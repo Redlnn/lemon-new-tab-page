@@ -1,0 +1,24 @@
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  font-size: 14px;
+  font-family: 'HarmonyOS Sans SC', 'PingFang SC', 'Helvetica Neue', 'Source Han Sans SC',
+    'Microsoft YaHei', sans-serif;
+}
+
+.noselect {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}

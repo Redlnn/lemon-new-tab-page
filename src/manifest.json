@@ -1,0 +1,18 @@
+{
+  "name": "柠檬起始页",
+  "version": "1.0.0",
+  "author": "Red_lnn<lemon@redlnn.top>",
+  "{{chrome}}.manifest_version": 3,
+  "{{firefox}}.manifest_version": 2,
+  "description": "一个开源、简洁、美观且使用的浏览器起始页。",
+  "{{chrome}}.chrome_url_overrides": {
+    "newtab": "src/newtab/index.html"
+  },
+  "permissions": ["topSites", "storage", "favicon"],
+  "host_permissions": [
+    "https://cn.bing.com/",
+    "https://api.bing.com/",
+    "https://suggestion.baidu.com/",
+    "https://suggestqueries.google.com/"
+  ]
+}

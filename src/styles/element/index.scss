@@ -1,0 +1,16 @@
+$--slider: (
+  'button-size': 15px
+);
+
+// You should use them in scss, because we calculate it by sass.
+// comment next lines to use default color
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  // do not use same name, it will override.
+  $slider: $--slider
+);
+
+// if you want to import all
+// @use "element-plus/theme-chalk/src/index.scss" as *;
+
+// custom dark variables
+@use './dark.scss';
