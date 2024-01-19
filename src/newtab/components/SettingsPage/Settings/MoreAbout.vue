@@ -18,8 +18,8 @@ const year = useDateFormat(useNow(), 'YYYY')
       <p class="ext-desc">版本 {{ version }}</p>
     </div>
     <div class="ext-links">
-      <a>项目地址</a>
-      <a>商店地址</a>
+      <a href="https://github.com/Redlnn/lemon-new-tab-page/" target="_blank">项目地址</a>
+      <!-- <a>商店地址</a> -->
     </div>
     <div class="ext-license">
       <a>遵循 MIT 开源协议</a>
