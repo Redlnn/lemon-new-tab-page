@@ -1,46 +1,104 @@
-# vite-project
+# 柠檬起始页（Lemon Tab Page）
 
-This template should help get you started developing with Vue 3 in Vite.
+一个非常简约的仿[青柠起始页](https://limestart.cn/)的纯本地新标签页实现。
 
-## Recommended IDE Setup
+## 安装使用
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+由于本人没有 Visa 或 MasterCard，无法发布到 Chrome 和 Firefox 的插件市场，因此需要手动下载安装。
 
-## Type Support for `.vue` Imports in TS
+请到 [Release 页面](https://github.com/Redlnn/lemon-new-tab-page/releases)下载
+zip 压缩包解压后在浏览器插件页面中加载已解压的插件。
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+## 特性
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+- :art: 基本复刻青柠起始页的主界面UI及相关动画
+- :top: 展示最常访问的网站
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+  > 由于个人需求，暂不支持自定义快速访问，如有需求可提 issue
 
-## Customize configuration
+- :framed_picture: 自定义壁纸或 Bing 每日一图
+- :crescent_moon: 深色模式（用于搭配壁纸色调）
+- :rainbow: 壁纸模糊、壁纸遮罩、壁纸暗角
+- :joystick: 切换搜索引擎、切换搜索建议来源
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+  > 更多搜索引擎和建议来源欢迎 PR
 
-## Project Setup
+- :zap: 加载迅速
+
+## 为什么会有这个插件？
+
+青柠起始页是一个在线服务不能离线使用，之前我网络环境不好，每当打开浏览器或切换标签页总是会先加载一下，虽然时间不长但还是有股卡顿感。
+
+并且青柠起始页由于并不是浏览器插件本身的页面，因此不支持展示经常访问网站，而我个人更习惯直接打开经常访问的网站。
+
+另一方面，青柠起始页把快速访问放在了需要鼠标右键点一下的二级页面，而我更喜欢在新标签页中直接打开常用网站。
+
+然而，青柠起始页不是个开源项目不好魔改，所以我决定根据自己需求模仿一个。
+
+### 有什么不同？
+
+和青柠起始页相比，柠檬起始页完全在本地运行。网络环境不好、公司内网、无网环境时也可以使用。而青柠起始页极度依赖其服务器，不管是页面本身还是搜索建议，假如网络不好或开发者服务器不可用时，青柠檬起始页会无法正常工作。
+
+得益于本地运行，柠檬起始页可以做到打开新标签页时秒速展示，无需等待网络请求。
+
+> Bing 每日一图及搜索联想功能在无网或弱网环境时无法使用。
+
+### 对比
+
+> 根据个人需求开发所以很多功能都没有，但欢迎 PR（提 issue 不一定会实现）
+
+|    主要功能    | 柠檬起始页 | 青柠起始页 |
+| :------------: | :--------: | :--------: |
+|    最常访问    |     ✅     |     ❌     |
+|   自定义壁纸   |     ✅     |     ✅     |
+|    深色模式    |     ✅     |     ✅     |
+|    视频壁纸    |     ❌     |     ✅     |
+|      一言      |     ❌     |     ✅     |
+|      便笺      |     ❌     |     ✅     |
+| 自定义快速访问 |     ❌     |     ✅     |
+|    设置同步    |     ❌     |     ✅     |
+
+## 浏览器兼容性
+
+| 浏览器  |   支持   |         说明         |
+| :-----: | :------: | :------------------: |
+| Chrome  |    ✅    | Chrome 96 及更高版本 |
+|  Edge   |    ✅    |  Edge 96 及更高版本  |
+| Firefox | 未经测试 |          -           |
+
+## 预览
+
+<details>
+<summary>点击展开图片</summary>
+
+![主页](./preview/home.webp)
+![设置页面](./preview/settings.webp)
+
+</details>
+
+## 开发
+
+本项目使用 Vue 3 + Vite 4 + TypeScript + Element Plus 开发。
 
 ```sh
+git clone https://github.com/Redlnn/lemon-new-tab-page.git
+cd lemon-new-tab-page
 pnpm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
+# 运行开发环境，会启动一个独立的浏览器
 pnpm dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
+# 构建
 pnpm build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+> [!NOTE]  
+> 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
 
-```sh
-pnpm lint
-```
+## 鸣谢
+
+- [青柠起始页](https://limestart.cn/)
+
+  > 柠檬起始页的模仿对象，模仿了布局和动画，除了 CSS 动画的贝塞尔曲线参数，其他 CSS 和 JS 均未使用
+
+- [Light Tab Page 轻标签页](https://github.com/Devifish/light-tab-page)
+
+  > 设置界面的模仿对象，参考或使用了其 HTML 布局、CSS 及部分图片资源
