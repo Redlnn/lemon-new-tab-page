@@ -65,7 +65,9 @@ export default defineConfig({
           const i = splitVendorChunk()(id, { getModuleIds, getModuleInfo })
           if (i === 'vendor') {
             let depName = id.toString().split('node_modules/.pnpm/')[1].split('/')[0].toString()
-            if (depName[0] === '@') depName = `@${depName.slice(1).split('@')[0].toString()}`
+            if (depName[0] === '@') {
+              depName = `@${depName.slice(1).split('@')[0].toString()}`
+            }
             return `js/${depName}`
           } else {
             return i
