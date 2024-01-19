@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { onBeforeMount, ref, onMounted, watch } from 'vue'
 import type { TopSites } from 'webextension-polyfill'
+import { ClearRound } from '@vicons/material'
+
 import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 import { getTopSites, getFaviconURL, blockSite } from '@/newtab/js/topSites'
 
@@ -52,7 +54,7 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
             </div>
             <div class="site-title">{{ site.title }}</div>
           </a>
-          <div
+          <el-icon
             class="block-site noselect"
             @click="
               async () => {
@@ -61,8 +63,8 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
               }
             "
           >
-            ×
-          </div>
+            <clear-round />
+          </el-icon>
         </div>
       </div>
     </el-scrollbar>
@@ -136,20 +138,19 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
 
     .block-site {
       position: absolute;
-      top: 5px;
+      top: 8px;
       right: 10px;
       font-size: 30px;
-      line-height: 1em;
-      width: 1em;
-      text-align: center;
+      padding: 5px;
       border-radius: 50%;
       transition: all 0.1s ease-in-out;
       cursor: pointer;
       color: transparent;
 
       &:hover {
-        background-color: var(--el-bg-color-page);
+        background-color: var(--el-bg-color);
         color: var(--el-text-color-primary);
+        box-shadow: var(--el-box-shadow-lighter);
       }
     }
   }
