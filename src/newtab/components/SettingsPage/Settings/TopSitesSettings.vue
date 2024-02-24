@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import { AppstoreOutlined } from '@vicons/antd'
+import { RestoreRound } from '@vicons/material'
 
 import { useSettingsStore } from '@/newtab/js/store'
+import { LocalExtensionStorage } from '@/newtab/js/storage'
 
 const settingsStore = useSettingsStore()
+
+async function restoreDefaultTopSites() {
+  await LocalExtensionStorage.setItem('blockedTopStites', [])
+  location.reload()
+}
 </script>
 
 <template>
@@ -44,4 +51,20 @@ const settingsStore = useSettingsStore()
   <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
     最常访问的上限只有10个噢~
   </p>
+  <div class="settings-item horizontal">
+    <div class="settings-label">恢复默认快捷方式</div>
+    <el-popconfirm
+      width="220"
+      confirm-button-text="好"
+      cancel-button-text="算了"
+      :icon="RestoreRound"
+      icon-color="#626AEF"
+      title="你确定要恢复默认快捷方式吗？"
+      @confirm="restoreDefaultTopSites()"
+    >
+      <template #reference>
+        <el-button :icon="RestoreRound" circle />
+      </template>
+    </el-popconfirm>
+  </div>
 </template>

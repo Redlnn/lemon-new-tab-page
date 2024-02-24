@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onBeforeMount, ref, onMounted, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import type { TopSites } from 'webextension-polyfill'
-import { ClearRound } from '@vicons/material'
+import { ClearRound, MoreVertRound } from '@vicons/material'
 
 import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
-import { getTopSites, getFaviconURL, blockSite } from '@/newtab/js/topSites'
+import { blockSite, getFaviconURL, getTopSites } from '@/newtab/js/topSites'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -48,23 +48,40 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
           class="top-sites-item"
           :style="{ margin: `${settingsStore.topSitesGap}px` }"
         >
-          <a :href="site.url">
-            <div class="site-icon">
+          <a :href="site.url" style="padding: 10px">
+            <div class="top-site-icon">
               <span :style="{ backgroundImage: `url(${getFaviconURL(site.url)})` }"></span>
             </div>
-            <div class="site-title">{{ site.title }}</div>
+            <div class="top-site-title">{{ site.title }}</div>
           </a>
-          <el-icon
-            class="block-site noselect"
-            @click="
-              async () => {
-                await blockSite(site.url)
-                await reloadTopSites()
-              }
-            "
-          >
-            <clear-round />
-          </el-icon>
+          <el-dropdown class="top-site-menu" trigger="click" placement="bottom-end" size="small">
+            <span class="top-site-menu-icon">
+              <el-icon>
+                <more-vert-round />
+              </el-icon>
+            </span>
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item>
+                  <span
+                    @click="
+                      async () => {
+                        await blockSite(site.url, reloadTopSites)
+                        await reloadTopSites()
+                      }
+                    "
+                    style="display: flex; align-items: center"
+                  >
+                    <el-icon>
+                      <clear-round />
+                    </el-icon>
+
+                    移除
+                  </span>
+                </el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
     </el-scrollbar>
@@ -92,7 +109,6 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
     width: 110px;
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
     backdrop-filter: blur(3px);
-    padding: 10px 10px;
     border-radius: 10px;
 
     a {
@@ -105,7 +121,7 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
       background-color: color-mix(in oklab, var(--el-bg-color), transparent 30%);
     }
 
-    .site-icon {
+    .top-site-icon {
       width: 50px;
       height: 50px;
       margin: 10px 0;
@@ -125,7 +141,7 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
       }
     }
 
-    .site-title {
+    .top-site-title {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 1;
@@ -136,22 +152,36 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
       overflow-wrap: anywhere;
     }
 
-    .block-site {
+    &:hover .top-site-menu {
+      color: var(--el-text-color-regular);
+    }
+
+    .top-site-menu {
       position: absolute;
-      top: 8px;
-      right: 10px;
-      font-size: 30px;
-      padding: 5px;
+      top: 6px;
+      right: 6px;
       border-radius: 50%;
-      transition: all 0.1s ease-in-out;
-      cursor: pointer;
       color: transparent;
+      transition: all 0.1s ease-in-out;
+      overflow: hidden;
+      cursor: pointer;
+
+      & > span {
+        outline: none;
+      }
 
       &:hover {
         background-color: var(--el-bg-color);
         color: var(--el-text-color-primary);
         box-shadow: var(--el-box-shadow-lighter);
       }
+    }
+
+    .top-site-menu-icon {
+      width: 26px;
+      height: 26px;
+      font-size: 20px;
+      padding: 3px;
     }
   }
 }

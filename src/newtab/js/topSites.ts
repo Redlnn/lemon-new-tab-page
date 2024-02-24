@@ -1,23 +1,64 @@
+import { h } from 'vue'
+import { ElMessage } from 'element-plus'
 import browser from 'webextension-polyfill'
+
 import { LocalExtensionStorage } from './storage'
 
 async function getTopSites(slice?: number) {
-  let topSites = await browser.topSites.get()
+  const topSites = await browser.topSites.get()
   const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
   if (blockedTopStites.length > 0) {
     topSites.forEach((site) => {
       if (blockedTopStites.includes(site.url)) {
-        topSites = topSites.splice(topSites.indexOf(site), 1)
+        topSites.splice(topSites.indexOf(site), 1)
       }
     })
   }
   return topSites.slice(0, slice)
 }
 
-async function blockSite(url: string) {
+async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
   blockedTopStites.push(url)
   await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
+  ElMessage({
+    message: h('p', null, [
+      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除快捷方式'),
+      h(
+        'span',
+        {
+          style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
+          onClick: async () => {
+            await restoreBlockedSite(url)
+            await reloadFunc()
+          }
+        },
+        '撤销'
+      ),
+      h(
+        'span',
+        {
+          style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
+          onClick: async () => {
+            await LocalExtensionStorage.setItem('blockedTopStites', [])
+            await reloadFunc()
+          }
+        },
+        '恢复默认快捷方式'
+      )
+    ]),
+    type: 'success'
+  })
+}
+
+async function restoreBlockedSite(url: string) {
+  const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
+  const index = blockedTopStites.indexOf(url)
+  if (index > -1) {
+    blockedTopStites.splice(index, 1)
+    await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
+  }
+  console.log('blockedTopStites', blockedTopStites)
 }
 
 function getFaviconURL(url: string, size: string = '128') {
