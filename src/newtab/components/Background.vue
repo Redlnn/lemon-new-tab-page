@@ -57,7 +57,7 @@ onMounted(() => (backgroundWrapper.value.style.opacity = '1'))
   left: 0;
   opacity: 0;
   z-index: -1000;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
   background-color: var(--el-bg-color-page);
 
   .background {

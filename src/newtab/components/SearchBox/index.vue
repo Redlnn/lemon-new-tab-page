@@ -1,10 +1,13 @@
-<!-- https://github.com/huasenjio/huasenjio-compose/blob/master/huasen-frontend/portal/src/views/home/search/HomeSearch.vue -->
-<!-- http://n.huasen.cc/#/home -->
-
 <script lang="ts" setup>
-import { ref, watch, onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { Search } from '@vicons/fa'
-import { onClickOutside, useElementSize, useWindowFocus, useActiveElement } from '@vueuse/core'
+import {
+  onClickOutside,
+  useActiveElement,
+  useElementSize,
+  useTimeoutFn,
+  useWindowFocus
+} from '@vueuse/core'
 import type { TooltipInstance } from 'element-plus'
 
 import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
@@ -134,7 +137,7 @@ async function doSearchWithText(text: string) {
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }
-onMounted(() => (mounted.value = true))
+onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
 </script>
 
 <template>
