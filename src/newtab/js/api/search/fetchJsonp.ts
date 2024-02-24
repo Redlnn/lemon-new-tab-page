@@ -31,7 +31,7 @@ async function fetchJsonp(
   if (response.status !== 200) {
     throw new Error(`fetchJsonp: request jsonp failed, status code: ${response.status}`)
   } else {
-    const {data} = response
+    const { data } = response
     if (typeof data === 'string') {
       return options.parser(data)
     } else {

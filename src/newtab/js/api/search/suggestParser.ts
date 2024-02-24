@@ -27,7 +27,9 @@ async function bingSuggestParser(text: string): Promise<string[]> {
   console.debug(response)
   if (response.status === 200) {
     const resp: BingSuggest = response.data
-    if (resp['AS']['FullResults'] <= 0) return []
+    if (resp['AS']['FullResults'] <= 0) {
+      return []
+    }
     const originSuggestions = resp['AS']['Results'][0]['Suggests']
     const suggestions: string[] = []
     originSuggestions.forEach((originSuggestion) => {

@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
-import { useWallpaperStore } from './wallpaperStore'
 
 import { LocalExtensionStorage } from '@/newtab/js/storage'
 import { isImageFile } from '@/newtab/js/utils/img'
+import { useWallpaperStore } from './wallpaperStore'
 
 export enum BgType {
   None,

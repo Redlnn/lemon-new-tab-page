@@ -2,11 +2,11 @@
 import { ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
-import { ElMessage, type UploadProps } from 'element-plus'
+import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 
 import { isImageFile } from '@/newtab/js/utils/img'
-import { useSettingsStore, BgType } from '@/newtab/js/store'
+import { BgType, useSettingsStore } from '@/newtab/js/store'
 
 const settingsStore = useSettingsStore()
 const imageUrl = ref(settingsStore.bgUrl)
@@ -41,7 +41,9 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
     v-if="settingsStore.bgType === BgType.Local"
     class="bg-uploader"
     :show-file-list="false"
-    :http-request="(option) => settingsStore.uploadBackgroundImage(option.file)"
+    :http-request="
+      (option: UploadRequestOptions) => settingsStore.uploadBackgroundImage(option.file)
+    "
     :on-success="handleBackgroundSuccess"
     :before-upload="beforeBackgroundUpload"
   >

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, onMounted } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useTimeoutFn } from '@vueuse/core'
 
 import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
@@ -9,7 +9,7 @@ const settingsStore = useSettingsStore()
 const backgroundWrapper = ref()
 const background = ref()
 
-const props = defineProps<{bgurl: string}>()
+const props = defineProps<{ bgurl: string }>()
 
 watch(
   () => focusStore.isFocused,

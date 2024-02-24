@@ -2,7 +2,7 @@
 import { SearchOutlined } from '@vicons/antd'
 
 import { useSettingsStore } from '@/newtab/js/store'
-import { searchSuggestAPIs, searchEngines } from '@/newtab/js/api/search'
+import { searchEngines, searchSuggestAPIs } from '@/newtab/js/api/search'
 
 const settingsStore = useSettingsStore()
 </script>

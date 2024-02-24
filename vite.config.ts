@@ -1,4 +1,4 @@
-import { fileURLToPath, URL } from 'node:url'
+import { URL, fileURLToPath } from 'node:url'
 
 import { defineConfig, splitVendorChunk } from 'vite'
 import vue from '@vitejs/plugin-vue'

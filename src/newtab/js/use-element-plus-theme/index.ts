@@ -1,4 +1,4 @@
-import { PRE, PRE_DARK, PRE_LIGHT, Levels, WHITE, BLACK } from './token'
+import { BLACK, Levels, PRE, PRE_DARK, PRE_LIGHT, WHITE } from './token'
 
 const html = document.documentElement
 

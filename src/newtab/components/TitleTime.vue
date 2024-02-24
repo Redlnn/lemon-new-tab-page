@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { useDateFormat, useNow, useElementHover } from '@vueuse/core'
+import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 const time = ref()
 
 const isTimeHovered = useElementHover(time)

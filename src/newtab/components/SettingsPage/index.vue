@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import { useSettingsStore, saveSettings } from '@/newtab/js/store'
+import { saveSettings, useSettingsStore } from '@/newtab/js/store'
 
 import ThemeSettings from './Settings/ThemeSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
@@ -25,9 +25,12 @@ function toggleShow() {
 defineExpose({ show, hide, toggleShow })
 
 const settingsStore = useSettingsStore()
-settingsStore.$subscribe(async (mutation, state) => {
-  await saveSettings(state)
-}, { detached: true })
+settingsStore.$subscribe(
+  async (mutation, state) => {
+    await saveSettings(state)
+  },
+  { detached: true }
+)
 </script>
 
 <template>

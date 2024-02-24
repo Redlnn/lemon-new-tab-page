@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, onBeforeMount, watch } from 'vue'
+import { onBeforeMount, ref, watch } from 'vue'
 import { SettingsOutlined } from '@vicons/material'
 import { ElConfigProvider } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
@@ -10,7 +10,7 @@ import SearchBox from './components/SearchBox/index.vue'
 import TopSites from './components/TopSites.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 
-import { useSettingsStore, readSettings, BgType } from './js/store'
+import { BgType, readSettings, useSettingsStore } from './js/store'
 import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/utils/img'
