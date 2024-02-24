@@ -13,8 +13,8 @@ async function confirmClearExtensionData() {
       '将会重置扩展设置、已忽略的最常访问站点、已选择的背景图片。',
       '确定要清除所有数据吗?',
       {
-        confirmButtonText: '是的',
-        cancelButtonText: '哒咩',
+        confirmButtonText: '好',
+        cancelButtonText: '算了',
         type: 'warning'
       }
     )
