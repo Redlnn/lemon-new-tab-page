@@ -70,6 +70,8 @@ settingsStore.$subscribe(
 .settings-item {
   min-height: 40px;
   margin: 8px 0;
+  width: 100%;
+  overflow: hidden;
 
   &.horizontal {
     display: flex;
