@@ -58,7 +58,6 @@ async function restoreBlockedSite(url: string) {
     blockedTopStites.splice(index, 1)
     await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
   }
-  console.log('blockedTopStites', blockedTopStites)
 }
 
 function getFaviconURL(url: string, size: string = '128') {

@@ -17,8 +17,6 @@ async function reloadTopSites() {
 }
 
 function getTopSiteItemWidth(TopSitesNum: number) {
-  console.log(TopSitesNum)
-  console.log(settingsStore.topSitesColumns * settingsStore.topSitesRows)
   if (
     TopSitesNum < settingsStore.topSitesColumns * settingsStore.topSitesRows &&
     TopSitesNum != 10

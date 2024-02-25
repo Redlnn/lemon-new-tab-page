@@ -26,7 +26,6 @@ onBeforeMount(async () => {
   for (const key in settings) {
     settingsStore[key] = settings[key]
   }
-  console.log(settingsStore)
   changeTheme(settingsStore.primaryColor)
 
   switch (settingsStore.bgType) {
