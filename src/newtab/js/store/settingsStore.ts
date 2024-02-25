@@ -13,6 +13,8 @@ export enum BgType {
 
 interface Settings {
   primaryColor: string
+  isMeridiem: boolean
+  showMeridiem: boolean
   selectedSearchSuggestionAPI: string
   selectedSearchEngine: number
   searchInNewTab: boolean
@@ -31,6 +33,8 @@ interface Settings {
 
 const defaultSettings: Settings = {
   primaryColor: '#409eff',
+  isMeridiem: true,
+  showMeridiem: false,
   selectedSearchSuggestionAPI: '百度',
   selectedSearchEngine: 0,
   searchInNewTab: false,

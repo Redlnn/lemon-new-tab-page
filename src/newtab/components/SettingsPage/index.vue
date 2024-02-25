@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { saveSettings, useSettingsStore } from '@/newtab/js/store'
 
 import ThemeSettings from './Settings/ThemeSettings.vue'
+import ClockSettings from './Settings/ClockSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import TopSitesSettings from './Settings/TopSitesSettings.vue'
@@ -43,6 +44,8 @@ settingsStore.$subscribe(
   >
     <el-scrollbar style="padding: 24px">
       <theme-settings />
+      <el-divider />
+      <clock-settings />
       <el-divider />
       <search-settings />
       <el-divider />

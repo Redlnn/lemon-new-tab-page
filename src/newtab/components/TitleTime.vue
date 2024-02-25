@@ -1,8 +1,11 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { ref, watch, type ComputedRef } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
-const time = ref()
 
+import { useSettingsStore } from '@/newtab/js/store'
+
+const settingsStore = useSettingsStore()
+const time = ref()
 const isTimeHovered = useElementHover(time)
 
 watch(isTimeHovered, (isTimeHovered) => {
@@ -31,16 +34,17 @@ function customMeridiem(hours: number) {
   }
 }
 
-const timeNowHour = useDateFormat(useNow(), 'h')
+const timeNowHour: ComputedRef<string> = useDateFormat(useNow(), 'HH')
+const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(useNow(), 'h')
 const timeNowMinute = useDateFormat(useNow(), 'mm')
 const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
 </script>
 
 <template>
   <div class="time" ref="time">
-    <span class="meridiem">{{ timeNowMeridiem }}</span>
+    <span v-if="settingsStore.showMeridiem" class="meridiem">{{ timeNowMeridiem }}</span>
     <span>
-      <span class="hour">{{ timeNowHour }}</span>
+      <span class="hour">{{ settingsStore.isMeridiem ? timeNowHourMeridiem : timeNowHour }}</span>
       <span class="colon">:</span>
       <span class="minute">{{ timeNowMinute }}</span>
     </span>
