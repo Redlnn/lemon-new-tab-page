@@ -1,19 +1,19 @@
 <script lang="ts" setup>
-import { onBeforeMount, ref, watch } from 'vue'
-import { SettingsOutlined } from '@vicons/material'
 import { ElConfigProvider } from 'element-plus'
+import { SettingsOutlined } from '@vicons/material'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
+import { onBeforeMount, ref, watch } from 'vue'
 
-import TitleTime from './components/TitleTime.vue'
 import Background from './components/Background.vue'
 import SearchBox from './components/SearchBox/index.vue'
-import TopSites from './components/TopSites.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
+import TitleTime from './components/TitleTime.vue'
+import TopSites from './components/TopSites.vue'
 
-import { BgType, readSettings, useSettingsStore } from './js/store'
 import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/utils/img'
+import { BgType, readSettings, useSettingsStore } from './js/store'
 
 const settingsStore = useSettingsStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()

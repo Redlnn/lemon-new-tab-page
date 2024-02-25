@@ -2,8 +2,8 @@
 import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 
-import { useSettingsStore } from '@/newtab/js/store'
 import { LocalExtensionStorage } from '@/newtab/js/storage'
+import { useSettingsStore } from '@/newtab/js/store'
 
 const settingsStore = useSettingsStore()
 

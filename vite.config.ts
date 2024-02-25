@@ -1,12 +1,12 @@
 import { URL, fileURLToPath } from 'node:url'
 
-import { defineConfig, splitVendorChunk } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { defineConfig, splitVendorChunk } from 'vite'
 
-import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
+import webExtension, { readJsonFile } from 'vite-plugin-web-extension'
 
 function generateManifest() {
   const manifest = readJsonFile('src/manifest.json')
@@ -48,7 +48,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      '@': fileURLToPath(new URL('./src', import.meta.url))
     }
   },
   css: {

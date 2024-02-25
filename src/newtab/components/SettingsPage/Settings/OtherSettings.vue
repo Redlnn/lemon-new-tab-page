@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { DeleteForeverOutlined } from '@vicons/material'
-import { ControlOutlined } from '@vicons/antd'
-import { ElMessageBox } from 'element-plus'
 import 'element-plus/theme-chalk/el-message-box.css'
+import { ControlOutlined } from '@vicons/antd'
+import { DeleteForeverOutlined } from '@vicons/material'
+import { ElMessageBox } from 'element-plus'
 
 import { useWallpaperStore } from '@/newtab/js/store'
 import { LocalExtensionStorage, SyncExtensionStorage } from '@/newtab/js/storage'

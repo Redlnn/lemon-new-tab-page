@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import 'element-plus/theme-chalk/el-message.css'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
+import { ref } from 'vue'
 import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
-import 'element-plus/theme-chalk/el-message.css'
 
 import { isImageFile } from '@/newtab/js/utils/img'
 import { BgType, useSettingsStore } from '@/newtab/js/store'

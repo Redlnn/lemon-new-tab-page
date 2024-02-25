@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue'
 import { useTimeoutFn } from '@vueuse/core'
+import { onMounted, ref, watch } from 'vue'
 
 import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 

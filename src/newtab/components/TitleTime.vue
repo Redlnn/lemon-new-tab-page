@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch, type ComputedRef } from 'vue'
+import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
 import { useSettingsStore } from '@/newtab/js/store'

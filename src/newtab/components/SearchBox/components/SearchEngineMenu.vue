@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 import { searchEngines } from '@/newtab/js/api/search'
+import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import type { TopSites } from 'webextension-polyfill'
 import { ClearRound, MoreVertRound } from '@vicons/material'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
 
-import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 import { blockSite, getFaviconURL, getTopSites } from '@/newtab/js/topSites'
+import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

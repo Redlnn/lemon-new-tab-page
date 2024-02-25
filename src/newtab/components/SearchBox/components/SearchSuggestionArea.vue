@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { TrashAlt } from '@vicons/fa'
+import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
-import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 import { LocalExtensionStorage } from '@/newtab/js/storage'
 import { searchSuggestAPIs } from '@/newtab/js/api/search'
+import { useFocusStore, useSettingsStore } from '@/newtab/js/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { version } from '@/../package.json'
 
-import { useDateFormat, useNow } from '@vueuse/core'
 import { InfoCircleOutlined } from '@vicons/antd'
+import { useDateFormat, useNow } from '@vueuse/core'
 
 const year = useDateFormat(useNow(), 'YYYY')
 </script>

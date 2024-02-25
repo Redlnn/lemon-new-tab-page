@@ -14,6 +14,13 @@ module.exports = {
   },
   rules: {
     'vue/multi-word-component-names': 'off',
-    'vue/no-deprecated-v-on-native-modifier': 'off'
+    'vue/no-deprecated-v-on-native-modifier': 'off',
+    'sort-imports': [
+      'error',
+      {
+        memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple'],
+        allowSeparatedGroups: true
+      }
+    ]
   }
 }

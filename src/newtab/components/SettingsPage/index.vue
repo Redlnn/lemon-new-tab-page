@@ -3,13 +3,13 @@ import { ref } from 'vue'
 
 import { saveSettings, useSettingsStore } from '@/newtab/js/store'
 
-import ThemeSettings from './Settings/ThemeSettings.vue'
-import ClockSettings from './Settings/ClockSettings.vue'
-import SearchSettings from './Settings/SearchSettings.vue'
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
-import TopSitesSettings from './Settings/TopSitesSettings.vue'
-import OtherSettings from './Settings/OtherSettings.vue'
+import ClockSettings from './Settings/ClockSettings.vue'
 import MoreAbout from './Settings/MoreAbout.vue'
+import OtherSettings from './Settings/OtherSettings.vue'
+import SearchSettings from './Settings/SearchSettings.vue'
+import ThemeSettings from './Settings/ThemeSettings.vue'
+import TopSitesSettings from './Settings/TopSitesSettings.vue'
 
 const opened = ref(false)
 

@@ -1,6 +1,6 @@
-import { h } from 'vue'
 import { ElMessage } from 'element-plus'
 import browser from 'webextension-polyfill'
+import { h } from 'vue'
 
 import { LocalExtensionStorage } from './storage'
 

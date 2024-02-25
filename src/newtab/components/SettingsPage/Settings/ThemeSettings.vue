@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { ColorLensOutlined } from '@vicons/material'
+import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
 
 import changeTheme from '@/newtab/js/use-element-plus-theme'
 import { useSettingsStore } from '@/newtab/js/store'
 
 import autoMode from '@/newtab/assets/color/auto-mode.svg?url'
-import lightMode from '@/newtab/assets/color/light-mode.svg?url'
 import darkMode from '@/newtab/assets/color/dark-mode.svg?url'
+import lightMode from '@/newtab/assets/color/light-mode.svg?url'
 import selected from '@/newtab/assets/color/selected.svg?component'
 
 const settingsStore = useSettingsStore()
