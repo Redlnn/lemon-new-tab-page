@@ -12,8 +12,8 @@ function generateManifest() {
   const manifest = readJsonFile('src/manifest.json')
   const pkg = readJsonFile('package.json')
   return {
-    name: pkg.name,
-    description: pkg.description,
+    name: manifest.description || pkg.name,
+    description: pkg.description || manifest.description,
     version: pkg.version,
     ...manifest
   }
@@ -48,7 +48,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     }
   },
   css: {

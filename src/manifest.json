@@ -1,6 +1,5 @@
 {
   "name": "柠檬起始页",
-  "version": "1.0.0",
   "author": "Red_lnn<lemon@redlnn.top>",
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { version } from '@/manifest.json'
+import { version } from '@/../package.json'
 
 import { useDateFormat, useNow } from '@vueuse/core'
 import { InfoCircleOutlined } from '@vicons/antd'
