@@ -23,7 +23,7 @@ async function restoreDefaultTopSites() {
     <el-switch v-model="settingsStore.enableTopSites" size="large" />
   </div>
   <div class="settings-item">
-    <div class="settings-label">行数</div>
+    <div class="settings-label">最大行数</div>
     <el-slider
       v-model="settingsStore.topSitesRows"
       :step="1"
@@ -36,7 +36,7 @@ async function restoreDefaultTopSites() {
     />
   </div>
   <div class="settings-item">
-    <div class="settings-label">列数</div>
+    <div class="settings-label">最大列数</div>
     <el-slider
       v-model="settingsStore.topSitesColumns"
       :step="1"
@@ -51,6 +51,17 @@ async function restoreDefaultTopSites() {
   <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
     最常访问的上限只有10个噢~
   </p>
+  <div class="settings-item top-sites-item-width">
+    <div class="settings-label">链接宽度</div>
+    <el-slider
+      v-model="settingsStore.topSitesItemWidth"
+      :min="100"
+      :max="200"
+      show-input
+      :show-input-controls="false"
+      :show-tooltip="false"
+    />
+  </div>
   <div class="settings-item horizontal">
     <div class="settings-label">恢复默认快捷方式</div>
     <el-popconfirm
@@ -68,3 +79,10 @@ async function restoreDefaultTopSites() {
     </el-popconfirm>
   </div>
 </template>
+
+<style scoped lang="scss">
+.top-sites-item-width:deep() .el-input-number,
+.top-sites-item-width:deep() .el-input {
+  width: 60px;
+}
+</style>

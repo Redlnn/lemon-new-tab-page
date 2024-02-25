@@ -25,7 +25,7 @@ interface Settings {
   enableTopSites: boolean
   topSitesRows: number
   topSitesColumns: number
-  topSitesGap: number
+  topSitesItemWidth: number
   [key: string]: any
 }
 
@@ -43,7 +43,7 @@ const defaultSettings: Settings = {
   enableTopSites: true,
   topSitesRows: 2,
   topSitesColumns: 5,
-  topSitesGap: 10
+  topSitesItemWidth: 100,
 }
 
 export async function readSettings() {

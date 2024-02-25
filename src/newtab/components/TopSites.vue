@@ -16,6 +16,19 @@ async function reloadTopSites() {
   topSites.value = await getTopSites(settingsStore.topSitesColumns * settingsStore.topSitesRows)
 }
 
+function getTopSiteItemWidth(TopSitesNum: number) {
+  console.log(TopSitesNum)
+  console.log(settingsStore.topSitesColumns * settingsStore.topSitesRows)
+  if (
+    TopSitesNum < settingsStore.topSitesColumns * settingsStore.topSitesRows &&
+    TopSitesNum != 10
+  ) {
+    return 100 / TopSitesNum + '%'
+  } else {
+    return 100 / settingsStore.topSitesColumns + '%'
+  }
+}
+
 onBeforeMount(async () => {
   await reloadTopSites()
 })
@@ -29,62 +42,62 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
 <template>
   <section
     class="top-sites-wrapper"
-    :style="{ opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '1' }"
+    :style="{
+      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '1'
+    }"
   >
-    <el-scrollbar view-style="padding: 0 0 5px" always class="top-sites-scrollbar">
+    <div
+      class="top-sites"
+      :style="{
+        pointerEvents: focusStore.isFocused ? 'none' : 'auto',
+        maxWidth: `${settingsStore.topSitesColumns * settingsStore.topSitesItemWidth + 20}px`,
+        maxHeight: `${settingsStore.topSitesRows * 112 + 20}px`
+      }"
+    >
       <div
-        class="top-sites"
+        v-for="(site, index) in topSites"
+        :key="index"
+        class="top-sites-item"
         :style="{
-          pointerEvents: focusStore.isFocused ? 'none' : 'auto',
-          gridTemplateColumns: `repeat(${settingsStore.topSitesColumns}, 130px)`,
-          gridTemplateRows: `repeat(${settingsStore.topSitesRows}, min-content)`
-          // gridColumnGap: `${settingsStore.topSitesGap}px`,
-          // gridRowGap: `${settingsStore.topSitesGap}px`
+          flexBasis: getTopSiteItemWidth(topSites.length),
+          width: `${settingsStore.topSitesItemWidth}px`
         }"
       >
-        <div
-          v-for="(site, index) in topSites"
-          :key="index"
-          class="top-sites-item"
-          :style="{ margin: `${settingsStore.topSitesGap}px` }"
-        >
-          <a :href="site.url" style="padding: 10px">
-            <div class="top-site-icon">
-              <span :style="{ backgroundImage: `url(${getFaviconURL(site.url)})` }"></span>
-            </div>
-            <div class="top-site-title">{{ site.title }}</div>
-          </a>
-          <el-dropdown class="top-site-menu" trigger="click" placement="bottom-end" size="small">
-            <span class="top-site-menu-icon">
-              <el-icon>
-                <more-vert-round />
-              </el-icon>
-            </span>
-            <template #dropdown>
-              <el-dropdown-menu>
-                <el-dropdown-item>
-                  <span
-                    @click="
-                      async () => {
-                        await blockSite(site.url, reloadTopSites)
-                        await reloadTopSites()
-                      }
-                    "
-                    style="display: flex; align-items: center"
-                  >
-                    <el-icon>
-                      <clear-round />
-                    </el-icon>
-
-                    移除
-                  </span>
-                </el-dropdown-item>
-              </el-dropdown-menu>
-            </template>
-          </el-dropdown>
-        </div>
+        <a :href="site.url">
+          <div class="top-site-icon">
+            <span :style="{ backgroundImage: `url(${getFaviconURL(site.url)})` }"></span>
+          </div>
+          <div class="top-site-title">{{ site.title }}</div>
+        </a>
+        <el-dropdown class="top-site-menu" trigger="click" placement="bottom-end" size="small">
+          <span class="top-site-menu-icon">
+            <el-icon>
+              <more-vert-round />
+            </el-icon>
+          </span>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item>
+                <span
+                  @click="
+                    async () => {
+                      await blockSite(site.url, reloadTopSites)
+                      await reloadTopSites()
+                    }
+                  "
+                  style="display: flex; align-items: center"
+                >
+                  <el-icon>
+                    <clear-round />
+                  </el-icon>
+                  移除
+                </span>
+              </el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
       </div>
-    </el-scrollbar>
+    </div>
   </section>
 </template>
 
@@ -96,8 +109,14 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
 }
 
 .top-sites {
-  display: grid;
+  display: flex;
+  flex-flow: row wrap;
+  padding: 10px;
+  background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
+  border-radius: 10px;
+  backdrop-filter: blur(3px);
   z-index: 10;
+  overflow: hidden;
 
   a {
     color: inherit;
@@ -106,15 +125,15 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
 
   .top-sites-item {
     position: relative;
-    width: 110px;
-    background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
-    backdrop-filter: blur(3px);
     border-radius: 10px;
+    overflow: hidden;
+    flex: 0;
 
     a {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: 8px;
     }
 
     &:hover {
@@ -148,6 +167,7 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
       overflow: hidden;
       font-size: 13px;
       height: 18px;
+      margin-bottom: 8px;
       text-align: center;
       overflow-wrap: anywhere;
     }
