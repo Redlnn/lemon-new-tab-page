@@ -1,20 +1,22 @@
 <script lang="ts" setup>
 import { ElConfigProvider } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
+import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import { onBeforeMount, ref, watch } from 'vue'
 
 import Background from './components/Background.vue'
+import QuickStart from './components/QuickStart/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 import TitleTime from './components/TitleTime.vue'
-import TopSites from './components/TopSites.vue'
 
 import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/utils/img'
 import { BgType, readSettings, useSettingsStore } from './js/store'
 
+useColorMode()
 const settingsStore = useSettingsStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 
@@ -74,7 +76,7 @@ watch(
     <main>
       <title-time />
       <search-box style="margin-top: 10px" />
-      <top-sites v-if="settingsStore.enableTopSites" />
+      <quick-start v-if="settingsStore.enableQuickStart" />
     </main>
     <background :bgurl="bgURL" />
     <div class="settings-icon" @click="SettingsPageRef?.toggleShow">
