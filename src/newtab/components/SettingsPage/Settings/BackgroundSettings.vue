@@ -46,6 +46,7 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
     "
     :on-success="handleBackgroundSuccess"
     :before-upload="beforeBackgroundUpload"
+    accept="image/*"
   >
     <img v-if="imageUrl" :src="imageUrl" class="bg-uploader-img" />
     <el-icon v-else class="bg-uploader-icon"><plus /></el-icon>
