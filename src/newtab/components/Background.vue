@@ -31,6 +31,7 @@ watch(
 
 onMounted(() => (backgroundWrapper.value.style.opacity = '1'))
 </script>
+
 <template>
   <div ref="backgroundWrapper" class="background-wrapper">
     <div
