@@ -16,11 +16,8 @@ async function reloadTopSites() {
   topSites.value = await getTopSites(settingsStore.topSitesColumns * settingsStore.topSitesRows)
 }
 
-function getTopSiteItemWidth(TopSitesNum: number) {
-  if (
-    TopSitesNum < settingsStore.topSitesColumns * settingsStore.topSitesRows &&
-    TopSitesNum != 10
-  ) {
+function getTopSitesItemWidth(TopSitesNum: number) {
+  if (TopSitesNum == 10 || TopSitesNum < settingsStore.topSitesColumns) {
     return 100 / TopSitesNum + '%'
   } else {
     return 100 / settingsStore.topSitesColumns + '%'
@@ -57,7 +54,7 @@ watch(() => settingsStore.topSitesColumns, reloadTopSites)
         :key="index"
         class="top-sites-item"
         :style="{
-          flexBasis: getTopSiteItemWidth(topSites.length),
+          flexBasis: getTopSitesItemWidth(topSites.length),
           width: `${settingsStore.topSitesItemWidth}px`
         }"
       >
