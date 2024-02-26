@@ -24,10 +24,11 @@ interface Settings {
   bgId: string
   bgUrl: string
   bgMaskPpacity: number
+  enableQuickStart: boolean
   enableTopSites: boolean
-  topSitesRows: number
-  topSitesColumns: number
-  topSitesItemWidth: number
+  QuickStartRows: number
+  QuickStartColumns: number
+  QuickStartItemWidth: number
   [key: string]: any
 }
 
@@ -44,10 +45,11 @@ const defaultSettings: Settings = {
   bgId: '',
   bgUrl: '',
   bgMaskPpacity: 0,
+  enableQuickStart: true,
   enableTopSites: true,
-  topSitesRows: 2,
-  topSitesColumns: 5,
-  topSitesItemWidth: 100
+  QuickStartRows: 2,
+  QuickStartColumns: 5,
+  QuickStartItemWidth: 110
 }
 
 export async function readSettings() {

@@ -25,7 +25,7 @@ async function restoreDefaultTopSites() {
   <div class="settings-item">
     <div class="settings-label">最大行数</div>
     <el-slider
-      v-model="settingsStore.topSitesRows"
+      v-model="settingsStore.QuickStartRows"
       :step="1"
       :min="1"
       :max="5"
@@ -38,7 +38,7 @@ async function restoreDefaultTopSites() {
   <div class="settings-item">
     <div class="settings-label">最大列数</div>
     <el-slider
-      v-model="settingsStore.topSitesColumns"
+      v-model="settingsStore.QuickStartColumns"
       :step="1"
       :min="1"
       :max="10"
@@ -51,10 +51,10 @@ async function restoreDefaultTopSites() {
   <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
     最常访问的上限只有10个噢~
   </p>
-  <div class="settings-item top-sites-item-width">
+  <div class="settings-item quickstart-item-width">
     <div class="settings-label">链接宽度</div>
     <el-slider
-      v-model="settingsStore.topSitesItemWidth"
+      v-model="settingsStore.QuickStartItemWidth"
       :min="100"
       :max="200"
       show-input
@@ -81,8 +81,8 @@ async function restoreDefaultTopSites() {
 </template>
 
 <style scoped lang="scss">
-.top-sites-item-width:deep() .el-input-number,
-.top-sites-item-width:deep() .el-input {
+.quickstart-item-width:deep() .el-input-number,
+.quickstart-item-width:deep() .el-input {
   width: 60px;
 }
 </style>
