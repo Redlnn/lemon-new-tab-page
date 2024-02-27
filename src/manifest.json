@@ -4,6 +4,7 @@
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
   "description": "一个开源、简洁、美观且使用的浏览器起始页。",
+  "icons": { "512": "icon.png" },
   "{{chrome}}.chrome_url_overrides": {
     "newtab": "src/newtab/index.html"
   },
