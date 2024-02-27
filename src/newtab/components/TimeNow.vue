@@ -77,11 +77,15 @@ const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
 
 .time {
   text-align: center;
-  color: var(--el-bg-color);
+  color: var(--el-fill-color-blank);
   font-size: 60px;
   animation: delayedFadeIn 0.5s;
   transition: 0.25s cubic-bezier(0.5, 0, 0.5, 2);
   text-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+
+  html.dark & {
+    color: var(--el-text-color-primary)
+  }
 
   .meridiem {
     font-size: 40px;

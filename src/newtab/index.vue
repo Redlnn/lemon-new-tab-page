@@ -9,7 +9,7 @@ import Background from './components/Background.vue'
 import QuickStart from './components/QuickStart/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
-import TitleTime from './components/TitleTime.vue'
+import TimeNow from './components/TimeNow.vue'
 
 import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
@@ -74,7 +74,7 @@ watch(
 <template>
   <el-config-provider :locale="zhCn">
     <main>
-      <title-time />
+      <time-now />
       <search-box style="margin-top: 10px" />
       <quick-start v-if="settingsStore.enableQuickStart" />
     </main>
