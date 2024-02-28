@@ -3,7 +3,7 @@
   "author": "Red_lnn<lemon@redlnn.top>",
   "{{chrome}}.manifest_version": 3,
   "{{firefox}}.manifest_version": 2,
-  "description": "一个开源、简洁、美观且使用的浏览器起始页。",
+  "description": "一个开源、简洁、美观且方便使用的浏览器起始页，带有搜索建议、Bing壁纸功能，可添加快速访问网站且展示最常访问网站。",
   "icons": { "512": "icon.png" },
   "{{chrome}}.chrome_url_overrides": {
     "newtab": "src/newtab/index.html"
