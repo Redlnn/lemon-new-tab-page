@@ -67,6 +67,9 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^9.22.0
     version: 9.22.0(eslint@8.57.0)
+  jinrishici:
+    specifier: ^1.0.6
+    version: 1.0.6
   localforage:
     specifier: ^1.10.0
     version: 1.10.0
@@ -2396,6 +2399,10 @@ packages:
 
   /isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
+    dev: true
+
+  /jinrishici@1.0.6:
+    resolution: {integrity: sha512-4Bk5VHo6xg9DspGS8y8I7D6kftA6DYy4rSvwpdtxFvh9DidXMgf+NSZKAXrcLTi8S5NjqmwkpAKYPHXRURH64Q==}
     dev: true
 
   /js-tokens@4.0.0:

@@ -10,6 +10,7 @@ import QuickStart from './components/QuickStart/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
+import YiYan from './components/YiYan.vue'
 
 import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
@@ -77,6 +78,7 @@ watch(
       <time-now />
       <search-box style="margin-top: 10px" />
       <quick-start v-if="settingsStore.enableQuickStart" />
+      <yi-yan />
     </main>
     <background :bgurl="bgURL" />
     <div class="settings-icon" @click="SettingsPageRef?.toggleShow">

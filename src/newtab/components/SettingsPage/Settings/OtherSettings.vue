@@ -4,9 +4,10 @@ import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 import { ElMessageBox } from 'element-plus'
 
-import { useWallpaperStore } from '@/newtab/js/store'
 import { LocalExtensionStorage, SyncExtensionStorage } from '@/newtab/js/storage'
+import { useSettingsStore, useWallpaperStore } from '@/newtab/js/store'
 
+const settingsStore = useSettingsStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
@@ -41,6 +42,10 @@ async function clearExtensionData() {
     <el-icon><control-outlined /></el-icon>
     <span>其他设置</span>
   </h3>
+  <div class="settings-item horizontal">
+    <div class="settings-label">一言</div>
+    <el-switch v-model="settingsStore.enableYiyan" size="large" />
+  </div>
   <div class="settings-item horizontal">
     <div class="settings-label">清除本扩展数据</div>
     <el-button

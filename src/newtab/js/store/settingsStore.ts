@@ -30,6 +30,7 @@ interface Settings {
   QuickStartRows: number
   QuickStartColumns: number
   QuickStartItemWidth: number
+  enableYiyan: boolean
   [key: string]: any
 }
 
@@ -51,7 +52,8 @@ const defaultSettings: Settings = {
   enableTopSites: true,
   QuickStartRows: 2,
   QuickStartColumns: 5,
-  QuickStartItemWidth: 110
+  QuickStartItemWidth: 110,
+  enableYiyan: true
 }
 
 export async function readSettings() {

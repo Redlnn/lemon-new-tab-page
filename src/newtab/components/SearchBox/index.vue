@@ -46,10 +46,13 @@ watch(isWindowFocused, (isFocused) => {
   focusStore.blur()
 })
 
-onClickOutside(searchBox, () => {
+onClickOutside(searchBox, (e) => {
   if (activeElement.value?.classList.contains('search-engine-menu')) {
     searchInput.value?.focus()
     searchEngineMenuRef.value?.hide()
+    return
+  }
+  if ((e.target as HTMLElement).localName !== 'main') {
     return
   }
   searchText.value = ''
@@ -112,7 +115,10 @@ async function doSearch() {
   searchText.value = ''
 }
 async function doSearchWithText(text: string) {
-  if (text.length <= 0) return
+  if (text.length <= 0) {
+    searchInput.value?.focus()
+    return
+  }
   if (settingsStore.recordSearchHistory) {
     const searchHistories: string[] = await LocalExtensionStorage.getItem<string[]>(
       'searchHistories',

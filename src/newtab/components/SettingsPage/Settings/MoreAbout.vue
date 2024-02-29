@@ -19,7 +19,17 @@ const year = useDateFormat(useNow(), 'YYYY')
     </div>
     <div class="ext-links">
       <a href="https://github.com/Redlnn/lemon-new-tab-page/" target="_blank">项目地址</a>
-      <!-- <a>商店地址</a> -->
+      <a
+        href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
+        target="_blank"
+        >Chrome 商店地址</a
+      >
+    </div>
+    <div class="ext-links">
+      <span>
+        一言API来自:
+        <a href="https://www.jinrishici.com" target="_blank"> 今日诗词 </a>
+      </span>
     </div>
     <div class="ext-license">
       <a>遵循 MIT 开源协议</a>
@@ -44,12 +54,13 @@ const year = useDateFormat(useNow(), 'YYYY')
     margin: 1em 0;
 
     a {
-      display: block;
+      display: table-row;
     }
   }
 
-  .ext-links {
+  .ext-links a {
     color: var(--el-color-primary);
+    text-decoration: none;
   }
 
   .ext-license {
