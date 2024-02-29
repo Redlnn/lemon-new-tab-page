@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ClearRound } from '@vicons/material'
+import { ElMessage } from 'element-plus'
 import type { TopSites } from 'webextension-polyfill'
 import _ from 'lodash'
-import { onBeforeMount, onMounted, ref, watch } from 'vue'
+import { ClearRound, VerticalAlignTopRound } from '@vicons/material'
+import { h, onBeforeMount, onMounted, ref, watch } from 'vue'
 
 import {
   readBookmark,
@@ -27,8 +28,17 @@ async function reloadQS() {
   bookmarkStore.items = (await readBookmark()).items
   const totalCellsNum = settingsStore.QuickStartColumns * settingsStore.QuickStartRows
   const bookmarkNum = Object.keys(bookmarkStore.items).length
+  let tmp: TopSites.MostVisitedURL[] = await getTopSites()
+  for (const idx in bookmarkStore.items) {
+    for (let i = 0; i < tmp.length; i++) {
+      if (bookmarkStore.items[idx].url === tmp[i].url) {
+        tmp.splice(i, 1)
+        continue
+      }
+    }
+  }
   if (bookmarkNum < totalCellsNum) {
-    topSites.value = (await getTopSites()).slice(0, totalCellsNum - bookmarkNum - 1)
+    topSites.value = tmp.slice(0, totalCellsNum - bookmarkNum - 1)
   }
 }
 
@@ -37,8 +47,42 @@ function getQSSize() {
 }
 
 async function removeBookmark(index: number) {
+  const { url, title } = bookmarkStore.items[index]
   bookmarkStore.items = _.omit(bookmarkStore.items, index)
   await saveBookmark(bookmarkStore)
+  ElMessage({
+    message: h('p', null, [
+      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除快捷方式'),
+      h(
+        'span',
+        {
+          style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
+          onClick: async () => {
+            bookmarkStore.items[index] = {
+              url,
+              title
+            }
+            await reloadQS()
+          }
+        },
+        '撤销'
+      )
+    ]),
+    type: 'success'
+  })
+}
+
+async function sticky(url: string, title: string) {
+  const bookmarkKeys = Object.keys(bookmarkStore.items)
+  let newIndex = 0
+  if (bookmarkKeys.length > 0) {
+    newIndex = parseInt(bookmarkKeys[bookmarkKeys.length - 1]) + 1
+  }
+  bookmarkStore.items[newIndex] = {
+    url,
+    title
+  }
+  await reloadQS()
 }
 
 onBeforeMount(async () => {
@@ -81,20 +125,22 @@ bookmarkStore.$subscribe(
         :qs-sites-size="getQSSize()"
       >
         <template #submenu>
-          <span
-            @click="
-              async () => {
-                removeBookmark(index)
-                await reloadQS()
-              }
-            "
-            style="display: flex; align-items: center"
-          >
-            <el-icon>
-              <clear-round />
-            </el-icon>
-            移除
-          </span>
+          <el-dropdown-item>
+            <span
+              @click="
+                async () => {
+                  removeBookmark(index)
+                  await reloadQS()
+                }
+              "
+              style="display: flex; align-items: center"
+            >
+              <el-icon>
+                <clear-round />
+              </el-icon>
+              移除
+            </span>
+          </el-dropdown-item>
         </template>
       </quick-start-item>
       <quick-start-item
@@ -105,20 +151,33 @@ bookmarkStore.$subscribe(
         :qs-sites-size="getQSSize()"
       >
         <template #submenu>
-          <span
-            @click="
-              async () => {
-                await blockSite(site.url, reloadQS)
-                await reloadQS()
-              }
-            "
-            style="display: flex; align-items: center"
-          >
-            <el-icon>
-              <clear-round />
-            </el-icon>
-            移除
-          </span>
+          <el-dropdown-item>
+            <span
+              @click="
+                async () => {
+                  await blockSite(site.url, reloadQS)
+                  await reloadQS()
+                }
+              "
+              style="display: flex; align-items: center"
+            >
+              <el-icon>
+                <clear-round />
+              </el-icon>
+              移除
+            </span>
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <span
+              @click="sticky(site.url, site.title || '')"
+              style="display: flex; align-items: center"
+            >
+              <el-icon>
+                <vertical-align-top-round />
+              </el-icon>
+              置顶
+            </span>
+          </el-dropdown-item>
         </template>
       </quick-start-item>
       <add-bookmark :quick-start-size="getQSSize" :reload="reloadQS" />
