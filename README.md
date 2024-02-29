@@ -4,10 +4,9 @@
 
 ## 安装使用
 
-由于本人没有 Visa 或 MasterCard，无法发布到 Chrome 和 Firefox 的插件市场，因此需要手动下载安装。
+目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb) 上架
 
-请到 [Release 页面](https://github.com/Redlnn/lemon-new-tab-page/releases)下载
-zip 压缩包解压后在浏览器插件页面中加载已解压的插件。
+> 你也可以 Clone 下来手动 Build 一份来使用
 
 ## 特性
 
@@ -96,6 +95,6 @@ pnpm build
 
 - [青柠起始页](https://limestart.cn/)
 
-  > 柠檬起始页的模仿对象，模仿了布局和动画，除了 CSS 动画的贝塞尔曲线参数，其他 CSS 和 JS 均未使用
+  > 柠檬起始页的模仿对象，模仿了布局和动画，参考了部分 CSS
 
 - [Light Tab Page 轻标签页](https://github.com/Devifish/light-tab-page)
