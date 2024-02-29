@@ -113,23 +113,25 @@ async function doSearch() {
 }
 async function doSearchWithText(text: string) {
   if (text.length <= 0) return
-  const searchHistories: string[] = await LocalExtensionStorage.getItem<string[]>(
-    'searchHistories',
-    []
-  )
-  // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
-  if (searchHistories.includes(text)) {
-    const index = searchHistories.indexOf(text)
-    searchHistories.splice(index, 1)
-    searchHistories.unshift(text)
-  } else {
-    searchHistories.unshift(text)
+  if (settingsStore.recordSearchHistory) {
+    const searchHistories: string[] = await LocalExtensionStorage.getItem<string[]>(
+      'searchHistories',
+      []
+    )
+    // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
+    if (searchHistories.includes(text)) {
+      const index = searchHistories.indexOf(text)
+      searchHistories.splice(index, 1)
+      searchHistories.unshift(text)
+    } else {
+      searchHistories.unshift(text)
+    }
+    // 如果历史搜索词大于15个，则删除最后几个只留下15个
+    if (searchHistories.length > 15) {
+      searchHistories.splice(15)
+    }
+    await LocalExtensionStorage.setItem('searchHistories', searchHistories)
   }
-  // 如果历史搜索词大于15个，则删除最后几个只留下15个
-  if (searchHistories.length > 15) {
-    searchHistories.splice(15)
-  }
-  await LocalExtensionStorage.setItem('searchHistories', searchHistories)
   // 跳转搜索结果
   window.open(
     searchEngines[settingsStore.selectedSearchEngine]['url'].replace('%s', text),

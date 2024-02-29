@@ -18,6 +18,7 @@ interface Settings {
   selectedSearchSuggestionAPI: string
   selectedSearchEngine: number
   searchInNewTab: boolean
+  recordSearchHistory: boolean
   bgType: BgType
   bgDarkCorners: boolean
   bgBlur: number
@@ -39,6 +40,7 @@ const defaultSettings: Settings = {
   selectedSearchSuggestionAPI: '百度',
   selectedSearchEngine: 0,
   searchInNewTab: false,
+  recordSearchHistory: true,
   bgType: BgType.Bing,
   bgDarkCorners: false,
   bgBlur: 3,

@@ -46,4 +46,8 @@ const settingsStore = useSettingsStore()
     <div class="settings-label">在新标签页打开结果</div>
     <el-switch v-model="settingsStore.searchInNewTab" size="large" />
   </div>
+  <div class="settings-item horizontal">
+    <div class="settings-label">记录搜索历史</div>
+    <el-switch v-model="settingsStore.recordSearchHistory" size="large" />
+  </div>
 </template>
