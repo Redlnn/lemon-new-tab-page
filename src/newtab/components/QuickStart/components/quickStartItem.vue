@@ -37,7 +37,7 @@ defineProps<{
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-            <slot name="submenu"></slot>
+          <slot name="submenu"></slot>
         </el-dropdown-menu>
       </template>
     </el-dropdown>

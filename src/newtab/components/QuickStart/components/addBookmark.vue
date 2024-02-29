@@ -63,13 +63,19 @@ async function add() {
       <div class="quickstart-title">添加快速访问</div>
     </div>
   </div>
-  <el-dialog v-model="showDialog" title="添加快速访问" width="400px" append-to-body destroy-on-close>
+  <el-dialog
+    v-model="showDialog"
+    title="添加快速访问"
+    width="400px"
+    append-to-body
+    destroy-on-close
+  >
     <el-form :inline="true" ref="modelForm" :model="data">
       <el-form-item label="标题" label-width="70px" prop="userNameCn">
-        <el-input v-model="data.title" style="width: 250px;" />
+        <el-input v-model="data.title" style="width: 250px" />
       </el-form-item>
       <el-form-item label="地址" label-width="70px" prop="userCode">
-        <el-input v-model="data.url" style="width: 250px;" />
+        <el-input v-model="data.url" style="width: 250px" />
       </el-form-item>
     </el-form>
     <template #footer>
