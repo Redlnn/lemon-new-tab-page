@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ElMessage } from 'element-plus'
-import type { TopSites } from 'webextension-polyfill'
 import _ from 'lodash'
 import { ClearRound, VerticalAlignTopRound } from '@vicons/material'
 import { h, onBeforeMount, onMounted, ref, watch } from 'vue'
@@ -21,29 +20,28 @@ const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 
-const topSites = ref<TopSites.MostVisitedURL[]>([])
+const topSites = ref<chrome.topSites.MostVisitedURL[]>([])
 const mounted = ref(false)
 
 async function reloadQS() {
   bookmarkStore.items = (await readBookmark()).items
   const totalCellsNum = settingsStore.QuickStartColumns * settingsStore.QuickStartRows
-  const bookmarkNum = Object.keys(bookmarkStore.items).length
-  let tmp: TopSites.MostVisitedURL[] = await getTopSites()
-  for (const idx in bookmarkStore.items) {
-    for (let i = 0; i < tmp.length; i++) {
-      if (bookmarkStore.items[idx].url === tmp[i].url) {
-        tmp.splice(i, 1)
+  let tmpTopSites: chrome.topSites.MostVisitedURL[] = await getTopSites()
+  for (let markIdx = 0; markIdx < bookmarkStore.items.length; markIdx++) {
+    for (let topIdx = 0; topIdx < tmpTopSites.length; topIdx++) {
+      if (bookmarkStore.items[markIdx].url === tmpTopSites[topIdx].url) {
+        tmpTopSites.splice(topIdx, 1)
         continue
       }
     }
   }
-  if (bookmarkNum < totalCellsNum) {
-    topSites.value = tmp.slice(0, totalCellsNum - bookmarkNum - 1)
+  if (bookmarkStore.items.length < totalCellsNum) {
+    topSites.value = tmpTopSites.slice(0, totalCellsNum - bookmarkStore.items.length - 1)
   }
 }
 
 function getQSSize() {
-  return Object.keys(bookmarkStore.items).length + topSites.value.length + 1
+  return topSites.value.length + 1
 }
 
 async function removeBookmark(index: number) {
@@ -58,10 +56,10 @@ async function removeBookmark(index: number) {
         {
           style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
           onClick: async () => {
-            bookmarkStore.items[index] = {
+            bookmarkStore.items.splice(index, 0, {
               url,
               title
-            }
+            })
             await reloadQS()
           }
         },
@@ -73,15 +71,11 @@ async function removeBookmark(index: number) {
 }
 
 async function sticky(url: string, title: string) {
-  const bookmarkKeys = Object.keys(bookmarkStore.items)
-  let newIndex = 0
-  if (bookmarkKeys.length > 0) {
-    newIndex = parseInt(bookmarkKeys[bookmarkKeys.length - 1]) + 1
-  }
-  bookmarkStore.items[newIndex] = {
+  bookmarkStore.items.push({
     url,
     title
-  }
+  })
+  await saveBookmark(bookmarkStore)
   await reloadQS()
 }
 
@@ -93,13 +87,6 @@ onMounted(() => {
 })
 watch(() => settingsStore.QuickStartRows, reloadQS)
 watch(() => settingsStore.QuickStartColumns, reloadQS)
-
-bookmarkStore.$subscribe(
-  async (mutation, state) => {
-    await saveBookmark(state)
-  },
-  { detached: true }
-)
 </script>
 
 <template>

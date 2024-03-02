@@ -1,11 +1,10 @@
 import { ElMessage } from 'element-plus'
-import browser from 'webextension-polyfill'
 import { h } from 'vue'
 
 import { LocalExtensionStorage } from '@/newtab/js/storage'
 
 async function getTopSites() {
-  const topSites = await browser.topSites.get()
+  const topSites = await chrome.topSites.get()
   const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
   if (blockedTopStites.length > 0) {
     topSites.forEach((site) => {
@@ -61,7 +60,7 @@ async function restoreBlockedSite(url: string) {
 }
 
 function getFaviconURL(url: string, size: string = '128') {
-  const _url = new URL(browser.runtime.getURL('/_favicon/'))
+  const _url = new URL(chrome.runtime.getURL('/_favicon/'))
   _url.searchParams.set('pageUrl', encodeURI(url)) // this encodes the URL as well
   _url.searchParams.set('size', size)
   return _url.toString()

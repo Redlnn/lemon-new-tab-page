@@ -25,7 +25,8 @@ export default defineConfig({
     vue(),
     webExtension({
       manifest: generateManifest,
-      watchFilePaths: ['package.json', 'manifest.json']
+      watchFilePaths: ['package.json', 'manifest.json'],
+      browser: 'chrome'
     }),
     Components({
       // allow auto load markdown components under `./src/components/`

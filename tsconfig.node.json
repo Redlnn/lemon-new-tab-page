@@ -12,6 +12,6 @@
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
-    "types": ["node", "element-plus/global"]
+    "types": ["node", "element-plus/global", "chrome"]
   }
 }
