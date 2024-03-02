@@ -3,7 +3,7 @@ import { AddRound } from '@vicons/material'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
-import { useBookmarkStore, useSettingsStore } from '@/newtab/js/store'
+import { saveBookmark, useBookmarkStore, useSettingsStore } from '@/newtab/js/store'
 
 import { getQuickStartItemWidth } from '../utils/index'
 
@@ -26,11 +26,6 @@ const data: {
 })
 
 async function add() {
-  const bookmarkKeys = Object.keys(bookmarkStore.items)
-  let newIndex = 0
-  if (bookmarkKeys.length > 0) {
-    newIndex = parseInt(bookmarkKeys[bookmarkKeys.length - 1]) + 1
-  }
   try {
     new URL(data.url)
   } catch (e) {
@@ -38,10 +33,11 @@ async function add() {
     data.url = ''
     return
   }
-  bookmarkStore.items[newIndex] = {
+  bookmarkStore.items.push({
     url: data.url,
     title: data.title
-  }
+  })
+  await saveBookmark(bookmarkStore)
   modelForm.value?.resetFields()
   await props.reload()
   showDialog.value = false
