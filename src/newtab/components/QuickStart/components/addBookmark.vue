@@ -46,15 +46,15 @@ async function add() {
 
 <template>
   <div
-    class="quickstart-item"
+    class="quickstart-item add-bookmark"
     :style="{
       flexBasis: getQuickStartItemWidth(quickStartSize(), settingsStore.quickStartColumns),
       width: `${settingsStore.quickStartItemWidth}px`
     }"
   >
     <div class="quickstart-item-link" style="cursor: pointer" @click="showDialog = true">
-      <div class="quickstart-icon" style="color: var(--el-text-color-regular)">
-        <AddRound />
+      <div class="quickstart-icon">
+        <add-round />
       </div>
       <div class="quickstart-title">添加快速访问</div>
     </div>
@@ -82,3 +82,14 @@ async function add() {
     </template>
   </el-dialog>
 </template>
+
+<style lang="scss" scoped>
+.add-bookmark .quickstart-icon {
+  color: var(--el-text-color-regular);
+}
+
+.add-bookmark:hover .quickstart-icon,
+.add-bookmark:hover .quickstart-title {
+    color: var(--el-color-primary);
+  }
+</style>
