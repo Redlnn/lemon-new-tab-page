@@ -296,7 +296,7 @@ watch(() => settingsStore.quickStartColumns, reloadQS)
       &:hover {
         background-color: var(--el-bg-color);
         color: var(--el-text-color-primary);
-        box-shadow: var(--el-box-shadow-lighter);
+        box-shadow: var(--el-box-shadow-light);
       }
     }
 
