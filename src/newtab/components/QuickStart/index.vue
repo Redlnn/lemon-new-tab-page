@@ -42,7 +42,7 @@ async function reloadQS() {
 }
 
 function getQSSize() {
-  return topSites.value.length + 1
+  return bookmarkStore.items.length + topSites.value.length + 1
 }
 
 async function removeBookmark(index: number) {
