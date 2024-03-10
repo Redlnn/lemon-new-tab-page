@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
 
 import { saveSettings, useSettingsStore } from '@/newtab/js/store'
 
@@ -26,9 +27,11 @@ function toggleShow() {
 defineExpose({ show, hide, toggleShow })
 
 const settingsStore = useSettingsStore()
+const saveSettingsDebounced =  useDebounceFn(saveSettings, 100)
+
 settingsStore.$subscribe(
   async (mutation, state) => {
-    await saveSettings(state)
+    await saveSettingsDebounced(state)
   },
   { detached: true }
 )
