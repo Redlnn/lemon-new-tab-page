@@ -4,7 +4,9 @@
 
 ## 安装使用
 
-目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb) 上架
+目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
+和 [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
+上架
 
 > 你也可以 Clone 下来手动 Build 一份来使用
 
@@ -45,16 +47,16 @@
 
 > 根据个人需求开发所以很多功能都没有，但欢迎 PR（提 issue 不一定会实现）
 
-|    主要功能    | 柠檬起始页 | 青柠起始页 |
-| :------------: | :--------: | :--------: |
-|    最常访问    |     ✅     |     ❌     |
-|   自定义壁纸   |     ✅     |     ✅     |
-|    深色模式    |     ✅     |     ✅     |
-|    视频壁纸    |     ❌     |     ✅     |
-|      一言      |     ❌     |     ✅     |
-|      便笺      |     ❌     |     ✅     |
-| 自定义快速访问 |     ✅     |     ✅     |
-|    设置同步    |     ❌     |     ✅     |
+|    主要功能    |  柠檬起始页  | 青柠起始页 |
+| :------------: | :----------: | :--------: |
+|    最常访问    |      ✅      |     ❌     |
+|   自定义壁纸   |      ✅      |     ✅     |
+|    深色模式    |      ✅      |     ✅     |
+|    视频壁纸    |      ❌      |     ✅     |
+|      一言      |      ✅      |     ✅     |
+|      便笺      |  不计划支持  |     ✅     |
+| 自定义快速访问 |      ✅      |     ✅     |
+|    设置同步    | 暂不计划支持 |     ✅     |
 
 ## 浏览器兼容性
 

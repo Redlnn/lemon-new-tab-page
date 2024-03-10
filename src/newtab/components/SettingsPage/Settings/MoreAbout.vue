@@ -24,6 +24,11 @@ const year = useDateFormat(useNow(), 'YYYY')
         target="_blank"
         >Chrome 商店地址</a
       >
+      <a
+        href="https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh"
+        target="_blank"
+        >Micorsoft Edge 商店地址</a
+      >
     </div>
     <div class="ext-links">
       <span>
