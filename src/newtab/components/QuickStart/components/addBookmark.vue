@@ -48,8 +48,8 @@ async function add() {
   <div
     class="quickstart-item"
     :style="{
-      flexBasis: getQuickStartItemWidth(quickStartSize(), settingsStore.QuickStartColumns),
-      width: `${settingsStore.QuickStartItemWidth}px`
+      flexBasis: getQuickStartItemWidth(quickStartSize(), settingsStore.quickStartColumns),
+      width: `${settingsStore.quickStartItemWidth}px`
     }"
   >
     <div class="quickstart-item-link" style="cursor: pointer" @click="showDialog = true">

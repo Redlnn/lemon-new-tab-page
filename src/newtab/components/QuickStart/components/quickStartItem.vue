@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MoreVertRound } from '@vicons/material'
+import { Pin16Regular } from '@vicons/fluent'
 
 import { useSettingsStore } from '@/newtab/js/store'
 
@@ -12,6 +13,7 @@ defineProps<{
   url: string
   title: string
   qsSitesSize: number
+  pined?: boolean
 }>()
 </script>
 
@@ -19,12 +21,17 @@ defineProps<{
   <div
     class="quickstart-item"
     :style="{
-      flexBasis: getQuickStartItemWidth(qsSitesSize, settingsStore.QuickStartColumns),
-      width: `${settingsStore.QuickStartItemWidth}px`
+      flexBasis: getQuickStartItemWidth(qsSitesSize, settingsStore.quickStartColumns),
+      width: `${settingsStore.quickStartItemWidth}px`
     }"
   >
     <a class="quickstart-item-link" :href="url">
       <div class="quickstart-icon">
+        <div class="pin-icon" v-if="pined && settingsStore.showPinnedIcon">
+          <el-icon size="15">
+            <pin16-regular />
+          </el-icon>
+        </div>
         <span :style="{ backgroundImage: `url(${getFaviconURL(url)})` }"></span>
       </div>
       <div class="quickstart-title">{{ title }}</div>

@@ -27,9 +27,10 @@ interface Settings {
   bgMaskPpacity: number
   enableQuickStart: boolean
   enableTopSites: boolean
-  QuickStartRows: number
-  QuickStartColumns: number
-  QuickStartItemWidth: number
+  quickStartRows: number
+  quickStartColumns: number
+  quickStartItemWidth: number
+  showPinnedIcon: boolean
   enableYiyan: boolean
   [key: string]: any
 }
@@ -50,9 +51,10 @@ const defaultSettings: Settings = {
   bgMaskPpacity: 0,
   enableQuickStart: true,
   enableTopSites: true,
-  QuickStartRows: 2,
-  QuickStartColumns: 5,
-  QuickStartItemWidth: 110,
+  quickStartRows: 2,
+  quickStartColumns: 5,
+  quickStartItemWidth: 110,
+  showPinnedIcon: true,
   enableYiyan: true
 }
 

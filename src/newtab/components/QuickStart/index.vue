@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import { ClearRound } from '@vicons/material'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
-import { ClearRound, VerticalAlignTopRound } from '@vicons/material'
+import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { h, onBeforeMount, onMounted, ref, watch } from 'vue'
 
 import {
@@ -25,7 +26,7 @@ const mounted = ref(false)
 
 async function reloadQS() {
   bookmarkStore.items = (await readBookmark()).items
-  const totalCellsNum = settingsStore.QuickStartColumns * settingsStore.QuickStartRows
+  const totalCellsNum = settingsStore.quickStartColumns * settingsStore.quickStartRows
   let tmpTopSites: chrome.topSites.MostVisitedURL[] = await getTopSites()
   for (let markIdx = 0; markIdx < bookmarkStore.items.length; markIdx++) {
     for (let topIdx = 0; topIdx < tmpTopSites.length; topIdx++) {
@@ -85,8 +86,8 @@ onBeforeMount(async () => {
 onMounted(() => {
   mounted.value = true
 })
-watch(() => settingsStore.QuickStartRows, reloadQS)
-watch(() => settingsStore.QuickStartColumns, reloadQS)
+watch(() => settingsStore.quickStartRows, reloadQS)
+watch(() => settingsStore.quickStartColumns, reloadQS)
 </script>
 
 <template>
@@ -100,8 +101,8 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
       class="quickstart-contaniner"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
-        maxWidth: `${settingsStore.QuickStartColumns * settingsStore.QuickStartItemWidth + 20}px`,
-        maxHeight: `${settingsStore.QuickStartRows * 112 + 20}px`
+        maxWidth: `${settingsStore.quickStartColumns * settingsStore.quickStartItemWidth + 20}px`,
+        maxHeight: `${settingsStore.quickStartRows * 112 + 20}px`
       }"
     >
       <quick-start-item
@@ -110,6 +111,7 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
         :url="site.url"
         :title="site.title"
         :qs-sites-size="getQSSize()"
+        pined
       >
         <template #submenu>
           <el-dropdown-item>
@@ -123,9 +125,9 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
               style="display: flex; align-items: center"
             >
               <el-icon>
-                <clear-round />
+                <pin-off16-regular />
               </el-icon>
-              移除
+              取消置顶
             </span>
           </el-dropdown-item>
         </template>
@@ -160,7 +162,7 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
               style="display: flex; align-items: center"
             >
               <el-icon>
-                <vertical-align-top-round />
+                <pin16-regular />
               </el-icon>
               置顶
             </span>
@@ -226,6 +228,7 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
     }
 
     .quickstart-icon {
+      position: relative;
       width: 50px;
       height: 50px;
       margin: 10px 0;
@@ -242,6 +245,21 @@ watch(() => settingsStore.QuickStartColumns, reloadQS)
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+      }
+
+      .pin-icon {
+        position: absolute;
+        bottom: -3px;
+        right: -3px;
+        height: 20px;
+        width: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--el-fill-color-light);
+        border-radius: 50%;
+        color: var(--el-color-primary);
+        box-shadow: var(--el-box-shadow-light);
       }
     }
 
