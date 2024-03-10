@@ -67,7 +67,14 @@ const predefineColors = ref([
       <el-color-picker
         v-model="settingsStore.primaryColor"
         :predefine="predefineColors"
-        @change="changeTheme(settingsStore.primaryColor)"
+        @change="
+          () => {
+            if (settingsStore.primaryColor === null) {
+              settingsStore.primaryColor = '#409eff'
+            }
+            changeTheme(settingsStore.primaryColor)
+          }
+        "
       />
     </div>
   </div>
