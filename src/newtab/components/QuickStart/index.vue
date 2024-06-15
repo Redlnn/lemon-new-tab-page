@@ -269,7 +269,6 @@ watch(() => settingsStore.quickStartColumns, reloadQS)
       -webkit-line-clamp: 1;
       overflow: hidden;
       font-size: 13px;
-      height: 1em;
       margin-bottom: 8px;
       text-align: center;
       overflow-wrap: anywhere;
