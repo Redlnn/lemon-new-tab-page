@@ -1,8 +1,10 @@
 <script lang="ts" setup>
-import { ElConfigProvider } from 'element-plus'
+import { version } from '@/../package.json'
+
 import { SettingsOutlined } from '@vicons/material'
 import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
+import { ElConfigProvider, ElNotification } from 'element-plus'
 import { onBeforeMount, ref, watch } from 'vue'
 
 import Background from './components/Background.vue'
@@ -13,6 +15,7 @@ import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
 
 import changeTheme from './js/use-element-plus-theme'
+import changelog from './changelog'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/utils/img'
 import { BgType, readSettings, useSettingsStore } from './js/store'
@@ -47,6 +50,18 @@ onBeforeMount(async () => {
 
       bgURL.value = settingsStore.bgUrl ? `url(${settingsStore.bgUrl})` : ''
       break
+  }
+
+  if (settingsStore.version !== version) {
+    ElNotification({
+      title: `柠檬起始页已更新至 v${version}`,
+      message: changelog,
+      type: 'success',
+      duration: 5000,
+      onClose: () => {
+        settingsStore.version = version
+      }
+    })
   }
 })
 

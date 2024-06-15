@@ -1,4 +1,5 @@
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+@use 'element-plus/theme-chalk/src/notification.scss' as *;
 
 * {
   box-sizing: border-box;
@@ -21,4 +22,15 @@ body,
   -ms-user-select: none;
   -khtml-user-select: none;
   user-select: none;
+}
+
+.update-content {
+  ul {
+    padding-inline-start: 20px;
+  }
+}
+
+.el-notification {
+  background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 25%);
+  backdrop-filter: blur(10px);
 }

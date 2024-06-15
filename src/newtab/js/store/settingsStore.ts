@@ -32,6 +32,7 @@ interface Settings {
   quickStartItemWidth: number
   showPinnedIcon: boolean
   enableYiyan: boolean
+  version: string
   [key: string]: any
 }
 
@@ -55,7 +56,8 @@ const defaultSettings: Settings = {
   quickStartColumns: 5,
   quickStartItemWidth: 110,
   showPinnedIcon: true,
-  enableYiyan: true
+  enableYiyan: true,
+  version: '0'
 }
 
 export async function readSettings() {
