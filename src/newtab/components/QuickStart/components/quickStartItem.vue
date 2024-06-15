@@ -34,7 +34,7 @@ defineProps<{
         </div>
         <span :style="{ backgroundImage: `url(${getFaviconURL(url)})` }"></span>
       </div>
-      <div class="quickstart-title">{{ title }}</div>
+      <div class="quickstart-title" v-if="settingsStore.showQuickStartTitle">{{ title }}</div>
     </a>
     <el-dropdown class="quickstart-menu" trigger="click" placement="bottom-end" size="small">
       <span class="quickstart-menu-icon">

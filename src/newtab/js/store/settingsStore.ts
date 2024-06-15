@@ -30,6 +30,7 @@ interface Settings {
   quickStartRows: number
   quickStartColumns: number
   quickStartItemWidth: number
+  showQuickStartTitle: boolean
   showPinnedIcon: boolean
   enableYiyan: boolean
   version: string
@@ -55,6 +56,7 @@ const defaultSettings: Settings = {
   quickStartRows: 2,
   quickStartColumns: 5,
   quickStartItemWidth: 110,
+  showQuickStartTitle: true,
   showPinnedIcon: true,
   enableYiyan: true,
   version: '0'

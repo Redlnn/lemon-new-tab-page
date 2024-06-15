@@ -26,6 +26,10 @@ async function restoreDefaultTopSites() {
     <div class="settings-label">显示置顶角标</div>
     <el-switch v-model="settingsStore.showPinnedIcon" size="large" />
   </div>
+  <div class="settings-item horizontal">
+    <div class="settings-label">显示链接标题</div>
+    <el-switch v-model="settingsStore.showQuickStartTitle" size="large" />
+  </div>
   <div class="settings-item">
     <div class="settings-label">最大行数</div>
     <el-slider
@@ -59,7 +63,7 @@ async function restoreDefaultTopSites() {
     <div class="settings-label">链接宽度</div>
     <el-slider
       v-model="settingsStore.quickStartItemWidth"
-      :min="100"
+      :min="80"
       :max="200"
       show-input
       :show-input-controls="false"

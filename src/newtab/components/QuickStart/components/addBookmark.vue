@@ -56,7 +56,7 @@ async function add() {
       <div class="quickstart-icon">
         <add-round />
       </div>
-      <div class="quickstart-title">添加快速访问</div>
+      <div class="quickstart-title" v-if="settingsStore.showQuickStartTitle">添加快速访问</div>
     </div>
   </div>
   <el-dialog
