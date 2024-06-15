@@ -32,9 +32,9 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   <div class="settings-item">
     <div class="settings-label">背景类型</div>
     <el-radio-group v-model="settingsStore.bgType">
-      <el-radio :label="BgType.None">无</el-radio>
-      <el-radio :label="BgType.Local">本地图片</el-radio>
-      <el-radio :label="BgType.Bing">Bing每日一图</el-radio>
+      <el-radio :value="BgType.None">无</el-radio>
+      <el-radio :value="BgType.Local">本地图片</el-radio>
+      <el-radio :value="BgType.Bing">Bing每日一图</el-radio>
     </el-radio-group>
   </div>
   <el-upload
