@@ -125,6 +125,7 @@ export const useSettingsStore = defineStore('opiton', {
         this.bgUrl = url
         await saveSettings(this)
       } else {
+        URL.revokeObjectURL(this.bgUrl)
         this.bgId = ''
         this.bgUrl = ''
         await useWallpaperStore.removeItem(id)
