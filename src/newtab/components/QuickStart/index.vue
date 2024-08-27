@@ -61,6 +61,7 @@ async function removeBookmark(index: number) {
               url,
               title
             })
+            await saveBookmark(bookmarkStore)
             await reloadQS()
           }
         },
