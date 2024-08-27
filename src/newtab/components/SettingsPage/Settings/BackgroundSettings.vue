@@ -85,10 +85,11 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   transition: var(--el-transition-duration-fast);
 
   &:hover {
+    border-color: var(--el-color-primary);
+
     .el-icon.bg-uploader-icon {
       color: var(--el-color-primary);
     }
-    border-color: var(--el-color-primary);
   }
 }
 

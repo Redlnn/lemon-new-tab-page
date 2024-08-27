@@ -51,7 +51,7 @@ async function removeBookmark(index: number) {
   await saveBookmark(bookmarkStore)
   ElMessage({
     message: h('p', null, [
-      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除快捷方式'),
+      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除该置顶链接'),
       h(
         'span',
         {
