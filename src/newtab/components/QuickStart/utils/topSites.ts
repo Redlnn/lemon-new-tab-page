@@ -6,18 +6,17 @@ import { LocalExtensionStorage } from '@/newtab/js/storage'
 async function getTopSites() {
   const topSites = await chrome.topSites.get()
   const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
-  if (blockedTopStites.length > 0) {
-    topSites.forEach((site) => {
-      if (blockedTopStites.includes(site.url)) {
-        topSites.splice(topSites.indexOf(site), 1)
-      }
-    })
+  if (blockedTopStites.length <= 0) {
+    return topSites
   }
-  return topSites
+  return topSites.filter(site => !blockedTopStites.includes(site.url))
 }
 
 async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
+  if (blockedTopStites.includes(url)) {
+    return
+  }
   blockedTopStites.push(url)
   await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
   ElMessage({
