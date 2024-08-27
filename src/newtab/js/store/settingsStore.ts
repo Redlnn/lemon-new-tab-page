@@ -11,6 +11,12 @@ export enum BgType {
   Bing
 }
 
+interface BingWallpaper {
+  bgId: string
+  url: string
+  updateDate: string
+}
+
 interface Settings {
   primaryColor: string
   isMeridiem: boolean
@@ -33,6 +39,7 @@ interface Settings {
   showQuickStartTitle: boolean
   showPinnedIcon: boolean
   enableYiyan: boolean
+  bingWallpaper: BingWallpaper
   version: string
   [key: string]: any
 }
@@ -59,6 +66,11 @@ const defaultSettings: Settings = {
   showQuickStartTitle: true,
   showPinnedIcon: true,
   enableYiyan: true,
+  bingWallpaper: {
+    bgId: '',
+    url: '',
+    updateDate: ''
+  },
   version: '0'
 }
 

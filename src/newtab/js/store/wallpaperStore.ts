@@ -10,3 +10,8 @@ export const useWallpaperStore = localForage.createInstance({
   ...COMMON_CONFIG,
   storeName: 'wallpaper'
 })
+
+export const useBingWallpaperStore = localForage.createInstance({
+  ...COMMON_CONFIG,
+  storeName: 'wallpaperBing'
+})

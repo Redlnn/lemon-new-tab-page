@@ -1,7 +1,15 @@
 import { useFocusStore } from './foucsStore'
-import { useWallpaperStore } from './wallpaperStore'
 import { BgType, readSettings, saveSettings, useSettingsStore } from './settingsStore'
 import { readBookmark, saveBookmark, useBookmarkStore } from './bookmarkStore'
+import { useBingWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
-export { useFocusStore, useWallpaperStore, useSettingsStore, saveSettings, readSettings, BgType }
+export {
+  useFocusStore,
+  useBingWallpaperStore,
+  useWallpaperStore,
+  useSettingsStore,
+  saveSettings,
+  readSettings,
+  BgType
+}
 export { readBookmark, saveBookmark, useBookmarkStore }
