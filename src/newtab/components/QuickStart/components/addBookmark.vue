@@ -56,7 +56,13 @@ async function add() {
       <div class="quickstart-icon">
         <add-round />
       </div>
-      <div class="quickstart-title" v-if="settingsStore.showQuickStartTitle">添加快速访问</div>
+      <div
+        class="quickstart-title"
+        style="font-size: 0.9em"
+        v-if="settingsStore.showQuickStartTitle"
+      >
+        添加快速访问
+      </div>
     </div>
   </div>
   <el-dialog
@@ -86,10 +92,14 @@ async function add() {
 <style lang="scss" scoped>
 .add-bookmark .quickstart-icon {
   color: var(--el-text-color-regular);
+
+  & svg{
+    width: 80%;
+  }
 }
 
 .add-bookmark:hover .quickstart-icon,
 .add-bookmark:hover .quickstart-title {
-    color: var(--el-color-primary);
-  }
+  color: var(--el-color-primary);
+}
 </style>
