@@ -1,17 +1,12 @@
 {
-  "extends": "@tsconfig/node18/tsconfig.json",
-  "include": [
-    "vite.config.*",
-    "vitest.config.*",
-    "cypress.config.*",
-    "nightwatch.conf.*",
-    "playwright.config.*"
-  ],
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "include": ["wxt.config.*"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
+    "resolveJsonModule": true,
     "types": ["node", "element-plus/global", "chrome"]
   }
 }

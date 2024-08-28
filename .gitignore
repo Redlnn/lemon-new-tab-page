@@ -12,17 +12,15 @@ lerna-debug.log*
 
 node_modules
 .DS_Store
-dist
-dist-ssr
-coverage
-*.local
-
-/cypress/videos/
-/cypress/screenshots/
+.output
+stats.html
+stats-*.json
+.wxt
+web-ext.config.ts
 
 # Editor directories and files
-#.vscode/*
-#!.vscode/extensions.json
+.vscode/*
+!.vscode/extensions.json
 .idea
 *.suo
 *.ntvs*

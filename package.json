@@ -1,12 +1,18 @@
 {
   "name": "lemon-tab-page",
+  "description": "manifest.json description",
+  "private": true,
   "version": "1.4.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
-    "build-only": "vite build",
-    "type-check": "vue-tsc --build --force",
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier . --write -u"
   },
@@ -15,10 +21,10 @@
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.10.4",
-    "@tsconfig/node18": "^18.2.4",
+    "@tsconfig/node20": "^20.1.4",
     "@types/chrome": "^0.0.270",
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.5.0",
+    "@types/node": "^22.5.1",
     "@types/uuid": "^10.0.0",
     "@vicons/antd": "^0.12.0",
     "@vicons/fa": "^0.12.0",
@@ -29,6 +35,7 @@
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
     "@vueuse/core": "^11.0.3",
+    "@wxt-dev/module-vue": "^1.0.1",
     "axios": "^1.7.5",
     "dayjs": "^1.11.13",
     "element-plus": "^2.8.1",
@@ -37,17 +44,15 @@
     "jinrishici": "^1.0.6",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
-    "npm-run-all2": "^6.2.2",
     "pinia": "^2.2.2",
     "prettier": "^3.3.3",
     "sass": "^1.77.8",
-    "typescript": "~5.3.3",
+    "typescript": "^5.5.4",
     "unplugin-vue-components": "^0.27.4",
     "uuid": "^10.0.0",
     "vite": "^5.4.2",
-    "vite-plugin-web-extension": "^4.1.6",
     "vite-svg-loader": "^5.1.0",
-    "vue-tsc": "^2.0.29"
-  },
-  "packageManager": "pnpm@9.9.0"
+    "vue-tsc": "^2.0.29",
+    "wxt": "^0.19.7"
+  }
 }
