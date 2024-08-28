@@ -28,14 +28,12 @@ async function reloadQS() {
   bookmarkStore.items = (await readBookmark()).items
   const totalCellsNum = settingsStore.quickStartColumns * settingsStore.quickStartRows
   let tmpTopSites: chrome.topSites.MostVisitedURL[] = await getTopSites()
-  for (let markIdx = 0; markIdx < bookmarkStore.items.length; markIdx++) {
-    for (let topIdx = 0; topIdx < tmpTopSites.length; topIdx++) {
-      if (bookmarkStore.items[markIdx].url === tmpTopSites[topIdx].url) {
-        tmpTopSites.splice(topIdx, 1)
-        continue
-      }
-    }
+  if (tmpTopSites === undefined) {
+    topSites.value = bookmarkStore.items
+    return
   }
+  const tmpBookmark = bookmarkStore.items.map((item) => item.url)
+  tmpTopSites = tmpTopSites.filter((site) => !tmpBookmark.includes(site.url))
   if (bookmarkStore.items.length < totalCellsNum) {
     topSites.value = tmpTopSites.slice(0, totalCellsNum - bookmarkStore.items.length - 1)
   }

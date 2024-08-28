@@ -55,10 +55,10 @@ async function showSuggestions() {
 function clearActiveSuggest() {
   const suggestions = searchSuggestionArea.value?.children
   if (!suggestions) return
-  for (let i = 0; i < suggestions.length; i++) {
-    suggestions[i].classList.remove('active')
-    currentActiveSuggest.value = null
+  for (const suggestion of suggestions) {
+    suggestion.classList.remove('active')
   }
+  currentActiveSuggest.value = null
 }
 function hideSearchHistories() {
   if (!clearSearchHistory.value) return
