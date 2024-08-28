@@ -8,6 +8,9 @@ class LocalExtensionStorage {
   static async getItem<T>(key: string, _default: T): Promise<T>
   static async getItem<T>(key: string, _default?: T) {
     const result = await chrome.storage.local.get(key)
+    if (result === undefined) {
+      return _default
+    }
     return result[key] || _default
   }
   static async removeItem(key: string) {

@@ -1,7 +1,5 @@
 import { defineConfig } from 'wxt'
 
-// import vue from '@vitejs/plugin-vue'
-
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
@@ -53,6 +51,6 @@ export default defineConfig({
           additionalData: `@use "@/styles/element/index.scss" as *;`
         }
       }
-    }
+    },
   })
 })

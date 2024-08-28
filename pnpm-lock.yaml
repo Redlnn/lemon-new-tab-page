@@ -8,28 +8,6 @@ importers:
 
   .:
     dependencies:
-      vue:
-        specifier: ^3.4.38
-        version: 3.4.38(typescript@5.5.4)
-    devDependencies:
-      '@rushstack/eslint-patch':
-        specifier: ^1.10.4
-        version: 1.10.4
-      '@tsconfig/node20':
-        specifier: ^20.1.4
-        version: 20.1.4
-      '@types/chrome':
-        specifier: ^0.0.270
-        version: 0.0.270
-      '@types/lodash':
-        specifier: ^4.17.7
-        version: 4.17.7
-      '@types/node':
-        specifier: ^22.5.1
-        version: 22.5.1
-      '@types/uuid':
-        specifier: ^10.0.0
-        version: 10.0.0
       '@vicons/antd':
         specifier: ^0.12.0
         version: 0.12.0
@@ -42,6 +20,52 @@ importers:
       '@vicons/material':
         specifier: ^0.12.0
         version: 0.12.0
+      axios:
+        specifier: ^1.7.5
+        version: 1.7.5
+      dayjs:
+        specifier: ^1.11.13
+        version: 1.11.13
+      element-plus:
+        specifier: ^2.8.1
+        version: 2.8.1(vue@3.4.38(typescript@5.5.4))
+      jinrishici:
+        specifier: ^1.0.6
+        version: 1.0.6
+      localforage:
+        specifier: ^1.10.0
+        version: 1.10.0
+      lodash:
+        specifier: ^4.17.21
+        version: 4.17.21
+      pinia:
+        specifier: ^2.2.2
+        version: 2.2.2(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))
+      uuid:
+        specifier: ^10.0.0
+        version: 10.0.0
+      vue:
+        specifier: ^3.4.38
+        version: 3.4.38(typescript@5.5.4)
+    devDependencies:
+      '@rushstack/eslint-patch':
+        specifier: ^1.10.4
+        version: 1.10.4
+      '@tsconfig/node22':
+        specifier: ^22.0.0
+        version: 22.0.0
+      '@types/chrome':
+        specifier: ^0.0.270
+        version: 0.0.270
+      '@types/lodash':
+        specifier: ^4.17.7
+        version: 4.17.7
+      '@types/node':
+        specifier: ^22.5.1
+        version: 22.5.1
+      '@types/uuid':
+        specifier: ^10.0.0
+        version: 10.0.0
       '@vitejs/plugin-vue':
         specifier: ^5.1.2
         version: 5.1.2(vite@5.4.2(@types/node@22.5.1)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))
@@ -60,33 +84,12 @@ importers:
       '@wxt-dev/module-vue':
         specifier: ^1.0.1
         version: 1.0.1(vite@5.4.2(@types/node@22.5.1)(sass@1.77.8))(vue@3.4.38(typescript@5.5.4))(wxt@0.19.7(@types/chrome@0.0.270)(@types/node@22.5.1)(rollup@4.21.1)(sass@1.77.8))
-      axios:
-        specifier: ^1.7.5
-        version: 1.7.5
-      dayjs:
-        specifier: ^1.11.13
-        version: 1.11.13
-      element-plus:
-        specifier: ^2.8.1
-        version: 2.8.1(vue@3.4.38(typescript@5.5.4))
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-plugin-vue:
         specifier: ^9.27.0
         version: 9.27.0(eslint@8.57.0)
-      jinrishici:
-        specifier: ^1.0.6
-        version: 1.0.6
-      localforage:
-        specifier: ^1.10.0
-        version: 1.10.0
-      lodash:
-        specifier: ^4.17.21
-        version: 4.17.21
-      pinia:
-        specifier: ^2.2.2
-        version: 2.2.2(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))
       prettier:
         specifier: ^3.3.3
         version: 3.3.3
@@ -99,9 +102,6 @@ importers:
       unplugin-vue-components:
         specifier: ^0.27.4
         version: 0.27.4(@babel/parser@7.25.4)(rollup@4.21.1)(vue@3.4.38(typescript@5.5.4))
-      uuid:
-        specifier: ^10.0.0
-        version: 10.0.0
       vite:
         specifier: ^5.4.2
         version: 5.4.2(@types/node@22.5.1)(sass@1.77.8)
@@ -657,8 +657,8 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
 
-  '@tsconfig/node20@20.1.4':
-    resolution: {integrity: sha512-sqgsT69YFeLWf5NtJ4Xq/xAF8p4ZQHlmGW74Nu2tD4+g5fAsposc4ZfaaPixVu4y01BEiDCWLRDCvDM5JOsRxg==}
+  '@tsconfig/node22@22.0.0':
+    resolution: {integrity: sha512-twLQ77zevtxobBOD4ToAtVmuYrpeYUh3qh+TEp+08IWhpsrIflVHqQ1F1CiPxQGL7doCdBIOOCF+1Tm833faNg==}
 
   '@types/chrome@0.0.270':
     resolution: {integrity: sha512-ADvkowV7YnJfycZZxL2brluZ6STGW+9oKG37B422UePf2PCXuFA/XdERI0T18wtuWPx0tmFeZqq6MOXVk1IC+Q==}
@@ -3400,7 +3400,7 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@tsconfig/node20@20.1.4': {}
+  '@tsconfig/node22@22.0.0': {}
 
   '@types/chrome@0.0.270':
     dependencies:

@@ -20,12 +20,12 @@ export const searchEngines: SearchEngine[] = [
   {
     name: '必应',
     url: 'https://www.bing.com/search?q=%s',
-    icon: Baidu
+    icon: Bing
   },
   {
     name: '百度',
     url: 'https://www.baidu.com/#ie=utf-8&wd=%s',
-    icon: Bing
+    icon: Baidu
   },
   {
     name: '谷歌',

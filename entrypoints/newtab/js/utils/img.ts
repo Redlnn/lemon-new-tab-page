@@ -8,7 +8,9 @@ export function isImageFile(file: Blob) {
 }
 
 export async function verifyImageUrl(url: string) {
-  if (url.length === 0) return false
+  if (url.length === 0) {
+    return false
+  }
 
   const tempImg = new Image()
   tempImg.src = url

@@ -10,7 +10,6 @@ import autoMode from '@/entrypoints/newtab/assets/color/auto-mode.svg?url'
 import darkMode from '@/entrypoints/newtab/assets/color/dark-mode.svg?url'
 import lightMode from '@/entrypoints/newtab/assets/color/light-mode.svg?url'
 import selected from '@/entrypoints/newtab/assets/color/selected.svg?component'
-// import selected from '@/entrypoints/newtab/components/icon/selected'
 
 const settingsStore = useSettingsStore()
 const colorMode = useColorMode()

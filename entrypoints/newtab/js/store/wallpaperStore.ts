@@ -1,9 +1,7 @@
 import localForage from 'localforage'
 
-const name = '柠檬起始页'
-
 const COMMON_CONFIG: LocalForageOptions = {
-  name: name,
+  name: '柠檬起始页',
   driver: localForage.INDEXEDDB
 }
 

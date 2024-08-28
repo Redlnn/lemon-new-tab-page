@@ -3,11 +3,11 @@ import { ref } from 'vue'
 
 export const useFocusStore = defineStore('focus', () => {
   const isFocused = ref(false)
-  function focus() {
+  const focus = () => {
     isFocused.value = true
   }
 
-  function blur() {
+  const blur = () => {
     isFocused.value = false
   }
 
