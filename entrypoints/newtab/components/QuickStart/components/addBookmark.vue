@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { AddRound } from '@vicons/material'
+import _ from 'lodash'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
@@ -38,7 +39,7 @@ async function add() {
     url: data.url,
     title: data.title
   })
-  await saveBookmark(bookmarkStore)
+  await saveBookmark(_.cloneDeep(bookmarkStore))
   modelForm.value?.resetFields()
   await props.reload()
   showDialog.value = false

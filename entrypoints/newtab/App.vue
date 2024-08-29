@@ -4,7 +4,7 @@ import { version } from '@/package.json'
 import { SettingsOutlined } from '@vicons/material'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import { ElConfigProvider, ElNotification } from 'element-plus'
-import { onBeforeMount, ref, watch } from 'vue'
+import { onBeforeMount, ref, toRaw, watch } from 'vue'
 import { useColorMode, useDebounceFn } from '@vueuse/core'
 
 import Background from './components/Background.vue'
@@ -93,7 +93,7 @@ watch(
 const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
 settingsStore.$subscribe(async (mutation, state) => {
-  await saveSettingsDebounced(state)
+  await saveSettingsDebounced(toRaw(state))
 })
 </script>
 

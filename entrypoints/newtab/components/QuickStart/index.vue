@@ -51,7 +51,7 @@ async function removeBookmark(index: number) {
   } else {
     bookmarkStore.items = []
   }
-  await saveBookmark(bookmarkStore)
+  await saveBookmark(_.cloneDeep(bookmarkStore))
   ElMessage({
     message: h('p', null, [
       h('span', { style: { color: 'var(--el-color-success)' } }, '已移除该置顶链接'),
@@ -64,7 +64,7 @@ async function removeBookmark(index: number) {
               url,
               title
             })
-            await saveBookmark(bookmarkStore)
+            await saveBookmark(_.cloneDeep(bookmarkStore))
             await reloadQS()
           }
         },
@@ -80,7 +80,7 @@ async function sticky(url: string, title: string) {
     url,
     title
   })
-  await saveBookmark(bookmarkStore)
+  await saveBookmark(_.cloneDeep(bookmarkStore))
   await reloadQS()
 }
 
