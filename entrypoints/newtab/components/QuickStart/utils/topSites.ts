@@ -1,11 +1,11 @@
 import { ElMessage } from 'element-plus'
 import { h } from 'vue'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
+import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
 
 async function getTopSites() {
   const topSites = await chrome.topSites.get()
-  const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
+  const blockedTopStites = await blockedTopStitesStorage.getValue()
   if (blockedTopStites.length <= 0) {
     return topSites
   }
@@ -13,12 +13,12 @@ async function getTopSites() {
 }
 
 async function blockSite(url: string, reloadFunc: () => Promise<void>) {
-  const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
+  const blockedTopStites = await blockedTopStitesStorage.getValue()
   if (blockedTopStites.includes(url)) {
     return
   }
   blockedTopStites.push(url)
-  await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
+  await blockedTopStitesStorage.setValue(blockedTopStites)
   ElMessage({
     message: h('p', null, [
       h('span', { style: { color: 'var(--el-color-success)' } }, '已移除快捷方式'),
@@ -38,7 +38,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
         {
           style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
           onClick: async () => {
-            await LocalExtensionStorage.setItem('blockedTopStites', [])
+            await blockedTopStitesStorage.setValue([])
             await reloadFunc()
           }
         },
@@ -50,11 +50,11 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
 }
 
 async function restoreBlockedSite(url: string) {
-  const blockedTopStites = await LocalExtensionStorage.getItem<string[]>('blockedTopStites', [])
+  const blockedTopStites = await await blockedTopStitesStorage.getValue()
   const index = blockedTopStites.indexOf(url)
   if (index > -1) {
     blockedTopStites.splice(index, 1)
-    await LocalExtensionStorage.setItem('blockedTopStites', blockedTopStites)
+    await blockedTopStitesStorage.setValue(blockedTopStites)
   }
 }
 

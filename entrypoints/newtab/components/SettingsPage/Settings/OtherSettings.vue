@@ -4,10 +4,19 @@ import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 import { ElMessageBox } from 'element-plus'
 
-import { LocalExtensionStorage, SyncExtensionStorage } from '@/entrypoints/newtab/js/storage'
-import { useSettingsStore, useWallpaperStore } from '@/entrypoints/newtab/js/store'
+import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
+import { defaultBookmark, saveBookmark } from '@/entrypoints/newtab/js/store/bookmarkStore'
+import {
+  defaultSettings,
+  saveSettings,
+  useSettingsStore
+} from '@/entrypoints/newtab/js/store/settingsStore'
+
+import { useWallpaperStore } from '@/entrypoints/newtab/js/store'
 
 const settingsStore = useSettingsStore()
+
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
@@ -30,9 +39,11 @@ async function clearExtensionData() {
   console.warn('正在清除扩展数据')
   localStorage.clear()
   sessionStorage.clear()
-  await SyncExtensionStorage.clear()
-  await LocalExtensionStorage.clear()
+  await blockedTopStitesStorage.setValue([])
+  await saveBookmark(defaultBookmark)
+  await searchHistoriesStorage.setValue([])
   await useWallpaperStore.clear()
+  await saveSettings(defaultSettings)
   location.reload()
 }
 </script>
@@ -44,7 +55,7 @@ async function clearExtensionData() {
   </h3>
   <div class="settings-item horizontal">
     <div class="settings-label">一言</div>
-    <el-switch v-model="settingsStore.enableYiyan" size="large" />
+    <el-switch v-model="settingsStore.search.enableYiyan" size="large" />
   </div>
   <div class="settings-item horizontal">
     <div class="settings-label">清除本扩展数据</div>

@@ -10,9 +10,10 @@ import {
 } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
 import { searchEngines } from '@/entrypoints/newtab/js/api/search'
-import { useFocusStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
+import { useFocusStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'
@@ -100,15 +101,15 @@ function activeOneSuggest(index: number) {
   searchText.value = suggedtionArea.value!.searchSuggestions[index]
 }
 function selectSearch(index: number) {
-  settingsStore.selectedSearchEngine = index
+  settingsStore.search.selectedSearchEngine = index
 }
 function handlePrevTab() {
-  if (settingsStore.selectedSearchEngine === 0) selectSearch(searchEngines.length - 1)
-  else selectSearch(settingsStore.selectedSearchEngine - 1)
+  if (settingsStore.search.selectedSearchEngine === 0) selectSearch(searchEngines.length - 1)
+  else selectSearch(settingsStore.search.selectedSearchEngine - 1)
 }
 function handleNextTab() {
-  if (settingsStore.selectedSearchEngine === searchEngines.length - 1) selectSearch(0)
-  else selectSearch(settingsStore.selectedSearchEngine + 1)
+  if (settingsStore.search.selectedSearchEngine === searchEngines.length - 1) selectSearch(0)
+  else selectSearch(settingsStore.search.selectedSearchEngine + 1)
 }
 async function doSearch() {
   doSearchWithText(searchText.value)
@@ -119,11 +120,8 @@ async function doSearchWithText(text: string) {
     searchInput.value?.focus()
     return
   }
-  if (settingsStore.recordSearchHistory) {
-    const searchHistories: string[] = await LocalExtensionStorage.getItem<string[]>(
-      'searchHistories',
-      []
-    )
+  if (settingsStore.search.recordSearchHistory) {
+    const searchHistories: string[] = await searchHistoriesStorage.getValue()
     // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
     if (searchHistories.includes(text)) {
       const index = searchHistories.indexOf(text)
@@ -136,12 +134,12 @@ async function doSearchWithText(text: string) {
     if (searchHistories.length > 15) {
       searchHistories.splice(15)
     }
-    await LocalExtensionStorage.setItem('searchHistories', searchHistories)
+    await searchHistoriesStorage.setValue(searchHistories)
   }
   // 跳转搜索结果
   window.open(
-    searchEngines[settingsStore.selectedSearchEngine]['url'].replace('%s', text),
-    settingsStore.searchInNewTab ? '_blank' : '_self'
+    searchEngines[settingsStore.search.selectedSearchEngine]['url'].replace('%s', text),
+    settingsStore.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }

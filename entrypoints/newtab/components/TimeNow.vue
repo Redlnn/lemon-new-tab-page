@@ -2,7 +2,7 @@
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
-import { useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '../js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const time = ref()
@@ -42,9 +42,11 @@ const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
 
 <template>
   <div class="time" ref="time">
-    <span v-if="settingsStore.showMeridiem" class="meridiem">{{ timeNowMeridiem }}</span>
+    <span v-if="settingsStore.time.showMeridiem" class="meridiem">{{ timeNowMeridiem }}</span>
     <span>
-      <span class="hour">{{ settingsStore.isMeridiem ? timeNowHourMeridiem : timeNowHour }}</span>
+      <span class="hour">{{
+        settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
+      }}</span>
       <span class="colon">:</span>
       <span class="minute">{{ timeNowMinute }}</span>
     </span>

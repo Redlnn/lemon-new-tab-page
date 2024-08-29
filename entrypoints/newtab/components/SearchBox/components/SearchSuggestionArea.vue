@@ -3,9 +3,10 @@ import { TrashAlt } from '@vicons/fa'
 import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
+import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
 import { searchSuggestAPIs } from '@/entrypoints/newtab/js/api/search'
-import { useFocusStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useFocusStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -34,10 +35,7 @@ function handleInput() {
 }
 async function showSearchHistories() {
   if (searchSuggestions.value.length > 0 && !isShowSearchHistories.value) return
-  const searchHistories: string[] = await LocalExtensionStorage.getItem<string[]>(
-    'searchHistories',
-    []
-  )
+  const searchHistories: string[] = await searchHistoriesStorage.getValue()
   if (searchHistories.length > 0 && clearSearchHistory) {
     searchSuggestions.value = searchHistories
     isShowSearchHistories.value = true
@@ -45,9 +43,10 @@ async function showSearchHistories() {
   }
 }
 const showSuggestionsDebounced = useDebounceFn(showSuggestions, 200)
+
 async function showSuggestions() {
   if (props.searchText.length <= 0) return
-  const suggestions = await searchSuggestAPIs[settingsStore.selectedSearchSuggestionAPI](
+  const suggestions = await searchSuggestAPIs[settingsStore.search.selectedSearchSuggestionAPI](
     props.searchText
   )
   searchSuggestions.value = suggestions
@@ -73,7 +72,7 @@ function clearSearchSuggestions() {
 }
 
 async function clearSearchHistories() {
-  await LocalExtensionStorage.setItem<string[]>('searchHistories', [])
+  await searchHistoriesStorage.setValue([])
   clearSearchSuggestions()
 }
 

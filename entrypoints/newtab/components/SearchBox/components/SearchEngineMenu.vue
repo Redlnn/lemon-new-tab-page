@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { searchEngines } from '@/entrypoints/newtab/js/api/search'
-import { useFocusStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useFocusStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -22,15 +23,15 @@ const settingsStore = useSettingsStore()
         v-for="(item, index) in searchEngines"
         :key="index"
         class="search-engine-menu-item"
-        :class="{ active: settingsStore.selectedSearchEngine === index }"
-        @click="settingsStore.selectedSearchEngine = index"
+        :class="{ active: settingsStore.search.selectedSearchEngine === index }"
+        @click="settingsStore.search.selectedSearchEngine = index"
       >
         <div style="display: flex; align-items: center">
           <el-icon><component :is="item['icon']" /></el-icon>
           <span>{{ item.name }}</span>
         </div>
         <div
-          v-if="index === settingsStore.selectedSearchEngine"
+          v-if="index === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
           当前
@@ -44,7 +45,7 @@ const settingsStore = useSettingsStore()
       </div>
     </template>
     <el-icon class="search-engine-icon">
-      <component :is="searchEngines[settingsStore.selectedSearchEngine]['icon']" />
+      <component :is="searchEngines[settingsStore.search.selectedSearchEngine]['icon']" />
     </el-icon>
   </el-tooltip>
 </template>

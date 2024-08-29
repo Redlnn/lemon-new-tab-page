@@ -4,7 +4,7 @@ import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
 
 import changeTheme from '@/entrypoints/newtab/js/use-element-plus-theme'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 import autoMode from '@/entrypoints/newtab/assets/color/auto-mode.svg?url'
 import darkMode from '@/entrypoints/newtab/assets/color/dark-mode.svg?url'
@@ -12,6 +12,7 @@ import lightMode from '@/entrypoints/newtab/assets/color/light-mode.svg?url'
 import selected from '@/entrypoints/newtab/assets/color/selected.svg?component'
 
 const settingsStore = useSettingsStore()
+
 const colorMode = useColorMode()
 
 const predefineColors = ref([

@@ -1,11 +1,8 @@
 import axios from '@/entrypoints/newtab/js/plugins/axios'
+import { useBingWallpaperStore } from '@/entrypoints/newtab/js/store/wallpaperStore'
 import { v4 as uuidv4 } from 'uuid'
 import { isImageFile, verifyImageUrl } from '@/entrypoints/newtab/js/utils/img'
-import {
-  saveSettings,
-  useBingWallpaperStore,
-  useSettingsStore
-} from '@/entrypoints/newtab/js/store'
+import { saveSettings, useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 interface BingWallpaperResp {
   images: {
@@ -36,8 +33,8 @@ interface BingWallpaperResp {
 
 export async function getBingWallpaperURL() {
   const settingsStore = useSettingsStore()
-  if (settingsStore.bingWallpaper.updateDate === new Date().toDateString()) {
-    const id = settingsStore.bingWallpaper.bgId
+  if (settingsStore.bingBackground.updateDate === new Date().toDateString()) {
+    const id = settingsStore.bingBackground.bgId
     const file = await useBingWallpaperStore.getItem<Blob>(id)
 
     // 校验图片数据是否可用，否则删除该数据
@@ -48,10 +45,10 @@ export async function getBingWallpaperURL() {
       }
     }
 
-    URL.revokeObjectURL(settingsStore.bingWallpaper.url)
-    settingsStore.bingWallpaper.bgId = ''
-    settingsStore.bingWallpaper.url = ''
-    saveSettings(settingsStore)
+    URL.revokeObjectURL(settingsStore.bingBackground.bgUrl)
+    settingsStore.bingBackground.bgId = ''
+    settingsStore.bingBackground.bgUrl = ''
+    await saveSettings(settingsStore)
     await useBingWallpaperStore.removeItem(id)
   }
 
@@ -79,7 +76,8 @@ export async function getBingWallpaperURL() {
 
   const id = uuidv4()
   const url = URL.createObjectURL(file)
-  const url_old = settingsStore.bingWallpaper.url
+
+  const url_old = settingsStore.bingBackground.bgUrl
 
   // 清除上次壁纸，ObjectURL可能导致内存溢出
   await useBingWallpaperStore.clear()
@@ -89,9 +87,9 @@ export async function getBingWallpaperURL() {
 
   // 保存图片到IndexedDB
   await useBingWallpaperStore.setItem<Blob>(id, file)
-  settingsStore.bingWallpaper = {
+  settingsStore.bingBackground = {
     bgId: id,
-    url,
+    bgUrl: url,
     updateDate: new Date().toDateString()
   }
   return url

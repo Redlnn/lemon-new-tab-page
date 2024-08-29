@@ -1,9 +1,12 @@
+import _ from 'lodash'
 import { defineStore } from 'pinia'
+import { storage } from 'wxt/storage'
 import { v4 as uuidv4 } from 'uuid'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
 import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
 import { useWallpaperStore } from './wallpaperStore'
+
+const CURRENT_CONFIG_VERSION = 2
 
 export enum BgType {
   None,
@@ -11,13 +14,7 @@ export enum BgType {
   Bing
 }
 
-interface BingWallpaper {
-  bgId: string
-  url: string
-  updateDate: string
-}
-
-interface Settings {
+interface OldSettingsInterface {
   primaryColor: string
   isMeridiem: boolean
   showMeridiem: boolean
@@ -31,7 +28,7 @@ interface Settings {
   bgId: string
   bgUrl: string
   bgMaskPpacity: number
-  enableQuickStart: boolean
+  enabled: boolean
   enableTopSites: boolean
   quickStartRows: number
   quickStartColumns: number
@@ -39,97 +36,212 @@ interface Settings {
   showQuickStartTitle: boolean
   showPinnedIcon: boolean
   enableYiyan: boolean
-  bingWallpaper: BingWallpaper
+  bingWallpaper: {
+    bgId: string
+    url: string
+    updateDate: string
+  }
   version: string
-  [key: string]: any
 }
 
-const defaultSettings: Settings = {
+interface SettingsInterface {
+  primaryColor: string
+  time: {
+    isMeridiem: boolean
+    showMeridiem: boolean
+  }
+  search: {
+    selectedSearchSuggestionAPI: string
+    selectedSearchEngine: number
+    searchInNewTab: boolean
+    recordSearchHistory: boolean
+    enableYiyan: boolean
+  }
+  background: {
+    bgType: BgType
+    bgDarkCorners: boolean
+    bgBlur: number
+    bgMaskPpacity: number
+  }
+  localBackground: {
+    bgId: string
+    bgUrl: string
+  }
+  bingBackground: {
+    bgId: string
+    bgUrl: string
+    updateDate: string
+  }
+  quickStart: {
+    enabled: boolean
+    enableTopSites: boolean
+    quickStartRows: number
+    quickStartColumns: number
+    quickStartItemWidth: number
+    showQuickStartTitle: boolean
+    showPinnedIcon: boolean
+  }
+  pluginVersion: string
+  version: number
+}
+
+export const defaultSettings: SettingsInterface = {
   primaryColor: '#409eff',
-  isMeridiem: true,
-  showMeridiem: false,
-  selectedSearchSuggestionAPI: '百度',
-  selectedSearchEngine: 0,
-  searchInNewTab: false,
-  recordSearchHistory: true,
-  bgType: BgType.Bing,
-  bgDarkCorners: false,
-  bgBlur: 3,
-  bgId: '',
-  bgUrl: '',
-  bgMaskPpacity: 0,
-  enableQuickStart: true,
-  enableTopSites: true,
-  quickStartRows: 2,
-  quickStartColumns: 5,
-  quickStartItemWidth: 110,
-  showQuickStartTitle: true,
-  showPinnedIcon: true,
-  enableYiyan: true,
-  bingWallpaper: {
+  time: {
+    isMeridiem: true,
+    showMeridiem: false
+  },
+  search: {
+    selectedSearchSuggestionAPI: '百度',
+    selectedSearchEngine: 0,
+    searchInNewTab: false,
+    recordSearchHistory: true,
+    enableYiyan: true
+  },
+  background: {
+    bgType: BgType.Bing,
+    bgDarkCorners: false,
+    bgBlur: 3,
+    bgMaskPpacity: 0
+  },
+  localBackground: {
     bgId: '',
-    url: '',
+    bgUrl: ''
+  },
+  bingBackground: {
+    bgId: '',
+    bgUrl: '',
     updateDate: ''
   },
-  version: '0'
+  quickStart: {
+    enabled: true,
+    enableTopSites: true,
+    quickStartRows: 2,
+    quickStartColumns: 5,
+    quickStartItemWidth: 110,
+    showQuickStartTitle: true,
+    showPinnedIcon: true
+  },
+  pluginVersion: '',
+  version: CURRENT_CONFIG_VERSION
 }
 
-export async function readSettings() {
-  const settings = await LocalExtensionStorage.getItem<Settings>('settings')
-  if (settings) {
-    const _o = Object.assign({}, defaultSettings, settings)
-    await saveSettings(_o)
-    return _o
-  } else {
-    await saveSettings(defaultSettings)
-    return defaultSettings
+const settingsStorage = storage.defineItem<SettingsInterface>('local:settings', {
+  fallback: defaultSettings
+})
+
+function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
+  return {
+    primaryColor: oldSettings.primaryColor,
+    time: {
+      isMeridiem: oldSettings.isMeridiem,
+      showMeridiem: oldSettings.showMeridiem
+    },
+    search: {
+      selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
+      selectedSearchEngine: oldSettings.selectedSearchEngine,
+      searchInNewTab: oldSettings.searchInNewTab,
+      recordSearchHistory: oldSettings.recordSearchHistory,
+      enableYiyan: oldSettings.enableYiyan
+    },
+    background: {
+      bgType: oldSettings.bgType,
+      bgDarkCorners: oldSettings.bgDarkCorners,
+      bgBlur: oldSettings.bgBlur,
+      bgMaskPpacity: oldSettings.bgMaskPpacity
+    },
+    localBackground: {
+      bgId: oldSettings.bgId,
+      bgUrl: oldSettings.bgUrl
+    },
+    bingBackground: {
+      bgId: oldSettings.bingWallpaper.bgId,
+      bgUrl: oldSettings.bingWallpaper.url,
+      updateDate: oldSettings.bingWallpaper.updateDate
+    },
+    quickStart: {
+      enabled: oldSettings.enabled,
+      enableTopSites: oldSettings.enableTopSites,
+      quickStartRows: oldSettings.quickStartRows,
+      quickStartColumns: oldSettings.quickStartColumns,
+      quickStartItemWidth: oldSettings.quickStartItemWidth,
+      showQuickStartTitle: oldSettings.showQuickStartTitle,
+      showPinnedIcon: oldSettings.showPinnedIcon
+    },
+    pluginVersion: oldSettings.version,
+    version: CURRENT_CONFIG_VERSION
   }
 }
 
-export async function saveSettings(settings: Settings) {
-  await LocalExtensionStorage.setItem('settings', settings)
+export async function initSettings() {
+  const oldSettings = <{ settings: OldSettingsInterface } | undefined | null>(
+    await chrome.storage.local.get('settings')
+  )
+
+  let settings = await settingsStorage.getValue()
+
+  if (oldSettings && oldSettings.settings) {
+    if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
+      settings = migrate(oldSettings.settings)
+      await saveSettings(settings)
+    } else if (!oldSettings.settings.version) {
+      settings = migrate({ ...oldSettings.settings, version: '' })
+      await saveSettings(settings)
+    }
+  }
+
+  const settingsStore = useSettingsStore()
+  settingsStore.$patch(settings)
+}
+
+export async function saveSettings(settings: SettingsInterface) {
+  await settingsStorage.setValue(settings)
 }
 
 export const useSettingsStore = defineStore('opiton', {
   state: () => {
-    return defaultSettings
-  },
-  actions: {
-    async uploadBackgroundImage(imageFile: File) {
-      // https://github.com/Devifish/light-tab
-
-      const id = uuidv4()
-      const url = URL.createObjectURL(imageFile)
-      const url_old = this.bgUrl
-
-      // 清除上次壁纸，ObjectURL可能导致内存溢出
-      await useWallpaperStore.clear()
-      if (url_old && url_old.startsWith('blob:')) {
-        URL.revokeObjectURL(url_old)
-      }
-
-      // 保存图片到IndexedDB
-      await useWallpaperStore.setItem<Blob>(id, imageFile)
-      this.bgId = id
-      this.bgUrl = url
-
-      await saveSettings(this)
-    },
-    async reloadBackgroundImage() {
-      const id = this.bgId
-      const file = await useWallpaperStore.getItem<Blob>(id)
-
-      // 校验图片数据是否可用，否则删除该数据
-      if (file && isImageFile(file)) {
-        const url = URL.createObjectURL(file)
-        this.bgUrl = url
-        await saveSettings(this)
-      } else {
-        URL.revokeObjectURL(this.bgUrl)
-        this.bgId = ''
-        this.bgUrl = ''
-        await useWallpaperStore.removeItem(id)
-      }
-    }
+    return _.cloneDeep(defaultSettings)
   }
 })
+
+export async function uploadBackgroundImage(imageFile: File) {
+  const settingsStore = useSettingsStore()
+
+  // https://github.com/Devifish/light-tab
+
+  const id = uuidv4()
+  const url = URL.createObjectURL(imageFile)
+  const url_old = settingsStore.localBackground.bgUrl
+
+  // 清除上次壁纸，ObjectURL可能导致内存溢出
+  await useWallpaperStore.clear()
+  if (url_old && url_old.startsWith('blob:')) {
+    URL.revokeObjectURL(url_old)
+  }
+
+  // 保存图片到IndexedDB
+  await useWallpaperStore.setItem<Blob>(id, imageFile)
+  settingsStore.localBackground = {
+    bgId: id,
+    bgUrl: url
+  }
+}
+
+export async function reloadBackgroundImage() {
+  const settingsStore = useSettingsStore()
+
+  const id = settingsStore.localBackground.bgId
+  const file = await useWallpaperStore.getItem<Blob>(id)
+
+  // 校验图片数据是否可用，否则删除该数据
+  if (file && isImageFile(file)) {
+    const url = URL.createObjectURL(file)
+    settingsStore.localBackground.bgUrl = url
+    await saveSettings(settingsStore)
+  } else {
+    URL.revokeObjectURL(settingsStore.localBackground.bgUrl)
+    settingsStore.localBackground.bgId = ''
+    settingsStore.localBackground.bgUrl = ''
+    await useWallpaperStore.removeItem(id)
+  }
+}

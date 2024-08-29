@@ -3,15 +3,15 @@ import { ClearRound } from '@vicons/material'
 import { ElMessage } from 'element-plus'
 import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
-import { h, onBeforeMount, onMounted, ref, watch } from 'vue'
+import { h,  onMounted, ref, watch } from 'vue'
 
+import { useFocusStore } from '../../js/store'
+import { useSettingsStore } from '../../js/store/settingsStore'
 import {
-  readBookmark,
+  initBookmark,
   saveBookmark,
-  useBookmarkStore,
-  useFocusStore,
-  useSettingsStore
-} from '@/entrypoints/newtab/js/store'
+  useBookmarkStore
+} from '../../js/store/bookmarkStore'
 
 import addBookmark from './components/addBookmark.vue'
 import quickStartItem from './components/quickStartItem.vue'
@@ -25,15 +25,16 @@ const topSites = ref<chrome.topSites.MostVisitedURL[]>([])
 const mounted = ref(false)
 
 async function reloadQS() {
-  bookmarkStore.items = (await readBookmark()).items
-  const totalCellsNum = settingsStore.quickStartColumns * settingsStore.quickStartRows
+  await initBookmark()
+  const totalCellsNum =
+    settingsStore.quickStart.quickStartColumns * settingsStore.quickStart.quickStartRows
   let tmpTopSites: chrome.topSites.MostVisitedURL[] = await getTopSites()
   if (tmpTopSites === undefined) {
     topSites.value = bookmarkStore.items
     return
   }
-  const tmpBookmark = bookmarkStore.items.map((item) => item.url)
-  tmpTopSites = tmpTopSites.filter((site) => !tmpBookmark.includes(site.url))
+  const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
+  tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
   if (bookmarkStore.items.length < totalCellsNum) {
     topSites.value = tmpTopSites.slice(0, totalCellsNum - bookmarkStore.items.length - 1)
   }
@@ -45,7 +46,11 @@ function getQSSize() {
 
 async function removeBookmark(index: number) {
   const { url, title } = bookmarkStore.items[index]
-  bookmarkStore.items = _.omit(bookmarkStore.items, index)
+  if (bookmarkStore.items.length > 1) {
+    bookmarkStore.items = _.omit(bookmarkStore.items, index)
+  } else {
+    bookmarkStore.items = []
+  }
   await saveBookmark(bookmarkStore)
   ElMessage({
     message: h('p', null, [
@@ -79,14 +84,12 @@ async function sticky(url: string, title: string) {
   await reloadQS()
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
   await reloadQS()
-})
-onMounted(() => {
   mounted.value = true
 })
-watch(() => settingsStore.quickStartRows, reloadQS)
-watch(() => settingsStore.quickStartColumns, reloadQS)
+watch(() => settingsStore.quickStart.quickStartRows, reloadQS)
+watch(() => settingsStore.quickStart.quickStartColumns, reloadQS)
 </script>
 
 <template>
@@ -100,8 +103,8 @@ watch(() => settingsStore.quickStartColumns, reloadQS)
       class="quickstart-contaniner"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
-        maxWidth: `${settingsStore.quickStartColumns * settingsStore.quickStartItemWidth + 20}px`,
-        maxHeight: `${settingsStore.quickStartRows * 112 + 20}px`
+        maxWidth: `${settingsStore.quickStart.quickStartColumns * settingsStore.quickStart.quickStartItemWidth + 20}px`,
+        maxHeight: `${settingsStore.quickStart.quickStartRows * 112 + 20}px`
       }"
     >
       <quick-start-item

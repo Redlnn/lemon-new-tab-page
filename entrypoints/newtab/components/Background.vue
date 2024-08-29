@@ -2,7 +2,8 @@
 import { useTimeoutFn } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
-import { useFocusStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useFocusStore } from '../js/store'
+import { useSettingsStore } from '../js/store/settingsStore'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -29,7 +30,9 @@ watch(
   }
 )
 
-onMounted(() => (backgroundWrapper.value.style.opacity = '1'))
+onMounted(async () => {
+  backgroundWrapper.value.style.opacity = '1'
+})
 </script>
 
 <template>
@@ -38,13 +41,13 @@ onMounted(() => (backgroundWrapper.value.style.opacity = '1'))
       ref="background"
       class="background"
       :style="{
-        '--bg-blur': `${settingsStore.bgBlur}px`,
-        '--bg-mask-opacity': settingsStore.bgMaskPpacity / 100,
+        '--bg-blur': `${settingsStore.background.bgBlur}px`,
+        '--bg-mask-opacity': settingsStore.background.bgMaskPpacity / 100,
         backgroundImage: props.bgurl
       }"
     >
       <div class="dark-corners"></div>
-      <div class="mask" v-if="settingsStore.bgDarkCorners"></div>
+      <div class="mask" v-if="settingsStore.background.bgDarkCorners"></div>
     </div>
   </div>
 </template>
@@ -71,6 +74,7 @@ onMounted(() => (backgroundWrapper.value.style.opacity = '1'))
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
+    transition: background .3s;
 
     .mask {
       position: absolute;

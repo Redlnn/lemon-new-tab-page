@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDebounceFn } from '@vueuse/core'
-
-import { saveSettings, useSettingsStore } from '@/entrypoints/newtab/js/store'
 
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
@@ -25,16 +22,6 @@ function toggleShow() {
 }
 
 defineExpose({ show, hide, toggleShow })
-
-const settingsStore = useSettingsStore()
-const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
-
-settingsStore.$subscribe(
-  async (mutation, state) => {
-    await saveSettingsDebounced(state)
-  },
-  { detached: true }
-)
 </script>
 
 <template>

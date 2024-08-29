@@ -2,10 +2,10 @@
 import { version } from '@/package.json'
 
 import { SettingsOutlined } from '@vicons/material'
-import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import { ElConfigProvider, ElNotification } from 'element-plus'
 import { onBeforeMount, ref, watch } from 'vue'
+import { useColorMode, useDebounceFn } from '@vueuse/core'
 
 import Background from './components/Background.vue'
 import QuickStart from './components/QuickStart/index.vue'
@@ -18,7 +18,13 @@ import changeTheme from './js/use-element-plus-theme'
 import changelog from './changelog'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/utils/img'
-import { BgType, readSettings, useSettingsStore } from './js/store'
+import {
+  BgType,
+  initSettings,
+  reloadBackgroundImage,
+  saveSettings,
+  useSettingsStore
+} from './js/store/settingsStore'
 
 useColorMode()
 const settingsStore = useSettingsStore()
@@ -27,53 +33,51 @@ const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const bgURL = ref('')
 
 onBeforeMount(async () => {
-  const settings = await readSettings()
-
-  for (const key in settings) {
-    settingsStore[key] = settings[key]
-  }
+  await initSettings()
   changeTheme(settingsStore.primaryColor)
 
-  switch (settingsStore.bgType) {
+  switch (settingsStore.background.bgType) {
     case BgType.Bing:
       bgURL.value = `url(${await getBingWallpaperURL()})`
       break
     case BgType.Local:
-      if (settingsStore.bgUrl) {
-        const verifyBackground = await verifyImageUrl(settingsStore.bgUrl)
+      if (settingsStore.localBackground.bgUrl) {
+        const verifyBackground = await verifyImageUrl(settingsStore.localBackground.bgUrl)
         if (!verifyBackground) {
-          await settingsStore.reloadBackgroundImage()
+          await reloadBackgroundImage()
         }
       } else {
-        await settingsStore.reloadBackgroundImage()
+        await reloadBackgroundImage()
       }
 
-      bgURL.value = settingsStore.bgUrl ? `url(${settingsStore.bgUrl})` : ''
+      bgURL.value = settingsStore.localBackground.bgUrl
+        ? `url(${settingsStore.localBackground.bgUrl})`
+        : ''
       break
   }
 
-  if (settingsStore.version !== version) {
+  if (settingsStore.pluginVersion !== version) {
     ElNotification({
       title: `柠檬起始页已更新至 v${version}`,
       message: changelog,
       type: 'success',
       duration: 5000,
       onClose: () => {
-        settingsStore.version = version
+        settingsStore.pluginVersion = version
       }
     })
   }
 })
 
 watch(
-  () => settingsStore.bgType,
+  () => settingsStore.background.bgType,
   async () => {
-    switch (settingsStore.bgType) {
+    switch (settingsStore.background.bgType) {
       case BgType.Bing:
         bgURL.value = `url(${await getBingWallpaperURL()})`
         break
       case BgType.Local:
-        bgURL.value = `url(${settingsStore.bgUrl})`
+        bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
         break
       case BgType.None:
         bgURL.value = ''
@@ -82,9 +86,15 @@ watch(
   }
 )
 watch(
-  () => settingsStore.bgUrl,
-  () => (bgURL.value = `url(${settingsStore.bgUrl})`)
+  () => settingsStore.localBackground.bgUrl,
+  () => (bgURL.value = `url(${settingsStore.localBackground.bgUrl})`)
 )
+
+const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
+
+settingsStore.$subscribe(async (mutation, state) => {
+  await saveSettingsDebounced(state)
+})
 </script>
 
 <template>
@@ -92,7 +102,7 @@ watch(
     <main>
       <time-now />
       <search-box style="margin-top: 10px" />
-      <quick-start v-if="settingsStore.enableQuickStart" />
+      <quick-start v-if="settingsStore.quickStart.enabled" />
       <yi-yan />
     </main>
     <background :bgurl="bgURL" />

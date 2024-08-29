@@ -3,7 +3,8 @@ import { load } from 'jinrishici'
 import { useWindowSize } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
 
-import { useFocusStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useFocusStore } from '../js/store'
+import { useSettingsStore } from '../js/store/settingsStore'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -29,7 +30,7 @@ onMounted(() => {
   <Transition>
     <div
       class="yiyan-wrapper"
-      v-if="settingsStore.enableYiyan && focusStore.isFocused && height >= 800"
+      v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800"
     >
       <div class="yiyan">
         <p class="yiyan-content">「 {{ yiyan }} 」</p>

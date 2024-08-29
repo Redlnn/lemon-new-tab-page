@@ -1,15 +1,22 @@
 import { useFocusStore } from './foucsStore'
-import { BgType, readSettings, saveSettings, useSettingsStore } from './settingsStore'
-import { readBookmark, saveBookmark, useBookmarkStore } from './bookmarkStore'
+import {
+  BgType,
+  defaultSettings,
+  initSettings,
+  reloadBackgroundImage,
+  uploadBackgroundImage,
+  useSettingsStore
+} from './settingsStore'
 import { useBingWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 export {
   useFocusStore,
   useBingWallpaperStore,
   useWallpaperStore,
-  useSettingsStore,
-  saveSettings,
-  readSettings,
-  BgType
+  BgType,
+  defaultSettings,
+  initSettings,
+  reloadBackgroundImage,
+  uploadBackgroundImage,
+  useSettingsStore
 }
-export { readBookmark, saveBookmark, useBookmarkStore }

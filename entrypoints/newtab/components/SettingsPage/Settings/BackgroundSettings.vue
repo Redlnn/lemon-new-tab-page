@@ -6,10 +6,15 @@ import { ref } from 'vue'
 import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
 
 import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
-import { BgType, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import {
+  BgType,
+  uploadBackgroundImage,
+  useSettingsStore
+} from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
-const imageUrl = ref(settingsStore.bgUrl)
+
+const imageUrl = ref(settingsStore.localBackground.bgUrl)
 
 const handleBackgroundSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
   imageUrl.value = URL.createObjectURL(uploadFile.raw!)
@@ -31,19 +36,17 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   </h3>
   <div class="settings-item">
     <div class="settings-label">背景类型</div>
-    <el-radio-group v-model="settingsStore.bgType">
+    <el-radio-group v-model="settingsStore.background.bgType">
       <el-radio :value="BgType.None">无</el-radio>
       <el-radio :value="BgType.Local">本地图片</el-radio>
       <el-radio :value="BgType.Bing">Bing每日一图</el-radio>
     </el-radio-group>
   </div>
   <el-upload
-    v-if="settingsStore.bgType === BgType.Local"
+    v-if="settingsStore.background.bgType === BgType.Local"
     class="bg-uploader"
     :show-file-list="false"
-    :http-request="
-      (option: UploadRequestOptions) => settingsStore.uploadBackgroundImage(option.file)
-    "
+    :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
     :on-success="handleBackgroundSuccess"
     :before-upload="beforeBackgroundUpload"
     accept="image/*"
@@ -53,15 +56,15 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   </el-upload>
   <div class="settings-item horizontal">
     <div class="settings-label">暗角</div>
-    <el-switch v-model="settingsStore.bgDarkCorners" size="large" />
+    <el-switch v-model="settingsStore.background.bgDarkCorners" size="large" />
   </div>
-  <div class="settings-item" v-if="settingsStore.bgType !== BgType.None">
+  <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
     <div class="settings-label">模糊强度</div>
-    <el-slider v-model="settingsStore.bgBlur" :show-tooltip="false" />
+    <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
   </div>
-  <div class="settings-item" v-if="settingsStore.bgType !== BgType.None">
+  <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
     <div class="settings-label">遮罩不透明度</div>
-    <el-slider v-model="settingsStore.bgMaskPpacity" :show-tooltip="false" />
+    <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
   </div>
 </template>
 

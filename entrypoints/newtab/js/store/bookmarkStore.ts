@@ -1,28 +1,30 @@
+import _ from 'lodash'
 import { defineStore } from 'pinia'
+import { storage } from 'wxt/storage'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
-
-interface Bookmark {
+export interface Bookmark {
   items: { url: string; title: string }[]
 }
 
-const defaultBookmark: Bookmark = { items: [] }
+export const defaultBookmark: Bookmark = { items: [] }
 
-export async function readBookmark() {
-  const bookmark = await LocalExtensionStorage.getItem<Bookmark>('bookmark')
-  if (bookmark && bookmark.items) {
-    return bookmark
-  } else {
-    return defaultBookmark
-  }
+const bookmarkStorage = storage.defineItem<Bookmark>('local:bookmark', {
+  fallback: defaultBookmark
+})
+
+export async function initBookmark() {
+  const bookmark = await bookmarkStorage.getValue()
+  const bookmarkStore = useBookmarkStore()
+  bookmarkStore.$patch(bookmark)
 }
 
 export async function saveBookmark(bookmark: Bookmark) {
-  await LocalExtensionStorage.setItem('bookmark', { items: Object.values(bookmark.items) })
+  console.log('saveBookmark', bookmark)
+  await bookmarkStorage.setValue({ items: Object.values(bookmark.items) })
 }
 
 export const useBookmarkStore = defineStore('bookmark', {
   state: () => {
-    return defaultBookmark
+    return _.cloneDeep(defaultBookmark)
   }
 })

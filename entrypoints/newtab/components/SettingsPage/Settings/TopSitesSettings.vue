@@ -2,13 +2,13 @@
 import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 
-import { LocalExtensionStorage } from '@/entrypoints/newtab/js/storage'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 
 async function restoreDefaultTopSites() {
-  await LocalExtensionStorage.setItem('blockedTopStites', [])
+  await blockedTopStitesStorage.setValue([])
   location.reload()
 }
 </script>
@@ -16,24 +16,28 @@ async function restoreDefaultTopSites() {
 <template>
   <h3 class="settings-title">
     <el-icon><appstore-outlined /></el-icon>
-    <span>最常访问</span>
+    <span>快速访问</span>
   </h3>
   <div class="settings-item horizontal">
     <div class="settings-label">启用</div>
-    <el-switch v-model="settingsStore.enableTopSites" size="large" />
+    <el-switch v-model="settingsStore.quickStart.enabled" size="large" />
+  </div>
+  <div class="settings-item horizontal">
+    <div class="settings-label">显示最常访问</div>
+    <el-switch v-model="settingsStore.quickStart.enableTopSites" size="large" />
   </div>
   <div class="settings-item horizontal">
     <div class="settings-label">显示置顶角标</div>
-    <el-switch v-model="settingsStore.showPinnedIcon" size="large" />
+    <el-switch v-model="settingsStore.quickStart.showPinnedIcon" size="large" />
   </div>
   <div class="settings-item horizontal">
     <div class="settings-label">显示链接标题</div>
-    <el-switch v-model="settingsStore.showQuickStartTitle" size="large" />
+    <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" size="large" />
   </div>
   <div class="settings-item">
     <div class="settings-label">最大行数</div>
     <el-slider
-      v-model="settingsStore.quickStartRows"
+      v-model="settingsStore.quickStart.quickStartRows"
       :step="1"
       :min="1"
       :max="5"
@@ -46,7 +50,7 @@ async function restoreDefaultTopSites() {
   <div class="settings-item">
     <div class="settings-label">最大列数</div>
     <el-slider
-      v-model="settingsStore.quickStartColumns"
+      v-model="settingsStore.quickStart.quickStartColumns"
       :step="1"
       :min="1"
       :max="10"
@@ -62,7 +66,7 @@ async function restoreDefaultTopSites() {
   <div class="settings-item quickstart-item-width">
     <div class="settings-label">链接宽度</div>
     <el-slider
-      v-model="settingsStore.quickStartItemWidth"
+      v-model="settingsStore.quickStart.quickStartItemWidth"
       :min="80"
       :max="200"
       show-input

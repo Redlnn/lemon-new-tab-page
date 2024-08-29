@@ -3,9 +3,10 @@ import { AddRound } from '@vicons/material'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
-import { saveBookmark, useBookmarkStore, useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { saveBookmark, useBookmarkStore } from '@/entrypoints/newtab/js/store/bookmarkStore'
 
 import { getQuickStartItemWidth } from '../utils/index'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
@@ -41,6 +42,8 @@ async function add() {
   modelForm.value?.resetFields()
   await props.reload()
   showDialog.value = false
+  data.title = ''
+  data.url = ''
 }
 </script>
 
@@ -48,8 +51,11 @@ async function add() {
   <div
     class="quickstart-item add-bookmark"
     :style="{
-      flexBasis: getQuickStartItemWidth(quickStartSize(), settingsStore.quickStartColumns),
-      width: `${settingsStore.quickStartItemWidth}px`
+      flexBasis: getQuickStartItemWidth(
+        quickStartSize(),
+        settingsStore.quickStart.quickStartColumns
+      ),
+      width: `${settingsStore.quickStart.quickStartItemWidth}px`
     }"
   >
     <div class="quickstart-item-link" style="cursor: pointer" @click="showDialog = true">
@@ -59,7 +65,7 @@ async function add() {
       <div
         class="quickstart-title"
         style="font-size: 0.9em"
-        v-if="settingsStore.showQuickStartTitle"
+        v-if="settingsStore.quickStart.showQuickStartTitle"
       >
         添加快速访问
       </div>

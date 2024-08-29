@@ -2,7 +2,7 @@
 import { MoreVertRound } from '@vicons/material'
 import { Pin16Regular } from '@vicons/fluent'
 
-import { useSettingsStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 import { getFaviconURL } from '../utils/topSites'
 import { getQuickStartItemWidth } from '../utils/index'
@@ -21,20 +21,22 @@ defineProps<{
   <div
     class="quickstart-item"
     :style="{
-      flexBasis: getQuickStartItemWidth(qsSitesSize, settingsStore.quickStartColumns),
-      width: `${settingsStore.quickStartItemWidth}px`
+      flexBasis: getQuickStartItemWidth(qsSitesSize, settingsStore.quickStart.quickStartColumns),
+      width: `${settingsStore.quickStart.quickStartItemWidth}px`
     }"
   >
     <a class="quickstart-item-link" :href="url">
       <div class="quickstart-icon">
-        <div class="pin-icon" v-if="pined && settingsStore.showPinnedIcon">
+        <div class="pin-icon" v-if="pined && settingsStore.quickStart.showPinnedIcon">
           <el-icon size="15">
             <pin16-regular />
           </el-icon>
         </div>
         <span :style="{ backgroundImage: `url(${getFaviconURL(url)})` }"></span>
       </div>
-      <div class="quickstart-title" v-if="settingsStore.showQuickStartTitle">{{ title }}</div>
+      <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
+        {{ title }}
+      </div>
     </a>
     <el-dropdown class="quickstart-menu" trigger="click" placement="bottom-end" size="small">
       <span class="quickstart-menu-icon">
