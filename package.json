@@ -1,6 +1,5 @@
 {
   "name": "lemon-tab-page",
-  "description": "manifest.json description",
   "private": true,
   "version": "1.4.0",
   "type": "module",
@@ -38,7 +37,7 @@
     "@types/lodash": "^4.17.7",
     "@types/node": "^22.5.1",
     "@types/uuid": "^10.0.0",
-    "@vitejs/plugin-vue": "^5.1.2",
+    "@vitejs/plugin-vue": "^5.1.3",
     "@vue/eslint-config-prettier": "^9.0.0",
     "@vue/eslint-config-typescript": "^13.0.0",
     "@vue/tsconfig": "^0.5.1",
@@ -53,7 +52,7 @@
     "vite": "^5.4.2",
     "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.1.2",
-    "wxt": "^0.19.7"
+    "wxt": "^0.19.8"
   },
   "packageManager": "pnpm@9.9.0"
 }

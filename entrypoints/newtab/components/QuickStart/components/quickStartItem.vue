@@ -33,7 +33,11 @@ defineProps<{
             <pin16-regular />
           </el-icon>
         </div>
-        <span :style="{ backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})` }"></span>
+        <span
+          :style="{
+            backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
+          }"
+        ></span>
       </div>
       <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
         {{ title }}

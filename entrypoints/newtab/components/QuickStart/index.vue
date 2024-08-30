@@ -6,9 +6,13 @@ import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { h, onMounted, ref, watch } from 'vue'
 
-import { useFocusStore } from '../../js/store'
-import { useSettingsStore } from '../../js/store/settingsStore'
-import { initBookmark, saveBookmark, useBookmarkStore } from '../../js/store/bookmarkStore'
+import { useFocusStore } from '@/entrypoints/newtab/js/store'
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
+import {
+  initBookmark,
+  saveBookmark,
+  useBookmarkStore
+} from '@/entrypoints/newtab/js/store/bookmarkStore'
 
 import addBookmark from './components/addBookmark.vue'
 import quickStartItem from './components/quickStartItem.vue'
@@ -142,7 +146,7 @@ watch(() => settingsStore.quickStart.quickStartColumns, reloadQS)
         :qs-sites-size="getQSSize()"
         :favicon="site.favicon"
       >
-      >
+        >
         <template #submenu>
           <el-dropdown-item>
             <span
@@ -219,6 +223,7 @@ watch(() => settingsStore.quickStart.quickStartColumns, reloadQS)
     border-radius: 10px;
     overflow: hidden;
     flex: 0;
+    min-width: 80px;
 
     .quickstart-item-link {
       display: flex;

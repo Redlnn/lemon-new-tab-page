@@ -8,7 +8,7 @@ async function getTopSites() {
   let topSites
   if (import.meta.env.BROWSER === 'chrome') {
     topSites = await browser.topSites.get()
-  } else if (import.meta.env.BROWSER === 'firefox'){
+  } else if (import.meta.env.BROWSER === 'firefox') {
     topSites = await browser.topSites.get({ includeFavicon: true })
   } else {
     throw new Error('Unsupported browser')

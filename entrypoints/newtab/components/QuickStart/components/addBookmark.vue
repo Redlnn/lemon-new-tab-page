@@ -4,10 +4,10 @@ import _ from 'lodash'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
+import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 import { saveBookmark, useBookmarkStore } from '@/entrypoints/newtab/js/store/bookmarkStore'
 
 import { getQuickStartItemWidth } from '../utils/index'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
@@ -63,11 +63,7 @@ async function add() {
       <div class="quickstart-icon">
         <add-round />
       </div>
-      <div
-        class="quickstart-title"
-        style="font-size: 0.9em"
-        v-if="settingsStore.quickStart.showQuickStartTitle"
-      >
+      <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
         添加快速访问
       </div>
     </div>

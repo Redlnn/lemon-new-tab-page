@@ -74,7 +74,7 @@ onMounted(async () => {
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
-    transition: background .3s;
+    transition: background 0.3s;
 
     .mask {
       position: absolute;

@@ -6,14 +6,13 @@ import { ElMessageBox } from 'element-plus'
 
 import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
 import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
+import { useWallpaperStore } from '@/entrypoints/newtab/js/store'
 import { defaultBookmark, saveBookmark } from '@/entrypoints/newtab/js/store/bookmarkStore'
 import {
   defaultSettings,
   saveSettings,
   useSettingsStore
 } from '@/entrypoints/newtab/js/store/settingsStore'
-
-import { useWallpaperStore } from '@/entrypoints/newtab/js/store'
 
 const settingsStore = useSettingsStore()
 
