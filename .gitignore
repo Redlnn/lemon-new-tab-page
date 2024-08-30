@@ -1,5 +1,6 @@
 auto-imports.d.ts
 components.d.ts
+.env.*
 
 # Logs
 logs
