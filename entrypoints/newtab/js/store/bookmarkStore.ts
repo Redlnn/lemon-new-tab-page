@@ -19,7 +19,6 @@ export async function initBookmark() {
 }
 
 export async function saveBookmark(bookmark: Bookmark) {
-  console.log('saveBookmark', bookmark)
   await bookmarkStorage.setValue({ items: Object.values(bookmark.items) })
 }
 

@@ -4,7 +4,7 @@ import { Pin16Regular } from '@vicons/fluent'
 
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
-import { getFaviconURL } from '../utils/topSites'
+import { getFaviconURLChrome } from '../utils/topSites'
 import { getQuickStartItemWidth } from '../utils/index'
 
 const settingsStore = useSettingsStore()
@@ -14,6 +14,7 @@ defineProps<{
   title: string
   qsSitesSize: number
   pined?: boolean
+  favicon?: string
 }>()
 </script>
 
@@ -32,7 +33,7 @@ defineProps<{
             <pin16-regular />
           </el-icon>
         </div>
-        <span :style="{ backgroundImage: `url(${getFaviconURL(url)})` }"></span>
+        <span :style="{ backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})` }"></span>
       </div>
       <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
         {{ title }}

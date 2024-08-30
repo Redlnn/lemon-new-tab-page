@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { ClearRound } from '@vicons/material'
 import { ElMessage } from 'element-plus'
+import type { TopSites } from 'wxt/browser'
 import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
-import { h,  onMounted, ref, watch } from 'vue'
+import { h, onMounted, ref, watch } from 'vue'
 
 import { useFocusStore } from '../../js/store'
 import { useSettingsStore } from '../../js/store/settingsStore'
-import {
-  initBookmark,
-  saveBookmark,
-  useBookmarkStore
-} from '../../js/store/bookmarkStore'
+import { initBookmark, saveBookmark, useBookmarkStore } from '../../js/store/bookmarkStore'
 
 import addBookmark from './components/addBookmark.vue'
 import quickStartItem from './components/quickStartItem.vue'
@@ -21,20 +18,23 @@ const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 
-const topSites = ref<chrome.topSites.MostVisitedURL[]>([])
+const topSites = ref<TopSites.MostVisitedURL[]>([])
 const mounted = ref(false)
 
 async function reloadQS() {
   await initBookmark()
   const totalCellsNum =
     settingsStore.quickStart.quickStartColumns * settingsStore.quickStart.quickStartRows
-  let tmpTopSites: chrome.topSites.MostVisitedURL[] = await getTopSites()
+  let tmpTopSites: TopSites.MostVisitedURL[] = await getTopSites()
+  console.log(tmpTopSites)
   if (tmpTopSites === undefined) {
-    topSites.value = bookmarkStore.items
+    tmpTopSites = bookmarkStore.items
     return
+  } else {
+    const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
+    console.log(bookmarkStore.items)
+    tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
   }
-  const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
-  tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
   if (bookmarkStore.items.length < totalCellsNum) {
     topSites.value = tmpTopSites.slice(0, totalCellsNum - bookmarkStore.items.length - 1)
   }
@@ -140,6 +140,8 @@ watch(() => settingsStore.quickStart.quickStartColumns, reloadQS)
         :url="site.url"
         :title="site.title || ''"
         :qs-sites-size="getQSSize()"
+        :favicon="site.favicon"
+      >
       >
         <template #submenu>
           <el-dropdown-item>

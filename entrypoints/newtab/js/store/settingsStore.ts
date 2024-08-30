@@ -174,20 +174,25 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
 }
 
 export async function initSettings() {
-  const oldSettings = <{ settings: OldSettingsInterface } | undefined | null>(
-    await chrome.storage.local.get('settings')
-  )
+  let settings
+  if (import.meta.env.BROWSER === 'chrome') {
+    const oldSettings = <{ settings: OldSettingsInterface } | undefined | null>(
+      await chrome.storage.local.get('settings')
+    )
 
-  let settings = await settingsStorage.getValue()
+    settings = await settingsStorage.getValue()
 
-  if (oldSettings && oldSettings.settings) {
-    if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
-      settings = migrate(oldSettings.settings)
-      await saveSettings(settings)
-    } else if (!oldSettings.settings.version) {
-      settings = migrate({ ...oldSettings.settings, version: '' })
-      await saveSettings(settings)
+    if (oldSettings && oldSettings.settings) {
+      if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
+        settings = migrate(oldSettings.settings)
+        await saveSettings(settings)
+      } else if (!oldSettings.settings.version) {
+        settings = migrate({ ...oldSettings.settings, version: '' })
+        await saveSettings(settings)
+      }
     }
+  } else {
+    settings = await settingsStorage.getValue()
   }
 
   const settingsStore = useSettingsStore()
