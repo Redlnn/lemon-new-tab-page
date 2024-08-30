@@ -31,7 +31,9 @@ watch(
 )
 
 onMounted(async () => {
-  backgroundWrapper.value.style.opacity = '1'
+  useTimeoutFn(() => {
+    backgroundWrapper.value.style.opacity = '1'
+  }, 50)
 })
 </script>
 
@@ -61,7 +63,7 @@ onMounted(async () => {
   left: 0;
   opacity: 0;
   z-index: -1000;
-  transition: opacity 0.4s ease-in-out;
+  transition: opacity 0.4s cubic-bezier(0.5, 0, 0.5, 2);
   background-color: var(--el-bg-color-page);
 
   .background {
@@ -74,7 +76,6 @@ onMounted(async () => {
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
-    transition: background 0.3s;
 
     .mask {
       position: absolute;
