@@ -28,14 +28,10 @@ export default defineConfig({
     plugins: [
       svgLoader(),
       Components({
-        // allow auto load markdown components under `./components/`
-        extensions: ['vue'],
-        // allow auto import and register components used in markdown
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
           /\.vue$/,
           /\.vue\?vue/, // .vue
-          /\.md$/ // .md
         ],
         resolvers: [
           ElementPlusResolver({
