@@ -30,9 +30,8 @@ async function reloadQS() {
   const totalCellsNum =
     settingsStore.quickStart.quickStartColumns * settingsStore.quickStart.quickStartRows
   let tmpTopSites: TopSites.MostVisitedURL[] = await getTopSites()
-  if (tmpTopSites === undefined) {
+  if (tmpTopSites === undefined || !settingsStore.quickStart.enableTopSites) {
     tmpTopSites = bookmarkStore.items
-    return
   } else {
     const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
     tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
@@ -92,6 +91,7 @@ onMounted(async () => {
 })
 watch(() => settingsStore.quickStart.quickStartRows, reloadQS)
 watch(() => settingsStore.quickStart.quickStartColumns, reloadQS)
+watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
 </script>
 
 <template>
