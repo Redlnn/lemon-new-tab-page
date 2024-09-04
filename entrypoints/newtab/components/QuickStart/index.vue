@@ -32,10 +32,9 @@ async function reloadQS() {
   let tmpTopSites: TopSites.MostVisitedURL[] = await getTopSites()
   if (tmpTopSites === undefined || !settingsStore.quickStart.enableTopSites) {
     tmpTopSites = bookmarkStore.items
-  } else {
-    const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
-    tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
   }
+  const bookmarkUrls = bookmarkStore.items.map((item) => item.url)
+  tmpTopSites = tmpTopSites.filter((site) => !bookmarkUrls.includes(site.url))
   if (bookmarkStore.items.length < totalCellsNum) {
     topSites.value = tmpTopSites.slice(0, totalCellsNum - bookmarkStore.items.length - 1)
   }
