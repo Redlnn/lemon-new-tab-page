@@ -2,6 +2,8 @@
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
+import { browser } from 'wxt/browser'
+import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '../js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
@@ -18,33 +20,41 @@ watch(isTimeHovered, (isTimeHovered) => {
 
 function customMeridiem(hours: number) {
   if (hours < 2) {
-    return '深夜'
+    return i18n.t('newtab.time.late_night')
   } else if (hours < 7) {
-    return '凌晨'
+    return i18n.t('newtab.time.before_dawn')
   } else if (hours < 11) {
-    return '早上'
+    return i18n.t('newtab.time.morning')
   } else if (hours < 14) {
-    return '中午'
+    return i18n.t('newtab.time.noon')
   } else if (hours < 17) {
-    return '下午'
+    return i18n.t('newtab.time.afternoon')
   } else if (hours < 19) {
-    return '傍晚'
+    return i18n.t('newtab.time.nightfall')
   } else if (hours < 23) {
-    return '晚上'
+    return i18n.t('newtab.time.night')
   } else {
-    return '深夜'
+    return i18n.t('newtab.time.late_night')
   }
 }
 
 const timeNowHour: ComputedRef<string> = useDateFormat(useNow(), 'HH')
 const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(useNow(), 'h')
 const timeNowMinute = useDateFormat(useNow(), 'mm')
-const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
+const timeNowMeridiemCN = useDateFormat(useNow(), 'aa', { customMeridiem })
+const timeNowMeridiem = useDateFormat(useNow(), 'A')
 </script>
 
 <template>
   <div class="time" ref="time">
-    <span v-if="settingsStore.time.showMeridiem" class="meridiem">{{ timeNowMeridiem }}</span>
+    <span
+      v-if="
+        settingsStore.time.showMeridiem && browser.i18n.getMessage('@@ui_locale').startsWith('zh')
+      "
+      class="meridiem"
+      style="margin-right: 5px"
+      >{{ timeNowMeridiemCN }}</span
+    >
     <span>
       <span class="hour">{{
         settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
@@ -52,6 +62,14 @@ const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
       <span class="colon">:</span>
       <span class="minute">{{ timeNowMinute }}</span>
     </span>
+    <span
+      v-if="
+        settingsStore.time.showMeridiem && !browser.i18n.getMessage('@@ui_locale').startsWith('zh')
+      "
+      class="meridiem"
+      style="margin-left: 5px"
+      >{{ timeNowMeridiem }}</span
+    >
   </div>
 </template>
 
@@ -93,7 +111,6 @@ const timeNowMeridiem = useDateFormat(useNow(), 'aa', { customMeridiem })
 
   .meridiem {
     font-size: 40px;
-    margin-right: 5px;
   }
 
   .colon {
