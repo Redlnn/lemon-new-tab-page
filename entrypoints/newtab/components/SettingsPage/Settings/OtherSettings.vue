@@ -15,6 +15,7 @@ import {
 } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
+const isChrome = import.meta.env.BROWSER === 'chrome'
 
 async function confirmClearExtensionData() {
   try {
@@ -65,7 +66,7 @@ async function clearExtensionData() {
       @click="confirmClearExtensionData"
     />
   </div>
-  <div class="settings-item">
+  <div class="settings-item" v-if="isChrome">
     <div class="settings-label">要自定义Chrome？</div>
     <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
       假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开Chrome 的原生新标签页
