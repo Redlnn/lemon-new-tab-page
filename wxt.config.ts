@@ -31,7 +31,7 @@ export default defineConfig({
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
           /\.vue$/,
-          /\.vue\?vue/, // .vue
+          /\.vue\?vue/ // .vue
         ],
         resolvers: [
           ElementPlusResolver({

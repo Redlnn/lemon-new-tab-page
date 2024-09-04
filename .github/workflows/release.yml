@@ -12,7 +12,6 @@ on:
         required: true
         type: boolean
 
-
 jobs:
   submit:
     runs-on: ubuntu-latest
