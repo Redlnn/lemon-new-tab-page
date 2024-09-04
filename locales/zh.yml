@@ -11,3 +11,16 @@ newtab:
     nightfall: 傍晚
     night: 晚上
     late_night: 深夜
+  settings:
+    background:
+      title: 背景设置
+      type:
+        title: 背景类型
+        none: 无
+        local: 本地图片
+        bing: Bing每日一图
+      vignette: 暗角
+      blur: 模糊强度
+      mask_opacity: 遮罩不透明度
+      error:
+        file_is_not_a_image: 所选文件不是图片!

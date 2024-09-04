@@ -5,6 +5,7 @@ import { Plus } from '@vicons/fa'
 import { ref } from 'vue'
 import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
 
+import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
 import {
   BgType,
@@ -22,7 +23,7 @@ const handleBackgroundSuccess: UploadProps['onSuccess'] = (response, uploadFile)
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
-    ElMessage.error('所选文件不是图片!')
+    ElMessage.error(i18n.t('newtab.settings.background.error.file_is_not_a_image'))
     return false
   }
   return true
@@ -32,14 +33,16 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
 <template>
   <h3 class="settings-title">
     <el-icon><picture-outlined /></el-icon>
-    <span>背景设置</span>
+    <span>{{ i18n.t('newtab.settings.background.title') }}</span>
   </h3>
   <div class="settings-item">
-    <div class="settings-label">背景类型</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
     <el-radio-group v-model="settingsStore.background.bgType">
-      <el-radio :value="BgType.None">无</el-radio>
-      <el-radio :value="BgType.Local">本地图片</el-radio>
-      <el-radio :value="BgType.Bing">Bing每日一图</el-radio>
+      <el-radio :value="BgType.None">{{ i18n.t('newtab.settings.background.type.none') }}</el-radio>
+      <el-radio :value="BgType.Local">{{
+        i18n.t('newtab.settings.background.type.local')
+      }}</el-radio>
+      <el-radio :value="BgType.Bing">{{ i18n.t('newtab.settings.background.type.bing') }}</el-radio>
     </el-radio-group>
   </div>
   <el-upload
@@ -55,15 +58,15 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
     <el-icon v-else class="bg-uploader-icon"><plus /></el-icon>
   </el-upload>
   <div class="settings-item horizontal">
-    <div class="settings-label">暗角</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.background.vignette') }}</div>
     <el-switch v-model="settingsStore.background.bgDarkCorners" size="large" />
   </div>
   <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
-    <div class="settings-label">模糊强度</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
     <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
   </div>
   <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
-    <div class="settings-label">遮罩不透明度</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
     <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
   </div>
 </template>
