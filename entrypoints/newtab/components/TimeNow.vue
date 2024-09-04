@@ -18,7 +18,7 @@ watch(isTimeHovered, (isTimeHovered) => {
 
 function customMeridiem(hours: number) {
   if (hours < 2) {
-    return '凌晨'
+    return '深夜'
   } else if (hours < 7) {
     return '凌晨'
   } else if (hours < 11) {
@@ -29,8 +29,10 @@ function customMeridiem(hours: number) {
     return '下午'
   } else if (hours < 19) {
     return '傍晚'
-  } else {
+  } else if (hours < 23) {
     return '晚上'
+  } else {
+    return '深夜'
   }
 }
 
