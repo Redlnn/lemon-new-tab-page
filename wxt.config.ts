@@ -6,12 +6,12 @@ import svgLoader from 'vite-svg-loader'
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  modules: ['@wxt-dev/module-vue'],
+  modules: ['@wxt-dev/module-vue', '@wxt-dev/i18n/module'],
   manifest: {
-    name: '柠檬起始页',
+    name: '__MSG_extension_name__',
     author: 'Red_lnn<lemon@redlnn.top>',
-    description:
-      '一个开源、简洁、美观且方便使用的浏览器起始页，带有搜索建议、Bing壁纸功能，可添加快速访问网站且展示最常访问网站。',
+    description: '__MSG_extension_description__',
+    default_locale: 'zh',
     icons: {
       512: '/icon.png'
     },
@@ -38,7 +38,7 @@ export default defineConfig({
             importStyle: 'sass'
           })
         ],
-        dts: 'components.d.ts'
+        dts: 'types/components.d.ts'
       })
     ],
     css: {
