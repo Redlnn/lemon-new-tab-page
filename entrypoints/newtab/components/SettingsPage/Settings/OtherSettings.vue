@@ -5,6 +5,7 @@ import { DeleteForeverOutlined } from '@vicons/material'
 import { ElMessageBox } from 'element-plus'
 
 import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { i18n } from '@/.wxt/i18n'
 import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
 import { useWallpaperStore } from '@/entrypoints/newtab/js/store'
 import { defaultBookmark, saveBookmark } from '@/entrypoints/newtab/js/store/bookmarkStore'
@@ -20,11 +21,11 @@ const isChrome = import.meta.env.BROWSER === 'chrome'
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      '将会重置扩展设置、已忽略的最常访问站点、已选择的背景图片。',
-      '确定要清除所有数据吗?',
+      i18n.t('newtab.settings.other.confirm_purge_data.messgae'),
+      i18n.t('newtab.settings.other.confirm_purge_data.title'),
       {
-        confirmButtonText: '好',
-        cancelButtonText: '算了',
+        confirmButtonText: i18n.t('newtab.settings.other.confirm_purge_data.confirm'),
+        cancelButtonText: i18n.t('newtab.settings.other.confirm_purge_data.cancel'),
         type: 'warning'
       }
     )
@@ -36,7 +37,7 @@ async function confirmClearExtensionData() {
 }
 
 async function clearExtensionData() {
-  console.warn('正在清除扩展数据')
+  console.warn(i18n.t('newtab.settings.other.confirm_purge_data.purging'))
   localStorage.clear()
   sessionStorage.clear()
   await blockedTopStitesStorage.setValue([])
@@ -51,14 +52,14 @@ async function clearExtensionData() {
 <template>
   <h3 class="settings-title">
     <el-icon><control-outlined /></el-icon>
-    <span>其他设置</span>
+    <span>{{ i18n.t('newtab.settings.other.title') }}</span>
   </h3>
   <div class="settings-item horizontal">
-    <div class="settings-label">一言</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
     <el-switch v-model="settingsStore.search.enableYiyan" size="large" />
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">清除本扩展数据</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.other.purge_data') }}</div>
     <el-button
       type="danger"
       :icon="DeleteForeverOutlined"
@@ -67,10 +68,9 @@ async function clearExtensionData() {
     />
   </div>
   <div class="settings-item" v-if="isChrome">
-    <div class="settings-label">要自定义Chrome？</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}</div>
     <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
-      假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开Chrome 的原生新标签页
-      (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。
+      {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
     </p>
   </div>
 </template>

@@ -28,6 +28,20 @@ newtab:
       title: 时钟设置
       use_12h_clock: 12小时制
       show_ampm: 显示“上午”/“下午”
+    other:
+      title: 其他设置
+      yiyan: 一言
+      purge_data: 清除本扩展数据
+      want_to_customize_chrome: 要自定义Chrome？
+      customize_chrome_tips: >
+        假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开Chrome 的原生新标签页
+        (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。
+      confirm_purge_data:
+        title: 确定要清除所有数据吗?
+        messgae: 将会重置扩展设置、已忽略的最常访问站点、已选择的背景图片。
+        confirm: 好
+        cancel: 算了
+        purging: 正在清除扩展数据...
     about:
       title: 关于
       version: 当前版本
