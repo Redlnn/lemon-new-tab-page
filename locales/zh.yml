@@ -24,3 +24,7 @@ newtab:
       mask_opacity: 遮罩不透明度
       error:
         file_is_not_a_image: 所选文件不是图片!
+    clock:
+      title: 时钟设置
+      use_12h_clock: 12小时制
+      show_ampm: 显示“上午”/“下午”
