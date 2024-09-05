@@ -22,8 +22,7 @@
 
 > 说明：
 >
-> 1. 由于个人需求，暂不支持自定义快速访问，如有需求可提 issue
-> 2. 更多功能欢迎 PR，提 Issue 不一定会实现噢
+> 1. 更多功能欢迎 PR，提 Issue 不一定会实现噢
 
 ## 为什么会有这个插件？
 
@@ -76,22 +75,38 @@
 
 </details>
 
-## 开发
+## 开发（Development）
 
 本项目使用 Vue 3 + Vite 4 + TypeScript + Element Plus 开发。
+
+> [!NOTE]  
+> 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
+
+### 构建（Build）
+
+#### 如果你使用 Chrome 浏览器（For Chrome）
 
 ```sh
 git clone https://github.com/Redlnn/lemon-new-tab-page.git
 cd lemon-new-tab-page
 pnpm install
-# 运行开发环境，会启动一个独立的浏览器
-pnpm dev
+# pnpm dev  # 运行开发环境，会启动一个独立的浏览器
 # 构建
-pnpm build
+pnpm build  # 构建为（未压缩的）Chrome 扩展
+pnpm zip  # 打包 Chrome 扩展
 ```
 
-> [!NOTE]  
-> 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
+### 如果你使用 Firefox 浏览器（For Firefox）
+
+```sh
+git clone https://github.com/Redlnn/lemon-new-tab-page.git
+cd lemon-new-tab-page
+pnpm install
+# pnpm dev  # 运行开发环境，会启动一个独立的浏览器
+# 构建
+pnpm build:firefox  # 构建为（未打包和签名的）Firefox 扩展
+pnpm zip:firefox  # 打包 Firefox 扩展
+```
 
 ## 鸣谢
 
