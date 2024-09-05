@@ -22,6 +22,8 @@ web-ext.config.ts
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/i18n-ally-custom-framework.yml
+!.vscode/settings.json
 .idea
 *.suo
 *.ntvs*
