@@ -3,14 +3,6 @@ extension:
   description: 一个开源、简洁、美观且方便使用的浏览器起始页，带有搜索建议、Bing壁纸功能，可添加快速访问网站且展示最常访问网站。
 newtab:
   title: 新标签页
-  time:
-    before_dawn: 凌晨
-    morning: 早上
-    noon: 中午
-    afternoon: 下午
-    nightfall: 傍晚
-    night: 晚上
-    late_night: 深夜
   settings:
     background:
       title: 背景设置
