@@ -20,21 +20,21 @@ watch(isTimeHovered, (isTimeHovered) => {
 
 function customMeridiem(hours: number) {
   if (hours < 2) {
-    return i18n.t('newtab.time.late_night')
+    return '深夜'
   } else if (hours < 7) {
-    return i18n.t('newtab.time.before_dawn')
+    return '凌晨'
   } else if (hours < 11) {
-    return i18n.t('newtab.time.morning')
+    return '早上'
   } else if (hours < 14) {
-    return i18n.t('newtab.time.noon')
+    return '中午'
   } else if (hours < 17) {
-    return i18n.t('newtab.time.afternoon')
+    return '下午'
   } else if (hours < 19) {
-    return i18n.t('newtab.time.nightfall')
+    return '傍晚'
   } else if (hours < 23) {
-    return i18n.t('newtab.time.night')
+    return '晚上'
   } else {
-    return i18n.t('newtab.time.late_night')
+    return '深夜'
   }
 }
 
