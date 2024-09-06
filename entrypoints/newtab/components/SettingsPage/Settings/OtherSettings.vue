@@ -15,6 +15,8 @@ import {
   useSettingsStore
 } from '@/entrypoints/newtab/js/store/settingsStore'
 
+import { isChrome} from './utils'
+
 const settingsStore = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
