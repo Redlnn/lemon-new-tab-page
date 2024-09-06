@@ -3,7 +3,6 @@ import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
 import { browser } from 'wxt/browser'
-import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '../js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
