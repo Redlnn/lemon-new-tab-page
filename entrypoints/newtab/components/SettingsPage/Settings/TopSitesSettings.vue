@@ -6,7 +6,7 @@ import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesS
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
-import { isChrome} from './utils'
+import { isChrome } from './utils'
 
 const settingsStore = useSettingsStore()
 
@@ -67,7 +67,7 @@ async function restoreDefaultTopSites() {
     v-if="isChrome"
     style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px"
   >
-  {{ i18n.t('newtab.settings.quickstart.max_items_tip_chrome') }}
+    {{ i18n.t('newtab.settings.quickstart.max_items_tip_chrome') }}
   </p>
   <div class="settings-item quickstart-item-width">
     <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.link_width') }}</div>

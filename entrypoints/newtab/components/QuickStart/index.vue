@@ -163,7 +163,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
               <el-icon>
                 <clear-round />
               </el-icon>
-              {{i18n.t('newtab.quickstart.remove')}}
+              {{ i18n.t('newtab.quickstart.remove') }}
             </span>
           </el-dropdown-item>
           <el-dropdown-item>
@@ -174,7 +174,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
               <el-icon>
                 <pin16-regular />
               </el-icon>
-              {{i18n.t('newtab.quickstart.pin')}}
+              {{ i18n.t('newtab.quickstart.pin') }}
             </span>
           </el-dropdown-item>
         </template>

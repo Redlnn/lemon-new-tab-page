@@ -72,7 +72,7 @@ async function cancel() {
         <add-round />
       </div>
       <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
-        {{i18n.t('newtab.quickstart.add_new_quickstart')}}
+        {{ i18n.t('newtab.quickstart.add_new_quickstart') }}
       </div>
     </div>
   </div>
@@ -84,17 +84,27 @@ async function cancel() {
     destroy-on-close
   >
     <el-form :inline="true" ref="modelForm" :model="data">
-      <el-form-item :label="i18n.t('newtab.quickstart.add_dialog.title')" label-width="70px" prop="userNameCn">
+      <el-form-item
+        :label="i18n.t('newtab.quickstart.add_dialog.title')"
+        label-width="70px"
+        prop="userNameCn"
+      >
         <el-input v-model="data.title" style="width: 250px" />
       </el-form-item>
-      <el-form-item :label="i18n.t('newtab.quickstart.add_dialog.url')" label-width="70px" prop="userCode">
+      <el-form-item
+        :label="i18n.t('newtab.quickstart.add_dialog.url')"
+        label-width="70px"
+        prop="userCode"
+      >
         <el-input v-model="data.url" style="width: 250px" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="cancel">{{ i18n.t('newtab.quickstart.add_dialog.cancel') }}</el-button>
-        <el-button type="primary" @click="add">{{ i18n.t('newtab.quickstart.add_dialog.confirm') }}</el-button>
+        <el-button type="primary" @click="add">{{
+          i18n.t('newtab.quickstart.add_dialog.confirm')
+        }}</el-button>
       </span>
     </template>
   </el-dialog>

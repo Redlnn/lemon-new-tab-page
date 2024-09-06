@@ -29,7 +29,9 @@ const settingsStore = useSettingsStore()
     </el-select>
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">{{ i18n.t('newtab.settings.search.search_suggestion_provider') }}</div>
+    <div class="settings-label">
+      {{ i18n.t('newtab.settings.search.search_suggestion_provider') }}
+    </div>
     <el-select
       v-model="settingsStore.search.selectedSearchSuggestionAPI"
       style="width: 100px"

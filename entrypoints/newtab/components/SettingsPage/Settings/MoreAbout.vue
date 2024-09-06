@@ -20,7 +20,9 @@ const year = useDateFormat(useNow(), 'YYYY')
       <p class="ext-desc">{{ i18n.t('newtab.settings.about.version') }} {{ version }}</p>
     </div>
     <div class="ext-links">
-      <a href="https://github.com/Redlnn/lemon-new-tab-page/" target="_blank">{{ i18n.t('newtab.settings.about.project_url') }}</a>
+      <a href="https://github.com/Redlnn/lemon-new-tab-page/" target="_blank">{{
+        i18n.t('newtab.settings.about.project_url')
+      }}</a>
       <a
         href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
         target="_blank"

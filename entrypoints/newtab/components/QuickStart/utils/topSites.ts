@@ -30,7 +30,11 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   await blockedTopStitesStorage.setValue(blockedTopStites)
   ElMessage({
     message: h('p', null, [
-      h('span', { style: { color: 'var(--el-color-success)' } }, i18n.t('newtab.quickstart.remove_top_message.content')),
+      h(
+        'span',
+        { style: { color: 'var(--el-color-success)' } },
+        i18n.t('newtab.quickstart.remove_top_message.content')
+      ),
       h(
         'span',
         {
