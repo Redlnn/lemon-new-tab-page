@@ -51,3 +51,9 @@ newtab:
       edge_extension_url: Edge 商店地址
       yiyan_api_provider: 一言 API 来自：
       license: 本项目使用 MIT 协议开源
+    search:
+      title: 搜索设置
+      default_search_engine: 搜索引擎
+      search_suggestion_provider: 搜索建议API
+      open_in_new_tab: 在新标签页中打开
+      record_history: 记录搜索历史
