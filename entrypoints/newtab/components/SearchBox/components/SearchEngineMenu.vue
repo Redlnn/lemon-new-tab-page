@@ -53,7 +53,7 @@ const settingsStore = useSettingsStore()
 
 <style lang="scss">
 .search-engine-menu.is-customized {
-  width: 220px;
+  min-width: 210px;
   padding: 5px;
   background-color: var(--el-bg-color);
   --el-popper-border-radius: 10px;
@@ -88,6 +88,7 @@ const settingsStore = useSettingsStore()
     font-size: 11px;
     height: 20px;
     color: var(--el-text-color-secondary);
+    padding: 0 10px;
 
     .kdb {
       border: solid 1px currentColor;
