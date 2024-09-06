@@ -6,6 +6,7 @@ import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { h, onMounted, ref, watch } from 'vue'
 
+import { i18n } from '@/.wxt/i18n'
 import { useFocusStore } from '@/entrypoints/newtab/js/store'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 import {
@@ -54,7 +55,11 @@ async function removeBookmark(index: number) {
   await saveBookmark(_.cloneDeep(bookmarkStore))
   ElMessage({
     message: h('p', null, [
-      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除该置顶链接'),
+      h(
+        'span',
+        { style: { color: 'var(--el-color-success)' } },
+        i18n.t('newtab.quickstart.remove_pinned_message.content')
+      ),
       h(
         'span',
         {
@@ -68,7 +73,7 @@ async function removeBookmark(index: number) {
             await reloadQS()
           }
         },
-        '撤销'
+        i18n.t('newtab.quickstart.remove_pinned_message.restore')
       )
     ]),
     type: 'success'
@@ -130,7 +135,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
               <el-icon>
                 <pin-off16-regular />
               </el-icon>
-              取消置顶
+              {{ i18n.t('newtab.quickstart.unpin') }}
             </span>
           </el-dropdown-item>
         </template>
@@ -158,7 +163,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
               <el-icon>
                 <clear-round />
               </el-icon>
-              移除
+              {{i18n.t('newtab.quickstart.remove')}}
             </span>
           </el-dropdown-item>
           <el-dropdown-item>
@@ -169,7 +174,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
               <el-icon>
                 <pin16-regular />
               </el-icon>
-              置顶
+              {{i18n.t('newtab.quickstart.pin')}}
             </span>
           </el-dropdown-item>
         </template>

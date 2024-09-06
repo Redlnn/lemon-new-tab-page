@@ -80,3 +80,22 @@ newtab:
         confirm: 对
         cancel: 算了
         restoring: 正在恢复默认快捷方式...
+  quickstart:
+    add_new_quickstart: 添加快速访问
+    pin: 置顶
+    unpin: 取消置顶
+    remove: 移除
+    add_dialog:
+      dialog_title: 添加快速访问
+      title: 标题
+      url: 地址
+      confirm: 好了
+      cancel: 不好
+      invalid_url_error: 无效的网址，请重新输入~
+    remove_top_message:
+      content: 已移除快捷方式
+      restore: 撤销
+      restore_default: 恢复默认快捷方式
+    remove_pinned_message:
+      content: 已移除该置顶链接
+      restore: 撤销
