@@ -92,7 +92,7 @@ export const defaultSettings: SettingsInterface = {
     showMeridiem: false
   },
   search: {
-    selectedSearchSuggestionAPI: '百度',
+    selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 0,
     searchInNewTab: false,
     recordSearchHistory: true,
