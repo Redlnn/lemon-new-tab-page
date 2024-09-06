@@ -15,7 +15,7 @@ export default defineConfig({
     icons: {
       512: '/icon.png'
     },
-    permissions: import.meta.env.CHROME || import.meta.env.EDGE ? ['topSites', 'storage', 'favicon'] : ['topSites', 'storage'],
+    permissions: ['topSites', 'storage', 'favicon'],
     host_permissions: [
       'https://cn.bing.com/',
       'https://api.bing.com/',

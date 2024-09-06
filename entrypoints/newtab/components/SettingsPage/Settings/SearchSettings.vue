@@ -38,7 +38,7 @@ const settingsStore = useSettingsStore()
       <el-option
         v-for="name in Object.keys(searchSuggestAPIs)"
         :key="name"
-        :label="searchSuggestAPIs.name.name"
+        :label="searchSuggestAPIs[name].name"
         :value="name"
       />
     </el-select>
