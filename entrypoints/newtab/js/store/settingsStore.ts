@@ -175,7 +175,7 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
 
 export async function initSettings() {
   let settings
-  if (import.meta.env.BROWSER === 'chrome') {
+  if (import.meta.env.CHROME || import.meta.env.EDGE) {
     const oldSettings = <{ settings: OldSettingsInterface } | undefined | null>(
       await chrome.storage.local.get('settings')
     )

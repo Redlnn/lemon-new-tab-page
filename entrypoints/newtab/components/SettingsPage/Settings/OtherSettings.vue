@@ -15,7 +15,7 @@ import {
 } from '@/entrypoints/newtab/js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
-const isChrome = import.meta.env.BROWSER === 'chrome'
+const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
 async function confirmClearExtensionData() {
   try {
