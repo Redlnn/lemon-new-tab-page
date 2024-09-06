@@ -15,8 +15,7 @@ import {
   useSettingsStore
 } from '@/entrypoints/newtab/js/store/settingsStore'
 
-import { isChrome } from './utils'
-
+const isGoogleChrome = import.meta.env.CHROME
 const settingsStore = useSettingsStore()
 
 async function confirmClearExtensionData() {
@@ -68,7 +67,7 @@ async function clearExtensionData() {
       @click="confirmClearExtensionData"
     />
   </div>
-  <div class="settings-item" v-if="isChrome">
+  <div class="settings-item" v-if="isGoogleChrome">
     <div class="settings-label">{{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}</div>
     <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
       {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}

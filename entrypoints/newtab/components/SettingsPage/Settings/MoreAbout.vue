@@ -38,11 +38,6 @@ const year = useDateFormat(useNow(), 'YYYY')
         target="_blank"
         >{{ i18n.t('newtab.settings.about.firefox_extension_url') }}</a
       >
-      <a
-        href="https://addons.mozilla.org/zh-CN/firefox/addon/%E6%9F%A0%E6%AA%AC%E8%B5%B7%E5%A7%8B%E9%A1%B5/"
-        target="_blank"
-        >Firefox 商店地址</a
-      >
     </div>
     <div class="ext-links">
       <span>
