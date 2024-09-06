@@ -73,7 +73,7 @@ async function removeBookmark(index: number) {
             await reloadQS()
           }
         },
-        i18n.t('newtab.quickstart.remove_pinned_message.restore')
+        i18n.t('newtab.quickstart.remove_pinned_message.revoke')
       )
     ]),
     type: 'success'

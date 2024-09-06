@@ -38,7 +38,7 @@ newtab:
         (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。
       confirm_purge_data:
         title: 确定要清除所有数据吗?
-        messgae: 将会重置扩展设置、已忽略的最常访问站点、已选择的背景图片。
+        messgae: 该操作将会重置扩展设置、已忽略的最常访问站点、已置顶或收藏的站点、已选择的背景图片等。
         confirm: 好
         cancel: 算了
         purging: 正在清除扩展数据...
@@ -94,11 +94,11 @@ newtab:
       invalid_url_error: 无效的网址，请重新输入~
     remove_top_message:
       content: 已移除快捷方式
-      restore: 撤销
+      revoke: 撤销
       restore_default: 恢复默认快捷方式
     remove_pinned_message:
       content: 已移除该置顶链接
-      restore: 撤销
+      revoke: 撤销
   search:
     placeholder: 搜索
     purge_search_history: 清除搜索历史

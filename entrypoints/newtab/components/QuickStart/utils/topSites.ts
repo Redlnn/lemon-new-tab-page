@@ -44,7 +44,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18n.t('newtab.quickstart.remove_top_message.restore')
+        i18n.t('newtab.quickstart.remove_top_message.revoke')
       ),
       h(
         'span',
