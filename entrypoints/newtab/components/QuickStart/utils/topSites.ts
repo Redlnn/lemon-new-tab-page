@@ -6,9 +6,9 @@ import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesS
 
 async function getTopSites() {
   let topSites
-  if (import.meta.env.BROWSER === 'chrome') {
+  if (import.meta.env.CHROME || import.meta.env.EDGE) {
     topSites = await browser.topSites.get()
-  } else if (import.meta.env.BROWSER === 'firefox') {
+  } else if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })
   } else {
     throw new Error('Unsupported browser')
