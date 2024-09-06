@@ -1,5 +1,6 @@
 {
-  "i18n-ally.localesPaths": ["src/locales"],
+  "i18n-ally.localesPaths": ["locales"],
+  "i18n-ally.fullReloadOnChanged": true,
   "i18n-ally.keystyle": "nested",
   "markdownlint.config": {
     "MD033": false

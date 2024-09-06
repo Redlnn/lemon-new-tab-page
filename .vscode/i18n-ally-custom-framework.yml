@@ -2,6 +2,10 @@
 # You can check available language ids here: https://code.visualstudio.com/docs/languages/identifiers
 languageIds:
   - typescript
+  - javascript
+  - vue
+  - vue-html
+  - html
 
 # Look for t("...")
 usageMatchRegex:
