@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { i18n } from '@/.wxt/i18n'
 import { searchEngines } from '@/entrypoints/newtab/js/api/search'
 import { useFocusStore } from '@/entrypoints/newtab/js/store'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
@@ -34,14 +35,14 @@ const settingsStore = useSettingsStore()
           v-if="index === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
-          当前
+          {{ i18n.t('newtab.search.search_engine_menu.current') }}
         </div>
       </div>
       <el-divider />
       <div class="tip">
-        <span>Tip: 按下</span>
+        <span>{{ i18n.t('newtab.search.search_engine_menu.tip_prefix') }}</span>
         <kbd class="kdb">Tab</kbd>
-        <span>切换搜索引擎</span>
+        <span>{{ i18n.t('newtab.search.search_engine_menu.tip_suffix') }}</span>
       </div>
     </template>
     <el-icon class="search-engine-icon">

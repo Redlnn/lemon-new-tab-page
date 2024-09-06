@@ -3,6 +3,7 @@ import { TrashAlt } from '@vicons/fa'
 import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
+import { i18n } from '@/.wxt/i18n'
 import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
 import { searchSuggestAPIs } from '@/entrypoints/newtab/js/api/search'
 import { useFocusStore } from '@/entrypoints/newtab/js/store'
@@ -46,9 +47,9 @@ const showSuggestionsDebounced = useDebounceFn(showSuggestions, 200)
 
 async function showSuggestions() {
   if (props.searchText.length <= 0) return
-  const suggestions = await searchSuggestAPIs[settingsStore.search.selectedSearchSuggestionAPI](
-    props.searchText
-  )
+  const suggestions = await searchSuggestAPIs[
+    settingsStore.search.selectedSearchSuggestionAPI
+  ].parser(props.searchText)
   searchSuggestions.value = suggestions
 }
 function clearActiveSuggest() {
@@ -137,7 +138,7 @@ defineExpose({
       @click="clearSearchHistories()"
     >
       <el-icon style="margin-right: 5px"><trash-alt /></el-icon>
-      <span>清除历史记录</span>
+      <span>{{ i18n.t('newtab.search.purge_search_history') }}</span>
     </div>
   </div>
 </template>

@@ -1,5 +1,7 @@
 import type { Component } from 'vue'
 
+import { i18n } from '@/.wxt/i18n'
+
 import Baidu from '@/entrypoints/newtab/assets/baidu.svg?component'
 import Bing from '@/entrypoints/newtab/assets/bing.svg?component'
 import { Google } from '@vicons/fa'
@@ -13,29 +15,30 @@ interface SearchEngine {
 }
 
 interface SearchSuggestAPI {
-  [text: string]: (text: string) => Promise<string[]>
+  name: string
+  parser: (text: string) => Promise<string[]>
 }
 
 export const searchEngines: SearchEngine[] = [
   {
-    name: '必应',
+    name: i18n.t('newtab.search_engine_menu.bing'),
     url: 'https://www.bing.com/search?q=%s',
     icon: Bing
   },
   {
-    name: '百度',
+    name: i18n.t('newtab.search_engine_menu.baidu'),
     url: 'https://www.baidu.com/#ie=utf-8&wd=%s',
     icon: Baidu
   },
   {
-    name: '谷歌',
+    name: i18n.t('newtab.search_engine_menu.google'),
     url: 'https://www.google.com/search?q=%s',
     icon: Google
   }
 ]
 
-export const searchSuggestAPIs: SearchSuggestAPI = {
-  必应: bingSuggestParser,
-  百度: baiduSuggestParser,
-  谷歌: googleSuggestParser
+export const searchSuggestAPIs: Record<string, SearchSuggestAPI> = {
+  google: { name: i18n.t('newtab.search_engine_menu.google'), parser: googleSuggestParser },
+  baidu: { name: i18n.t('newtab.search_engine_menu.baidu'), parser: baiduSuggestParser },
+  bing: { name: i18n.t('newtab.search_engine_menu.bing'), parser: bingSuggestParser }
 }

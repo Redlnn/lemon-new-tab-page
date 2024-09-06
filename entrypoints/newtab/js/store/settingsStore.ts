@@ -173,6 +173,12 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
   }
 }
 
+const searchSuggestAPIsMap: Record<string, string> = {
+  百度: 'baidu',
+  必应: 'bing',
+  谷歌: 'google'
+}
+
 export async function initSettings() {
   let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
@@ -183,6 +189,12 @@ export async function initSettings() {
     settings = await settingsStorage.getValue()
 
     if (oldSettings && oldSettings.settings) {
+      if (
+        Object.keys(searchSuggestAPIsMap).includes(oldSettings.settings.selectedSearchSuggestionAPI)
+      ) {
+        oldSettings.settings.selectedSearchSuggestionAPI =
+          searchSuggestAPIsMap[oldSettings.settings.selectedSearchSuggestionAPI]
+      }
       if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
         settings = migrate(oldSettings.settings)
         await saveSettings(settings)

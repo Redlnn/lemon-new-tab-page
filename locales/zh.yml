@@ -99,3 +99,14 @@ newtab:
     remove_pinned_message:
       content: 已移除该置顶链接
       restore: 撤销
+  search:
+    placeholder: 搜索
+    purge_search_history: 清除搜索历史
+    search_engine_menu:
+      current: 当前
+      tip_prefix: 'Tip: 按下'
+      tip_suffix: 切换搜索引擎
+  search_engine_menu:
+    bing: 必应
+    google: Google
+    baidu: 百度
