@@ -57,6 +57,13 @@ newtab:
       search_suggestion_provider: 搜索建议API
       open_in_new_tab: 在新标签页中打开
       record_history: 记录搜索历史
+    theme:
+      title: 主题设置
+      color_scheme: 颜色方案
+      dark_mode: 黑暗模式
+      light_mode: 浅色模式
+      system_mode: 跟随系统
+      primary_color: 主题色
     quickstart:
       title: 快速访问
       enable: 启用

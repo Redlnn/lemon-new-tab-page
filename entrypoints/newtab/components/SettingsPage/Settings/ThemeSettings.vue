@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import { useColorMode } from '@vueuse/core'
 
 import changeTheme from '@/entrypoints/newtab/js/use-element-plus-theme'
+import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 import autoMode from '@/entrypoints/newtab/assets/color/auto-mode.svg?url'
@@ -29,18 +30,18 @@ const predefineColors = ref([
 <template>
   <h3 class="settings-title">
     <el-icon><color-lens-outlined /></el-icon>
-    <span>主题设置</span>
+    <span>{{ i18n.t('newtab.settings.theme.title') }}</span>
   </h3>
   <div class="settings-item">
-    <div class="settings-label">深色模式</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.theme.color_scheme') }}</div>
     <div class="theme-mode">
-      <el-tooltip content="跟随系统" placement="top">
+      <el-tooltip :content="i18n.t('newtab.settings.theme.system_mode')" placement="top">
         <span class="theme-item" @click="colorMode = 'auto'">
           <img :src="autoMode" />
           <span class="selected"><selected /></span>
         </span>
       </el-tooltip>
-      <el-tooltip content="浅色模式" placement="top">
+      <el-tooltip :content="i18n.t('newtab.settings.theme.light_mode')" placement="top">
         <span
           class="theme-item"
           :class="{ active: colorMode === 'light' }"
@@ -50,7 +51,7 @@ const predefineColors = ref([
           <span class="selected"><selected /></span>
         </span>
       </el-tooltip>
-      <el-tooltip content="深色模式" placement="top">
+      <el-tooltip :content="i18n.t('newtab.settings.theme.dark_mode')" placement="top">
         <span
           class="theme-item"
           :class="{ active: colorMode === 'dark' }"
@@ -63,7 +64,7 @@ const predefineColors = ref([
     </div>
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">主题颜色</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.theme.primary_color') }}</div>
     <div class="color-mode">
       <el-color-picker
         v-model="settingsStore.primaryColor"
