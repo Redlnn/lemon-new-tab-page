@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
-import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
+import { isImageFile } from '@/entrypoints/newtab/js/img'
 import {
   BgType,
   uploadBackgroundImage,

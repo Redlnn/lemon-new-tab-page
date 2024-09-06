@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { storage } from 'wxt/storage'
 import { v4 as uuidv4 } from 'uuid'
 
-import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
+import { isImageFile } from '@/entrypoints/newtab/js/img'
 import { useWallpaperStore } from './wallpaperStore'
 
 const CURRENT_CONFIG_VERSION = 2

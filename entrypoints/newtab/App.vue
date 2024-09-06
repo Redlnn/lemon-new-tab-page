@@ -17,7 +17,7 @@ import YiYan from './components/YiYan.vue'
 import changeTheme from './js/use-element-plus-theme'
 import changelog from './changelog'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
-import { verifyImageUrl } from './js/utils/img'
+import { verifyImageUrl } from './js/img'
 import {
   BgType,
   initSettings,
