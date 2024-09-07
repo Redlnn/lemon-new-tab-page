@@ -6,8 +6,7 @@ import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesS
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
-import { isChrome } from './utils'
-
+const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const settingsStore = useSettingsStore()
 
 async function restoreDefaultTopSites() {

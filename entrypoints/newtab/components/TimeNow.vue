@@ -37,22 +37,21 @@ function customMeridiem(hours: number) {
   }
 }
 
+const isChinese = browser.i18n.getMessage('@@ui_locale').startsWith('zh')
 const timeNowHour: ComputedRef<string> = useDateFormat(useNow(), 'HH')
 const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(useNow(), 'h')
 const timeNowMinute = useDateFormat(useNow(), 'mm')
-const timeNowMeridiemCN = useDateFormat(useNow(), 'aa', { customMeridiem })
+const timeNowMeridiemZH = useDateFormat(useNow(), 'aa', { customMeridiem })
 const timeNowMeridiem = useDateFormat(useNow(), 'A')
 </script>
 
 <template>
   <div class="time" ref="time">
     <span
-      v-if="
-        settingsStore.time.showMeridiem && browser.i18n.getMessage('@@ui_locale').startsWith('zh')
-      "
+      v-if="settingsStore.time.showMeridiem && isChinese"
       class="meridiem"
       style="margin-right: 5px"
-      >{{ timeNowMeridiemCN }}</span
+      >{{ timeNowMeridiemZH }}</span
     >
     <span>
       <span class="hour">{{
@@ -62,9 +61,7 @@ const timeNowMeridiem = useDateFormat(useNow(), 'A')
       <span class="minute">{{ timeNowMinute }}</span>
     </span>
     <span
-      v-if="
-        settingsStore.time.showMeridiem && !browser.i18n.getMessage('@@ui_locale').startsWith('zh')
-      "
+      v-if="settingsStore.time.showMeridiem && !isChinese"
       class="meridiem"
       style="margin-left: 5px"
       >{{ timeNowMeridiem }}</span
