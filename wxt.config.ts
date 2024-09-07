@@ -11,7 +11,7 @@ export default defineConfig({
     name: '__MSG_extension_name__',
     author: 'Red_lnn<lemon@redlnn.top>',
     description: '__MSG_extension_description__',
-    default_locale: 'zh',
+    default_locale: 'zh_CN',
     icons: {
       512: '/icon.png'
     },
