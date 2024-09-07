@@ -1,5 +1,5 @@
-import { browser } from 'wxt/browser'
 import 'dayjs/locale/zh-cn'
+import { browser } from 'wxt/browser'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 

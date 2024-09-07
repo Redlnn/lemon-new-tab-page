@@ -49,7 +49,7 @@ const changelog = h('section', { class: 'update-content' }, [
     ),
     h('li', null, 'Remove Herobrine')
   ]),
-  h('h5', null, 'Translate by Copilot.'),
+  h('h5', null, 'Translate by Copilot.')
 ])
 
 const _ = browser.i18n.getMessage('@@ui_locale').startsWith('zh') ? changelogZH : changelog
