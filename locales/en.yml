@@ -1,9 +1,14 @@
 extension:
+  # ==> A Fxxxing Restriction from Microsoft <==
+  # Message: Can't publish extension as the package is not valid.
+  # Error: Package acceptance validation error.
+  # The translation for field Description in locale en is too long.
+  # It exceeds maximum size limit of 132 characters.
   name: Lemon New Tab
   description: >
-    An open-source, simple, beautiful, and user-friendly browser start page extension.
-    It features search suggestions, Bing wallpaper functionality, the ability to add quick access websites,
-    and display the most frequently visited sites.
+    An open-source, simple, user-friendly start page.
+    You can search or custom wallpaper.
+    It can also display the most visited links.
 newtab:
   title: New Tab
   settings:
