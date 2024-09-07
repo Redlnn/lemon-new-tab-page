@@ -1,0 +1,106 @@
+extension:
+  name: 檸檬起始頁
+  description: >
+    一個開源、簡潔、美觀且方便使用的瀏覽器起始頁。頁面上可直接開始搜索，支持
+    Bing 每日一圖，可添加捷徑並展示最常訪問網站。
+newtab:
+  title: 新標籤頁
+  settings:
+    background:
+      title: 背景設定
+      type:
+        title: 背景類型
+        none: 無
+        local: 本地圖片
+        bing: Bing每日一圖
+      vignette: 暗角
+      blur: 模糊強度
+      mask_opacity: 遮罩不透明度
+      error:
+        file_is_not_a_image: 所選檔不是圖片!
+    clock:
+      title: 時鐘設定
+      use_12h_clock: 12小時制
+      show_ampm: 顯示“上午”/“下午”
+    other:
+      title: 其他設定
+      yiyan: 一言
+      purge_data: 清除本擴展資料
+      want_to_customize_chrome: 要自訂Chrome？
+      customize_chrome_tips: >
+        假如你要自訂 Chrome（例如更改顏色主題）的話，你只能打開Chrome 的原生新標籤頁
+        (chrome://new-tab-page) 並點擊右下角的圖示來打開“自訂 Chrome”側邊欄。
+      confirm_purge_data:
+        title: 確定要清除所有資料嗎?
+        messgae: 該操作將會重置擴展設定、已忽略的最常訪問網站、已置頂或收藏的網站、已選擇的背景圖片等。
+        confirm: 好
+        cancel: 算了
+        purging: 正在清除擴展資料...
+    about:
+      title: 關於
+      version: 當前版本
+      project_url: 項目位址
+      chrome_extension_url: Chrome 商店連結
+      firefox_extension_url: Firefox 商店連結
+      edge_extension_url: Edge 商店連結
+      yiyan_api_provider: 一言 API 來自：
+      license: 本項目使用 MIT 協定開源
+    search:
+      title: 搜索設定
+      default_search_engine: 搜尋引擎
+      search_suggestion_provider: 搜尋建議API
+      open_in_new_tab: 在新標籤頁中打開
+      record_history: 記錄搜索歷史
+    theme:
+      title: 主題設定
+      color_scheme: 顏色方案
+      dark_mode: 黑暗模式
+      light_mode: 淺色模式
+      system_mode: 跟隨系統
+      primary_color: 主題色
+    quickstart:
+      title: 捷徑設定
+      enable: 啟用
+      show_tops: 展示最常訪問
+      show_pinned_icon: 展示置頂圖標
+      show_title: 顯示標題
+      max_rows: 最大行數
+      max_columns: 最大列數
+      max_items_tip_chrome: 最常訪問的上限只有10個噢~
+      link_width: 連結寬度
+      restore_default: 恢復預設捷徑
+      restore_default_confirm:
+        title: 你確定要恢復預設捷徑嗎
+        confirm: 對
+        cancel: 算了
+        restoring: 正在恢復預設捷徑...
+  quickstart:
+    add_new_quickstart: 添加捷徑
+    pin: 置頂
+    unpin: 取消置頂
+    remove: 移除
+    add_dialog:
+      dialog_title: 添加捷徑
+      title: 標題
+      url: 連結
+      confirm: 好了
+      cancel: 不好
+      invalid_url_error: 無效的網址，請重新輸入~
+    remove_top_message:
+      content: 已移除捷徑
+      revoke: 撤銷
+      restore_default: 恢復預設捷徑
+    remove_pinned_message:
+      content: 已移除該置頂連結
+      revoke: 撤銷
+  search:
+    placeholder: 搜索
+    purge_search_history: 清除搜索歷史
+    search_engine_menu:
+      current: 當前
+      tip_prefix: 'Tip: 按下'
+      tip_suffix: 切換搜尋引擎
+  search_engine_menu:
+    bing: 必應
+    google: Google
+    baidu: 百度
