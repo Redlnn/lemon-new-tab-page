@@ -66,7 +66,7 @@ newtab:
       system_mode: Follow System
       primary_color: Primary Color
     quickstart:
-      title: Qickstart
+      title: Shortcut Settings
       enable: Enable
       show_tops: Show Most Visited
       show_pinned_icon: Show Pinned Icon
@@ -75,19 +75,19 @@ newtab:
       max_columns: Maximum Columns
       max_items_tip_chrome: 'Tip: The maximum number of most frequently visited links is only 10.'
       link_width: Width of Links
-      restore_default: Restore default quickstart links.
+      restore_default: Restore default shortcut links.
       restore_default_confirm:
-        title: Are you sure to restore default quickstart links?
+        title: Are you sure to restore default shortcut links?
         confirm: Yes
         cancel: No
-        restoring: Restoring default quickstart links...
+        restoring: Restoring default shortcut links...
   quickstart:
-    add_new_quickstart: Add New Quickstart
+    add_new_quickstart: Add a New Shortcut
     pin: Pin
     unpin: Unpin
     remove: Remove
     add_dialog:
-      dialog_title: Add New Quickstart
+      dialog_title: New Shortcut
       title: Title
       url: URL
       confirm: OK
@@ -96,7 +96,7 @@ newtab:
     remove_top_message:
       content: Removed from most visited.
       revoke: Revoke
-      restore_default: Restore default quickstart links
+      restore_default: Restore default shortcut links
     remove_pinned_message:
       content: Removed from pinned links.
       revoke: Revoke
