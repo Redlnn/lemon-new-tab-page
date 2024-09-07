@@ -1,0 +1,108 @@
+extension:
+  name: Lemon New Tab
+  description: >
+    An open-source, simple, beautiful, and user-friendly browser start page extension.
+    It features search suggestions, Bing wallpaper functionality, the ability to add quick access websites,
+    and display the most frequently visited sites.
+newtab:
+  title: New Tab
+  settings:
+    background:
+      title: Background Settings
+      type:
+        title: Background Type
+        none: None
+        local: Local Image
+        bing: Bing Wallpaper (CN Region)
+      vignette: Enable Vignette
+      blur: Blur Intensity
+      mask_opacity: Mask Opacity
+      error:
+        file_is_not_a_image: The selected file is not an image!
+    clock:
+      title: Clock Settings
+      use_12h_clock: 12 Hours Clock
+      show_ampm: Show AM/PM
+    other:
+      title: Other Settings
+      yiyan: Show a line of Chinese poetry when expanding the search box.
+      purge_data: Purge the data of this extension.
+      want_to_customize_chrome: Want to customize Chrome?
+      customize_chrome_tips: >
+        If you want to customize Chrome (for example, change the color theme),
+        you can only open Chrome’s native new tab page (chrome://new-tab-page)
+        and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.
+      confirm_purge_data:
+        title: Are you sure to purge all data of this extension?
+        messgae: This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images, etc.
+        confirm: OK
+        cancel: Cancel
+        purging: Clearing extension data..
+    about:
+      title: About
+      version: Current Version
+      project_url: Project link
+      chrome_extension_url: Link to Chrome Web Store
+      firefox_extension_url: Link to Firefox Add-ons
+      edge_extension_url: Link to Microsoft Edge Add-ons
+      yiyan_api_provider: 'Provider of Chinese poetry API:'
+      license: This project is open source under the MIT license
+    search:
+      title: Search Settings
+      default_search_engine: Search Engine
+      search_suggestion_provider: Search Suggestion API
+      open_in_new_tab: Open in New Tab
+      record_history: Record Search History
+    theme:
+      title: Theme Settings
+      color_scheme: Color Scheme
+      dark_mode: Dark Mode
+      light_mode: Light Mode
+      system_mode: Follow System
+      primary_color: Primary Color
+    quickstart:
+      title: Qickstart
+      enable: Enable
+      show_tops: Show Most Visited
+      show_pinned_icon: Show Pinned Icon
+      show_title: Show Link Title
+      max_rows: Maximum Rows
+      max_columns: Maximum Columns
+      max_items_tip_chrome: 'Tip: The maximum number of most frequently visited links is only 10.'
+      link_width: Width of Links
+      restore_default: Restore default quickstart links.
+      restore_default_confirm:
+        title: Are you sure to restore default quickstart links?
+        confirm: Yes
+        cancel: No
+        restoring: Restoring default quickstart links...
+  quickstart:
+    add_new_quickstart: Add New Quickstart
+    pin: Pin
+    unpin: Unpin
+    remove: Remove
+    add_dialog:
+      dialog_title: Add New Quickstart
+      title: Title
+      url: URL
+      confirm: OK
+      cancel: Cancel
+      invalid_url_error: Invalid URL. Please input a new one
+    remove_top_message:
+      content: Removed from most visited.
+      revoke: Revoke
+      restore_default: Restore default quickstart links
+    remove_pinned_message:
+      content: Removed from pinned links.
+      revoke: Revoke
+  search:
+    placeholder: Search
+    purge_search_history: Purge Search History
+    search_engine_menu:
+      current: Current
+      tip_prefix: 'Tip: Press'
+      tip_suffix: to switch search engine.
+  search_engine_menu:
+    bing: Bing
+    google: Google
+    baidu: Baidu

@@ -1,7 +1,7 @@
 import axios from '@/entrypoints/newtab/js/plugins/axios'
 import { useBingWallpaperStore } from '@/entrypoints/newtab/js/store/wallpaperStore'
 import { v4 as uuidv4 } from 'uuid'
-import { isImageFile, verifyImageUrl } from '@/entrypoints/newtab/js/utils/img'
+import { isImageFile, verifyImageUrl } from '@/entrypoints/newtab/js/img'
 import { saveSettings, useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
 interface BingWallpaperResp {

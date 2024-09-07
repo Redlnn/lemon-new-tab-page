@@ -3,6 +3,7 @@ import { browser } from 'wxt/browser'
 import { h } from 'vue'
 
 import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { i18n } from '@/.wxt/i18n'
 
 async function getTopSites() {
   let topSites
@@ -29,7 +30,11 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   await blockedTopStitesStorage.setValue(blockedTopStites)
   ElMessage({
     message: h('p', null, [
-      h('span', { style: { color: 'var(--el-color-success)' } }, '已移除快捷方式'),
+      h(
+        'span',
+        { style: { color: 'var(--el-color-success)' } },
+        i18n.t('newtab.quickstart.remove_top_message.content')
+      ),
       h(
         'span',
         {
@@ -39,7 +44,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        '撤销'
+        i18n.t('newtab.quickstart.remove_top_message.revoke')
       ),
       h(
         'span',
@@ -50,7 +55,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        '恢复默认快捷方式'
+        i18n.t('newtab.quickstart.remove_top_message.restore_default')
       )
     ]),
     type: 'success'

@@ -10,6 +10,7 @@ import {
 } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
+import { i18n } from '@/.wxt/i18n'
 import { searchEngines } from '@/entrypoints/newtab/js/api/search'
 import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
 import { useFocusStore } from '@/entrypoints/newtab/js/store'
@@ -164,7 +165,7 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
-        :placeholder="focusStore.isFocused ? '' : '搜索'"
+        :placeholder="focusStore.isFocused ? '' : i18n.t('newtab.search.placeholder')"
         class="search-input"
       />
       <div class="search-btn">

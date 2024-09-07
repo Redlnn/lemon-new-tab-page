@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { storage } from 'wxt/storage'
 import { v4 as uuidv4 } from 'uuid'
 
-import { isImageFile } from '@/entrypoints/newtab/js/utils/img'
+import { isImageFile } from '@/entrypoints/newtab/js/img'
 import { useWallpaperStore } from './wallpaperStore'
 
 const CURRENT_CONFIG_VERSION = 2
@@ -92,7 +92,7 @@ export const defaultSettings: SettingsInterface = {
     showMeridiem: false
   },
   search: {
-    selectedSearchSuggestionAPI: '百度',
+    selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 0,
     searchInNewTab: false,
     recordSearchHistory: true,
@@ -173,6 +173,12 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
   }
 }
 
+const searchSuggestAPIsMap: Record<string, string> = {
+  百度: 'baidu',
+  必应: 'bing',
+  谷歌: 'google'
+}
+
 export async function initSettings() {
   let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
@@ -183,6 +189,12 @@ export async function initSettings() {
     settings = await settingsStorage.getValue()
 
     if (oldSettings && oldSettings.settings) {
+      if (
+        Object.keys(searchSuggestAPIsMap).includes(oldSettings.settings.selectedSearchSuggestionAPI)
+      ) {
+        oldSettings.settings.selectedSearchSuggestionAPI =
+          searchSuggestAPIsMap[oldSettings.settings.selectedSearchSuggestionAPI]
+      }
       if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
         settings = migrate(oldSettings.settings)
         await saveSettings(settings)

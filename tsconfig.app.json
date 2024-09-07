@@ -1,7 +1,11 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["./**/*", "./**/*.vue", "./**/*.ts"],
-  "exclude": ["./.output"],
+  "paths": {
+    "#i18n": ["./.wxt/i18n/index.ts"],
+    "#i18n/*": ["./.wxt/i18n/index.ts/*"]
+  },
+  "include": ["./entrypoints/**/*", "./types/**/*", "./.wxt/i18n/**/*", "./.wxt/types/**/*"],
+  "exclude": ["./.output", "./.wxt/types/imports.d.ts"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

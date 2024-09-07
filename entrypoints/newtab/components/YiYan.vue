@@ -53,29 +53,33 @@ onMounted(() => {
   width: 530px;
   text-align: center;
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-  color: var(--el-fill-color-blank);
+  color: var(--el-fill-color-darker);
   border-radius: 20px;
   padding: 6px 14px;
-  transition: all 0.25s ease-in-out;
-
-  .yiyan-content {
-    transition: all 0.25s ease-in-out;
-  }
+  transition:
+    background-color 0.25s ease-in-out,
+    backdrop-filter 0.25s ease-in-out,
+    color 0.25s ease-in-out;
 
   .yiyan-extra {
     opacity: 0;
-    transition: all 0.25s ease-in-out;
+    transition: opacity 0.25s ease-in-out;
     margin-top: 8px;
     font-size: 0.95em;
   }
 
   html.dark & {
-    color: var(--el-text-color-primary);
+    color: var(--el-text-color-regular);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+    }
   }
 
   &:hover {
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 90%);
     backdrop-filter: blur(10px);
+    color: var(--el-fill-color-blank);
 
     .yiyan-extra {
       opacity: 1;

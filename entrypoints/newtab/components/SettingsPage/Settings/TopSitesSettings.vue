@@ -3,7 +3,10 @@ import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 
 import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
+
+import { isChrome } from './utils'
 
 const settingsStore = useSettingsStore()
 
@@ -16,26 +19,26 @@ async function restoreDefaultTopSites() {
 <template>
   <h3 class="settings-title">
     <el-icon><appstore-outlined /></el-icon>
-    <span>快速访问</span>
+    <span>{{ i18n.t('newtab.settings.quickstart.title') }}</span>
   </h3>
   <div class="settings-item horizontal">
-    <div class="settings-label">启用</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enable') }}</div>
     <el-switch v-model="settingsStore.quickStart.enabled" size="large" />
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">显示最常访问</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_tops') }}</div>
     <el-switch v-model="settingsStore.quickStart.enableTopSites" size="large" />
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">显示置顶角标</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_pinned_icon') }}</div>
     <el-switch v-model="settingsStore.quickStart.showPinnedIcon" size="large" />
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">显示链接标题</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_title') }}</div>
     <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" size="large" />
   </div>
   <div class="settings-item">
-    <div class="settings-label">最大行数</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.max_rows') }}</div>
     <el-slider
       v-model="settingsStore.quickStart.quickStartRows"
       :step="1"
@@ -48,7 +51,7 @@ async function restoreDefaultTopSites() {
     />
   </div>
   <div class="settings-item">
-    <div class="settings-label">最大列数</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.max_columns') }}</div>
     <el-slider
       v-model="settingsStore.quickStart.quickStartColumns"
       :step="1"
@@ -60,11 +63,14 @@ async function restoreDefaultTopSites() {
       :marks="{ 1: '1', 10: '10' }"
     />
   </div>
-  <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
-    最常访问的上限只有10个噢~
+  <p
+    v-if="isChrome"
+    style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px"
+  >
+    {{ i18n.t('newtab.settings.quickstart.max_items_tip_chrome') }}
   </p>
   <div class="settings-item quickstart-item-width">
-    <div class="settings-label">链接宽度</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.link_width') }}</div>
     <el-slider
       v-model="settingsStore.quickStart.quickStartItemWidth"
       :min="80"
@@ -75,14 +81,14 @@ async function restoreDefaultTopSites() {
     />
   </div>
   <div class="settings-item horizontal">
-    <div class="settings-label">恢复默认快捷方式</div>
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restore_default') }}</div>
     <el-popconfirm
       width="220"
-      confirm-button-text="好"
-      cancel-button-text="算了"
+      :confirm-button-text="i18n.t('newtab.settings.quickstart.restore_default_confirm.confirm')"
+      :cancel-button-text="i18n.t('newtab.settings.quickstart.restore_default_confirm.cancel')"
       :icon="RestoreRound"
       icon-color="#626AEF"
-      title="你确定要恢复默认快捷方式吗？"
+      :title="i18n.t('newtab.settings.quickstart.restore_default_confirm.title')"
       @confirm="restoreDefaultTopSites()"
     >
       <template #reference>

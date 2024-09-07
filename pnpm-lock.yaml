@@ -81,6 +81,9 @@ importers:
       '@vueuse/core':
         specifier: ^11.0.3
         version: 11.0.3(vue@3.5.0(typescript@5.5.4))
+      '@wxt-dev/i18n':
+        specifier: ^0.1.0
+        version: 0.1.0(wxt@0.19.8(@types/chrome@0.0.270)(@types/node@22.5.2)(rollup@4.21.2)(sass@1.77.8))
       '@wxt-dev/module-vue':
         specifier: ^1.0.1
         version: 1.0.1(vite@5.4.2(@types/node@22.5.2)(sass@1.77.8))(vue@3.5.0(typescript@5.5.4))(wxt@0.19.8(@types/chrome@0.0.270)(@types/node@22.5.2)(rollup@4.21.2)(sass@1.77.8))
@@ -883,6 +886,14 @@ packages:
 
   '@webext-core/match-patterns@1.0.3':
     resolution: {integrity: sha512-NY39ACqCxdKBmHgw361M9pfJma8e4AZo20w9AY+5ZjIj1W2dvXC8J31G5fjfOGbulW9w4WKpT8fPooi0mLkn9A==}
+
+  '@wxt-dev/i18n@0.1.0':
+    resolution: {integrity: sha512-qK3S8iyKFnr1MO8eLFKW/ek5pYkMuXQTLEA944H34iR+9hBuvtPFQtzw5iAlu3idm1qKy2tf6j3X8D3pnM/RNA==}
+    peerDependencies:
+      wxt: '>=0.19.7'
+    peerDependenciesMeta:
+      wxt:
+        optional: true
 
   '@wxt-dev/module-vue@1.0.1':
     resolution: {integrity: sha512-tGEs1nCVwZ3qvDC2eBqfhWsEB/Wiqz6wFbsyK91w/dW3djsYvz3VO7xs+LNZPKqqXZg6CE81KpyLwzUJC+JhQQ==}
@@ -3696,6 +3707,14 @@ snapshots:
       is-potential-custom-element-name: 1.0.1
 
   '@webext-core/match-patterns@1.0.3': {}
+
+  '@wxt-dev/i18n@0.1.0(wxt@0.19.8(@types/chrome@0.0.270)(@types/node@22.5.2)(rollup@4.21.2)(sass@1.77.8))':
+    dependencies:
+      chokidar: 3.6.0
+      confbox: 0.1.7
+      fast-glob: 3.3.2
+    optionalDependencies:
+      wxt: 0.19.8(@types/chrome@0.0.270)(@types/node@22.5.2)(rollup@4.21.2)(sass@1.77.8)
 
   '@wxt-dev/module-vue@1.0.1(vite@5.4.2(@types/node@22.5.2)(sass@1.77.8))(vue@3.5.0(typescript@5.5.4))(wxt@0.19.8(@types/chrome@0.0.270)(@types/node@22.5.2)(rollup@4.21.2)(sass@1.77.8))':
     dependencies:

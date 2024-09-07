@@ -4,6 +4,7 @@ import _ from 'lodash'
 import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
+import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 import { saveBookmark, useBookmarkStore } from '@/entrypoints/newtab/js/store/bookmarkStore'
 
@@ -31,7 +32,7 @@ async function add() {
   try {
     new URL(data.url)
   } catch (e) {
-    ElMessage.error('无效的网址，请重新输入~')
+    ElMessage.error(i18n.t('newtab.quickstart.add_dialog.invalid_url_error'))
     data.url = ''
     return
   }
@@ -40,9 +41,16 @@ async function add() {
     title: data.title
   })
   await saveBookmark(_.cloneDeep(bookmarkStore))
-  modelForm.value?.resetFields()
   await props.reload()
   showDialog.value = false
+  modelForm.value?.resetFields()
+  data.title = ''
+  data.url = ''
+}
+
+async function cancel() {
+  showDialog.value = false
+  modelForm.value?.resetFields()
   data.title = ''
   data.url = ''
 }
@@ -64,29 +72,39 @@ async function add() {
         <add-round />
       </div>
       <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
-        添加快速访问
+        {{ i18n.t('newtab.quickstart.add_new_quickstart') }}
       </div>
     </div>
   </div>
   <el-dialog
     v-model="showDialog"
-    title="添加快速访问"
+    :title="i18n.t('newtab.quickstart.add_dialog.dialog_title')"
     width="400px"
     append-to-body
     destroy-on-close
   >
     <el-form :inline="true" ref="modelForm" :model="data">
-      <el-form-item label="标题" label-width="70px" prop="userNameCn">
+      <el-form-item
+        :label="i18n.t('newtab.quickstart.add_dialog.title')"
+        label-width="70px"
+        prop="userNameCn"
+      >
         <el-input v-model="data.title" style="width: 250px" />
       </el-form-item>
-      <el-form-item label="地址" label-width="70px" prop="userCode">
+      <el-form-item
+        :label="i18n.t('newtab.quickstart.add_dialog.url')"
+        label-width="70px"
+        prop="userCode"
+      >
         <el-input v-model="data.url" style="width: 250px" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="showDialog = false">不好</el-button>
-        <el-button type="primary" @click="add">好了</el-button>
+        <el-button @click="cancel">{{ i18n.t('newtab.quickstart.add_dialog.cancel') }}</el-button>
+        <el-button type="primary" @click="add">{{
+          i18n.t('newtab.quickstart.add_dialog.confirm')
+        }}</el-button>
       </span>
     </template>
   </el-dialog>
