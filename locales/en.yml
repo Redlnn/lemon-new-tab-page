@@ -18,7 +18,7 @@ newtab:
         title: Background Type
         none: None
         local: Local Image
-        bing: Bing Wallpaper (CN Region)
+        bing: Bing Wallpaper
       vignette: Enable Vignette
       blur: Blur Intensity
       mask_opacity: Mask Opacity

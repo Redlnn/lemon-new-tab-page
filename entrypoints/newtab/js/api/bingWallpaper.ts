@@ -53,7 +53,7 @@ export async function getBingWallpaperURL() {
   }
 
   const response = await axios.get(
-    'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN'
+    'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN'
   )
 
   if (response.status !== 200) {
@@ -61,12 +61,12 @@ export async function getBingWallpaperURL() {
   }
 
   const data: BingWallpaperResp = response.data
-  const resp = await axios.get(`https://cn.bing.com${data.images[0].url}`, {
+  const resp = await axios.get(`https://www.bing.com${data.images[0].url}`, {
     responseType: 'arraybuffer'
   })
 
   if (resp.status !== 200) {
-    return `https://cn.bing.com${data.images[0].url}`
+    return `https://www.bing.com${data.images[0].url}`
   }
 
   const blob = new Blob([resp.data], {

@@ -17,7 +17,7 @@ export default defineConfig({
     },
     permissions: ['topSites', 'storage', 'favicon'],
     host_permissions: [
-      'https://cn.bing.com/',
+      'https://www.bing.com/',
       'https://api.bing.com/',
       'https://suggestion.baidu.com/',
       'https://suggestqueries.google.com/',
