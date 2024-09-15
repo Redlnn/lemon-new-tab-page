@@ -12,6 +12,7 @@ extension:
 newtab:
   title: New Tab
   settings:
+    title: Settings
     background:
       title: Background Settings
       type:

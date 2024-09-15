@@ -10,11 +10,11 @@ const year = useDateFormat(useNow(), 'YYYY')
 </script>
 
 <template>
-  <h3 class="settings-title">
+  <div class="settings-title">
     <el-icon><info-circle-outlined /></el-icon>
     <span>关于</span>
-  </h3>
-  <div class="about">
+  </div>
+  <div class="setting-items-container about">
     <div class="ext-info">
       <p class="ext-name">{{ i18n.t('extension.name') }}</p>
       <p class="ext-desc">{{ i18n.t('newtab.settings.about.version') }} {{ version }}</p>

@@ -6,6 +6,7 @@ extension:
 newtab:
   title: 新标签页
   settings:
+    title: 设置
     background:
       title: 背景设置
       type:

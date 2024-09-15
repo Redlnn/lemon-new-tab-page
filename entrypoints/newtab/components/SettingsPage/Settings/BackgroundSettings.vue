@@ -31,57 +31,63 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
 </script>
 
 <template>
-  <h3 class="settings-title">
+  <div class="settings-title">
     <el-icon><picture-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.background.title') }}</span>
-  </h3>
-  <div class="settings-item">
-    <div class="settings-label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
-    <el-radio-group v-model="settingsStore.background.bgType">
-      <el-radio :value="BgType.None">{{ i18n.t('newtab.settings.background.type.none') }}</el-radio>
-      <el-radio :value="BgType.Local">{{
-        i18n.t('newtab.settings.background.type.local')
-      }}</el-radio>
-      <el-radio :value="BgType.Bing">{{ i18n.t('newtab.settings.background.type.bing') }}</el-radio>
-    </el-radio-group>
   </div>
-  <el-upload
-    v-if="settingsStore.background.bgType === BgType.Local"
-    class="bg-uploader"
-    :show-file-list="false"
-    :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
-    :on-success="handleBackgroundSuccess"
-    :before-upload="beforeBackgroundUpload"
-    accept="image/*"
-  >
-    <img v-if="imageUrl" :src="imageUrl" class="bg-uploader-img" />
-    <el-icon v-else class="bg-uploader-icon"><plus /></el-icon>
-  </el-upload>
-  <div class="settings-item horizontal">
-    <div class="settings-label">{{ i18n.t('newtab.settings.background.vignette') }}</div>
-    <el-switch v-model="settingsStore.background.bgDarkCorners" size="large" />
-  </div>
-  <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
-    <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
-    <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
-  </div>
-  <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
-    <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
-    <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
-  </div>
-  <div class="settings-item horizontal" v-if="settingsStore.background.bgType !== BgType.None">
-    <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_color') }}</div>
-    <el-color-picker
-      v-model="settingsStore.background.maskColor"
-      :predefine="['#fff', '#000']"
-      @change="
-        () => {
-          if (settingsStore.background.maskColor === null) {
-            settingsStore.background.maskColor = '#000'
+  <div class="setting-items-container">
+    <div class="settings-item">
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
+      <el-radio-group v-model="settingsStore.background.bgType">
+        <el-radio :value="BgType.None">{{
+          i18n.t('newtab.settings.background.type.none')
+        }}</el-radio>
+        <el-radio :value="BgType.Local">{{
+          i18n.t('newtab.settings.background.type.local')
+        }}</el-radio>
+        <el-radio :value="BgType.Bing">{{
+          i18n.t('newtab.settings.background.type.bing')
+        }}</el-radio>
+      </el-radio-group>
+    </div>
+    <el-upload
+      v-if="settingsStore.background.bgType === BgType.Local"
+      class="bg-uploader"
+      :show-file-list="false"
+      :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
+      :on-success="handleBackgroundSuccess"
+      :before-upload="beforeBackgroundUpload"
+      accept="image/*"
+    >
+      <img v-if="imageUrl" :src="imageUrl" class="bg-uploader-img" />
+      <el-icon v-else class="bg-uploader-icon"><plus /></el-icon>
+    </el-upload>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.vignette') }}</div>
+      <el-switch v-model="settingsStore.background.bgDarkCorners" />
+    </div>
+    <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
+      <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
+    </div>
+    <div class="settings-item" v-if="settingsStore.background.bgType !== BgType.None">
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
+      <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
+    </div>
+    <div class="settings-item horizontal" v-if="settingsStore.background.bgType !== BgType.None">
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_color') }}</div>
+      <el-color-picker
+        v-model="settingsStore.background.maskColor"
+        :predefine="['#fff', '#000']"
+        @change="
+          () => {
+            if (settingsStore.background.maskColor === null) {
+              settingsStore.background.maskColor = '#000'
+            }
           }
-        }
-      "
-    />
+        "
+      />
+    </div>
   </div>
 </template>
 

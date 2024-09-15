@@ -28,56 +28,58 @@ const predefineColors = ref([
 </script>
 
 <template>
-  <h3 class="settings-title">
+  <div class="settings-title">
     <el-icon><color-lens-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.theme.title') }}</span>
-  </h3>
-  <div class="settings-item">
-    <div class="settings-label">{{ i18n.t('newtab.settings.theme.color_scheme') }}</div>
-    <div class="theme-mode">
-      <el-tooltip :content="i18n.t('newtab.settings.theme.system_mode')" placement="top">
-        <span class="theme-item" @click="colorMode = 'auto'">
-          <img :src="autoMode" />
-          <span class="selected"><selected /></span>
-        </span>
-      </el-tooltip>
-      <el-tooltip :content="i18n.t('newtab.settings.theme.light_mode')" placement="top">
-        <span
-          class="theme-item"
-          :class="{ active: colorMode === 'light' }"
-          @click="colorMode = 'light'"
-        >
-          <img :src="lightMode" />
-          <span class="selected"><selected /></span>
-        </span>
-      </el-tooltip>
-      <el-tooltip :content="i18n.t('newtab.settings.theme.dark_mode')" placement="top">
-        <span
-          class="theme-item"
-          :class="{ active: colorMode === 'dark' }"
-          @click="colorMode = 'dark'"
-        >
-          <img :src="darkMode" />
-          <span class="selected"><selected /></span>
-        </span>
-      </el-tooltip>
-    </div>
   </div>
-  <div class="settings-item horizontal">
-    <div class="settings-label">{{ i18n.t('newtab.settings.theme.primary_color') }}</div>
-    <div class="color-mode">
-      <el-color-picker
-        v-model="settingsStore.primaryColor"
-        :predefine="predefineColors"
-        @change="
-          () => {
-            if (settingsStore.primaryColor === null) {
-              settingsStore.primaryColor = '#409eff'
+  <div class="setting-items-container">
+    <div class="settings-item">
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.color_scheme') }}</div>
+      <div class="theme-mode">
+        <el-tooltip :content="i18n.t('newtab.settings.theme.system_mode')" placement="top">
+          <span class="theme-item" @click="colorMode = 'auto'">
+            <img :src="autoMode" />
+            <span class="selected"><selected /></span>
+          </span>
+        </el-tooltip>
+        <el-tooltip :content="i18n.t('newtab.settings.theme.light_mode')" placement="top">
+          <span
+            class="theme-item"
+            :class="{ active: colorMode === 'light' }"
+            @click="colorMode = 'light'"
+          >
+            <img :src="lightMode" />
+            <span class="selected"><selected /></span>
+          </span>
+        </el-tooltip>
+        <el-tooltip :content="i18n.t('newtab.settings.theme.dark_mode')" placement="top">
+          <span
+            class="theme-item"
+            :class="{ active: colorMode === 'dark' }"
+            @click="colorMode = 'dark'"
+          >
+            <img :src="darkMode" />
+            <span class="selected"><selected /></span>
+          </span>
+        </el-tooltip>
+      </div>
+    </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.primary_color') }}</div>
+      <div class="color-mode">
+        <el-color-picker
+          v-model="settingsStore.primaryColor"
+          :predefine="predefineColors"
+          @change="
+            () => {
+              if (settingsStore.primaryColor === null) {
+                settingsStore.primaryColor = '#409eff'
+              }
+              changeTheme(settingsStore.primaryColor)
             }
-            changeTheme(settingsStore.primaryColor)
-          }
-        "
-      />
+          "
+        />
+      </div>
     </div>
   </div>
 </template>

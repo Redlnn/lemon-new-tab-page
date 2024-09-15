@@ -50,27 +50,31 @@ async function clearExtensionData() {
 </script>
 
 <template>
-  <h3 class="settings-title">
+  <div class="settings-title">
     <el-icon><control-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.other.title') }}</span>
-  </h3>
-  <div class="settings-item horizontal">
-    <div class="settings-label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
-    <el-switch v-model="settingsStore.search.enableYiyan" size="large" />
   </div>
-  <div class="settings-item horizontal">
-    <div class="settings-label">{{ i18n.t('newtab.settings.other.purge_data') }}</div>
-    <el-button
-      type="danger"
-      :icon="DeleteForeverOutlined"
-      circle
-      @click="confirmClearExtensionData"
-    />
-  </div>
-  <div class="settings-item" v-if="isGoogleChrome">
-    <div class="settings-label">{{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}</div>
-    <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
-      {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
-    </p>
+  <div class="setting-items-container">
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
+      <el-switch v-model="settingsStore.search.enableYiyan" />
+    </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.other.purge_data') }}</div>
+      <el-button
+        type="danger"
+        :icon="DeleteForeverOutlined"
+        circle
+        @click="confirmClearExtensionData"
+      />
+    </div>
+    <div class="settings-item" v-if="isGoogleChrome">
+      <div class="settings-label">
+        {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
+      </div>
+      <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
+        {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
+      </p>
+    </div>
   </div>
 </template>

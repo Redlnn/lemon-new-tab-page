@@ -21,9 +21,9 @@ interface SearchSuggestAPI {
 
 export const searchEngines: SearchEngine[] = [
   {
-    name: i18n.t('newtab.search_engine_menu.bing'),
-    url: 'https://www.bing.com/search?q=%s',
-    icon: Bing
+    name: i18n.t('newtab.search_engine_menu.google'),
+    url: 'https://www.google.com/search?q=%s',
+    icon: Google
   },
   {
     name: i18n.t('newtab.search_engine_menu.baidu'),
@@ -31,9 +31,9 @@ export const searchEngines: SearchEngine[] = [
     icon: Baidu
   },
   {
-    name: i18n.t('newtab.search_engine_menu.google'),
-    url: 'https://www.google.com/search?q=%s',
-    icon: Google
+    name: i18n.t('newtab.search_engine_menu.bing'),
+    url: 'https://www.bing.com/search?q=%s',
+    icon: Bing
   }
 ]
 
