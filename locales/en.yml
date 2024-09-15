@@ -71,6 +71,7 @@ newtab:
       show_tops: Show Most Visited
       show_pinned_icon: Show Pinned Icon
       show_title: Show Link Title
+      enable_qs_bg: Shortcut Area Background
       max_rows: Maximum Rows
       max_columns: Maximum Columns
       max_items_tip_chrome: 'Tip: The maximum number of most frequently visited links is only 10.'

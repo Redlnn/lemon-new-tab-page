@@ -80,6 +80,7 @@ interface SettingsInterface {
     quickStartItemWidth: number
     showQuickStartTitle: boolean
     showPinnedIcon: boolean
+    showQuickStartContainerBg: boolean
   }
   pluginVersion: string
   version: number
@@ -120,7 +121,8 @@ export const defaultSettings: SettingsInterface = {
     quickStartColumns: 5,
     quickStartItemWidth: 110,
     showQuickStartTitle: true,
-    showPinnedIcon: true
+    showPinnedIcon: true,
+    showQuickStartContainerBg: true
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION
@@ -166,7 +168,8 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       quickStartColumns: oldSettings.quickStartColumns,
       quickStartItemWidth: oldSettings.quickStartItemWidth,
       showQuickStartTitle: oldSettings.showQuickStartTitle,
-      showPinnedIcon: oldSettings.showPinnedIcon
+      showPinnedIcon: oldSettings.showPinnedIcon,
+      showQuickStartContainerBg: true
     },
     pluginVersion: oldSettings.version,
     version: CURRENT_CONFIG_VERSION

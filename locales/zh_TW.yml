@@ -64,6 +64,7 @@ newtab:
       show_tops: 展示最常訪問
       show_pinned_icon: 展示置頂圖標
       show_title: 顯示標題
+      enable_qs_bg: 顯示捷徑區域背景
       max_rows: 最大行數
       max_columns: 最大列數
       max_items_tip_chrome: 最常訪問的上限只有10個噢~

@@ -107,6 +107,9 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   >
     <div
       class="quickstart-contaniner"
+      :class="[
+        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : ''
+      ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
         maxWidth: `${settingsStore.quickStart.quickStartColumns * settingsStore.quickStart.quickStartItemWidth + 20}px`,
@@ -195,14 +198,18 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   display: flex;
   flex-flow: row wrap;
   padding: 10px;
-  background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
-  box-shadow: var(--el-box-shadow-dark);
-  border-radius: 10px;
-  backdrop-filter: blur(3px);
   z-index: 10;
   overflow: hidden;
+  transition: all 0.2s;
 
-  html.dark & {
+  &.quickstart-contaniner-bg {
+    background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
+    box-shadow: var(--el-box-shadow-dark);
+    border-radius: 10px;
+    backdrop-filter: blur(3px);
+  }
+
+  html.dark &.quickstart-contaniner-bg {
     box-shadow: var(--el-box-shadow-light);
   }
 

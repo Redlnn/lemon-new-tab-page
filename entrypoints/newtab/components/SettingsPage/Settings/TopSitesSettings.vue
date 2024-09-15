@@ -29,6 +29,10 @@ async function restoreDefaultTopSites() {
     <el-switch v-model="settingsStore.quickStart.enableTopSites" size="large" />
   </div>
   <div class="settings-item horizontal">
+    <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enable_qs_bg') }}</div>
+    <el-switch v-model="settingsStore.quickStart.showQuickStartContainerBg" size="large" />
+  </div>
+  <div class="settings-item horizontal">
     <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_pinned_icon') }}</div>
     <el-switch v-model="settingsStore.quickStart.showPinnedIcon" size="large" />
   </div>
