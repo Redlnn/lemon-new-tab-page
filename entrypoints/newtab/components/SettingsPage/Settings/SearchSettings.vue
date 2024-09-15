@@ -18,7 +18,7 @@ const settingsStore = useSettingsStore()
       <div class="settings-label">{{ i18n.t('newtab.settings.search.default_search_engine') }}</div>
       <el-select
         v-model="settingsStore.search.selectedSearchEngine"
-        style="width: 95px"
+        style="width: 100px"
         fit-input-width
       >
         <el-option
@@ -35,7 +35,7 @@ const settingsStore = useSettingsStore()
       </div>
       <el-select
         v-model="settingsStore.search.selectedSearchSuggestionAPI"
-        style="width: 95px"
+        style="width: 100px"
         fit-input-width
       >
         <el-option
