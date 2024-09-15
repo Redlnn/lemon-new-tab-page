@@ -22,6 +22,7 @@ newtab:
       vignette: Enable Vignette
       blur: Blur Intensity
       mask_opacity: Mask Opacity
+      mask_color: Mask Color
       error:
         file_is_not_a_image: The selected file is not an image!
     clock:

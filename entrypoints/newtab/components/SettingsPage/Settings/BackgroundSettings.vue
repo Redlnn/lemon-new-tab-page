@@ -69,6 +69,20 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
     <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
     <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
   </div>
+  <div class="settings-item horizontal" v-if="settingsStore.background.bgType !== BgType.None">
+    <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_color') }}</div>
+    <el-color-picker
+      v-model="settingsStore.background.maskColor"
+      :predefine="['#fff', '#000']"
+      @change="
+        () => {
+          if (settingsStore.background.maskColor === null) {
+            settingsStore.background.maskColor = '#000'
+          }
+        }
+      "
+    />
+  </div>
 </template>
 
 <style scoped lang="scss">
@@ -106,5 +120,16 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   height: 200px;
   text-align: center;
   transition: var(--el-transition-duration-fast);
+}
+
+:deep().el-color-picker__trigger {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+
+  .el-color-picker__color {
+    border: none;
+    border-radius: none;
+  }
 }
 </style>

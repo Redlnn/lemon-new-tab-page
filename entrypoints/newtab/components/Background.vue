@@ -48,8 +48,8 @@ onMounted(async () => {
         backgroundImage: props.bgurl
       }"
     >
-      <div class="dark-corners"></div>
-      <div class="mask" v-if="settingsStore.background.bgDarkCorners"></div>
+      <div class="mask" :style="{backgroundColor: settingsStore.background.maskColor}"></div>
+      <div class="dark-corners" v-if="settingsStore.background.bgDarkCorners"></div>
     </div>
   </div>
 </template>
@@ -77,7 +77,7 @@ onMounted(async () => {
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
 
-    .mask {
+    .dark-corners {
       position: absolute;
       top: 0;
       left: 0;
@@ -86,14 +86,14 @@ onMounted(async () => {
       background-image: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
       z-index: -999;
     }
-    .dark-corners {
+    .mask {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       opacity: var(--bg-mask-opacity);
-      background-color: #000;
+      transition: all 0.2s;
       z-index: -999;
     }
   }

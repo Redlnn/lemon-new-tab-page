@@ -62,6 +62,7 @@ interface SettingsInterface {
     bgDarkCorners: boolean
     bgBlur: number
     bgMaskPpacity: number
+    maskColor: string
   }
   localBackground: {
     bgId: string
@@ -103,7 +104,8 @@ export const defaultSettings: SettingsInterface = {
     bgType: BgType.Bing,
     bgDarkCorners: false,
     bgBlur: 3,
-    bgMaskPpacity: 0
+    bgMaskPpacity: 0,
+    maskColor: '#000'
   },
   localBackground: {
     bgId: '',
@@ -150,7 +152,8 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       bgType: oldSettings.bgType,
       bgDarkCorners: oldSettings.bgDarkCorners,
       bgBlur: oldSettings.bgBlur,
-      bgMaskPpacity: oldSettings.bgMaskPpacity
+      bgMaskPpacity: oldSettings.bgMaskPpacity,
+      maskColor: '#000'
     },
     localBackground: {
       bgId: oldSettings.bgId,

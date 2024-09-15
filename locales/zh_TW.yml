@@ -16,6 +16,7 @@ newtab:
       vignette: 暗角
       blur: 模糊強度
       mask_opacity: 遮罩不透明度
+      mask_color: 遮罩顔色
       error:
         file_is_not_a_image: 所選檔不是圖片!
     clock:
