@@ -37,12 +37,15 @@ function customMeridiem(hours: number) {
   }
 }
 
-const isChinese = browser.i18n.getMessage('@@ui_locale').startsWith('zh')
-const timeNowHour: ComputedRef<string> = useDateFormat(useNow(), 'HH')
-const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(useNow(), 'h')
-const timeNowMinute = useDateFormat(useNow(), 'mm')
-const timeNowMeridiemZH = useDateFormat(useNow(), 'aa', { customMeridiem })
-const timeNowMeridiem = useDateFormat(useNow(), 'A')
+const timeNow = useNow()
+const lang = browser.i18n.getUILanguage()
+const isChinese = lang.startsWith('zh')
+
+const timeNowHour: ComputedRef<string> = useDateFormat(timeNow, 'HH')
+const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(timeNow, 'h')
+const timeNowMinute = useDateFormat(timeNow, 'mm')
+const timeNowMeridiemZH = useDateFormat(timeNow, 'aa', { customMeridiem })
+const timeNowMeridiem = useDateFormat(timeNow, 'A', { locales: lang })
 </script>
 
 <template>

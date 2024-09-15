@@ -52,6 +52,6 @@ const changelog = h('section', { class: 'update-content' }, [
   h('h5', null, 'Translate by Copilot.')
 ])
 
-const _ = browser.i18n.getMessage('@@ui_locale').startsWith('zh') ? changelogZH : changelog
+const _ = browser.i18n.getUILanguage().startsWith('zh') ? changelogZH : changelog
 
 export default _
