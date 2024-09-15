@@ -1,8 +1,8 @@
 <script lang="ts" setup>
+import { browser } from 'wxt/browser';
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
-import { browser } from 'wxt/browser'
 import { useSettingsStore } from '../js/store/settingsStore'
 
 const settingsStore = useSettingsStore()
@@ -46,29 +46,54 @@ const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(timeNow, 'h')
 const timeNowMinute = useDateFormat(timeNow, 'mm')
 const timeNowMeridiemZH = useDateFormat(timeNow, 'aa', { customMeridiem })
 const timeNowMeridiem = useDateFormat(timeNow, 'A', { locales: lang })
+const timeNowWeekday = useDateFormat(timeNow, 'dddd')
+
+function getlunarCalendar() {
+  const lunarCalendarMatchRes = /([^年]{1,2}月.{2})/.exec(
+    timeNow.value.toLocaleDateString(isChinese ? lang : 'zh', {
+      dateStyle: 'long',
+      calendar: 'chinese'
+    })
+  )
+  return lunarCalendarMatchRes ? lunarCalendarMatchRes[0] : ''
+}
 </script>
 
 <template>
-  <div class="time" ref="time">
-    <span
-      v-if="settingsStore.time.showMeridiem && isChinese"
-      class="meridiem"
-      style="margin-right: 5px"
-      >{{ timeNowMeridiemZH }}</span
-    >
-    <span>
-      <span class="hour">{{
-        settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
-      }}</span>
-      <span class="colon">:</span>
-      <span class="minute">{{ timeNowMinute }}</span>
-    </span>
-    <span
-      v-if="settingsStore.time.showMeridiem && !isChinese"
-      class="meridiem"
-      style="margin-left: 5px"
-      >{{ timeNowMeridiem }}</span
-    >
+  <div class="clock" ref="time">
+    <div class="time">
+      <span
+        v-if="settingsStore.time.showMeridiem && isChinese"
+        class="meridiem"
+        style="margin-right: 5px"
+        >{{ timeNowMeridiemZH }}</span
+      >
+      <span>
+        <span class="hour">{{
+          settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
+        }}</span>
+        <span class="colon">:</span>
+        <span class="minute">{{ timeNowMinute }}</span>
+      </span>
+      <span
+        v-if="settingsStore.time.showMeridiem && !isChinese"
+        class="meridiem"
+        style="margin-left: 5px"
+      >
+        {{ timeNowMeridiem }}
+      </span>
+    </div>
+    <div class="date" v-if="settingsStore.time.showDate">
+      <span>
+        {{
+          timeNow.toLocaleDateString(undefined, {
+            dateStyle: 'long'
+          })
+        }}
+        {{ timeNowWeekday }}
+      </span>
+      <span v-if="settingsStore.time.showLunar && isChinese">{{ ` ${getlunarCalendar()}` }}</span>
+    </div>
   </div>
 </template>
 
@@ -96,13 +121,20 @@ const timeNowMeridiem = useDateFormat(timeNow, 'A', { locales: lang })
   }
 }
 
-.time {
+.clock {
   text-align: center;
   color: var(--el-fill-color-blank);
-  font-size: 60px;
   animation: delayedFadeIn 0.5s;
   transition: 0.25s cubic-bezier(0.5, 0, 0.5, 2);
   text-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+
+  .time {
+    font-size: 60px;
+  }
+
+  .date {
+    margin-bottom: 5px;
+  }
 
   html.dark & {
     color: var(--el-text-color-primary);

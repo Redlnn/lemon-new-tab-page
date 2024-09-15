@@ -30,6 +30,8 @@ newtab:
       title: Clock Settings
       use12HourClock: '12-Hour Clock'
       showAMPM: Show AM/PM
+      showDate: Show Date
+      showLunar: Show Chinese Lunar Calendar
     other:
       title: Other Settings
       yiyan: Show a line of Chinese poetry when expanding the search box.

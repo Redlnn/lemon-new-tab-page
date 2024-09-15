@@ -24,6 +24,8 @@ newtab:
       title: 时钟设置
       use12HourClock: 12小时制
       showAMPM: 显示“上午”/“下午”
+      showDate: 显示日期
+      showLunar: 显示农历
     other:
       title: 其他设置
       yiyan: 一言

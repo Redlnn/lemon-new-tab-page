@@ -49,6 +49,8 @@ interface SettingsInterface {
   time: {
     isMeridiem: boolean
     showMeridiem: boolean
+    showDate: boolean
+    showLunar: boolean
   }
   search: {
     selectedSearchSuggestionAPI: string
@@ -90,8 +92,10 @@ interface SettingsInterface {
 export const defaultSettings: SettingsInterface = {
   primaryColor: '#409eff',
   time: {
-    isMeridiem: true,
-    showMeridiem: false
+    isMeridiem: false,
+    showMeridiem: true,
+    showDate: true,
+    showLunar: true
   },
   search: {
     selectedSearchSuggestionAPI: 'bing',
@@ -139,7 +143,9 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
     primaryColor: oldSettings.primaryColor,
     time: {
       isMeridiem: oldSettings.isMeridiem,
-      showMeridiem: oldSettings.showMeridiem
+      showMeridiem: oldSettings.showMeridiem,
+      showDate: true,
+      showLunar: true
     },
     search: {
       selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
