@@ -32,7 +32,7 @@ async function add() {
   try {
     new URL(data.url)
   } catch (e) {
-    ElMessage.error(i18n.t('newtab.quickstart.add_dialog.invalid_url_error'))
+    ElMessage.error(i18n.t('newtab.quickstart.addDialog.invalidUrlError'))
     data.url = ''
     return
   }
@@ -72,27 +72,27 @@ async function cancel() {
         <add-round />
       </div>
       <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
-        {{ i18n.t('newtab.quickstart.add_new_quickstart') }}
+        {{ i18n.t('newtab.quickstart.addNewQuickstart') }}
       </div>
     </div>
   </div>
   <el-dialog
     v-model="showDialog"
-    :title="i18n.t('newtab.quickstart.add_dialog.dialog_title')"
+    :title="i18n.t('newtab.quickstart.addDialog.dialogTitle')"
     width="400px"
     append-to-body
     destroy-on-close
   >
     <el-form :inline="true" ref="modelForm" :model="data">
       <el-form-item
-        :label="i18n.t('newtab.quickstart.add_dialog.title')"
+        :label="i18n.t('newtab.quickstart.addDialog.title')"
         label-width="70px"
         prop="userNameCn"
       >
         <el-input v-model="data.title" style="width: 250px" />
       </el-form-item>
       <el-form-item
-        :label="i18n.t('newtab.quickstart.add_dialog.url')"
+        :label="i18n.t('newtab.quickstart.addDialog.url')"
         label-width="70px"
         prop="userCode"
       >
@@ -101,9 +101,9 @@ async function cancel() {
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ i18n.t('newtab.quickstart.add_dialog.cancel') }}</el-button>
+        <el-button @click="cancel">{{ i18n.t('newtab.quickstart.addDialog.cancel') }}</el-button>
         <el-button type="primary" @click="add">{{
-          i18n.t('newtab.quickstart.add_dialog.confirm')
+          i18n.t('newtab.quickstart.addDialog.confirm')
         }}</el-button>
       </span>
     </template>

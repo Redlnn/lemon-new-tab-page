@@ -32,23 +32,23 @@ async function restoreDefaultTopSites() {
       <el-switch v-model="settingsStore.quickStart.enabled" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_tops') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTopSites') }}</div>
       <el-switch v-model="settingsStore.quickStart.enableTopSites" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enable_qs_bg') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableQSBg') }}</div>
       <el-switch v-model="settingsStore.quickStart.showQuickStartContainerBg" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_pinned_icon') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showPinnedIcon') }}</div>
       <el-switch v-model="settingsStore.quickStart.showPinnedIcon" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.show_title') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTitle') }}</div>
       <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" />
     </div>
     <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.max_rows') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
       <el-slider
         v-model="settingsStore.quickStart.quickStartRows"
         :step="1"
@@ -61,7 +61,7 @@ async function restoreDefaultTopSites() {
       />
     </div>
     <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.max_columns') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxColumns') }}</div>
       <el-slider
         v-model="settingsStore.quickStart.quickStartColumns"
         :step="1"
@@ -77,10 +77,10 @@ async function restoreDefaultTopSites() {
       v-if="isChrome"
       style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px"
     >
-      {{ i18n.t('newtab.settings.quickstart.max_items_tip_chrome') }}
+      {{ i18n.t('newtab.settings.quickstart.maxItemsTipChrome') }}
     </p>
     <div class="settings-item quickstart-item-width">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.link_width') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.linkWidth') }}</div>
       <el-slider
         v-model="settingsStore.quickStart.quickStartItemWidth"
         :min="80"
@@ -91,14 +91,14 @@ async function restoreDefaultTopSites() {
       />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restore_default') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restoreDefault') }}</div>
       <el-popconfirm
         width="220"
-        :confirm-button-text="i18n.t('newtab.settings.quickstart.restore_default_confirm.confirm')"
-        :cancel-button-text="i18n.t('newtab.settings.quickstart.restore_default_confirm.cancel')"
+        :confirm-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.confirm')"
+        :cancel-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.cancel')"
         :icon="RestoreRound"
         icon-color="#626AEF"
-        :title="i18n.t('newtab.settings.quickstart.restore_default_confirm.title')"
+        :title="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.title')"
         @confirm="restoreDefaultTopSites()"
       >
         <template #reference>

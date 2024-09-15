@@ -33,7 +33,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.quickstart.remove_top_message.content')
+        i18n.t('newtab.quickstart.removeTopMessage.content')
       ),
       h(
         'span',
@@ -44,7 +44,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18n.t('newtab.quickstart.remove_top_message.revoke')
+        i18n.t('newtab.quickstart.removeTopMessage.revoke')
       ),
       h(
         'span',
@@ -55,7 +55,7 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18n.t('newtab.quickstart.remove_top_message.restore_default')
+        i18n.t('newtab.quickstart.removeTopMessage.restoreDefault')
       )
     ]),
     type: 'success'

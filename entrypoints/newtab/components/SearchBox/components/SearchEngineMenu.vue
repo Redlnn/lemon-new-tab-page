@@ -35,14 +35,14 @@ const settingsStore = useSettingsStore()
           v-if="index === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
-          {{ i18n.t('newtab.search.search_engine_menu.current') }}
+          {{ i18n.t('newtab.search.searchEngineMenu.current') }}
         </div>
       </div>
       <el-divider />
       <div class="tip">
-        <span>{{ i18n.t('newtab.search.search_engine_menu.tip_prefix') }}</span>
+        <span>{{ i18n.t('newtab.search.searchEngineMenu.tipPrefix') }}</span>
         <kbd class="kdb">Tab</kbd>
-        <span>{{ i18n.t('newtab.search.search_engine_menu.tip_suffix') }}</span>
+        <span>{{ i18n.t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
     <el-icon class="search-engine-icon">

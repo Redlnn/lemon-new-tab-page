@@ -21,27 +21,27 @@ const year = useDateFormat(useNow(), 'YYYY')
     </div>
     <div class="ext-links">
       <a href="https://github.com/Redlnn/lemon-new-tab-page/" target="_blank">{{
-        i18n.t('newtab.settings.about.project_url')
+        i18n.t('newtab.settings.about.projectLink')
       }}</a>
       <a
         href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
         target="_blank"
-        >{{ i18n.t('newtab.settings.about.chrome_extension_url') }}</a
+        >{{ i18n.t('newtab.settings.about.chromeExtensionLink') }}</a
       >
       <a
         href="https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh"
         target="_blank"
-        >{{ i18n.t('newtab.settings.about.edge_extension_url') }}</a
+        >{{ i18n.t('newtab.settings.about.edgeExtensionLink') }}</a
       >
       <a
         href="https://addons.mozilla.org/zh-CN/firefox/addon/%E6%9F%A0%E6%AA%AC%E8%B5%B7%E5%A7%8B%E9%A1%B5/"
         target="_blank"
-        >{{ i18n.t('newtab.settings.about.firefox_extension_url') }}</a
+        >{{ i18n.t('newtab.settings.about.firefoxExtensionLink') }}</a
       >
     </div>
     <div class="ext-links">
       <span>
-        {{ i18n.t('newtab.settings.about.yiyan_api_provider') }}
+        {{ i18n.t('newtab.settings.about.yiyanApiProvider') }}
         <a href="https://www.jinrishici.com" target="_blank"> 今日诗词 </a>
       </span>
     </div>

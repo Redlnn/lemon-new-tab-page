@@ -15,7 +15,7 @@ const settingsStore = useSettingsStore()
   </div>
   <div class="setting-items-container">
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.default_search_engine') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.search.defaultSearchEngine') }}</div>
       <el-select
         v-model="settingsStore.search.selectedSearchEngine"
         style="width: 100px"
@@ -31,7 +31,7 @@ const settingsStore = useSettingsStore()
     </div>
     <div class="settings-item horizontal">
       <div class="settings-label">
-        {{ i18n.t('newtab.settings.search.search_suggestion_provider') }}
+        {{ i18n.t('newtab.settings.search.searchSuggestionProvider') }}
       </div>
       <el-select
         v-model="settingsStore.search.selectedSearchSuggestionAPI"
@@ -47,11 +47,11 @@ const settingsStore = useSettingsStore()
       </el-select>
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.open_in_new_tab') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.search.openInNewTab') }}</div>
       <el-switch v-model="settingsStore.search.searchInNewTab" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.record_history') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.search.recordSearchHistory') }}</div>
       <el-switch v-model="settingsStore.search.recordSearchHistory" />
     </div>
   </div>

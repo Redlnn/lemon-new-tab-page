@@ -138,7 +138,7 @@ defineExpose({
       @click="clearSearchHistories()"
     >
       <el-icon style="margin-right: 5px"><trash-alt /></el-icon>
-      <span>{{ i18n.t('newtab.search.purge_search_history') }}</span>
+      <span>{{ i18n.t('newtab.search.purgeSearchHistory') }}</span>
     </div>
   </div>
 </template>

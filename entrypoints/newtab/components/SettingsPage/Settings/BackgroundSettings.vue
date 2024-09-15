@@ -23,7 +23,7 @@ const handleBackgroundSuccess: UploadProps['onSuccess'] = (response, uploadFile)
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
-    ElMessage.error(i18n.t('newtab.settings.background.error.file_is_not_a_image'))
+    ElMessage.error(i18n.t('newtab.settings.background.error.fileIsNotImage'))
     return false
   }
   return true

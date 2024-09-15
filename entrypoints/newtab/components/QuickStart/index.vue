@@ -58,7 +58,7 @@ async function removeBookmark(index: number) {
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.quickstart.remove_pinned_message.content')
+        i18n.t('newtab.quickstart.removePinnedMessage.content')
       ),
       h(
         'span',
@@ -73,7 +73,7 @@ async function removeBookmark(index: number) {
             await reloadQS()
           }
         },
-        i18n.t('newtab.quickstart.remove_pinned_message.revoke')
+        i18n.t('newtab.quickstart.removePinnedMessage.revoke')
       )
     ]),
     type: 'success'

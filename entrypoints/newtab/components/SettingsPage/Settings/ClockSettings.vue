@@ -14,11 +14,11 @@ const settingsStore = useSettingsStore()
   </div>
   <div class="setting-items-container">
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.use_12h_clock') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.clock.use12HourClock') }}</div>
       <el-switch v-model="settingsStore.time.isMeridiem" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.show_ampm') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.clock.showAMPM') }}</div>
       <el-switch v-model="settingsStore.time.showMeridiem" />
     </div>
   </div>

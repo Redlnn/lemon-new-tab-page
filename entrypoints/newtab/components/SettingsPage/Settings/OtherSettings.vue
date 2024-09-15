@@ -21,11 +21,11 @@ const settingsStore = useSettingsStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      i18n.t('newtab.settings.other.confirm_purge_data.messgae'),
-      i18n.t('newtab.settings.other.confirm_purge_data.title'),
+      i18n.t('newtab.settings.other.confirmPurgeData.messgae'),
+      i18n.t('newtab.settings.other.confirmPurgeData.title'),
       {
-        confirmButtonText: i18n.t('newtab.settings.other.confirm_purge_data.confirm'),
-        cancelButtonText: i18n.t('newtab.settings.other.confirm_purge_data.cancel'),
+        confirmButtonText: i18n.t('newtab.settings.other.confirmPurgeData.confirm'),
+        cancelButtonText: i18n.t('newtab.settings.other.confirmPurgeData.cancel'),
         type: 'warning'
       }
     )
@@ -37,7 +37,7 @@ async function confirmClearExtensionData() {
 }
 
 async function clearExtensionData() {
-  console.warn(i18n.t('newtab.settings.other.confirm_purge_data.purging'))
+  console.warn(i18n.t('newtab.settings.other.confirmPurgeData.purging'))
   localStorage.clear()
   sessionStorage.clear()
   await blockedTopStitesStorage.setValue([])
@@ -60,7 +60,7 @@ async function clearExtensionData() {
       <el-switch v-model="settingsStore.search.enableYiyan" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.other.purge_data') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.other.purgeData') }}</div>
       <el-button
         type="danger"
         :icon="DeleteForeverOutlined"

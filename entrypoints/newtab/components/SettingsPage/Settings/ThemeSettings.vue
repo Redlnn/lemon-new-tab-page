@@ -34,15 +34,15 @@ const predefineColors = ref([
   </div>
   <div class="setting-items-container">
     <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.color_scheme') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.colorScheme') }}</div>
       <div class="theme-mode">
-        <el-tooltip :content="i18n.t('newtab.settings.theme.system_mode')" placement="top">
+        <el-tooltip :content="i18n.t('newtab.settings.theme.systemMode')" placement="top">
           <span class="theme-item" @click="colorMode = 'auto'">
             <img :src="autoMode" />
             <span class="selected"><selected /></span>
           </span>
         </el-tooltip>
-        <el-tooltip :content="i18n.t('newtab.settings.theme.light_mode')" placement="top">
+        <el-tooltip :content="i18n.t('newtab.settings.theme.lightMode')" placement="top">
           <span
             class="theme-item"
             :class="{ active: colorMode === 'light' }"
@@ -52,7 +52,7 @@ const predefineColors = ref([
             <span class="selected"><selected /></span>
           </span>
         </el-tooltip>
-        <el-tooltip :content="i18n.t('newtab.settings.theme.dark_mode')" placement="top">
+        <el-tooltip :content="i18n.t('newtab.settings.theme.darkMode')" placement="top">
           <span
             class="theme-item"
             :class="{ active: colorMode === 'dark' }"
@@ -65,7 +65,7 @@ const predefineColors = ref([
       </div>
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.primary_color') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>
       <div class="color-mode">
         <el-color-picker
           v-model="settingsStore.primaryColor"
