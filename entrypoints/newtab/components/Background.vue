@@ -48,7 +48,7 @@ onMounted(async () => {
         backgroundImage: props.bgurl
       }"
     >
-      <div class="mask" :style="{backgroundColor: settingsStore.background.maskColor}"></div>
+      <div class="mask" :style="{ backgroundColor: settingsStore.background.maskColor }"></div>
       <div class="dark-corners" v-if="settingsStore.background.bgDarkCorners"></div>
     </div>
   </div>
