@@ -99,7 +99,12 @@ settingsStore.$subscribe(async (mutation, state) => {
 
 <template>
   <el-config-provider :locale="zhCn">
-    <main>
+    <main
+      :style="{
+        justifyContent: settingsStore.quickStart.enabled ? 'center' : '',
+        paddingTop: settingsStore.quickStart.enabled ? '' : '30vh'
+      }"
+    >
       <time-now />
       <search-box style="margin-top: 10px" />
       <quick-start v-if="settingsStore.quickStart.enabled" />
@@ -117,7 +122,6 @@ settingsStore.$subscribe(async (mutation, state) => {
 main {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100%;
 }
