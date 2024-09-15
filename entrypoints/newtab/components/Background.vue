@@ -18,7 +18,7 @@ watch(
     if (focusStore.isFocused) {
       background.value.style.transition =
         'transform 0.2s cubic-bezier(0.65, 0.05, 0.1, 1), filter 0.2s cubic-bezier(0.65, 0.05, 0.1, 1)'
-      background.value.style.filter = 'blur(10px)'
+      background.value.style.filter = `blur(${settingsStore.background.bgBlur + 10}px)`
       background.value.style.transform = 'scale(1.1)'
     } else {
       background.value.style.filter = ''
