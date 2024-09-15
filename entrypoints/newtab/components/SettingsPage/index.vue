@@ -40,6 +40,7 @@ defineExpose({ show, hide, toggleShow })
     :show-close="false"
     align-center
     lock-scroll
+    draggable
     @open="() => scrollbar?.setScrollTop(0)"
   >
     <template #header="{ close, titleId }">

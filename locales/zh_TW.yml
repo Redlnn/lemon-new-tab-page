@@ -62,6 +62,7 @@ newtab:
       primary_color: 主題色
     quickstart:
       title: 捷徑設定
+      tip: Tip：可以拖動設定視窗以觀察捷徑區域變化噢~
       enable: 啟用
       show_tops: 展示最常訪問
       show_pinned_icon: 展示置頂圖標

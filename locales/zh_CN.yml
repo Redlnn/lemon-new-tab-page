@@ -62,6 +62,7 @@ newtab:
       primary_color: 主题色
     quickstart:
       title: 快速访问
+      tip: Tip：可以拖动设置窗口以观察快速访问区域变化噢~
       enable: 启用
       show_tops: 展示最常访问
       show_pinned_icon: 展示置顶图标

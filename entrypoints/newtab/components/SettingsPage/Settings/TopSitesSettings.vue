@@ -21,6 +21,12 @@ async function restoreDefaultTopSites() {
     <span>{{ i18n.t('newtab.settings.quickstart.title') }}</span>
   </div>
   <div class="setting-items-container">
+    <p
+      v-if="isChrome"
+      style="color: var(--el-text-color-regular); line-height: 1em; font-size: 12px"
+    >
+      {{ i18n.t('newtab.settings.quickstart.tip') }}
+    </p>
     <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enable') }}</div>
       <el-switch v-model="settingsStore.quickStart.enabled" />
