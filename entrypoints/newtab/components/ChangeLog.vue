@@ -7,7 +7,10 @@ import type { ScrollbarInstance } from 'element-plus'
 
 import ChangeLog from '../ChangeLog'
 import { i18n } from '@/.wxt/i18n'
+import { useSettingsStore } from '../js/store/settingsStore'
+import { version } from '@/package.json'
 
+const settingsStore = useSettingsStore()
 const opened = ref(false)
 const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
@@ -36,6 +39,7 @@ defineExpose({ show, hide, toggleShow })
     lock-scroll
     draggable
     @open="() => scrollbar?.setScrollTop(0)"
+    @closed="() => settingsStore.pluginVersion = version"
   >
     <template #header="{ close, titleId }">
       <div
