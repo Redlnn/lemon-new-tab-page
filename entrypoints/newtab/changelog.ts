@@ -2,6 +2,23 @@ import { browser } from 'wxt/browser'
 import { defineComponent, h } from 'vue'
 
 const changelogZH = h('section', { class: 'update-content' }, [
+  h('h1', null, '1.5.4'),
+  h('h2', null, '新特性'),
+  h('ul', null, [
+    h('li', null, '支持显示日期和农历了'),
+    h('li', null, '全新的设置窗口和更新日志窗口'),
+    h('li', null, '使用 www.bing.com 而不是 cn.bing.com 避免后续使用 Bing 被重定向'),
+    h('li', null, '现在可以改变背景遮罩的颜色了'),
+    h('li', null, '现在可以关闭快捷访问区域的背景了'),
+    h('li', null, '优化了关闭快速访问区域后搜索栏的位置')
+  ]),
+  h('h2', null, '修复'),
+  h('ul', null, [
+    h('li', null, '现在设置页的搜索引擎下拉可以显示完整的 Google 了'),
+    h('li', null, '修复聚焦搜索栏时背景模糊被设置为固定数值'),
+    h('li', null, '修复使用本地图片作为背景时在浏览器启动时卡死、吃很多 CPU 且内存泄漏的问题')
+  ]),
+  h('h1', null, '1.5.3'),
   h('h2', null, '新特性'),
   h('ul', null, [
     h('li', null, '部分重构以支持 Firefox 浏览器'),
@@ -23,6 +40,39 @@ const changelogZH = h('section', { class: 'update-content' }, [
 ])
 
 const changelog = h('section', { class: 'update-content' }, [
+  h('h1', null, '1.5.4'),
+  h('h2', null, 'New Features'),
+  h('ul', null, [
+    h('li', null, 'Now supports displaying dates'),
+    h('li', null, 'New settings window and changelog window'),
+    h(
+      'li',
+      null,
+      'Use www.bing.com instead of cn.bing.com to avoid being redirected when using Bing'
+    ),
+    h('li', null, 'You can now change the color of the background mask'),
+    h('li', null, 'You can now turn off the background of the shortcut area'),
+    h('li', null, 'Optimized the position of the search bar afterdisabling the shortcut area')
+  ]),
+  h('h2', null, 'Fixes'),
+  h('ul', null, [
+    h(
+      'li',
+      null,
+      'The search engine drop-down on the settings page now shows the full Google word'
+    ),
+    h(
+      'li',
+      null,
+      'Fixed the background blur being set to a fixed value when focusing the search bar'
+    ),
+    h(
+      'li',
+      null,
+      'Fixed the problem of using a local image as the background when the browser starts and freezes, consumes a lot of CPU and leaks memory'
+    )
+  ]),
+  h('h1', null, '1.5.3'),
   h('h2', null, 'New Features'),
   h('ul', null, [
     h('li', null, 'Partial refactor to support Firefox browser'),
