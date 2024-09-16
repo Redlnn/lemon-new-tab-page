@@ -59,7 +59,8 @@ defineExpose({ show, hide, toggleShow })
       style="
         height: 1px;
         width: 100%;
-        border-top: 1px var(--el-border-color) var(--el-border-style);
+        border-top: 1px color-mix(in srgb, var(--el-border-color), transparent 30%)
+          var(--el-border-style);
         transition: opacity 0.1s;
       "
       :style="{ opacity: !headerIsVisible ? 1 : 0 }"
@@ -87,7 +88,7 @@ defineExpose({ show, hide, toggleShow })
   padding: 0;
   max-height: 80%;
   height: 500px;
-  background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 5%);
+  background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
   backdrop-filter: blur(10px);
   border-radius: 10px;
   box-shadow: 0px 0px 15px 0px color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
@@ -105,7 +106,7 @@ defineExpose({ show, hide, toggleShow })
   }
 
   .el-dialog__body {
-    height: calc(100% - 50px);
+    height: calc(100% - 51px);
     color: var(--el-text-color-primary);
   }
 
