@@ -266,7 +266,7 @@ export async function reloadBackgroundImage() {
   if (file && isImageFile(file)) {
     const url = URL.createObjectURL(file)
     settingsStore.localBackground.bgUrl = url
-    await saveSettings(settingsStore)
+    // await saveSettings(settingsStore) // 会导致启动时卡死、CPU吃满和内存泄漏
   } else {
     URL.revokeObjectURL(settingsStore.localBackground.bgUrl)
     settingsStore.localBackground.bgId = ''
