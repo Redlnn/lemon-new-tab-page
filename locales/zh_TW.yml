@@ -5,6 +5,7 @@ extension:
     Bing 每日一圖，可添加捷徑並展示最常訪問網站。
 newtab:
   title: 新標籤頁
+  changelog: 更新日誌
   settings:
     title: 設定
     background:

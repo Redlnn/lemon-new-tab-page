@@ -5,6 +5,7 @@ extension:
     Bing 每日一图，可添加快速访问网站并展示最常访问网站。
 newtab:
   title: 新标签页
+  changelog: 更新日志
   settings:
     title: 设置
     background:

@@ -1,8 +1,8 @@
 import { browser } from 'wxt/browser'
-import { h } from 'vue'
+import { defineComponent, h } from 'vue'
 
 const changelogZH = h('section', { class: 'update-content' }, [
-  h('h3', null, '新特性'),
+  h('h2', null, '新特性'),
   h('ul', null, [
     h('li', null, '部分重构以支持 Firefox 浏览器'),
     h('li', null, '支持缓存 Bing 每日一图'),
@@ -10,7 +10,7 @@ const changelogZH = h('section', { class: 'update-content' }, [
     h('li', null, '优化十二小时制时间表示'),
     h('li', null, '[i18n] 国际化支持')
   ]),
-  h('h3', null, '修复'),
+  h('h2', null, '修复'),
   h('ul', null, [
     h('li', null, '修复撤销取消置顶不生效的问题'),
     h('li', null, '修复无法删除经常访问的问题 (#8)'),
@@ -23,7 +23,7 @@ const changelogZH = h('section', { class: 'update-content' }, [
 ])
 
 const changelog = h('section', { class: 'update-content' }, [
-  h('h3', null, 'New Features'),
+  h('h2', null, 'New Features'),
   h('ul', null, [
     h('li', null, 'Partial refactor to support Firefox browser'),
     h('li', null, 'Support for caching Bing daily image'),
@@ -31,7 +31,7 @@ const changelog = h('section', { class: 'update-content' }, [
     h('li', null, 'Optimized 12-hour time format display'),
     h('li', null, '[i18n] Internationalization support')
   ]),
-  h('h3', null, 'Fixes'),
+  h('h2', null, 'Fixes'),
   h('ul', null, [
     h('li', null, 'Fixed issue where undoing unpin did not take effect'),
     h('li', null, 'Fixed issue where frequently visited sites could not be deleted (#8)'),
@@ -54,4 +54,8 @@ const changelog = h('section', { class: 'update-content' }, [
 
 const _ = browser.i18n.getUILanguage().startsWith('zh') ? changelogZH : changelog
 
-export default _
+export default defineComponent({
+  setup() {
+    return () => _
+  }
+})

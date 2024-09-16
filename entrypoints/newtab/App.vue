@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import { version } from '@/package.json'
 
+import { ElConfigProvider } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { ElConfigProvider, ElNotification } from 'element-plus'
 import { onBeforeMount, ref, toRaw, watch } from 'vue'
 import { useColorMode, useDebounceFn } from '@vueuse/core'
 
 import Background from './components/Background.vue'
+import ChangeLog from './components/ChangeLog.vue'
 import QuickStart from './components/QuickStart/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
@@ -15,7 +16,6 @@ import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
 
 import changeTheme from './js/use-element-plus-theme'
-import changelog from './changelog'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/img'
 import {
@@ -29,6 +29,7 @@ import {
 useColorMode()
 const settingsStore = useSettingsStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
+const ChangeLogRef = ref<InstanceType<typeof ChangeLog>>()
 
 const bgURL = ref('')
 
@@ -57,15 +58,7 @@ onBeforeMount(async () => {
   }
 
   if (settingsStore.pluginVersion !== version) {
-    ElNotification({
-      title: `柠檬起始页已更新至 v${version}`,
-      message: changelog,
-      type: 'success',
-      duration: 5000,
-      onClose: () => {
-        settingsStore.pluginVersion = version
-      }
-    })
+    ChangeLogRef.value?.show()
   }
 })
 
@@ -115,6 +108,7 @@ settingsStore.$subscribe(async (mutation, state) => {
       <el-icon><settings-outlined /></el-icon>
     </div>
     <settings-page ref="SettingsPageRef" />
+    <change-log ref="ChangeLogRef" />
   </el-config-provider>
 </template>
 

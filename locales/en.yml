@@ -11,6 +11,7 @@ extension:
     It can also display the most visited links.
 newtab:
   title: New Tab
+  changelog: Changelog
   settings:
     title: Settings
     background:
