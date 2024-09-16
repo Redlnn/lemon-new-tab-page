@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { browser } from 'wxt/browser';
+import { browser } from 'wxt/browser'
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
@@ -60,7 +60,7 @@ function getlunarCalendar() {
 </script>
 
 <template>
-  <div class="clock" ref="time">
+  <div ref="time" class="clock">
     <div class="time">
       <span
         v-if="settingsStore.time.showMeridiem && isChinese"
@@ -83,7 +83,7 @@ function getlunarCalendar() {
         {{ timeNowMeridiem }}
       </span>
     </div>
-    <div class="date" v-if="settingsStore.time.showDate">
+    <div v-if="settingsStore.time.showDate" class="date">
       <span>
         {{
           timeNow.toLocaleDateString(undefined, {

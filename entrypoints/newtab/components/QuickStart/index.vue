@@ -127,13 +127,13 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
         <template #submenu>
           <el-dropdown-item>
             <span
+              style="display: flex; align-items: center"
               @click="
                 async () => {
                   removeBookmark(index)
                   await reloadQS()
                 }
               "
-              style="display: flex; align-items: center"
             >
               <el-icon>
                 <pin-off16-regular />
@@ -155,13 +155,13 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
         <template #submenu>
           <el-dropdown-item>
             <span
+              style="display: flex; align-items: center"
               @click="
                 async () => {
                   await blockSite(site.url, reloadQS)
                   await reloadQS()
                 }
               "
-              style="display: flex; align-items: center"
             >
               <el-icon>
                 <clear-round />
@@ -171,8 +171,8 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
           </el-dropdown-item>
           <el-dropdown-item>
             <span
-              @click="sticky(site.url, site.title || '')"
               style="display: flex; align-items: center"
+              @click="sticky(site.url, site.title || '')"
             >
               <el-icon>
                 <pin16-regular />

@@ -150,23 +150,23 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
 <template>
   <section ref="searchBox" class="search-box">
     <form
-      @submit.prevent="doSearch"
       ref="searchForm"
       class="search-form"
       :style="{ '--width': mounted ? '' : '0' }"
+      @submit.prevent="doSearch"
     >
       <search-engine-menu />
       <input
-        v-model="searchText"
         ref="searchInput"
+        v-model="searchText"
+        :placeholder="focusStore.isFocused ? '' : i18n.t('newtab.search.placeholder')"
+        class="search-input"
         @input="suggedtionArea!.handleInput"
         @focus="handleFocus"
         @keydown.up.prevent="handleUp"
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
-        :placeholder="focusStore.isFocused ? '' : i18n.t('newtab.search.placeholder')"
-        class="search-input"
       />
       <div class="search-btn">
         <el-icon @click="doSearch"><search /></el-icon>
@@ -174,10 +174,10 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     </form>
     <search-suggestion-area
       ref="suggedtionArea"
-      :searchText="searchText"
-      :originSearchText="originSearchText"
-      :searchFormWidth="searchFormWidth"
-      @doSearchWithText="doSearchWithText"
+      :search-text="searchText"
+      :origin-search-text="originSearchText"
+      :search-form-width="searchFormWidth"
+      @do-search-with-text="doSearchWithText"
     />
   </section>
 </template>

@@ -106,20 +106,20 @@ defineExpose({
 
 <template>
   <div
-    class="search-suggestion-area"
     ref="searchSuggestionArea"
+    class="search-suggestion-area"
     :style="{
       width: `${searchFormWidth}px`,
       height: getSearchSuggestionAreaHeight()
     }"
   >
     <div
-      class="search-suggestion-item noselect"
       v-for="(item, index) in searchSuggestions.length > 10
         ? searchSuggestions.slice(0, 10)
         : searchSuggestions"
-      :class="{ active: currentActiveSuggest === index }"
       :key="index"
+      class="search-suggestion-item noselect"
+      :class="{ active: currentActiveSuggest === index }"
       @click="emit('doSearchWithText', item)"
       @mouseover="
         (e) => {
@@ -132,8 +132,8 @@ defineExpose({
       {{ item }}
     </div>
     <div
-      class="search-suggestion-item clear-search-history noselect"
       ref="clearSearchHistory"
+      class="search-suggestion-item clear-search-history noselect"
       style="display: none"
       @click="clearSearchHistories()"
     >

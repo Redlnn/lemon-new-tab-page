@@ -20,7 +20,7 @@ interface BingWallpaperResp {
     drk: number
     top: number
     bot: number
-    hs: any[]
+    hs: unknown[]
   }[]
   tooltips: {
     loading: string

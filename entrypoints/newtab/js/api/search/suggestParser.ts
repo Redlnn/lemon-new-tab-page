@@ -78,11 +78,11 @@ async function baiduSuggestParser(text: string): Promise<string[]> {
 }
 
 interface GoogleSuggest {
-  [index: number]: any
+  [index: number]: unknown
   0: string
   1: string[]
   2: string[]
-  3: any[]
+  3: unknown[]
   4: {
     'google:clientdata': {
       bpc: boolean

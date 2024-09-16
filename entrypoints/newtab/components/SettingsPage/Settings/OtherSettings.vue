@@ -68,7 +68,7 @@ async function clearExtensionData() {
         @click="confirmClearExtensionData"
       />
     </div>
-    <div class="settings-item" v-if="isGoogleChrome">
+    <div v-if="isGoogleChrome" class="settings-item">
       <div class="settings-label">
         {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
       </div>

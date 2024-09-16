@@ -72,7 +72,7 @@ newtab:
       primaryColor: Primary Color
     quickstart:
       title: Shortcut Settings
-      tip: "Tip: You can drag the settings window to see changes in the shortcut area."
+      tip: 'Tip: You can drag the settings window to see changes in the shortcut area.'
       enable: Enable
       showTopSites: Show Most Visited
       showPinnedIcon: Show Pinned Icon

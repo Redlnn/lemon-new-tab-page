@@ -49,7 +49,7 @@ onMounted(async () => {
       }"
     >
       <div class="mask" :style="{ backgroundColor: settingsStore.background.maskColor }"></div>
-      <div class="dark-corners" v-if="settingsStore.background.bgDarkCorners"></div>
+      <div v-if="settingsStore.background.bgDarkCorners" class="dark-corners"></div>
     </div>
   </div>
 </template>

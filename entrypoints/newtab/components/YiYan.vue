@@ -29,8 +29,8 @@ onMounted(() => {
 <template>
   <Transition>
     <div
-      class="yiyan-wrapper"
       v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800"
+      class="yiyan-wrapper"
     >
       <div class="yiyan">
         <p class="yiyan-content">「 {{ yiyan }} 」</p>

@@ -31,7 +31,7 @@ const data: {
 async function add() {
   try {
     new URL(data.url)
-  } catch (e) {
+  } catch {
     ElMessage.error(i18n.t('newtab.quickstart.addDialog.invalidUrlError'))
     data.url = ''
     return
@@ -71,7 +71,7 @@ async function cancel() {
       <div class="quickstart-icon">
         <add-round />
       </div>
-      <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
+      <div v-if="settingsStore.quickStart.showQuickStartTitle" class="quickstart-title">
         {{ i18n.t('newtab.quickstart.addNewQuickstart') }}
       </div>
     </div>
@@ -83,7 +83,7 @@ async function cancel() {
     append-to-body
     destroy-on-close
   >
-    <el-form :inline="true" ref="modelForm" :model="data">
+    <el-form ref="modelForm" :inline="true" :model="data">
       <el-form-item
         :label="i18n.t('newtab.quickstart.addDialog.title')"
         label-width="70px"

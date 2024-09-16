@@ -39,7 +39,7 @@ defineExpose({ show, hide, toggleShow })
     lock-scroll
     draggable
     @open="() => scrollbar?.setScrollTop(0)"
-    @closed="() => settingsStore.pluginVersion = version"
+    @closed="() => (settingsStore.pluginVersion = version)"
   >
     <template #header="{ close, titleId }">
       <div
@@ -65,7 +65,9 @@ defineExpose({ show, hide, toggleShow })
     ></div>
     <div style="height: 100%; padding: 0 19px 0px 35px">
       <el-scrollbar ref="scrollbar" style="padding-right: 15px">
-        <div ref="header" class="changelog-dialog__list-tilte">{{ i18n.t('newtab.changelog') }}</div>
+        <div ref="header" class="changelog-dialog__list-tilte">
+          {{ i18n.t('newtab.changelog') }}
+        </div>
         <component :is="ChangeLog"></component>
         <div style="height: 35px"></div>
       </el-scrollbar>

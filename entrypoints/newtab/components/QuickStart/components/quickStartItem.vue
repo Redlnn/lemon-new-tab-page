@@ -28,7 +28,7 @@ defineProps<{
   >
     <a class="quickstart-item-link" :href="url">
       <div class="quickstart-icon">
-        <div class="pin-icon" v-if="pined && settingsStore.quickStart.showPinnedIcon">
+        <div v-if="pined && settingsStore.quickStart.showPinnedIcon" class="pin-icon">
           <el-icon size="15">
             <pin16-regular />
           </el-icon>
@@ -39,7 +39,7 @@ defineProps<{
           }"
         ></span>
       </div>
-      <div class="quickstart-title" v-if="settingsStore.quickStart.showQuickStartTitle">
+      <div v-if="settingsStore.quickStart.showQuickStartTitle" class="quickstart-title">
         {{ title }}
       </div>
     </a>
