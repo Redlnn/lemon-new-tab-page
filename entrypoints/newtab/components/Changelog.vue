@@ -5,7 +5,7 @@ import { useElementVisibility } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
-import ChangeLog from '../ChangeLog'
+import Changelog from '../Changelog'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '../js/store/settingsStore'
 import { version } from '@/package.json'
@@ -68,7 +68,7 @@ defineExpose({ show, hide, toggleShow })
         <div ref="header" class="changelog-dialog__list-tilte">
           {{ i18n.t('newtab.changelog') }}
         </div>
-        <component :is="ChangeLog"></component>
+        <component :is="Changelog"></component>
         <div style="height: 35px"></div>
       </el-scrollbar>
     </div>

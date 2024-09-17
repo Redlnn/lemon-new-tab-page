@@ -8,7 +8,7 @@ import { onBeforeMount, ref, toRaw, watch } from 'vue'
 import { useColorMode, useDebounceFn } from '@vueuse/core'
 
 import Background from './components/Background.vue'
-import ChangeLog from './components/ChangeLog.vue'
+import Changelog from './components/Changelog.vue'
 import QuickStart from './components/QuickStart/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
@@ -29,7 +29,7 @@ import {
 useColorMode()
 const settingsStore = useSettingsStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
-const ChangeLogRef = ref<InstanceType<typeof ChangeLog>>()
+const ChangelogRef = ref<InstanceType<typeof Changelog>>()
 
 const bgURL = ref('')
 
@@ -58,7 +58,7 @@ onBeforeMount(async () => {
   }
 
   if (settingsStore.pluginVersion !== version) {
-    ChangeLogRef.value?.show()
+    ChangelogRef.value?.show()
   }
 })
 
@@ -108,7 +108,7 @@ settingsStore.$subscribe(async (mutation, state) => {
       <el-icon><settings-outlined /></el-icon>
     </div>
     <settings-page ref="SettingsPageRef" />
-    <change-log ref="ChangeLogRef" />
+    <changelog ref="ChangelogRef" />
   </el-config-provider>
 </template>
 
