@@ -3,6 +3,7 @@ import { defineConfig } from 'wxt'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
@@ -27,6 +28,7 @@ export default defineConfig({
   vite: () => ({
     plugins: [
       svgLoader(),
+      vueJsx(),
       Components({
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx

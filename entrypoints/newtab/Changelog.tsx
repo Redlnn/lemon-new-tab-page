@@ -1,5 +1,4 @@
 import { browser } from 'wxt/browser'
-import { defineComponent } from 'vue'
 
 const changelogZH = (
   <section>
@@ -87,8 +86,4 @@ const changelog = (
 
 const _ = browser.i18n.getUILanguage().startsWith('zh') ? changelogZH : changelog
 
-export default defineComponent({
-  setup() {
-    return () => _
-  }
-})
+export default _
