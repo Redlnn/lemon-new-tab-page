@@ -56,5 +56,6 @@
     "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.1.6",
     "wxt": "^0.19.9"
-  }
+  },
+  "packageManager": "pnpm@9.10.0"
 }
