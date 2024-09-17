@@ -20,9 +20,7 @@ const searchSuggestionArea = ref<HTMLDivElement>()
 const searchSuggestions = ref<string[]>([])
 
 const props = defineProps<{ searchText: string; searchFormWidth: number }>()
-const emit = defineEmits<{
-  (e: 'doSearchWithText', text: string): Promise<void>
-}>()
+const emit = defineEmits<(e: 'doSearchWithText', text: string) => Promise<void>>()
 
 function handleInput() {
   if (focusStore.isFocused && !props.searchText) {

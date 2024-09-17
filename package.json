@@ -12,7 +12,7 @@
     "zip:firefox": "wxt zip -b firefox",
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare",
-    "lint": "eslint . --fix",
+    "lint": "eslint --fix entrypoints/ types/",
     "format": "prettier . --write -u"
   },
   "dependencies": {

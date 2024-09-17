@@ -27,10 +27,10 @@ async function bingSuggestParser(text: string): Promise<string[]> {
   console.debug(response)
   if (response.status === 200) {
     const resp: BingSuggest = response.data
-    if (resp['AS']['FullResults'] <= 0) {
+    if (resp.AS.FullResults <= 0) {
       return []
     }
-    const originSuggestions = resp['AS']['Results'][0]['Suggests']
+    const originSuggestions = resp.AS.Results[0].Suggests
     const suggestions: string[] = []
     originSuggestions.forEach((originSuggestion) => {
       suggestions.push(originSuggestion.Txt)
@@ -51,8 +51,8 @@ async function bingSuggestParser(text: string): Promise<string[]> {
 
 function baiduJsonpParser(text: string): string[] {
   // window.baidu.sug({q:"1",p:false,s:["192.1681.1","1公顷等于多少平方米","1g等于多少mg","163邮箱登录","1升等于多少斤","1克等于多少毫克","12生肖","1升等于多少毫升","12生肖排行顺序","12304是什么电话号码"]});
-  const match = text.match(/\[.*\]/)
-  if (match && match[0]) {
+  const match = /\[.*\]/.exec(text)
+  if (match?.[0]) {
     return JSON.parse(match[0])
   } else {
     throw new Error(`Parse jsonp error, text: ${text}`)

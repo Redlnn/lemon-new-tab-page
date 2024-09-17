@@ -139,7 +139,7 @@ async function doSearchWithText(text: string) {
   }
   // 跳转搜索结果
   window.open(
-    searchEngines[settingsStore.search.selectedSearchEngine]['url'].replace('%s', text),
+    searchEngines[settingsStore.search.selectedSearchEngine].url.replace('%s', text),
     settingsStore.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()

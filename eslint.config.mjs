@@ -23,6 +23,8 @@ export default [
   eslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
   ...tseslint.configs.recommended,
+  // stylistic 需配合 parserOptions.project，但是指定了 project 后会很慢
+  // ...tseslint.configs.stylisticTypeChecked,
   {
     plugins: {
       vue: pluginVue,
@@ -40,6 +42,11 @@ export default [
       sourceType: 'module',
 
       parserOptions: {
+        // project: ['tsconfig.app.json'],  // 配合 stylisticTypeChecked 用，但是太慢了
+        extraFileExtensions: ['.vue'],
+        ecmaFeatures: {
+          jsx: true
+        },
         parser: {
           js: 'espree',
           jsx: 'espree',
@@ -53,16 +60,12 @@ export default [
       }
     },
     rules: {
-      // '@typescript-eslint/explicit-function-return-type': 'off',
       'no-var': 'error',
-      // 'no-unused-vars': 'off',
-      // 'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': 'warn',
       'prefer-const': 'error',
       'prefer-rest-params': 'error',
       'prefer-spread': 'error',
       'vue/multi-word-component-names': 'off',
-      // 'vue/no-deprecated-v-on-native-modifier': 'off',
 
       'sort-imports': [
         'error',
@@ -74,7 +77,7 @@ export default [
     }
   },
   {
-    files: ['**/*.js', '**/*.cjs'],
+    files: ['**/*.js', '**/*.cjs', '**/*.mjs'],
 
     rules: {
       '@typescript-eslint/no-var-requires': 'off'

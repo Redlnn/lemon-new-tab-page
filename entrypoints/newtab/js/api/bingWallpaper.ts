@@ -81,7 +81,7 @@ export async function getBingWallpaperURL() {
 
   // 清除上次壁纸，ObjectURL可能导致内存溢出
   await useBingWallpaperStore.clear()
-  if (url_old && url_old.startsWith('blob:')) {
+  if (url_old.startsWith('blob:')) {
     URL.revokeObjectURL(url_old)
   }
 

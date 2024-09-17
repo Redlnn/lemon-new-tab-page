@@ -194,13 +194,11 @@ const searchSuggestAPIsMap: Record<string, string> = {
 export async function initSettings() {
   let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    const oldSettings = <{ settings: OldSettingsInterface } | undefined | null>(
-      await chrome.storage.local.get('settings')
-    )
+    const oldSettings = await chrome.storage.local.get('settings') as { settings: OldSettingsInterface } | undefined | null
 
     settings = await settingsStorage.getValue()
 
-    if (oldSettings && oldSettings.settings) {
+    if (oldSettings?.settings) {
       if (
         Object.keys(searchSuggestAPIsMap).includes(oldSettings.settings.selectedSearchSuggestionAPI)
       ) {
@@ -244,7 +242,7 @@ export async function uploadBackgroundImage(imageFile: File) {
 
   // 清除上次壁纸，ObjectURL可能导致内存溢出
   await useWallpaperStore.clear()
-  if (url_old && url_old.startsWith('blob:')) {
+  if (url_old.startsWith('blob:')) {
     URL.revokeObjectURL(url_old)
   }
 

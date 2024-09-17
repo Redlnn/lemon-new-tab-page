@@ -22,10 +22,10 @@ async function fetchJsonp(
   axiosOptions: AxiosRequestConfig | undefined = undefined
 ): Promise<string[]> {
   let url = _url
-  const jsonpCallback = options.jsonpCallback || defaultOptions.jsonpCallback
-  const callbackFunction = options.jsonpCallbackFunction || generateCallbackFunction()
+  const jsonpCallback = options.jsonpCallback ?? defaultOptions.jsonpCallback
+  const callbackFunction = options.jsonpCallbackFunction ?? generateCallbackFunction()
 
-  url += url.indexOf('?') === -1 ? '?' : '&'
+  url += url.includes('?') ? '&' : '?'
 
   const response = await axios.get(`${url}${jsonpCallback}=${callbackFunction}`, axiosOptions)
   if (response.status !== 200) {
