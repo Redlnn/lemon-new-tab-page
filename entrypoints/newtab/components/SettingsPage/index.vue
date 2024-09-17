@@ -96,7 +96,6 @@ defineExpose({ show, hide, toggleShow })
 
   .el-dialog__header {
     padding: 0;
-    marin: 0;
     width: 100%;
     height: 50px;
     display: flex;
