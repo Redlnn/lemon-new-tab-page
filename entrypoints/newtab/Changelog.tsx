@@ -11,6 +11,7 @@ const changelogZH = (
       <li>现在可以改变背景遮罩的颜色了</li>
       <li>现在可以关闭快捷访问区域的背景了</li>
       <li>优化了关闭快速访问区域后搜索栏的位置</li>
+      <li>[Firefox] 现在支持将设置为主页了 (#12)</li>
     </ul>
     <h2>修复</h2>
     <ul>
@@ -45,40 +46,41 @@ const changelog = (
     <h1>1.5.4</h1>
     <h2>New Features</h2>
     <ul>
-      <li>Now supports displaying dates</li>
-      <li>New settings window and changelog window</li>
-      <li>Use www.bing.com instead of cn.bing.com to avoid being redirected when using Bing</li>
-      <li>You can now change the color of the background mask</li>
-      <li>You can now turn off the background of the shortcut area</li>
-      <li>Optimized the position of the search bar afterdisabling the shortcut area</li>
+      <li>Now supports displaying dates.</li>
+      <li>New settings window and changelog window.</li>
+      <li>Use www.bing.com instead of cn.bing.com to avoid being redirected when using Bing.</li>
+      <li>You can now change the color of the background mask.</li>
+      <li>You can now turn off the background of the shortcut area.</li>
+      <li>Optimized the position of the search bar afterdisabling the shortcut area.</li>
+      <li>[Firefox] You can now set as the homepage. (#12)</li>
     </ul>
     <h2>Fixes</h2>
     <ul>
-      <li>The search engine drop-down on the settings page now shows the full Google word</li>
-      <li>Fixed the background blur being set to a fixed value when focusing the search bar</li>
+      <li>The search engine drop-down on the settings page now shows the full Google word.</li>
+      <li>Fixed the background blur being set to a fixed value when focusing the search bar.</li>
       <li>
         Fixed the problem of using a local image as the background when the browser starts and
-        freezes, consumes a lot of CPU and leaks memory
+        freezes, consumes a lot of CPU and leaks memory.
       </li>
     </ul>
     <h1>1.5.3</h1>
     <h2>New Features</h2>
     <ul>
-      <li>Partial refactor to support Firefox browser</li>
-      <li>Support for caching Bing daily image</li>
-      <li>New entry animation for local backgrounds or cached Bing wallpapers</li>
-      <li>Optimized 12-hour time format display</li>
-      <li>[i18n] Internationalization support</li>
+      <li>Partial refactor to support Firefox browser.</li>
+      <li>Support for caching Bing daily image.</li>
+      <li>New entry animation for local backgrounds or cached Bing wallpapers.</li>
+      <li>Optimized 12-hour time format display.</li>
+      <li>[i18n] Internationalization support.</li>
     </ul>
     <h2>Fixes</h2>
     <ul>
-      <li>Fixed issue where undoing unpin did not take effect</li>
-      <li>Fixed issue where frequently visitedsites could not be deleted (#8)</li>
-      <li>Fixed issue where "Enable Most Visited" switch did not take effect</li>
-      <li>Fixed issue where hiding most visited sites could result in duplicate bookmarks</li>
-      <li>Hide Chrome-specific prompts in Firefox browser</li>
-      <li>Fixed issue where search suggestion API candidates and icons could not be displayed</li>
-      <li>Remove Herobrine</li>
+      <li>Fixed issue where undoing unpin did not take effect.</li>
+      <li>Fixed issue where frequently visitedsites could not be deleted (#8).</li>
+      <li>Fixed issue where "Enable Most Visited" switch did not take effect.</li>
+      <li>Fixed issue where hiding most visited sites could result in duplicate bookmarks.</li>
+      <li>Hide Chrome-specific prompts in Firefox browser.</li>
+      <li>Fixed issue where search suggestion API candidates and icons could not be displayed.</li>
+      <li>Remove Herobrine.</li>
     </ul>
     <h5>Translate by Copilot.</h5>
   </section>
