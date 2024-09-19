@@ -137,5 +137,12 @@ defineExpose({ show, hide, toggleShow })
     line-height: 1.6;
     margin: 0.25em 0;
   }
+
+  .blockquote {
+    margin: 0.3em 0 0.5em 0;
+    padding: 0.2em 1em;
+    color: var(--el-text-color-regular);
+    border-left: 0.25em solid var(--el-text-color-secondary);
+  }
 }
 </style>

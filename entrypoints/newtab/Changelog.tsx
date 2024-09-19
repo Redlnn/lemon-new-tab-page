@@ -2,6 +2,16 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>1.5.5</h1>
+    <h2>修复</h2>
+    <ul>
+      <li>
+          再次修复会使得浏览器 Bing 跳转到国区的问题
+          <div class="blockquote">
+            <span>如需恢复非国区访问，需在浏览器中清理 *.bing.com 的 cookie</span>
+          </div>
+      </li>
+    </ul>
     <h1>1.5.4</h1>
     <h2>新特性</h2>
     <ul>

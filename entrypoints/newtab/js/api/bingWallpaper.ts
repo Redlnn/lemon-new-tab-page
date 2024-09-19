@@ -53,7 +53,8 @@ export async function getBingWallpaperURL() {
   }
 
   const response = await axios.get(
-    'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN'
+    'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
+    // &mkt=zh-CN 加上区域后会导致后续访问 www.bing.com 被跳转到 cn.bing.com
   )
 
   if (response.status !== 200) {
