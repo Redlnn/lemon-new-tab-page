@@ -3,6 +3,10 @@ import { browser } from 'wxt/browser'
 const changelogZH = (
   <section>
     <h1>1.5.5</h1>
+    <h2>新特性</h2>
+    <ul>
+      <li>现在可以通过右键设置按钮再次打开更新日志了</li>
+    </ul>
     <h2>修复</h2>
     <ul>
       <li>
@@ -53,6 +57,20 @@ const changelogZH = (
 
 const changelog = (
   <section>
+  <h1>1.5.5</h1>
+  <h2>New Features</h2>
+  <ul>
+    <li>Now you can open the changelog dialog again by right-click the setting button.</li>
+  </ul>
+  <h2>Fixes</h2>
+  <ul>
+    <li>
+        Fixes again to make sure that the browser will not be redirected to the country specific version.
+        <div class="blockquote">
+          <span>If you have been redirected to the country specific version of Bing, you need to clear the cookies of *.bing.com in your browser</span>
+        </div>
+    </li>
+  </ul>
     <h1>1.5.4</h1>
     <h2>New Features</h2>
     <ul>
