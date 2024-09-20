@@ -104,7 +104,7 @@ settingsStore.$subscribe(async (mutation, state) => {
       <yi-yan />
     </main>
     <background :bgurl="bgURL" />
-    <div class="settings-icon" @click="SettingsPageRef?.toggleShow" @contextmenu.prevent.stop="ChangelogRef.show">
+    <div class="settings-icon" @click="SettingsPageRef?.toggleShow" @contextmenu.prevent.stop="ChangelogRef?.show">
       <el-icon><settings-outlined /></el-icon>
     </div>
     <settings-page ref="SettingsPageRef" />
