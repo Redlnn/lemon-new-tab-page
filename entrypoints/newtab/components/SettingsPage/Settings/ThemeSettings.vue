@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { ColorLensOutlined } from '@vicons/material'
 import { ref } from 'vue'
-import { useColorMode } from '@vueuse/core'
+import { useColorMode, useDark, useTimeoutFn } from '@vueuse/core'
 
 import changeTheme from '@/entrypoints/newtab/js/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
 
-import autoMode from '@/entrypoints/newtab/assets/color/auto-mode.svg?url'
-import darkMode from '@/entrypoints/newtab/assets/color/dark-mode.svg?url'
-import lightMode from '@/entrypoints/newtab/assets/color/light-mode.svg?url'
-import selected from '@/entrypoints/newtab/assets/color/selected.svg?component'
-
 const settingsStore = useSettingsStore()
 
-const colorMode = useColorMode()
+const { store } = useColorMode()
 
 const predefineColors = ref([
   '#ff4500',
@@ -25,6 +20,38 @@ const predefineColors = ref([
   '#1e90ff',
   '#c71585'
 ])
+
+const isDark = useDark()
+const isDarkLocal = ref(isDark.value)
+
+const isAuto = ref(store.value === 'auto')
+
+function toggleDark() {
+  const doc: HTMLHtmlElement | null = document.querySelector('html')
+  if (!doc) return
+  if (isDark.value) {
+    doc.classList.remove('dark')
+    doc.classList.add('light')
+    useTimeoutFn(() => {
+      isDark.value = false
+      if (isDarkLocal.value) {
+        isDarkLocal.value = false
+      }
+    }, 300)
+  } else {
+    doc.classList.add('dark')
+    doc.classList.remove('light')
+    useTimeoutFn(() => {
+      isDark.value = true
+      if (!isDarkLocal.value) {
+        isDarkLocal.value = true
+      }
+    }, 300)
+  }
+  if (store.value === 'auto') {
+    isAuto.value = false
+  }
+}
 </script>
 
 <template>
@@ -33,36 +60,22 @@ const predefineColors = ref([
     <span>{{ i18n.t('newtab.settings.theme.title') }}</span>
   </div>
   <div class="setting-items-container">
-    <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.colorScheme') }}</div>
-      <div class="theme-mode">
-        <el-tooltip :content="i18n.t('newtab.settings.theme.systemMode')" placement="top">
-          <span class="theme-item" @click="colorMode = 'auto'">
-            <img :src="autoMode" />
-            <span class="selected"><selected /></span>
-          </span>
-        </el-tooltip>
-        <el-tooltip :content="i18n.t('newtab.settings.theme.lightMode')" placement="top">
-          <span
-            class="theme-item"
-            :class="{ active: colorMode === 'light' }"
-            @click="colorMode = 'light'"
-          >
-            <img :src="lightMode" />
-            <span class="selected"><selected /></span>
-          </span>
-        </el-tooltip>
-        <el-tooltip :content="i18n.t('newtab.settings.theme.darkMode')" placement="top">
-          <span
-            class="theme-item"
-            :class="{ active: colorMode === 'dark' }"
-            @click="colorMode = 'dark'"
-          >
-            <img :src="darkMode" />
-            <span class="selected"><selected /></span>
-          </span>
-        </el-tooltip>
-      </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.darkMode') }}</div>
+      <el-switch v-model="isDarkLocal" @change="toggleDark" />
+    </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.theme.systemMode') }}</div>
+      <el-switch
+        v-model="isAuto"
+        @change="
+          () => {
+            if (isAuto) {
+              store = 'auto'
+            }
+          }
+        "
+      />
     </div>
     <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>

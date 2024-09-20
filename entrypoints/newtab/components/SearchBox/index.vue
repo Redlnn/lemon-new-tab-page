@@ -195,6 +195,7 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
 .search-form {
   --height: 44px;
   --width: 300px;
+  --search-form-placeholder-color: var(--el-text-color-regular);
   height: var(--height);
   width: var(--width);
   display: flex;
@@ -205,12 +206,12 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
   font-size: 15px;
   box-shadow: var(--el-box-shadow-dark);
   backdrop-filter: blur(10px);
-  transition:
-    background-color 0.2s var(--cubic-bezier),
-    width 0.2s var(--cubic-bezier);
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
   color: transparent;
-  --search-form-placeholder-color: var(--el-text-color-regular);
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    width 0.2s var(--cubic-bezier);
 
   html.dark & {
     box-shadow: var(--el-box-shadow-light);
@@ -237,8 +238,10 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     height: calc(var(--height) - 10px);
     width: calc(var(--height) - 10px);
     overflow: hidden;
-    transition: all 0.2s var(--cubic-bezier);
     border-radius: 50%;
+    transition:
+      color 0.2s ease,
+      background-color 0.2s ease;
   }
 
   &.focus:deep() {
@@ -264,10 +267,12 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     color: var(--el-text-color-primary);
     text-align: center;
     font-size: 1em;
-    transition: all 0.2s var(--cubic-bezier);
     outline: none;
     border: none;
     background: none;
+    transition:
+      width 0.2s var(--cubic-bezier),
+      color 0.2s ease;
 
     &::placeholder {
       color: var(--search-form-placeholder-color);

@@ -27,7 +27,7 @@ const firefoxManifest = {
   permissions: ['topSites', 'storage'],
   chrome_settings_overrides: {
     homepage: 'newtab.html'
-  },
+  }
 }
 
 const chromeManifest = {
@@ -66,7 +66,8 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/styles/element/index.scss" as *;`
+          additionalData: `@use "@/styles/element/index.scss" as *;`,
+          api: 'modern'
         }
       }
     }

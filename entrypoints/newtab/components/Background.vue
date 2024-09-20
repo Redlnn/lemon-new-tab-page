@@ -63,8 +63,10 @@ onMounted(async () => {
   left: 0;
   opacity: 0;
   z-index: -1000;
-  transition: opacity 0.4s cubic-bezier(0.5, 0, 0.5, 2);
   background-color: var(--el-bg-color-page);
+  transition:
+    opacity 0.4s cubic-bezier(0.5, 0, 0.5, 2),
+    background-color 0.2s ease;
 
   .background {
     position: absolute;
@@ -86,6 +88,7 @@ onMounted(async () => {
       background-image: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
       z-index: -999;
     }
+
     .mask {
       position: absolute;
       top: 0;

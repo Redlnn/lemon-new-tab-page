@@ -59,8 +59,7 @@ newtab:
     theme:
       title: 主題設定
       colorScheme: 顏色方案
-      darkMode: 黑暗模式
-      lightMode: 淺色模式
+      darkMode: 深色模式
       systemMode: 跟隨系統
       primaryColor: 主題色
     quickstart:

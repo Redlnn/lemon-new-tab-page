@@ -152,7 +152,10 @@ defineExpose({
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 50%);
   backdrop-filter: blur(30px) saturate(1.2);
   box-shadow: var(--el-box-shadow-light);
-  transition: height 0.1s var(--cubic-bezier);
+  transition:
+    height 0.1s var(--cubic-bezier),
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   .search-suggestion-item {
     display: -webkit-box;
@@ -164,7 +167,11 @@ defineExpose({
     line-height: 33px;
     cursor: pointer;
     color: var(--el-text-color-primary);
-    transition: all 0.2s var(--cubic-bezier);
+    background-color: transparent;
+    transition:
+      padding 0.2s var(--cubic-bezier),
+      padding-left 0.2s var(--cubic-bezier),
+      color 0.2s ease;
 
     &.active {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
@@ -177,6 +184,8 @@ defineExpose({
     color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
     display: flex;
     align-items: center;
+    background-color: transparent;
+    transition: color 0.2s ease;
 
     &:hover {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);

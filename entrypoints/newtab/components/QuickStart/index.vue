@@ -200,7 +200,9 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   padding: 10px;
   z-index: 10;
   overflow: hidden;
-  transition: all 0.2s;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &.quickstart-contaniner-bg {
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
@@ -302,7 +304,6 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
       right: 6px;
       border-radius: 50%;
       color: transparent;
-      transition: all 0.1s ease-in-out;
       overflow: hidden;
       cursor: pointer;
 

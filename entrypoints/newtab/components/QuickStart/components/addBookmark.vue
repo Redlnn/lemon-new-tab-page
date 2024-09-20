@@ -113,6 +113,7 @@ async function cancel() {
 <style lang="scss" scoped>
 .add-bookmark .quickstart-icon {
   color: var(--el-text-color-regular);
+  transition: color 0.2s ease;
 
   & svg {
     width: 80%;

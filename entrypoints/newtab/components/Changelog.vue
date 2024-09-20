@@ -85,6 +85,9 @@ defineExpose({ show, hide, toggleShow })
   border-radius: 10px;
   box-shadow: 0px 0px 15px 0px color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
   overflow: hidden;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   .el-dialog__header {
     padding: 0;
@@ -99,6 +102,7 @@ defineExpose({ show, hide, toggleShow })
   .el-dialog__body {
     height: calc(100% - 51px);
     color: var(--el-text-color-primary);
+    transition: color 0.2s ease;
   }
 
   .changelog-dialog__title {
@@ -112,7 +116,9 @@ defineExpose({ show, hide, toggleShow })
     height: 20px;
     color: var(--el-text-color-regular);
     cursor: pointer;
-    transition: transform 0.1s ease-in-out;
+    transition:
+      transform 0.1s ease-in-out,
+      color 0.2s ease;
 
     &:hover {
       color: var(--el-text-color-primary);
