@@ -6,6 +6,7 @@ const changelogZH = (
     <h2>新特性</h2>
     <ul>
       <li>现在可以通过右键设置按钮再次打开更新日志了</li>
+      <li>现在当颜色模式选择为跟随系统时更直观了</li>
     </ul>
     <h2>修复</h2>
     <ul>
@@ -15,6 +16,7 @@ const changelogZH = (
             <span>如需恢复非国区访问，需在浏览器中清理 *.bing.com 的 cookie</span>
           </div>
       </li>
+      <li>降低 CPU 占用</li>
     </ul>
     <h1>1.5.4</h1>
     <h2>新特性</h2>
@@ -61,6 +63,7 @@ const changelog = (
   <h2>New Features</h2>
   <ul>
     <li>Now you can open the changelog dialog again by right-click the setting button.</li>
+    <li>The color mode is now more intuitive when "Follow System" is selected.</li>
   </ul>
   <h2>Fixes</h2>
   <ul>
@@ -70,6 +73,7 @@ const changelog = (
           <span>If you have been redirected to the country specific version of Bing, you need to clear the cookies of *.bing.com in your browser</span>
         </div>
     </li>
+    <li>Reduce CPU usage.</li>
   </ul>
     <h1>1.5.4</h1>
     <h2>New Features</h2>
@@ -110,7 +114,7 @@ const changelog = (
       <li>Fixed issue where search suggestion API candidates and icons could not be displayed.</li>
       <li>Remove Herobrine.</li>
     </ul>
-    <h5>Translate by Copilot.</h5>
+    <h5>Translate by Copilot and Google Translate.</h5>
   </section>
 )
 

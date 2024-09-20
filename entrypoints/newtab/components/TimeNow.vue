@@ -37,7 +37,7 @@ function customMeridiem(hours: number) {
   }
 }
 
-const timeNow = useNow()
+const timeNow = useNow({interval: 1000})
 const lang = browser.i18n.getUILanguage()
 const isChinese = lang.startsWith('zh')
 
