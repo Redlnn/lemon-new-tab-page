@@ -5,6 +5,12 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Color Emoji';
+  src: local('Apple Color Emoji'), local('Segoe UI Emoji'), local('Noto Color Emoji'),
+    local('Segoe Fluent Icons'), local('Segoe MDL2 Assets'), local('Segoe UI Symbol');
+}
+
 html,
 body,
 #app {
@@ -12,8 +18,17 @@ body,
   width: 100vw;
   height: 100vh;
   font-size: 14px;
-  font-family: 'HarmonyOS Sans SC', 'PingFang SC', 'Helvetica Neue', 'Source Han Sans SC',
-    'Microsoft YaHei', sans-serif;
+  font-family:
+    HarmonyOS Sans SC,
+    -apple-system,
+    BlinkMacSystemFont,
+    Helvetica Neue,
+    Microsoft YaHei,
+    Color Emoji,
+    emoji,
+    system-ui,
+    ui-sans-serif,
+    sans-serif;
 }
 
 .noselect {

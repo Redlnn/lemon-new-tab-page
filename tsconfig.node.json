@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
-  "include": ["wxt.config.*"],
+  "include": ["wxt.config.*", "utils/optimizeDeps.ts", "./types/**/*", "./.wxt/types/**/*"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

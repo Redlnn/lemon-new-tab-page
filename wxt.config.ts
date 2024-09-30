@@ -5,6 +5,8 @@ import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
+import optimizeDeps from './utils/optimizeDeps'
+
 const baseManifest = {
   name: '__MSG_extension_name__',
   author: 'Red_lnn<lemon@redlnn.top>',
@@ -67,9 +69,12 @@ export default defineConfig({
       preprocessorOptions: {
         scss: {
           additionalData: `@use "@/styles/element/index.scss" as *;`,
-          api: 'modern'
+          api: 'modern-compiler'
         }
       }
+    },
+    optimizeDeps: {
+      include: optimizeDeps
     }
   })
 })

@@ -4,7 +4,7 @@
     "#i18n": ["./.wxt/i18n/index.ts"],
     "#i18n/*": ["./.wxt/i18n/index.ts/*"]
   },
-  "include": ["./entrypoints/**/*", "./types/**/*", "./.wxt/i18n/**/*", "./.wxt/types/**/*"],
+  "include": ["./entrypoints/**/*", "./.wxt/i18n/**/*"],
   "exclude": ["./.output", "./.wxt/types/imports.d.ts"],
   "compilerOptions": {
     "composite": true,

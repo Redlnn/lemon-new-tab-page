@@ -12,7 +12,7 @@
     "zip:firefox": "wxt zip -b firefox",
     "compile": "vue-tsc --noEmit",
     "postinstall": "wxt prepare",
-    "lint": "eslint --fix entrypoints/ types/",
+    "lint": "eslint --fix entrypoints/ types/ utils/",
     "format": "prettier . --write -u"
   },
   "dependencies": {
@@ -22,20 +22,21 @@
     "@vicons/material": "^0.12.0",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
-    "element-plus": "^2.8.3",
+    "element-plus": "^2.8.4",
     "jinrishici": "^1.0.6",
     "localforage": "^1.10.0",
     "lodash": "^4.17.21",
-    "pinia": "^2.2.2",
+    "pinia": "^2.2.3",
     "uuid": "^10.0.0",
-    "vue": "^3.5.6"
+    "vue": "^3.5.10"
   },
   "devDependencies": {
-    "@eslint/js": "^9.10.0",
+    "@eslint/js": "^9.11.1",
+    "@pnpm/types": "^12.2.0",
     "@tsconfig/node22": "^22.0.0",
-    "@types/chrome": "^0.0.271",
-    "@types/lodash": "^4.17.7",
-    "@types/node": "^22.5.5",
+    "@types/chrome": "^0.0.273",
+    "@types/lodash": "^4.17.9",
+    "@types/node": "^22.7.4",
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-vue": "^5.1.4",
     "@vitejs/plugin-vue-jsx": "^4.0.1",
@@ -44,19 +45,20 @@
     "@vueuse/core": "^11.1.0",
     "@wxt-dev/i18n": "^0.1.0",
     "@wxt-dev/module-vue": "^1.0.1",
-    "eslint": "^9.10.0",
+    "eslint": "^9.11.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-vue": "^9.28.0",
+    "fast-glob": "^3.3.2",
     "globals": "^15.9.0",
     "prettier": "^3.3.3",
-    "sass": "^1.79.2",
+    "sass": "^1.79.4",
     "typescript": "^5.6.2",
-    "typescript-eslint": "^8.6.0",
+    "typescript-eslint": "^8.7.0",
     "unplugin-vue-components": "^0.27.4",
-    "vite": "^5.4.6",
+    "vite": "^5.4.8",
     "vite-svg-loader": "^5.1.0",
     "vue-tsc": "^2.1.6",
-    "wxt": "^0.19.9"
+    "wxt": "^0.19.10"
   },
   "packageManager": "pnpm@9.10.0"
 }
