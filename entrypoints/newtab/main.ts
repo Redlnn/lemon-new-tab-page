@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { i18n } from '@/.wxt/i18n'
+import { useDebounceFn } from '@vueuse/core'
+import { createApp, toRaw } from 'vue'
 
 import './js/plugins/dayjs'
+import changeTheme from './js/use-element-plus-theme'
+import { i18n } from '@/.wxt/i18n'
+import { initSettings, saveSettings, useSettingsStore } from './js/store/settingsStore'
 
 import './css/index.scss'
 
@@ -15,4 +18,15 @@ document.title = i18n.t('newtab.title')
 
 app.use(pinia)
 
-app.mount('body')
+const settingsStore = useSettingsStore()
+
+initSettings().then(() => {
+  changeTheme(settingsStore.primaryColor)
+  app.mount('body')
+
+  const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
+
+  settingsStore.$subscribe(async (mutation, state) => {
+    await saveSettingsDebounced(toRaw(state))
+  })
+})

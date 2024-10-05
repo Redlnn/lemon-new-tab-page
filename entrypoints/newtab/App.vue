@@ -3,9 +3,9 @@ import { version } from '@/package.json'
 
 import { ElConfigProvider } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
+import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { onBeforeMount, ref, toRaw, watch } from 'vue'
-import { useColorMode, useDebounceFn } from '@vueuse/core'
+import { onBeforeMount, ref, watch } from 'vue'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
@@ -15,16 +15,9 @@ import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
 
-import changeTheme from './js/use-element-plus-theme'
 import { getBingWallpaperURL } from './js/api/bingWallpaper'
 import { verifyImageUrl } from './js/img'
-import {
-  BgType,
-  initSettings,
-  reloadBackgroundImage,
-  saveSettings,
-  useSettingsStore
-} from './js/store/settingsStore'
+import { BgType, reloadBackgroundImage, useSettingsStore } from './js/store/settingsStore'
 
 useColorMode()
 const settingsStore = useSettingsStore()
@@ -34,9 +27,6 @@ const ChangelogRef = ref<InstanceType<typeof Changelog>>()
 const bgURL = ref('')
 
 onBeforeMount(async () => {
-  await initSettings()
-  changeTheme(settingsStore.primaryColor)
-
   switch (settingsStore.background.bgType) {
     case BgType.Bing:
       bgURL.value = `url(${await getBingWallpaperURL()})`
@@ -82,12 +72,6 @@ watch(
   () => settingsStore.localBackground.bgUrl,
   () => (bgURL.value = `url(${settingsStore.localBackground.bgUrl})`)
 )
-
-const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
-
-settingsStore.$subscribe(async (mutation, state) => {
-  await saveSettingsDebounced(toRaw(state))
-})
 </script>
 
 <template>
@@ -104,7 +88,11 @@ settingsStore.$subscribe(async (mutation, state) => {
       <yi-yan />
     </main>
     <background :bgurl="bgURL" />
-    <div class="settings-icon" @click="SettingsPageRef?.toggleShow" @contextmenu.prevent.stop="ChangelogRef?.show">
+    <div
+      class="settings-icon"
+      @click="SettingsPageRef?.toggleShow"
+      @contextmenu.prevent.stop="ChangelogRef?.show"
+    >
       <el-icon><settings-outlined /></el-icon>
     </div>
     <settings-page ref="SettingsPageRef" />
