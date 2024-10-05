@@ -19,14 +19,14 @@ document.title = i18n.t('newtab.title')
 app.use(pinia)
 
 const settingsStore = useSettingsStore()
+const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
 initSettings().then(() => {
   changeTheme(settingsStore.primaryColor)
-  app.mount('body')
-
-  const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
   settingsStore.$subscribe(async (mutation, state) => {
     await saveSettingsDebounced(toRaw(state))
   })
+
+  app.mount('body')
 })
