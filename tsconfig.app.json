@@ -4,7 +4,13 @@
     "#i18n": ["./.wxt/i18n/index.ts"],
     "#i18n/*": ["./.wxt/i18n/index.ts/*"]
   },
-  "include": ["./entrypoints/**/*", "./.wxt/i18n/**/*"],
+  "include": [
+    "./.wxt/i18n/**/*",
+    "./.wxt/types/**/*",
+    "./entrypoints/**/*",
+    "./types/**/*",
+    "./utils/optimizeDeps.ts"
+  ],
   "exclude": ["./.output", "./.wxt/types/imports.d.ts"],
   "compilerOptions": {
     "composite": true,

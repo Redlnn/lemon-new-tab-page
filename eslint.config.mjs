@@ -3,10 +3,11 @@
 import globals from 'globals'
 
 import eslint from '@eslint/js'
-import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
+import prettierConfig from '@vue/eslint-config-prettier'
+import tseslint from 'typescript-eslint'
+import vueTsEslintConfig from '@vue/eslint-config-typescript'
 import vueParser from 'vue-eslint-parser'
-import eslintConfigPrettier from 'eslint-config-prettier'
 
 export default [
   {
@@ -22,9 +23,7 @@ export default [
   },
   eslint.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
-  ...tseslint.configs.recommended,
-  // stylistic 需配合 parserOptions.project，但是指定了 project 后会很慢
-  // ...tseslint.configs.stylisticTypeChecked,
+  ...vueTsEslintConfig(),
   {
     plugins: {
       vue: pluginVue,
@@ -83,5 +82,5 @@ export default [
       '@typescript-eslint/no-var-requires': 'off'
     }
   },
-  eslintConfigPrettier
+  prettierConfig
 ]

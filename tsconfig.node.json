@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
-  "include": ["wxt.config.*", "utils/optimizeDeps.ts", "./types/**/*", "./.wxt/types/**/*"],
+  "include": ["wxt.config.*"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
@@ -9,6 +9,6 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "element-plus/global", "chrome"]
+    "types": ["node"]
   }
 }

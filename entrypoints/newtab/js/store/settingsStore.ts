@@ -194,7 +194,10 @@ const searchSuggestAPIsMap: Record<string, string> = {
 export async function initSettings() {
   let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    const oldSettings = await chrome.storage.local.get('settings') as { settings: OldSettingsInterface } | undefined | null
+    const oldSettings = (await chrome.storage.local.get('settings')) as
+      | { settings: OldSettingsInterface }
+      | undefined
+      | null
 
     settings = await settingsStorage.getValue()
 

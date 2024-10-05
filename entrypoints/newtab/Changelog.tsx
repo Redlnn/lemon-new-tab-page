@@ -11,10 +11,10 @@ const changelogZH = (
     <h2>修复</h2>
     <ul>
       <li>
-          再次修复会使得浏览器 Bing 跳转到国区的问题
-          <div class="blockquote">
-            <span>如需恢复非国区访问，需在浏览器中清理 *.bing.com 的 cookie</span>
-          </div>
+        再次修复会使得浏览器 Bing 跳转到国区的问题
+        <div class="blockquote">
+          <span>如需恢复非国区访问，需在浏览器中清理 *.bing.com 的 cookie</span>
+        </div>
       </li>
       <li>降低 CPU 占用</li>
     </ul>
@@ -59,22 +59,26 @@ const changelogZH = (
 
 const changelog = (
   <section>
-  <h1>1.5.5</h1>
-  <h2>New Features</h2>
-  <ul>
-    <li>Now you can open the changelog dialog again by right-click the setting button.</li>
-    <li>The color mode is now more intuitive when "Follow System" is selected.</li>
-  </ul>
-  <h2>Fixes</h2>
-  <ul>
-    <li>
-        Fixes again to make sure that the browser will not be redirected to the country specific version.
+    <h1>1.5.5</h1>
+    <h2>New Features</h2>
+    <ul>
+      <li>Now you can open the changelog dialog again by right-click the setting button.</li>
+      <li>The color mode is now more intuitive when "Follow System" is selected.</li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>
+        Fixes again to make sure that the browser will not be redirected to the country specific
+        version.
         <div class="blockquote">
-          <span>If you have been redirected to the country specific version of Bing, you need to clear the cookies of *.bing.com in your browser</span>
+          <span>
+            If you have been redirected to the country specific version of Bing, you need to clear
+            the cookies of *.bing.com in your browser
+          </span>
         </div>
-    </li>
-    <li>Reduce CPU usage.</li>
-  </ul>
+      </li>
+      <li>Reduce CPU usage.</li>
+    </ul>
     <h1>1.5.4</h1>
     <h2>New Features</h2>
     <ul>
