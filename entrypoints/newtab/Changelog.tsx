@@ -17,6 +17,7 @@ const changelogZH = (
         </div>
       </li>
       <li>降低 CPU 占用</li>
+      <li>将设置初始化的阶段提前以避免刚打开新标签页时看到默认设置状态的问题</li>
     </ul>
     <h1>1.5.4</h1>
     <h2>新特性</h2>
@@ -78,6 +79,10 @@ const changelog = (
         </div>
       </li>
       <li>Reduce CPU usage.</li>
+      <li>
+        Move the initialization phase of the setting to avoid seeing the default setting status when
+        open new tab.
+      </li>
     </ul>
     <h1>1.5.4</h1>
     <h2>New Features</h2>
