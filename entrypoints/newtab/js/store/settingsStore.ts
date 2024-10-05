@@ -194,7 +194,8 @@ const searchSuggestAPIsMap: Record<string, string> = {
 export async function initSettings() {
   let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    const oldSettings = (await chrome.storage.local.get('settings')) as
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const oldSettings = (await chrome.storage.local.get('settings')) as any as
       | { settings: OldSettingsInterface }
       | undefined
       | null
