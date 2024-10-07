@@ -97,7 +97,7 @@ pnpm build  # 构建为（未压缩的）Chrome 扩展
 pnpm zip  # 打包 Chrome 扩展
 ```
 
-### 如果你使用 Firefox 浏览器（For Firefox）
+#### 如果你使用 Firefox 浏览器（For Firefox）
 
 ```sh
 git clone https://github.com/Redlnn/lemon-new-tab-page.git
