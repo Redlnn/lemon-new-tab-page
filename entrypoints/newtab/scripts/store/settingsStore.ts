@@ -90,7 +90,7 @@ interface SettingsInterface {
 }
 
 export const defaultSettings: SettingsInterface = {
-  primaryColor: '#409eff',
+  primaryColor: '#1677ff',
   time: {
     isMeridiem: false,
     showMeridiem: true,

@@ -18,7 +18,9 @@ const predefineColors = ref([
   '#90ee90',
   '#00ced1',
   '#1e90ff',
-  '#c71585'
+  '#c71585',
+  '#409eff',
+  '#1677ff'
 ])
 
 const isDark = useDark()
@@ -86,7 +88,7 @@ function toggleDark() {
           @change="
             () => {
               if (settingsStore.primaryColor === null) {
-                settingsStore.primaryColor = '#409eff'
+                settingsStore.primaryColor = '#1677ff'
               }
               changeTheme(settingsStore.primaryColor)
             }
