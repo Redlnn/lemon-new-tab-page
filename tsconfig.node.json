@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
-  "include": ["wxt.config.*"],
+  "include": ["wxt.config.*", "./utils"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,

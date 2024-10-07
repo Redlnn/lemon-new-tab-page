@@ -1,4 +1,4 @@
-import axios from '@/entrypoints/newtab/js/plugins/axios'
+import axios from '@/newtab/scripts/plugins/axios'
 import fetchJsonp from './fetchJsonp'
 
 interface BingSuggestItem {

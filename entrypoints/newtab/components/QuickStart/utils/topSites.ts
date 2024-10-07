@@ -2,7 +2,7 @@ import { ElMessage } from 'element-plus'
 import { browser } from 'wxt/browser'
 import { h } from 'vue'
 
-import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { blockedTopStitesStorage } from '@/newtab/scripts/store/topSitesStore'
 import { i18n } from '@/.wxt/i18n'
 
 async function getTopSites() {

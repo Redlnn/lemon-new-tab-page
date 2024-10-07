@@ -15,9 +15,9 @@ import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
 
-import { getBingWallpaperURL } from './js/api/bingWallpaper'
-import { verifyImageUrl } from './js/img'
-import { BgType, reloadBackgroundImage, useSettingsStore } from './js/store/settingsStore'
+import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
+import { verifyImageUrl } from './scripts/img'
+import { BgType, reloadBackgroundImage, useSettingsStore } from './scripts/store/settingsStore'
 
 useColorMode()
 const settingsStore = useSettingsStore()

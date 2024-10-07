@@ -5,10 +5,11 @@ import { useElementVisibility } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
-import Changelog from '../Changelog'
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '../js/store/settingsStore'
 import { version } from '@/package.json'
+
+import Changelog from '@/newtab/Changelog'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const opened = ref(false)

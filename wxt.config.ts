@@ -65,6 +65,11 @@ export default defineConfig({
         dts: 'types/components.d.ts'
       })
     ],
+    resolve: {
+      alias: {
+        '@/newtab': '/entrypoints/newtab'
+      }
+    },
     css: {
       preprocessorOptions: {
         scss: {

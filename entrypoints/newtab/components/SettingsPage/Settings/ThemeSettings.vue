@@ -3,9 +3,9 @@ import { ColorLensOutlined } from '@vicons/material'
 import { ref } from 'vue'
 import { useColorMode, useDark, useTimeoutFn } from '@vueuse/core'
 
-import changeTheme from '@/entrypoints/newtab/js/use-element-plus-theme'
+import changeTheme from '@/newtab/scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 

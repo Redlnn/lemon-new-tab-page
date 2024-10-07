@@ -5,8 +5,8 @@ import { ElMessage, type FormInstance } from 'element-plus'
 import { reactive, ref } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
-import { saveBookmark, useBookmarkStore } from '@/entrypoints/newtab/js/store/bookmarkStore'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { saveBookmark, useBookmarkStore } from '@/newtab/scripts/store/bookmarkStore'
 
 import { getQuickStartItemWidth } from '../utils/index'
 

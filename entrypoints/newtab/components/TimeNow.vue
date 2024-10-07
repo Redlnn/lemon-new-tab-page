@@ -3,7 +3,7 @@ import { browser } from 'wxt/browser'
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
-import { useSettingsStore } from '../js/store/settingsStore'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const time = ref()

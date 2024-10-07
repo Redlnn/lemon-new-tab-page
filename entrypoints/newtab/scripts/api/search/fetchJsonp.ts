@@ -1,5 +1,5 @@
 import { type AxiosRequestConfig } from 'axios'
-import axios from '@/entrypoints/newtab/js/plugins/axios'
+import axios from '@/newtab/scripts/plugins/axios'
 
 interface fetchJsonpOptions {
   parser: (text: string) => string[]

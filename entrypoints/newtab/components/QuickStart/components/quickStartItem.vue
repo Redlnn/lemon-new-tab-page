@@ -2,7 +2,7 @@
 import { MoreVertRound } from '@vicons/material'
 import { Pin16Regular } from '@vicons/fluent'
 
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 import { getFaviconURLChrome } from '../utils/topSites'
 import { getQuickStartItemWidth } from '../utils/index'

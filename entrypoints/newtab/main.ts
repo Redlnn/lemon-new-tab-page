@@ -2,10 +2,10 @@ import { createPinia } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
 import { createApp, toRaw } from 'vue'
 
-import './js/plugins/dayjs'
-import changeTheme from './js/use-element-plus-theme'
+import './scripts/plugins/dayjs'
+import changeTheme from './scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
-import { initSettings, saveSettings, useSettingsStore } from './js/store/settingsStore'
+import { initSettings, saveSettings, useSettingsStore } from './scripts/store/settingsStore'
 
 import './css/index.scss'
 

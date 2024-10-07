@@ -4,16 +4,16 @@ import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 import { ElMessageBox } from 'element-plus'
 
-import { blockedTopStitesStorage } from '@/entrypoints/newtab/js/store/topSitesStore'
+import { blockedTopStitesStorage } from '@/newtab/scripts/store/topSitesStore'
 import { i18n } from '@/.wxt/i18n'
-import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
-import { useWallpaperStore } from '@/entrypoints/newtab/js/store'
-import { defaultBookmark, saveBookmark } from '@/entrypoints/newtab/js/store/bookmarkStore'
+import { searchHistoriesStorage } from '@/newtab/scripts/store/searchStore'
+import { useWallpaperStore } from '@/newtab/scripts/store'
+import { defaultBookmark, saveBookmark } from '@/newtab/scripts/store/bookmarkStore'
 import {
   defaultSettings,
   saveSettings,
   useSettingsStore
-} from '@/entrypoints/newtab/js/store/settingsStore'
+} from '@/newtab/scripts/store/settingsStore'
 
 const isGoogleChrome = import.meta.env.CHROME
 const settingsStore = useSettingsStore()

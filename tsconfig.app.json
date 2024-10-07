@@ -17,7 +17,8 @@
     "noEmit": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@/newtab/*": ["./entrypoints/newtab/*"]
     },
     "jsx": "preserve",
     "jsxImportSource": "vue"

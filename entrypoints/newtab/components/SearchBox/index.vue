@@ -11,10 +11,10 @@ import {
 import { onMounted, ref, watch } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
-import { searchEngines } from '@/entrypoints/newtab/js/api/search'
-import { searchHistoriesStorage } from '@/entrypoints/newtab/js/store/searchStore'
-import { useFocusStore } from '@/entrypoints/newtab/js/store'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
+import { searchEngines } from '@/newtab/scripts/api/search'
+import { searchHistoriesStorage } from '@/newtab/scripts/store/searchStore'
+import { useFocusStore } from '@/newtab/scripts/store'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'

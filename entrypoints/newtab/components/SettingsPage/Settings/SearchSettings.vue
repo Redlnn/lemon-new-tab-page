@@ -2,8 +2,8 @@
 import { SearchOutlined } from '@vicons/antd'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/entrypoints/newtab/js/store/settingsStore'
-import { searchEngines, searchSuggestAPIs } from '@/entrypoints/newtab/js/api/search'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { searchEngines, searchSuggestAPIs } from '@/newtab/scripts/api/search'
 
 const settingsStore = useSettingsStore()
 </script>

@@ -2,8 +2,8 @@
 import { useTimeoutFn } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
-import { useFocusStore } from '../js/store'
-import { useSettingsStore } from '../js/store/settingsStore'
+import { useFocusStore } from '@/newtab/scripts/store'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
