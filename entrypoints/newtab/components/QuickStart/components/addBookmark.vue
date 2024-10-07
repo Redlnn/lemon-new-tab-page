@@ -79,6 +79,9 @@ async function cancel() {
   <el-dialog
     v-model="showDialog"
     :title="i18n.t('newtab.quickstart.addDialog.dialogTitle')"
+    :style="{
+      padding: '20px 24px'
+    }"
     width="400px"
     append-to-body
     destroy-on-close
