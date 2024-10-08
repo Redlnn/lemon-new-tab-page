@@ -42,7 +42,7 @@ function getQSSize() {
 }
 
 async function removeBookmark(index: number) {
-  const { url, title } = bookmarkStore.items[index]
+  const { url, title, favicon } = bookmarkStore.items[index]
   if (bookmarkStore.items.length > 1) {
     bookmarkStore.items = _.omit(bookmarkStore.items, index)
   } else {
@@ -63,7 +63,8 @@ async function removeBookmark(index: number) {
           onClick: async () => {
             bookmarkStore.items.splice(index, 0, {
               url,
-              title
+              title,
+              favicon
             })
             await saveBookmark(_.cloneDeep(bookmarkStore))
             await reloadQS()
@@ -76,10 +77,11 @@ async function removeBookmark(index: number) {
   })
 }
 
-async function sticky(url: string, title: string) {
+async function sticky(url: string, title: string, favicon?: string) {
   bookmarkStore.items.push({
     url,
-    title
+    title,
+    favicon
   })
   await saveBookmark(_.cloneDeep(bookmarkStore))
   await reloadQS()
@@ -117,6 +119,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
         :key="index"
         :url="site.url"
         :title="site.title"
+        :favicon="site.favicon"
         :qs-sites-size="getQSSize()"
         pined
       >
@@ -261,6 +264,12 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
+        color: var(--el-text-color-regular);
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
       }
 
       .pin-icon {

@@ -1,5 +1,5 @@
-export function isImageFile(file: Blob) {
-  const imageType = ['png', 'jpeg', 'jpg', 'gif', 'webp']
+export function isImageFile(file: Blob, extra?: string[]) {
+  const imageType = ['png', 'jpeg', 'jpg', 'gif', 'webp', ...(extra || [])]
 
   let fileType = file.type
   fileType = fileType.substring(fileType.lastIndexOf('/') + 1, fileType.length)
@@ -26,4 +26,12 @@ export async function verifyImageUrl(url: string) {
   } finally {
     tempImg.remove()
   }
+}
+
+export function convertBase64Svg(str: string) {
+  // 将 data:image/svg+xml 开头的 svg 文件的 base64 字符串转换为 <svg> 标签
+  const decodedSVG = atob(str.split(',')[1])
+  const parser = new DOMParser()
+  const svgDoc = parser.parseFromString(decodedSVG, 'image/svg+xml')
+  return svgDoc.documentElement.outerHTML
 }

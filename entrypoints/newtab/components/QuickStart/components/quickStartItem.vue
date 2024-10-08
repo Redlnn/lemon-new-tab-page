@@ -4,6 +4,7 @@ import { Pin16Regular } from '@vicons/fluent'
 
 import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
+import { convertBase64Svg } from '@/newtab/scripts/img'
 import { getFaviconURLChrome } from '../utils/topSites'
 import { getQuickStartItemWidth } from '../utils/index'
 
@@ -33,7 +34,13 @@ defineProps<{
             <pin16-regular />
           </el-icon>
         </div>
+        <!-- eslint-disable vue/no-v-html -->
         <span
+          v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
+          v-html="convertBase64Svg(favicon as string)"
+        ></span>
+        <span
+          v-else
           :style="{
             backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
           }"

@@ -97,9 +97,17 @@ newtab:
       dialogTitle: New Shortcut
       title: Title
       url: URL
+      favicon: Favicon
       confirm: OK
       cancel: Cancel
       invalidUrlError: Invalid URL. Please input a new one
+      confirmSvgTitle: You selected an SVG image
+      confirmSvgDesc: Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.
+      confirmSvgOKBtn: Right
+      confirmSvgCancelBtn: Oh no
+      tooLargeImageError: The image size exceeds 100KiB, please reselect a new one~
+      autoFetchFavicon: Use auto favicon
+      uploadFaviconAlert: Available types：ico、svg、png、jpg、webp
     removeTopMessage:
       content: Removed from most visited.
       revoke: Revoke

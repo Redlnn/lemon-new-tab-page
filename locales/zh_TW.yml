@@ -89,9 +89,17 @@ newtab:
       dialogTitle: 添加捷徑
       title: 標題
       url: 連結
+      favicon: 圖示
       confirm: 好了
       cancel: 不好
-      invalidUrlError: 無效的網址，請重新輸入~
+      invalidUrlError: 無效的連結，請重新輸入~
+      confirmSvgTitle: 你选择了一张 SVG 图片
+      confirmSvgDesc: 你確定要使用 SVG 圖片嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對該圖片進行處理，因此有可能會導致該 SVG 圖片不會如期展示。但即使經過處理，你也有可能被你所選擇的圖片攻擊，請確保你所使用的圖片來源是安全的。
+      confirmSvgOKBtn: 是的
+      confirmSvgCancelBtn: 還是不要了
+      tooLargeImageError: 圖片大小超過 100KiB，請重新選擇~
+      autoFetchFavicon: 自動獲取圖示
+      uploadFaviconAlert: 可用的格式：ico、svg、png、jpg、webp
     removeTopMessage:
       content: 已移除捷徑
       revoke: 撤銷
