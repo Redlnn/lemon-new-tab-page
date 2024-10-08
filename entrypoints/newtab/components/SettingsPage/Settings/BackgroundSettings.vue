@@ -59,8 +59,8 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
       :before-upload="beforeBackgroundUpload"
       accept="image/*"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="bg-uploader-img" />
-      <el-icon v-else class="bg-uploader-icon"><plus /></el-icon>
+      <img v-if="imageUrl" :src="imageUrl" class="bg-uploader__img" />
+      <el-icon v-else class="bg-uploader__icon"><plus /></el-icon>
     </el-upload>
     <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.background.vignette') }}</div>
@@ -92,12 +92,7 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
 </template>
 
 <style scoped lang="scss">
-.bg-uploader .bg {
-  width: 178px;
-  height: 178px;
-  display: block;
-}
-.bg-uploader-img {
+.bg-uploader__img {
   max-width: 100%;
   object-fit: cover;
 }
@@ -113,13 +108,13 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   &:hover {
     border-color: var(--el-color-primary);
 
-    .el-icon.bg-uploader-icon {
+    .el-icon.bg-uploader__icon {
       color: var(--el-color-primary);
     }
   }
 }
 
-.el-icon.bg-uploader-icon {
+.el-icon.bg-uploader__icon {
   font-size: 28px;
   color: var(--el-text-color-placeholder);
   width: 350px;
