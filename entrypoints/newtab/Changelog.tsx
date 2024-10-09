@@ -2,12 +2,12 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
-    <h1>1.5.5</h1>
+    <h1>1.6.0</h1>
     <h2>新特性</h2>
     <ul>
+      <li>现在添加置顶访问时支持自定义图标了</li>
       <li>现在可以通过右键设置按钮再次打开更新日志了</li>
       <li>现在当颜色模式选择为跟随系统时更直观了</li>
-      <li>现在添加置顶访问时支持自定义图标了</li>
       <li>更新了默认主题色，优化了部分组件外观</li>
     </ul>
     <h2>修复</h2>
@@ -62,12 +62,12 @@ const changelogZH = (
 
 const changelog = (
   <section>
-    <h1>1.5.5</h1>
+    <h1>1.6.0</h1>
     <h2>New Features</h2>
     <ul>
+      <li>Now you can set a custom icon when adding a shortcut.</li>
       <li>Now you can open the changelog dialog again by right-click the setting button.</li>
       <li>The color mode is now more intuitive when "Follow System" is selected.</li>
-      <li>Now you can set a custom icon when adding a shortcut.</li>
       <li>Changed the default theme color and improved the appearance of some components.</li>
     </ul>
     <h2>Fixes</h2>
