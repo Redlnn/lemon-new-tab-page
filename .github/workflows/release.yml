@@ -35,7 +35,6 @@ jobs:
         if: ${{ github.event.inputs.dryrun == 'true' }}
         run: |
           pnpm wxt submit --dry-run\
-            --chrome-zip .output/*-chrome.zip \
             --edge-zip .output/*-chrome.zip \
             --firefox-zip .output/*-firefox.zip \
             --firefox-sources-zip .output/*-sources.zip
@@ -60,7 +59,6 @@ jobs:
         if: ${{ github.event.inputs.dryrun == 'false' }}
         run: |
           pnpm wxt submit \
-            --chrome-zip .output/*-chrome.zip \
             --edge-zip .output/*-chrome.zip \
             --firefox-zip .output/*-firefox.zip \
             --firefox-sources-zip .output/*-sources.zip
