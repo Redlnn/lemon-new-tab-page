@@ -12,7 +12,7 @@ const year = useDateFormat(useNow(), 'YYYY')
 <template>
   <div class="settings-title">
     <el-icon><info-circle-outlined /></el-icon>
-    <span>关于</span>
+    <span>{{ i18n.t('newtab.settings.about.title') }}</span>
   </div>
   <div class="setting-items-container about">
     <div class="ext-info">
