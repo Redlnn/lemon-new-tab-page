@@ -1,9 +1,5 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "paths": {
-    "#i18n": ["./.wxt/i18n/index.ts"],
-    "#i18n/*": ["./.wxt/i18n/index.ts/*"]
-  },
   "include": [
     "./.wxt/i18n/**/*",
     "./.wxt/types/**/*",
@@ -14,7 +10,8 @@
   "exclude": ["./.output", "./.wxt/types/imports.d.ts"],
   "compilerOptions": {
     "composite": true,
-    "noEmit": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
