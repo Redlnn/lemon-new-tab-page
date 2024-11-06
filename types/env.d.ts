@@ -1,5 +1,5 @@
 /// <reference types="vite/client" />
-/// <reference types="chrome"/>
+/// <reference types="chrome" />
 
 declare module '*.svg?component' {
   import type { FunctionalComponent, SVGAttributes } from 'vue'
