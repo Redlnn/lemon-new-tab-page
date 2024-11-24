@@ -125,7 +125,7 @@ function getlunarCalendar() {
   text-align: center;
   color: var(--el-fill-color-blank);
   animation: delayedFadeIn 0.5s;
-  text-shadow: 0px 6px 16px rgba(0, 0, 0, 0.4);
+  text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   transition:
     font-size 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),

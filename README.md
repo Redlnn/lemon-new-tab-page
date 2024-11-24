@@ -1,6 +1,4 @@
-# 柠檬起始页（Lemon Tab Page）
-
-一个非常简约的仿[青柠起始页](https://limestart.cn/)的新标签页实现。
+![lemon-new-tab-page](https://socialify.git.ci/Redlnn/lemon-new-tab-page/image?description=1&descriptionEditable=%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E7%AE%80%E7%BA%A6%E7%9A%84%E4%BB%BF%E9%9D%92%E6%9F%A0%E8%B5%B7%E5%A7%8B%E9%A1%B5%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E5%AE%9E%E7%8E%B0%E3%80%82&font=Jost&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
 
 ## 安装
 

@@ -291,6 +291,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
     .quickstart-title {
       display: -webkit-box;
       -webkit-box-orient: vertical;
+      line-clamp: 1;
       -webkit-line-clamp: 1;
       overflow: hidden;
       font-size: 13px;

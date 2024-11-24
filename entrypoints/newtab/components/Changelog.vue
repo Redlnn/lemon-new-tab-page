@@ -64,7 +64,7 @@ defineExpose({ show, hide, toggleShow })
       "
       :style="{ opacity: !headerIsVisible ? 1 : 0 }"
     ></div>
-    <div style="height: 100%; padding: 0 19px 0px 35px">
+    <div style="height: 100%; padding: 0 19px 0 35px">
       <el-scrollbar ref="scrollbar" style="padding-right: 15px">
         <div ref="header" class="changelog-dialog__list-tilte">
           {{ i18n.t('newtab.changelog') }}
@@ -84,7 +84,7 @@ defineExpose({ show, hide, toggleShow })
   background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
   backdrop-filter: blur(10px);
   border-radius: 10px;
-  box-shadow: 0px 0px 15px 0px color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
+  box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
   overflow: hidden;
   transition:
     background-color 0.2s ease,

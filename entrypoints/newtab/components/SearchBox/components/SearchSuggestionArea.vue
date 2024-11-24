@@ -160,6 +160,7 @@ defineExpose({
   .search-suggestion-item {
     display: -webkit-box;
     -webkit-box-orient: vertical;
+    line-clamp: 1;
     -webkit-line-clamp: 1;
     overflow: hidden;
     height: 33px;

@@ -1,9 +1,9 @@
 // @ts-check
 
-import eslint from '@eslint/js'
 import pluginVue from 'eslint-plugin-vue'
-import prettierConfig from '@vue/eslint-config-prettier'
 import vueTsEslintConfig from '@vue/eslint-config-typescript'
+import oxlint from 'eslint-plugin-oxlint'
+import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
 export default [
   {
@@ -14,8 +14,7 @@ export default [
     name: 'app/files-to-ignore',
     ignores: ['auto-imports.d.ts', 'components.d.ts', '.output/*', '.wxt/*']
   },
-  eslint.configs.recommended,
-  ...pluginVue.configs['flat/recommended'],
+  ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),
   {
     rules: {
@@ -34,5 +33,6 @@ export default [
       '@typescript-eslint/no-var-requires': 'off'
     }
   },
-  prettierConfig
+  oxlint.configs['flat/recommended'],
+  skipFormatting
 ]
