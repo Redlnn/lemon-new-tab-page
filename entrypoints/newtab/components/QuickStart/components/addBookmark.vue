@@ -202,12 +202,20 @@ function isSvg(file: Blob) {
 </template>
 
 <style lang="scss" scoped>
+.add-bookmark {
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 .add-bookmark .quickstart-icon {
   color: var(--el-text-color-regular);
   transition: color 0.2s ease;
 
   & svg {
-    width: 80%;
+    width: 70%;
   }
 }
 

@@ -10,6 +10,7 @@ const changelogZH = (
     <h2>修复</h2>
     <ul>
       <li>修复了启动时看到快速访问区域跳动的问题</li>
+      <li>优化了“添加快速访问”按钮的样式，鼠标不悬浮时降低不透明度</li>
     </ul>
     <details>
       <summary>过往版本更新日志</summary>
@@ -85,6 +86,10 @@ const changelog = (
     <ul>
       <li>
         Fixed the issue where the Quick Start area would flicker when loading the new tab page.
+      </li>
+      <li>
+        Optimized the style of the "Add New Shortcut" button by reducing its opacity when the mouse
+        is not hovering over it.
       </li>
     </ul>
     <details>
