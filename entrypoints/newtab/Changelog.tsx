@@ -2,6 +2,18 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>1.6.2</h1>
+    <h2>新特性</h2>
+    <ul>
+      <li>重点优化了繁中的翻译</li>
+    </ul>
+    <h2>修复</h2>
+    <ul>
+      <li>调整加载背景的时机以避免在获取背景时卡住页面</li>
+      <li>修复了在设置页面多次切换壁纸类型后不展示壁纸预览图的问题</li>
+      <li>未获取到一言的时候不展示其容器</li>
+      <li>获取 Bing 壁纸失败时报错</li>
+    </ul>
     <h1>1.6.1</h1>
     <h2>新特性</h2>
     <ul>
@@ -75,6 +87,24 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>1.6.2</h1>
+    <h2>Features</h2>
+    <ul>
+      <li>Optimized translation for zh_tw</li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>
+        Adjusted the timing of background loading to avoid freezing the page when fetching the
+        background
+      </li>
+      <li>
+        Fixed the issue where wallpaper preview did not display after switching wallpaper types
+        multiple times in the settings page
+      </li>
+      <li>Did not display the container for the quote when it was unavailable</li>
+      <li>Show error message when failing to get Bing wallpaper</li>
+    </ul>
     <h1>1.6.1</h1>
     <h2>Features</h2>
     <ul>
@@ -97,72 +127,75 @@ const changelog = (
       <h1>1.6.0</h1>
       <h2>Features</h2>
       <ul>
-        <li>Now you can set a custom icon when adding a shortcut.</li>
-        <li>Now you can open the changelog dialog again by right-click the setting button.</li>
-        <li>The color mode is now more intuitive when "Follow System" is selected.</li>
-        <li>Changed the default theme color and improved the appearance of some components.</li>
+        <li>Added support for customizing icons when adding pinned access</li>
+        <li>You can now open the changelog again via the right-click settings button</li>
+        <li>Improved visual experience when the color mode is set to follow the system</li>
+        <li>Updated the default theme color and optimized the appearance of some components</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
         <li>
-          Fixes again to make sure that the browser will not be redirected to the country specific
-          version.
+          Fixed the issue where the browser would redirect Bing to the national region
           <div class="blockquote">
             <span>
-              If you have been redirected to the country specific version of Bing, you need to clear
-              the cookies of *.bing.com in your browser
+              To restore non-national region access, you need to clear the *.bing.com cookies in
+              your browser
             </span>
           </div>
         </li>
-        <li>Reduce CPU usage.</li>
+        <li>Reduced CPU usage</li>
         <li>
-          Move the initialization phase of the setting to avoid seeing the default setting status
-          when open new tab.
+          Moved the settings initialization phase earlier to avoid seeing the default settings state
+          when opening a new tab
         </li>
       </ul>
       <h1>1.5.4</h1>
       <h2>Features</h2>
       <ul>
-        <li>Now supports displaying dates.</li>
-        <li>New settings window and changelog window.</li>
-        <li>Use www.bing.com instead of cn.bing.com to avoid being redirected when using Bing.</li>
-        <li>You can now change the color of the background mask.</li>
-        <li>You can now turn off the background of the shortcut area.</li>
-        <li>Optimized the position of the search bar afterdisabling the shortcut area.</li>
-        <li>[Firefox] You can now set as the homepage. (#12)</li>
+        <li>Added support for displaying the date and Chinese lunar calendar</li>
+        <li>Brand new settings window and changelog window</li>
+        <li>Using www.bing.com instead of cn.bing.com to avoid redirection when using Bing</li>
+        <li>Now you can change the background mask color</li>
+        <li>Now you can disable the background of the quick access area</li>
+        <li>Optimized the position of the search bar after closing the quick access area</li>
+        <li>[Firefox] Now supports setting it as the homepage (#12)</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
-        <li>The search engine drop-down on the settings page now shows the full Google word.</li>
-        <li>Fixed the background blur being set to a fixed value when focusing the search bar.</li>
         <li>
-          Fixed the problem of using a local image as the background when the browser starts and
-          freezes, consumes a lot of CPU and leaks memory.
+          Now the search engine dropdown in the settings page can display the full name of Google
+        </li>
+        <li>
+          Fixed the issue where the background blur was set to a fixed value when focusing the
+          search bar
+        </li>
+        <li>
+          Fixed the issue of browser freezing, high CPU usage, and memory leaks when using local
+          images as backgrounds
         </li>
       </ul>
       <h1>1.5.3</h1>
       <h2>Features</h2>
       <ul>
-        <li>Partial refactor to support Firefox browser.</li>
-        <li>Support for caching Bing daily image.</li>
-        <li>New entry animation for local backgrounds or cached Bing wallpapers.</li>
-        <li>Optimized 12-hour time format display.</li>
-        <li>[i18n] Internationalization support.</li>
+        <li>Partial refactor to support Firefox browser</li>
+        <li>Supports caching of Bing's daily image</li>
+        <li>Added transition animation for local backgrounds or cached Bing wallpapers</li>
+        <li>Optimized the display of the 12-hour clock format</li>
+        <li>[i18n] Internationalization support</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
-        <li>Fixed issue where undoing unpin did not take effect.</li>
-        <li>Fixed issue where frequently visitedsites could not be deleted (#8).</li>
-        <li>Fixed issue where "Enable Most Visited" switch did not take effect.</li>
-        <li>Fixed issue where hiding most visited sites could result in duplicate bookmarks.</li>
-        <li>Hide Chrome-specific prompts in Firefox browser.</li>
+        <li>Fixed the issue where unpinning did not take effect</li>
+        <li>Fixed the issue where frequently visited sites could not be deleted (#8)</li>
+        <li>Fixed the issue where the "Enable Most Visited" switch did not work</li>
+        <li>Fixed the issue where duplicate bookmarks appeared after hiding most visited</li>
+        <li>Hid Chrome-specific hints in Firefox browser</li>
         <li>
-          Fixed issue where search suggestion API candidates and icons could not be displayed.
+          Fixed the issue where search suggestion API candidates and icons could not be displayed
         </li>
-        <li>Remove Herobrine.</li>
+        <li>Remove Herobrine</li>
       </ul>
     </details>
-    <h5>Translate by Copilot and Google Translate.</h5>
   </section>
 )
 
