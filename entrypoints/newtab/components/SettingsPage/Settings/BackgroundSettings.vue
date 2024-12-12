@@ -2,8 +2,7 @@
 import 'element-plus/theme-chalk/el-message.css'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
-import { ref } from 'vue'
-import { ElMessage, type UploadProps, type UploadRequestOptions } from 'element-plus'
+import { type UploadProps, type UploadRequestOptions } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/newtab/scripts/img'
@@ -14,12 +13,6 @@ import {
 } from '@/newtab/scripts/store/settingsStore'
 
 const settingsStore = useSettingsStore()
-
-const imageUrl = ref(settingsStore.localBackground.bgUrl)
-
-const handleBackgroundSuccess: UploadProps['onSuccess'] = (response, uploadFile) => {
-  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
-}
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
@@ -55,11 +48,14 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
       class="bg-uploader"
       :show-file-list="false"
       :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
-      :on-success="handleBackgroundSuccess"
       :before-upload="beforeBackgroundUpload"
       accept="image/*"
     >
-      <img v-if="imageUrl" :src="imageUrl" class="bg-uploader__img" />
+      <img
+        v-if="settingsStore.localBackground.bgUrl"
+        :src="settingsStore.localBackground.bgUrl"
+        class="bg-uploader__img"
+      />
       <el-icon v-else class="bg-uploader__icon"><plus /></el-icon>
     </el-upload>
     <div class="settings-item horizontal">
