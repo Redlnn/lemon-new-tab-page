@@ -2,7 +2,6 @@
 import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
-import { ElMessageBox } from 'element-plus'
 
 import { blockedTopStitesStorage } from '@/newtab/scripts/store/topSitesStore'
 import { i18n } from '@/.wxt/i18n'

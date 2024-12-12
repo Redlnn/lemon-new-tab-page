@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ClearRound } from '@vicons/material'
-import { ElMessage } from 'element-plus'
 import type { TopSites } from 'wxt/browser'
 import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'

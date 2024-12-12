@@ -1,4 +1,3 @@
-import { ElMessage } from 'element-plus'
 import { browser } from 'wxt/browser'
 import { h } from 'vue'
 

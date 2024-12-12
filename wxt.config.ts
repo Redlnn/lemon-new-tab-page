@@ -1,5 +1,6 @@
 import { defineConfig } from 'wxt'
 
+import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
@@ -51,12 +52,15 @@ export default defineConfig({
     plugins: [
       svgLoader(),
       vueJsx(),
-      Components({
-        include: [
-          /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
-          /\.vue$/,
-          /\.vue\?vue/ // .vue
+      AutoImport({
+        resolvers: [
+          ElementPlusResolver({
+            importStyle: 'sass'
+          })
         ],
+        dts: 'types/auto-imports.d.ts'
+      }),
+      Components({
         resolvers: [
           ElementPlusResolver({
             importStyle: 'sass'
