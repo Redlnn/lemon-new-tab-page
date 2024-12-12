@@ -167,6 +167,7 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
+        :autofocus="settingsStore.search.autoFocus"
       />
       <div class="search-btn">
         <el-icon @click="doSearch"><search /></el-icon>

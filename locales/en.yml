@@ -62,6 +62,7 @@ newtab:
       defaultSearchEngine: Search Engine
       searchSuggestionProvider: Search Suggestion API
       openInNewTab: Open in New Tab
+      autoFocus: Auto Focus
       recordSearchHistory: Record Search History
     theme:
       title: Theme Settings

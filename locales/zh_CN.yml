@@ -55,6 +55,7 @@ newtab:
       defaultSearchEngine: 搜索引擎
       searchSuggestionProvider: 搜索建议API
       openInNewTab: 在新标签页中打开
+      autoFocus: 自动聚焦于搜索框
       recordSearchHistory: 记录搜索历史
     theme:
       title: 主题设置

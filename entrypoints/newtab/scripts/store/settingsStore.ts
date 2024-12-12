@@ -53,6 +53,7 @@ interface SettingsInterface {
     showLunar: boolean
   }
   search: {
+    autoFocus: boolean
     selectedSearchSuggestionAPI: string
     selectedSearchEngine: number
     searchInNewTab: boolean
@@ -98,6 +99,7 @@ export const defaultSettings: SettingsInterface = {
     showLunar: true
   },
   search: {
+    autoFocus: false,
     selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 0,
     searchInNewTab: false,
@@ -148,6 +150,7 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       showLunar: true
     },
     search: {
+      autoFocus: false,
       selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
       selectedSearchEngine: oldSettings.selectedSearchEngine,
       searchInNewTab: oldSettings.searchInNewTab,

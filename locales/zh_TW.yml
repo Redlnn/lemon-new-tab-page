@@ -1,7 +1,7 @@
 extension:
   name: 檸檬起始頁
   description: >
-    一個開源、簡潔、美觀且方便使用的瀏覽器起始頁。頁面上可直接開始搜索，支持
+    一個開源、簡潔、美觀且方便使用的瀏覽器起始頁。頁面上可直接開始搜尋，支持
     Bing 每日一圖，可添加捷徑並展示最常訪問網站。
 newtab:
   title: 新標籤頁
@@ -51,11 +51,12 @@ newtab:
       yiyanApiProvider: 一言 API 來自：
       license: 本項目使用 MIT 協定開源
     search:
-      title: 搜索設定
+      title: 搜尋設定
       defaultSearchEngine: 搜尋引擎
       searchSuggestionProvider: 搜尋建議API
       openInNewTab: 在新標籤頁中打開
-      recordSearchHistory: 記錄搜索歷史
+      autoFocus: 自動聚焦于搜尋框
+      recordSearchHistory: 記錄搜尋歷史
     theme:
       title: 主題設定
       colorScheme: 顏色方案
@@ -108,8 +109,8 @@ newtab:
       content: 已移除該置頂連結
       revoke: 撤銷
   search:
-    placeholder: 搜索
-    purgeSearchHistory: 清除搜索歷史
+    placeholder: 搜尋
+    purgeSearchHistory: 清除搜尋歷史
     searchEngineMenu:
       current: 當前
       tipPrefix: 'Tip: 按下'

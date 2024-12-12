@@ -4,6 +4,9 @@ const changelogZH = (
   <section>
     <h1>1.6.1</h1>
     <h2>新特性</h2>
+    <ul>
+      <li>现在打开新标签页时可以直接聚焦搜索框了（默认关闭）</li>
+    </ul>
     <h2>修复</h2>
     <ul>
       <li>修复了启动时看到快速访问区域跳动的问题</li>
@@ -73,6 +76,11 @@ const changelog = (
   <section>
     <h1>1.6.1</h1>
     <h2>Features</h2>
+    <ul>
+      <li>
+        Now the search box can automatically focus when opening the new tab (disabled by default).
+      </li>
+    </ul>
     <h2>Fixes</h2>
     <ul>
       <li>

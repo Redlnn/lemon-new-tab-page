@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 export const useFocusStore = defineStore('focus', () => {
   const isFocused = ref(false)
+
   const focus = () => {
     isFocused.value = true
   }
