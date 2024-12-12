@@ -50,3 +50,7 @@ body,
   backdrop-filter: blur(10px);
   transition: background-color 0.2s ease;
 }
+
+.el-switch {
+  transform: scale(0.95);
+}

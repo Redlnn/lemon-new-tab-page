@@ -90,7 +90,7 @@ newtab:
         cancel: No
         restoring: Restoring default shortcut links...
   quickstart:
-    addNewQuickstart: Add a New Shortcut
+    addNewQuickstart: Add New Shortcut
     pin: Pin
     unpin: Unpin
     remove: Remove
