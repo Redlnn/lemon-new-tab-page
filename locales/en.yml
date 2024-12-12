@@ -127,3 +127,7 @@ newtab:
     bing: Bing
     google: Google
     baidu: Baidu
+  notification:
+    bingWallpaper:
+      title: Failed to get Bing wallpaper
+      message: Please check the console output in developer tools.

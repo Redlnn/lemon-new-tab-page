@@ -119,3 +119,7 @@ newtab:
     bing: 必應
     google: Google
     baidu: 百度
+  notification:
+    bingWallpaper:
+      title: 無法取得 Bing 桌布
+      message: 請檢查開發者工具中的主控台訊息。
