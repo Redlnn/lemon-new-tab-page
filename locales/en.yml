@@ -7,7 +7,7 @@ extension:
   name: Lemon New Tab
   description: >
     An open-source, simple, user-friendly start page.
-    You can search or custom wallpaper.
+    You can search or customize wallpaper.
     It can also display the most visited links.
 newtab:
   title: New Tab
@@ -32,7 +32,7 @@ newtab:
       use12HourClock: '12-Hour Clock'
       showAMPM: Show AM/PM
       showDate: Show Date
-      showLunar: Show Chinese Lunar Calendar
+      showLunar: Show Chinese lunar calendar
     other:
       title: Other Settings
       yiyan: Show a line of Chinese poetry when expanding the search box.
@@ -81,13 +81,13 @@ newtab:
       enableQSBg: Shortcut Area Background
       maxRows: Maximum Rows
       maxColumns: Maximum Columns
-      maxItemsTipChrome: 'Tip: The maximum number of most frequently visited links is only 10.'
+      maxItemsTipChrome: 'Tip: You can only have up to 10 most visited links.'
       linkWidth: Width of Links
       restoreDefault: Restore default shortcut links.
       restoreDefaultConfirm:
         title: Are you sure to restore default shortcut links?
-        confirm: Yes
-        cancel: No
+        confirm: 'Yes'
+        cancel: 'No'
         restoring: Restoring default shortcut links...
   quickstart:
     addNewQuickstart: Add New Shortcut
@@ -107,8 +107,8 @@ newtab:
       confirmSvgOKBtn: Right
       confirmSvgCancelBtn: Oh no
       tooLargeImageError: The image size exceeds 100KiB, please reselect a new one~
-      autoFetchFavicon: Use auto favicon
-      uploadFaviconAlert: Available types：ico、svg、png、jpg、webp
+      autoFetchFavicon: Use automatic favicon
+      uploadFaviconAlert: Available types：ico, svg, png, jpg, webp
     removeTopMessage:
       content: Removed from most visited.
       revoke: Revoke
@@ -118,7 +118,7 @@ newtab:
       revoke: Revoke
   search:
     placeholder: Search
-    purgeSearchHistory: Purge Search History
+    purgeSearchHistory: Clear Search History
     searchEngineMenu:
       current: Current
       tipPrefix: 'Tip: Press'

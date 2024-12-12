@@ -23,8 +23,8 @@ newtab:
         fileIsNotImage: 所选文件不是图片!
     clock:
       title: 时钟设置
-      use12HourClock: 12小时制
-      showAMPM: 显示“上午”/“下午”
+      use12HourClock: 12 小时制
+      showAMPM: 显示「上午」/「下午」
       showDate: 显示日期
       showLunar: 显示农历
     other:
@@ -33,7 +33,7 @@ newtab:
       purgeData: 清除本扩展数据
       want_to_customize_chrome: 要自定义Chrome？
       customize_chrome_tips: >
-        假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开Chrome 的原生新标签页
+        假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页
         (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。
       confirmPurgeData:
         title: 确定要清除所有数据吗?
@@ -73,7 +73,7 @@ newtab:
       enableQSBg: 显示快速访问区域背景
       maxRows: 最大行数
       maxColumns: 最大列数
-      maxItemsTipChrome: 最常访问的上限只有10个噢~
+      maxItemsTipChrome: 最常访问的上限只有 10 个噢~
       linkWidth: 链接宽度
       restoreDefault: 恢复默认快捷方式
       restoreDefaultConfirm:

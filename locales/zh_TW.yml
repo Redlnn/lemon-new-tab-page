@@ -2,60 +2,60 @@ extension:
   name: 檸檬起始頁
   description: >
     一個開源、簡潔、美觀且方便使用的瀏覽器起始頁。頁面上可直接開始搜尋，支持
-    Bing 每日一圖，可添加捷徑並展示最常訪問網站。
+    Bing 每日一圖，可添加捷徑並展示最常造訪網站。
 newtab:
-  title: 新標籤頁
+  title: 新分頁
   changelog: 更新日誌
   settings:
     title: 設定
     background:
-      title: 背景設定
+      title: 桌布設定
       type:
-        title: 背景類型
+        title: 桌布類型
         none: 無
-        local: 本地圖片
-        bing: Bing每日一圖
+        local: 本地圖像
+        bing: Bing 每日一圖
       vignette: 暗角
       blur: 模糊強度
       mask_opacity: 遮罩不透明度
       mask_color: 遮罩顔色
       error:
-        fileIsNotImage: 所選檔不是圖片!
+        fileIsNotImage: 所選檔案不是圖像!
     clock:
       title: 時鐘設定
-      use12HourClock: 12小時制
-      showAMPM: 顯示“上午”/“下午”
+      use12HourClock: 12 小時制
+      showAMPM: 顯示「上午」/「下午」
       showDate: 顯示日期
       showLunar: 顯示農曆
     other:
       title: 其他設定
       yiyan: 一言
-      purgeData: 清除本擴展資料
+      purgeData: 清除本擴充功能資料
       want_to_customize_chrome: 要自訂Chrome？
       customize_chrome_tips: >
-        假如你要自訂 Chrome（例如更改顏色主題）的話，你只能打開Chrome 的原生新標籤頁
-        (chrome://new-tab-page) 並點擊右下角的圖示來打開“自訂 Chrome”側邊欄。
+        假如你要自訂 Chrome（例如更改顏色主題）的話，你只能打開 Chrome 的原生新分頁
+        (chrome://new-tab-page) 並點擊右下角的圖示來打開「自訂 Chrome」側邊欄。
       confirmPurgeData:
         title: 確定要清除所有資料嗎?
-        messgae: 該操作將會重置擴展設定、已忽略的最常訪問網站、已置頂或收藏的網站、已選擇的背景圖片等。
+        messgae: 該操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已置頂或收藏的網站、已選擇的背景圖像等。
         confirm: 好
         cancel: 算了
-        purging: 正在清除擴展資料...
+        purging: 正在清除擴充功能資料...
     about:
       title: 關於
       version: 當前版本
-      projectLink: 項目位址
+      projectLink: 專案位址
       chromeExtensionLink: Chrome 商店連結
       firefoxExtensionLink: Firefox 商店連結
       edgeExtensionLink: Edge 商店連結
       yiyanApiProvider: 一言 API 來自：
-      license: 本項目使用 MIT 協定開源
+      license: 本專案使用 MIT 協議開源
     search:
       title: 搜尋設定
       defaultSearchEngine: 搜尋引擎
       searchSuggestionProvider: 搜尋建議API
-      openInNewTab: 在新標籤頁中打開
-      autoFocus: 自動聚焦于搜尋框
+      openInNewTab: 在新分頁中開啟
+      autoFocus: 自動聚焦於搜尋框
       recordSearchHistory: 記錄搜尋歷史
     theme:
       title: 主題設定
@@ -65,49 +65,49 @@ newtab:
       primaryColor: 主題色
     quickstart:
       title: 捷徑設定
-      tip: Tip：可以拖動設定視窗以觀察捷徑區域變化噢~
+      tip: Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~
       enable: 啟用
-      showTopSites: 展示最常訪問
-      showPinnedIcon: 展示置頂圖標
+      showTopSites: 顯示最常造訪
+      showPinnedIcon: 顯示置頂圖示
       showTitle: 顯示標題
       enableQSBg: 顯示捷徑區域背景
       maxRows: 最大行數
       maxColumns: 最大列數
-      maxItemsTipChrome: 最常訪問的上限只有10個噢~
+      maxItemsTipChrome: 最常造訪的上限只有 10 個噢~
       linkWidth: 連結寬度
       restoreDefault: 恢復預設捷徑
       restoreDefaultConfirm:
         title: 你確定要恢復預設捷徑嗎
-        confirm: 對
+        confirm: 是
         cancel: 算了
         restoring: 正在恢復預設捷徑...
   quickstart:
-    addNewQuickstart: 添加捷徑
+    addNewQuickstart: 新增捷徑
     pin: 置頂
     unpin: 取消置頂
     remove: 移除
     addDialog:
-      dialogTitle: 添加捷徑
+      dialogTitle: 新增捷徑
       title: 標題
       url: 連結
       favicon: 圖示
       confirm: 好了
       cancel: 不好
       invalidUrlError: 無效的連結，請重新輸入~
-      confirmSvgTitle: 你选择了一张 SVG 图片
-      confirmSvgDesc: 你確定要使用 SVG 圖片嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對該圖片進行處理，因此有可能會導致該 SVG 圖片不會如期展示。但即使經過處理，你也有可能被你所選擇的圖片攻擊，請確保你所使用的圖片來源是安全的。
+      confirmSvgTitle: 你选择了一张 SVG 圖像
+      confirmSvgDesc: 你確定要使用 SVG 圖像嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對這個圖像進行處理，因此有可能會導致這個 SVG 圖像不會如期展示。但即使經過處理，你仍可能被你所選擇的圖像攻擊，請確保你所使用的圖像來源是安全的。
       confirmSvgOKBtn: 是的
       confirmSvgCancelBtn: 還是不要了
-      tooLargeImageError: 圖片大小超過 100KiB，請重新選擇~
-      autoFetchFavicon: 自動獲取圖示
+      tooLargeImageError: 圖像檔案大小超過 100KiB，請重新選擇~
+      autoFetchFavicon: 自動取得圖示
       uploadFaviconAlert: 可用的格式：ico、svg、png、jpg、webp
     removeTopMessage:
       content: 已移除捷徑
-      revoke: 撤銷
+      revoke: 復原
       restoreDefault: 恢復預設捷徑
     removePinnedMessage:
       content: 已移除該置頂連結
-      revoke: 撤銷
+      revoke: 復原
   search:
     placeholder: 搜尋
     purgeSearchHistory: 清除搜尋歷史
