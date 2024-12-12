@@ -20,7 +20,7 @@ onMounted(() => {
       yiyanOrigin.value = res.data.origin.title
     },
     (err) => {
-      yiyan.value = err.errMessage
+      // 这里不会触发，但不写又不行
     }
   )
 })
@@ -29,7 +29,7 @@ onMounted(() => {
 <template>
   <Transition>
     <div
-      v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800"
+      v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800 && yiyan"
       class="yiyan-wrapper"
     >
       <div class="yiyan">
