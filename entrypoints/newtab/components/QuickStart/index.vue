@@ -100,7 +100,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   <section
     class="quickstart-wrapper"
     :style="{
-      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '1'
+      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0'
     }"
   >
     <div

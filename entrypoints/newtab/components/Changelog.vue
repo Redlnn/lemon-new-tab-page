@@ -151,5 +151,15 @@ defineExpose({ show, hide, toggleShow })
     color: var(--el-text-color-regular);
     border-left: 0.25em solid var(--el-text-color-secondary);
   }
+
+  details {
+    margin-top: 20px;
+
+    summary {
+      cursor: pointer;
+      font-weight: 500;
+      font-size: medium;
+    }
+  }
 }
 </style>
