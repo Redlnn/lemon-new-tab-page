@@ -5,7 +5,7 @@ import { ElConfigProvider } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
 import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { onBeforeMount, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
@@ -26,29 +26,33 @@ const ChangelogRef = ref<InstanceType<typeof Changelog>>()
 
 const bgURL = ref('')
 
-onBeforeMount(async () => {
+async function loadLocalBackground() {
+  if (settingsStore.localBackground.bgUrl) {
+    const verifyBackground = await verifyImageUrl(settingsStore.localBackground.bgUrl)
+    if (!verifyBackground) {
+      await reloadBackgroundImage()
+    }
+  } else {
+    await reloadBackgroundImage()
+  }
+
+  bgURL.value = settingsStore.localBackground.bgUrl
+    ? `url(${settingsStore.localBackground.bgUrl})`
+    : ''
+}
+
+onMounted(async () => {
+  if (settingsStore.pluginVersion !== version) {
+    ChangelogRef.value?.show()
+  }
+
   switch (settingsStore.background.bgType) {
     case BgType.Bing:
       bgURL.value = `url(${await getBingWallpaperURL()})`
       break
     case BgType.Local:
-      if (settingsStore.localBackground.bgUrl) {
-        const verifyBackground = await verifyImageUrl(settingsStore.localBackground.bgUrl)
-        if (!verifyBackground) {
-          await reloadBackgroundImage()
-        }
-      } else {
-        await reloadBackgroundImage()
-      }
-
-      bgURL.value = settingsStore.localBackground.bgUrl
-        ? `url(${settingsStore.localBackground.bgUrl})`
-        : ''
+      await loadLocalBackground()
       break
-  }
-
-  if (settingsStore.pluginVersion !== version) {
-    ChangelogRef.value?.show()
   }
 })
 
@@ -57,10 +61,11 @@ watch(
   async () => {
     switch (settingsStore.background.bgType) {
       case BgType.Bing:
+        ElNotification({ title: '1', message: '正在加载 Bing 壁纸...' })
         bgURL.value = `url(${await getBingWallpaperURL()})`
         break
       case BgType.Local:
-        bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
+        await loadLocalBackground()
         break
       case BgType.None:
         bgURL.value = ''
