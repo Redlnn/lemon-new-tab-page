@@ -154,8 +154,8 @@ defineExpose({
   box-shadow: var(--el-box-shadow-light);
   transition:
     height 0.1s var(--cubic-bezier),
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color var(--el-transition-duration-fast) ease,
+    box-shadow var(--el-transition-duration-fast) ease;
 
   .search-suggestion-item {
     display: -webkit-box;
@@ -170,9 +170,9 @@ defineExpose({
     color: var(--el-text-color-primary);
     background-color: transparent;
     transition:
-      padding 0.2s var(--cubic-bezier),
-      padding-left 0.2s var(--cubic-bezier),
-      color 0.2s ease;
+      padding var(--el-transition-duration-fast) var(--cubic-bezier),
+      padding-left var(--el-transition-duration-fast) var(--cubic-bezier),
+      color var(--el-transition-duration-fast) ease;
 
     &.active {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
@@ -186,7 +186,7 @@ defineExpose({
     display: flex;
     align-items: center;
     background-color: transparent;
-    transition: color 0.2s ease;
+    transition: color var(--el-transition-duration-fast) ease;
 
     &:hover {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);

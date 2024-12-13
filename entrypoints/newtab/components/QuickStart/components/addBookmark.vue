@@ -212,7 +212,7 @@ function isSvg(file: Blob) {
 
 .add-bookmark .quickstart-icon {
   color: var(--el-text-color-regular);
-  transition: color 0.2s ease;
+  transition: color var(--el-transition-duration-fast) ease;
 
   & svg {
     width: 70%;

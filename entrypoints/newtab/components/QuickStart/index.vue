@@ -189,7 +189,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
 .quickstart-wrapper {
   max-width: 80%;
   margin-top: 80px;
-  transition: all 0.2s cubic-bezier(0.65, 0.05, 0.1, 1);
+  transition: opacity var(--el-transition-duration-fast) ease;
 }
 
 .quickstart-contaniner {
@@ -199,8 +199,8 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   z-index: 10;
   overflow: hidden;
   transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+    background-color var(--el-transition-duration-fast) ease,
+    box-shadow var(--el-transition-duration-fast) ease;
 
   &.quickstart-contaniner-bg {
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);

@@ -57,13 +57,13 @@ onMounted(() => {
   border-radius: 20px;
   padding: 6px 14px;
   transition:
-    background-color 0.25s ease-in-out,
-    backdrop-filter 0.25s ease-in-out,
-    color 0.25s ease-in-out;
+    background-color var(--el-transition-duration-fast) ease,
+    backdrop-filter var(--el-transition-duration-fast) ease,
+    color var(--el-transition-duration-fast) ease;
 
   .yiyan-extra {
     opacity: 0;
-    transition: opacity 0.25s ease-in-out;
+    transition: opacity var(--el-transition-duration-fast) ease;
     margin-top: 8px;
     font-size: 0.95em;
   }
@@ -98,7 +98,7 @@ onMounted(() => {
 
 .v-enter-active,
 .v-leave-active {
-  transition: all 0.25s ease-in-out;
+  transition: all var(--el-transition-duration-fast) ease-in-out;
 }
 
 .v-enter-from,

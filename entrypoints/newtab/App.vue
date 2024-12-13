@@ -132,6 +132,7 @@ main {
     color: var(--el-color-primary);
     background-color: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-lighter);
+    transition: none;
   }
 }
 </style>

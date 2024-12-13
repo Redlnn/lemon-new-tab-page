@@ -129,7 +129,7 @@ function getlunarCalendar() {
   transition:
     font-size 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),
-    color 0.2s ease;
+    color var(--el-transition-duration-fast) ease;
 
   .time {
     font-size: 60px;

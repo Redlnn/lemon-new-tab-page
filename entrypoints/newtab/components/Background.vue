@@ -65,8 +65,8 @@ onMounted(async () => {
   z-index: -1000;
   background-color: var(--el-bg-color-page);
   transition:
-    opacity 0.4s cubic-bezier(0.5, 0, 0.5, 2),
-    background-color 0.2s ease;
+    opacity var(--el-transition-duration) var(--el-transition-function-ease-in-out-bezier),
+    background-color var(--el-transition-duration-fast) ease;
 
   .background {
     position: absolute;
@@ -96,7 +96,7 @@ onMounted(async () => {
       width: 100%;
       height: 100%;
       opacity: var(--bg-mask-opacity);
-      transition: all 0.2s;
+      transition: all var(--el-transition-duration-fast) ease;
       z-index: -999;
     }
   }

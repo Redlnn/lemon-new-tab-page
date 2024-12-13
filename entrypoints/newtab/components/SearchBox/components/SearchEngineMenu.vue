@@ -57,7 +57,7 @@ const settingsStore = useSettingsStore()
   padding: 5px;
   background-color: var(--el-bg-color);
   --el-popper-border-radius: 10px;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--el-transition-duration-fast) ease;
 
   .search-engine-menu-item {
     display: flex;
@@ -89,7 +89,7 @@ const settingsStore = useSettingsStore()
     height: 20px;
     color: var(--el-text-color-secondary);
     padding: 0 10px;
-    transition: color 0.2s ease;
+    transition: color var(--el-transition-duration-fast) ease;
 
     .kdb {
       border: solid 1px currentColor;

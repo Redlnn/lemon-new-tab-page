@@ -210,9 +210,9 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
   color: transparent;
   transition:
-    background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    width 0.2s var(--cubic-bezier);
+    background-color var(--el-transition-duration-fast) ease,
+    box-shadow var(--el-transition-duration-fast) ease,
+    width var(--el-transition-duration-fast) var(--cubic-bezier);
 
   html.dark & {
     box-shadow: var(--el-box-shadow-light);
@@ -241,8 +241,8 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     overflow: hidden;
     border-radius: 50%;
     transition:
-      color 0.2s ease,
-      background-color 0.2s ease;
+      color var(--el-transition-duration-fast) ease,
+      background-color var(--el-transition-duration-fast) ease;
   }
 
   &.focus:deep() {
@@ -272,8 +272,8 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     border: none;
     background: none;
     transition:
-      width 0.2s var(--cubic-bezier),
-      color 0.2s ease;
+      width var(--el-transition-duration-fast) var(--cubic-bezier),
+      color var(--el-transition-duration-fast) ease;
 
     &::placeholder {
       color: var(--search-form-placeholder-color);
