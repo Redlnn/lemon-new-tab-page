@@ -2,10 +2,11 @@
 import { useTimeoutFn } from '@vueuse/core'
 import { onMounted, ref, watch } from 'vue'
 
-import { useFocusStore, useSettingsStore } from '@/newtab/scripts/store'
+import { useFocusStore, useSettingsStore, useBgSwtichStore } from '@/newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
+const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref()
 const background = ref()
 
@@ -47,6 +48,7 @@ onMounted(() => {
         backgroundImage: props.bgurl
       }"
     >
+      <div class="transition" :style="{ opacity: switchStore.isSwitching ? 1 : 0 }"></div>
       <div class="mask" :style="{ backgroundColor: settingsStore.background.maskColor }"></div>
       <div v-if="settingsStore.background.bgDarkCorners" class="dark-corners"></div>
     </div>
@@ -77,6 +79,18 @@ onMounted(() => {
     background-position: center;
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
+
+    .transition {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--el-bg-color-page);
+      z-index: -998;
+      transition: opacity 0.1s ease-in-out;
+    }
 
     .dark-corners {
       position: absolute;

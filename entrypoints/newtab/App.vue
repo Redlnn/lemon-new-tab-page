@@ -3,11 +3,9 @@ import { version } from '@/package.json'
 
 import { ElConfigProvider } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
-import { useColorMode } from '@vueuse/core'
+import { useColorMode, promiseTimeout } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import { onMounted, ref, watch } from 'vue'
-
-import { i18n } from '@/.wxt/i18n'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
@@ -19,10 +17,12 @@ import YiYan from './components/YiYan.vue'
 
 import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from './scripts/img'
-import { BgType, reloadBackgroundImage, useSettingsStore } from './scripts/store/settingsStore'
+import { reloadBackgroundImage, useSettingsStore, useBgSwtichStore } from './scripts/store'
+import { BgType } from './scripts/storages/settingsStorage'
 
 useColorMode()
 const settingsStore = useSettingsStore()
+const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
 
@@ -61,22 +61,33 @@ onMounted(async () => {
 watch(
   () => settingsStore.background.bgType,
   async () => {
+    switchStore.start()
+    await promiseTimeout(300)
+    bgURL.value = ''
     switch (settingsStore.background.bgType) {
       case BgType.Bing:
         bgURL.value = `url(${await getBingWallpaperURL()})`
+        settingsStore.localBackground = { bgUrl: '', bgId: '' }
         break
       case BgType.Local:
         await loadLocalBackground()
         break
       case BgType.None:
         bgURL.value = ''
+        settingsStore.localBackground = { bgUrl: '', bgId: '' }
         break
     }
+    switchStore.end()
   }
 )
 watch(
   () => settingsStore.localBackground.bgUrl,
-  () => (bgURL.value = `url(${settingsStore.localBackground.bgUrl})`)
+  async () => {
+    switchStore.start()
+    await promiseTimeout(500)
+    bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
+    switchStore.end()
+  }
 )
 </script>
 
