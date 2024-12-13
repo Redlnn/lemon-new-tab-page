@@ -63,7 +63,6 @@ watch(
   async () => {
     switch (settingsStore.background.bgType) {
       case BgType.Bing:
-        ElMessage(i18n.t('newtab.notification.bingWallpaper.get'))
         bgURL.value = `url(${await getBingWallpaperURL()})`
         break
       case BgType.Local:

@@ -54,6 +54,7 @@ export async function getBingWallpaperURL() {
     await useBingWallpaperStore.removeItem(id)
   }
 
+  ElMessage(i18n.t('newtab.notification.bingWallpaper.get'))
   try {
     const response = await axios.get(
       'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
