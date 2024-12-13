@@ -30,10 +30,10 @@ watch(
   }
 )
 
-onMounted(async () => {
+onMounted(() => {
   useTimeoutFn(() => {
     backgroundWrapper.value.style.opacity = '1'
-  }, 50)
+  }, 100)
 })
 </script>
 
@@ -65,7 +65,7 @@ onMounted(async () => {
   z-index: -1000;
   background-color: var(--el-bg-color-page);
   transition:
-    opacity var(--el-transition-duration) var(--el-transition-function-ease-in-out-bezier),
+    opacity 0.4s var(--el-transition-function-ease-in-out-bezier),
     background-color var(--el-transition-duration-fast) ease;
 
   .background {
