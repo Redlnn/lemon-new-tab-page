@@ -17,6 +17,7 @@
 - :framed_picture: 自定义壁纸或使用 Bing 每日一图
 - :joystick: 切换搜索引擎、多种搜索建议来源
 - :atom_symbol: 开放源代码
+- :globe_with_meridians: 支持三种语言（`zh_CN`、`zh_TW`、`en`）
 
 > [!NOTE]  
 > 更多功能欢迎 PR，提 Issue 不一定会实现噢
