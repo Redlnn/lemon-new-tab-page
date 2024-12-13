@@ -7,6 +7,8 @@ import { useColorMode } from '@vueuse/core'
 import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
 import { onMounted, ref, watch } from 'vue'
 
+import { i18n } from '@/.wxt/i18n'
+
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
 import QuickStart from './components/QuickStart/index.vue'
@@ -61,7 +63,7 @@ watch(
   async () => {
     switch (settingsStore.background.bgType) {
       case BgType.Bing:
-        ElNotification({ title: '1', message: '正在加载 Bing 壁纸...' })
+        ElMessage(i18n.t('newtab.notification.bingWallpaper.get'))
         bgURL.value = `url(${await getBingWallpaperURL()})`
         break
       case BgType.Local:

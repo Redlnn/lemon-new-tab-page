@@ -129,5 +129,7 @@ newtab:
     baidu: Baidu
   notification:
     bingWallpaper:
-      title: Failed to get Bing wallpaper
-      message: Please check the console output in developer tools.
+      get: Fetching Bing wallpaper...
+      error:
+        title: Failed to get Bing wallpaper
+        message: Please check the console output in developer tools.

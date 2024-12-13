@@ -100,8 +100,8 @@ export async function getBingWallpaperURL() {
     return url
   } catch {
     ElNotification({
-      title: i18n.t('newtab.notification.bingWallpaper.title'),
-      message: i18n.t('newtab.notification.bingWallpaper.message'),
+      title: i18n.t('newtab.notification.bingWallpaper.error.title'),
+      message: i18n.t('newtab.notification.bingWallpaper.error.message'),
       type: 'error'
     })
     return ''

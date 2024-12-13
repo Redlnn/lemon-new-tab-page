@@ -121,5 +121,7 @@ newtab:
     baidu: 百度
   notification:
     bingWallpaper:
-      title: 無法取得 Bing 桌布
-      message: 請檢查開發者工具中的主控台訊息。
+      get: 正在獲取 Bing 桌布...
+      error:
+        title: 無法取得 Bing 桌布
+        message: 請檢查開發者工具中的主控台訊息。
