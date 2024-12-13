@@ -2,17 +2,30 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
-    <h1>1.6.2</h1>
+    <h1>1.7.0</h1>
     <h2>新特性</h2>
     <ul>
       <li>重点优化了繁中的翻译</li>
+      <li>切换背景类型时增加渐变效果，网速或设备性能较差时仍然有可能看到新背景图突然跳出</li>
+      <li>
+        优化了纯色背景（背景类型设置为「无」）时的显示效果
+        <div class="blockquote">
+          <div>- 纯色背景时，时钟字体颜色反色</div>
+          <div>- 纯色背景时，搜索框背景调整为静态纯白色并增加描边</div>
+          <div>- 现在允许关闭时钟、搜索框、快速访问区域的阴影了</div>
+        </div>
+      </li>
+    </ul>
+    <h2>优化</h2>
+    <ul>
+      <li>调整加载背景的时机以避免在获取背景时卡住页面</li>
+      <li>统一动画持续时间以获得更好的体验</li>
+      <li>未获取到一言的时候不展示其容器</li>
+      <li>获取 Bing 壁纸失败时报错</li>
     </ul>
     <h2>修复</h2>
     <ul>
-      <li>调整加载背景的时机以避免在获取背景时卡住页面</li>
       <li>修复了在设置页面多次切换壁纸类型后不展示壁纸预览图的问题</li>
-      <li>未获取到一言的时候不展示其容器</li>
-      <li>获取 Bing 壁纸失败时报错</li>
     </ul>
     <h1>1.6.1</h1>
     <h2>新特性</h2>
@@ -87,23 +100,42 @@ const changelogZH = (
 
 const changelog = (
   <section>
-    <h1>1.6.2</h1>
+    <h1>1.7.0</h1>
     <h2>Features</h2>
     <ul>
-      <li>Optimized translation for zh_tw</li>
+      <li>Improved translation for zh_tw</li>
+      <li>
+        Added transition effects when switching background types. However, users with slow internet
+        or low-performance devices may still notice the new background image appearing abruptly.
+      </li>
+      <li>
+        Enhanced the display effect for solid color backgrounds (when the background type is set to
+        "None")
+        <div class="blockquote">
+          <div>- Clock font color now inverts on solid color backgrounds</div>
+          <div>- The search box background is now static pure white with an added outline</div>
+          <div>
+            - Added the option to disable shadows for the clock, search box, and quick access area
+          </div>
+        </div>
+      </li>
     </ul>
-    <h2>Fixes</h2>
+    <h2>Improvements</h2>
     <ul>
       <li>
         Adjusted the timing of background loading to avoid freezing the page when fetching the
         background
       </li>
+      <li>Standardized animation durations for a smoother experience</li>
+      <li>Did not display the container for the quote when it was unavailable</li>
+      <li>Show error message when failing to get Bing wallpaper</li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
       <li>
         Fixed the issue where wallpaper preview did not display after switching wallpaper types
         multiple times in the settings page
       </li>
-      <li>Did not display the container for the quote when it was unavailable</li>
-      <li>Show error message when failing to get Bing wallpaper</li>
     </ul>
     <h1>1.6.1</h1>
     <h2>Features</h2>
