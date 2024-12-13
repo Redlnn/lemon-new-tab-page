@@ -66,6 +66,7 @@
 <summary>点击展开图片</summary>
 
 ![主页](./preview/home.webp)
+![纯色背景主页](./preview/pure.webp)
 ![设置页面](./preview/settings.webp)
 
 </details>

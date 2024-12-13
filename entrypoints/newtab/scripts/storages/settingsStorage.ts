@@ -45,6 +45,7 @@ export interface SettingsInterface {
     showMeridiem: boolean
     showDate: boolean
     showLunar: boolean
+    enableShadow: boolean
   }
   search: {
     autoFocus: boolean
@@ -52,6 +53,7 @@ export interface SettingsInterface {
     selectedSearchEngine: number
     searchInNewTab: boolean
     recordSearchHistory: boolean
+    enableShadow: boolean
     enableYiyan: boolean
   }
   background: {
@@ -73,6 +75,7 @@ export interface SettingsInterface {
   quickStart: {
     enabled: boolean
     enableTopSites: boolean
+    enableShadow: boolean
     quickStartRows: number
     quickStartColumns: number
     quickStartItemWidth: number
@@ -90,7 +93,8 @@ export const defaultSettings: SettingsInterface = {
     isMeridiem: false,
     showMeridiem: true,
     showDate: true,
-    showLunar: true
+    showLunar: true,
+    enableShadow: true
   },
   search: {
     autoFocus: false,
@@ -98,6 +102,7 @@ export const defaultSettings: SettingsInterface = {
     selectedSearchEngine: 0,
     searchInNewTab: false,
     recordSearchHistory: true,
+    enableShadow: true,
     enableYiyan: true
   },
   background: {
@@ -119,6 +124,7 @@ export const defaultSettings: SettingsInterface = {
   quickStart: {
     enabled: true,
     enableTopSites: true,
+    enableShadow: true,
     quickStartRows: 2,
     quickStartColumns: 5,
     quickStartItemWidth: 110,

@@ -27,6 +27,7 @@ newtab:
       showAMPM: 显示「上午」/「下午」
       showDate: 显示日期
       showLunar: 显示农历
+      enableShadow: 显示阴影
     other:
       title: 其他设置
       yiyan: 一言
@@ -56,6 +57,7 @@ newtab:
       searchSuggestionProvider: 搜索建议API
       openInNewTab: 在新标签页中打开
       autoFocus: 自动聚焦于搜索框
+      enableShadow: 显示搜索框阴影
       recordSearchHistory: 记录搜索历史
     theme:
       title: 主题设置
@@ -71,6 +73,7 @@ newtab:
       showPinnedIcon: 展示置顶图标
       showTitle: 显示标题
       enableQSBg: 显示快速访问区域背景
+      enableShadow: 显示快速访问区域阴影
       maxRows: 最大行数
       maxColumns: 最大列数
       maxItemsTipChrome: 最常访问的上限只有 10 个噢~

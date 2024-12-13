@@ -8,7 +8,7 @@ import { i18n } from '@/.wxt/i18n'
 import { useFocusStore } from './scripts/store'
 import { initSettings, saveSettings, useSettingsStore } from './scripts/store/settingsStore'
 
-import './css/index.scss'
+import './styles/index.scss'
 
 import App from './App.vue'
 

@@ -40,6 +40,13 @@ async function restoreDefaultTopSites() {
       <el-switch v-model="settingsStore.quickStart.showQuickStartContainerBg" />
     </div>
     <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableShadow') }}</div>
+      <el-switch
+        v-model="settingsStore.quickStart.enableShadow"
+        :disabled="!settingsStore.quickStart.showQuickStartContainerBg"
+      />
+    </div>
+    <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showPinnedIcon') }}</div>
       <el-switch v-model="settingsStore.quickStart.showPinnedIcon" />
     </div>

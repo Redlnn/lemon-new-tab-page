@@ -60,7 +60,14 @@ function getlunarCalendar() {
 </script>
 
 <template>
-  <div ref="time" class="clock">
+  <div
+    ref="time"
+    class="clock"
+    :class="[
+      settingsStore.time.enableShadow ? 'shadow' : '',
+      settingsStore.background.bgType === 0 ? 'dark' : ''
+    ]"
+  >
     <div class="time">
       <span
         v-if="settingsStore.time.showMeridiem && isChinese"
@@ -125,11 +132,15 @@ function getlunarCalendar() {
   text-align: center;
   color: var(--el-fill-color-blank);
   animation: delayedFadeIn 0.5s;
-  text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   transition:
     font-size 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),
+    text-shadow var(--el-transition-duration-fast) ease,
     color var(--el-transition-duration-fast) ease;
+
+  &.shadow {
+    text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+  }
 
   .time {
     font-size: 60px;
@@ -139,6 +150,7 @@ function getlunarCalendar() {
     margin-bottom: 5px;
   }
 
+  &.dark,
   html.dark & {
     color: var(--el-text-color-primary);
   }

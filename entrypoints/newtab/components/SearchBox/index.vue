@@ -151,6 +151,10 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
     <form
       ref="searchForm"
       class="search-form"
+      :class="[
+        settingsStore.search.enableShadow ? 'shadow' : '',
+        settingsStore.background.bgType === 0 ? 'dark' : ''
+      ]"
       :style="{ '--width': mounted ? '' : '0' }"
       @submit.prevent="doSearch"
     >
@@ -204,18 +208,25 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
   position: relative;
   border-radius: calc(var(--height) / 2);
   font-size: 15px;
-  box-shadow: var(--el-box-shadow-dark);
   backdrop-filter: blur(10px);
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
   color: transparent;
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease,
+    border var(--el-transition-duration-fast) ease,
     width var(--el-transition-duration-fast) var(--cubic-bezier);
 
+  &.shadow {
+    box-shadow: var(--el-box-shadow-dark);
+  }
+
   html.dark & {
-    box-shadow: var(--el-box-shadow-light);
     --search-form-placeholder-color: var(--el-text-color-secondary);
+
+    &.shadow {
+      box-shadow: var(--el-box-shadow-light);
+    }
   }
 
   &:hover:not(.focus) {
@@ -227,6 +238,11 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
   &.focus {
     background-color: color-mix(in oklab, var(--el-fill-color), transparent 20%);
     --width: 500px;
+  }
+
+  html:not(.dark) &.dark {
+    background-color: var(--el-fill-color-blank);
+    border: solid 1px var(--el-border-color-light);
   }
 
   :deep() .search-engine-icon,

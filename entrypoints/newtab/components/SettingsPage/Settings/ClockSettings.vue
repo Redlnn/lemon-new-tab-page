@@ -31,5 +31,9 @@ const isChinese = browser.i18n.getUILanguage().startsWith('zh')
       <div class="settings-label">{{ i18n.t('newtab.settings.clock.showLunar') }}</div>
       <el-switch v-model="settingsStore.time.showLunar" />
     </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">{{ i18n.t('newtab.settings.clock.enableShadow') }}</div>
+      <el-switch v-model="settingsStore.time.enableShadow" />
+    </div>
   </div>
 </template>

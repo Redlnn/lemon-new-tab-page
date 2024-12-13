@@ -109,7 +109,8 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
     <div
       class="quickstart-contaniner"
       :class="[
-        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : ''
+        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : '',
+        settingsStore.quickStart.enableShadow ? 'quickstart-contaniner-shadow' : ''
       ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
@@ -208,12 +209,15 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
 
   &.quickstart-contaniner-bg {
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
-    box-shadow: var(--el-box-shadow-dark);
     border-radius: 10px;
     backdrop-filter: blur(3px);
+
+    &.quickstart-contaniner-shadow {
+      box-shadow: var(--el-box-shadow-dark);
+    }
   }
 
-  html.dark &.quickstart-contaniner-bg {
+  html.dark &.quickstart-contaniner-bg.quickstart-contaniner-shadow {
     box-shadow: var(--el-box-shadow-light);
   }
 
@@ -259,6 +263,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
       align-items: center;
       border-radius: 50%;
       background: color-mix(in oklab, var(--el-bg-color), transparent 10%);
+      transition: background-color var(--el-transition-duration-fast) ease;
 
       span {
         display: block;

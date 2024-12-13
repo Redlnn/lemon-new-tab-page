@@ -105,6 +105,10 @@ defineExpose({
   <div
     ref="searchSuggestionArea"
     class="search-suggestion-area"
+    :class="[
+      settingsStore.search.enableShadow ? 'shadow' : '',
+      settingsStore.background.bgType === 0 && searchSuggestions.length > 0 ? 'dark' : ''
+    ]"
     :style="{
       width: `${searchFormWidth}px`,
       height: getSearchSuggestionAreaHeight()
@@ -150,11 +154,20 @@ defineExpose({
   z-index: 1000;
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 50%);
   backdrop-filter: blur(30px) saturate(1.2);
-  box-shadow: var(--el-box-shadow-light);
   transition:
     height 0.1s var(--cubic-bezier),
     background-color var(--el-transition-duration-fast) ease,
+    border var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
+
+  &.shadow {
+    box-shadow: var(--el-box-shadow-light);
+  }
+
+  &.dark {
+    background-color: var(--el-fill-color-blank);
+    border: solid 1px var(--el-border-color-light);
+  }
 
   .search-suggestion-item {
     display: -webkit-box;

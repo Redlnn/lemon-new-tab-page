@@ -19,7 +19,8 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       isMeridiem: oldSettings.isMeridiem,
       showMeridiem: oldSettings.showMeridiem,
       showDate: true,
-      showLunar: true
+      showLunar: true,
+      enableShadow: true
     },
     search: {
       autoFocus: false,
@@ -27,6 +28,7 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       selectedSearchEngine: oldSettings.selectedSearchEngine,
       searchInNewTab: oldSettings.searchInNewTab,
       recordSearchHistory: oldSettings.recordSearchHistory,
+      enableShadow: true,
       enableYiyan: oldSettings.enableYiyan
     },
     background: {
@@ -48,6 +50,7 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
     quickStart: {
       enabled: oldSettings.enabled,
       enableTopSites: oldSettings.enableTopSites,
+      enableShadow: true,
       quickStartRows: oldSettings.quickStartRows,
       quickStartColumns: oldSettings.quickStartColumns,
       quickStartItemWidth: oldSettings.quickStartItemWidth,
