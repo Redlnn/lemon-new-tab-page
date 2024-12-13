@@ -3,16 +3,14 @@ import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 
-import { blockedTopStitesStorage } from '@/newtab/scripts/store/topSitesStore'
+import { blockedTopStitesStorage } from '@/newtab/scripts/storages/topSitesStorage'
 import { i18n } from '@/.wxt/i18n'
-import { searchHistoriesStorage } from '@/newtab/scripts/store/searchStore'
+import { searchHistoriesStorage } from '@/newtab/scripts/storages/searchStorages'
 import { useWallpaperStore } from '@/newtab/scripts/store'
-import { defaultBookmark, saveBookmark } from '@/newtab/scripts/store/bookmarkStore'
-import {
-  defaultSettings,
-  saveSettings,
-  useSettingsStore
-} from '@/newtab/scripts/store/settingsStore'
+import { saveBookmark } from '@/newtab/scripts/store/bookmarkStore'
+import { saveSettings, useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { defaultBookmark } from '@/newtab/scripts/storages/bookmarkStorage'
+import { defaultSettings } from '@/newtab/scripts/storages/settingsStorage'
 
 const isGoogleChrome = import.meta.env.CHROME
 const settingsStore = useSettingsStore()

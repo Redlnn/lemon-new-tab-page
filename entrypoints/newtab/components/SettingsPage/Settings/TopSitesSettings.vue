@@ -2,7 +2,7 @@
 import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 
-import { blockedTopStitesStorage } from '@/newtab/scripts/store/topSitesStore'
+import { blockedTopStitesStorage } from '@/newtab/scripts/storages/topSitesStorage'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 

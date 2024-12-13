@@ -9,7 +9,7 @@ import { i18n } from '@/.wxt/i18n'
 import { version } from '@/package.json'
 
 import Changelog from '@/newtab/Changelog'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useSettingsStore } from '@/newtab/scripts/store'
 
 const settingsStore = useSettingsStore()
 const opened = ref(false)

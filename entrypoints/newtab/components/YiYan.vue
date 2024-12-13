@@ -3,8 +3,7 @@ import { load } from 'jinrishici'
 import { useWindowSize } from '@vueuse/core'
 import { onMounted, ref } from 'vue'
 
-import { useFocusStore } from '@/newtab/scripts/store'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useFocusStore, useSettingsStore } from '@/newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

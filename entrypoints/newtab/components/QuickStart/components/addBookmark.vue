@@ -13,9 +13,8 @@ import {
 import { reactive, ref } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useSettingsStore, saveBookmark, useBookmarkStore } from '@/newtab/scripts/store'
 import { convertBase64Svg, isImageFile } from '@/newtab/scripts/img'
-import { saveBookmark, useBookmarkStore } from '@/newtab/scripts/store/bookmarkStore'
 
 import { getQuickStartItemWidth } from '../utils/index'
 

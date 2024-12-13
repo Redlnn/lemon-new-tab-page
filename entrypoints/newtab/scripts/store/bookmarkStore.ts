@@ -1,16 +1,7 @@
 import _ from 'lodash'
 import { defineStore } from 'pinia'
-import { storage } from 'wxt/storage'
 
-export interface Bookmark {
-  items: { url: string; title: string; favicon?: string }[]
-}
-
-export const defaultBookmark: Bookmark = { items: [] }
-
-const bookmarkStorage = storage.defineItem<Bookmark>('local:bookmark', {
-  fallback: defaultBookmark
-})
+import { type Bookmark, bookmarkStorage, defaultBookmark } from '../storages/bookmarkStorage'
 
 export async function initBookmark() {
   const bookmark = await bookmarkStorage.getValue()

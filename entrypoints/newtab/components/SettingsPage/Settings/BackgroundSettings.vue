@@ -6,11 +6,8 @@ import { type UploadProps, type UploadRequestOptions } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/newtab/scripts/img'
-import {
-  BgType,
-  uploadBackgroundImage,
-  useSettingsStore
-} from '@/newtab/scripts/store/settingsStore'
+import { uploadBackgroundImage, useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { BgType } from '@/newtab/scripts/storages/settingsStorage'
 
 const settingsStore = useSettingsStore()
 

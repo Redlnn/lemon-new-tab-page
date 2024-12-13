@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { i18n } from '@/.wxt/i18n'
 import { searchEngines } from '@/newtab/scripts/api/search'
-import { useFocusStore } from '@/newtab/scripts/store'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useFocusStore, useSettingsStore } from '@/newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

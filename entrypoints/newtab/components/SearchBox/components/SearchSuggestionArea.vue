@@ -4,10 +4,9 @@ import { ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { i18n } from '@/.wxt/i18n'
-import { searchHistoriesStorage } from '@/newtab/scripts/store/searchStore'
+import { searchHistoriesStorage } from '@/newtab/scripts/storages/searchStorages'
 import { searchSuggestAPIs } from '@/newtab/scripts/api/search'
-import { useFocusStore } from '@/newtab/scripts/store'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useFocusStore, useSettingsStore } from '@/newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

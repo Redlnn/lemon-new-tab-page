@@ -6,9 +6,13 @@ import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { h, onMounted, ref, watch } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
-import { useFocusStore } from '@/newtab/scripts/store'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
-import { initBookmark, saveBookmark, useBookmarkStore } from '@/newtab/scripts/store/bookmarkStore'
+import {
+  useFocusStore,
+  useSettingsStore,
+  initBookmark,
+  saveBookmark,
+  useBookmarkStore
+} from '@/newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import quickStartItem from './components/quickStartItem.vue'

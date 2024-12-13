@@ -1,7 +1,6 @@
+import { initBookmark, saveBookmark, useBookmarkStore } from './bookmarkStore'
 import { useFocusStore } from './foucsStore'
 import {
-  BgType,
-  defaultSettings,
   initSettings,
   reloadBackgroundImage,
   uploadBackgroundImage,
@@ -10,11 +9,12 @@ import {
 import { useBingWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 export {
+  initBookmark,
+  saveBookmark,
+  useBookmarkStore,
   useFocusStore,
   useBingWallpaperStore,
   useWallpaperStore,
-  BgType,
-  defaultSettings,
   initSettings,
   reloadBackgroundImage,
   uploadBackgroundImage,
