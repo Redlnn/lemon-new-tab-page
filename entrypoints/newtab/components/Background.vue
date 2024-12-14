@@ -45,7 +45,7 @@ onMounted(() => {
       :style="{
         '--bg-blur': `${settingsStore.background.bgBlur}px`,
         '--bg-mask-opacity': settingsStore.background.bgMaskPpacity / 100,
-        backgroundImage: props.bgurl
+        backgroundImage: bgurl
       }"
     >
       <div class="transition" :style="{ opacity: switchStore.isSwitching ? 1 : 0 }"></div>
@@ -80,18 +80,6 @@ onMounted(() => {
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
 
-    .transition {
-      opacity: 0;
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: var(--el-bg-color-page);
-      z-index: -998;
-      transition: opacity 0.1s ease-in-out;
-    }
-
     .dark-corners {
       position: absolute;
       top: 0;
@@ -99,7 +87,7 @@ onMounted(() => {
       width: 100%;
       height: 100%;
       background-image: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
-      z-index: -999;
+      z-index: -997;
     }
 
     .mask {
@@ -110,7 +98,19 @@ onMounted(() => {
       height: 100%;
       opacity: var(--bg-mask-opacity);
       transition: all var(--el-transition-duration-fast) ease;
+      z-index: -998;
+    }
+
+    .transition {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--el-bg-color-page);
       z-index: -999;
+      transition: opacity 0.1s ease-in-out;
     }
   }
 }
