@@ -67,14 +67,12 @@ watch(
     switch (settingsStore.background.bgType) {
       case BgType.Bing:
         bgURL.value = `url(${await getBingWallpaperURL()})`
-        settingsStore.localBackground = { bgUrl: '', bgId: '' }
         break
       case BgType.Local:
         await loadLocalBackground()
         break
       case BgType.None:
         bgURL.value = ''
-        settingsStore.localBackground = { bgUrl: '', bgId: '' }
         break
     }
     switchStore.end()
