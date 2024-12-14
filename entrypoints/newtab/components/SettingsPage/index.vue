@@ -41,7 +41,7 @@ defineExpose({ show, hide, toggleShow })
     align-center
     lock-scroll
     draggable
-    @open="() => scrollbar?.setScrollTop(0)"
+    overflow
   >
     <template #header="{ close, titleId }">
       <div
