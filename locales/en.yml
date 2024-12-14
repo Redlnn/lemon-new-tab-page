@@ -68,9 +68,7 @@ newtab:
       recordSearchHistory: Record Search History
     theme:
       title: Theme Settings
-      colorScheme: Color Scheme
       darkMode: Dark Mode
-      lightMode: Light Mode
       systemMode: Follow System
       primaryColor: Primary Color
     quickstart:
@@ -91,7 +89,6 @@ newtab:
         title: Are you sure to restore default shortcut links?
         confirm: 'Yes'
         cancel: 'No'
-        restoring: Restoring default shortcut links...
   quickstart:
     addNewQuickstart: Add New Shortcut
     pin: Pin

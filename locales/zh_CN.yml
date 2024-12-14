@@ -61,7 +61,6 @@ newtab:
       recordSearchHistory: 记录搜索历史
     theme:
       title: 主题设置
-      colorScheme: 颜色方案
       darkMode: 深色模式
       systemMode: 跟随系统
       primaryColor: 主题色
@@ -83,7 +82,6 @@ newtab:
         title: 你确定要恢复默认快捷方式吗
         confirm: 对
         cancel: 算了
-        restoring: 正在恢复默认快捷方式...
   quickstart:
     addNewQuickstart: 添加快速访问
     pin: 置顶

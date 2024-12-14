@@ -61,7 +61,6 @@ newtab:
       recordSearchHistory: 記錄搜尋歷史
     theme:
       title: 主題設定
-      colorScheme: 顏色方案
       darkMode: 深色模式
       systemMode: 跟隨系統
       primaryColor: 主題色
@@ -83,7 +82,6 @@ newtab:
         title: 你確定要恢復預設捷徑嗎
         confirm: 是
         cancel: 算了
-        restoring: 正在恢復預設捷徑...
   quickstart:
     addNewQuickstart: 新增捷徑
     pin: 置頂
