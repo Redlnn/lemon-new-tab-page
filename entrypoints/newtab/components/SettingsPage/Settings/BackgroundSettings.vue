@@ -63,11 +63,11 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
       <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
       <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
     </div>
-    <div v-if="settingsStore.background.bgType !== BgType.None" class="settings-item">
+    <div class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
       <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
     </div>
-    <div v-if="settingsStore.background.bgType !== BgType.None" class="settings-item horizontal">
+    <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_color') }}</div>
       <el-color-picker
         v-model="settingsStore.background.maskColor"
