@@ -2,6 +2,13 @@
   "i18n-ally.localesPaths": ["locales"],
   "i18n-ally.fullReloadOnChanged": true,
   "i18n-ally.keystyle": "nested",
+  "i18n-ally.sortKeys": true,
+  "i18n-ally.localeCountryMap": {
+    "zh": "CN" // show Chinese flag for 'zh'
+  },
+  "i18n-ally.preferredDelimiter": "_",
+  "i18n-ally.extract.keygenStyle": "camelCase",
+  "i18n-ally.extract.autoDetect": true,
   "markdownlint.config": {
     "MD033": false
   },

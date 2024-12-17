@@ -17,6 +17,7 @@ export default [
   ...pluginVue.configs['flat/essential'],
   ...vueTsEslintConfig(),
   {
+    name: 'app/overrides',
     rules: {
       'no-var': 'error',
       '@typescript-eslint/no-unused-vars': 'warn',
@@ -27,8 +28,8 @@ export default [
     }
   },
   {
+    name: 'app/overrides-js',
     files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.cjx'],
-
     rules: {
       '@typescript-eslint/no-var-requires': 'off'
     }
