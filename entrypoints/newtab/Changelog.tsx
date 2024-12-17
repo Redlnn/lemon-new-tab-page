@@ -5,6 +5,9 @@ const changelogZH = (
     <h1>1.7.0</h1>
     <h2>新特性</h2>
     <ul>
+      <li>
+        <b>更新了默认主题色和扩展图标</b>
+      </li>
       <li>重点优化了繁中的翻译</li>
       <li>切换背景类型时增加渐变效果，网速或设备性能较差时仍然有可能看到新背景图突然跳出</li>
       <li>
@@ -103,6 +106,9 @@ const changelog = (
     <h1>1.7.0</h1>
     <h2>Features</h2>
     <ul>
+      <li>
+        <b>Updated default theme colors and icons</b>
+      </li>
       <li>Improved translation for zh_tw</li>
       <li>
         Added transition effects when switching background types. However, users with slow internet
