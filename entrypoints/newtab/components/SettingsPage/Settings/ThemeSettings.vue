@@ -19,8 +19,8 @@ const predefineColors = ref([
   '#00ced1',
   '#1e90ff',
   '#c71585',
-  '#409eff',
-  '#1677ff'
+  '#1677ff',
+  '#FFBB00'
 ])
 
 const isDark = useDark()
