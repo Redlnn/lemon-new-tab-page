@@ -7,7 +7,7 @@ extension:
   name: Lemon New Tab
   description: >
     An open-source, simple, user-friendly start page.
-    You can search or customize wallpaper.
+    You can search or custom wallpaper.
     It can also display the most visited links.
 newtab:
   title: New Tab
