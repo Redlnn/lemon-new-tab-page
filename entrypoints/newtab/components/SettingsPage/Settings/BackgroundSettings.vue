@@ -29,6 +29,7 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
 }
 
 function changeOnlineBg(e: Event) {
+  onlineUrlInput.value?.blur()
   const _url = (e.target as HTMLInputElement).value
   if (!_url) {
     settingsStore.background.bgType = BgType.None
@@ -38,46 +39,39 @@ function changeOnlineBg(e: Event) {
   }
   const hostname = new URL(_url).hostname
 
-  if (isChrome) {
-    chrome.permissions.contains(
-      {
-        origins: [`*://${hostname}/*`]
-      },
-      (granted) => {
-        if (granted) {
-          settingsStore.background.onlineUrl = _url
-        } else {
-          ElMessageBox.confirm(
-            `由于 Google 的安全策略，需要授予 ${hostname} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限`
-          )
-            .then(() => {
-              chrome.permissions.request(
-                {
-                  origins: [`*://${hostname}/*`]
-                },
-                (granted) => {
-                  if (granted) {
-                    ElMessage.success('已授予访问权限')
-                    settingsStore.background.onlineUrl = _url
-                  } else {
-                    ElMessage.error('未授予权限，无法访问该地址')
-                    settingsStore.background.bgType = BgType.None
-                    tmpUrl.value = ''
-                  }
-                }
-              )
-            })
-            .catch(() => {
-              settingsStore.background.bgType = BgType.None
-              tmpUrl.value = ''
-            })
-        }
-      }
-    )
-  } else {
+  if (!isChrome) {
     settingsStore.background.onlineUrl = _url
+    return
   }
-  onlineUrlInput.value?.blur()
+
+  const permissions = {
+    origins: [`*://${hostname}/*`]
+  }
+  chrome.permissions.contains(permissions, (granted) => {
+    if (granted) {
+      settingsStore.background.onlineUrl = _url
+      return
+    }
+    ElMessageBox.confirm(
+      `由于 Google 的安全策略，需要授予 ${hostname} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限`
+    )
+      .then(() => {
+        chrome.permissions.request(permissions, (granted) => {
+          if (granted) {
+            ElMessage.success('已授予访问权限')
+            settingsStore.background.onlineUrl = _url
+            return
+          }
+          ElMessage.error('未授予权限，无法访问该地址')
+          settingsStore.background.bgType = BgType.None
+          tmpUrl.value = ''
+        })
+      })
+      .catch(() => {
+        settingsStore.background.bgType = BgType.None
+        tmpUrl.value = ''
+      })
+  })
 }
 
 function onlineImageWarn() {
