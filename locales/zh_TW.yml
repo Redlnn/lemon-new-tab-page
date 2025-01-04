@@ -15,6 +15,7 @@ newtab:
         none: 無
         local: 本地圖像
         bing: Bing 每日一圖
+        online: 在線圖像
       vignette: 暗角
       blur: 模糊強度
       mask_opacity: 遮罩不透明度

@@ -7,14 +7,15 @@ import { useFocusStore, useSettingsStore, useBgSwtichStore } from '@/newtab/scri
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
-const backgroundWrapper = ref()
-const background = ref()
+const backgroundWrapper = ref<HTMLDivElement>()
+const background = ref<HTMLDivElement>()
 
 const props = defineProps<{ bgurl: string }>()
 
 watch(
   () => focusStore.isFocused,
   () => {
+    if (!background.value) return
     if (focusStore.isFocused) {
       background.value.style.transition =
         'transform 0.2s cubic-bezier(0.65, 0.05, 0.1, 1), filter 0.2s cubic-bezier(0.65, 0.05, 0.1, 1)'
@@ -24,7 +25,7 @@ watch(
       background.value.style.filter = ''
       background.value.style.transform = ''
       useTimeoutFn(() => {
-        background.value.style.transition = ''
+        background.value!.style.transition = ''
       }, 200)
     }
   }
@@ -32,7 +33,7 @@ watch(
 
 onMounted(() => {
   useTimeoutFn(() => {
-    backgroundWrapper.value.style.opacity = '1'
+    backgroundWrapper.value!.style.opacity = '1'
   }, 100)
 })
 </script>

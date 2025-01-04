@@ -21,6 +21,7 @@ newtab:
         none: None
         local: Local Image
         bing: Bing Wallpaper
+        online: Online Image
       vignette: Enable Vignette
       blur: Blur Intensity
       mask_opacity: Mask Opacity

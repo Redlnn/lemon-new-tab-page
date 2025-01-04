@@ -55,38 +55,55 @@ onMounted(async () => {
     case BgType.Local:
       await loadLocalBackground()
       break
+    case BgType.Online:
+      bgURL.value = `url(${settingsStore.background.onlineUrl})`
+      break
   }
-})
 
-watch(
-  () => settingsStore.background.bgType,
-  async () => {
-    switchStore.start()
-    await promiseTimeout(300)
-    bgURL.value = ''
-    switch (settingsStore.background.bgType) {
-      case BgType.Bing:
-        bgURL.value = `url(${await getBingWallpaperURL()})`
-        break
-      case BgType.Local:
-        await loadLocalBackground()
-        break
-      case BgType.None:
-        bgURL.value = ''
-        break
+  watch(
+    () => settingsStore.background.bgType,
+    async () => {
+      switchStore.start()
+      await promiseTimeout(300)
+      bgURL.value = ''
+      switch (settingsStore.background.bgType) {
+        case BgType.Bing:
+          bgURL.value = `url(${await getBingWallpaperURL()})`
+          break
+        case BgType.Local:
+          await loadLocalBackground()
+          break
+        case BgType.None:
+          bgURL.value = ''
+          break
+        case BgType.Online:
+          bgURL.value = `url(${settingsStore.background.onlineUrl})`
+          break
+      }
+      switchStore.end()
     }
-    switchStore.end()
-  }
-)
-watch(
-  () => settingsStore.localBackground.bgUrl,
-  async () => {
-    switchStore.start()
-    await promiseTimeout(500)
-    bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
-    switchStore.end()
-  }
-)
+  )
+
+  watch(
+    () => settingsStore.localBackground.bgUrl,
+    async () => {
+      switchStore.start()
+      await promiseTimeout(500)
+      bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
+      switchStore.end()
+    }
+  )
+
+  watch(
+    () => settingsStore.background.onlineUrl,
+    async () => {
+      switchStore.start()
+      await promiseTimeout(500)
+      bgURL.value = `url(${settingsStore.background.onlineUrl})`
+      switchStore.end()
+    }
+  )
+})
 </script>
 
 <template>

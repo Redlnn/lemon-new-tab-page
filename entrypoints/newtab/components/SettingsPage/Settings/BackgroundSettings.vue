@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import 'element-plus/theme-chalk/el-message.css'
+import { onMounted, ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
-import { type UploadProps, type UploadRequestOptions } from 'element-plus'
+import { type UploadProps, type UploadRequestOptions, type ElInput } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/newtab/scripts/img'
@@ -10,6 +10,15 @@ import { uploadBackgroundImage, useSettingsStore } from '@/newtab/scripts/store'
 import { BgType } from '@/newtab/scripts/storages/settingsStorage'
 
 const settingsStore = useSettingsStore()
+const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
+const tmpUrl = ref('')
+const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
+
+onMounted(() => {
+  if (settingsStore.background.onlineUrl) {
+    tmpUrl.value = settingsStore.background.onlineUrl
+  }
+})
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
@@ -17,6 +26,67 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
     return false
   }
   return true
+}
+
+function changeOnlineBg(e: Event) {
+  const _url = (e.target as HTMLInputElement).value
+  if (!_url) {
+    settingsStore.background.bgType = BgType.None
+    settingsStore.background.onlineUrl = ''
+    tmpUrl.value = ''
+    return
+  }
+  const hostname = new URL(_url).hostname
+
+  if (isChrome) {
+    chrome.permissions.contains(
+      {
+        origins: [`*://${hostname}/*`]
+      },
+      (granted) => {
+        if (granted) {
+          settingsStore.background.onlineUrl = _url
+        } else {
+          ElMessageBox.confirm(
+            `由于 Google 的安全策略，需要授予 ${hostname} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限`
+          )
+            .then(() => {
+              chrome.permissions.request(
+                {
+                  origins: [`*://${hostname}/*`]
+                },
+                (granted) => {
+                  if (granted) {
+                    ElMessage.success('已授予访问权限')
+                    settingsStore.background.onlineUrl = _url
+                  } else {
+                    ElMessage.error('未授予权限，无法访问该地址')
+                    settingsStore.background.bgType = BgType.None
+                    tmpUrl.value = ''
+                  }
+                }
+              )
+            })
+            .catch(() => {
+              settingsStore.background.bgType = BgType.None
+              tmpUrl.value = ''
+            })
+        }
+      }
+    )
+  } else {
+    settingsStore.background.onlineUrl = _url
+  }
+  onlineUrlInput.value?.blur()
+}
+
+function onlineImageWarn() {
+  if (settingsStore.background.onlineUrl) return
+  ElMessageBox.confirm('使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？', '警告', {
+    type: 'warning'
+  }).catch(() => {
+    settingsStore.background.bgType = BgType.None
+  })
 }
 </script>
 
@@ -38,8 +108,24 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
         <el-radio :value="BgType.Bing">{{
           i18n.t('newtab.settings.background.type.bing')
         }}</el-radio>
+        <el-radio :value="BgType.Online" @change="onlineImageWarn">{{
+          i18n.t('newtab.settings.background.type.online')
+        }}</el-radio>
       </el-radio-group>
     </div>
+    <el-input
+      v-if="settingsStore.background.bgType === BgType.Online"
+      ref="onlineUrlInput"
+      v-model="tmpUrl"
+      @blur="changeOnlineBg"
+      @keydown.enter="changeOnlineBg"
+      placeholder="https://example.com/image.jpg"
+    ></el-input>
+    <ul v-if="settingsStore.background.bgType === BgType.Online" class="online-bg-tips">
+      <li>按下回车键或者输入框失去焦点后提交</li>
+      <li>壁纸缓存策略却决于浏览器，若使用动态壁纸则断网后会获取不到壁纸</li>
+      <li>由于壁纸每次都需要在线加载，因此每次打开都会白屏一段时间，时长取决于你的网速</li>
+    </ul>
     <el-upload
       v-if="settingsStore.background.bgType === BgType.Local"
       class="bg-uploader"
@@ -124,6 +210,17 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   .el-color-picker__color {
     border: none;
     border-radius: none;
+  }
+}
+
+.online-bg-tips {
+  font-size: 12px;
+  margin-top: 5px;
+  color: var(--el-text-color-placeholder);
+  padding: 5px 15px 0;
+
+  li {
+    margin: 3px 0;
   }
 }
 </style>

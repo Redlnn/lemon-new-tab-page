@@ -5,7 +5,8 @@ export const CURRENT_CONFIG_VERSION = 2
 export enum BgType {
   None,
   Local,
-  Bing
+  Bing,
+  Online
 }
 
 export interface OldSettingsInterface {
@@ -62,6 +63,7 @@ export interface SettingsInterface {
     bgBlur: number
     bgMaskPpacity: number
     maskColor: string
+    onlineUrl: string
   }
   localBackground: {
     bgId: string
@@ -110,7 +112,8 @@ export const defaultSettings: SettingsInterface = {
     bgDarkCorners: false,
     bgBlur: 3,
     bgMaskPpacity: 0,
-    maskColor: '#000'
+    maskColor: '#000',
+    onlineUrl: ''
   },
   localBackground: {
     bgId: '',

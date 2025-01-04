@@ -35,7 +35,8 @@ const firefoxManifest = {
 
 const chromeManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'favicon']
+  permissions: ['topSites', 'storage', 'favicon'],
+  optional_host_permissions: ['*://*/*']
 }
 
 // See https://wxt.dev/api/config.html
