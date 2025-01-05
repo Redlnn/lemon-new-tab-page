@@ -22,6 +22,11 @@ newtab:
       mask_color: 遮罩颜色
       error:
         fileIsNotImage: 所选文件不是图片!
+      onlineTips:
+        a: 按下回车键或者输入框失去焦点后提交
+        b: 壁纸缓存策略却决于浏览器，断网后会获取不到壁纸
+        c: 壁纸加载完成前会白屏一段时间，时长取决于你的网速
+        d: 请确保你使用的壁纸 API 允许跨域请求，否则会加载失败
     clock:
       title: 时钟设置
       use12HourClock: 12 小时制
@@ -29,6 +34,8 @@ newtab:
       showDate: 显示日期
       showLunar: 显示农历
       enableShadow: 显示阴影
+      invertColorLight: 浅色模式下使用深色字体
+      invertColorDark: 深色模式下使用深色字体
     other:
       title: 其他设置
       yiyan: 一言

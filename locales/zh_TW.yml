@@ -22,6 +22,11 @@ newtab:
       mask_color: 遮罩顔色
       error:
         fileIsNotImage: 所選檔案不是圖像!
+      onlineTips:
+        a: 按下 Enter 鍵或輸入框失去焦點後提交
+        b: 壁紙的快取策略取決於瀏覽器，離線時可能無法取得壁紙
+        c: 壁紙載入完成前會出現白屏，時間長短取決於你的網速
+        d: 請確認你使用的壁紙 API 允許跨域請求，否則會載入失敗
     clock:
       title: 時鐘設定
       use12HourClock: 12 小時制
@@ -29,6 +34,8 @@ newtab:
       showDate: 顯示日期
       showLunar: 顯示農曆
       enableShadow: 顯示陰影
+      invertColorLight: 淺色模式下使用深色字體
+      invertColorDark: 深色模式下使用深色字體
     other:
       title: 其他設定
       yiyan: 一言
@@ -118,7 +125,7 @@ newtab:
       tipPrefix: 'Tip: 按下'
       tipSuffix: 切換搜尋引擎
   searchEngineMenu:
-    bing: 必應
+    bing: Bing
     google: Google
     baidu: 百度
   notification:

@@ -116,9 +116,10 @@ function onlineImageWarn() {
       placeholder="https://example.com/image.jpg"
     ></el-input>
     <ul v-if="settingsStore.background.bgType === BgType.Online" class="online-bg-tips">
-      <li>按下回车键或者输入框失去焦点后提交</li>
-      <li>壁纸缓存策略却决于浏览器，若使用动态壁纸则断网后会获取不到壁纸</li>
-      <li>由于壁纸每次都需要在线加载，因此每次打开都会白屏一段时间，时长取决于你的网速</li>
+      <li>{{ i18n.t('newtab.settings.background.onlineTips.a') }}</li>
+      <li>{{ i18n.t('newtab.settings.background.onlineTips.b') }}</li>
+      <li>{{ i18n.t('newtab.settings.background.onlineTips.c') }}</li>
+      <li>{{ i18n.t('newtab.settings.background.onlineTips.d') }}</li>
     </ul>
     <el-upload
       v-if="settingsStore.background.bgType === BgType.Local"
