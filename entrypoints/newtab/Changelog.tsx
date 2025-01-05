@@ -2,6 +2,12 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>1.8.0</h1>
+    <h2>新特性</h2>
+    <ul>
+      <li>支持使用在线图片 API 作为壁纸</li>
+      <li>添加了深色时钟字体的开关</li>
+    </ul>
     <h1>1.7.0</h1>
     <h2>新特性</h2>
     <ul>
@@ -103,25 +109,31 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>1.8.0</h1>
+    <h2>Features</h2>
+    <ul>
+      <li>You can now using online image APIs as wallpaper.</li>
+      <li>Added a toggle for dark clock font.</li>
+    </ul>
     <h1>1.7.0</h1>
     <h2>Features</h2>
     <ul>
       <li>
-        <b>Updated default theme colors and icons</b>
+        <b>Updated default theme colors and icons.</b>
       </li>
-      <li>Improved translation for zh_tw</li>
+      <li>Improved translation for zh_tw.</li>
       <li>
         Added transition effects when switching background types. However, users with slow internet
         or low-performance devices may still notice the new background image appearing abruptly.
       </li>
       <li>
         Enhanced the display effect for solid color backgrounds (when the background type is set to
-        "None")
+        "None").
         <div class="blockquote">
-          <div>- Clock font color now inverts on solid color backgrounds</div>
-          <div>- The search box background is now static pure white with an added outline</div>
+          <div>- Clock font color now inverts on solid color backgrounds.</div>
+          <div>- The search box background is now static pure white with an added outline.</div>
           <div>
-            - Added the option to disable shadows for the clock, search box, and quick access area
+            - Added the option to disable shadows for the clock, search box, and quick access area.
           </div>
         </div>
       </li>
@@ -130,17 +142,17 @@ const changelog = (
     <ul>
       <li>
         Adjusted the timing of background loading to avoid freezing the page when fetching the
-        background
+        background.
       </li>
-      <li>Standardized animation durations for a smoother experience</li>
-      <li>Did not display the container for the quote when it was unavailable</li>
-      <li>Show error message when failing to get Bing wallpaper</li>
+      <li>Standardized animation durations for a smoother experience.</li>
+      <li>Did not display the container for the quote when it was unavailable.</li>
+      <li>Show error message when failing to get Bing wallpaper.</li>
     </ul>
     <h2>Fixes</h2>
     <ul>
       <li>
         Fixed the issue where wallpaper preview did not display after switching wallpaper types
-        multiple times in the settings page
+        multiple times in the settings page.
       </li>
     </ul>
     <h1>1.6.1</h1>
@@ -165,73 +177,73 @@ const changelog = (
       <h1>1.6.0</h1>
       <h2>Features</h2>
       <ul>
-        <li>Added support for customizing icons when adding pinned access</li>
-        <li>You can now open the changelog again via the right-click settings button</li>
-        <li>Improved visual experience when the color mode is set to follow the system</li>
-        <li>Updated the default theme color and optimized the appearance of some components</li>
+        <li>Added support for customizing icons when adding pinned access.</li>
+        <li>You can now open the changelog again via the right-click settings button.</li>
+        <li>Improved visual experience when the color mode is set to follow the system.</li>
+        <li>Updated the default theme color and optimized the appearance of some components.</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
         <li>
-          Fixed the issue where the browser would redirect Bing to the national region
+          Fixed the issue where the browser would redirect Bing to the national region.
           <div class="blockquote">
             <span>
               To restore non-national region access, you need to clear the *.bing.com cookies in
-              your browser
+              your browser.
             </span>
           </div>
         </li>
         <li>Reduced CPU usage</li>
         <li>
           Moved the settings initialization phase earlier to avoid seeing the default settings state
-          when opening a new tab
+          when opening a new tab.
         </li>
       </ul>
       <h1>1.5.4</h1>
       <h2>Features</h2>
       <ul>
-        <li>Added support for displaying the date and Chinese lunar calendar</li>
-        <li>Brand new settings window and changelog window</li>
-        <li>Using www.bing.com instead of cn.bing.com to avoid redirection when using Bing</li>
-        <li>Now you can change the background mask color</li>
-        <li>Now you can disable the background of the quick access area</li>
-        <li>Optimized the position of the search bar after closing the quick access area</li>
-        <li>[Firefox] Now supports setting it as the homepage (#12)</li>
+        <li>Added support for displaying the date and Chinese lunar calendar.</li>
+        <li>Brand new settings window and changelog window.</li>
+        <li>Using www.bing.com instead of cn.bing.com to avoid redirection when using Bing.</li>
+        <li>Now you can change the background mask color.</li>
+        <li>Now you can disable the background of the quick access area.</li>
+        <li>Optimized the position of the search bar after closing the quick access area.</li>
+        <li>[Firefox] Now supports setting it as the homepage (#12).</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
         <li>
-          Now the search engine dropdown in the settings page can display the full name of Google
+          Now the search engine dropdown in the settings page can display the full name of Google.
         </li>
         <li>
           Fixed the issue where the background blur was set to a fixed value when focusing the
-          search bar
+          search bar.
         </li>
         <li>
           Fixed the issue of browser freezing, high CPU usage, and memory leaks when using local
-          images as backgrounds
+          images as backgrounds.
         </li>
       </ul>
       <h1>1.5.3</h1>
       <h2>Features</h2>
       <ul>
-        <li>Partial refactor to support Firefox browser</li>
-        <li>Supports caching of Bing's daily image</li>
-        <li>Added transition animation for local backgrounds or cached Bing wallpapers</li>
-        <li>Optimized the display of the 12-hour clock format</li>
-        <li>[i18n] Internationalization support</li>
+        <li>Partial refactor to support Firefox browser.</li>
+        <li>Supports caching of Bing's daily image.</li>
+        <li>Added transition animation for local backgrounds or cached Bing wallpapers.</li>
+        <li>Optimized the display of the 12-hour clock format.</li>
+        <li>[i18n] Internationalization support.</li>
       </ul>
       <h2>Fixes</h2>
       <ul>
-        <li>Fixed the issue where unpinning did not take effect</li>
-        <li>Fixed the issue where frequently visited sites could not be deleted (#8)</li>
-        <li>Fixed the issue where the "Enable Most Visited" switch did not work</li>
-        <li>Fixed the issue where duplicate bookmarks appeared after hiding most visited</li>
-        <li>Hid Chrome-specific hints in Firefox browser</li>
+        <li>Fixed the issue where unpinning did not take effect.</li>
+        <li>Fixed the issue where frequently visited sites could not be deleted (#8).</li>
+        <li>Fixed the issue where the "Enable Most Visited" switch did not work.</li>
+        <li>Fixed the issue where duplicate bookmarks appeared after hiding most visited.</li>
+        <li>Hid Chrome-specific hints in Firefox browser.</li>
         <li>
-          Fixed the issue where search suggestion API candidates and icons could not be displayed
+          Fixed the issue where search suggestion API candidates and icons could not be displayed.
         </li>
-        <li>Remove Herobrine</li>
+        <li>Remove Herobrine.</li>
       </ul>
     </details>
   </section>
