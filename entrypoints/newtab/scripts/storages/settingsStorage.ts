@@ -47,6 +47,10 @@ export interface SettingsInterface {
     showDate: boolean
     showLunar: boolean
     enableShadow: boolean
+    invertColor: {
+      light: boolean
+      night: boolean
+    }
   }
   search: {
     autoFocus: boolean
@@ -96,7 +100,11 @@ export const defaultSettings: SettingsInterface = {
     showMeridiem: true,
     showDate: true,
     showLunar: true,
-    enableShadow: true
+    enableShadow: true,
+    invertColor: {
+      light: false,
+      night: false
+    }
   },
   search: {
     autoFocus: false,

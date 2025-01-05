@@ -35,5 +35,13 @@ const isChinese = browser.i18n.getUILanguage().startsWith('zh')
       <div class="settings-label">{{ i18n.t('newtab.settings.clock.enableShadow') }}</div>
       <el-switch v-model="settingsStore.time.enableShadow" />
     </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">浅色模式下使用深色字体</div>
+      <el-switch v-model="settingsStore.time.invertColor.light" />
+    </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">深色模式下使用深色字体</div>
+      <el-switch v-model="settingsStore.time.invertColor.night" />
+    </div>
   </div>
 </template>

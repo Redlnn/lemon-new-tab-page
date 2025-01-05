@@ -65,7 +65,8 @@ function getlunarCalendar() {
     class="clock"
     :class="[
       settingsStore.time.enableShadow ? 'shadow' : '',
-      settingsStore.background.bgType === 0 ? 'dark' : ''
+      settingsStore.time.invertColor.light ? ['invert', 'light'] : '',
+      settingsStore.time.invertColor.night ? ['invert', 'night'] : ''
     ]"
   >
     <div class="time">
@@ -150,9 +151,13 @@ function getlunarCalendar() {
     margin-bottom: 5px;
   }
 
-  &.dark,
+  &.invert.light,
   html.dark & {
     color: var(--el-text-color-primary);
+  }
+
+  html.dark &.invert.night {
+    color: var(--el-fill-color-extra-light);
   }
 
   .meridiem {
