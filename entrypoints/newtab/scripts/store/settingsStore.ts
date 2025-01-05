@@ -20,7 +20,11 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       showMeridiem: oldSettings.showMeridiem,
       showDate: true,
       showLunar: true,
-      enableShadow: true
+      enableShadow: true,
+      invertColor: {
+        light: false,
+        night: false
+      }
     },
     search: {
       autoFocus: false,
@@ -36,7 +40,8 @@ function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
       bgDarkCorners: oldSettings.bgDarkCorners,
       bgBlur: oldSettings.bgBlur,
       bgMaskPpacity: oldSettings.bgMaskPpacity,
-      maskColor: '#000'
+      maskColor: '#000',
+      onlineUrl: ''
     },
     localBackground: {
       bgId: oldSettings.bgId,
