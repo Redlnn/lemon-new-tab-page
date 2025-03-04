@@ -1,11 +1,16 @@
 // @ts-check
 
 import pluginVue from 'eslint-plugin-vue'
-import vueTsEslintConfig from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
 import oxlint from 'eslint-plugin-oxlint'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-export default [
+// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
+// import { configureVueProject } from '@vue/eslint-config-typescript'
+// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
+// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
+
+export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
     files: ['**/*.{ts,mts,tsx,vue,js,cjs,mjs,jsx}']
@@ -14,8 +19,8 @@ export default [
     name: 'app/files-to-ignore',
     ignores: ['auto-imports.d.ts', 'components.d.ts', '.output/*', '.wxt/*']
   },
-  ...pluginVue.configs['flat/essential'],
-  ...vueTsEslintConfig(),
+  pluginVue.configs['flat/essential'],
+  vueTsConfigs.recommended,
   {
     name: 'app/overrides',
     rules: {
@@ -36,4 +41,4 @@ export default [
   },
   oxlint.configs['flat/recommended'],
   skipFormatting
-]
+)
