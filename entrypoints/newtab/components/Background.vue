@@ -10,7 +10,7 @@ const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const background = ref<HTMLDivElement>()
 
-const props = defineProps<{ bgurl: string }>()
+defineProps<{ bgurl: string }>()
 
 watch(
   () => focusStore.isFocused,

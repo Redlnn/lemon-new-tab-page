@@ -20,6 +20,7 @@ const changelogZH = (
         更多内容请前往 GitHub 查看。👉
         <a
           target="_blank"
+          rel="noreferrer"
           href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_zh.md"
         >
           点击跳转
@@ -52,6 +53,7 @@ const changelog = (
         For more information, please visit GitHub.👉
         <a
           target="_blank"
+          rel="noreferrer"
           href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG.md"
         >
           Click to view

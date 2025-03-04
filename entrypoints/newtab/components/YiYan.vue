@@ -18,7 +18,7 @@ onMounted(() => {
       yiyan.value = res.data.content
       yiyanOrigin.value = res.data.origin.title
     },
-    (err) => {
+    () => {
       // 这里不会触发，但不写又不行
     }
   )
