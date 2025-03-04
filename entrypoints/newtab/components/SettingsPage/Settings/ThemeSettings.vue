@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import { ColorLensOutlined } from '@vicons/material'
-import { ref } from 'vue'
-import { useColorMode, useDark, useTimeoutFn } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
+import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/core'
 
 import changeTheme from '@/newtab/scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
+const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
-
 const { store } = useColorMode()
 
 const predefineColors = ref([
@@ -25,35 +25,81 @@ const predefineColors = ref([
 
 const isDark = useDark()
 const isDarkLocal = ref(isDark.value)
+const preferredDark = usePreferredDark()
 
-const isAuto = ref(store.value === 'auto')
+const isAuto = computed(() => store.value === 'auto')
+const isAutoLocal = ref(isAuto.value)
 
-function toggleDark() {
-  const doc: HTMLHtmlElement | null = document.querySelector('html')
-  if (!doc) return
-  if (isDark.value) {
-    doc.classList.remove('dark')
-    doc.classList.add('light')
-    useTimeoutFn(() => {
-      isDark.value = false
-      if (isDarkLocal.value) {
-        isDarkLocal.value = false
-      }
-    }, 300)
+function changeByPreferred(htmlElement: HTMLHtmlElement) {
+  if (preferredDark.value) {
+    htmlElement.classList.add('dark')
+    htmlElement.classList.remove('light')
+    isDarkLocal.value = true
   } else {
-    doc.classList.add('dark')
-    doc.classList.remove('light')
-    useTimeoutFn(() => {
-      isDark.value = true
-      if (!isDarkLocal.value) {
-        isDarkLocal.value = true
-      }
-    }, 300)
-  }
-  if (store.value === 'auto') {
-    isAuto.value = false
+    htmlElement.classList.add('light')
+    htmlElement.classList.remove('dark')
+    isDarkLocal.value = false
   }
 }
+
+function changeByUser(htmlElement: HTMLHtmlElement) {
+  if (isDarkLocal.value) {
+    htmlElement.classList.add('dark')
+    htmlElement.classList.remove('light')
+    isAutoLocal.value = false
+  } else {
+    htmlElement.classList.add('light')
+    htmlElement.classList.remove('dark')
+    isAutoLocal.value = false
+  }
+}
+
+function toggleDark() {
+  const htmlElement: HTMLHtmlElement | null = document.querySelector('html')
+  if (!htmlElement) return
+  if (isDark.value) {
+    // 先切换CSS，等待动画结束后，再切换store
+    changeByUser(htmlElement)
+    useTimeoutFn(() => {
+      store.value = 'light'
+    }, 300)
+  } else {
+    changeByUser(htmlElement)
+    useTimeoutFn(() => {
+      store.value = 'dark'
+    }, 300)
+  }
+}
+
+function toggleAuto() {
+  const htmlElement: HTMLHtmlElement | null = document.querySelector('html')
+  if (!htmlElement) return
+  if (!isAutoLocal.value) {
+    store.value = isDarkLocal.value ? 'dark' : 'light'
+    return
+  }
+
+  if (isDarkLocal.value !== preferredDark.value) {
+    // 先切换CSS，等待动画结束后，再切换store
+    changeByPreferred(htmlElement)
+    useTimeoutFn(() => {
+      store.value = 'auto'
+    }, 300)
+  } else {
+    store.value = 'auto'
+  }
+}
+
+watch(preferredDark, () => {
+  const doc: HTMLHtmlElement | null = document.querySelector('html')
+  if (!doc) return
+
+  if (isAuto.value) {
+    if (isDarkLocal.value !== preferredDark.value) {
+      changeByPreferred(doc)
+    }
+  }
+})
 </script>
 
 <template>
@@ -68,17 +114,19 @@ function toggleDark() {
     </div>
     <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.theme.systemMode') }}</div>
-      <el-switch
-        v-model="isAuto"
-        @change="
-          () => {
-            if (isAuto) {
-              store = 'auto'
-            }
-          }
-        "
-      />
+      <el-switch v-model="isAutoLocal" @change="toggleAuto" />
     </div>
+    <p
+      v-if="isGoogleChrome"
+      style="
+        color: var(--el-text-color-regular);
+        line-height: 1.5em;
+        font-size: 12px;
+        margin-top: 0;
+      "
+    >
+      {{ i18n.t('newtab.settings.theme.chromeTip') }}
+    </p>
     <div class="settings-item horizontal">
       <div class="settings-label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>
       <div class="color-mode">

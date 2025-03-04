@@ -72,6 +72,7 @@ newtab:
       darkMode: 深色模式
       systemMode: 跟随系统
       primaryColor: 主题色
+      chromeTip: 在 Chrome 中，该选项不受到“自定义 Chrome”侧边栏的影响，只与系统设置相关。
     quickstart:
       title: 快速访问
       tip: Tip：可以拖动设置窗口以观察快速访问区域变化噢~

@@ -79,6 +79,7 @@ newtab:
       darkMode: Dark Mode
       systemMode: Follow System
       primaryColor: Primary Color
+      chromeTip: In Chrome, this option is not affected by the 'Customize Chrome' sidebar and only related to system settings.
     quickstart:
       title: Shortcut Settings
       tip: 'Tip: You can drag the settings window to see changes in the shortcut area.'

@@ -72,6 +72,7 @@ newtab:
       darkMode: 深色模式
       systemMode: 跟隨系統
       primaryColor: 主題色
+      chromeTip: 在 Chrome 中，該選項不受到「自訂 Chrome」側邊欄的影響，只與系統設定相關。
     quickstart:
       title: 捷徑設定
       tip: Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~
