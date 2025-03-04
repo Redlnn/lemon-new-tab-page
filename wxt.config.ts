@@ -42,6 +42,7 @@ const chromeManifest = {
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   modules: ['@wxt-dev/module-vue', '@wxt-dev/i18n/module'],
+  imports: false,
   manifest: ({ browser }) => {
     if (browser === 'firefox') {
       return firefoxManifest
