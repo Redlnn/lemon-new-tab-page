@@ -6,10 +6,13 @@
   "scripts": {
     "dev": "wxt",
     "dev:firefox": "wxt -b firefox",
+    "dev:edge": "wxt -b edge",
     "build": "wxt build",
     "build:firefox": "wxt build -b firefox",
+    "build:edge": "wxt build -b edge",
     "zip": "wxt zip",
     "zip:firefox": "wxt zip -b firefox",
+    "zip:edge": "wxt zip -b edge",
     "postinstall": "wxt prepare",
     "lint:oxlint": "oxlint entrypoints/ types/ utils/ --fix -D correctness --ignore-path .gitignore",
     "lint:eslint": "eslint entrypoints/ types/ utils/ --fix",
