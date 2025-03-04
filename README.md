@@ -4,7 +4,7 @@
 
 目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
 、[Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
-和 [Firefox Browser Add-Ons](https://addons.mozilla.org/zh-CN/firefox/addon/%E6%9F%A0%E6%AA%AC%E8%B5%B7%E5%A7%8B%E9%A1%B5/)
+和 [Firefox Browser Add-Ons](https://addons.mozilla.org/zh-CN/firefox/addon/lemon-new-tab/)
 上架
 
 > 你也可以 Clone 下来手动 Build 一份来使用
