@@ -145,6 +145,11 @@ defineExpose({ show, hide, toggleShow })
     margin: 0.25em 0;
   }
 
+  a {
+    color: #1677ff;
+    text-decoration: none;
+  }
+
   .blockquote {
     margin: 0.3em 0 0.5em 0;
     padding: 0.2em 1em;

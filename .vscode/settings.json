@@ -10,7 +10,8 @@
   "i18n-ally.extract.keygenStyle": "camelCase",
   "i18n-ally.extract.autoDetect": true,
   "markdownlint.config": {
-    "MD033": false
+    "MD033": false,
+    "MD024": false
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
