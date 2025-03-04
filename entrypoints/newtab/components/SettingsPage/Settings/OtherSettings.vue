@@ -12,7 +12,7 @@ import { saveSettings, useSettingsStore } from '@/newtab/scripts/store/settingsS
 import { defaultBookmark } from '@/newtab/scripts/storages/bookmarkStorage'
 import { defaultSettings } from '@/newtab/scripts/storages/settingsStorage'
 
-const isGoogleChrome = import.meta.env.CHROME
+const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
 
 async function confirmClearExtensionData() {
