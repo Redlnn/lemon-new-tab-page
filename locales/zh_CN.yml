@@ -20,8 +20,13 @@ newtab:
       blur: 模糊强度
       mask_opacity: 遮罩不透明度
       mask_color: 遮罩颜色
-      error:
+      warning:
+        title: 警告
         fileIsNotImage: 所选文件不是图片!
+        securityPolicy: 由于 Google 的安全策略，需要授予 $1 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限
+        granted: 已授予访问权限
+        notGranted: 未授予权限，无法访问该地址
+        unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
       onlineTips:
         a: 按下回车键或者输入框失去焦点后提交
         b: 壁纸缓存策略却决于浏览器，断网后会获取不到壁纸

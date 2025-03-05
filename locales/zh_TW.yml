@@ -9,9 +9,9 @@ newtab:
   settings:
     title: 設定
     background:
-      title: 桌布設定
+      title: 壁紙設定
       type:
-        title: 桌布類型
+        title: 壁紙類型
         none: 無
         local: 本地圖像
         bing: Bing 每日一圖
@@ -20,8 +20,12 @@ newtab:
       blur: 模糊強度
       mask_opacity: 遮罩不透明度
       mask_color: 遮罩顔色
-      error:
+      warning:
         fileIsNotImage: 所選檔案不是圖像!
+        securityPolicy: 由於 Google 的安全策略，需要授予 $1 的訪問權限才能獲取壁紙，是否允許本擴充功能申請訪問該連結的權限
+        granted: 已授予訪問權限
+        notGranted: 未授予權限，無法訪問該連結
+        unknownSource: 使用未知來源的圖像作為壁紙可能會使你的設備遭到攻擊，是否繼續？
       onlineTips:
         a: 按下 Enter 鍵或輸入框失去焦點後提交
         b: 壁紙的快取策略取決於瀏覽器，離線時可能無法取得壁紙
@@ -131,7 +135,7 @@ newtab:
     baidu: 百度
   notification:
     bingWallpaper:
-      get: 正在獲取 Bing 桌布...
+      get: 正在獲取 Bing 壁紙...
       error:
-        title: 無法取得 Bing 桌布
+        title: 無法取得 Bing 壁紙
         message: 請檢查開發者工具中的主控台訊息。

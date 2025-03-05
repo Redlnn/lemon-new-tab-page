@@ -22,10 +22,37 @@ onMounted(() => {
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
-    ElMessage.error(i18n.t('newtab.settings.background.error.fileIsNotImage'))
+    ElMessage.error(i18n.t('newtab.settings.background.warning.fileIsNotImage'))
     return false
   }
   return true
+}
+
+function handlePermissions(_url: string, hostname: string) {
+  const permissions = { origins: [`*://${hostname}/*`] }
+  chrome.permissions.contains(permissions, (granted) => {
+    if (granted) {
+      settingsStore.background.onlineUrl = _url
+      return
+    }
+    ElMessageBox.confirm(i18n.t('newtab.settings.background.warning.securityPolicy', [hostname]))
+      .then(() => {
+        chrome.permissions.request(permissions, (granted) => {
+          if (granted) {
+            ElMessage.success(i18n.t('newtab.settings.background.warning.granted'))
+            settingsStore.background.onlineUrl = _url
+            return
+          }
+          ElMessage.error(i18n.t('newtab.settings.background.warning.notGranted'))
+          settingsStore.background.bgType = BgType.None
+          tmpUrl.value = ''
+        })
+      })
+      .catch(() => {
+        settingsStore.background.bgType = BgType.None
+        tmpUrl.value = ''
+      })
+  })
 }
 
 function changeOnlineBg(e: Event) {
@@ -44,41 +71,18 @@ function changeOnlineBg(e: Event) {
     return
   }
 
-  const permissions = {
-    origins: [`*://${hostname}/*`]
-  }
-  chrome.permissions.contains(permissions, (granted) => {
-    if (granted) {
-      settingsStore.background.onlineUrl = _url
-      return
-    }
-    ElMessageBox.confirm(
-      `由于 Google 的安全策略，需要授予 ${hostname} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限`
-    )
-      .then(() => {
-        chrome.permissions.request(permissions, (granted) => {
-          if (granted) {
-            ElMessage.success('已授予访问权限')
-            settingsStore.background.onlineUrl = _url
-            return
-          }
-          ElMessage.error('未授予权限，无法访问该地址')
-          settingsStore.background.bgType = BgType.None
-          tmpUrl.value = ''
-        })
-      })
-      .catch(() => {
-        settingsStore.background.bgType = BgType.None
-        tmpUrl.value = ''
-      })
-  })
+  handlePermissions(_url, hostname)
 }
 
 function onlineImageWarn() {
   if (settingsStore.background.onlineUrl) return
-  ElMessageBox.confirm('使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？', '警告', {
-    type: 'warning'
-  }).catch(() => {
+  ElMessageBox.confirm(
+    i18n.t('newtab.settings.background.warning.unknownSource'),
+    i18n.t('newtab.settings.background.warning.title'),
+    {
+      type: 'warning'
+    }
+  ).catch(() => {
     settingsStore.background.bgType = BgType.None
   })
 }

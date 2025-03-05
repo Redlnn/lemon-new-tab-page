@@ -10,31 +10,18 @@ const time = ref()
 const isTimeHovered = useElementHover(time)
 
 watch(isTimeHovered, (isTimeHovered) => {
-  if (isTimeHovered) {
-    time.value.style.transform = 'scale(1.1)'
-  } else {
-    time.value.style.transform = null
-  }
+  time.value.style.transform = isTimeHovered ? 'scale(1.1)' : null
 })
 
 function customMeridiem(hours: number) {
-  if (hours < 2) {
-    return '深夜'
-  } else if (hours < 7) {
-    return '凌晨'
-  } else if (hours < 11) {
-    return '早上'
-  } else if (hours < 14) {
-    return '中午'
-  } else if (hours < 17) {
-    return '下午'
-  } else if (hours < 19) {
-    return '傍晚'
-  } else if (hours < 23) {
-    return '晚上'
-  } else {
-    return '深夜'
-  }
+  if (hours < 2) return '深夜'
+  if (hours < 7) return '凌晨'
+  if (hours < 11) return '早上'
+  if (hours < 14) return '中午'
+  if (hours < 17) return '下午'
+  if (hours < 19) return '傍晚'
+  if (hours < 23) return '晚上'
+  return '深夜'
 }
 
 const timeNow = useNow({ interval: 1000 })
@@ -107,20 +94,17 @@ function getlunarCalendar() {
 
 <style scoped lang="scss">
 @keyframes twinkle {
-  0% {
+  0%,
+  100% {
     opacity: 0.5;
   }
   50% {
     opacity: 1;
   }
-  100% {
-    opacity: 0.5;
-  }
 }
+
 @keyframes delayedFadeIn {
-  0% {
-    opacity: 0;
-  }
+  0%,
   50% {
     opacity: 0;
   }

@@ -35,16 +35,18 @@ const activeElement = useActiveElement()
 
 const { width: searchFormWidth } = useElementSize(searchForm)
 
-watch(isWindowFocused, (isFocused) => {
-  if (searchText.value.length > 0 || isFocused) return
+function resetSearch() {
   searchText.value = ''
   originSearchText.value = ''
-  if (suggedtionArea.value) {
-    suggedtionArea.value.clearSearchSuggestions()
-  }
+  suggedtionArea.value?.clearSearchSuggestions()
   searchForm.value?.classList.remove('focus')
-  searchInput.value?.blur()
   focusStore.blur()
+}
+
+watch(isWindowFocused, (isFocused) => {
+  if (searchText.value.length > 0 || isFocused) return
+  resetSearch()
+  searchInput.value?.blur()
 })
 
 onClickOutside(searchBox, (e) => {
@@ -56,43 +58,43 @@ onClickOutside(searchBox, (e) => {
   if ((e.target as HTMLElement).localName !== 'main') {
     return
   }
-  searchText.value = ''
-  originSearchText.value = ''
-  if (suggedtionArea.value) {
-    suggedtionArea.value.clearSearchSuggestions()
-  }
-  searchForm.value?.classList.remove('focus')
-  focusStore.blur()
+  resetSearch()
 })
+
 function handleFocus() {
   searchForm.value?.classList.add('focus')
   suggedtionArea.value!.showSearchHistories()
   focusStore.focus()
 }
+
+function navigateSuggestions(direction: number) {
+  const suggestionsLength = suggedtionArea.value!.searchSuggestions.length
+  if (suggestionsLength <= 0) return
+  const _current = suggedtionArea.value!.currentActiveSuggest
+  suggedtionArea.value!.clearActiveSuggest()
+  if (originSearchText.value === null) originSearchText.value = searchText.value
+  if (_current === null) {
+    activeOneSuggest(direction > 0 ? direction - 1 : suggestionsLength + direction)
+  } else {
+    const newIndex = _current + direction
+    if (newIndex < 0 || newIndex >= suggestionsLength) {
+      searchText.value = originSearchText.value || ''
+      originSearchText.value = ''
+      suggedtionArea.value!.currentActiveSuggest = null
+    } else {
+      activeOneSuggest(newIndex)
+    }
+  }
+}
+
 function handleUp() {
-  if (suggedtionArea.value!.searchSuggestions.length <= 0) return
-  const _current = suggedtionArea.value!.currentActiveSuggest
-  suggedtionArea.value!.clearActiveSuggest()
-  if (originSearchText.value === null) originSearchText.value = searchText.value
-  if (_current === null) activeOneSuggest(suggedtionArea.value!.searchSuggestions.length - 1)
-  else if (_current === 0) {
-    searchText.value = originSearchText.value || ''
-    originSearchText.value = ''
-    suggedtionArea.value!.currentActiveSuggest = null
-  } else activeOneSuggest(_current - 1)
+  navigateSuggestions(-1)
 }
+
 function handleDown() {
-  if (suggedtionArea.value!.searchSuggestions.length <= 0) return
-  const _current = suggedtionArea.value!.currentActiveSuggest
-  suggedtionArea.value!.clearActiveSuggest()
-  if (originSearchText.value === null) originSearchText.value = searchText.value
-  if (_current === null) activeOneSuggest(0)
-  else if (_current === suggedtionArea.value!.searchSuggestions.length - 1) {
-    searchText.value = originSearchText.value || ''
-    originSearchText.value = ''
-    suggedtionArea.value!.currentActiveSuggest = null
-  } else activeOneSuggest(_current + 1)
+  navigateSuggestions(1)
 }
+
 function activeOneSuggest(index: number) {
   const suggestions = suggedtionArea.value!.searchSuggestionArea?.children
   if (!suggestions) return
@@ -100,21 +102,26 @@ function activeOneSuggest(index: number) {
   suggedtionArea.value!.currentActiveSuggest = index
   searchText.value = suggedtionArea.value!.searchSuggestions[index]
 }
+
 function selectSearch(index: number) {
   settingsStore.search.selectedSearchEngine = index
 }
+
 function handlePrevTab() {
-  if (settingsStore.search.selectedSearchEngine === 0) selectSearch(searchEngines.length - 1)
-  else selectSearch(settingsStore.search.selectedSearchEngine - 1)
+  selectSearch(
+    (settingsStore.search.selectedSearchEngine - 1 + searchEngines.length) % searchEngines.length
+  )
 }
+
 function handleNextTab() {
-  if (settingsStore.search.selectedSearchEngine === searchEngines.length - 1) selectSearch(0)
-  else selectSearch(settingsStore.search.selectedSearchEngine + 1)
+  selectSearch((settingsStore.search.selectedSearchEngine + 1) % searchEngines.length)
 }
+
 async function doSearch() {
   doSearchWithText(searchText.value)
   searchText.value = ''
 }
+
 async function doSearchWithText(text: string) {
   if (text.length <= 0) {
     searchInput.value?.focus()
@@ -123,13 +130,11 @@ async function doSearchWithText(text: string) {
   if (settingsStore.search.recordSearchHistory) {
     const searchHistories: string[] = await searchHistoriesStorage.getValue()
     // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
-    if (searchHistories.includes(text)) {
-      const index = searchHistories.indexOf(text)
+    const index = searchHistories.indexOf(text)
+    if (index !== -1) {
       searchHistories.splice(index, 1)
-      searchHistories.unshift(text)
-    } else {
-      searchHistories.unshift(text)
     }
+    searchHistories.unshift(text)
     // 如果历史搜索词大于15个，则删除最后几个只留下15个
     if (searchHistories.length > 15) {
       searchHistories.splice(15)
@@ -143,6 +148,7 @@ async function doSearchWithText(text: string) {
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }
+
 onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
 </script>
 

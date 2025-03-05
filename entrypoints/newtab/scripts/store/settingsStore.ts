@@ -75,7 +75,7 @@ const searchSuggestAPIsMap: Record<string, string> = {
 }
 
 export async function initSettings() {
-  let settings
+  let settings = await settingsStorage.getValue()
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const oldSettings = (await chrome.storage.local.get('settings')) as any as
@@ -83,16 +83,12 @@ export async function initSettings() {
       | undefined
       | null
 
-    settings = await settingsStorage.getValue()
-
     if (oldSettings?.settings) {
-      if (
-        Object.keys(searchSuggestAPIsMap).includes(oldSettings.settings.selectedSearchSuggestionAPI)
-      ) {
-        oldSettings.settings.selectedSearchSuggestionAPI =
-          searchSuggestAPIsMap[oldSettings.settings.selectedSearchSuggestionAPI]
+      const selectedAPI = oldSettings.settings.selectedSearchSuggestionAPI
+      if (searchSuggestAPIsMap[selectedAPI]) {
+        oldSettings.settings.selectedSearchSuggestionAPI = searchSuggestAPIsMap[selectedAPI]
       }
-      if (oldSettings.settings.version && typeof oldSettings.settings.version === 'string') {
+      if (typeof oldSettings.settings.version === 'string') {
         settings = migrate(oldSettings.settings)
         await saveSettings(settings)
       } else if (!oldSettings.settings.version) {
@@ -100,8 +96,6 @@ export async function initSettings() {
         await saveSettings(settings)
       }
     }
-  } else {
-    settings = await settingsStorage.getValue()
   }
 
   const settingsStore = useSettingsStore()

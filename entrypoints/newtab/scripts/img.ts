@@ -1,14 +1,11 @@
 export function isImageFile(file: Blob, extra?: string[]) {
-  const imageType = ['png', 'jpeg', 'jpg', 'gif', 'webp', ...(extra || [])]
-
-  let fileType = file.type
-  fileType = fileType.substring(fileType.lastIndexOf('/') + 1, fileType.length)
-
-  return imageType.includes(fileType)
+  const imageType = new Set(['png', 'jpeg', 'jpg', 'gif', 'webp', ...(extra || [])])
+  const fileType = file.type.split('/').pop() || ''
+  return imageType.has(fileType)
 }
 
 export async function verifyImageUrl(url: string) {
-  if (url.length === 0) {
+  if (!url) {
     return false
   }
 

@@ -31,15 +31,17 @@ function handleInput() {
     showSuggestionsDebounced()
   }
 }
+
 async function showSearchHistories() {
   if (searchSuggestions.value.length > 0 && !isShowSearchHistories.value) return
   const searchHistories: string[] = await searchHistoriesStorage.getValue()
-  if (searchHistories.length > 0 && clearSearchHistory) {
+  if (searchHistories.length > 0 && clearSearchHistory.value) {
     searchSuggestions.value = searchHistories
     isShowSearchHistories.value = true
-    clearSearchHistory.value!.style.display = 'flex'
+    clearSearchHistory.value.style.display = 'flex'
   }
 }
+
 const showSuggestionsDebounced = useDebounceFn(showSuggestions, 200)
 
 async function showSuggestions() {
@@ -75,15 +77,16 @@ async function clearSearchHistories() {
 }
 
 function getSearchSuggestionAreaHeight() {
-  if (searchSuggestions.value.length > 0) {
-    if (searchSuggestions.value.length > 10) {
-      if (isShowSearchHistories.value) return '363px'
-      else return '330px'
+  const length = searchSuggestions.value.length
+  if (length > 0) {
+    if (length > 10) {
+      return isShowSearchHistories.value ? '363px' : '330px'
     } else {
-      if (isShowSearchHistories.value) return `${(searchSuggestions.value.length + 1) * 33}px`
-      else return `${searchSuggestions.value.length * 33}px`
+      return isShowSearchHistories.value ? `${(length + 1) * 33}px` : `${length * 33}px`
     }
-  } else return '0'
+  } else {
+    return '0'
+  }
 }
 
 defineExpose({

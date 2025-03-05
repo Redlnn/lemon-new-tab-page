@@ -41,25 +41,25 @@ const data: {
 
 function resetFields() {
   modelForm.value?.resetFields()
-  data.title = ''
-  data.url = ''
-  data.favicon = ''
+  Object.assign(data, { url: '', title: '', favicon: '' })
   getFaviconAuto.value = true
 }
 
-async function add() {
+function isValidUrl(url: string) {
   try {
-    new URL(data.url)
+    new URL(url)
+    return true
   } catch {
+    return false
+  }
+}
+async function add() {
+  if (!isValidUrl(data.url)) {
     ElMessage.error(i18n.t('newtab.quickstart.addDialog.invalidUrlError'))
     data.url = ''
     return
   }
-  bookmarkStore.items.push({
-    url: data.url,
-    title: data.title,
-    favicon: data.favicon
-  })
+  bookmarkStore.items.push({ ...data })
   await saveBookmark(_.cloneDeep(bookmarkStore))
   await props.reload()
   showDialog.value = false
@@ -77,42 +77,43 @@ async function uploadFavicon(file: File) {
   reader.readAsDataURL(file)
   reader.onloadend = () => {
     let res = reader.result as string
-    console.log(res)
     if (res.startsWith('data:image/svg+xml')) {
       res = DOMPurify.sanitize(convertBase64Svg(res), {
         USE_PROFILES: { svg: true, svgFilters: true }
       })
       res = `data:image/svg+xml;base64,${btoa(res)}`
     }
-    console.log(res)
     data.favicon = res
+  }
+}
+
+async function confirmSvgUpload() {
+  try {
+    await ElMessageBox.confirm(
+      i18n.t('newtab.quickstart.addDialog.confirmSvgDesc'),
+      i18n.t('newtab.quickstart.addDialog.confirmSvgTitle'),
+      {
+        confirmButtonText: i18n.t('newtab.quickstart.addDialog.confirmSvgOKBtn'),
+        cancelButtonText: i18n.t('newtab.quickstart.addDialog.confirmSvgCancelBtn'),
+        closeOnClickModal: false,
+        closeOnPressEscape: false,
+        showClose: false,
+        type: 'warning'
+      }
+    )
+    return true
+  } catch {
+    return false
   }
 }
 
 const beforeFaviconUpload: UploadProps['beforeUpload'] = async (rawFile) => {
   if (!isImageFile(rawFile, ['x-icon', 'svg+xml'])) {
-    ElMessage.error(i18n.t('newtab.settings.background.error.fileIsNotImage'))
+    ElMessage.error(i18n.t('newtab.settings.background.warning.fileIsNotImage'))
     return false
   }
   if (isSvg(rawFile)) {
-    let isConfirm = true
-    try {
-      await ElMessageBox.confirm(
-        i18n.t('newtab.quickstart.addDialog.confirmSvgDesc'),
-        i18n.t('newtab.quickstart.addDialog.confirmSvgTitle'),
-        {
-          confirmButtonText: i18n.t('newtab.quickstart.addDialog.confirmSvgOKBtn'),
-          cancelButtonText: i18n.t('newtab.quickstart.addDialog.confirmSvgCancelBtn'),
-          closeOnClickModal: false,
-          closeOnPressEscape: false,
-          showClose: false,
-          type: 'warning'
-        }
-      )
-    } catch {
-      isConfirm = false
-    }
-    return isConfirm
+    return await confirmSvgUpload()
   }
   if (rawFile.size / 1024 > 100) {
     ElMessage.error(i18n.t('newtab.quickstart.addDialog.tooLargeImageError'))
@@ -122,10 +123,7 @@ const beforeFaviconUpload: UploadProps['beforeUpload'] = async (rawFile) => {
 }
 
 function isSvg(file: Blob) {
-  let fileType = file.type
-  fileType = fileType.substring(fileType.lastIndexOf('/') + 1, fileType.length)
-
-  return fileType === 'svg+xml'
+  return file.type.endsWith('svg+xml')
 }
 </script>
 

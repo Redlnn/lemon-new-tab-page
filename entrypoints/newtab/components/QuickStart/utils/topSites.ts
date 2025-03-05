@@ -13,20 +13,11 @@ async function getTopSites() {
   } else {
     throw new Error('Unsupported browser')
   }
-  const blockedTopStites = await blockedTopStitesStorage.getValue()
-  if (blockedTopStites.length <= 0) {
-    return topSites
-  }
-  return topSites.filter((site) => !blockedTopStites.includes(site.url))
+  const blockedTopStites = new Set(await blockedTopStitesStorage.getValue())
+  return topSites.filter((site) => !blockedTopStites.has(site.url))
 }
 
-async function blockSite(url: string, reloadFunc: () => Promise<void>) {
-  const blockedTopStites = await blockedTopStitesStorage.getValue()
-  if (blockedTopStites.includes(url)) {
-    return
-  }
-  blockedTopStites.push(url)
-  await blockedTopStitesStorage.setValue(blockedTopStites)
+function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
   ElMessage({
     message: h('p', null, [
       h(
@@ -61,12 +52,20 @@ async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   })
 }
 
-async function restoreBlockedSite(url: string) {
+async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   const blockedTopStites = await blockedTopStitesStorage.getValue()
-  const index = blockedTopStites.indexOf(url)
-  if (index > -1) {
-    blockedTopStites.splice(index, 1)
-    await blockedTopStitesStorage.setValue(blockedTopStites)
+  if (blockedTopStites.includes(url)) {
+    return
+  }
+  blockedTopStites.push(url)
+  await blockedTopStitesStorage.setValue(blockedTopStites)
+  showBlockedMessage(url, reloadFunc)
+}
+
+async function restoreBlockedSite(url: string) {
+  const blockedTopStites = new Set(await blockedTopStitesStorage.getValue())
+  if (blockedTopStites.delete(url)) {
+    await blockedTopStitesStorage.setValue(Array.from(blockedTopStites))
   }
 }
 
