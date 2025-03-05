@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.8.1
+
+### Fixes
+
+- Fixed the issue that background color does not follow system (or browser)
+  when JS is not loaded (#19)
+- Fixed the logic and animation issues of "Dark mode" and "Follow system" switch</li>
+
 ## 1.8.0
 
 ### Features

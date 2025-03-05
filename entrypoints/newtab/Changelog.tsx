@@ -5,7 +5,7 @@ const changelogZH = (
     <h1>1.8.1</h1>
     <h2>修复</h2>
     <ul>
-      <li>修复JS未加载时背景色不跟随系统（或浏览器）的问题 (#9)</li>
+      <li>修复JS未加载时背景色不跟随系统（或浏览器）的问题 (#19)</li>
       <li>修复“深色模式”与“跟随系统”开关的逻辑、动画问题</li>
     </ul>
     <details>
@@ -37,7 +37,7 @@ const changelog = (
     <ul>
       <li>
         Fixed the issue that background color does not follow system (or browser) when JS is not
-        loaded (#9)
+        loaded (#19)
       </li>
       <li>Fixed the logic and animation issues of "Dark mode" and "Follow system" switch</li>
     </ul>
