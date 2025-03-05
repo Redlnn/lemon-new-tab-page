@@ -1,7 +1,7 @@
 {
   "name": "lemon-tab-page",
   "private": true,
-  "version": "1.8.0",
+  "version": "1.8.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -24,7 +24,7 @@
     "@vicons/fa": "^0.13.0",
     "@vicons/fluent": "^0.13.0",
     "@vicons/material": "^0.13.0",
-    "@vueuse/core": "^12.7.0",
+    "@vueuse/core": "^12.8.2",
     "axios": "^1.8.1",
     "dayjs": "^1.11.13",
     "dompurify": "^3.2.4",
@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
-    "@types/chrome": "^0.0.307",
+    "@types/chrome": "^0.0.308",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.13.9",
     "@vitejs/plugin-vue-jsx": "^4.1.1",
@@ -49,7 +49,7 @@
     "@wxt-dev/module-vue": "^1.0.2",
     "eslint": "^9.21.0",
     "eslint-plugin-oxlint": "^0.15.13",
-    "eslint-plugin-vue": "^9.32.0",
+    "eslint-plugin-vue": "^10.0.0",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^7.0.2",
     "oxlint": "^0.15.13",
