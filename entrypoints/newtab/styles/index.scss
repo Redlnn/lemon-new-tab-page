@@ -48,7 +48,7 @@ body,
 
 .el-notification {
   background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 25%);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) saturate(1.4);
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 

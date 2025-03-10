@@ -194,7 +194,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
 .quickstart-wrapper {
   max-width: 80%;
   margin-top: 80px;
-  transition: opacity var(--el-transition-duration-fast) ease;
+  transition: opacity 0.1s ease;
 }
 
 .quickstart-contaniner {
@@ -210,7 +210,7 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
   &.quickstart-contaniner-bg {
     background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
     border-radius: 10px;
-    backdrop-filter: blur(3px);
+    backdrop-filter: blur(10px) saturate(1.4);
 
     &.quickstart-contaniner-shadow {
       box-shadow: var(--el-box-shadow-dark);
@@ -262,13 +262,15 @@ watch(() => settingsStore.quickStart.enableTopSites, reloadQS)
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      background: color-mix(in oklab, var(--el-bg-color), transparent 10%);
+      background: color-mix(in oklab, var(--el-bg-color), transparent 50%);
+      backdrop-filter: blur(10px) saturate(1.4);
       transition: background-color var(--el-transition-duration-fast) ease;
 
       span {
         display: block;
-        width: 30px;
-        height: 30px;
+        width: 25px;
+        height: 25px;
+        border-radius: 3px;
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;

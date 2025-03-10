@@ -82,7 +82,7 @@ defineExpose({ show, hide, toggleShow })
   max-height: 80%;
   height: 500px;
   background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) saturate(1.4);
   border-radius: 10px;
   box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
   overflow: hidden;

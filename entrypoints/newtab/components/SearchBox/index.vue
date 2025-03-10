@@ -215,7 +215,7 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
   position: relative;
   border-radius: calc(var(--height) / 2);
   font-size: 15px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px) saturate(1.4);
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
   color: transparent;
   transition:
