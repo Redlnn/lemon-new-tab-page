@@ -55,7 +55,8 @@ onClickOutside(searchBox, (e) => {
     searchEngineMenuRef.value?.hide()
     return
   }
-  if ((e.target as HTMLElement).localName !== 'main') {
+  const target = e.target as HTMLElement
+  if (!(target.localName == 'main' || target.classList.contains('quickstart-wrapper'))) {
     return
   }
   resetSearch()
