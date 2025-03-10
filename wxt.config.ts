@@ -25,6 +25,10 @@ const baseManifest = {
   ]
 }
 
+if (import.meta.env.DEV) {
+  baseManifest.host_permissions.push('http://localhost:3000/')
+}
+
 const firefoxManifest = {
   ...baseManifest,
   permissions: ['topSites', 'storage'],

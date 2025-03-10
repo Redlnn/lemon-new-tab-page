@@ -1,6 +1,6 @@
 {
   "extends": "@tsconfig/node22/tsconfig.json",
-  "include": ["wxt.config.*", "./utils"],
+  "include": ["./wxt.config.ts", "./utils"],
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
@@ -10,6 +10,6 @@
     "moduleResolution": "Bundler",
     "useDefineForClassFields": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node"]
+    "types": ["node", "vite/client"]
   }
 }
