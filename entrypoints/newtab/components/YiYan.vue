@@ -31,7 +31,14 @@ onMounted(() => {
       v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800 && yiyan"
       class="yiyan-wrapper"
     >
-      <div class="yiyan">
+      <div
+        class="yiyan"
+        :class="[
+          settingsStore.time.enableShadow ? 'shadow' : '',
+          settingsStore.time.invertColor.light ? ['invert', 'light'] : '',
+          settingsStore.time.invertColor.night ? ['invert', 'night'] : ''
+        ]"
+      >
         <p class="yiyan-content">「 {{ yiyan }} 」</p>
         <p class="yiyan-extra">—— 《{{ yiyanOrigin }}》</p>
       </div>
@@ -51,7 +58,6 @@ onMounted(() => {
 .yiyan {
   width: 530px;
   text-align: center;
-  text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
   color: var(--el-fill-color-darker);
   border-radius: 20px;
   padding: 6px 14px;
@@ -67,11 +73,24 @@ onMounted(() => {
     font-size: 0.95em;
   }
 
+  &.shadow {
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+  }
+
+  &.invert.light,
   html.dark & {
     color: var(--el-text-color-regular);
 
     &:hover {
       color: var(--el-text-color-primary);
+    }
+  }
+
+  html.dark &.invert.night {
+    color: var(--el-fill-color-extra-light);
+
+    &:hover {
+      color: var(--el-fill-color);
     }
   }
 
