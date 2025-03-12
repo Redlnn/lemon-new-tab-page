@@ -83,7 +83,7 @@ function getContainerWidth(num: number) {
   return (
     num * (15 + settingsStore.quickStart.itemSize + 15) +
     (num - 1) * settingsStore.quickStart.itemMarginH +
-    20
+    40
   )
 }
 
@@ -102,7 +102,7 @@ async function refresh() {
 
   let _columnsCount = Math.min(settingsStore.quickStart.columns, _itemCount)
   for (let i = _columnsCount; i > 0; i--) {
-    if (getContainerWidth(i) <= windowWidth.value * 0.85) {
+    if (getContainerWidth(i) < windowWidth.value * 0.85) {
       _columnsCount = i
       break
     }
