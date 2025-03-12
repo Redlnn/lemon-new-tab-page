@@ -5,7 +5,6 @@ import { Pin16Regular } from '@vicons/fluent'
 import { useSettingsStore } from '@/newtab/scripts/store'
 import { convertBase64Svg } from '@/newtab/scripts/img'
 import { getFaviconURLChrome } from '../utils/topSites'
-import { getQuickStartItemWidth } from '../utils/index'
 
 const settingsStore = useSettingsStore()
 
@@ -19,13 +18,7 @@ defineProps<{
 </script>
 
 <template>
-  <div
-    class="quickstart-item"
-    :style="{
-      flexBasis: getQuickStartItemWidth(qsSitesSize, settingsStore.quickStart.quickStartColumns),
-      width: `${settingsStore.quickStart.quickStartItemWidth}px`
-    }"
-  >
+  <div class="quickstart-item">
     <a class="quickstart-item-link" :href="url">
       <div class="quickstart-icon">
         <div v-if="pined && settingsStore.quickStart.showPinnedIcon" class="pin-icon">

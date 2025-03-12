@@ -16,8 +16,6 @@ import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore, saveBookmark, useBookmarkStore } from '@/newtab/scripts/store'
 import { convertBase64Svg, isImageFile } from '@/newtab/scripts/img'
 
-import { getQuickStartItemWidth } from '../utils/index'
-
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 const modelForm = ref<FormInstance>()
@@ -128,16 +126,7 @@ function isSvg(file: Blob) {
 </script>
 
 <template>
-  <div
-    class="quickstart-item add-bookmark"
-    :style="{
-      flexBasis: getQuickStartItemWidth(
-        quickStartSize(),
-        settingsStore.quickStart.quickStartColumns
-      ),
-      width: `${settingsStore.quickStart.quickStartItemWidth}px`
-    }"
-  >
+  <div class="quickstart-item add-bookmark">
     <div class="quickstart-item-link" style="cursor: pointer" @click="showDialog = true">
       <div class="quickstart-icon">
         <add-round />
@@ -201,24 +190,31 @@ function isSvg(file: Blob) {
 <style lang="scss" scoped>
 .add-bookmark {
   opacity: 0.7;
+  color: var(--el-text-color-primary);
+  transition:
+    color var(--el-transition-duration-fast) ease,
+    opacity var(--el-transition-duration-fast) ease;
 
-  &:hover {
+  &:hover,
+  &:hover .quickstart-title {
     opacity: 1;
   }
-}
 
-.add-bookmark .quickstart-icon {
-  color: var(--el-text-color-regular);
-  transition: color var(--el-transition-duration-fast) ease;
-
-  & svg {
-    width: 70%;
+  .white-text-light &,
+  .white-text-light & .quickstart-icon {
+    color: var(--el-bg-color);
   }
-}
 
-.add-bookmark:hover .quickstart-icon,
-.add-bookmark:hover .quickstart-title {
-  color: var(--el-color-primary);
+  &:hover .quickstart-icon {
+    transition: color var(--el-transition-duration-fast) ease;
+    color: var(--el-color-primary);
+  }
+
+  .quickstart-icon {
+    & svg {
+      width: 70%;
+    }
+  }
 }
 
 .favicon-uploader__img {
