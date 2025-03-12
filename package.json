@@ -60,6 +60,7 @@
     "unplugin-vue-components": "^28.4.1",
     "vite": "^6.2.1",
     "vite-svg-loader": "^5.1.0",
+    "vue-draggable-plus": "^0.6.0",
     "wxt": "^0.19.29"
   },
   "packageManager": "pnpm@10.5.2"
