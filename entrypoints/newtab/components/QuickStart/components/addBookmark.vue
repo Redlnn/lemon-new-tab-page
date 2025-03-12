@@ -24,7 +24,6 @@ const props = defineProps<{
   reload: () => Promise<void>
 }>()
 const getFaviconAuto = ref(true)
-
 const showDialog = ref(false)
 const data: {
   url: string

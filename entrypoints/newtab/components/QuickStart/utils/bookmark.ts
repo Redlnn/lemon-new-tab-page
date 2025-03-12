@@ -1,6 +1,6 @@
 import type { Bookmark } from '@/entrypoints/newtab/scripts/storages/bookmarkStorage'
 import _ from 'lodash'
-import { useFocusStore, useSettingsStore, initBookmark, saveBookmark } from '@/newtab/scripts/store'
+import { saveBookmark } from '@/newtab/scripts/store'
 import type { Store } from 'pinia'
 import { h } from 'vue'
 import { i18n } from '@/.wxt/i18n'

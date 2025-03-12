@@ -1,7 +1,3 @@
-import type { Bookmark } from '@/entrypoints/newtab/scripts/storages/bookmarkStorage'
-import type { Store } from 'pinia'
-import _ from 'lodash'
-import type { Ref } from 'vue'
 import type { TopSites } from 'wxt/browser'
 
 export function getQuickStartItemWidth(QSNum: number, cols: number) {
