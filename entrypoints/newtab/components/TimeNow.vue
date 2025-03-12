@@ -152,4 +152,20 @@ function getlunarCalendar() {
     animation: twinkle 1s ease infinite;
   }
 }
+
+@media screen and (max-width: 600px) {
+  .clock {
+    .time {
+      font-size: 50px;
+    }
+
+    .meridiem {
+      font-size: 35px;
+    }
+
+    .date {
+      font-size: 13px;
+    }
+  }
+}
 </style>

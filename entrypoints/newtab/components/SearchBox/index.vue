@@ -159,10 +159,10 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
       ref="searchForm"
       class="search-form"
       :class="[
-        settingsStore.search.enableShadow ? 'shadow' : '',
-        settingsStore.background.bgType === 0 ? 'dark' : ''
+        settingsStore.search.enableShadow ? 'shadow' : null,
+        settingsStore.background.bgType === 0 ? 'dark' : null
       ]"
-      :style="{ '--width': mounted ? '' : '0' }"
+      :style="{ '--width': mounted ? null : '0' }"
       @submit.prevent="doSearch"
     >
       <search-engine-menu />
@@ -304,6 +304,18 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
       -ms-user-select: none;
       -khtml-user-select: none;
       user-select: none;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .search-form {
+    --width: 75vw;
+    --height: 40px;
+
+    &:hover:not(.focus),
+    &.focus {
+      --width: 85vw;
     }
   }
 }
