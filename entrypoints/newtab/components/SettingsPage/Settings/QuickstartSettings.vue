@@ -54,10 +54,14 @@ async function restoreDefaultTopSites() {
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTitle') }}</div>
       <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" />
     </div>
+    <div class="settings-item horizontal">
+      <div class="settings-label">在浅色模式下使用白色字体</div>
+      <el-switch v-model="settingsStore.quickStart.whiteTextInLightMode" />
+    </div>
     <div class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
       <el-slider
-        v-model="settingsStore.quickStart.quickStartRows"
+        v-model="settingsStore.quickStart.rows"
         :step="1"
         :min="1"
         :max="5"
@@ -70,7 +74,7 @@ async function restoreDefaultTopSites() {
     <div class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxColumns') }}</div>
       <el-slider
-        v-model="settingsStore.quickStart.quickStartColumns"
+        v-model="settingsStore.quickStart.columns"
         :step="1"
         :min="1"
         :max="10"
@@ -87,11 +91,33 @@ async function restoreDefaultTopSites() {
       {{ i18n.t('newtab.settings.quickstart.maxItemsTipChrome') }}
     </p>
     <div class="settings-item quickstart-item-width">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.linkWidth') }}</div>
+      <div class="settings-label">图标大小</div>
       <el-slider
-        v-model="settingsStore.quickStart.quickStartItemWidth"
-        :min="80"
+        v-model="settingsStore.quickStart.itemSize"
+        :min="10"
         :max="200"
+        show-input
+        :show-input-controls="false"
+        :show-tooltip="false"
+      />
+    </div>
+    <div class="settings-item quickstart-item-width">
+      <div class="settings-label">图标横向间隔</div>
+      <el-slider
+        v-model="settingsStore.quickStart.itemMarginH"
+        :min="0"
+        :max="50"
+        show-input
+        :show-input-controls="false"
+        :show-tooltip="false"
+      />
+    </div>
+    <div class="settings-item quickstart-item-width">
+      <div class="settings-label">图标纵向间隔</div>
+      <el-slider
+        v-model="settingsStore.quickStart.itemMarginV"
+        :min="5"
+        :max="30"
         show-input
         :show-input-controls="false"
         :show-tooltip="false"
