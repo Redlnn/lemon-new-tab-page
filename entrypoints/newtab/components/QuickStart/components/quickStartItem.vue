@@ -11,7 +11,6 @@ const settingsStore = useSettingsStore()
 defineProps<{
   url: string
   title: string
-  qsSitesSize: number
   pined?: boolean
   favicon?: string
 }>()
