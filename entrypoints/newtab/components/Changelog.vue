@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useElementVisibility } from '@vueuse/core'
+import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
@@ -16,6 +16,8 @@ const opened = ref(false)
 const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
 const headerIsVisible = useElementVisibility(header)
+
+const { width: windowWidth } = useWindowSize()
 
 function show() {
   opened.value = true
@@ -33,7 +35,7 @@ defineExpose({ show, hide, toggleShow })
 <template>
   <el-dialog
     v-model="opened"
-    width="600"
+    :width="windowWidth < 650 ? '90%' : 600"
     class="changelog-dialog"
     :show-close="false"
     align-center

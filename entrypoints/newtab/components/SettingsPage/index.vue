@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useElementVisibility } from '@vueuse/core'
+import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
@@ -11,13 +11,15 @@ import MoreAbout from './Settings/MoreAbout.vue'
 import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
-import TopSitesSettings from './Settings/TopSitesSettings.vue'
+import QuickstartSettings from './Settings/QuickstartSettings.vue'
 import { i18n } from '@/.wxt/i18n'
 
 const opened = ref(false)
 const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
 const headerIsVisible = useElementVisibility(header)
+
+const { width: windowWidth } = useWindowSize()
 
 function show() {
   opened.value = true
@@ -35,7 +37,7 @@ defineExpose({ show, hide, toggleShow })
 <template>
   <el-dialog
     v-model="opened"
-    width="600"
+    :width="windowWidth < 650 ? '90%' : 600"
     class="settings-dialog"
     :show-close="false"
     align-center
@@ -65,7 +67,7 @@ defineExpose({ show, hide, toggleShow })
       "
       :style="{ opacity: !headerIsVisible ? 1 : 0 }"
     ></div>
-    <div style="height: 100%; padding: 0 19px 0 35px">
+    <div class="container" style="height: 100%">
       <el-scrollbar ref="scrollbar" style="padding-right: 15px">
         <div ref="header" class="settings-dialog__list-tilte">
           {{ i18n.t('newtab.settings.title') }}
@@ -74,7 +76,7 @@ defineExpose({ show, hide, toggleShow })
         <clock-settings />
         <search-settings />
         <background-settings />
-        <top-sites-settings />
+        <quickstart-settings />
         <other-settings />
         <more-about />
         <div style="height: 35px"></div>
@@ -96,6 +98,17 @@ defineExpose({ show, hide, toggleShow })
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
+
+  .container {
+    height: 100%;
+    padding: 0 19px 0 35px;
+  }
+
+  @media screen and (max-width: 650px) {
+    .container {
+      padding: 0 4px 0 20px;
+    }
+  }
 
   .el-dialog__header {
     padding: 0;
