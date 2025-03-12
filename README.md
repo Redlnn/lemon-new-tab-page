@@ -1,4 +1,4 @@
-![lemon-new-tab-page](https://socialify.git.ci/Redlnn/lemon-new-tab-page/image?description=1&descriptionEditable=%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E7%AE%80%E7%BA%A6%E7%9A%84%E4%BB%BF%E9%9D%92%E6%9F%A0%E8%B5%B7%E5%A7%8B%E9%A1%B5%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E5%AE%9E%E7%8E%B0%E3%80%82&font=Jost&language=1&name=1&owner=1&pattern=Circuit%20Board&stargazers=1&theme=Auto)
+![lemon-new-tab-page](https://socialify.git.ci/redlnn/lemon-new-tab-page/image?custom_description=%E4%B8%80%E4%B8%AA%E9%9D%9E%E5%B8%B8%E7%AE%80%E7%BA%A6%E7%9A%84%E4%BB%BF%E9%9D%92%E6%9F%A0%E8%B5%B7%E5%A7%8B%E9%A1%B5%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E5%AE%9E%E7%8E%B0&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab-page%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)
 
 ## 安装
 
@@ -12,10 +12,11 @@
 ## 特性
 
 - :zap: 加载迅速（[已知问题](#已知问题)）
-- :top: 展示最常访问的网站或自定义快捷方式
+- :gear: 丰富的自定义选项，可组合出不同的样式
+- :top: 展示最常访问的网站与自定义快捷方式
 - :art: 复刻青柠起始页的部分 UI 及动画
-- :framed_picture: 自定义壁纸或使用 Bing 每日壁纸
-- :joystick: 切换搜索引擎、多种搜索建议来源
+- :framed_picture: 使用自定义壁纸或 Bing 每日壁纸
+- :joystick: 切换搜索引擎和多种搜索建议来源
 - :atom_symbol: 开放源代码
 - :globe_with_meridians: 多语言支持（目前只有`zh_CN`、`zh_TW`、`en`）
 
@@ -32,7 +33,8 @@
 4. 青柠起始页把快速访问放在了二级页面，而我更喜欢在新标签页中直接打开常用网站，虽然可以默认进入二级页面但是就看不到搜索栏了
 5. 青柠起始页不是个开源项目不好魔改，所以我决定根据自己需求模仿一个
 
-> 听闻青柠起始页准备重构并且添加新功能了，也许新版会满足我的需求，然后就停更了呢？（笑
+> ~~听闻青柠起始页准备重构并且添加新功能了，也许新版会满足我的需求，然后就停更了呢？（笑~~
+> 更新了，结果新功能不多，害
 
 ### 对比
 
@@ -105,8 +107,8 @@ pnpm zip:firefox  # 打包 Firefox 扩展
 
 ## 已知问题
 
-1. 部分 Windows 设备上的 Chromium 内核浏览器会在启动时卡死，禁用 GPU 硬件加速或者在
-   [Experiments](chrome://flags/#use-angle) 页面将
+1. 部分 Windows 设备上的 Chromium 内核浏览器会在启动时卡死，**禁用 GPU
+   硬件加速**或者在 [Experiments](chrome://flags/#use-angle) 页面将
    **Choose ANGLE graphics backend** 更改为 `OpenGL` 后可缓解
    > - 考虑是因为显卡驱动 / 系统问题 / 浏览器被注入等原因造成
    > - Chromium 不推荐使用 OpenGL API 渲染，改成其他可能会有效（可能会不卡但掉帧）
