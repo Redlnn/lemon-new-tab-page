@@ -58,6 +58,16 @@ async function restoreDefaultTopSites() {
       <div class="settings-label">在浅色模式下使用白色字体</div>
       <el-switch v-model="settingsStore.quickStart.whiteTextInLightMode" />
     </div>
+    <p
+      style="
+        color: var(--el-text-color-regular);
+        line-height: 1.5em;
+        font-size: 12px;
+        margin-top: 0;
+      "
+    >
+      搭配【关闭快速访问区域背景】和【背景遮罩】食用更佳噢~
+    </p>
     <div class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
       <el-slider
@@ -86,7 +96,12 @@ async function restoreDefaultTopSites() {
     </div>
     <p
       v-if="isChrome"
-      style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px"
+      style="
+        color: var(--el-text-color-regular);
+        line-height: 1.5em;
+        font-size: 12px;
+        margin-top: 0;
+      "
     >
       {{ i18n.t('newtab.settings.quickstart.maxItemsTipChrome') }}
     </p>
