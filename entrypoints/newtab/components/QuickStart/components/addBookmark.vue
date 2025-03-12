@@ -21,7 +21,6 @@ const bookmarkStore = useBookmarkStore()
 const modelForm = ref<FormInstance>()
 
 const props = defineProps<{
-  quickStartSize: () => number
   reload: () => Promise<void>
 }>()
 const getFaviconAuto = ref(true)

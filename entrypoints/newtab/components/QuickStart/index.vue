@@ -3,7 +3,7 @@ import { ClearRound } from '@vicons/material'
 import type { TopSites } from 'wxt/browser'
 import _ from 'lodash'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
-import { h, onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { i18n } from '@/.wxt/i18n'
@@ -11,13 +11,14 @@ import {
   useFocusStore,
   useSettingsStore,
   initBookmark,
-  saveBookmark,
   useBookmarkStore
 } from '@/newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import quickStartItem from './components/quickStartItem.vue'
+import { getQSSize } from './utils'
 import { blockSite, getTopSites } from './utils/topSites'
+import { removeBookmark, pin } from './utils/bookmark'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -27,57 +28,6 @@ const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
 const { width: windowWidth } = useWindowSize()
-
-function getQSSize() {
-  return bookmarks.value.length + topSites.value.length + 1
-}
-
-async function removeBookmark(index: number) {
-  const { url, title, favicon } = bookmarkStore.items[index]
-  if (bookmarkStore.items.length > 1) {
-    bookmarkStore.items = _.omit(bookmarkStore.items, index)
-  } else {
-    bookmarkStore.items = []
-  }
-  await saveBookmark(_.cloneDeep(bookmarkStore))
-  await refresh()
-  ElMessage({
-    message: h('p', null, [
-      h(
-        'span',
-        { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.quickstart.removePinnedMessage.content')
-      ),
-      h(
-        'span',
-        {
-          style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
-          onClick: async () => {
-            bookmarkStore.items.splice(index, 0, {
-              url,
-              title,
-              favicon
-            })
-            await saveBookmark(_.cloneDeep(bookmarkStore))
-            await refresh()
-          }
-        },
-        i18n.t('newtab.quickstart.removePinnedMessage.revoke')
-      )
-    ]),
-    type: 'success'
-  })
-}
-
-async function sticky(url: string, title: string, favicon?: string) {
-  bookmarkStore.items.push({
-    url,
-    title,
-    favicon
-  })
-  await saveBookmark(_.cloneDeep(bookmarkStore))
-  await refresh()
-}
 
 function getContainerWidth(num: number) {
   return (
@@ -162,19 +112,14 @@ watch(() => windowWidth.value, refresh)
         :url="site.url"
         :title="site.title"
         :favicon="site.favicon"
-        :qs-sites-size="getQSSize()"
+        :qs-sites-size="() => getQSSize(bookmarks, topSites)"
         pined
       >
         <template #submenu>
           <el-dropdown-item>
             <span
               style="display: flex; align-items: center"
-              @click="
-                async () => {
-                  removeBookmark(index)
-                  await refresh()
-                }
-              "
+              @click="removeBookmark(index, bookmarkStore, refresh)"
             >
               <el-icon>
                 <pin-off16-regular />
@@ -189,7 +134,7 @@ watch(() => windowWidth.value, refresh)
         :key="index"
         :url="site.url"
         :title="site.title || ''"
-        :qs-sites-size="getQSSize()"
+        :qs-sites-size="() => getQSSize(bookmarks, topSites)"
         :favicon="site.favicon"
       >
         >
@@ -213,7 +158,7 @@ watch(() => windowWidth.value, refresh)
           <el-dropdown-item>
             <span
               style="display: flex; align-items: center"
-              @click="sticky(site.url, site.title || '')"
+              @click="pin(bookmarkStore, refresh, site.url, site.title || '')"
             >
               <el-icon>
                 <pin16-regular />
@@ -223,7 +168,7 @@ watch(() => windowWidth.value, refresh)
           </el-dropdown-item>
         </template>
       </quick-start-item>
-      <add-bookmark :quick-start-size="getQSSize" :reload="refresh" />
+      <add-bookmark :reload="refresh" />
     </div>
   </section>
 </template>
