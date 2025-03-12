@@ -1,0 +1,63 @@
+import { defaultSettings } from '..'
+import type { SettingsInterfaceVer2, SettingsInterfaceVer3 } from '../types'
+
+export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer3 {
+  return {
+    primaryColor: oldSettings.primaryColor,
+    time: {
+      isMeridiem: oldSettings.time.isMeridiem,
+      showMeridiem: oldSettings.time.showMeridiem,
+      showDate: oldSettings.time.showDate,
+      showLunar: oldSettings.time.showLunar,
+      enableShadow: oldSettings.time.enableShadow,
+      invertColor: {
+        light: oldSettings.time.invertColor.light,
+        night: oldSettings.time.invertColor.night
+      }
+    },
+    search: {
+      autoFocus: oldSettings.search.autoFocus,
+      selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
+      selectedSearchEngine: oldSettings.search.selectedSearchEngine,
+      searchInNewTab: oldSettings.search.searchInNewTab,
+      recordSearchHistory: oldSettings.search.recordSearchHistory,
+      enableShadow: oldSettings.search.enableShadow,
+      enableYiyan: oldSettings.search.enableYiyan
+    },
+    background: {
+      bgType: oldSettings.background.bgType,
+      bgDarkCorners: oldSettings.background.bgDarkCorners,
+      bgBlur: oldSettings.background.bgBlur,
+      bgMaskPpacity: oldSettings.background.bgMaskPpacity,
+      maskColor: oldSettings.background.maskColor,
+      onlineUrl: oldSettings.background.onlineUrl
+    },
+    localBackground: {
+      bgId: oldSettings.localBackground.bgId,
+      bgUrl: oldSettings.localBackground.bgUrl
+    },
+    bingBackground: {
+      bgId: oldSettings.bingBackground.bgId,
+      bgUrl: oldSettings.bingBackground.bgUrl,
+      updateDate: oldSettings.bingBackground.updateDate
+    },
+    quickStart: {
+      enabled: oldSettings.quickStart.enabled,
+      enableTopSites: oldSettings.quickStart.enableTopSites,
+      enableShadow: oldSettings.quickStart.enableShadow,
+      rows: oldSettings.quickStart.quickStartRows,
+      columns: oldSettings.quickStart.quickStartColumns,
+      itemMarginH:
+        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.itemSize) / 2,
+      itemMarginV:
+        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.itemSize) / 2,
+      showQuickStartTitle: oldSettings.quickStart.showQuickStartTitle,
+      showPinnedIcon: oldSettings.quickStart.showPinnedIcon,
+      showQuickStartContainerBg: oldSettings.quickStart.showQuickStartContainerBg,
+      itemSize: 50,
+      whiteTextInLightMode: defaultSettings.quickStart.whiteTextInLightMode
+    },
+    pluginVersion: oldSettings.pluginVersion,
+    version: 3
+  }
+}

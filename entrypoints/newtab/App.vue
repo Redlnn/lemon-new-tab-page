@@ -18,7 +18,7 @@ import YiYan from './components/YiYan.vue'
 import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from './scripts/img'
 import { reloadBackgroundImage, useSettingsStore, useBgSwtichStore } from './scripts/store'
-import { BgType } from './scripts/storages/settingsStorage'
+import { BgType } from './scripts/settings'
 
 useColorMode()
 const settingsStore = useSettingsStore()

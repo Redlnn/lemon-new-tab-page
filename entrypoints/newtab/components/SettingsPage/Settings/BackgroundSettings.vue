@@ -7,7 +7,7 @@ import { type UploadProps, type UploadRequestOptions, type ElInput } from 'eleme
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/newtab/scripts/img'
 import { uploadBackgroundImage, useSettingsStore } from '@/newtab/scripts/store'
-import { BgType } from '@/newtab/scripts/storages/settingsStorage'
+import { BgType } from '@/newtab/scripts/settings'
 
 const settingsStore = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE

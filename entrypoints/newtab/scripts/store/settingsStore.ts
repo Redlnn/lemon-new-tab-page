@@ -3,70 +3,15 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
 import { isImageFile } from '@/newtab/scripts/img'
-import {
-  CURRENT_CONFIG_VERSION,
-  type OldSettingsInterface,
-  settingsStorage,
-  type SettingsInterface,
-  defaultSettings
-} from '../storages/settingsStorage'
+import { settingsStorage } from '../storages/settingsStorage'
 import { useWallpaperStore } from './wallpaperStore'
-
-function migrate(oldSettings: OldSettingsInterface): SettingsInterface {
-  return {
-    primaryColor: oldSettings.primaryColor,
-    time: {
-      isMeridiem: oldSettings.isMeridiem,
-      showMeridiem: oldSettings.showMeridiem,
-      showDate: true,
-      showLunar: true,
-      enableShadow: true,
-      invertColor: {
-        light: false,
-        night: false
-      }
-    },
-    search: {
-      autoFocus: false,
-      selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
-      selectedSearchEngine: oldSettings.selectedSearchEngine,
-      searchInNewTab: oldSettings.searchInNewTab,
-      recordSearchHistory: oldSettings.recordSearchHistory,
-      enableShadow: true,
-      enableYiyan: oldSettings.enableYiyan
-    },
-    background: {
-      bgType: oldSettings.bgType,
-      bgDarkCorners: oldSettings.bgDarkCorners,
-      bgBlur: oldSettings.bgBlur,
-      bgMaskPpacity: oldSettings.bgMaskPpacity,
-      maskColor: '#000',
-      onlineUrl: ''
-    },
-    localBackground: {
-      bgId: oldSettings.bgId,
-      bgUrl: oldSettings.bgUrl
-    },
-    bingBackground: {
-      bgId: oldSettings.bingWallpaper.bgId,
-      bgUrl: oldSettings.bingWallpaper.url,
-      updateDate: oldSettings.bingWallpaper.updateDate
-    },
-    quickStart: {
-      enabled: oldSettings.enabled,
-      enableTopSites: oldSettings.enableTopSites,
-      enableShadow: true,
-      quickStartRows: oldSettings.quickStartRows,
-      quickStartColumns: oldSettings.quickStartColumns,
-      quickStartItemWidth: oldSettings.quickStartItemWidth,
-      showQuickStartTitle: oldSettings.showQuickStartTitle,
-      showPinnedIcon: oldSettings.showPinnedIcon,
-      showQuickStartContainerBg: true
-    },
-    pluginVersion: oldSettings.version,
-    version: CURRENT_CONFIG_VERSION
-  }
-}
+import type {
+  OldSettingsInterface,
+  SettingsInterfaceVer2,
+  SettingsInterfaceVer3
+} from '../settings/types'
+import { migrateFromVer1To3, migrateFromVer2To3, defaultSettings } from '../settings'
+import { storage } from 'wxt/storage'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -88,22 +33,31 @@ export async function initSettings() {
       if (searchSuggestAPIsMap[selectedAPI]) {
         oldSettings.settings.selectedSearchSuggestionAPI = searchSuggestAPIsMap[selectedAPI]
       }
+      // 最旧版本的设置中储存的是插件版本号，需要迁移
       if (typeof oldSettings.settings.version === 'string') {
-        settings = migrate(oldSettings.settings)
+        settings = migrateFromVer1To3(oldSettings.settings)
         await saveSettings(settings)
       } else if (!oldSettings.settings.version) {
-        settings = migrate({ ...oldSettings.settings, version: '' })
+        // 某些情况下没有 version 字段的问题
+        settings = migrateFromVer1To3({ ...oldSettings.settings, version: '' })
         await saveSettings(settings)
       }
     }
+  }
+
+  // 由于前期没有使用wxt的配置版本管理，所以刷新页面以应用新的配置
+  if (settings.version == 2) {
+    settings = migrateFromVer2To3(settings as unknown as SettingsInterfaceVer2)
   }
 
   const settingsStore = useSettingsStore()
   settingsStore.$patch(settings)
 }
 
-export async function saveSettings(settings: SettingsInterface) {
+export async function saveSettings(settings: SettingsInterfaceVer3) {
+  console.log(settings)
   await settingsStorage.setValue(settings)
+  console.log(await settingsStorage.getValue())
 }
 
 export const useSettingsStore = defineStore('opiton', {

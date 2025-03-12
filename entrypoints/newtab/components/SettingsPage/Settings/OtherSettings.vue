@@ -3,14 +3,10 @@ import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 
-import { blockedTopStitesStorage } from '@/newtab/scripts/storages/topSitesStorage'
+import { storage } from 'wxt/storage'
 import { i18n } from '@/.wxt/i18n'
-import { searchHistoriesStorage } from '@/newtab/scripts/storages/searchStorages'
 import { useWallpaperStore } from '@/newtab/scripts/store'
-import { saveBookmark } from '@/newtab/scripts/store/bookmarkStore'
-import { saveSettings, useSettingsStore } from '@/newtab/scripts/store/settingsStore'
-import { defaultBookmark } from '@/newtab/scripts/storages/bookmarkStorage'
-import { defaultSettings } from '@/newtab/scripts/storages/settingsStorage'
+import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
@@ -37,11 +33,11 @@ async function clearExtensionData() {
   console.warn(i18n.t('newtab.settings.other.confirmPurgeData.purging'))
   localStorage.clear()
   sessionStorage.clear()
-  await blockedTopStitesStorage.setValue([])
-  await saveBookmark(defaultBookmark)
-  await searchHistoriesStorage.setValue([])
   await useWallpaperStore.clear()
-  await saveSettings(defaultSettings)
+  await storage.clear('local')
+  await storage.clear('session')
+  // await storage.clear('sync')
+  // await storage.clear('managed')
   location.reload()
 }
 </script>
