@@ -22,7 +22,7 @@ export const defaultSettings: SettingsInterfaceVer3 = {
   search: {
     autoFocus: false,
     selectedSearchSuggestionAPI: 'bing',
-    selectedSearchEngine: 0,
+    selectedSearchEngine: 2,
     searchInNewTab: false,
     recordSearchHistory: true,
     enableShadow: true,
