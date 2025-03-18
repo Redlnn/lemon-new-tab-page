@@ -88,13 +88,17 @@ newtab:
       enableShadow: 顯示捷徑區域陰影
       maxRows: 最大行數
       maxColumns: 最大列數
-      maxItemsTipChrome: 最常造訪的上限只有 10 個噢~
-      linkWidth: 連結寬度
+      maxItemsTipForChrome: 最常造訪的上限只有 10 個噢~
       restoreDefault: 恢復預設捷徑
       restoreDefaultConfirm:
         title: 你確定要恢復預設捷徑嗎
         confirm: 是
         cancel: 算了
+      whiteTextInLightMode: 在淺色模式下使用白色文字
+      whiteTextTip: 搭配【關閉捷徑區域背景】和【背景遮罩】使用更好看哦~
+      iconSize: 連結大小
+      HorizontalIconSpacing: 橫向連結間距
+      VerticalIconSpacing: 竪向連結間距
   quickstart:
     addNewQuickstart: 新增捷徑
     pin: 置頂

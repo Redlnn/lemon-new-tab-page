@@ -95,13 +95,17 @@ newtab:
       enableShadow: Show Shortcut Area Shadow
       maxRows: Maximum Rows
       maxColumns: Maximum Columns
-      maxItemsTipChrome: 'Tip: You can only have up to 10 most visited links.'
-      linkWidth: Width of Links
+      maxItemsTipForChrome: 'Tip: You can only have up to 10 most visited links.'
       restoreDefault: Restore default shortcut links.
       restoreDefaultConfirm:
         title: Are you sure to restore default shortcut links?
         confirm: 'Yes'
         cancel: 'No'
+      whiteTextInLightMode: White Text in Light Mode
+      whiteTextTip: Disable the shortcut area background and enable the background mask can provide an enhanced experience.
+      iconSize: Icon Size
+      HorizontalIconSpacing: Horizontal Icon Spacing
+      VerticalIconSpacing: Vertical Icon Spacing
   quickstart:
     addNewQuickstart: Add New Shortcut
     pin: Pin

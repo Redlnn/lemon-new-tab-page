@@ -47,14 +47,16 @@ export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): Settings
       enableShadow: oldSettings.quickStart.enableShadow,
       rows: oldSettings.quickStart.quickStartRows,
       columns: oldSettings.quickStart.quickStartColumns,
-      itemMarginH:
-        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.itemSize) / 2,
-      itemMarginV:
-        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.itemSize) / 2,
+      itemMarginH: Math.round(
+        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.iconSize) / 2
+      ),
+      itemMarginV: Math.round(
+        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.quickStart.iconSize) / 2
+      ),
       showQuickStartTitle: oldSettings.quickStart.showQuickStartTitle,
       showPinnedIcon: oldSettings.quickStart.showPinnedIcon,
       showQuickStartContainerBg: oldSettings.quickStart.showQuickStartContainerBg,
-      itemSize: 50,
+      iconSize: 50,
       whiteTextInLightMode: defaultSettings.quickStart.whiteTextInLightMode
     },
     pluginVersion: oldSettings.pluginVersion,

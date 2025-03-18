@@ -55,7 +55,9 @@ async function restoreDefaultTopSites() {
       <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">在浅色模式下使用白色字体</div>
+      <div class="settings-label">
+        {{ i18n.t('newtab.settings.quickstart.whiteTextInLightMode') }}
+      </div>
       <el-switch v-model="settingsStore.quickStart.whiteTextInLightMode" />
     </div>
     <p
@@ -66,7 +68,7 @@ async function restoreDefaultTopSites() {
         margin-top: 0;
       "
     >
-      搭配【关闭快速访问区域背景】和【背景遮罩】食用更佳噢~
+      {{ i18n.t('newtab.settings.quickstart.whiteTextTip') }}
     </p>
     <div class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
@@ -103,12 +105,12 @@ async function restoreDefaultTopSites() {
         margin-top: 0;
       "
     >
-      {{ i18n.t('newtab.settings.quickstart.maxItemsTipChrome') }}
+      {{ i18n.t('newtab.settings.quickstart.maxItemsTipForChrome') }}
     </p>
     <div class="settings-item quickstart-item-width">
-      <div class="settings-label">图标大小</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.iconSize') }}</div>
       <el-slider
-        v-model="settingsStore.quickStart.itemSize"
+        v-model="settingsStore.quickStart.iconSize"
         :min="10"
         :max="200"
         show-input
@@ -117,7 +119,9 @@ async function restoreDefaultTopSites() {
       />
     </div>
     <div class="settings-item quickstart-item-width">
-      <div class="settings-label">图标横向间隔</div>
+      <div class="settings-label">
+        {{ i18n.t('newtab.settings.quickstart.HorizontalIconSpacing') }}
+      </div>
       <el-slider
         v-model="settingsStore.quickStart.itemMarginH"
         :min="0"
@@ -128,7 +132,9 @@ async function restoreDefaultTopSites() {
       />
     </div>
     <div class="settings-item quickstart-item-width">
-      <div class="settings-label">图标纵向间隔</div>
+      <div class="settings-label">
+        {{ i18n.t('newtab.settings.quickstart.VerticalIconSpacing') }}
+      </div>
       <el-slider
         v-model="settingsStore.quickStart.itemMarginV"
         :min="5"

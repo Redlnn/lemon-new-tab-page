@@ -42,7 +42,7 @@ useDraggable(quickstartContaninerRef, bookmarks, {
 
 function getContainerWidth(num: number) {
   const width =
-    num * (15 + settingsStore.quickStart.itemSize + 15) +
+    num * (15 + settingsStore.quickStart.iconSize + 15) +
     (num - 1) * settingsStore.quickStart.itemMarginH
   if (settingsStore.quickStart.showQuickStartContainerBg) {
     return width + 40
@@ -133,7 +133,7 @@ watch(() => windowWidth.value, refresh)
         gridTemplateColumns: `repeat(${columnsNum}, 1fr)`,
         gridTemplateRows: `repeat(${rowsNum}, 1fr)`,
         gridGap: `${2 * settingsStore.quickStart.itemMarginV}px ${settingsStore.quickStart.itemMarginH}px`,
-        '--icon_size': `${settingsStore.quickStart.itemSize}px`
+        '--icon_size': `${settingsStore.quickStart.iconSize}px`
       }"
     >
       <quick-start-item

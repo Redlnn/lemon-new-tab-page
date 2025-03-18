@@ -50,7 +50,7 @@ export interface SettingsInterfaceVer3 {
     showQuickStartTitle: boolean
     showPinnedIcon: boolean
     showQuickStartContainerBg: boolean
-    itemSize: number
+    iconSize: number
     whiteTextInLightMode: boolean
   }
   pluginVersion: string

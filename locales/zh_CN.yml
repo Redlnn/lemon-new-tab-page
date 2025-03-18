@@ -89,13 +89,17 @@ newtab:
       enableShadow: 显示快速访问区域阴影
       maxRows: 最大行数
       maxColumns: 最大列数
-      maxItemsTipChrome: 最常访问的上限只有 10 个噢~
-      linkWidth: 链接宽度
+      maxItemsTipForChrome: 最常访问的上限只有 10 个噢~
       restoreDefault: 恢复默认快捷方式
       restoreDefaultConfirm:
         title: 你确定要恢复默认快捷方式吗
         confirm: 对
         cancel: 算了
+      whiteTextInLightMode: 在浅色模式下使用白色字体
+      whiteTextTip: 搭配【关闭快速访问区域背景】和【背景遮罩】食用更佳噢~
+      iconSize: 图标大小
+      HorizontalIconSpacing: 横向图标间隔
+      VerticalIconSpacing: 竖向图标间隔
   quickstart:
     addNewQuickstart: 添加快速访问
     pin: 置顶
