@@ -17,7 +17,6 @@ export const settingsStorage = storage.defineItem<SettingsInterfaceVer3>('local:
     },
     // Ran when migrating from v2 to v3
     3: async (settings: SettingsInterfaceVer2): Promise<SettingsInterfaceVer3> => {
-      console.log(settings)
       if (settings.version === 2) {
         return migrateFromVer2To3(settings)
       } else if (settings.version === 3) {

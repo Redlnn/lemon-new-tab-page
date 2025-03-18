@@ -11,7 +11,6 @@ import type {
   SettingsInterfaceVer3
 } from '../settings/types'
 import { migrateFromVer1To3, migrateFromVer2To3, defaultSettings } from '../settings'
-import { storage } from 'wxt/storage'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -55,9 +54,7 @@ export async function initSettings() {
 }
 
 export async function saveSettings(settings: SettingsInterfaceVer3) {
-  console.log(settings)
   await settingsStorage.setValue(settings)
-  console.log(await settingsStorage.getValue())
 }
 
 export const useSettingsStore = defineStore('opiton', {

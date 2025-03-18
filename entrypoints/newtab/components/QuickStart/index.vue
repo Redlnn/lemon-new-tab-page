@@ -4,7 +4,6 @@ import type { TopSites } from 'wxt/browser'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { onMounted, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
-
 import { useDraggable } from 'vue-draggable-plus'
 
 import { i18n } from '@/.wxt/i18n'
@@ -34,10 +33,7 @@ const { width: windowWidth } = useWindowSize()
 const quickstartContaninerRef = ref()
 useDraggable(quickstartContaninerRef, bookmarks, {
   animation: 150,
-  handle: '.handle',
-  onStart() {
-    console.log('start')
-  },
+  handle: '.quickstart-item',
   onUpdate() {
     bookmarkStore.items = bookmarks.value
     saveBookmark(bookmarkStore)
@@ -142,7 +138,6 @@ watch(() => windowWidth.value, refresh)
     >
       <quick-start-item
         v-for="(site, index) in bookmarks"
-        class="handle"
         ref="bookmarkItemsRef"
         :key="index"
         :url="site.url"
