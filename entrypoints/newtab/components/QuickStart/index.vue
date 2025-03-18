@@ -146,16 +146,11 @@ watch(() => windowWidth.value, refresh)
         pined
       >
         <template #submenu>
-          <el-dropdown-item>
-            <span
-              style="display: flex; align-items: center"
-              @click="removeBookmark(index, bookmarkStore, refresh)"
-            >
-              <el-icon>
-                <pin-off16-regular />
-              </el-icon>
-              {{ i18n.t('newtab.quickstart.unpin') }}
-            </span>
+          <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refresh)">
+            <el-icon>
+              <pin-off16-regular />
+            </el-icon>
+            {{ i18n.t('newtab.quickstart.unpin') }}
           </el-dropdown-item>
         </template>
       </quick-start-item>
@@ -169,32 +164,24 @@ watch(() => windowWidth.value, refresh)
       >
         >
         <template #submenu>
-          <el-dropdown-item>
-            <span
-              style="display: flex; align-items: center"
-              @click="
-                async () => {
-                  await blockSite(site.url, refresh)
-                  await refresh()
-                }
-              "
-            >
-              <el-icon>
-                <clear-round />
-              </el-icon>
-              {{ i18n.t('newtab.quickstart.remove') }}
-            </span>
+          <el-dropdown-item
+            @click="
+              async () => {
+                await blockSite(site.url, refresh)
+                await refresh()
+              }
+            "
+          >
+            <el-icon>
+              <clear-round />
+            </el-icon>
+            {{ i18n.t('newtab.quickstart.remove') }}
           </el-dropdown-item>
-          <el-dropdown-item>
-            <span
-              style="display: flex; align-items: center"
-              @click="pin(bookmarkStore, refresh, site.url, site.title || '')"
-            >
-              <el-icon>
-                <pin16-regular />
-              </el-icon>
-              {{ i18n.t('newtab.quickstart.pin') }}
-            </span>
+          <el-dropdown-item @click="pin(bookmarkStore, refresh, site.url, site.title || '')">
+            <el-icon>
+              <pin16-regular />
+            </el-icon>
+            {{ i18n.t('newtab.quickstart.pin') }}
           </el-dropdown-item>
         </template>
       </quick-start-item>
