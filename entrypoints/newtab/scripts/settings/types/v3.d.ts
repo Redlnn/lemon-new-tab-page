@@ -24,19 +24,19 @@ export interface SettingsInterfaceVer3 {
   }
   background: {
     bgType: BgType
-    bgDarkCorners: boolean
-    bgBlur: number
+    enableVignetting: boolean
+    blurIntensity: number
     bgMaskPpacity: number
     maskColor: string
     onlineUrl: string
   }
   localBackground: {
-    bgId: string
-    bgUrl: string
+    id: string
+    url: string
   }
   bingBackground: {
-    bgId: string
-    bgUrl: string
+    id: string
+    url: string
     updateDate: string
   }
   quickStart: {

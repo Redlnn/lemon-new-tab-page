@@ -30,19 +30,19 @@ export const defaultSettings: SettingsInterfaceVer3 = {
   },
   background: {
     bgType: BgType.Bing,
-    bgDarkCorners: false,
-    bgBlur: 3,
+    enableVignetting: false,
+    blurIntensity: 3,
     bgMaskPpacity: 0,
     maskColor: '#000',
     onlineUrl: ''
   },
   localBackground: {
-    bgId: '',
-    bgUrl: ''
+    id: '',
+    url: ''
   },
   bingBackground: {
-    bgId: '',
-    bgUrl: '',
+    id: '',
+    url: '',
     updateDate: ''
   },
   quickStart: {

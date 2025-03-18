@@ -16,10 +16,10 @@ newtab:
         local: 本地圖像
         bing: Bing 每日一圖
         online: 在線圖像
-      vignette: 暗角
+      enableVignetting: 暗角
       blur: 模糊強度
-      mask_opacity: 遮罩不透明度
-      mask_color: 遮罩顔色
+      maskOpacity: 遮罩不透明度
+      maskColor: 遮罩顔色
       warning:
         fileIsNotImage: 所選檔案不是圖像!
         securityPolicy: 由於 Google 的安全策略，需要授予 $1 的訪問權限才能獲取壁紙，是否允許本擴充功能申請訪問該連結的權限

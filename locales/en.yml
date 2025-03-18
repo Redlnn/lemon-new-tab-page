@@ -22,10 +22,10 @@ newtab:
         local: Local Image
         bing: Bing Wallpaper
         online: Online Image
-      vignette: Enable Vignette
+      enableVignetting: Enable Vignetting
       blur: Blur Intensity
-      mask_opacity: Mask Opacity
-      mask_color: Mask Color
+      maskOpacity: Mask Opacity
+      maskColor: Mask Color
       warning:
         fileIsNotImage: The selected file is not an image!
         securityPolicy: Due to Google's security policy, the extension needs permission to access $1 to get the background. Do you allow this extension to request access to this host?

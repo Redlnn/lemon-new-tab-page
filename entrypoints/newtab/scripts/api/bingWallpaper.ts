@@ -36,7 +36,7 @@ interface BingWallpaperResp {
 export async function getBingWallpaperURL() {
   const settingsStore = useSettingsStore()
   if (settingsStore.bingBackground.updateDate === new Date().toDateString()) {
-    const id = settingsStore.bingBackground.bgId
+    const { id } = settingsStore.bingBackground
     const file = await useBingWallpaperStore.getItem<Blob>(id)
 
     // 校验图片数据是否可用，否则删除该数据
@@ -47,9 +47,9 @@ export async function getBingWallpaperURL() {
       }
     }
 
-    URL.revokeObjectURL(settingsStore.bingBackground.bgUrl)
-    settingsStore.bingBackground.bgId = ''
-    settingsStore.bingBackground.bgUrl = ''
+    URL.revokeObjectURL(settingsStore.bingBackground.url)
+    settingsStore.bingBackground.id = ''
+    settingsStore.bingBackground.url = ''
     await saveSettings(settingsStore)
     await useBingWallpaperStore.removeItem(id)
   }
@@ -83,7 +83,7 @@ export async function getBingWallpaperURL() {
     const id = uuidv4()
     const url = URL.createObjectURL(file)
 
-    const url_old = settingsStore.bingBackground.bgUrl
+    const url_old = settingsStore.bingBackground.url
 
     // 清除上次壁纸，ObjectURL可能导致内存溢出
     await useBingWallpaperStore.clear()
@@ -94,8 +94,8 @@ export async function getBingWallpaperURL() {
     // 保存图片到IndexedDB
     await useBingWallpaperStore.setItem<Blob>(id, file)
     settingsStore.bingBackground = {
-      bgId: id,
-      bgUrl: url,
+      id: id,
+      url: url,
       updateDate: new Date().toDateString()
     }
     return url

@@ -26,19 +26,19 @@ export function migrateFromVer1To3(oldSettings: OldSettingsInterface): SettingsI
     },
     background: {
       bgType: oldSettings.bgType,
-      bgDarkCorners: oldSettings.bgDarkCorners,
-      bgBlur: oldSettings.bgBlur,
+      enableVignetting: oldSettings.bgDarkCorners,
+      blurIntensity: oldSettings.bgBlur,
       bgMaskPpacity: oldSettings.bgMaskPpacity,
       maskColor: defaultSettings.background.maskColor,
       onlineUrl: defaultSettings.background.onlineUrl
     },
     localBackground: {
-      bgId: oldSettings.bgId,
-      bgUrl: oldSettings.bgUrl
+      id: oldSettings.bgId,
+      url: oldSettings.bgUrl
     },
     bingBackground: {
-      bgId: oldSettings.bingWallpaper.bgId,
-      bgUrl: oldSettings.bingWallpaper.url,
+      id: oldSettings.bingWallpaper.bgId,
+      url: oldSettings.bingWallpaper.url,
       updateDate: oldSettings.bingWallpaper.updateDate
     },
     quickStart: {

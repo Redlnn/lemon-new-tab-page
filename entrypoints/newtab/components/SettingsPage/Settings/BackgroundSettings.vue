@@ -134,26 +134,26 @@ function onlineImageWarn() {
       accept="image/*"
     >
       <img
-        v-if="settingsStore.localBackground.bgUrl"
-        :src="settingsStore.localBackground.bgUrl"
+        v-if="settingsStore.localBackground.url"
+        :src="settingsStore.localBackground.url"
         class="bg-uploader__img"
       />
       <el-icon v-else class="bg-uploader__icon"><plus /></el-icon>
     </el-upload>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.vignette') }}</div>
-      <el-switch v-model="settingsStore.background.bgDarkCorners" />
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
+      <el-switch v-model="settingsStore.background.enableVignetting" />
     </div>
     <div v-if="settingsStore.background.bgType !== BgType.None" class="settings-item">
       <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
-      <el-slider v-model="settingsStore.background.bgBlur" :show-tooltip="false" />
+      <el-slider v-model="settingsStore.background.blurIntensity" :show-tooltip="false" />
     </div>
     <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_opacity') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.maskOpacity') }}</div>
       <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
     </div>
     <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.mask_color') }}</div>
+      <div class="settings-label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
       <el-color-picker
         v-model="settingsStore.background.maskColor"
         :predefine="['#fff', '#000']"

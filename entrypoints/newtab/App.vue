@@ -29,8 +29,8 @@ const ChangelogRef = ref<InstanceType<typeof Changelog>>()
 const bgURL = ref('')
 
 async function loadLocalBackground() {
-  if (settingsStore.localBackground.bgUrl) {
-    const verifyBackground = await verifyImageUrl(settingsStore.localBackground.bgUrl)
+  if (settingsStore.localBackground.url) {
+    const verifyBackground = await verifyImageUrl(settingsStore.localBackground.url)
     if (!verifyBackground) {
       await reloadBackgroundImage()
     }
@@ -38,9 +38,7 @@ async function loadLocalBackground() {
     await reloadBackgroundImage()
   }
 
-  bgURL.value = settingsStore.localBackground.bgUrl
-    ? `url(${settingsStore.localBackground.bgUrl})`
-    : ''
+  bgURL.value = settingsStore.localBackground.url ? `url(${settingsStore.localBackground.url})` : ''
 }
 
 onMounted(async () => {
@@ -85,11 +83,11 @@ onMounted(async () => {
   )
 
   watch(
-    () => settingsStore.localBackground.bgUrl,
+    () => settingsStore.localBackground.url,
     async () => {
       switchStore.start()
       await promiseTimeout(500)
-      bgURL.value = `url(${settingsStore.localBackground.bgUrl})`
+      bgURL.value = `url(${settingsStore.localBackground.url})`
       switchStore.end()
     }
   )
@@ -119,7 +117,7 @@ onMounted(async () => {
       <quick-start v-if="settingsStore.quickStart.enabled" />
       <yi-yan />
     </main>
-    <background :bgurl="bgURL" />
+    <background :url="bgURL" />
     <div
       class="settings-icon"
       @click="SettingsPageRef?.toggleShow"

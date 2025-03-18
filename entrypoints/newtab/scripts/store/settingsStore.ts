@@ -70,7 +70,7 @@ export async function uploadBackgroundImage(imageFile: File) {
 
   const id = uuidv4()
   const url = URL.createObjectURL(imageFile)
-  const url_old = settingsStore.localBackground.bgUrl
+  const url_old = settingsStore.localBackground.url
 
   // 清除上次壁纸，ObjectURL可能导致内存溢出
   await useWallpaperStore.clear()
@@ -81,26 +81,26 @@ export async function uploadBackgroundImage(imageFile: File) {
   // 保存图片到IndexedDB
   await useWallpaperStore.setItem<Blob>(id, imageFile)
   settingsStore.localBackground = {
-    bgId: id,
-    bgUrl: url
+    id: id,
+    url: url
   }
 }
 
 export async function reloadBackgroundImage() {
   const settingsStore = useSettingsStore()
 
-  const id = settingsStore.localBackground.bgId
+  const { id } = settingsStore.localBackground
   const file = await useWallpaperStore.getItem<Blob>(id)
 
   // 校验图片数据是否可用，否则删除该数据
   if (file && isImageFile(file)) {
     const url = URL.createObjectURL(file)
-    settingsStore.localBackground.bgUrl = url
+    settingsStore.localBackground.url = url
     // await saveSettings(settingsStore) // 会导致启动时卡死、CPU吃满和内存泄漏
   } else {
-    URL.revokeObjectURL(settingsStore.localBackground.bgUrl)
-    settingsStore.localBackground.bgId = ''
-    settingsStore.localBackground.bgUrl = ''
+    URL.revokeObjectURL(settingsStore.localBackground.url)
+    settingsStore.localBackground.id = ''
+    settingsStore.localBackground.url = ''
     await useWallpaperStore.removeItem(id)
   }
 }

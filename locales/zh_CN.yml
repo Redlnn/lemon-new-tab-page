@@ -16,10 +16,10 @@ newtab:
         local: 本地图片
         bing: Bing每日一图
         online: 在线图片
-      vignette: 暗角
+      enableVignetting: 暗角
       blur: 模糊强度
-      mask_opacity: 遮罩不透明度
-      mask_color: 遮罩颜色
+      maskOpacity: 遮罩不透明度
+      maskColor: 遮罩颜色
       warning:
         title: 警告
         fileIsNotImage: 所选文件不是图片!

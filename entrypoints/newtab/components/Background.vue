@@ -10,7 +10,7 @@ const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const background = ref<HTMLDivElement>()
 
-defineProps<{ bgurl: string }>()
+defineProps<{ url: string }>()
 
 watch(
   () => focusStore.isFocused,
@@ -19,7 +19,7 @@ watch(
     if (focusStore.isFocused) {
       background.value.style.transition =
         'transform 0.2s cubic-bezier(0.65, 0.05, 0.1, 1), filter 0.2s cubic-bezier(0.65, 0.05, 0.1, 1)'
-      background.value.style.filter = `blur(${settingsStore.background.bgBlur + 10}px)`
+      background.value.style.filter = `blur(${settingsStore.background.blurIntensity + 10}px)`
       background.value.style.transform = 'scale(1.1)'
     } else {
       background.value.style.filter = ''
@@ -44,14 +44,14 @@ onMounted(() => {
       ref="background"
       class="background"
       :style="{
-        '--bg-blur': `${settingsStore.background.bgBlur}px`,
+        '--bg-blur': `${settingsStore.background.blurIntensity}px`,
         '--bg-mask-opacity': settingsStore.background.bgMaskPpacity / 100,
-        backgroundImage: bgurl
+        backgroundImage: url
       }"
     >
       <div class="transition" :style="{ opacity: switchStore.isSwitching ? 1 : 0 }"></div>
       <div class="mask" :style="{ backgroundColor: settingsStore.background.maskColor }"></div>
-      <div v-if="settingsStore.background.bgDarkCorners" class="dark-corners"></div>
+      <div v-if="settingsStore.background.enableVignetting" class="dark-corners"></div>
     </div>
   </div>
 </template>
