@@ -159,17 +159,17 @@ onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
       ref="searchForm"
       class="search-form"
       :class="[
-        settingsStore.search.enableShadow ? 'shadow' : null,
-        settingsStore.background.bgType === 0 ? 'dark' : null
+        settingsStore.search.enableShadow ? 'shadow' : undefined,
+        settingsStore.background.bgType === 0 ? 'dark' : undefined
       ]"
-      :style="{ '--width': mounted ? null : '0' }"
+      :style="{ '--width': mounted ? undefined : '0' }"
       @submit.prevent="doSearch"
     >
       <search-engine-menu />
       <input
         ref="searchInput"
         v-model="searchText"
-        :placeholder="focusStore.isFocused ? '' : i18n.t('newtab.search.placeholder')"
+        :placeholder="focusStore.isFocused ? undefined : i18n.t('newtab.search.placeholder')"
         class="search-input"
         @input="suggedtionArea!.handleInput"
         @focus="handleFocus"

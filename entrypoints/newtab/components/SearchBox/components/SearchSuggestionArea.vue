@@ -109,8 +109,8 @@ defineExpose({
     ref="searchSuggestionArea"
     class="search-suggestion-area"
     :class="[
-      settingsStore.search.enableShadow ? 'shadow' : '',
-      settingsStore.background.bgType === 0 && searchSuggestions.length > 0 ? 'dark' : ''
+      settingsStore.search.enableShadow ? 'shadow' : undefined,
+      settingsStore.background.bgType === 0 && searchSuggestions.length > 0 ? 'dark' : undefined
     ]"
     :style="{
       width: `${searchFormWidth}px`,

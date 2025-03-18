@@ -108,8 +108,8 @@ onMounted(async () => {
   <el-config-provider :locale="zhCn">
     <main
       :style="{
-        justifyContent: settingsStore.quickStart.enabled ? 'center' : '',
-        paddingTop: settingsStore.quickStart.enabled ? '' : '30vh'
+        justifyContent: settingsStore.quickStart.enabled ? 'center' : undefined,
+        paddingTop: settingsStore.quickStart.enabled ? undefined : '30vh'
       }"
     >
       <time-now />

@@ -124,9 +124,9 @@ watch(() => windowWidth.value, refresh)
       ref="quickstartContaninerRef"
       class="quickstart-contaniner"
       :class="[
-        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : null,
-        settingsStore.quickStart.enableShadow ? 'quickstart-contaniner-shadow' : null,
-        settingsStore.quickStart.whiteTextInLightMode ? 'white-text-light' : null
+        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : undefined,
+        settingsStore.quickStart.enableShadow ? 'quickstart-contaniner-shadow' : undefined,
+        settingsStore.quickStart.whiteTextInLightMode ? 'white-text-light' : undefined
       ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',

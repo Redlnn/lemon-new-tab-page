@@ -51,9 +51,9 @@ function getlunarCalendar() {
     ref="time"
     class="clock"
     :class="[
-      settingsStore.time.enableShadow ? 'shadow' : '',
-      settingsStore.time.invertColor.light ? ['invert', 'light'] : '',
-      settingsStore.time.invertColor.night ? ['invert', 'night'] : ''
+      settingsStore.time.enableShadow ? 'shadow' : undefined,
+      settingsStore.time.invertColor.light ? ['invert', 'light'] : undefined,
+      settingsStore.time.invertColor.night ? ['invert', 'night'] : undefined
     ]"
   >
     <div class="time">
