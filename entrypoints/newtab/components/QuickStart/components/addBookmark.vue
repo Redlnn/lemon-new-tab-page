@@ -2,7 +2,6 @@
 import { AddRound } from '@vicons/material'
 import DOMPurify from 'dompurify'
 import { Plus } from '@vicons/fa'
-import _ from 'lodash'
 import {
   ElMessage,
   ElMessageBox,
@@ -49,6 +48,7 @@ function isValidUrl(url: string) {
     return false
   }
 }
+
 async function add() {
   if (!isValidUrl(data.url)) {
     ElMessage.error(i18n.t('newtab.quickstart.addDialog.invalidUrlError'))
@@ -56,7 +56,7 @@ async function add() {
     return
   }
   bookmarkStore.items.push({ ...data })
-  await saveBookmark(_.cloneDeep(bookmarkStore))
+  await saveBookmark(bookmarkStore)
   await props.reload()
   showDialog.value = false
   resetFields()

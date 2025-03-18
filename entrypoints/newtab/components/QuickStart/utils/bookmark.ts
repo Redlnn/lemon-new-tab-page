@@ -16,7 +16,7 @@ export async function removeBookmark(
   } else {
     store.items = []
   }
-  await saveBookmark(_.cloneDeep(store))
+  await saveBookmark(store)
   await refresh()
   ElMessage({
     message: h('p', null, [
@@ -35,7 +35,7 @@ export async function removeBookmark(
               title,
               favicon
             })
-            await saveBookmark(_.cloneDeep(store))
+            await saveBookmark(store)
             await refresh()
           }
         },
@@ -58,6 +58,6 @@ export async function pin(
     title,
     favicon
   })
-  await saveBookmark(_.cloneDeep(store))
+  await saveBookmark(store)
   await refresh()
 }
