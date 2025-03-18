@@ -34,34 +34,34 @@
     "lodash": "^4.17.21",
     "pinia": "^3.0.1",
     "uuid": "^11.1.0",
-    "vue": "^3.5.13"
+    "vue": "^3.5.13",
+    "vue-draggable-plus": "^0.6.0"
   },
   "devDependencies": {
     "@tsconfig/node22": "^22.0.0",
     "@types/chrome": "^0.0.309",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.13.10",
-    "@vitejs/plugin-vue-jsx": "^4.1.1",
+    "@vitejs/plugin-vue-jsx": "^4.1.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.5.0",
     "@vue/tsconfig": "^0.7.0",
     "@wxt-dev/i18n": "^0.2.3",
     "@wxt-dev/module-vue": "^1.0.2",
     "eslint": "^9.22.0",
-    "eslint-plugin-oxlint": "^0.15.14",
+    "eslint-plugin-oxlint": "^0.16.0",
     "eslint-plugin-vue": "^10.0.0",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^7.0.2",
-    "oxlint": "^0.15.14",
+    "oxlint": "^0.16.0",
     "prettier": "^3.5.3",
-    "sass-embedded": "^1.85.1",
+    "sass-embedded": "^1.86.0",
     "typescript": "^5.8.2",
     "unplugin-auto-import": "^19.1.1",
     "unplugin-vue-components": "^28.4.1",
-    "vite": "^6.2.1",
+    "vite": "^6.2.2",
     "vite-svg-loader": "^5.1.0",
-    "vue-draggable-plus": "^0.6.0",
     "wxt": "^0.19.29"
   },
-  "packageManager": "pnpm@10.5.2"
+  "packageManager": "pnpm@10.6.4"
 }
