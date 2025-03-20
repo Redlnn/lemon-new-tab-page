@@ -150,7 +150,13 @@ async function doSearchWithText(text: string) {
   suggedtionArea.value!.clearSearchSuggestions()
 }
 
-onMounted(() => useTimeoutFn(() => (mounted.value = true), 100))
+onMounted(() => {
+  if (settingsStore.search.autoFocus) {
+    handleFocus()
+    searchInput.value?.focus()
+  }
+  useTimeoutFn(() => (mounted.value = true), 100)
+})
 </script>
 
 <template>

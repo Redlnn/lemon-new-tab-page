@@ -30,9 +30,5 @@ initSettings().then(() => {
     await saveSettingsDebounced(toRaw(state))
   })
 
-  if (settingsStore.search.autoFocus) {
-    focusStore.focus()
-  }
-
   app.mount('body')
 })

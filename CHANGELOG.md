@@ -36,6 +36,7 @@
 - Applied clock font settings to the YiYan (a line of Chinese poetry) to improve
   page appearance in dark mode.
 - Fixed an issue where clicks on some areas of the quick launch submenu did not work.
+- Fix auto focus search box not working (unfortunately Chrome prioritizes address bar).
 
 ## 1.8.1
 

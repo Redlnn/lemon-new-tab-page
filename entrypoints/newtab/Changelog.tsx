@@ -45,6 +45,7 @@ const changelogZH = (
       <li>修复搜索框展开后无法通过点击原快速访问区域使搜索框失焦的问题</li>
       <li>使时钟的字体设置应用于一言以提升神色模式下的页面观感</li>
       <li>修复快速启动子菜单部分区域点击不生效的问题</li>
+      <li>修复自动聚焦搜索框不生效（但很遗憾 Chrome 优先聚焦地址栏）</li>
     </ul>
     <p>
       Tip: 过往版本的更新内容请前往 GitHub 查看。👉
@@ -122,6 +123,7 @@ const changelog = (
         appearance in dark mode.
       </li>
       <li>Fixed an issue where clicks on some areas of the quick launch submenu did not work.</li>
+      <li>Fix auto focus search box not working (unfortunately Chrome prioritizes address bar).</li>
     </ul>
     <p>Translated by ChatGPT from Chinese.</p>
     <p>
