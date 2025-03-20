@@ -1,5 +1,42 @@
 # Changelog
 
+> Translated by ChatGPT from Chinese.
+
+## 2.0.0
+
+**Important**: Major version upgrade, please carefully read the following changelog.
+
+### Known Issues
+
+- Some Windows devices may experience a freeze on startup when setting the
+  Chromium-based browser’s homepage. The solution can be found in the
+  [README](/README.md#已知问题).
+
+### Features
+
+- Optimized performance to improve opening speed and avoid lag in certain situations.
+- Pinned quick access links can now be reordered by dragging.
+- Refactored the layout style of the quick access area for better compatibility.
+  Due to this refactoring, some existing settings may have been reset.
+  We apologize for any inconvenience.
+- Refactored configuration storage and internal version iterations.
+  Due to this, some existing settings may be misaligned during configuration upgrades.
+  We apologize for any inconvenience.
+- Added options for “using white font in light mode for quick access” and “icon spacing”.
+  The original “icon width” setting has been changed to “icon size”.
+- "Adjust the page's responsive styles to prevent misalignment when shrinking the browser,
+  thus supporting use on narrow-screen devices
+  (unfortunately, Firefox mobile add-ons cannot replace the new tab page).
+- Default search engine is now Bing.
+
+### Fixes
+
+- Fixed an issue where the search box could not lose focus by clicking the original
+  quick access area after expanding.
+- Applied clock font settings to the YiYan (a line of Chinese poetry) to improve
+  page appearance in dark mode.
+- Fixed an issue where clicks on some areas of the quick launch submenu did not work.
+
 ## 1.8.1
 
 ### Fixes
