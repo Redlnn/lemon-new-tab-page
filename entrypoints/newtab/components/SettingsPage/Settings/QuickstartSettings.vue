@@ -31,134 +31,136 @@ async function restoreDefaultTopSites() {
       <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enable') }}</div>
       <el-switch v-model="settingsStore.quickStart.enabled" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTopSites') }}</div>
-      <el-switch v-model="settingsStore.quickStart.enableTopSites" />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableQSBg') }}</div>
-      <el-switch v-model="settingsStore.quickStart.showQuickStartContainerBg" />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableShadow') }}</div>
-      <el-switch
-        v-model="settingsStore.quickStart.enableShadow"
-        :disabled="!settingsStore.quickStart.showQuickStartContainerBg"
-      />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showPinnedIcon') }}</div>
-      <el-switch v-model="settingsStore.quickStart.showPinnedIcon" />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTitle') }}</div>
-      <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">
-        {{ i18n.t('newtab.settings.quickstart.whiteTextInLightMode') }}
+    <div v-show="settingsStore.quickStart.enabled">
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTopSites') }}</div>
+        <el-switch v-model="settingsStore.quickStart.enableTopSites" />
       </div>
-      <el-switch v-model="settingsStore.quickStart.whiteTextInLightMode" />
-    </div>
-    <p
-      style="
-        color: var(--el-text-color-regular);
-        line-height: 1.5em;
-        font-size: 12px;
-        margin-top: 0;
-      "
-    >
-      {{ i18n.t('newtab.settings.quickstart.whiteTextTip') }}
-    </p>
-    <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
-      <el-slider
-        v-model="settingsStore.quickStart.rows"
-        :step="1"
-        :min="1"
-        :max="5"
-        show-stops
-        :show-tooltip="false"
-        style="margin-bottom: 20px"
-        :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
-      />
-    </div>
-    <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxColumns') }}</div>
-      <el-slider
-        v-model="settingsStore.quickStart.columns"
-        :step="1"
-        :min="1"
-        :max="10"
-        show-stops
-        :show-tooltip="false"
-        style="margin-bottom: 20px"
-        :marks="{ 1: '1', 10: '10' }"
-      />
-    </div>
-    <p
-      v-if="isChrome"
-      style="
-        color: var(--el-text-color-regular);
-        line-height: 1.5em;
-        font-size: 12px;
-        margin-top: 0;
-      "
-    >
-      {{ i18n.t('newtab.settings.quickstart.maxItemsTipForChrome') }}
-    </p>
-    <div class="settings-item quickstart-item-width">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.iconSize') }}</div>
-      <el-slider
-        v-model="settingsStore.quickStart.iconSize"
-        :min="10"
-        :max="200"
-        show-input
-        :show-input-controls="false"
-        :show-tooltip="false"
-      />
-    </div>
-    <div class="settings-item quickstart-item-width">
-      <div class="settings-label">
-        {{ i18n.t('newtab.settings.quickstart.HorizontalIconSpacing') }}
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableQSBg') }}</div>
+        <el-switch v-model="settingsStore.quickStart.showQuickStartContainerBg" />
       </div>
-      <el-slider
-        v-model="settingsStore.quickStart.itemMarginH"
-        :min="0"
-        :max="50"
-        show-input
-        :show-input-controls="false"
-        :show-tooltip="false"
-      />
-    </div>
-    <div class="settings-item quickstart-item-width">
-      <div class="settings-label">
-        {{ i18n.t('newtab.settings.quickstart.VerticalIconSpacing') }}
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.enableShadow') }}</div>
+        <el-switch
+          v-model="settingsStore.quickStart.enableShadow"
+          :disabled="!settingsStore.quickStart.showQuickStartContainerBg"
+        />
       </div>
-      <el-slider
-        v-model="settingsStore.quickStart.itemMarginV"
-        :min="5"
-        :max="30"
-        show-input
-        :show-input-controls="false"
-        :show-tooltip="false"
-      />
-    </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restoreDefault') }}</div>
-      <el-popconfirm
-        width="220"
-        :confirm-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.confirm')"
-        :cancel-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.cancel')"
-        :icon="RestoreRound"
-        icon-color="#626AEF"
-        :title="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.title')"
-        @confirm="restoreDefaultTopSites()"
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showPinnedIcon') }}</div>
+        <el-switch v-model="settingsStore.quickStart.showPinnedIcon" />
+      </div>
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.showTitle') }}</div>
+        <el-switch v-model="settingsStore.quickStart.showQuickStartTitle" />
+      </div>
+      <div class="settings-item horizontal">
+        <div class="settings-label">
+          {{ i18n.t('newtab.settings.quickstart.whiteTextInLightMode') }}
+        </div>
+        <el-switch v-model="settingsStore.quickStart.whiteTextInLightMode" />
+      </div>
+      <p
+        style="
+          color: var(--el-text-color-regular);
+          line-height: 1.5em;
+          font-size: 12px;
+          margin-top: 0;
+        "
       >
-        <template #reference>
-          <el-button :icon="RestoreRound" circle />
-        </template>
-      </el-popconfirm>
+        {{ i18n.t('newtab.settings.quickstart.whiteTextTip') }}
+      </p>
+      <div class="settings-item">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxRows') }}</div>
+        <el-slider
+          v-model="settingsStore.quickStart.rows"
+          :step="1"
+          :min="1"
+          :max="5"
+          show-stops
+          :show-tooltip="false"
+          style="margin-bottom: 20px"
+          :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
+        />
+      </div>
+      <div class="settings-item">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.maxColumns') }}</div>
+        <el-slider
+          v-model="settingsStore.quickStart.columns"
+          :step="1"
+          :min="1"
+          :max="10"
+          show-stops
+          :show-tooltip="false"
+          style="margin-bottom: 20px"
+          :marks="{ 1: '1', 10: '10' }"
+        />
+      </div>
+      <p
+        v-if="isChrome"
+        style="
+          color: var(--el-text-color-regular);
+          line-height: 1.5em;
+          font-size: 12px;
+          margin-top: 0;
+        "
+      >
+        {{ i18n.t('newtab.settings.quickstart.maxItemsTipForChrome') }}
+      </p>
+      <div class="settings-item quickstart-item-width">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.iconSize') }}</div>
+        <el-slider
+          v-model="settingsStore.quickStart.iconSize"
+          :min="10"
+          :max="200"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings-item quickstart-item-width">
+        <div class="settings-label">
+          {{ i18n.t('newtab.settings.quickstart.HorizontalIconSpacing') }}
+        </div>
+        <el-slider
+          v-model="settingsStore.quickStart.itemMarginH"
+          :min="0"
+          :max="50"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings-item quickstart-item-width">
+        <div class="settings-label">
+          {{ i18n.t('newtab.settings.quickstart.VerticalIconSpacing') }}
+        </div>
+        <el-slider
+          v-model="settingsStore.quickStart.itemMarginV"
+          :min="5"
+          :max="30"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings-item horizontal">
+        <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restoreDefault') }}</div>
+        <el-popconfirm
+          width="220"
+          :confirm-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.confirm')"
+          :cancel-button-text="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.cancel')"
+          :icon="RestoreRound"
+          icon-color="#626AEF"
+          :title="i18n.t('newtab.settings.quickstart.restoreDefaultConfirm.title')"
+          @confirm="restoreDefaultTopSites()"
+        >
+          <template #reference>
+            <el-button :icon="RestoreRound" circle />
+          </template>
+        </el-popconfirm>
+      </div>
     </div>
   </div>
 </template>
