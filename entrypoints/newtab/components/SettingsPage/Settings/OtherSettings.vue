@@ -3,7 +3,7 @@ import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 
-import { storage } from 'wxt/storage'
+import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
 import { useWallpaperStore } from '@/newtab/scripts/store'
 import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'

@@ -1,4 +1,4 @@
-import { storage } from 'wxt/storage'
+import { storage } from '#imports'
 
 export interface Bookmark {
   items: { url: string; title: string; favicon?: string }[]
