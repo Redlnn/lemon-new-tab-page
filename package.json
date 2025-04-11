@@ -59,7 +59,7 @@
     "typescript": "^5.8.2",
     "unplugin-auto-import": "^19.1.2",
     "unplugin-vue-components": "^28.4.1",
-    "vite": "^6.2.5",
+    "vite": "^6.2.6",
     "vite-svg-loader": "^5.1.0",
     "wxt": "^0.20.0"
   },
