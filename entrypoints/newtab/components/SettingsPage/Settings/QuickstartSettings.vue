@@ -145,6 +145,19 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
+      <div class="settings-item quickstart-item-width">
+        <div class="settings-label">
+          {{ i18n.t('newtab.settings.quickstart.marginTop') }}
+        </div>
+        <el-slider
+          v-model="settingsStore.quickStart.marginTop"
+          :min="10"
+          :max="150"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
       <div class="settings-item horizontal">
         <div class="settings-label">{{ i18n.t('newtab.settings.quickstart.restoreDefault') }}</div>
         <el-popconfirm

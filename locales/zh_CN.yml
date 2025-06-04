@@ -100,6 +100,7 @@ newtab:
       iconSize: 图标大小
       HorizontalIconSpacing: 横向图标间隔
       VerticalIconSpacing: 竖向图标间隔
+      marginTop: 快速访问区域上边距
   quickstart:
     addNewQuickstart: 添加快速访问
     pin: 置顶

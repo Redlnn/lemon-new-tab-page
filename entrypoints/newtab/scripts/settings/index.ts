@@ -57,7 +57,8 @@ export const defaultSettings: SettingsInterfaceVer3 = {
     showPinnedIcon: true,
     showQuickStartContainerBg: false,
     iconSize: 50,
-    whiteTextInLightMode: true
+    whiteTextInLightMode: true,
+    marginTop: 50
   },
   pluginVersion: '',
   version: 3

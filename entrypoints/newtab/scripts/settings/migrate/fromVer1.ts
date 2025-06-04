@@ -57,7 +57,8 @@ export function migrateFromVer1To3(oldSettings: OldSettingsInterface): SettingsI
       showPinnedIcon: oldSettings.showPinnedIcon,
       showQuickStartContainerBg: defaultSettings.quickStart.showQuickStartContainerBg,
       iconSize: defaultSettings.quickStart.iconSize,
-      whiteTextInLightMode: defaultSettings.quickStart.whiteTextInLightMode
+      whiteTextInLightMode: defaultSettings.quickStart.whiteTextInLightMode,
+      marginTop: defaultSettings.quickStart.marginTop
     },
     pluginVersion: oldSettings.version,
     version: 2

@@ -106,6 +106,7 @@ newtab:
       iconSize: Icon Size
       HorizontalIconSpacing: Horizontal Icon Spacing
       VerticalIconSpacing: Vertical Icon Spacing
+      marginTop: Shortcut Area Top Margin
   quickstart:
     addNewQuickstart: Add New Shortcut
     pin: Pin

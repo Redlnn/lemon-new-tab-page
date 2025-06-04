@@ -52,6 +52,7 @@ export interface SettingsInterfaceVer3 {
     showQuickStartContainerBg: boolean
     iconSize: number
     whiteTextInLightMode: boolean
+    marginTop: number
   }
   pluginVersion: string
   version: number

@@ -99,6 +99,7 @@ newtab:
       iconSize: 連結大小
       HorizontalIconSpacing: 橫向連結間距
       VerticalIconSpacing: 竪向連結間距
+      marginTop: 捷徑區域上邊距
   quickstart:
     addNewQuickstart: 新增捷徑
     pin: 置頂
