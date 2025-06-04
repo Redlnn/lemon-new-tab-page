@@ -14,9 +14,41 @@ $--slider: (
 
 // custom dark variables
 @use './dark.scss';
+@use './pingfang.scss';
 
 :root {
   --el-border-radius-base: 8px;
+  --el-font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', Ubuntu, Arial, Roboto,
+    'Source Sans 3', 'Source Sans Pro', 'Segoe UI', system-ui, sans-serif, emoji;
+}
+
+html[lang^='zh-Hans'],
+html[lang^='zh-CN'],
+html[lang^='zh-SG'] {
+  --el-font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'HarmonyOS Sans SC', PingFangSC,
+    'OPPO Sans 4.0', 'OPPO Sans', 'OPPOSans R', Ubuntu, Arial, 'Microsoft YaHei UI',
+    'Source Han Sans SC', 'Source Han Sans CN', Roboto, 'Noto Sans CJK SC', system-ui, sans-serif,
+    emoji;
+}
+
+/* 繁体中文 香港 zh-Hant-HK 和 zh-HK */
+html[lang^='zh-Hant-HK'],
+html[lang^='zh-HK'] {
+  --el-font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'HarmonyOS Sans TC', PingFangHK, Ubuntu,
+    Arial, 'Microsoft JhengHei UI', 'LiHei Pro', 'Source Han Sans HK', Roboto, 'Noto Sans CJK HK',
+    system-ui, sans-serif, emoji;
+}
+
+/* 其他繁体 zh-Hant（不包括HK） */
+html[lang^='zh-Hant']:not([lang^='zh-Hant-HK']),
+html[lang^='zh-TW'] {
+  --el-font-family:
+    -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'HarmonyOS Sans TC', PingFangTC, Ubuntu,
+    Arial, 'Microsoft JhengHei UI', 'LiHei Pro', 'Source Han Sans TC', Roboto, 'Noto Sans CJK TC',
+    system-ui, sans-serif, emoji;
 }
 
 .el-message-box {
