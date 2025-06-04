@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ClearRound } from '@vicons/material'
-import type { TopSites } from 'wxt/browser'
+import type { TopSites } from 'webextension-polyfill'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { onMounted, ref, watch } from 'vue'
 import { useWindowSize } from '@vueuse/core'
@@ -117,7 +117,8 @@ watch(() => windowWidth.value, refresh)
   <section
     class="quickstart-wrapper"
     :style="{
-      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0'
+      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
+      marginTop: `${settingsStore.quickStart.marginTop}px`
     }"
   >
     <div
@@ -193,7 +194,6 @@ watch(() => windowWidth.value, refresh)
 <style scoped lang="scss">
 .quickstart-wrapper {
   max-width: 85%;
-  margin-top: 80px;
   transition: opacity 0.1s ease;
 }
 

@@ -1,4 +1,4 @@
-import type { TopSites } from 'wxt/browser'
+import type { TopSites } from 'webextension-polyfill'
 
 export function getQuickStartItemWidth(QSNum: number, cols: number) {
   if (QSNum < cols) {
