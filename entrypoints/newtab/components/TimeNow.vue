@@ -63,7 +63,7 @@ function getlunarCalendar() {
         style="margin-right: 5px"
         >{{ timeNowMeridiemZH }}</span
       >
-      <span>
+      <span style="font-variant-numeric: tabular-nums">
         <span class="hour">{{
           settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
         }}</span>
