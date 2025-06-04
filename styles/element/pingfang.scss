@@ -18,42 +18,42 @@ $unicode-range-cjk:
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Ultralight');
+  src: local('PingFang SC Ultralight'), local('PingFangSC-Ultralight');
   font-weight: 100;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Thin');
+  src: local('PingFang SC Thin'), local('PingFangSC-Thin');
   font-weight: 200;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Light');
+  src: local('PingFang SC Light'), local('PingFangSC-Light');
   font-weight: 300;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Regular');
+  src: local('PingFang SC Regular'), local('PingFangSC-Regular');
   font-weight: 400;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Medium');
+  src: local('PingFang SC Medium'), local('PingFangSC-Medium');
   font-weight: 500;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangSC';
-  src: local('PingFang SC Semibold');
+  src: local('PingFang SC Semibold'), local('PingFangSC-Semibold');
   font-weight: 600;
   unicode-range: #{$unicode-range-cjk};
 }
@@ -62,42 +62,42 @@ $unicode-range-cjk:
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Ultralight');
+  src: local('PingFang TC Ultralight'), local('PingFangTC-Ultralight');
   font-weight: 100;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Thin');
+  src: local('PingFang TC Thin'), local('PingFangTC-Thin');
   font-weight: 200;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Light');
+  src: local('PingFang TC Light'), local('PingFangTC-Light');
   font-weight: 300;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Regular');
+  src: local('PingFang TC Regular'), local('PingFangTC-Regular');
   font-weight: 400;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Medium');
+  src: local('PingFang TC Medium'), local('PingFangTC-Medium');
   font-weight: 500;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangTC';
-  src: local('PingFang TC Semibold');
+  src: local('PingFang TC Semibold'), local('PingFangTC-Semibold');
   font-weight: 600;
   unicode-range: #{$unicode-range-cjk};
 }
@@ -106,42 +106,42 @@ $unicode-range-cjk:
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Ultralight');
+  src: local('PingFang HK Ultralight'), local('PingFangHK-Ultralight');
   font-weight: 100;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Thin');
+  src: local('PingFang HK Thin'), local('PingFangHK-Thin');
   font-weight: 200;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Light');
+  src: local('PingFang HK Light'), local('PingFangHK-Light');
   font-weight: 300;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Regular');
+  src: local('PingFang HK Regular'), local('PingFangHK-Regular');
   font-weight: 400;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Medium');
+  src: local('PingFang HK Medium'), local('PingFangHK-Medium');
   font-weight: 500;
   unicode-range: #{$unicode-range-cjk};
 }
 
 @font-face {
   font-family: 'PingFangHK';
-  src: local('PingFang HK Semibold');
+  src: local('PingFang HK Semibold'), local('PingFangHK-Semibold');
   font-weight: 600;
   unicode-range: #{$unicode-range-cjk};
 }
