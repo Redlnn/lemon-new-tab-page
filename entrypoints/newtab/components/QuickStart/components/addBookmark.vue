@@ -151,7 +151,7 @@ function isSvg(file: Blob) {
         <el-input v-model="data.title" />
       </el-form-item>
       <el-form-item :label="i18n.t('newtab.quickstart.addDialog.url')">
-        <el-input v-model="data.url" />
+        <el-input v-model="data.url" @keyup.enter="add" />
       </el-form-item>
       <el-form-item :label="i18n.t('newtab.quickstart.addDialog.autoFetchFavicon')">
         <el-switch v-model="getFaviconAuto" />
