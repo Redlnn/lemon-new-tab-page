@@ -2,6 +2,18 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>2.1.0</h1>
+    <h2>优化</h2>
+    <ul>
+      <li>时钟字体设置为等宽，提升观感</li>
+      <li>调整字体选择顺序，提升观感</li>
+      <li>手动添加快捷方式时，可以回车进行提交，提升用户体验</li>
+      <li>降低置顶快捷方式的图钉图标的背景透明度，提升观感</li>
+    </ul>
+    <h2>修复</h2>
+    <ul>
+      <li>修复了部分 Linux 用户的拉丁文文字字体被 fallback 到 emoji 字体上</li>
+    </ul>
     <h1>2.0.0</h1>
     <p style="font-size:1.5em">重要：大版本升级，请仔细阅读以下更新日志。</p>
     <h2>已知问题</h2>
@@ -62,6 +74,22 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>2.1.0</h1>
+    <h2>Optimizations</h2>
+    <ul>
+      <li>Set the clock font to monospace for improved visual appearance.</li>
+      <li>Adjusted font selection order to enhance aesthetics.</li>
+      <li>
+        When manually adding a shortcut, pressing Enter now submits it to improve user experience.
+      </li>
+      <li>
+        Reduced background opacity of the pin icon on pinned shortcuts to improve visual appearance.
+      </li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>Fixed an issue where Latin text for some Linux users was falling back to emoji fonts.</li>
+    </ul>
     <h1>2.0.0</h1>
     <p style="font-size:1.5em">
       Important: Major version upgrade, please carefully read the following changelog.

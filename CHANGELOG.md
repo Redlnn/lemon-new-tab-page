@@ -2,6 +2,22 @@
 
 > Translated by ChatGPT from Chinese.
 
+## Optimization
+
+- Set the clock font to monospace for improved visual appearance.
+- Adjusted font selection order to enhance aesthetics.
+- When manually adding a shortcut, pressing Enter now submits it to improve user experience.
+- Reduced background opacity of the pin icon on pinned shortcuts to improve visual
+  appearance.
+
+## Fixes
+
+- Fixed an issue where Latin text for some Linux users was falling back to emoji fonts.
+
+## Others
+
+- Refactored code to improve readability.
+
 ## 2.0.0
 
 **Important**: Major version upgrade, please carefully read the following changelog.
