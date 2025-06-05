@@ -148,9 +148,9 @@ onMounted(async () => {
   overflow: hidden;
   font-size: 25px;
   line-height: 1em;
-  color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
+  color: color-mix(in srgb, var(--el-text-color-primary), transparent 20%);
   cursor: pointer;
-  background-color: color-mix(in oklab, var(--el-bg-color), transparent 80%);
+  background-color: color-mix(in srgb, var(--el-bg-color), transparent 80%);
   border-radius: 50%;
   backdrop-filter: blur(10px);
   transition: 0.1s;

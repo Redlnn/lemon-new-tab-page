@@ -78,7 +78,7 @@ onMounted(() => {
 
     &:hover {
       color: var(--el-fill-color-blank);
-      background-color: color-mix(in oklab, var(--el-bg-color), transparent 90%);
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 90%);
       backdrop-filter: blur(10px) saturate(1.2);
 
       .yiyan__extra {

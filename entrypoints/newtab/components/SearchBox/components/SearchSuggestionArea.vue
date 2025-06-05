@@ -163,7 +163,7 @@ defineExpose({
   z-index: 1000;
   overflow: hidden;
   font-size: 13px;
-  background-color: color-mix(in oklab, var(--el-fill-color), transparent 50%);
+  background-color: color-mix(in srgb, var(--el-fill-color), transparent 50%);
   border-radius: 15px;
   backdrop-filter: blur(30px) saturate(1.2);
   transition:
@@ -200,7 +200,7 @@ defineExpose({
 
     &--active {
       padding-left: 30px;
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 60%);
     }
   }
 
@@ -208,7 +208,7 @@ defineExpose({
     display: flex;
     align-items: center;
     font-size: 12px;
-    color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
+    color: color-mix(in srgb, var(--el-text-color-primary), transparent 20%);
     background-color: transparent;
     transition:
       padding var(--el-transition-duration-fast) var(--cubic-bezier),
@@ -217,7 +217,7 @@ defineExpose({
 
     &:hover {
       padding-left: 30px;
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 60%);
     }
   }
 }

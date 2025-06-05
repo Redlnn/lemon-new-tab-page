@@ -221,7 +221,7 @@ onMounted(() => {
     height: var(--height);
     font-size: 15px;
     color: transparent;
-    background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
+    background-color: color-mix(in srgb, var(--el-fill-color), transparent 60%);
     border-radius: calc(var(--height) / 2);
     backdrop-filter: blur(10px) saturate(1.4);
     transition:
@@ -244,13 +244,13 @@ onMounted(() => {
 
     &:hover:not(.search-box__form--focus) {
       --width: 500px;
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 40%);
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
 
       --search-form-placeholder-color: var(--el-text-color-primary);
     }
 
     &--focus {
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 20%);
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
 
       --width: 500px;
     }
