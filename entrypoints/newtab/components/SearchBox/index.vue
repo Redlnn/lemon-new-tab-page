@@ -201,35 +201,39 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 .search-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
   position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
+
   &__form {
     --height: 44px;
     --width: 300px;
     --search-form-placeholder-color: var(--el-text-color-regular);
-    height: var(--height);
-    width: var(--width);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     position: relative;
-    border-radius: calc(var(--height) / 2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: var(--width);
+    height: var(--height);
     font-size: 15px;
-    backdrop-filter: blur(10px) saturate(1.4);
-    background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
     color: transparent;
+    background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
+    border-radius: calc(var(--height) / 2);
+    backdrop-filter: blur(10px) saturate(1.4);
     transition:
       background-color var(--el-transition-duration-fast) ease,
       box-shadow var(--el-transition-duration-fast) ease,
       border var(--el-transition-duration-fast) ease,
       width var(--el-transition-duration-fast) var(--cubic-bezier);
+
     &--shadow {
       box-shadow: var(--el-box-shadow-dark);
     }
+
     html.dark & {
       --search-form-placeholder-color: var(--el-text-color-secondary);
 
@@ -241,11 +245,13 @@ onMounted(() => {
     &:hover:not(.search-box__form--focus) {
       --width: 500px;
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 40%);
+
       --search-form-placeholder-color: var(--el-text-color-primary);
     }
 
     &--focus {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 20%);
+
       --width: 500px;
     }
 
@@ -259,9 +265,9 @@ onMounted(() => {
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 5px;
-      height: calc(var(--height) - 10px);
       width: calc(var(--height) - 10px);
+      height: calc(var(--height) - 10px);
+      margin: 5px;
       overflow: hidden;
       border-radius: 50%;
       transition:
@@ -270,6 +276,14 @@ onMounted(() => {
     }
 
     &--focus:deep() {
+      .search-engine-menu__icon {
+        color: var(--el-text-color-regular);
+      }
+
+      .search-box__btn {
+        color: var(--el-color-primary);
+      }
+
       .search-engine-menu__icon,
       .search-box__btn {
         cursor: pointer;
@@ -278,24 +292,17 @@ onMounted(() => {
           background: white;
         }
       }
-      .search-engine-menu__icon {
-        color: var(--el-text-color-regular);
-      }
-
-      .search-box__btn {
-        color: var(--el-color-primary);
-      }
     }
 
     .search-box__input {
-      height: 100%;
       width: calc(100% - 2 * var(--height) - 20px);
+      height: 100%;
+      font-size: 1em;
       color: var(--el-text-color-primary);
       text-align: center;
-      font-size: 1em;
       outline: none;
-      border: none;
       background: none;
+      border: none;
       transition:
         width var(--el-transition-duration-fast) var(--cubic-bezier),
         color var(--el-transition-duration-fast) ease;
@@ -312,10 +319,11 @@ onMounted(() => {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
   .search-box__form {
     --width: 75vw;
     --height: 40px;
+
     &:hover:not(.search-box__form--focus),
     &.search-box__form--focus {
       --width: 85vw;

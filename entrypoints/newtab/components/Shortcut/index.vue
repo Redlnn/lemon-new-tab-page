@@ -198,10 +198,9 @@ watch(() => windowWidth.value, refresh)
   transition: opacity 0.1s ease;
 
   &__container {
-    display: grid;
-    justify-items: center;
-    align-items: center;
     z-index: 10;
+    display: grid;
+    place-items: center center;
     transition:
       background-color var(--el-transition-duration-fast) ease,
       box-shadow var(--el-transition-duration-fast) ease;
@@ -244,6 +243,35 @@ watch(() => windowWidth.value, refresh)
     position: relative;
     border-radius: 10px;
 
+    .shortcut__icon {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--icon_size);
+      height: var(--icon_size);
+      color: var(--el-text-color-regular);
+      background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+      border-radius: 50%;
+      backdrop-filter: blur(10px) saturate(1.4);
+      transition: background-color 0.1s ease;
+
+      span {
+        display: block;
+        width: calc(var(--icon_size) / 2);
+        height: calc(var(--icon_size) / 2);
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        border-radius: 3px;
+
+        svg {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+
     &:hover .shortcut__icon {
       background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
     }
@@ -259,92 +287,64 @@ watch(() => windowWidth.value, refresh)
       margin-bottom: 8px;
     }
 
-    .shortcut__icon {
-      position: relative;
-      width: var(--icon_size);
-      height: var(--icon_size);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
-      background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
-      backdrop-filter: blur(10px) saturate(1.4);
-      transition: background-color 0.1s ease;
-      color: var(--el-text-color-regular);
-
-      span {
-        display: block;
-        width: calc(var(--icon_size) / 2);
-        height: calc(var(--icon_size) / 2);
-        border-radius: 3px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        svg {
-          width: 30px;
-          height: 30px;
-        }
-      }
-    }
-
     .shortcut__pin-icon {
       position: absolute;
-      bottom: -3px;
       right: -3px;
-      height: 20px;
-      width: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 50%;
+      bottom: -3px;
       z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
       color: var(--el-color-primary);
-      box-shadow: var(--el-box-shadow-light);
       background-color: color-mix(in srgb, var(--el-fill-color-light), transparent 60%);
+      border-radius: 50%;
+      box-shadow: var(--el-box-shadow-light);
       backdrop-filter: blur(10px);
     }
 
     .shortcut__title {
-      width: calc(var(--icon_size) + 30px);
       display: -webkit-box;
-      -webkit-box-orient: vertical;
-      line-clamp: 1;
-      -webkit-line-clamp: 1;
+      width: calc(var(--icon_size) + 30px);
       overflow: hidden;
+      -webkit-line-clamp: 1;
+      line-clamp: 1;
       font-size: 13px;
       text-align: center;
       overflow-wrap: anywhere;
-    }
-
-    &:hover .shortcut__menu {
-      color: var(--el-text-color-regular);
+      -webkit-box-orient: vertical;
     }
 
     .shortcut__menu {
       position: absolute;
       top: -5px;
       right: -5px;
-      border-radius: 50%;
-      color: transparent;
       overflow: hidden;
+      color: transparent;
       cursor: pointer;
+      border-radius: 50%;
 
       & > span {
         outline: none;
       }
 
       &:hover {
-        background-color: var(--el-bg-color);
         color: var(--el-text-color-primary);
+        background-color: var(--el-bg-color);
         box-shadow: var(--el-box-shadow-light);
       }
+    }
+
+    &:hover .shortcut__menu {
+      color: var(--el-text-color-regular);
     }
 
     .shortcut__menu-icon {
       width: 26px;
       height: 26px;
-      font-size: 20px;
       padding: 3px;
+      font-size: 20px;
     }
   }
 }

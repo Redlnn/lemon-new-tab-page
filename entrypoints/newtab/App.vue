@@ -141,19 +141,19 @@ onMounted(async () => {
 
 .settings-icon {
   position: fixed;
-  bottom: 20px;
   right: 30px;
+  bottom: 20px;
   height: calc(1em + 12px);
-  color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
+  padding: 6px;
+  overflow: hidden;
   font-size: 25px;
   line-height: 1em;
+  color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
   cursor: pointer;
   background-color: color-mix(in oklab, var(--el-bg-color), transparent 80%);
-  padding: 6px;
   border-radius: 50%;
-  overflow: hidden;
-  transition: 0.1s;
   backdrop-filter: blur(10px);
+  transition: 0.1s;
 
   &:hover {
     color: var(--el-color-primary);

@@ -98,6 +98,7 @@ function getlunarCalendar() {
   100% {
     opacity: 0.5;
   }
+
   50% {
     opacity: 1;
   }
@@ -108,23 +109,24 @@ function getlunarCalendar() {
   50% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }
 }
 
 .clock {
-  text-align: center;
   color: var(--el-fill-color-blank);
-  animation: delayedFadeIn 0.5s;
+  text-align: center;
   transition:
     font-size 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     text-shadow var(--el-transition-duration-fast) ease,
     color var(--el-transition-duration-fast) ease;
+  animation: delayedFadeIn 0.5s;
 
   &--shadow {
-    text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 6px 16px rgb(0 0 0 / 40%);
   }
 
   &__time {
@@ -153,7 +155,7 @@ function getlunarCalendar() {
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (width <= 600px) {
   .clock {
     &__time {
       font-size: 50px;

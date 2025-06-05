@@ -65,7 +65,7 @@ async function clearExtensionData() {
       <div class="settings__label">
         {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
       </div>
-      <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">
+      <p style="font-size: 12px; line-height: 1.5em; color: var(--el-text-color-regular)">
         {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
       </p>
     </div>

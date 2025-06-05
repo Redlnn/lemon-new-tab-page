@@ -59,8 +59,8 @@ defineExpose({ show, hide, toggleShow })
     </template>
     <div
       style="
-        height: 1px;
         width: 100%;
+        height: 1px;
         border-top: 1px color-mix(in srgb, var(--el-border-color), transparent 30%)
           var(--el-border-style);
         transition: opacity 0.1s;
@@ -87,14 +87,14 @@ defineExpose({ show, hide, toggleShow })
 
 <style lang="scss">
 .settings__dialog {
-  padding: 0;
-  max-height: 80%;
   height: 500px;
+  max-height: 80%;
+  padding: 0;
+  overflow: hidden;
   background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
-  backdrop-filter: blur(10px) saturate(1.4);
   border-radius: 10px;
   box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
-  overflow: hidden;
+  backdrop-filter: blur(10px) saturate(1.4);
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
@@ -104,20 +104,20 @@ defineExpose({ show, hide, toggleShow })
     padding: 0 19px 0 35px;
   }
 
-  @media screen and (max-width: 650px) {
+  @media screen and (width <= 650px) {
     .settings__container {
       padding: 0 4px 0 20px;
     }
   }
 
   .el-dialog__header {
-    padding: 0;
-    width: 100%;
-    height: 50px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 0;
   }
 
   .el-dialog__body {
@@ -152,8 +152,8 @@ defineExpose({ show, hide, toggleShow })
   }
 
   .settings__dialog-list-title {
-    font-size: 28px;
     margin-top: 30px;
+    font-size: 28px;
   }
 }
 
@@ -161,8 +161,8 @@ defineExpose({ show, hide, toggleShow })
   display: flex;
   align-items: center;
   margin: 30px 0 6px 10px;
-  font-weight: 900;
   font-size: 1.1em;
+  font-weight: 900;
 
   span {
     margin-left: 5px;
@@ -170,15 +170,15 @@ defineExpose({ show, hide, toggleShow })
 }
 
 .settings__items-container {
-  background-color: var(--el-bg-color);
   padding: 10px 25px;
+  background-color: var(--el-bg-color);
   border-radius: 8px;
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 
 .settings__item {
-  min-height: 40px;
   width: 100%;
+  min-height: 40px;
   overflow: hidden;
 
   &--horizontal {
@@ -188,8 +188,8 @@ defineExpose({ show, hide, toggleShow })
   }
 
   .el-slider {
-    padding: 0 10px;
     height: 35px;
+    padding: 0 10px;
   }
 }
 

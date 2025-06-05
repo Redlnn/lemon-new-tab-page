@@ -50,30 +50,40 @@ onMounted(() => {
 .yiyan {
   position: absolute;
   bottom: 100px;
-  width: 100%;
   display: flex;
   justify-content: center;
+  width: 100%;
 
   &__main {
     width: 530px;
-    text-align: center;
-    color: var(--el-fill-color-darker);
-    border-radius: 20px;
     padding: 6px 14px;
+    color: var(--el-fill-color-darker);
+    text-align: center;
+    border-radius: 20px;
     transition:
       background-color var(--el-transition-duration-fast) ease,
       backdrop-filter var(--el-transition-duration-fast) ease,
       color var(--el-transition-duration-fast) ease;
 
     .yiyan__extra {
-      opacity: 0;
-      transition: opacity var(--el-transition-duration-fast) ease;
       margin-top: 8px;
       font-size: 0.95em;
+      opacity: 0;
+      transition: opacity var(--el-transition-duration-fast) ease;
     }
 
     &.yiyan--shadow {
-      text-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+      text-shadow: 0 0 20px rgb(0 0 0 / 80%);
+    }
+
+    &:hover {
+      color: var(--el-fill-color-blank);
+      background-color: color-mix(in oklab, var(--el-bg-color), transparent 90%);
+      backdrop-filter: blur(10px) saturate(1.2);
+
+      .yiyan__extra {
+        opacity: 1;
+      }
     }
 
     &.yiyan--invert.yiyan--light,
@@ -93,22 +103,12 @@ onMounted(() => {
       }
     }
 
-    &:hover {
-      background-color: color-mix(in oklab, var(--el-bg-color), transparent 90%);
-      backdrop-filter: blur(10px) saturate(1.2);
-      color: var(--el-fill-color-blank);
-
-      .yiyan__extra {
-        opacity: 1;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
+    @media screen and (width <= 600px) {
       width: 80%;
       font-size: 0.9em;
     }
 
-    @media screen and (max-width: 400px) {
+    @media screen and (width <= 400px) {
       width: 80%;
     }
   }

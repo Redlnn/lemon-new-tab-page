@@ -59,59 +59,56 @@ onMounted(() => {
 <style scoped lang="scss">
 .background__wrapper {
   position: fixed;
-  width: 100%;
-  height: 100%;
   top: 0;
   left: 0;
-  opacity: 0;
   z-index: -1000;
+  width: 100%;
+  height: 100%;
   background-color: var(--el-bg-color-page);
+  opacity: 0;
   transition:
     opacity 0.4s var(--el-transition-function-ease-in-out-bezier),
     background-color var(--el-transition-duration-fast) ease;
 
   .background__main {
     position: absolute;
-    top: calc(var(--bg-blur) * -2);
-    left: calc(var(--bg-blur) * -2);
-    right: calc(var(--bg-blur) * -2);
-    bottom: calc(var(--bg-blur) * -2);
-    background-size: cover;
-    background-position: center;
+    inset: calc(var(--bg-blur) * -2);
     background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
     filter: blur(var(--bg-blur));
 
     .background__dark-corners {
       position: absolute;
       top: 0;
       left: 0;
+      z-index: -997;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      background: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
-      z-index: -997;
+      background: radial-gradient(rgb(0 0 0 / 0%) 33%, rgb(0 0 0 / 100%) 166%);
     }
 
     .mask {
       position: absolute;
       top: 0;
       left: 0;
+      z-index: -998;
       width: 100%;
       height: 100%;
       opacity: var(--bg-mask-opacity);
       transition: all var(--el-transition-duration-fast) ease;
-      z-index: -998;
     }
 
     .transition {
-      opacity: 0;
       position: absolute;
       top: 0;
       left: 0;
+      z-index: -999;
       width: 100%;
       height: 100%;
       background-color: var(--el-bg-color-page);
-      z-index: -999;
+      opacity: 0;
       transition: opacity 0.1s ease-in-out;
     }
   }

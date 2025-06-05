@@ -58,6 +58,7 @@ const settingsStore = useSettingsStore()
     min-width: 210px;
     padding: 5px;
     background-color: var(--el-bg-color);
+
     --el-popper-border-radius: 10px;
     transition: background-color var(--el-transition-duration-fast) ease;
   }
@@ -66,12 +67,12 @@ const settingsStore = useSettingsStore()
     display: flex;
     align-items: center;
     justify-content: space-between;
-    font-size: 12px;
     padding: 8px 18px;
-    color: var(--el-text-color-primary);
-    border-radius: 5px;
     overflow: hidden;
+    font-size: 12px;
+    color: var(--el-text-color-primary);
     cursor: pointer;
+    border-radius: 5px;
 
     &--active {
       background: var(--el-fill-color-dark);
@@ -79,8 +80,8 @@ const settingsStore = useSettingsStore()
 
     .el-icon {
       margin-right: 10px;
-      color: var(--el-text-color-regular);
       font-size: 13px;
+      color: var(--el-text-color-regular);
     }
   }
 
@@ -88,19 +89,19 @@ const settingsStore = useSettingsStore()
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 11px;
     height: 20px;
-    color: var(--el-text-color-secondary);
     padding: 0 10px;
+    font-size: 11px;
+    color: var(--el-text-color-secondary);
     transition: color var(--el-transition-duration-fast) ease;
 
     .search-engine-menu__kbd {
-      border: solid 1px currentColor;
       padding: 2px 4px;
-      border-radius: 3px;
+      margin: 0 3px;
       font-size: 10px;
       line-height: 1em;
-      margin: 0 3px;
+      border: solid 1px currentColor;
+      border-radius: 3px;
     }
   }
 

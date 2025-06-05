@@ -160,11 +160,11 @@ defineExpose({
 .search-suggestion-area {
   position: absolute;
   top: 60px;
-  border-radius: 15px;
+  z-index: 1000;
   overflow: hidden;
   font-size: 13px;
-  z-index: 1000;
   background-color: color-mix(in oklab, var(--el-fill-color), transparent 50%);
+  border-radius: 15px;
   backdrop-filter: blur(30px) saturate(1.2);
   transition:
     height 0.1s var(--cubic-bezier),
@@ -183,32 +183,32 @@ defineExpose({
 
   &__item {
     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
     height: 33px;
     padding: 0 20px;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
     line-height: 33px;
-    cursor: pointer;
     color: var(--el-text-color-primary);
+    cursor: pointer;
     background-color: transparent;
     transition:
       padding var(--el-transition-duration-fast) var(--cubic-bezier),
       padding-left var(--el-transition-duration-fast) var(--cubic-bezier),
       color var(--el-transition-duration-fast) ease;
+    -webkit-box-orient: vertical;
 
     &--active {
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
       padding-left: 30px;
+      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
     }
   }
 
   &__clear-history {
-    font-size: 12px;
-    color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
     display: flex;
     align-items: center;
+    font-size: 12px;
+    color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
     background-color: transparent;
     transition:
       padding var(--el-transition-duration-fast) var(--cubic-bezier),
@@ -216,8 +216,8 @@ defineExpose({
       color var(--el-transition-duration-fast) ease;
 
     &:hover {
-      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
       padding-left: 30px;
+      background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
     }
   }
 }

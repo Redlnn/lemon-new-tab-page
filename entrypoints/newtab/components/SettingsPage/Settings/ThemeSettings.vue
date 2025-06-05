@@ -119,10 +119,10 @@ watch(preferredDark, () => {
     <p
       v-if="isGoogleChrome"
       style="
-        color: var(--el-text-color-regular);
-        line-height: 1.5em;
-        font-size: 12px;
         margin-top: 0;
+        font-size: 12px;
+        line-height: 1.5em;
+        color: var(--el-text-color-regular);
       "
     >
       {{ i18n.t('newtab.settings.theme.chromeTip') }}
@@ -159,11 +159,12 @@ watch(preferredDark, () => {
     & .settings__theme-selected {
       display: none;
     }
+
     &.settings__theme-item--active .settings__theme-selected {
-      display: block;
       position: absolute;
       right: 8px;
       bottom: 8px;
+      display: block;
       color: var(--el-color-primary);
     }
   }
@@ -171,13 +172,13 @@ watch(preferredDark, () => {
 
 :deep().el-color-picker__trigger {
   padding: 0;
-  border: none;
   overflow: hidden;
+  border: none;
   border-radius: 8px;
 
   .el-color-picker__color {
     border: none;
-    border-radius: none;
+    border-radius: initial;
   }
 }
 </style>

@@ -54,8 +54,8 @@ defineExpose({ show, hide, toggleShow })
     </template>
     <div
       style="
-        height: 1px;
         width: 100%;
+        height: 1px;
         border-top: 1px color-mix(in srgb, var(--el-border-color), transparent 30%)
           var(--el-border-style);
         transition: opacity 0.1s ease;
@@ -77,14 +77,14 @@ defineExpose({ show, hide, toggleShow })
 <style lang="scss">
 .changelog {
   &__dialog {
-    padding: 0;
-    max-height: 80%;
     height: 500px;
+    max-height: 80%;
+    padding: 0;
+    overflow: hidden;
     background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
-    backdrop-filter: blur(10px) saturate(1.4);
     border-radius: 10px;
     box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
-    overflow: hidden;
+    backdrop-filter: blur(10px) saturate(1.4);
     transition:
       background-color var(--el-transition-duration-fast) ease,
       box-shadow var(--el-transition-duration-fast) ease;
@@ -94,8 +94,8 @@ defineExpose({ show, hide, toggleShow })
     }
 
     li {
-      line-height: 1.6;
       margin: 0.25em 0;
+      line-height: 1.6;
     }
 
     a {
@@ -104,8 +104,8 @@ defineExpose({ show, hide, toggleShow })
     }
 
     .changelog__blockquote {
-      margin: 0.3em 0 0.5em 0;
       padding: 0.2em 1em;
+      margin: 0.3em 0 0.5em;
       color: var(--el-text-color-regular);
       border-left: 0.25em solid var(--el-text-color-secondary);
     }
@@ -114,21 +114,21 @@ defineExpose({ show, hide, toggleShow })
       margin-top: 20px;
 
       summary {
-        cursor: pointer;
-        font-weight: 500;
         font-size: medium;
+        font-weight: 500;
+        cursor: pointer;
       }
     }
   }
 
   .el-dialog__header {
-    padding: 0;
-    width: 100%;
-    height: 50px;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
+    width: 100%;
+    height: 50px;
+    padding: 0;
   }
 
   .el-dialog__body {
@@ -163,8 +163,8 @@ defineExpose({ show, hide, toggleShow })
   }
 
   &__list-title {
-    font-size: 28px;
     margin-top: 30px;
+    font-size: 28px;
   }
 }
 </style>

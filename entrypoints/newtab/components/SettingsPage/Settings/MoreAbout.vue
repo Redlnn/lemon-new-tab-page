@@ -65,25 +65,30 @@ const year = useDateFormat(useNow(), 'YYYY')
   &__ext-name {
     margin-bottom: 0;
   }
+
   &__ext-desc {
+    margin-top: 3px;
     font-size: 13px;
     color: var(--el-text-color-regular);
-    margin-top: 3px;
   }
+
   &__ext-links,
   &__ext-license {
     margin: 1em 0;
+
     a {
       display: table-row;
     }
   }
+
   &__ext-link {
     color: var(--el-color-primary);
     text-decoration: none;
   }
+
   &__ext-license {
-    color: var(--el-text-color-regular);
     font-size: 12px;
+    color: var(--el-text-color-regular);
   }
 }
 </style>

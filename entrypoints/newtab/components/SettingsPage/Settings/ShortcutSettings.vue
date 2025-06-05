@@ -23,7 +23,7 @@ async function restoreDefaultTopSites() {
   <div class="settings__items-container">
     <p
       v-if="isChrome"
-      style="color: var(--el-text-color-regular); line-height: 1em; font-size: 12px"
+      style="font-size: 12px; line-height: 1em; color: var(--el-text-color-regular)"
     >
       {{ i18n.t('newtab.settings.shortcut.tip') }}
     </p>
@@ -63,10 +63,10 @@ async function restoreDefaultTopSites() {
       </div>
       <p
         style="
-          color: var(--el-text-color-regular);
-          line-height: 1.5em;
-          font-size: 12px;
           margin-top: 0;
+          font-size: 12px;
+          line-height: 1.5em;
+          color: var(--el-text-color-regular);
         "
       >
         {{ i18n.t('newtab.settings.shortcut.whiteTextTip') }}
@@ -100,10 +100,10 @@ async function restoreDefaultTopSites() {
       <p
         v-if="isChrome"
         style="
-          color: var(--el-text-color-regular);
-          line-height: 1.5em;
-          font-size: 12px;
           margin-top: 0;
+          font-size: 12px;
+          line-height: 1.5em;
+          color: var(--el-text-color-regular);
         "
       >
         {{ i18n.t('newtab.settings.shortcut.maxItemsTipForChrome') }}

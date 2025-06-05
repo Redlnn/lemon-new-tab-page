@@ -32,3 +32,4 @@ web-ext.config.ts
 *.sw?
 
 *.tsbuildinfo
+.stylelintcache

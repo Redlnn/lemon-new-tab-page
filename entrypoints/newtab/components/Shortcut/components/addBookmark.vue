@@ -189,8 +189,8 @@ function isSvg(file: Blob) {
 
 <style lang="scss" scoped>
 .shortcut__item--add-bookmark {
-  opacity: 0.7;
   color: var(--el-text-color-primary);
+  opacity: 0.7;
   transition:
     color var(--el-transition-duration-fast) ease,
     opacity var(--el-transition-duration-fast) ease;
@@ -206,8 +206,8 @@ function isSvg(file: Blob) {
   }
 
   &:hover .shortcut__icon {
-    transition: color var(--el-transition-duration-fast) ease;
     color: var(--el-text-color-primary);
+    transition: color var(--el-transition-duration-fast) ease;
   }
 
   .shortcut__icon {
@@ -215,18 +215,28 @@ function isSvg(file: Blob) {
       width: 70%;
     }
   }
+
   .shortcut__favicon-uploader-img {
     width: 100px;
     height: 100px;
     object-fit: cover;
   }
 
+  .el-icon.shortcut__favicon-uploader-icon {
+    width: 100px;
+    height: 100px;
+    font-size: 28px;
+    color: var(--el-text-color-placeholder);
+    text-align: center;
+    transition: var(--el-transition-duration-fast);
+  }
+
   .shortcut__favicon-uploader:deep() .el-upload {
-    border: 1px dashed var(--el-border-color-darker);
-    border-radius: 6px;
-    cursor: pointer;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    border: 1px dashed var(--el-border-color-darker);
+    border-radius: 6px;
     transition: var(--el-transition-duration-fast);
 
     &:hover {
@@ -237,15 +247,6 @@ function isSvg(file: Blob) {
       }
     }
   }
-
-  .el-icon.shortcut__favicon-uploader-icon {
-    font-size: 28px;
-    color: var(--el-text-color-placeholder);
-    width: 100px;
-    height: 100px;
-    text-align: center;
-    transition: var(--el-transition-duration-fast);
-  }
 }
 
 :deep().el-color-picker__trigger {
@@ -255,7 +256,7 @@ function isSvg(file: Blob) {
 
   .el-color-picker__color {
     border: none;
-    border-radius: none;
+    border-radius: initial;
   }
 }
 </style>
