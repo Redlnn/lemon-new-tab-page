@@ -16,47 +16,47 @@ async function restoreDefaultTopSites() {
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><appstore-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.shortcut.title') }}</span>
   </div>
-  <div class="setting-items-container">
+  <div class="settings__items-container">
     <p
       v-if="isChrome"
       style="color: var(--el-text-color-regular); line-height: 1em; font-size: 12px"
     >
       {{ i18n.t('newtab.settings.shortcut.tip') }}
     </p>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.enable') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.enable') }}</div>
       <el-switch v-model="settingsStore.shortcut.enabled" />
     </div>
     <div v-show="settingsStore.shortcut.enabled">
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.showTopSites') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.showTopSites') }}</div>
         <el-switch v-model="settingsStore.shortcut.enableTopSites" />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.enableBg') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.enableBg') }}</div>
         <el-switch v-model="settingsStore.shortcut.showShortcutContainerBg" />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.enableShadow') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.enableShadow') }}</div>
         <el-switch
           v-model="settingsStore.shortcut.enableShadow"
           :disabled="!settingsStore.shortcut.showShortcutContainerBg"
         />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.showPinnedIcon') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.showPinnedIcon') }}</div>
         <el-switch v-model="settingsStore.shortcut.showPinnedIcon" />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.showTitle') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.showTitle') }}</div>
         <el-switch v-model="settingsStore.shortcut.showShortcutTitle" />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.whiteTextInLightMode') }}
         </div>
         <el-switch v-model="settingsStore.shortcut.whiteTextInLightMode" />
@@ -71,8 +71,8 @@ async function restoreDefaultTopSites() {
       >
         {{ i18n.t('newtab.settings.shortcut.whiteTextTip') }}
       </p>
-      <div class="settings-item">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.maxRows') }}</div>
+      <div class="settings__item">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.maxRows') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.rows"
           :step="1"
@@ -84,8 +84,8 @@ async function restoreDefaultTopSites() {
           :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
         />
       </div>
-      <div class="settings-item">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.maxColumns') }}</div>
+      <div class="settings__item">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.maxColumns') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.columns"
           :step="1"
@@ -108,8 +108,8 @@ async function restoreDefaultTopSites() {
       >
         {{ i18n.t('newtab.settings.shortcut.maxItemsTipForChrome') }}
       </p>
-      <div class="settings-item shortcut__item-width">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.iconSize') }}</div>
+      <div class="settings__item settings__item--shortcut-width">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.iconSize') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.iconSize"
           :min="10"
@@ -119,8 +119,8 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings-item shortcut__item-width">
-        <div class="settings-label">
+      <div class="settings__item settings__item--shortcut-width">
+        <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.HorizontalIconSpacing') }}
         </div>
         <el-slider
@@ -132,8 +132,8 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings-item shortcut__item-width">
-        <div class="settings-label">
+      <div class="settings__item settings__item--shortcut-width">
+        <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.VerticalIconSpacing') }}
         </div>
         <el-slider
@@ -145,8 +145,8 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings-item shortcut__item-width">
-        <div class="settings-label">
+      <div class="settings__item settings__item--shortcut-width">
+        <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.marginTop') }}
         </div>
         <el-slider
@@ -158,8 +158,8 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings-item horizontal">
-        <div class="settings-label">{{ i18n.t('newtab.settings.shortcut.restoreDefault') }}</div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.restoreDefault') }}</div>
         <el-popconfirm
           width="220"
           :confirm-button-text="i18n.t('newtab.settings.shortcut.restoreDefaultConfirm.confirm')"
@@ -179,8 +179,8 @@ async function restoreDefaultTopSites() {
 </template>
 
 <style scoped lang="scss">
-.shortcut__item-width:deep() .el-input-number,
-.shortcut__item-width:deep() .el-input {
+.settings__item--shortcut-width:deep() .el-input-number,
+.settings__item--shortcut-width:deep() .el-input {
   width: 60px;
 }
 </style>

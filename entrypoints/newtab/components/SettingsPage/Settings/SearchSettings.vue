@@ -9,13 +9,13 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><search-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.search.title') }}</span>
   </div>
-  <div class="setting-items-container">
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.defaultSearchEngine') }}</div>
+  <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.defaultSearchEngine') }}</div>
       <el-select
         v-model="settingsStore.search.selectedSearchEngine"
         style="width: 100px"
@@ -29,8 +29,8 @@ const settingsStore = useSettingsStore()
         />
       </el-select>
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">
         {{ i18n.t('newtab.settings.search.searchSuggestionProvider') }}
       </div>
       <el-select
@@ -46,20 +46,20 @@ const settingsStore = useSettingsStore()
         />
       </el-select>
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.openInNewTab') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.openInNewTab') }}</div>
       <el-switch v-model="settingsStore.search.searchInNewTab" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.autoFocus') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.autoFocus') }}</div>
       <el-switch v-model="settingsStore.search.autoFocus" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.enableShadow') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.enableShadow') }}</div>
       <el-switch v-model="settingsStore.search.enableShadow" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.search.recordSearchHistory') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.recordSearchHistory') }}</div>
       <el-switch v-model="settingsStore.search.recordSearchHistory" />
     </div>
   </div>

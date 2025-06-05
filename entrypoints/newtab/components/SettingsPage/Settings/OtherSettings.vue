@@ -43,17 +43,17 @@ async function clearExtensionData() {
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><control-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.other.title') }}</span>
   </div>
-  <div class="setting-items-container">
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
+  <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
       <el-switch v-model="settingsStore.search.enableYiyan" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.other.purgeData') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.other.purgeData') }}</div>
       <el-button
         type="danger"
         :icon="DeleteForeverOutlined"
@@ -61,8 +61,8 @@ async function clearExtensionData() {
         @click="confirmClearExtensionData"
       />
     </div>
-    <div v-if="isGoogleChrome" class="settings-item">
-      <div class="settings-label">
+    <div v-if="isGoogleChrome" class="settings__item">
+      <div class="settings__label">
         {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
       </div>
       <p style="color: var(--el-text-color-regular); line-height: 1.5em; font-size: 12px">

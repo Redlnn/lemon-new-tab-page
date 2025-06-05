@@ -124,7 +124,7 @@ function isSvg(file: Blob) {
 </script>
 
 <template>
-  <div class="shortcut__item shortcut__add-bookmark">
+  <div class="shortcut__item shortcut__item--add-bookmark">
     <div class="shortcut__item-link" style="cursor: pointer" @click="showDialog = true">
       <div class="shortcut__icon-container">
         <div class="shortcut__icon">
@@ -188,7 +188,7 @@ function isSvg(file: Blob) {
 </template>
 
 <style lang="scss" scoped>
-.shortcut__add-bookmark {
+.shortcut__item--add-bookmark {
   opacity: 0.7;
   color: var(--el-text-color-primary);
   transition:
@@ -200,8 +200,8 @@ function isSvg(file: Blob) {
     opacity: 1;
   }
 
-  .white-text-light &,
-  .white-text-light & .shortcut__icon {
+  .shortcut__container--white-text-light &,
+  .shortcut__container--white-text-light & .shortcut__icon {
     color: var(--el-bg-color);
   }
 
@@ -215,38 +215,37 @@ function isSvg(file: Blob) {
       width: 70%;
     }
   }
-}
+  .shortcut__favicon-uploader-img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+  }
 
-.shortcut__favicon-uploader-img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-}
+  .shortcut__favicon-uploader:deep() .el-upload {
+    border: 1px dashed var(--el-border-color-darker);
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: var(--el-transition-duration-fast);
 
-.shortcut__favicon-uploader:deep() .el-upload {
-  border: 1px dashed var(--el-border-color-darker);
-  border-radius: 6px;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: var(--el-transition-duration-fast);
+    &:hover {
+      border-color: var(--el-color-primary);
 
-  &:hover {
-    border-color: var(--el-color-primary);
-
-    .el-icon.favicon-uploader__icon {
-      color: var(--el-color-primary);
+      .el-icon.shortcut__favicon-uploader-icon {
+        color: var(--el-color-primary);
+      }
     }
   }
-}
 
-.el-icon.favicon-uploader__icon {
-  font-size: 28px;
-  color: var(--el-text-color-placeholder);
-  width: 100px;
-  height: 100px;
-  text-align: center;
-  transition: var(--el-transition-duration-fast);
+  .el-icon.shortcut__favicon-uploader-icon {
+    font-size: 28px;
+    color: var(--el-text-color-placeholder);
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    transition: var(--el-transition-duration-fast);
+  }
 }
 
 :deep().el-color-picker__trigger {

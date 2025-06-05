@@ -111,6 +111,7 @@ onMounted(async () => {
         justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,
         paddingTop: settingsStore.shortcut.enabled ? undefined : '30vh'
       }"
+      class="app"
     >
       <time-now />
       <search-box style="margin-top: 10px" />
@@ -131,7 +132,7 @@ onMounted(async () => {
 </template>
 
 <style scoped lang="scss">
-main {
+.app {
   display: flex;
   flex-direction: column;
   align-items: center;

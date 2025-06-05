@@ -89,13 +89,13 @@ function onlineImageWarn() {
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><picture-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.background.title') }}</span>
   </div>
-  <div class="setting-items-container">
-    <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
+  <div class="settings__items-container">
+    <div class="settings__item">
+      <div class="settings__label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
       <el-radio-group v-model="settingsStore.background.bgType">
         <el-radio :value="BgType.None">{{
           i18n.t('newtab.settings.background.type.none')
@@ -119,7 +119,7 @@ function onlineImageWarn() {
       @keydown.enter="changeOnlineBg"
       placeholder="https://example.com/image.jpg"
     ></el-input>
-    <ul v-if="settingsStore.background.bgType === BgType.Online" class="online-bg-tips">
+    <ul v-if="settingsStore.background.bgType === BgType.Online" class="settings__online-bg-tips">
       <li>{{ i18n.t('newtab.settings.background.onlineTips.a') }}</li>
       <li>{{ i18n.t('newtab.settings.background.onlineTips.b') }}</li>
       <li>{{ i18n.t('newtab.settings.background.onlineTips.c') }}</li>
@@ -127,7 +127,7 @@ function onlineImageWarn() {
     </ul>
     <el-upload
       v-if="settingsStore.background.bgType === BgType.Local"
-      class="bg-uploader"
+      class="settings__bg-uploader"
       :show-file-list="false"
       :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
       :before-upload="beforeBackgroundUpload"
@@ -136,24 +136,24 @@ function onlineImageWarn() {
       <img
         v-if="settingsStore.localBackground.url"
         :src="settingsStore.localBackground.url"
-        class="bg-uploader__img"
+        class="settings__bg-uploader-img"
       />
-      <el-icon v-else class="bg-uploader__icon"><plus /></el-icon>
+      <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
     </el-upload>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />
     </div>
-    <div v-if="settingsStore.background.bgType !== BgType.None" class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.blur') }}</div>
+    <div v-if="settingsStore.background.bgType !== BgType.None" class="settings__item">
+      <div class="settings__label">{{ i18n.t('newtab.settings.background.blur') }}</div>
       <el-slider v-model="settingsStore.background.blurIntensity" :show-tooltip="false" />
     </div>
-    <div class="settings-item">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.maskOpacity') }}</div>
+    <div class="settings__item">
+      <div class="settings__label">{{ i18n.t('newtab.settings.background.maskOpacity') }}</div>
       <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
       <el-color-picker
         v-model="settingsStore.background.maskColor"
         :predefine="['#fff', '#000']"
@@ -170,29 +170,25 @@ function onlineImageWarn() {
 </template>
 
 <style scoped lang="scss">
-.bg-uploader__img {
+.settings__bg-uploader-img {
   max-width: 100%;
   object-fit: cover;
 }
-
-.bg-uploader:deep() .el-upload {
+.settings__bg-uploader:deep() .el-upload {
   border: 1px dashed var(--el-border-color-darker);
   border-radius: 6px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
   transition: var(--el-transition-duration-fast);
-
   &:hover {
     border-color: var(--el-color-primary);
-
-    .el-icon.bg-uploader__icon {
+    .el-icon.settings__bg-uploader-icon {
       color: var(--el-color-primary);
     }
   }
 }
-
-.el-icon.bg-uploader__icon {
+.el-icon.settings__bg-uploader-icon {
   font-size: 28px;
   color: var(--el-text-color-placeholder);
   width: 350px;
@@ -200,24 +196,20 @@ function onlineImageWarn() {
   text-align: center;
   transition: var(--el-transition-duration-fast);
 }
-
 :deep().el-color-picker__trigger {
   padding: 0;
   overflow: hidden;
   border-radius: 8px;
-
   .el-color-picker__color {
     border: none;
     border-radius: none;
   }
 }
-
-.online-bg-tips {
+.settings__online-bg-tips {
   font-size: 12px;
   margin-top: 5px;
   color: var(--el-text-color-placeholder);
   padding: 5px 15px 0;
-
   li {
     margin: 3px 0;
   }

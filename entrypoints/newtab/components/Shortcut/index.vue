@@ -114,7 +114,7 @@ watch(() => windowWidth.value, refresh)
 
 <template>
   <section
-    class="shortcut-wrapper"
+    class="shortcut"
     :style="{
       opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
       marginTop: `${settingsStore.shortcut.marginTop}px`
@@ -124,9 +124,11 @@ watch(() => windowWidth.value, refresh)
       ref="shortcutContainerRef"
       class="shortcut__container"
       :class="[
-        settingsStore.shortcut.showShortcutContainerBg ? 'shortcut__container-bg' : undefined,
-        settingsStore.shortcut.enableShadow ? 'shortcut__container-shadow' : undefined,
-        settingsStore.shortcut.whiteTextInLightMode ? 'white-text-light' : undefined
+        settingsStore.shortcut.showShortcutContainerBg ? 'shortcut__container--bg' : undefined,
+        settingsStore.shortcut.enableShadow ? 'shortcut__container--shadow' : undefined,
+        settingsStore.shortcut.whiteTextInLightMode
+          ? 'shortcut__container--white-text-light'
+          : undefined
       ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
@@ -161,7 +163,6 @@ watch(() => windowWidth.value, refresh)
         :title="site.title || ''"
         :favicon="site.favicon"
       >
-        >
         <template #submenu>
           <el-dropdown-item
             @click="
@@ -192,45 +193,45 @@ watch(() => windowWidth.value, refresh)
 </template>
 
 <style scoped lang="scss">
-.shortcut-wrapper {
+.shortcut {
   max-width: 85%;
   transition: opacity 0.1s ease;
-}
 
-.shortcut__container {
-  display: grid;
-  justify-items: center;
-  align-items: center;
-  z-index: 10;
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease;
+  &__container {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    z-index: 10;
+    transition:
+      background-color var(--el-transition-duration-fast) ease,
+      box-shadow var(--el-transition-duration-fast) ease;
 
-  &.shortcut__container-bg {
-    padding: 20px;
-    background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
-    border-radius: 10px;
-    backdrop-filter: blur(10px) saturate(1.4);
+    &--bg {
+      padding: 20px;
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+      border-radius: 10px;
+      backdrop-filter: blur(10px) saturate(1.4);
+    }
 
-    &.shortcut__container-shadow {
+    &--bg.shortcut__container--shadow {
       box-shadow: var(--el-box-shadow-dark);
     }
-  }
 
-  html.dark &.shortcut__container-bg.shortcut__container-shadow {
-    box-shadow: var(--el-box-shadow-light);
-  }
+    html.dark &.shortcut__container--bg.shortcut__container--shadow {
+      box-shadow: var(--el-box-shadow-light);
+    }
 
-  a {
-    color: inherit;
-    text-decoration: inherit;
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
   }
 }
 </style>
 
 <style lang="scss">
 .shortcut__container {
-  &.white-text-light .shortcut__title {
+  &--white-text-light .shortcut__title {
     color: white;
   }
 

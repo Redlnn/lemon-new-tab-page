@@ -39,10 +39,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="backgroundWrapper" class="background-wrapper">
+  <div ref="backgroundWrapper" class="background__wrapper">
     <div
       ref="background"
-      class="background"
+      class="background__main"
       :style="{
         '--bg-blur': `${settingsStore.background.blurIntensity}px`,
         '--bg-mask-opacity': settingsStore.background.bgMaskPpacity / 100,
@@ -51,13 +51,13 @@ onMounted(() => {
     >
       <div class="transition" :style="{ opacity: switchStore.isSwitching ? 1 : 0 }"></div>
       <div class="mask" :style="{ backgroundColor: settingsStore.background.maskColor }"></div>
-      <div v-if="settingsStore.background.enableVignetting" class="dark-corners"></div>
+      <div v-if="settingsStore.background.enableVignetting" class="background__dark-corners"></div>
     </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.background-wrapper {
+.background__wrapper {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -70,7 +70,7 @@ onMounted(() => {
     opacity 0.4s var(--el-transition-function-ease-in-out-bezier),
     background-color var(--el-transition-duration-fast) ease;
 
-  .background {
+  .background__main {
     position: absolute;
     top: calc(var(--bg-blur) * -2);
     left: calc(var(--bg-blur) * -2);
@@ -81,13 +81,14 @@ onMounted(() => {
     background-repeat: no-repeat;
     filter: blur(var(--bg-blur));
 
-    .dark-corners {
+    .background__dark-corners {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
+      pointer-events: none;
+      background: radial-gradient(rgba(0, 0, 0, 0) 33%, rgba(0, 0, 0, 1) 166%);
       z-index: -997;
     }
 

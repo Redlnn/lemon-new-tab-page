@@ -20,14 +20,11 @@ $font-apple: -apple-system, BlinkMacSystemFont;
 $font-fallback: system-ui, sans-serif, emoji;
 $font-common: Inter, Ubuntu, 'Source Sans 3', 'Source Sans Pro', Roboto, Arial;
 $font-sc:
-  PingFangSC, 'Microsoft YaHei UI', 'Source Han Sans SC', 'Source Han Sans CN',
-  'Noto Sans CJK SC';
+  PingFangSC, 'Microsoft YaHei UI', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC';
 $font-hk:
-  PingFangHK, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans HK',
-  'Noto Sans CJK HK';
+  PingFangHK, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans HK', 'Noto Sans CJK HK';
 $font-tc:
-  PingFangTC, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans TC',
-  'Noto Sans CJK TC';
+  PingFangTC, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans TC', 'Noto Sans CJK TC';
 
 :root {
   --el-border-radius-base: 8px;

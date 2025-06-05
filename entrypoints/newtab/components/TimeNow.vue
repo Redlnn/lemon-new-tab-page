@@ -51,34 +51,34 @@ function getlunarCalendar() {
     ref="time"
     class="clock"
     :class="[
-      settingsStore.time.enableShadow ? 'shadow' : undefined,
-      settingsStore.time.invertColor.light ? ['invert', 'light'] : undefined,
-      settingsStore.time.invertColor.night ? ['invert', 'night'] : undefined
+      settingsStore.time.enableShadow ? 'clock--shadow' : undefined,
+      settingsStore.time.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
+      settingsStore.time.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
-    <div class="time">
+    <div class="clock__time">
       <span
         v-if="settingsStore.time.showMeridiem && isChinese"
-        class="meridiem"
+        class="clock__meridiem"
         style="margin-right: 5px"
         >{{ timeNowMeridiemZH }}</span
       >
       <span style="font-variant-numeric: tabular-nums">
-        <span class="hour">{{
+        <span class="clock__hour">{{
           settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
         }}</span>
-        <span class="colon">:</span>
-        <span class="minute">{{ timeNowMinute }}</span>
+        <span class="clock__colon">:</span>
+        <span class="clock__minute">{{ timeNowMinute }}</span>
       </span>
       <span
         v-if="settingsStore.time.showMeridiem && !isChinese"
-        class="meridiem"
+        class="clock__meridiem"
         style="margin-left: 5px"
       >
         {{ timeNowMeridiem }}
       </span>
     </div>
-    <div v-if="settingsStore.time.showDate" class="date">
+    <div v-if="settingsStore.time.showDate" class="clock__date">
       <span>
         {{
           timeNow.toLocaleDateString(undefined, {
@@ -123,47 +123,47 @@ function getlunarCalendar() {
     text-shadow var(--el-transition-duration-fast) ease,
     color var(--el-transition-duration-fast) ease;
 
-  &.shadow {
+  &--shadow {
     text-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
   }
 
-  .time {
+  &__time {
     font-size: 60px;
   }
 
-  .date {
+  &__date {
     margin-bottom: 5px;
   }
 
-  &.invert.light,
+  &--invert.clock--light,
   html.dark & {
     color: var(--el-text-color-primary);
   }
 
-  html.dark &.invert.night {
+  html.dark &.clock--invert.clock--night {
     color: var(--el-fill-color-extra-light);
   }
 
-  .meridiem {
+  &__meridiem {
     font-size: 40px;
   }
 
-  .colon {
+  &__colon {
     animation: twinkle 1s ease infinite;
   }
 }
 
 @media screen and (max-width: 600px) {
   .clock {
-    .time {
+    &__time {
       font-size: 50px;
     }
 
-    .meridiem {
+    &__meridiem {
       font-size: 35px;
     }
 
-    .date {
+    &__date {
       font-size: 13px;
     }
   }

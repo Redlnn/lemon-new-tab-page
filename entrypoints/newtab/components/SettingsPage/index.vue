@@ -38,7 +38,7 @@ defineExpose({ show, hide, toggleShow })
   <el-dialog
     v-model="opened"
     :width="windowWidth < 650 ? '90%' : 600"
-    class="settings-dialog"
+    class="settings__dialog"
     :show-close="false"
     align-center
     lock-scroll
@@ -48,12 +48,12 @@ defineExpose({ show, hide, toggleShow })
     <template #header="{ close, titleId }">
       <div
         :id="titleId"
-        class="settings-dialog__title"
+        class="settings__dialog-title"
         :style="{ opacity: !headerIsVisible ? 1 : 0 }"
       >
         {{ i18n.t('newtab.settings.title') }}
       </div>
-      <span class="settings-dialog__close-btn" @click="close">
+      <span class="settings__dialog-close-btn" @click="close">
         <component :is="CloseRound" />
       </span>
     </template>
@@ -67,9 +67,9 @@ defineExpose({ show, hide, toggleShow })
       "
       :style="{ opacity: !headerIsVisible ? 1 : 0 }"
     ></div>
-    <div class="container" style="height: 100%">
+    <div class="settings__container" style="height: 100%">
       <el-scrollbar ref="scrollbar" style="padding-right: 15px">
-        <div ref="header" class="settings-dialog__list-tilte">
+        <div ref="header" class="settings__dialog-list-title">
           {{ i18n.t('newtab.settings.title') }}
         </div>
         <theme-settings />
@@ -86,7 +86,7 @@ defineExpose({ show, hide, toggleShow })
 </template>
 
 <style lang="scss">
-.settings-dialog {
+.settings__dialog {
   padding: 0;
   max-height: 80%;
   height: 500px;
@@ -99,13 +99,13 @@ defineExpose({ show, hide, toggleShow })
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
 
-  .container {
+  .settings__container {
     height: 100%;
     padding: 0 19px 0 35px;
   }
 
   @media screen and (max-width: 650px) {
-    .container {
+    .settings__container {
       padding: 0 4px 0 20px;
     }
   }
@@ -126,12 +126,12 @@ defineExpose({ show, hide, toggleShow })
     transition: color var(--el-transition-duration-fast) ease;
   }
 
-  .settings-dialog__title {
+  .settings__dialog-title {
     font-size: 18px;
     transition: opacity 0.1s;
   }
 
-  .settings-dialog__close-btn {
+  .settings__dialog-close-btn {
     position: fixed;
     right: 20px;
     height: 20px;
@@ -151,13 +151,13 @@ defineExpose({ show, hide, toggleShow })
     }
   }
 
-  .settings-dialog__list-tilte {
+  .settings__dialog-list-title {
     font-size: 28px;
     margin-top: 30px;
   }
 }
 
-.settings-title {
+.settings__title {
   display: flex;
   align-items: center;
   margin: 30px 0 6px 10px;
@@ -169,19 +169,19 @@ defineExpose({ show, hide, toggleShow })
   }
 }
 
-.setting-items-container {
+.settings__items-container {
   background-color: var(--el-bg-color);
   padding: 10px 25px;
   border-radius: 8px;
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 
-.settings-item {
+.settings__item {
   min-height: 40px;
   width: 100%;
   overflow: hidden;
 
-  &.horizontal {
+  &--horizontal {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -193,7 +193,7 @@ defineExpose({ show, hide, toggleShow })
   }
 }
 
-.settings-label {
+.settings__label {
   margin: 10px 0 6px;
 }
 </style>

@@ -22,8 +22,10 @@ const settingsStore = useSettingsStore()
       <div
         v-for="(item, index) in searchEngines"
         :key="index"
-        class="search-engine-menu-item"
-        :class="{ active: settingsStore.search.selectedSearchEngine === index }"
+        class="search-engine-menu__item"
+        :class="{
+          'search-engine-menu__item--active': settingsStore.search.selectedSearchEngine === index
+        }"
         @click="settingsStore.search.selectedSearchEngine = index"
       >
         <div style="display: flex; align-items: center">
@@ -38,27 +40,29 @@ const settingsStore = useSettingsStore()
         </div>
       </div>
       <el-divider />
-      <div class="tip">
+      <div class="search-engine-menu__tip">
         <span>{{ i18n.t('newtab.search.searchEngineMenu.tipPrefix') }}</span>
-        <kbd class="kdb">Tab</kbd>
+        <kbd class="search-engine-menu__kbd">Tab</kbd>
         <span>{{ i18n.t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
-    <el-icon class="search-engine-icon">
+    <el-icon class="search-engine-menu__icon">
       <component :is="searchEngines[settingsStore.search.selectedSearchEngine]['icon']" />
     </el-icon>
   </el-tooltip>
 </template>
 
 <style lang="scss">
-.search-engine-menu.is-customized {
-  min-width: 210px;
-  padding: 5px;
-  background-color: var(--el-bg-color);
-  --el-popper-border-radius: 10px;
-  transition: background-color var(--el-transition-duration-fast) ease;
+.search-engine-menu {
+  &.is-customized {
+    min-width: 210px;
+    padding: 5px;
+    background-color: var(--el-bg-color);
+    --el-popper-border-radius: 10px;
+    transition: background-color var(--el-transition-duration-fast) ease;
+  }
 
-  .search-engine-menu-item {
+  &__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -69,7 +73,7 @@ const settingsStore = useSettingsStore()
     overflow: hidden;
     cursor: pointer;
 
-    &:hover {
+    &--active {
       background: var(--el-fill-color-dark);
     }
 
@@ -80,7 +84,7 @@ const settingsStore = useSettingsStore()
     }
   }
 
-  .tip {
+  &__tip {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +94,7 @@ const settingsStore = useSettingsStore()
     padding: 0 10px;
     transition: color var(--el-transition-duration-fast) ease;
 
-    .kdb {
+    .search-engine-menu__kbd {
       border: solid 1px currentColor;
       padding: 2px 4px;
       border-radius: 3px;

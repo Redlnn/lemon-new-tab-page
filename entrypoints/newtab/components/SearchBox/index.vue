@@ -39,7 +39,7 @@ function resetSearch() {
   searchText.value = ''
   originSearchText.value = ''
   suggedtionArea.value?.clearSearchSuggestions()
-  searchForm.value?.classList.remove('focus')
+  searchForm.value?.classList.remove('search-box__form--focus')
   focusStore.blur()
 }
 
@@ -63,7 +63,7 @@ onClickOutside(searchBox, (e) => {
 })
 
 function handleFocus() {
-  searchForm.value?.classList.add('focus')
+  searchForm.value?.classList.add('search-box__form--focus')
   suggedtionArea.value!.showSearchHistories()
   focusStore.focus()
 }
@@ -163,10 +163,10 @@ onMounted(() => {
   <section ref="searchBox" class="search-box">
     <form
       ref="searchForm"
-      class="search-form"
+      class="search-box__form"
       :class="[
-        settingsStore.search.enableShadow ? 'shadow' : undefined,
-        settingsStore.background.bgType === 0 ? 'dark' : undefined
+        settingsStore.search.enableShadow ? 'search-box__form--shadow' : undefined,
+        settingsStore.background.bgType === 0 ? 'search-box__form--dark' : undefined
       ]"
       :style="{ '--width': mounted ? undefined : '0' }"
       @submit.prevent="doSearch"
@@ -176,7 +176,7 @@ onMounted(() => {
         ref="searchInput"
         v-model="searchText"
         :placeholder="focusStore.isFocused ? undefined : i18n.t('newtab.search.placeholder')"
-        class="search-input"
+        class="search-box__input"
         @input="suggedtionArea!.handleInput"
         @focus="handleFocus"
         @keydown.up.prevent="handleUp"
@@ -185,7 +185,7 @@ onMounted(() => {
         @keydown.tab.prevent.exact="handleNextTab"
         :autofocus="settingsStore.search.autoFocus"
       />
-      <div class="search-btn">
+      <div class="search-box__btn">
         <el-icon @click="doSearch"><search /></el-icon>
       </div>
     </form>
@@ -207,120 +207,117 @@ onMounted(() => {
   z-index: 10;
   --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
   position: relative;
-}
-
-.search-form {
-  --height: 44px;
-  --width: 300px;
-  --search-form-placeholder-color: var(--el-text-color-regular);
-  height: var(--height);
-  width: var(--width);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  border-radius: calc(var(--height) / 2);
-  font-size: 15px;
-  backdrop-filter: blur(10px) saturate(1.4);
-  background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
-  color: transparent;
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease,
-    border var(--el-transition-duration-fast) ease,
-    width var(--el-transition-duration-fast) var(--cubic-bezier);
-
-  &.shadow {
-    box-shadow: var(--el-box-shadow-dark);
-  }
-
-  html.dark & {
-    --search-form-placeholder-color: var(--el-text-color-secondary);
-
-    &.shadow {
-      box-shadow: var(--el-box-shadow-light);
-    }
-  }
-
-  &:hover:not(.focus) {
-    --width: 500px;
-    background-color: color-mix(in oklab, var(--el-fill-color), transparent 40%);
-    --search-form-placeholder-color: var(--el-text-color-primary);
-  }
-
-  &.focus {
-    background-color: color-mix(in oklab, var(--el-fill-color), transparent 20%);
-    --width: 500px;
-  }
-
-  html:not(.dark) &.dark {
-    background-color: var(--el-fill-color-blank);
-    border: solid 1px var(--el-border-color-light);
-  }
-
-  :deep() .search-engine-icon,
-  :deep() .search-btn {
+  &__form {
+    --height: 44px;
+    --width: 300px;
+    --search-form-placeholder-color: var(--el-text-color-regular);
+    height: var(--height);
+    width: var(--width);
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
-    margin: 5px;
-    height: calc(var(--height) - 10px);
-    width: calc(var(--height) - 10px);
-    overflow: hidden;
-    border-radius: 50%;
+    position: relative;
+    border-radius: calc(var(--height) / 2);
+    font-size: 15px;
+    backdrop-filter: blur(10px) saturate(1.4);
+    background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
+    color: transparent;
     transition:
-      color var(--el-transition-duration-fast) ease,
-      background-color var(--el-transition-duration-fast) ease;
-  }
+      background-color var(--el-transition-duration-fast) ease,
+      box-shadow var(--el-transition-duration-fast) ease,
+      border var(--el-transition-duration-fast) ease,
+      width var(--el-transition-duration-fast) var(--cubic-bezier);
+    &--shadow {
+      box-shadow: var(--el-box-shadow-dark);
+    }
+    html.dark & {
+      --search-form-placeholder-color: var(--el-text-color-secondary);
 
-  &.focus:deep() {
-    .search-engine-icon,
-    .search-btn {
-      cursor: pointer;
-
-      &:hover {
-        background: white;
+      &--shadow {
+        box-shadow: var(--el-box-shadow-light);
       }
     }
-    .search-engine-icon {
-      color: var(--el-text-color-regular);
-    }
-    .search-btn {
-      color: var(--el-color-primary);
-    }
-  }
 
-  .search-input {
-    height: 100%;
-    width: calc(100% - 2 * var(--height) - 20px);
-    color: var(--el-text-color-primary);
-    text-align: center;
-    font-size: 1em;
-    outline: none;
-    border: none;
-    background: none;
-    transition:
-      width var(--el-transition-duration-fast) var(--cubic-bezier),
-      color var(--el-transition-duration-fast) ease;
+    &:hover:not(.search-box__form--focus) {
+      --width: 500px;
+      background-color: color-mix(in oklab, var(--el-fill-color), transparent 40%);
+      --search-form-placeholder-color: var(--el-text-color-primary);
+    }
 
-    &::placeholder {
-      color: var(--search-form-placeholder-color);
-      -moz-user-select: none;
-      -webkit-user-select: none;
-      -ms-user-select: none;
-      -khtml-user-select: none;
-      user-select: none;
+    &--focus {
+      background-color: color-mix(in oklab, var(--el-fill-color), transparent 20%);
+      --width: 500px;
+    }
+
+    html:not(.dark) &.search-box__form--dark {
+      background-color: var(--el-fill-color-blank);
+      border: solid 1px var(--el-border-color-light);
+    }
+
+    :deep() .search-engine-menu__icon,
+    :deep() .search-box__btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 5px;
+      height: calc(var(--height) - 10px);
+      width: calc(var(--height) - 10px);
+      overflow: hidden;
+      border-radius: 50%;
+      transition:
+        color var(--el-transition-duration-fast) ease,
+        background-color var(--el-transition-duration-fast) ease;
+    }
+
+    &--focus:deep() {
+      .search-engine-menu__icon,
+      .search-box__btn {
+        cursor: pointer;
+
+        &:hover {
+          background: white;
+        }
+      }
+      .search-engine-menu__icon {
+        color: var(--el-text-color-regular);
+      }
+
+      .search-box__btn {
+        color: var(--el-color-primary);
+      }
+    }
+
+    .search-box__input {
+      height: 100%;
+      width: calc(100% - 2 * var(--height) - 20px);
+      color: var(--el-text-color-primary);
+      text-align: center;
+      font-size: 1em;
+      outline: none;
+      border: none;
+      background: none;
+      transition:
+        width var(--el-transition-duration-fast) var(--cubic-bezier),
+        color var(--el-transition-duration-fast) ease;
+
+      &::placeholder {
+        color: var(--search-form-placeholder-color);
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+        -khtml-user-select: none;
+        user-select: none;
+      }
     }
   }
 }
 
 @media screen and (max-width: 600px) {
-  .search-form {
+  .search-box__form {
     --width: 75vw;
     --height: 40px;
-
-    &:hover:not(.focus),
-    &.focus {
+    &:hover:not(.search-box__form--focus),
+    &.search-box__form--focus {
       --width: 85vw;
     }
   }

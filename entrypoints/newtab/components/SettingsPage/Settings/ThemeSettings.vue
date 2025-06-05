@@ -103,17 +103,17 @@ watch(preferredDark, () => {
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><color-lens-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.theme.title') }}</span>
   </div>
-  <div class="setting-items-container">
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.darkMode') }}</div>
+  <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.theme.darkMode') }}</div>
       <el-switch v-model="isDarkLocal" @change="toggleDark" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.systemMode') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.theme.systemMode') }}</div>
       <el-switch v-model="isAutoLocal" @change="toggleAuto" />
     </div>
     <p
@@ -127,9 +127,9 @@ watch(preferredDark, () => {
     >
       {{ i18n.t('newtab.settings.theme.chromeTip') }}
     </p>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>
-      <div class="color-mode">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>
+      <div class="settings__theme-mode">
         <el-color-picker
           v-model="settingsStore.primaryColor"
           :predefine="predefineColors"
@@ -148,18 +148,18 @@ watch(preferredDark, () => {
 </template>
 
 <style scoped lang="scss">
-.theme-mode {
+.settings__theme-mode {
   display: flex;
   column-gap: 8px;
 
-  .theme-item {
+  .settings__theme-item {
     position: relative;
     cursor: pointer;
 
-    & .selected {
+    & .settings__theme-selected {
       display: none;
     }
-    &.active .selected {
+    &.settings__theme-item--active .settings__theme-selected {
       display: block;
       position: absolute;
       right: 8px;

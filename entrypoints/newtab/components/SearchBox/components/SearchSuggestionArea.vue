@@ -109,8 +109,10 @@ defineExpose({
     ref="searchSuggestionArea"
     class="search-suggestion-area"
     :class="[
-      settingsStore.search.enableShadow ? 'shadow' : undefined,
-      settingsStore.background.bgType === 0 && searchSuggestions.length > 0 ? 'dark' : undefined
+      settingsStore.search.enableShadow ? 'search-suggestion-area--shadow' : undefined,
+      settingsStore.background.bgType === 0 && searchSuggestions.length > 0
+        ? 'search-suggestion-area--dark'
+        : undefined
     ]"
     :style="{
       width: `${searchFormWidth}px`,
@@ -122,22 +124,29 @@ defineExpose({
         ? searchSuggestions.slice(0, 10)
         : searchSuggestions"
       :key="index"
-      class="search-suggestion-item noselect"
-      :class="{ active: currentActiveSuggest === index }"
+      class="search-suggestion-area__item noselect"
+      :class="{ 'search-suggestion-area__item--active': currentActiveSuggest === index }"
       @click="emit('doSearchWithText', item)"
       @mouseover="
         (e) => {
-          ;(e.target as HTMLDivElement | null)?.classList.add('active')
+          ;(e.target as HTMLDivElement | null)?.classList.add(
+            'search-suggestion-area__item--active'
+          )
           currentActiveSuggest = index
         }
       "
-      @mouseout="(e) => (e.target as HTMLDivElement | null)?.classList.remove('active')"
+      @mouseout="
+        (e) =>
+          (e.target as HTMLDivElement | null)?.classList.remove(
+            'search-suggestion-area__item--active'
+          )
+      "
     >
       {{ item }}
     </div>
     <div
       ref="clearSearchHistory"
-      class="search-suggestion-item clear-search-history noselect"
+      class="search-suggestion-area__item search-suggestion-area__clear-history noselect"
       style="display: none"
       @click="clearSearchHistories()"
     >
@@ -163,16 +172,16 @@ defineExpose({
     border var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
 
-  &.shadow {
+  &--shadow {
     box-shadow: var(--el-box-shadow-light);
   }
 
-  &.dark {
+  &--dark {
     background-color: var(--el-fill-color-blank);
     border: solid 1px var(--el-border-color-light);
   }
 
-  .search-suggestion-item {
+  &__item {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     line-clamp: 1;
@@ -189,19 +198,22 @@ defineExpose({
       padding-left var(--el-transition-duration-fast) var(--cubic-bezier),
       color var(--el-transition-duration-fast) ease;
 
-    &.active {
+    &--active {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);
       padding-left: 30px;
     }
   }
 
-  .clear-search-history {
+  &__clear-history {
     font-size: 12px;
     color: color-mix(in oklab, var(--el-text-color-primary), transparent 20%);
     display: flex;
     align-items: center;
     background-color: transparent;
-    transition: color var(--el-transition-duration-fast) ease;
+    transition:
+      padding var(--el-transition-duration-fast) var(--cubic-bezier),
+      padding-left var(--el-transition-duration-fast) var(--cubic-bezier),
+      color var(--el-transition-duration-fast) ease;
 
     &:hover {
       background-color: color-mix(in oklab, var(--el-fill-color), transparent 60%);

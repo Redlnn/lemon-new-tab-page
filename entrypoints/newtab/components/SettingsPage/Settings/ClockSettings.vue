@@ -10,37 +10,40 @@ const isChinese = browser.i18n.getUILanguage().startsWith('zh')
 </script>
 
 <template>
-  <div class="settings-title">
+  <div class="settings__title">
     <el-icon><clock-circle-outlined /></el-icon>
     <span>{{ i18n.t('newtab.settings.clock.title') }}</span>
   </div>
-  <div class="setting-items-container">
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.use12HourClock') }}</div>
+  <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.use12HourClock') }}</div>
       <el-switch v-model="settingsStore.time.isMeridiem" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.showAMPM') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.showAMPM') }}</div>
       <el-switch v-model="settingsStore.time.showMeridiem" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.showDate') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.showDate') }}</div>
       <el-switch v-model="settingsStore.time.showDate" />
     </div>
-    <div v-if="settingsStore.time.showDate && isChinese" class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.showLunar') }}</div>
+    <div
+      v-if="settingsStore.time.showDate && isChinese"
+      class="settings__item settings__item--horizontal"
+    >
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.showLunar') }}</div>
       <el-switch v-model="settingsStore.time.showLunar" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.enableShadow') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.enableShadow') }}</div>
       <el-switch v-model="settingsStore.time.enableShadow" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.invertColorLight') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.invertColorLight') }}</div>
       <el-switch v-model="settingsStore.time.invertColor.light" />
     </div>
-    <div class="settings-item horizontal">
-      <div class="settings-label">{{ i18n.t('newtab.settings.clock.invertColorDark') }}</div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.invertColorDark') }}</div>
       <el-switch v-model="settingsStore.time.invertColor.night" />
     </div>
   </div>
