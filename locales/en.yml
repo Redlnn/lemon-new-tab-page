@@ -84,21 +84,21 @@ newtab:
       systemMode: Follow System
       primaryColor: Primary Color
       chromeTip: In Chrome, this option is not affected by the 'Customize Chrome' sidebar and only related to system settings.
-    quickstart:
+    shortcut:
       title: Shortcut Settings
       tip: 'Tip: You can drag the settings window to see changes in the shortcut area.'
       enable: Enable
       showTopSites: Show Most Visited
       showPinnedIcon: Show Pinned Icon
       showTitle: Show Link Title
-      enableQSBg: Shortcut Area Background
+      enableBg: Shortcut Area Background
       enableShadow: Show Shortcut Area Shadow
       maxRows: Maximum Rows
       maxColumns: Maximum Columns
       maxItemsTipForChrome: 'Tip: You can only have up to 10 most visited links.'
-      restoreDefault: Restore default shortcut links.
+      restoreDefault: Restore default shortcuts
       restoreDefaultConfirm:
-        title: Are you sure to restore default shortcut links?
+        title: Are you sure to restore default shortcuts?
         confirm: 'Yes'
         cancel: 'No'
       whiteTextInLightMode: White Text in Light Mode
@@ -107,8 +107,8 @@ newtab:
       HorizontalIconSpacing: Horizontal Icon Spacing
       VerticalIconSpacing: Vertical Icon Spacing
       marginTop: Shortcut Area Top Margin
-  quickstart:
-    addNewQuickstart: Add New Shortcut
+  shortcut:
+    addNewShortcut: Add New Shortcut
     pin: Pin
     unpin: Unpin
     remove: Remove
@@ -126,11 +126,11 @@ newtab:
       confirmSvgCancelBtn: Oh no
       tooLargeImageError: The image size exceeds 100KiB, please reselect a new one~
       autoFetchFavicon: Use automatic favicon
-      uploadFaviconAlert: Available types：ico, svg, png, jpg, webp
+      uploadFaviconAlert: 'Available types: ico, svg, png, jpg, webp'
     removeTopMessage:
-      content: Removed from most visited.
+      content: Removed from shortcuts.
       revoke: Revoke
-      restoreDefault: Restore default shortcut links
+      restoreDefault: Restore default shortcuts
     removePinnedMessage:
       content: Removed from pinned links.
       revoke: Revoke

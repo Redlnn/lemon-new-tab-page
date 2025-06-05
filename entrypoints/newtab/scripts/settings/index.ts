@@ -1,12 +1,17 @@
 export { BgType } from './types'
-export { migrateFromVer1To3, migrateFromVer2To3 } from './migrate'
-export type { OldSettingsInterface, SettingsInterfaceVer2, SettingsInterfaceVer3 } from './types'
+export { migrateFromVer1To4, migrateFromVer2To4, migrateFromVer3To4 } from './migrate'
+export type {
+  OldSettingsInterface,
+  SettingsInterfaceVer2,
+  SettingsInterfaceVer3,
+  SettingsInterfaceVer4
+} from './types'
 
-import { BgType, type SettingsInterfaceVer3 } from './types'
+import { BgType, type SettingsInterfaceVer4 } from './types'
 
-export const CURRENT_CONFIG_VERSION = 3
+export const CURRENT_CONFIG_VERSION = 4
 
-export const defaultSettings: SettingsInterfaceVer3 = {
+export const defaultSettings: SettingsInterfaceVer4 = {
   primaryColor: '#FFBB00',
   time: {
     isMeridiem: false,
@@ -45,7 +50,7 @@ export const defaultSettings: SettingsInterfaceVer3 = {
     url: '',
     updateDate: ''
   },
-  quickStart: {
+  shortcut: {
     enabled: true,
     enableTopSites: true,
     enableShadow: true,
@@ -53,9 +58,9 @@ export const defaultSettings: SettingsInterfaceVer3 = {
     columns: 5,
     itemMarginH: 10,
     itemMarginV: 10,
-    showQuickStartTitle: true,
+    showShortcutTitle: true,
     showPinnedIcon: true,
-    showQuickStartContainerBg: false,
+    showShortcutContainerBg: false,
     iconSize: 50,
     whiteTextInLightMode: true,
     marginTop: 50

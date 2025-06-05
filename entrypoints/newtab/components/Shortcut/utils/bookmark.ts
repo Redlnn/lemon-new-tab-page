@@ -23,7 +23,7 @@ export async function removeBookmark(
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.quickstart.removePinnedMessage.content')
+        i18n.t('newtab.shortcut.removePinnedMessage.content')
       ),
       h(
         'span',
@@ -39,14 +39,14 @@ export async function removeBookmark(
             await refresh()
           }
         },
-        i18n.t('newtab.quickstart.removePinnedMessage.revoke')
+        i18n.t('newtab.shortcut.removePinnedMessage.revoke')
       )
     ]),
     type: 'success'
   })
 }
 
-export async function pin(
+export async function pinBookmark(
   store: Store<'bookmark', Bookmark>,
   refresh: () => Promise<void>,
   url: string,

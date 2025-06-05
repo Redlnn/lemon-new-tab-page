@@ -9,7 +9,7 @@ import { onMounted, ref, watch } from 'vue'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
-import QuickStart from './components/QuickStart/index.vue'
+import Shortcut from './components/Shortcut/index.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
@@ -108,13 +108,13 @@ onMounted(async () => {
   <el-config-provider :locale="zhCn">
     <main
       :style="{
-        justifyContent: settingsStore.quickStart.enabled ? 'center' : undefined,
-        paddingTop: settingsStore.quickStart.enabled ? undefined : '30vh'
+        justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,
+        paddingTop: settingsStore.shortcut.enabled ? undefined : '30vh'
       }"
     >
       <time-now />
       <search-box style="margin-top: 10px" />
-      <quick-start v-if="settingsStore.quickStart.enabled" />
+      <shortcut v-if="settingsStore.shortcut.enabled" />
       <yi-yan />
     </main>
     <background :url="bgURL" />

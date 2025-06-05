@@ -77,14 +77,14 @@ newtab:
       systemMode: 跟隨系統
       primaryColor: 主題色
       chromeTip: 在 Chrome 中，該選項不受到「自訂 Chrome」側邊欄的影響，只與系統設定相關。
-    quickstart:
+    shortcut:
       title: 捷徑設定
       tip: Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~
       enable: 啟用
       showTopSites: 顯示最常造訪
       showPinnedIcon: 顯示置頂圖示
       showTitle: 顯示標題
-      enableQSBg: 顯示捷徑區域背景
+      enableBg: 顯示捷徑區域背景
       enableShadow: 顯示捷徑區域陰影
       maxRows: 最大行數
       maxColumns: 最大列數
@@ -94,14 +94,14 @@ newtab:
         title: 你確定要恢復預設捷徑嗎
         confirm: 是
         cancel: 算了
-      whiteTextInLightMode: 在淺色模式下使用白色文字
+      whiteTextInLightMode: 在淺色模式下使用白色字體
       whiteTextTip: 搭配【關閉捷徑區域背景】和【背景遮罩】使用更好看哦~
       iconSize: 連結大小
       HorizontalIconSpacing: 橫向連結間距
-      VerticalIconSpacing: 竪向連結間距
+      VerticalIconSpacing: 縱向連結間距
       marginTop: 捷徑區域上邊距
-  quickstart:
-    addNewQuickstart: 新增捷徑
+  shortcut:
+    addNewShortcut: 新增捷徑
     pin: 置頂
     unpin: 取消置頂
     remove: 移除

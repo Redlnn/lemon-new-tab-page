@@ -15,11 +15,10 @@ import {
 } from '@/newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
-import quickStartItem from './components/quickStartItem.vue'
+import ShortcutItem from './components/ShortcutItem.vue'
 import { saveBookmark } from '@/newtab/scripts/store'
-import { getQSSize } from './utils'
 import { blockSite, getTopSites } from './utils/topSites'
-import { removeBookmark, pin } from './utils/bookmark'
+import { removeBookmark, pinBookmark } from './utils/bookmark'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -30,10 +29,10 @@ const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
 const { width: windowWidth } = useWindowSize()
 
-const quickstartContaninerRef = ref()
-useDraggable(quickstartContaninerRef, bookmarks, {
+const shortcutContainerRef = ref()
+useDraggable(shortcutContainerRef, bookmarks, {
   animation: 150,
-  handle: '.quickstart-item',
+  handle: '.shortcut__item',
   onUpdate() {
     bookmarkStore.items = bookmarks.value
     saveBookmark(bookmarkStore)
@@ -42,9 +41,9 @@ useDraggable(quickstartContaninerRef, bookmarks, {
 
 function getContainerWidth(num: number) {
   const width =
-    num * (15 + settingsStore.quickStart.iconSize + 15) +
-    (num - 1) * settingsStore.quickStart.itemMarginH
-  if (settingsStore.quickStart.showQuickStartContainerBg) {
+    num * (15 + settingsStore.shortcut.iconSize + 15) +
+    (num - 1) * settingsStore.shortcut.itemMarginH
+  if (settingsStore.shortcut.showShortcutContainerBg) {
     return width + 40
   }
   return width
@@ -56,7 +55,7 @@ async function refresh() {
   const _bookmarks = bookmarkStore.items.slice()
   let _topSites: TopSites.MostVisitedURL[] = []
 
-  if (settingsStore.quickStart.enableTopSites) {
+  if (settingsStore.shortcut.enableTopSites) {
     //如果 getTopSites() 返回 undefined，默认空数组
     _topSites = (await getTopSites()) ?? []
 
@@ -71,7 +70,7 @@ async function refresh() {
   const _itemCount = _bookmarks.length + _topSites.length + 1
 
   // 当元素总数少于设置中的列数时，使实际列数=元素总数
-  let _columnsCount = Math.min(settingsStore.quickStart.columns, _itemCount)
+  let _columnsCount = Math.min(settingsStore.shortcut.columns, _itemCount)
   // 遍历列数，计算小于多少列时，容器大小不会超出页面
   const containerWidth = windowWidth.value * 0.85
   for (let i = _columnsCount; i > 0; i--) {
@@ -88,7 +87,7 @@ async function refresh() {
     rowsNum.value = 1
   } else {
     // 讲元素总数÷实际列数（所需行数）与最大行数比较，取小的作为实际行数
-    rowsNum.value = Math.min(settingsStore.quickStart.rows, Math.ceil(_itemCount / _columnsCount))
+    rowsNum.value = Math.min(settingsStore.shortcut.rows, Math.ceil(_itemCount / _columnsCount))
   }
 
   // 定好行数和列数后才把书签上屏避免闪烁
@@ -102,42 +101,42 @@ async function refresh() {
 }
 
 const columnsNum = ref(0)
-const rowsNum = ref(settingsStore.quickStart.rows)
+const rowsNum = ref(settingsStore.shortcut.rows)
 
 onMounted(async () => {
   await refresh()
   mounted.value = true
 })
 
-watch(settingsStore.quickStart, refresh)
+watch(settingsStore.shortcut, refresh)
 watch(() => windowWidth.value, refresh)
 </script>
 
 <template>
   <section
-    class="quickstart-wrapper"
+    class="shortcut-wrapper"
     :style="{
       opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
-      marginTop: `${settingsStore.quickStart.marginTop}px`
+      marginTop: `${settingsStore.shortcut.marginTop}px`
     }"
   >
     <div
-      ref="quickstartContaninerRef"
-      class="quickstart-contaniner"
+      ref="shortcutContainerRef"
+      class="shortcut__container"
       :class="[
-        settingsStore.quickStart.showQuickStartContainerBg ? 'quickstart-contaniner-bg' : undefined,
-        settingsStore.quickStart.enableShadow ? 'quickstart-contaniner-shadow' : undefined,
-        settingsStore.quickStart.whiteTextInLightMode ? 'white-text-light' : undefined
+        settingsStore.shortcut.showShortcutContainerBg ? 'shortcut__container-bg' : undefined,
+        settingsStore.shortcut.enableShadow ? 'shortcut__container-shadow' : undefined,
+        settingsStore.shortcut.whiteTextInLightMode ? 'white-text-light' : undefined
       ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
         gridTemplateColumns: `repeat(${columnsNum}, 1fr)`,
         gridTemplateRows: `repeat(${rowsNum}, 1fr)`,
-        gridGap: `${2 * settingsStore.quickStart.itemMarginV}px ${settingsStore.quickStart.itemMarginH}px`,
-        '--icon_size': `${settingsStore.quickStart.iconSize}px`
+        gridGap: `${2 * settingsStore.shortcut.itemMarginV}px ${settingsStore.shortcut.itemMarginH}px`,
+        '--icon_size': `${settingsStore.shortcut.iconSize}px`
       }"
     >
-      <quick-start-item
+      <shortcut-item
         v-for="(site, index) in bookmarks"
         ref="bookmarkItemsRef"
         :key="index"
@@ -151,16 +150,15 @@ watch(() => windowWidth.value, refresh)
             <el-icon>
               <pin-off16-regular />
             </el-icon>
-            {{ i18n.t('newtab.quickstart.unpin') }}
+            {{ i18n.t('newtab.shortcut.unpin') }}
           </el-dropdown-item>
         </template>
-      </quick-start-item>
-      <quick-start-item
+      </shortcut-item>
+      <shortcut-item
         v-for="(site, index) in topSites"
         :key="index"
         :url="site.url"
         :title="site.title || ''"
-        :qs-sites-size="() => getQSSize(bookmarks, topSites)"
         :favicon="site.favicon"
       >
         >
@@ -176,28 +174,30 @@ watch(() => windowWidth.value, refresh)
             <el-icon>
               <clear-round />
             </el-icon>
-            {{ i18n.t('newtab.quickstart.remove') }}
+            {{ i18n.t('newtab.shortcut.remove') }}
           </el-dropdown-item>
-          <el-dropdown-item @click="pin(bookmarkStore, refresh, site.url, site.title || '')">
+          <el-dropdown-item
+            @click="pinBookmark(bookmarkStore, refresh, site.url, site.title || '')"
+          >
             <el-icon>
               <pin16-regular />
             </el-icon>
-            {{ i18n.t('newtab.quickstart.pin') }}
+            {{ i18n.t('newtab.shortcut.pin') }}
           </el-dropdown-item>
         </template>
-      </quick-start-item>
+      </shortcut-item>
       <add-bookmark :reload="refresh" />
     </div>
   </section>
 </template>
 
 <style scoped lang="scss">
-.quickstart-wrapper {
+.shortcut-wrapper {
   max-width: 85%;
   transition: opacity 0.1s ease;
 }
 
-.quickstart-contaniner {
+.shortcut__container {
   display: grid;
   justify-items: center;
   align-items: center;
@@ -206,18 +206,18 @@ watch(() => windowWidth.value, refresh)
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
 
-  &.quickstart-contaniner-bg {
+  &.shortcut__container-bg {
     padding: 20px;
     background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
     border-radius: 10px;
     backdrop-filter: blur(10px) saturate(1.4);
 
-    &.quickstart-contaniner-shadow {
+    &.shortcut__container-shadow {
       box-shadow: var(--el-box-shadow-dark);
     }
   }
 
-  html.dark &.quickstart-contaniner-bg.quickstart-contaniner-shadow {
+  html.dark &.shortcut__container-bg.shortcut__container-shadow {
     box-shadow: var(--el-box-shadow-light);
   }
 
@@ -229,8 +229,8 @@ watch(() => windowWidth.value, refresh)
 </style>
 
 <style lang="scss">
-.quickstart-contaniner {
-  &.white-text-light a {
+.shortcut__container {
+  &.white-text-light .shortcut__title {
     color: white;
   }
 
@@ -239,26 +239,26 @@ watch(() => windowWidth.value, refresh)
     text-decoration: inherit;
   }
 
-  .quickstart-item {
+  .shortcut__item {
     position: relative;
     border-radius: 10px;
 
-    &:hover .quickstart-icon {
+    &:hover .shortcut__icon {
       background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
     }
 
-    .quickstart-item-link {
+    .shortcut__item-link {
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
-    .quickstart-icon-container {
+    .shortcut__icon-container {
       position: relative;
       margin-bottom: 8px;
     }
 
-    .quickstart-icon {
+    .shortcut__icon {
       position: relative;
       width: var(--icon_size);
       height: var(--icon_size);
@@ -269,6 +269,7 @@ watch(() => windowWidth.value, refresh)
       background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
       backdrop-filter: blur(10px) saturate(1.4);
       transition: background-color 0.1s ease;
+      color: var(--el-text-color-regular);
 
       span {
         display: block;
@@ -278,8 +279,6 @@ watch(() => windowWidth.value, refresh)
         background-position: center center;
         background-repeat: no-repeat;
         background-size: cover;
-        color: var(--el-text-color-regular);
-
         svg {
           width: 30px;
           height: 30px;
@@ -287,7 +286,7 @@ watch(() => windowWidth.value, refresh)
       }
     }
 
-    .pin-icon {
+    .shortcut__pin-icon {
       position: absolute;
       bottom: -3px;
       right: -3px;
@@ -304,7 +303,7 @@ watch(() => windowWidth.value, refresh)
       backdrop-filter: blur(10px);
     }
 
-    .quickstart-title {
+    .shortcut__title {
       width: calc(var(--icon_size) + 30px);
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -316,11 +315,11 @@ watch(() => windowWidth.value, refresh)
       overflow-wrap: anywhere;
     }
 
-    &:hover .quickstart-menu {
+    &:hover .shortcut__menu {
       color: var(--el-text-color-regular);
     }
 
-    .quickstart-menu {
+    .shortcut__menu {
       position: absolute;
       top: -5px;
       right: -5px;
@@ -340,7 +339,7 @@ watch(() => windowWidth.value, refresh)
       }
     }
 
-    .quickstart-menu-icon {
+    .shortcut__menu-icon {
       width: 26px;
       height: 26px;
       font-size: 20px;

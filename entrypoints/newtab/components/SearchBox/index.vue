@@ -56,7 +56,7 @@ onClickOutside(searchBox, (e) => {
     return
   }
   const target = e.target as HTMLElement
-  if (!(target.localName == 'main' || target.classList.contains('quickstart-wrapper'))) {
+  if (!(target.localName == 'main' || target.classList.contains('shortcut-wrapper'))) {
     return
   }
   resetSearch()

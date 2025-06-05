@@ -1,7 +1,6 @@
-import { defaultSettings } from '..'
-import type { SettingsInterfaceVer2, SettingsInterfaceVer4 } from '../types'
+import type { SettingsInterfaceVer3, SettingsInterfaceVer4 } from '../types'
 
-export function migrateFromVer2To4(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer4 {
+export function migrateFromVer3To4(oldSettings: SettingsInterfaceVer3): SettingsInterfaceVer4 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -26,39 +25,35 @@ export function migrateFromVer2To4(oldSettings: SettingsInterfaceVer2): Settings
     },
     background: {
       bgType: oldSettings.background.bgType,
-      enableVignetting: oldSettings.background.bgDarkCorners,
-      blurIntensity: oldSettings.background.bgBlur,
+      enableVignetting: oldSettings.background.enableVignetting,
+      blurIntensity: oldSettings.background.blurIntensity,
       bgMaskPpacity: oldSettings.background.bgMaskPpacity,
       maskColor: oldSettings.background.maskColor,
       onlineUrl: oldSettings.background.onlineUrl
     },
     localBackground: {
-      id: oldSettings.localBackground.bgId,
-      url: oldSettings.localBackground.bgUrl
+      id: oldSettings.localBackground.id,
+      url: oldSettings.localBackground.url
     },
     bingBackground: {
-      id: oldSettings.bingBackground.bgId,
-      url: oldSettings.bingBackground.bgUrl,
+      id: oldSettings.bingBackground.id,
+      url: oldSettings.bingBackground.url,
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {
       enabled: oldSettings.quickStart.enabled,
       enableTopSites: oldSettings.quickStart.enableTopSites,
       enableShadow: oldSettings.quickStart.enableShadow,
-      rows: oldSettings.quickStart.quickStartRows,
-      columns: oldSettings.quickStart.quickStartColumns,
-      itemMarginH: Math.round(
-        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.shortcut.iconSize) / 2
-      ),
-      itemMarginV: Math.round(
-        (oldSettings.quickStart.quickStartItemWidth - defaultSettings.shortcut.iconSize) / 2
-      ),
+      rows: oldSettings.quickStart.rows,
+      columns: oldSettings.quickStart.columns,
+      itemMarginH: oldSettings.quickStart.itemMarginH,
+      itemMarginV: oldSettings.quickStart.itemMarginV,
       showShortcutTitle: oldSettings.quickStart.showQuickStartTitle,
       showPinnedIcon: oldSettings.quickStart.showPinnedIcon,
       showShortcutContainerBg: oldSettings.quickStart.showQuickStartContainerBg,
-      iconSize: 50,
-      whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
-      marginTop: defaultSettings.shortcut.marginTop
+      iconSize: oldSettings.quickStart.iconSize,
+      whiteTextInLightMode: oldSettings.quickStart.whiteTextInLightMode,
+      marginTop: oldSettings.quickStart.marginTop
     },
     pluginVersion: oldSettings.pluginVersion,
     version: 4

@@ -78,14 +78,14 @@ newtab:
       systemMode: 跟随系统
       primaryColor: 主题色
       chromeTip: 在 Chrome 中，该选项不受到“自定义 Chrome”侧边栏的影响，只与系统设置相关。
-    quickstart:
+    shortcut:
       title: 快速访问
       tip: Tip：可以拖动设置窗口以观察快速访问区域变化噢~
       enable: 启用
       showTopSites: 展示最常访问
       showPinnedIcon: 展示置顶图标
       showTitle: 显示标题
-      enableQSBg: 显示快速访问区域背景
+      enableBg: 显示快速访问区域背景
       enableShadow: 显示快速访问区域阴影
       maxRows: 最大行数
       maxColumns: 最大列数
@@ -101,8 +101,8 @@ newtab:
       HorizontalIconSpacing: 横向图标间隔
       VerticalIconSpacing: 竖向图标间隔
       marginTop: 快速访问区域上边距
-  quickstart:
-    addNewQuickstart: 添加快速访问
+  shortcut:
+    addNewShortcut: 添加快速访问
     pin: 置顶
     unpin: 取消置顶
     remove: 移除

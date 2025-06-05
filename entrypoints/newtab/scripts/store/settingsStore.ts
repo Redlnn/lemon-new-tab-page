@@ -8,9 +8,9 @@ import { useWallpaperStore } from './wallpaperStore'
 import type {
   OldSettingsInterface,
   SettingsInterfaceVer2,
-  SettingsInterfaceVer3
+  SettingsInterfaceVer4
 } from '../settings/types'
-import { migrateFromVer1To3, migrateFromVer2To3, defaultSettings } from '../settings'
+import { migrateFromVer1To4, migrateFromVer2To4, defaultSettings } from '../settings'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -34,11 +34,11 @@ export async function initSettings() {
       }
       // 最旧版本的设置中储存的是插件版本号，需要迁移
       if (typeof oldSettings.settings.version === 'string') {
-        settings = migrateFromVer1To3(oldSettings.settings)
+        settings = migrateFromVer1To4(oldSettings.settings)
         await saveSettings(settings)
       } else if (!oldSettings.settings.version) {
         // 某些情况下没有 version 字段的问题
-        settings = migrateFromVer1To3({ ...oldSettings.settings, version: '' })
+        settings = migrateFromVer1To4({ ...oldSettings.settings, version: '' })
         await saveSettings(settings)
       }
     }
@@ -46,14 +46,14 @@ export async function initSettings() {
 
   // 由于前期没有使用wxt的配置版本管理，所以刷新页面以应用新的配置
   if (settings.version == 2) {
-    settings = migrateFromVer2To3(settings as unknown as SettingsInterfaceVer2)
+    settings = migrateFromVer2To4(settings as unknown as SettingsInterfaceVer2)
   }
 
   const settingsStore = useSettingsStore()
   settingsStore.$patch(settings)
 }
 
-export async function saveSettings(settings: SettingsInterfaceVer3) {
+export async function saveSettings(settings: SettingsInterfaceVer4) {
   await settingsStorage.setValue(settings)
 }
 

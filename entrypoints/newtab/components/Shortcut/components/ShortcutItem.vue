@@ -17,16 +17,16 @@ defineProps<{
 </script>
 
 <template>
-  <div class="quickstart-item">
-    <a class="quickstart-item-link" :href="url">
-      <div class="quickstart-icon-container">
-        <div v-if="pined && settingsStore.quickStart.showPinnedIcon" class="pin-icon">
+  <div class="shortcut__item">
+    <a class="shortcut__item-link" :href="url">
+      <div class="shortcut__icon-container">
+        <div v-if="pined && settingsStore.shortcut.showPinnedIcon" class="shortcut__pin-icon">
           <el-icon size="15">
             <pin16-regular />
           </el-icon>
         </div>
         <!-- eslint-disable vue/no-v-html -->
-        <div class="quickstart-icon">
+        <div class="shortcut__icon">
           <span
             v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
             v-html="convertBase64Svg(favicon as string)"
@@ -39,12 +39,12 @@ defineProps<{
           ></span>
         </div>
       </div>
-      <div v-if="settingsStore.quickStart.showQuickStartTitle" class="quickstart-title">
+      <div v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title">
         {{ title }}
       </div>
     </a>
-    <el-dropdown class="quickstart-menu" trigger="click" placement="bottom-end" size="small">
-      <span class="quickstart-menu-icon">
+    <el-dropdown class="shortcut__menu" trigger="click" placement="bottom-end" size="small">
+      <span class="shortcut__menu-icon">
         <el-icon>
           <more-vert-round />
         </el-icon>

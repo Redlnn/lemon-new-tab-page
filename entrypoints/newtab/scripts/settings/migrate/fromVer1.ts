@@ -1,7 +1,7 @@
 import { defaultSettings } from '..'
-import type { OldSettingsInterface, SettingsInterfaceVer3 } from '../types'
+import type { OldSettingsInterface, SettingsInterfaceVer4 } from '../types'
 
-export function migrateFromVer1To3(oldSettings: OldSettingsInterface): SettingsInterfaceVer3 {
+export function migrateFromVer1To4(oldSettings: OldSettingsInterface): SettingsInterfaceVer4 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -41,26 +41,26 @@ export function migrateFromVer1To3(oldSettings: OldSettingsInterface): SettingsI
       url: oldSettings.bingWallpaper.url,
       updateDate: oldSettings.bingWallpaper.updateDate
     },
-    quickStart: {
+    shortcut: {
       enabled: oldSettings.enabled,
       enableTopSites: oldSettings.enableTopSites,
-      enableShadow: defaultSettings.quickStart.enableShadow,
+      enableShadow: defaultSettings.shortcut.enableShadow,
       rows: oldSettings.quickStartRows,
       columns: oldSettings.quickStartColumns,
       itemMarginH: Math.round(
-        (oldSettings.quickStartItemWidth - defaultSettings.quickStart.iconSize) / 2
+        (oldSettings.quickStartItemWidth - defaultSettings.shortcut.iconSize) / 2
       ),
       itemMarginV: Math.round(
-        (oldSettings.quickStartItemWidth - defaultSettings.quickStart.iconSize) / 2
+        (oldSettings.quickStartItemWidth - defaultSettings.shortcut.iconSize) / 2
       ),
-      showQuickStartTitle: oldSettings.showQuickStartTitle,
+      showShortcutTitle: oldSettings.showQuickStartTitle,
       showPinnedIcon: oldSettings.showPinnedIcon,
-      showQuickStartContainerBg: defaultSettings.quickStart.showQuickStartContainerBg,
-      iconSize: defaultSettings.quickStart.iconSize,
-      whiteTextInLightMode: defaultSettings.quickStart.whiteTextInLightMode,
-      marginTop: defaultSettings.quickStart.marginTop
+      showShortcutContainerBg: defaultSettings.shortcut.showShortcutContainerBg,
+      iconSize: defaultSettings.shortcut.iconSize,
+      whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
+      marginTop: defaultSettings.shortcut.marginTop
     },
     pluginVersion: oldSettings.version,
-    version: 2
+    version: 4
   }
 }

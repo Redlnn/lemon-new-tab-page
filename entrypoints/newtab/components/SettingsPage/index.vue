@@ -11,7 +11,7 @@ import MoreAbout from './Settings/MoreAbout.vue'
 import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
-import QuickstartSettings from './Settings/QuickstartSettings.vue'
+import ShortcutSettings from './Settings/ShortcutSettings.vue'
 import { i18n } from '@/.wxt/i18n'
 
 const opened = ref(false)
@@ -76,7 +76,7 @@ defineExpose({ show, hide, toggleShow })
         <clock-settings />
         <search-settings />
         <background-settings />
-        <quickstart-settings />
+        <shortcut-settings />
         <other-settings />
         <more-about />
         <div style="height: 35px"></div>
