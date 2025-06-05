@@ -19,23 +19,25 @@ defineProps<{
 <template>
   <div class="quickstart-item">
     <a class="quickstart-item-link" :href="url">
-      <div class="quickstart-icon">
+      <div class="quickstart-icon-container">
         <div v-if="pined && settingsStore.quickStart.showPinnedIcon" class="pin-icon">
           <el-icon size="15">
             <pin16-regular />
           </el-icon>
         </div>
         <!-- eslint-disable vue/no-v-html -->
-        <span
-          v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
-          v-html="convertBase64Svg(favicon as string)"
-        ></span>
-        <span
-          v-else
-          :style="{
-            backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
-          }"
-        ></span>
+        <div class="quickstart-icon">
+          <span
+            v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
+            v-html="convertBase64Svg(favicon as string)"
+          ></span>
+          <span
+            v-else
+            :style="{
+              backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
+            }"
+          ></span>
+        </div>
       </div>
       <div v-if="settingsStore.quickStart.showQuickStartTitle" class="quickstart-title">
         {{ title }}

@@ -126,8 +126,10 @@ function isSvg(file: Blob) {
 <template>
   <div class="quickstart-item add-bookmark">
     <div class="quickstart-item-link" style="cursor: pointer" @click="showDialog = true">
-      <div class="quickstart-icon">
-        <add-round />
+      <div class="quickstart-icon-container">
+        <div class="quickstart-icon">
+          <add-round />
+        </div>
       </div>
       <div v-if="settingsStore.quickStart.showQuickStartTitle" class="quickstart-title">
         {{ i18n.t('newtab.quickstart.addNewQuickstart') }}

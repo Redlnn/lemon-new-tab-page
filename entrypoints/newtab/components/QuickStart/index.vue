@@ -208,7 +208,7 @@ watch(() => windowWidth.value, refresh)
 
   &.quickstart-contaniner-bg {
     padding: 20px;
-    background-color: color-mix(in oklab, var(--el-bg-color), transparent 60%);
+    background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
     border-radius: 10px;
     backdrop-filter: blur(10px) saturate(1.4);
 
@@ -244,7 +244,7 @@ watch(() => windowWidth.value, refresh)
     border-radius: 10px;
 
     &:hover .quickstart-icon {
-      background-color: color-mix(in oklab, var(--el-bg-color), transparent 30%);
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
     }
 
     .quickstart-item-link {
@@ -253,16 +253,20 @@ watch(() => windowWidth.value, refresh)
       align-items: center;
     }
 
+    .quickstart-icon-container {
+      position: relative;
+      margin-bottom: 8px;
+    }
+
     .quickstart-icon {
       position: relative;
       width: var(--icon_size);
       height: var(--icon_size);
-      margin-bottom: 8px;
       display: flex;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      background: color-mix(in oklab, var(--el-bg-color), transparent 70%);
+      background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
       backdrop-filter: blur(10px) saturate(1.4);
       transition: background-color 0.1s ease;
 
@@ -281,21 +285,23 @@ watch(() => windowWidth.value, refresh)
           height: 30px;
         }
       }
+    }
 
-      .pin-icon {
-        position: absolute;
-        bottom: -3px;
-        right: -3px;
-        height: 20px;
-        width: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: var(--el-fill-color-light);
-        border-radius: 50%;
-        color: var(--el-color-primary);
-        box-shadow: var(--el-box-shadow-light);
-      }
+    .pin-icon {
+      position: absolute;
+      bottom: -3px;
+      right: -3px;
+      height: 20px;
+      width: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      z-index: 1;
+      color: var(--el-color-primary);
+      box-shadow: var(--el-box-shadow-light);
+      background-color: color-mix(in srgb, var(--el-fill-color-light), transparent 60%);
+      backdrop-filter: blur(10px);
     }
 
     .quickstart-title {
