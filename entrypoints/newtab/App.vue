@@ -152,6 +152,7 @@ main {
   border-radius: 50%;
   overflow: hidden;
   transition: 0.1s;
+  backdrop-filter: blur(10px);
 
   &:hover {
     color: var(--el-color-primary);
