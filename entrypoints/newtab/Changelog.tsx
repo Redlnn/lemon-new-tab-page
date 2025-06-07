@@ -9,6 +9,7 @@ const changelogZH = (
       <li>调整字体选择顺序，提升观感</li>
       <li>手动添加快捷方式时，可以回车进行提交，提升用户体验</li>
       <li>降低置顶快捷方式的图钉图标的背景透明度，提升观感</li>
+      <li>调整CSS顺序和解除组件限制以减小插件体积</li>
       <li>重构大部分 JS 和部分 CSS 以提高性能</li>
       <ul>
         <li>修复了配置升级的bug</li>
@@ -93,6 +94,7 @@ const changelog = (
       <li>
         Reduced background opacity of the pin icon on pinned shortcuts to improve visual appearance.
       </li>
+      <li>Adjusted CSS order and removed component restrictions to reduce extension size.</li>
       <li>Refactored most of the JS and some CSS to improve performance.</li>
       <ul>
         <li>Fixed bugs related to configuration upgrades.</li>

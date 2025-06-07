@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useElementVisibility, useWindowSize } from '@vueuse/core'
-
-import { CloseRound } from '@vicons/material'
-import type { ScrollbarInstance } from 'element-plus'
+import { i18n } from '@/.wxt/i18n'
+import BaseDialog from '../BaseDialog.vue'
 
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
@@ -12,14 +10,8 @@ import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
 import ShortcutSettings from './Settings/ShortcutSettings.vue'
-import { i18n } from '@/.wxt/i18n'
 
 const opened = ref(false)
-const header = ref<HTMLDivElement>()
-const scrollbar = ref<ScrollbarInstance>()
-const headerIsVisible = useElementVisibility(header)
-
-const { width: windowWidth } = useWindowSize()
 
 function show() {
   opened.value = true
@@ -35,128 +27,22 @@ defineExpose({ show, hide, toggleShow })
 </script>
 
 <template>
-  <el-dialog
+  <base-dialog
     v-model="opened"
-    :width="windowWidth < 650 ? '90%' : 600"
-    class="settings__dialog"
-    :show-close="false"
-    align-center
-    lock-scroll
-    draggable
-    overflow
+    :title="i18n.t('newtab.settings.title')"
+    container-class="settings__dialog"
   >
-    <template #header="{ close, titleId }">
-      <div
-        :id="titleId"
-        class="settings__dialog-title"
-        :style="{ opacity: !headerIsVisible ? 1 : 0 }"
-      >
-        {{ i18n.t('newtab.settings.title') }}
-      </div>
-      <span class="settings__dialog-close-btn" @click="close">
-        <component :is="CloseRound" />
-      </span>
-    </template>
-    <div
-      style="
-        width: 100%;
-        height: 1px;
-        border-top: 1px color-mix(in srgb, var(--el-border-color), transparent 30%)
-          var(--el-border-style);
-        transition: opacity 0.1s;
-      "
-      :style="{ opacity: !headerIsVisible ? 1 : 0 }"
-    ></div>
-    <div class="settings__container" style="height: 100%">
-      <el-scrollbar ref="scrollbar" style="padding-right: 15px">
-        <div ref="header" class="settings__dialog-list-title">
-          {{ i18n.t('newtab.settings.title') }}
-        </div>
-        <theme-settings />
-        <clock-settings />
-        <search-settings />
-        <background-settings />
-        <shortcut-settings />
-        <other-settings />
-        <more-about />
-        <div style="height: 35px"></div>
-      </el-scrollbar>
-    </div>
-  </el-dialog>
+    <theme-settings />
+    <clock-settings />
+    <search-settings />
+    <background-settings />
+    <shortcut-settings />
+    <other-settings />
+    <more-about />
+  </base-dialog>
 </template>
 
 <style lang="scss">
-.settings__dialog {
-  height: 500px;
-  max-height: 80%;
-  padding: 0;
-  overflow: hidden;
-  background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
-  border-radius: 10px;
-  box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
-  backdrop-filter: blur(10px) saturate(1.4);
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease;
-
-  .settings__container {
-    height: 100%;
-    padding: 0 19px 0 35px;
-  }
-
-  @media screen and (width <= 650px) {
-    .settings__container {
-      padding: 0 4px 0 20px;
-    }
-  }
-
-  .el-dialog__header {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 50px;
-    padding: 0;
-  }
-
-  .el-dialog__body {
-    height: calc(100% - 51px);
-    color: var(--el-text-color-primary);
-    transition: color var(--el-transition-duration-fast) ease;
-  }
-
-  .settings__dialog-title {
-    font-size: 18px;
-    transition: opacity 0.1s;
-  }
-
-  .settings__dialog-close-btn {
-    position: fixed;
-    right: 20px;
-    height: 20px;
-    color: var(--el-text-color-regular);
-    cursor: pointer;
-    transition:
-      transform 0.1s ease-in-out,
-      color var(--el-transition-duration-fast) ease;
-
-    &:hover {
-      color: var(--el-text-color-primary);
-      transform: rotate(90deg);
-    }
-
-    svg {
-      height: 100%;
-    }
-  }
-
-  .settings__dialog-list-title {
-    margin-top: 30px;
-    font-size: 28px;
-  }
-}
-
 .settings__title {
   display: flex;
   align-items: center;

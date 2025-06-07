@@ -147,7 +147,7 @@ watch(preferredDark, () => {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .settings__theme-mode {
   display: flex;
   column-gap: 8px;
@@ -167,18 +167,6 @@ watch(preferredDark, () => {
       display: block;
       color: var(--el-color-primary);
     }
-  }
-}
-
-:deep().el-color-picker__trigger {
-  padding: 0;
-  overflow: hidden;
-  border: none;
-  border-radius: 8px;
-
-  .el-color-picker__color {
-    border: none;
-    border-radius: initial;
   }
 }
 </style>

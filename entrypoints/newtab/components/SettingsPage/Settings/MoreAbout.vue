@@ -60,7 +60,7 @@ const year = useDateFormat(useNow(), 'YYYY')
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .settings {
   &__ext-name {
     margin-bottom: 0;

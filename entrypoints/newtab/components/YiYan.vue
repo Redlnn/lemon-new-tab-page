@@ -46,7 +46,7 @@ onMounted(() => {
   </Transition>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .yiyan {
   position: absolute;
   bottom: 100px;

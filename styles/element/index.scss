@@ -78,3 +78,24 @@ html {
     font-weight: bold;
   }
 }
+
+.el-notification {
+  background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 25%);
+  backdrop-filter: blur(10px) saturate(1.4);
+  transition: background-color var(--el-transition-duration-fast) ease;
+}
+
+.el-switch {
+  transform: scale(0.95);
+}
+
+.el-color-picker__trigger {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+
+  .el-color-picker__color {
+    border: none;
+    border-radius: initial;
+  }
+}

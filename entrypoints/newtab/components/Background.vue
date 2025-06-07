@@ -37,7 +37,7 @@ defineProps<{ url: string }>()
   </Transition>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .background-wrapper {
   position: fixed;
   top: 0;

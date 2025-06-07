@@ -178,9 +178,9 @@ async function restoreDefaultTopSites() {
   </div>
 </template>
 
-<style scoped lang="scss">
-.settings__item--shortcut-width:deep() .el-input-number,
-.settings__item--shortcut-width:deep() .el-input {
+<style lang="scss">
+.settings__item--shortcut-width .el-input-number,
+.settings__item--shortcut-width .el-input {
   width: 60px;
 }
 </style>

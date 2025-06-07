@@ -92,7 +92,7 @@ function getlunarCalendar() {
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 @keyframes twinkle {
   0%,
   100% {

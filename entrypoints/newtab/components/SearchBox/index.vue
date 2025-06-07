@@ -224,7 +224,7 @@ onMounted(() => {
   </section>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .search-box {
   position: relative;
   z-index: 10;
@@ -276,19 +276,13 @@ onMounted(() => {
       background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
     }
 
-    &--focus {
-      --width: 500px;
-
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
-    }
-
     html:not(.dark) &.search-box__form--dark {
       background-color: var(--el-fill-color-blank);
       border: solid 1px var(--el-border-color-light);
     }
 
-    :deep() .search-engine-menu__icon,
-    :deep() .search-box__btn {
+    .search-engine-menu__icon,
+    .search-box__btn {
       display: flex;
       align-items: center;
       justify-content: center;
@@ -302,7 +296,11 @@ onMounted(() => {
         background-color var(--el-transition-duration-fast) ease;
     }
 
-    &--focus:deep() {
+    &--focus {
+      --width: 500px;
+
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
+
       .search-engine-menu__icon {
         color: var(--el-text-color-regular);
       }

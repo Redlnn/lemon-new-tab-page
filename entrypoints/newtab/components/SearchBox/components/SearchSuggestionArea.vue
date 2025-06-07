@@ -179,7 +179,7 @@ defineExpose({
   </div>
 </template>
 
-<style scoped lang="scss">
+<style lang="scss">
 .search-suggestion-area {
   --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
 
