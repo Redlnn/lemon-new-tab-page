@@ -9,7 +9,14 @@ const changelogZH = (
       <li>调整字体选择顺序，提升观感</li>
       <li>手动添加快捷方式时，可以回车进行提交，提升用户体验</li>
       <li>降低置顶快捷方式的图钉图标的背景透明度，提升观感</li>
-      <li>重构大部分 JS 和 CSS 以提高性能</li>
+      <li>重构大部分 JS 和部分 CSS 以提高性能</li>
+      <ul>
+        <li>修复了配置升级的bug</li>
+        <li>使用 fetch api 代替 axios 以缩减体积</li>
+        <li>使用新的写法实现背景更换动画</li>
+        <li>修复了拼写错误</li>
+        <li>感谢 Copilot</li>
+      </ul>
     </ul>
     <h2>修复</h2>
     <ul>
@@ -86,7 +93,14 @@ const changelog = (
       <li>
         Reduced background opacity of the pin icon on pinned shortcuts to improve visual appearance.
       </li>
-      <li>Refactored most JS and CSS for better performance.</li>
+      <li>Refactored most of the JS and some CSS to improve performance.</li>
+      <ul>
+        <li>Fixed bugs related to configuration upgrades.</li>
+        <li>Replaced axios with fetch API to reduce size.</li>
+        <li>Implemented background change animations with new syntax.</li>
+        <li>Fixed spelling errors.</li>
+        <li>Thanks to Copilot for assistance.</li>
+      </ul>
     </ul>
     <h2>Fixes</h2>
     <ul>

@@ -9,7 +9,12 @@
 - When manually adding a shortcut, pressing Enter now submits it to improve user experience.
 - Reduced background opacity of the pin icon on pinned shortcuts to improve visual
   appearance.
-- Refactored most JS and CSS for better performance.
+- Refactored most of the JS and some CSS to improve performance.
+  - Fixed bugs related to configuration upgrades.
+  - Replaced axios with fetch API to reduce size.
+  - Implemented background change animations with new syntax.
+  - Fixed spelling errors.
+  - Thanks to Copilot for assistance.
 
 ## Fixes
 
