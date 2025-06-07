@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import { i18n } from '@/.wxt/i18n'
-import axios from '@/newtab/scripts/plugins/axios'
+import enhancedFetch from '@/newtab/scripts/plugins/fetch'
 import { useBingWallpaperStore } from '@/newtab/scripts/store/wallpaperStore'
 import { isImageFile, verifyImageUrl } from '@/newtab/scripts/img'
 import { saveSettings, useSettingsStore } from '@/newtab/scripts/store/settingsStore'
@@ -56,33 +56,22 @@ export async function getBingWallpaperURL() {
 
   ElMessage(i18n.t('newtab.notification.bingWallpaper.get'))
   try {
-    const response = await axios.get(
+    const data: BingWallpaperResp = await enhancedFetch(
       'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
       // &mkt=zh-CN 加上区域后会导致后续访问 www.bing.com 被跳转到 cn.bing.com
     )
 
-    if (response.status !== 200) {
-      console.warn(response)
-      throw new Error()
+    const imgUrl = `https://www.bing.com${data.images[0].url}`
+    const response = await fetch(imgUrl)
+    if (!response.ok) {
+      return imgUrl
     }
 
-    const data: BingWallpaperResp = response.data
-    const resp = await axios.get(`https://www.bing.com${data.images[0].url}`, {
-      responseType: 'arraybuffer'
-    })
-
-    if (resp.status !== 200) {
-      return `https://www.bing.com${data.images[0].url}`
-    }
-
-    const blob = new Blob([resp.data], {
-      type: resp.headers['content-type']
-    })
+    const blob = await response.blob()
     const file = new File([blob], 'bing.jpg', { type: blob.type })
 
     const id = uuidv4()
     const url = URL.createObjectURL(file)
-
     const url_old = settingsStore.bingBackground.url
 
     // 清除上次壁纸，ObjectURL可能导致内存溢出
@@ -99,12 +88,13 @@ export async function getBingWallpaperURL() {
       updateDate: new Date().toDateString()
     }
     return url
-  } catch {
+  } catch (error) {
+    console.error('Failed to get Bing wallpaper:', error)
     ElNotification({
       title: i18n.t('newtab.notification.bingWallpaper.error.title'),
       message: i18n.t('newtab.notification.bingWallpaper.error.message'),
       type: 'error'
     })
-    return ''
+    throw error
   }
 }

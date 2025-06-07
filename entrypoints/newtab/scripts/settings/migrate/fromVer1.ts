@@ -2,6 +2,7 @@ import { defaultSettings } from '..'
 import type { OldSettingsInterface, SettingsInterfaceVer4 } from '../types'
 
 export function migrateFromVer1To4(oldSettings: OldSettingsInterface): SettingsInterfaceVer4 {
+  console.log('Migrating settings from version 1 to 4')
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -28,7 +29,7 @@ export function migrateFromVer1To4(oldSettings: OldSettingsInterface): SettingsI
       bgType: oldSettings.bgType,
       enableVignetting: oldSettings.bgDarkCorners,
       blurIntensity: oldSettings.bgBlur,
-      bgMaskPpacity: oldSettings.bgMaskPpacity,
+      bgMaskOpacity: oldSettings.bgMaskPpacity,
       maskColor: defaultSettings.background.maskColor,
       onlineUrl: defaultSettings.background.onlineUrl
     },

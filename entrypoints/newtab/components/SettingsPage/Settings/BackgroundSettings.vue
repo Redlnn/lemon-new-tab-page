@@ -150,7 +150,7 @@ function onlineImageWarn() {
     </div>
     <div class="settings__item">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.maskOpacity') }}</div>
-      <el-slider v-model="settingsStore.background.bgMaskPpacity" :show-tooltip="false" />
+      <el-slider v-model="settingsStore.background.bgMaskOpacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>

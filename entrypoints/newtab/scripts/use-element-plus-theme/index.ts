@@ -2,31 +2,50 @@ import { BLACK, Levels, PRE, PRE_DARK, PRE_LIGHT, WHITE } from './token'
 
 const html = document.documentElement
 
+interface RGBColor {
+  r: number
+  g: number
+  b: number
+}
+
+function parseHexColor(color: string): RGBColor {
+  const hex = color.substring(1)
+  return {
+    r: parseInt(hex.substring(0, 2), 16),
+    g: parseInt(hex.substring(2, 4), 16),
+    b: parseInt(hex.substring(4, 6), 16)
+  }
+}
+
+function componentToHex(c: number): string {
+  const hex = Math.round(c).toString(16)
+  return hex.length === 1 ? '0' + hex : hex
+}
+
+function rgbToHex({ r, g, b }: RGBColor): string {
+  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b)
+}
+
 /**
  * 混合颜色
  */
-const mix = (color1: string, color2: string, weight: number) => {
+function mix(color1: string, color2: string, weight: number): string {
   weight = Math.max(Math.min(Number(weight), 1), 0)
-  const r1 = parseInt(color1.substring(1, 3), 16)
-  const g1 = parseInt(color1.substring(3, 5), 16)
-  const b1 = parseInt(color1.substring(5, 7), 16)
-  const r2 = parseInt(color2.substring(1, 3), 16)
-  const g2 = parseInt(color2.substring(3, 5), 16)
-  const b2 = parseInt(color2.substring(5, 7), 16)
-  const r = Math.round(r1 * (1 - weight) + r2 * weight)
-  const g = Math.round(g1 * (1 - weight) + g2 * weight)
-  const b = Math.round(b1 * (1 - weight) + b2 * weight)
-  const _r = ('0' + (r || 0).toString(16)).slice(-2)
-  const _g = ('0' + (g || 0).toString(16)).slice(-2)
-  const _b = ('0' + (b || 0).toString(16)).slice(-2)
-  return '#' + _r + _g + _b
+  const c1 = parseHexColor(color1)
+  const c2 = parseHexColor(color2)
+
+  return rgbToHex({
+    r: c1.r * (1 - weight) + c2.r * weight,
+    g: c1.g * (1 - weight) + c2.g * weight,
+    b: c1.b * (1 - weight) + c2.b * weight
+  })
 }
 
 /**
  * 更换颜色的方法
  * @param color 颜色
  */
-const changeTheme = (color?: string | null) => {
+function changeTheme(color?: string | null) {
   if (!color) {
     console.warn('未获取到颜色的值')
     return

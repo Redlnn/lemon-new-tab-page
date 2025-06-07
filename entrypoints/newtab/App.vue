@@ -25,20 +25,53 @@ const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
-
 const bgURL = ref('')
 
-async function loadLocalBackground() {
-  if (settingsStore.localBackground.url) {
-    const verifyBackground = await verifyImageUrl(settingsStore.localBackground.url)
-    if (!verifyBackground) {
-      await reloadBackgroundImage()
-    }
-  } else {
-    await reloadBackgroundImage()
-  }
+interface BgURLProvider {
+  getURL: () => Promise<string>
+  verify?: () => Promise<boolean>
+}
 
-  bgURL.value = settingsStore.localBackground.url ? `url(${settingsStore.localBackground.url})` : ''
+const bgTypeProviders: Record<BgType, BgURLProvider> = {
+  [BgType.Bing]: {
+    getURL: async () => `url(${await getBingWallpaperURL()})`
+  },
+  [BgType.Local]: {
+    getURL: async () => `url(${settingsStore.localBackground.url})`,
+    verify: async () => {
+      if (!settingsStore.localBackground.url) {
+        await reloadBackgroundImage()
+        return true
+      }
+      const isValid = await verifyImageUrl(settingsStore.localBackground.url)
+      if (!isValid) {
+        await reloadBackgroundImage()
+      }
+      return true
+    }
+  },
+  [BgType.Online]: {
+    getURL: () => Promise.resolve(`url(${settingsStore.background.onlineUrl})`)
+  },
+  [BgType.None]: {
+    getURL: () => Promise.resolve('')
+  }
+}
+
+async function updateBackgroundURL(type: BgType): Promise<void> {
+  const provider = bgTypeProviders[type]
+  if (!provider) return
+
+  switchStore.start()
+  await promiseTimeout(300)
+  bgURL.value = ''
+
+  if (provider.verify) {
+    await provider.verify()
+  }
+  bgURL.value = await provider.getURL()
+
+  switchStore.end()
 }
 
 onMounted(async () => {
@@ -46,62 +79,35 @@ onMounted(async () => {
     ChangelogRef.value?.show()
   }
 
-  switch (settingsStore.background.bgType) {
-    case BgType.Bing:
-      bgURL.value = `url(${await getBingWallpaperURL()})`
-      break
-    case BgType.Local:
-      await loadLocalBackground()
-      break
-    case BgType.Online:
-      bgURL.value = `url(${settingsStore.background.onlineUrl})`
-      break
-  }
-
-  watch(
-    () => settingsStore.background.bgType,
-    async () => {
-      switchStore.start()
-      await promiseTimeout(300)
-      bgURL.value = ''
-      switch (settingsStore.background.bgType) {
-        case BgType.Bing:
-          bgURL.value = `url(${await getBingWallpaperURL()})`
-          break
-        case BgType.Local:
-          await loadLocalBackground()
-          break
-        case BgType.None:
-          bgURL.value = ''
-          break
-        case BgType.Online:
-          bgURL.value = `url(${settingsStore.background.onlineUrl})`
-          break
-      }
-      switchStore.end()
-    }
-  )
-
-  watch(
-    () => settingsStore.localBackground.url,
-    async () => {
-      switchStore.start()
-      await promiseTimeout(500)
-      bgURL.value = `url(${settingsStore.localBackground.url})`
-      switchStore.end()
-    }
-  )
-
-  watch(
-    () => settingsStore.background.onlineUrl,
-    async () => {
-      switchStore.start()
-      await promiseTimeout(500)
-      bgURL.value = `url(${settingsStore.background.onlineUrl})`
-      switchStore.end()
-    }
-  )
+  await updateBackgroundURL(settingsStore.background.bgType)
 })
+
+// Watch for background type changes
+watch(() => settingsStore.background.bgType, updateBackgroundURL)
+
+// Watch for local background URL changes
+watch(
+  () => settingsStore.localBackground.url,
+  async () => {
+    if (settingsStore.background.bgType !== BgType.Local) return
+    switchStore.start()
+    await promiseTimeout(500)
+    bgURL.value = `url(${settingsStore.localBackground.url})`
+    switchStore.end()
+  }
+)
+
+// Watch for online background URL changes
+watch(
+  () => settingsStore.background.onlineUrl,
+  async () => {
+    if (settingsStore.background.bgType !== BgType.Online) return
+    switchStore.start()
+    await promiseTimeout(500)
+    bgURL.value = `url(${settingsStore.background.onlineUrl})`
+    switchStore.end()
+  }
+)
 </script>
 
 <template>

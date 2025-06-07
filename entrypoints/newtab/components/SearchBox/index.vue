@@ -8,7 +8,7 @@ import {
   useTimeoutFn,
   useWindowFocus
 } from '@vueuse/core'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
 import { searchEngines } from '@/newtab/scripts/api/search'
@@ -25,7 +25,7 @@ const suggedtionArea = ref<InstanceType<typeof SearchSuggestionArea>>()
 const searchEngineMenuRef = ref<TooltipInstance>()
 
 const searchText = ref('')
-const originSearchText = ref<string | null>(null) // 当使用上下方向键时使用，记录原始搜索文本
+const originSearchText = ref<string | null>(null)
 const mounted = ref(false)
 
 const focusStore = useFocusStore()
@@ -34,6 +34,17 @@ const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 
 const { width: searchFormWidth } = useElementSize(searchForm)
+
+const formClasses = computed(() => {
+  return {
+    'search-box__form--shadow': settingsStore.search.enableShadow,
+    'search-box__form--dark': settingsStore.background.bgType === 0
+  }
+})
+
+const searchPlaceholder = computed(() =>
+  focusStore.isFocused ? undefined : i18n.t('newtab.search.placeholder')
+)
 
 function resetSearch() {
   searchText.value = ''
@@ -44,7 +55,9 @@ function resetSearch() {
 }
 
 watch(isWindowFocused, (isFocused) => {
-  if (searchText.value.length > 0 || isFocused) return
+  if (searchText.value.length > 0 || isFocused) {
+    return
+  }
   resetSearch()
   searchInput.value?.blur()
 })
@@ -64,16 +77,22 @@ onClickOutside(searchBox, (e) => {
 
 function handleFocus() {
   searchForm.value?.classList.add('search-box__form--focus')
-  suggedtionArea.value!.showSearchHistories()
+  suggedtionArea.value?.showSearchHistories()
   focusStore.focus()
 }
 
 function navigateSuggestions(direction: number) {
   const suggestionsLength = suggedtionArea.value!.searchSuggestions.length
-  if (suggestionsLength <= 0) return
+  if (suggestionsLength <= 0) {
+    return
+  }
   const _current = suggedtionArea.value!.currentActiveSuggest
   suggedtionArea.value!.clearActiveSuggest()
-  if (originSearchText.value === null) originSearchText.value = searchText.value
+
+  if (originSearchText.value === null) {
+    originSearchText.value = searchText.value
+  }
+
   if (_current === null) {
     activeOneSuggest(direction > 0 ? direction - 1 : suggestionsLength + direction)
   } else {
@@ -98,56 +117,65 @@ function handleDown() {
 
 function activeOneSuggest(index: number) {
   const suggestions = suggedtionArea.value!.searchSuggestionArea?.children
-  if (!suggestions) return
+  if (!suggestions) {
+    return
+  }
   suggestions[index].classList.add('active')
   suggedtionArea.value!.currentActiveSuggest = index
   searchText.value = suggedtionArea.value!.searchSuggestions[index]
 }
 
-function selectSearch(index: number) {
-  settingsStore.search.selectedSearchEngine = index
+function handleTabNavigation(direction: 1 | -1) {
+  const newIndex =
+    (settingsStore.search.selectedSearchEngine + direction + searchEngines.length) %
+    searchEngines.length
+  settingsStore.search.selectedSearchEngine = newIndex
 }
 
 function handlePrevTab() {
-  selectSearch(
-    (settingsStore.search.selectedSearchEngine - 1 + searchEngines.length) % searchEngines.length
-  )
+  handleTabNavigation(-1)
 }
 
 function handleNextTab() {
-  selectSearch((settingsStore.search.selectedSearchEngine + 1) % searchEngines.length)
+  handleTabNavigation(1)
 }
 
-async function doSearch() {
-  doSearchWithText(searchText.value)
-  searchText.value = ''
+const saveSearchHistory = async (text: string) => {
+  if (!settingsStore.search.recordSearchHistory) {
+    return
+  }
+  const searchHistories = await searchHistoriesStorage.getValue()
+  // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
+  const index = searchHistories.indexOf(text)
+  if (index !== -1) {
+    searchHistories.splice(index, 1)
+  }
+  searchHistories.unshift(text)
+  // 如果历史搜索词大于15个，则删除最后几个只留下15个
+  if (searchHistories.length > 15) {
+    searchHistories.splice(15)
+  }
+  await searchHistoriesStorage.setValue(searchHistories)
 }
 
-async function doSearchWithText(text: string) {
+const doSearchWithText = async (text: string) => {
   if (text.length <= 0) {
     searchInput.value?.focus()
     return
   }
-  if (settingsStore.search.recordSearchHistory) {
-    const searchHistories: string[] = await searchHistoriesStorage.getValue()
-    // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
-    const index = searchHistories.indexOf(text)
-    if (index !== -1) {
-      searchHistories.splice(index, 1)
-    }
-    searchHistories.unshift(text)
-    // 如果历史搜索词大于15个，则删除最后几个只留下15个
-    if (searchHistories.length > 15) {
-      searchHistories.splice(15)
-    }
-    await searchHistoriesStorage.setValue(searchHistories)
-  }
-  // 跳转搜索结果
+
+  await saveSearchHistory(text)
+
   window.open(
     searchEngines[settingsStore.search.selectedSearchEngine].url.replace('%s', text),
     settingsStore.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()
+}
+
+function doSearch() {
+  doSearchWithText(searchText.value)
+  searchText.value = ''
 }
 
 onMounted(() => {
@@ -164,10 +192,7 @@ onMounted(() => {
     <form
       ref="searchForm"
       class="search-box__form"
-      :class="[
-        settingsStore.search.enableShadow ? 'search-box__form--shadow' : undefined,
-        settingsStore.background.bgType === 0 ? 'search-box__form--dark' : undefined
-      ]"
+      :class="formClasses"
       :style="{ '--width': mounted ? undefined : '0' }"
       @submit.prevent="doSearch"
     >
@@ -175,7 +200,7 @@ onMounted(() => {
       <input
         ref="searchInput"
         v-model="searchText"
-        :placeholder="focusStore.isFocused ? undefined : i18n.t('newtab.search.placeholder')"
+        :placeholder="searchPlaceholder"
         class="search-box__input"
         @input="suggedtionArea!.handleInput"
         @focus="handleFocus"
@@ -213,7 +238,9 @@ onMounted(() => {
     --height: 44px;
     --width: 300px;
     --search-form-placeholder-color: var(--el-text-color-regular);
+
     position: relative;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -244,15 +271,15 @@ onMounted(() => {
 
     &:hover:not(.search-box__form--focus) {
       --width: 500px;
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
-
       --search-form-placeholder-color: var(--el-text-color-primary);
+
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
     }
 
     &--focus {
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
-
       --width: 500px;
+
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
     }
 
     html:not(.dark) &.search-box__form--dark {
@@ -309,8 +336,8 @@ onMounted(() => {
 
       &::placeholder {
         color: var(--search-form-placeholder-color);
-        -moz-user-select: none;
         -webkit-user-select: none;
+        -moz-user-select: none;
         -ms-user-select: none;
         -khtml-user-select: none;
         user-select: none;
@@ -321,8 +348,8 @@ onMounted(() => {
 
 @media screen and (width <= 600px) {
   .search-box__form {
-    --width: 75vw;
     --height: 40px;
+    --width: 75vw;
 
     &:hover:not(.search-box__form--focus),
     &.search-box__form--focus {

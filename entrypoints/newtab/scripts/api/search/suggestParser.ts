@@ -1,4 +1,4 @@
-import axios from '@/newtab/scripts/plugins/axios'
+import { enhancedFetch } from '../../plugins/fetch'
 import fetchJsonp from './fetchJsonp'
 
 interface BingSuggestItem {
@@ -21,59 +21,69 @@ interface BingSuggest {
   }
 }
 
+const MAX_RETRIES = 2
+const RETRY_DELAY = 100
+
+/**
+ * 带重试的API调用
+ */
+async function retryableRequest<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
+  try {
+    return await fn()
+  } catch (error) {
+    if (retries > 0) {
+      await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY))
+      return retryableRequest(fn, retries - 1)
+    }
+    throw error
+  }
+}
+
 async function bingSuggestParser(text: string): Promise<string[]> {
-  const url = `https://api.bing.com/qsonhs.aspx?q=${encodeURIComponent(text)}`
-  const response = await axios.get(url)
-  console.debug(response)
-  if (response.status === 200) {
-    const resp: BingSuggest = response.data
+  try {
+    const url = `https://api.bing.com/qsonhs.aspx?q=${encodeURIComponent(text)}`
+    const resp: BingSuggest = await retryableRequest(() => enhancedFetch(url))
+
     if (resp.AS.FullResults <= 0) {
       return []
     }
-    const originSuggestions = resp.AS.Results[0].Suggests
-    const suggestions: string[] = []
-    originSuggestions.forEach((originSuggestion) => {
-      suggestions.push(originSuggestion.Txt)
-    })
-    return suggestions
-  } else {
-    console.error(`An error occurred while getting Bing search suggestions.`)
-    console.error(response)
+    return resp.AS.Results[0].Suggests.map((s) => s.Txt)
+  } catch (error) {
+    console.error('Bing suggestion error:', error)
     return []
   }
 }
 
-// interface BaiduSuggest {
-//   q: string
-//   p: boolean
-//   s: string[]
-// }
-
 function baiduJsonpParser(text: string): string[] {
-  // window.baidu.sug({q:"1",p:false,s:["192.1681.1","1公顷等于多少平方米","1g等于多少mg","163邮箱登录","1升等于多少斤","1克等于多少毫克","12生肖","1升等于多少毫升","12生肖排行顺序","12304是什么电话号码"]});
   const match = /\[.*\]/.exec(text)
   if (match?.[0]) {
     return JSON.parse(match[0])
-  } else {
-    throw new Error(`Parse jsonp error, text: ${text}`)
   }
+  throw new Error(`Invalid Baidu suggestion response: ${text}`)
 }
 
 async function baiduSuggestParser(text: string): Promise<string[]> {
-  const url = `https://suggestion.baidu.com/su?wd=${encodeURIComponent(text)}&cb=window.baidu.sug`
-  const res = await fetchJsonp(
-    url,
-    {
-      parser: baiduJsonpParser,
-      jsonpCallback: 'cb',
-      jsonpCallbackFunction: 'window.baidu.sug'
-    },
-    { timeout: 1000 }
-  )
-  if (res[0] === text) {
-    return res.slice(1)
-  } else {
-    return res
+  try {
+    const url = `https://suggestion.baidu.com/su?wd=${encodeURIComponent(text)}&cb=window.baidu.sug`
+    const suggestions = await retryableRequest(() =>
+      fetchJsonp({
+        url,
+        params: {},
+        callbackParam: 'cb',
+        callbackName: 'window.baidu.sug',
+        parser: baiduJsonpParser,
+        encoding: 'gbk' // 百度搜索建议 API 使用 GBK 编码
+      })
+    )
+
+    if (suggestions[0] === text) {
+      return suggestions.slice(1)
+    }
+
+    return suggestions
+  } catch (error) {
+    console.error('Baidu suggestion error:', error)
+    return []
   }
 }
 
@@ -96,17 +106,12 @@ interface GoogleSuggest {
 }
 
 async function googleSuggestParser(text: string): Promise<string[]> {
-  // 替换%s为text然后发起get请求
-  const url = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(
-    text
-  )}`
-  const response = await axios.get(url)
-  if (response.status === 200) {
-    const resp: GoogleSuggest = response.data
+  try {
+    const url = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(text)}`
+    const resp: GoogleSuggest = await retryableRequest(() => enhancedFetch(url))
     return resp[1]
-  } else {
-    console.error(`An error occurred while getting Bing search suggestions.`)
-    console.error(response)
+  } catch (error) {
+    console.error('Google suggestion error:', error)
     return []
   }
 }

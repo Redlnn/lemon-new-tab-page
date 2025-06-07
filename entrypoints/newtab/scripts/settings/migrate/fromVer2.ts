@@ -1,7 +1,7 @@
 import { defaultSettings } from '..'
-import type { SettingsInterfaceVer2, SettingsInterfaceVer4 } from '../types'
+import type { SettingsInterfaceVer2, SettingsInterfaceVer3 } from '../types'
 
-export function migrateFromVer2To4(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer4 {
+export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer3 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -41,7 +41,7 @@ export function migrateFromVer2To4(oldSettings: SettingsInterfaceVer2): Settings
       url: oldSettings.bingBackground.bgUrl,
       updateDate: oldSettings.bingBackground.updateDate
     },
-    shortcut: {
+    quickStart: {
       enabled: oldSettings.quickStart.enabled,
       enableTopSites: oldSettings.quickStart.enableTopSites,
       enableShadow: oldSettings.quickStart.enableShadow,
@@ -53,14 +53,14 @@ export function migrateFromVer2To4(oldSettings: SettingsInterfaceVer2): Settings
       itemMarginV: Math.round(
         (oldSettings.quickStart.quickStartItemWidth - defaultSettings.shortcut.iconSize) / 2
       ),
-      showShortcutTitle: oldSettings.quickStart.showQuickStartTitle,
+      showQuickStartTitle: oldSettings.quickStart.showQuickStartTitle,
       showPinnedIcon: oldSettings.quickStart.showPinnedIcon,
-      showShortcutContainerBg: oldSettings.quickStart.showQuickStartContainerBg,
+      showQuickStartContainerBg: oldSettings.quickStart.showQuickStartContainerBg,
       iconSize: 50,
       whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
       marginTop: defaultSettings.shortcut.marginTop
     },
     pluginVersion: oldSettings.pluginVersion,
-    version: 4
+    version: 3
   }
 }

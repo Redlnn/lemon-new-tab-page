@@ -9,6 +9,7 @@
 - When manually adding a shortcut, pressing Enter now submits it to improve user experience.
 - Reduced background opacity of the pin icon on pinned shortcuts to improve visual
   appearance.
+- Refactored most JS and CSS for better performance.
 
 ## Fixes
 

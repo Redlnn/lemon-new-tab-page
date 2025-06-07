@@ -1,5 +1,5 @@
 export { BgType } from './types'
-export { migrateFromVer1To4, migrateFromVer2To4, migrateFromVer3To4 } from './migrate'
+export { migrateFromVer1To4, migrateFromVer2To3, migrateFromVer3To4 } from './migrate'
 export type {
   OldSettingsInterface,
   SettingsInterfaceVer2,
@@ -10,8 +10,9 @@ export type {
 import { BgType, type SettingsInterfaceVer4 } from './types'
 
 export const CURRENT_CONFIG_VERSION = 4
+export type CURRENT_CONFTG_INTERFACE = SettingsInterfaceVer4
 
-export const defaultSettings: SettingsInterfaceVer4 = {
+export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
   primaryColor: '#FFBB00',
   time: {
     isMeridiem: false,
@@ -37,7 +38,7 @@ export const defaultSettings: SettingsInterfaceVer4 = {
     bgType: BgType.Bing,
     enableVignetting: false,
     blurIntensity: 3,
-    bgMaskPpacity: 0,
+    bgMaskOpacity: 0,
     maskColor: '#000',
     onlineUrl: ''
   },
@@ -66,5 +67,5 @@ export const defaultSettings: SettingsInterfaceVer4 = {
     marginTop: 50
   },
   pluginVersion: '',
-  version: 3
+  version: CURRENT_CONFIG_VERSION
 }

@@ -1,42 +1,39 @@
-import { type AxiosRequestConfig } from 'axios'
-import axios from '@/newtab/scripts/plugins/axios'
+import { enhancedFetch } from '../../plugins/fetch'
 
 interface fetchJsonpOptions {
-  parser: (text: string) => string[]
-  jsonpCallback?: string
-  jsonpCallbackFunction?: string | undefined
+  url: string
+  params: Record<string, string>
+  callbackParam: string
+  callbackName: string
+  parser: (data: string) => string[]
+  encoding?: string // 可选的编码参数
 }
 
-const defaultOptions = {
-  jsonpCallback: 'callback',
-  jsonpCallbackFunction: undefined
-}
+/**
+ * JSONP 请求实现
+ * @param options JSONP 选项
+ * @returns 搜索建议列表
+ */
+async function fetchJsonp(options: fetchJsonpOptions): Promise<string[]> {
+  const { url, params, callbackParam, callbackName } = options
+  const queryParams = new URLSearchParams(params)
+  queryParams.set(callbackParam, callbackName)
 
-function generateCallbackFunction() {
-  return 'jsonp_' + Date.now() + '_' + Math.ceil(Math.random() * 100000)
-}
+  const fullUrl = `${url}?${queryParams.toString()}`
 
-async function fetchJsonp(
-  _url: string,
-  options: fetchJsonpOptions,
-  axiosOptions: AxiosRequestConfig | undefined = undefined
-): Promise<string[]> {
-  let url = _url
-  const jsonpCallback = options.jsonpCallback ?? defaultOptions.jsonpCallback
-  const callbackFunction = options.jsonpCallbackFunction ?? generateCallbackFunction()
+  try {
+    const response = await enhancedFetch<string>(fullUrl, {
+      responseType: 'text',
+      responseEncoding: options.encoding,
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    })
 
-  url += url.includes('?') ? '&' : '?'
-
-  const response = await axios.get(`${url}${jsonpCallback}=${callbackFunction}`, axiosOptions)
-  if (response.status !== 200) {
-    throw new Error(`fetchJsonp: request jsonp failed, status code: ${response.status}`)
-  } else {
-    const { data } = response
-    if (typeof data === 'string') {
-      return options.parser(data)
-    } else {
-      throw new Error(`fetchJsonp: invalid response data, data: ${data}`)
-    }
+    return options.parser(response)
+  } catch (error) {
+    console.error('JSONP request failed:', error)
+    return [] // 返回空数组作为降级处理
   }
 }
 

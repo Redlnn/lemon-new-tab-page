@@ -1,6 +1,6 @@
 import { useBgSwtichStore } from './backgroundSwitchStore'
 import { initBookmark, saveBookmark, useBookmarkStore } from './bookmarkStore'
-import { useFocusStore } from './foucsStore'
+import { useFocusStore } from './focusStore'
 import {
   initSettings,
   reloadBackgroundImage,

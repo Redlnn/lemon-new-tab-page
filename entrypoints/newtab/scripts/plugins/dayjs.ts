@@ -5,8 +5,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 dayjs.extend(relativeTime)
 
-if (browser.i18n.getMessage('@@ui_locale').startsWith('zh')) {
-  dayjs.locale('zh-cn')
-}
+// 根据浏览器语言设置 dayjs 语言
+const browserLocale = browser.i18n.getMessage('@@ui_locale')
+
+dayjs.locale(browserLocale)
 
 export default dayjs

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { TrashAlt } from '@vicons/fa'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { i18n } from '@/.wxt/i18n'
@@ -15,11 +15,39 @@ const clearSearchHistory = ref<HTMLDivElement>()
 const isShowSearchHistories = ref(false)
 const currentActiveSuggest = ref<null | number>(null)
 const searchSuggestionArea = ref<HTMLDivElement>()
-
 const searchSuggestions = ref<string[]>([])
 
-const props = defineProps<{ searchText: string; searchFormWidth: number }>()
-const emit = defineEmits<(e: 'doSearchWithText', text: string) => Promise<void>>()
+const props = defineProps<{
+  searchText: string
+  searchFormWidth: number
+}>()
+
+const emit = defineEmits<{
+  doSearchWithText: [text: string]
+}>()
+
+const areaClasses = computed(() => ({
+  'search-suggestion-area--shadow': settingsStore.search.enableShadow,
+  'search-suggestion-area--dark':
+    settingsStore.background.bgType === 0 && searchSuggestions.value.length > 0
+}))
+
+const areaHeight = computed(() => {
+  const length = searchSuggestions.value.length
+  if (length === 0) {
+    return '0'
+  }
+  if (length > 10) {
+    return isShowSearchHistories.value ? '363px' : '330px'
+  }
+  return isShowSearchHistories.value ? `${(length + 1) * 33}px` : `${length * 33}px`
+})
+
+const displayedSuggestions = computed(() =>
+  searchSuggestions.value.length > 10
+    ? searchSuggestions.value.slice(0, 10)
+    : searchSuggestions.value
+)
 
 function handleInput() {
   if (focusStore.isFocused && !props.searchText) {
@@ -33,8 +61,11 @@ function handleInput() {
 }
 
 async function showSearchHistories() {
-  if (searchSuggestions.value.length > 0 && !isShowSearchHistories.value) return
-  const searchHistories: string[] = await searchHistoriesStorage.getValue()
+  if (searchSuggestions.value.length > 0 && !isShowSearchHistories.value) {
+    return
+  }
+
+  const searchHistories = await searchHistoriesStorage.getValue()
   if (searchHistories.length > 0 && clearSearchHistory.value) {
     searchSuggestions.value = searchHistories
     isShowSearchHistories.value = true
@@ -42,25 +73,42 @@ async function showSearchHistories() {
   }
 }
 
-const showSuggestionsDebounced = useDebounceFn(showSuggestions, 200)
+const showSuggestionsDebounced = useDebounceFn(async () => {
+  if (props.searchText.length <= 0) {
+    return
+  }
 
-async function showSuggestions() {
-  if (props.searchText.length <= 0) return
-  const suggestions = await searchSuggestAPIs[
-    settingsStore.search.selectedSearchSuggestionAPI
-  ].parser(props.searchText)
-  searchSuggestions.value = suggestions
-}
+  const api = searchSuggestAPIs[settingsStore.search.selectedSearchSuggestionAPI]
+  if (!api) {
+    console.error('Selected search suggestion API not found')
+    return
+  }
+
+  try {
+    const suggestions = await api.parser(props.searchText)
+    searchSuggestions.value = suggestions
+  } catch (error) {
+    console.error('Failed to fetch search suggestions:', error)
+    searchSuggestions.value = []
+  }
+}, 200)
+
 function clearActiveSuggest() {
   const suggestions = searchSuggestionArea.value?.children
-  if (!suggestions) return
+  if (!suggestions) {
+    return
+  }
+
   for (const suggestion of suggestions) {
     suggestion.classList.remove('active')
   }
   currentActiveSuggest.value = null
 }
+
 function hideSearchHistories() {
-  if (!clearSearchHistory.value) return
+  if (!clearSearchHistory.value) {
+    return
+  }
   clearSearchHistory.value.style.display = 'none'
   isShowSearchHistories.value = false
 }
@@ -74,19 +122,6 @@ function clearSearchSuggestions() {
 async function clearSearchHistories() {
   await searchHistoriesStorage.setValue([])
   clearSearchSuggestions()
-}
-
-function getSearchSuggestionAreaHeight() {
-  const length = searchSuggestions.value.length
-  if (length > 0) {
-    if (length > 10) {
-      return isShowSearchHistories.value ? '363px' : '330px'
-    } else {
-      return isShowSearchHistories.value ? `${(length + 1) * 33}px` : `${length * 33}px`
-    }
-  } else {
-    return '0'
-  }
 }
 
 defineExpose({
@@ -108,38 +143,26 @@ defineExpose({
   <div
     ref="searchSuggestionArea"
     class="search-suggestion-area"
-    :class="[
-      settingsStore.search.enableShadow ? 'search-suggestion-area--shadow' : undefined,
-      settingsStore.background.bgType === 0 && searchSuggestions.length > 0
-        ? 'search-suggestion-area--dark'
-        : undefined
-    ]"
+    :class="areaClasses"
     :style="{
       width: `${searchFormWidth}px`,
-      height: getSearchSuggestionAreaHeight()
+      height: areaHeight
     }"
   >
     <div
-      v-for="(item, index) in searchSuggestions.length > 10
-        ? searchSuggestions.slice(0, 10)
-        : searchSuggestions"
+      v-for="(item, index) in displayedSuggestions"
       :key="index"
       class="search-suggestion-area__item noselect"
       :class="{ 'search-suggestion-area__item--active': currentActiveSuggest === index }"
       @click="emit('doSearchWithText', item)"
       @mouseover="
         (e) => {
-          ;(e.target as HTMLDivElement | null)?.classList.add(
-            'search-suggestion-area__item--active'
-          )
+          ;(e.target as HTMLDivElement).classList.add('search-suggestion-area__item--active')
           currentActiveSuggest = index
         }
       "
       @mouseout="
-        (e) =>
-          (e.target as HTMLDivElement | null)?.classList.remove(
-            'search-suggestion-area__item--active'
-          )
+        (e) => (e.target as HTMLDivElement).classList.remove('search-suggestion-area__item--active')
       "
     >
       {{ item }}
@@ -158,6 +181,8 @@ defineExpose({
 
 <style scoped lang="scss">
 .search-suggestion-area {
+  --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
+
   position: absolute;
   top: 60px;
   z-index: 1000;
@@ -183,11 +208,12 @@ defineExpose({
 
   &__item {
     display: -webkit-box;
+    align-items: center;
     height: 33px;
     padding: 0 20px;
     overflow: hidden;
     -webkit-line-clamp: 1;
-    line-clamp: 1;
+    -webkit-box-orient: vertical;
     line-height: 33px;
     color: var(--el-text-color-primary);
     cursor: pointer;
@@ -196,7 +222,6 @@ defineExpose({
       padding var(--el-transition-duration-fast) var(--cubic-bezier),
       padding-left var(--el-transition-duration-fast) var(--cubic-bezier),
       color var(--el-transition-duration-fast) ease;
-    -webkit-box-orient: vertical;
 
     &--active {
       padding-left: 30px;

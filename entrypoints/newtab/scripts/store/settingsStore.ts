@@ -10,7 +10,7 @@ import type {
   SettingsInterfaceVer2,
   SettingsInterfaceVer4
 } from '../settings/types'
-import { migrateFromVer1To4, migrateFromVer2To4, defaultSettings } from '../settings'
+import { migrateFromVer1To4, defaultSettings } from '../settings'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -18,37 +18,44 @@ const searchSuggestAPIsMap: Record<string, string> = {
   谷歌: 'google'
 }
 
+type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
+
+async function migrateSettings(
+  settings: OldStorageSettings
+): Promise<SettingsInterfaceVer4 | null> {
+  if (!settings.version) {
+    settings.version = '' // 太旧版本可能没有version字段
+  }
+
+  // 判断版本类型来确定具体的设置类型
+  if (typeof settings.version === 'string') {
+    const oldSettings = settings as OldSettingsInterface
+    if (searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]) {
+      oldSettings.selectedSearchSuggestionAPI =
+        searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]
+    }
+    return migrateFromVer1To4(oldSettings)
+  }
+
+  return null
+}
+
 export async function initSettings() {
   let settings = await settingsStorage.getValue()
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const oldSettings = (await chrome.storage.local.get('settings')) as any as
-      | { settings: OldSettingsInterface }
-      | undefined
-      | null
+    const oldSettings: { settings: OldStorageSettings | null } = await chrome.storage.local.get({
+      settings: null
+    })
 
-    if (oldSettings?.settings) {
-      const selectedAPI = oldSettings.settings.selectedSearchSuggestionAPI
-      if (searchSuggestAPIsMap[selectedAPI]) {
-        oldSettings.settings.selectedSearchSuggestionAPI = searchSuggestAPIsMap[selectedAPI]
-      }
-      // 最旧版本的设置中储存的是插件版本号，需要迁移
-      if (typeof oldSettings.settings.version === 'string') {
-        settings = migrateFromVer1To4(oldSettings.settings)
-        await saveSettings(settings)
-      } else if (!oldSettings.settings.version) {
-        // 某些情况下没有 version 字段的问题
-        settings = migrateFromVer1To4({ ...oldSettings.settings, version: '' })
+    if (oldSettings.settings) {
+      // 迁移旧版本设置
+      const migratedSettings = await migrateSettings(oldSettings.settings)
+      if (migratedSettings) {
+        settings = migratedSettings
         await saveSettings(settings)
       }
     }
   }
-
-  // 由于前期没有使用wxt的配置版本管理，所以刷新页面以应用新的配置
-  if (settings.version == 2) {
-    settings = migrateFromVer2To4(settings as unknown as SettingsInterfaceVer2)
-  }
-
   const settingsStore = useSettingsStore()
   settingsStore.$patch(settings)
 }

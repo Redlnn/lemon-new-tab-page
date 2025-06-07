@@ -26,7 +26,7 @@ export interface SettingsInterfaceVer4 {
     bgType: BgType
     enableVignetting: boolean
     blurIntensity: number
-    bgMaskPpacity: number
+    bgMaskOpacity: number
     maskColor: string
     onlineUrl: string
   }
