@@ -1,7 +1,6 @@
 import type { SettingsInterfaceVer3, SettingsInterfaceVer4 } from '../types'
 
 export function migrateFromVer3To4(oldSettings: SettingsInterfaceVer3): SettingsInterfaceVer4 {
-  console.log('Migrating settings from version 3 to 4')
   return {
     primaryColor: oldSettings.primaryColor,
     time: {

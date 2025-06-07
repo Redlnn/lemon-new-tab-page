@@ -10,7 +10,7 @@ import {
   defaultSettings
 } from '../settings'
 
-console.log('Initializing settings storage with version', CURRENT_CONFIG_VERSION)
+console.log('Initializing settings storage with config version', CURRENT_CONFIG_VERSION)
 export const settingsStorage = storage.defineItem<CURRENT_CONFTG_INTERFACE>('local:settings', {
   fallback: defaultSettings,
   version: CURRENT_CONFIG_VERSION,
@@ -19,18 +19,18 @@ export const settingsStorage = storage.defineItem<CURRENT_CONFTG_INTERFACE>('loc
       if (settings.version > 2) {
         return settings as unknown as SettingsInterfaceVer3
       }
-      console.log('Migrating settings from version 2 to 3')
+      console.log('Migrating config from version 2 to 3')
       return migrateFromVer2To3(settings)
     },
     3: async (settings: SettingsInterfaceVer3): Promise<SettingsInterfaceVer4> => {
       if (settings.version > 3) {
         return settings as unknown as SettingsInterfaceVer4
       }
-      console.log('Migrating settings from version 3 to 4')
+      console.log('Migrating config from version 3 to 4')
       if (settings.version === 3) {
         return migrateFromVer3To4(settings)
       }
-      throw new Error('Invalid settings version')
+      throw new Error('Invalid config version')
     }
   }
 })
