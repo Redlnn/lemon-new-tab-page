@@ -1,5 +1,5 @@
 import { defineConfig } from 'wxt'
-
+import { URL, fileURLToPath } from 'node:url'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -77,7 +77,8 @@ export default defineConfig({
     ],
     resolve: {
       alias: {
-        '@/newtab': '/entrypoints/newtab'
+        '@': fileURLToPath(new URL('./', import.meta.url)),
+        '@newtab': fileURLToPath(new URL('./entrypoints/newtab', import.meta.url))
       }
     },
     css: {

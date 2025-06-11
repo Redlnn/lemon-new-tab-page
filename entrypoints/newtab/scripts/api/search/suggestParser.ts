@@ -1,5 +1,5 @@
-import { enhancedFetch } from '../../plugins/fetch'
-import fetchJsonp from './fetchJsonp'
+import { enhancedFetch } from '@/utils/network/fetch'
+import fetchJsonp from '@/utils/network/fetchJsonp'
 
 interface BingSuggestItem {
   Txt: string

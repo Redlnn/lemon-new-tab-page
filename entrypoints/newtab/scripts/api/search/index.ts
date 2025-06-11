@@ -2,8 +2,8 @@ import type { Component } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
 
-import Baidu from '@/newtab/assets/baidu.svg?component'
-import Bing from '@/newtab/assets/bing.svg?component'
+import Baidu from '@newtab/assets/baidu.svg?component'
+import Bing from '@newtab/assets/bing.svg?component'
 import { Google } from '@vicons/fa'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'

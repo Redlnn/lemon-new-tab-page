@@ -2,7 +2,7 @@ import _ from 'lodash'
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
-import { isImageFile } from '@/newtab/scripts/img'
+import { isImageFile } from '@/utils/image'
 import { settingsStorage } from '../storages/settingsStorage'
 import { useWallpaperStore } from './wallpaperStore'
 import type {

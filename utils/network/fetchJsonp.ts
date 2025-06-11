@@ -1,4 +1,4 @@
-import { enhancedFetch } from '@/utils/network/fetch'
+import { enhancedFetch } from './fetch'
 
 interface fetchJsonpOptions {
   url: string

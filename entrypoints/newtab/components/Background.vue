@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { useFocusStore, useSettingsStore, useBgSwtichStore } from '@/newtab/scripts/store'
+import { useFocusStore, useSettingsStore, useBgSwtichStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

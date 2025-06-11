@@ -12,8 +12,8 @@ import {
 import { reactive, ref } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore, saveBookmark, useBookmarkStore } from '@/newtab/scripts/store'
-import { convertBase64Svg, isImageFile } from '@/newtab/scripts/img'
+import { useSettingsStore, saveBookmark, useBookmarkStore } from '@newtab/scripts/store'
+import { convertBase64Svg, isImageFile } from '@/utils/image'
 
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()

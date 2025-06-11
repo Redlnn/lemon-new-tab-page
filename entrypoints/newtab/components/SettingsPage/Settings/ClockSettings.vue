@@ -3,7 +3,7 @@ import { ClockCircleOutlined } from '@vicons/antd'
 import { browser } from 'wxt/browser'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
 
 const settingsStore = useSettingsStore()
 const isChinese = browser.i18n.getUILanguage().startsWith('zh')

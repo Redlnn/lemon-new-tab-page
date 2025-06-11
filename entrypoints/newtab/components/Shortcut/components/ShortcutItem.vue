@@ -2,8 +2,8 @@
 import { MoreVertRound } from '@vicons/material'
 import { Pin16Regular } from '@vicons/fluent'
 
-import { useSettingsStore } from '@/newtab/scripts/store'
-import { convertBase64Svg } from '@/newtab/scripts/img'
+import { useSettingsStore } from '@newtab/scripts/store'
+import { convertBase64Svg } from '@/utils/image'
 import { getFaviconURLChrome } from '../utils/topSites'
 
 const settingsStore = useSettingsStore()

@@ -3,9 +3,9 @@ import { ColorLensOutlined } from '@vicons/material'
 import { computed, ref, watch } from 'vue'
 import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/core'
 
-import changeTheme from '@/newtab/scripts/use-element-plus-theme'
+import changeTheme from '@newtab/scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()

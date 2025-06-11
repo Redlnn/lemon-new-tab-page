@@ -5,9 +5,9 @@
     "./.wxt/types/**/*",
     "./entrypoints/**/*",
     "./types/**/*",
-    "./utils/optimizeDeps.ts"
+    "./utils/**/*"
   ],
-  "exclude": ["./.output"],
+  "exclude": ["./.output", "./utils/optimizeDeps.ts"],
   "compilerOptions": {
     "composite": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",

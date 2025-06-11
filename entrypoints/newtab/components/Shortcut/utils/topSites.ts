@@ -1,7 +1,7 @@
 import browser from 'webextension-polyfill'
 import { h } from 'vue'
 
-import { blockedTopStitesStorage } from '@/newtab/scripts/storages/topSitesStorage'
+import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { i18n } from '@/.wxt/i18n'
 
 async function getTopSites() {

@@ -5,8 +5,8 @@ import { DeleteForeverOutlined } from '@vicons/material'
 
 import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
-import { useWallpaperStore } from '@/newtab/scripts/store'
-import { useSettingsStore } from '@/newtab/scripts/store/settingsStore'
+import { useWallpaperStore } from '@newtab/scripts/store'
+import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
