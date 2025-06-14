@@ -10,7 +10,6 @@ import {
   defaultSettings
 } from '../settings'
 
-console.log('Initializing settings storage with config version', CURRENT_CONFIG_VERSION)
 export const settingsStorage = storage.defineItem<CURRENT_CONFTG_INTERFACE>('local:settings', {
   fallback: defaultSettings,
   version: CURRENT_CONFIG_VERSION,

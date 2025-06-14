@@ -5,8 +5,10 @@ import {
   initSettings,
   reloadBackgroundImage,
   uploadBackgroundImage,
-  useSettingsStore
+  useSettingsStore,
+  saveSettings
 } from './settingsStore'
+import { initSyncSettings, useSyncSettingsStore } from './syncSettingsStore'
 import { useBingWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 export {
@@ -20,5 +22,8 @@ export {
   initSettings,
   reloadBackgroundImage,
   uploadBackgroundImage,
-  useSettingsStore
+  useSettingsStore,
+  saveSettings,
+  initSyncSettings,
+  useSyncSettingsStore
 }
