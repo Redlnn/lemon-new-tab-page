@@ -1,5 +1,4 @@
 import type { Bookmark } from '@/entrypoints/newtab/scripts/storages/bookmarkStorage'
-import _ from 'lodash'
 import { saveBookmark } from '@newtab/scripts/store'
 import type { Store } from 'pinia'
 import { h } from 'vue'
@@ -12,7 +11,7 @@ export async function removeBookmark(
 ) {
   const { url, title, favicon } = store.items[index]
   if (store.items.length > 1) {
-    store.items = _.omit(store.items, index)
+    store.items = store.items.filter((_, i) => i !== index)
   } else {
     store.items = []
   }

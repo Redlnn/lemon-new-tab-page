@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -66,7 +65,7 @@ export async function saveSettings(settings: SettingsInterfaceVer4) {
 
 export const useSettingsStore = defineStore('opiton', {
   state: () => {
-    return _.cloneDeep(defaultSettings)
+    return structuredClone(defaultSettings)
   }
 })
 
