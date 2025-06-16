@@ -1,4 +1,3 @@
-import _ from 'lodash'
 import { defineStore } from 'pinia'
 
 import { type Bookmark, bookmarkStorage, defaultBookmark } from '../storages/bookmarkStorage'
@@ -15,6 +14,6 @@ export async function saveBookmark(bookmark: Bookmark) {
 
 export const useBookmarkStore = defineStore('bookmark', {
   state: () => {
-    return _.cloneDeep(defaultBookmark)
+    return structuredClone(defaultBookmark)
   }
 })
