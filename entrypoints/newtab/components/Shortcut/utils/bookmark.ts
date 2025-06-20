@@ -1,5 +1,4 @@
-import type { Bookmark } from '@/entrypoints/newtab/scripts/storages/bookmarkStorage'
-import { saveBookmark } from '@newtab/scripts/store'
+import { type Bookmark, saveBookmark } from '@/shared/bookmark'
 import type { Store } from 'pinia'
 import { h } from 'vue'
 import { i18n } from '@/.wxt/i18n'

@@ -2,16 +2,14 @@ import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
 import { isImageFile } from '@/shared/image'
-import { settingsStorage } from '../../../../shared/settings/settingsStorage'
-import {
-  type OldSettingsInterface,
-  type SettingsInterfaceVer2,
-  type SettingsInterfaceVer5,
-  useWallpaperStore,
-  migrateFromVer1To5,
-  defaultSettings,
-  type CURRENT_CONFTG_INTERFACE
-} from '@/shared/settings'
+import { settingsStorage } from './settingsStorage'
+import { useWallpaperStore } from './wallpaperStore'
+import type {
+  OldSettingsInterface,
+  SettingsInterfaceVer2,
+  SettingsInterfaceVer5
+} from '../settings/types'
+import { migrateFromVer1To5, defaultSettings, type CURRENT_CONFTG_INTERFACE } from '../settings'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',

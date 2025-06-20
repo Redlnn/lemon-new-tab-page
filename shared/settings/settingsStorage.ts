@@ -1,17 +1,11 @@
 import { storage } from '#imports'
-import {
-  migrateFromVer2To3,
-  migrateFromVer3To4,
-  type SettingsInterfaceVer2,
-  type SettingsInterfaceVer3,
-  type SettingsInterfaceVer4,
-  CURRENT_CONFIG_VERSION,
-  type CURRENT_CONFTG_INTERFACE,
-  defaultSettings
-} from '../settings'
+import type { SettingsInterfaceVer2, SettingsInterfaceVer3, SettingsInterfaceVer4 } from './types'
+import { migrateFromVer2To3, migrateFromVer3To4 } from './migrate'
+import { defaultSettings } from './default'
+import { CURRENT_CONFIG_VERSION, type CURRENT_CONFTG_INTERFACE } from './current'
 
 export const settingsStorage = storage.defineItem<CURRENT_CONFTG_INTERFACE>('local:settings', {
-  fallback: defaultSettings,
+  fallback: structuredClone(defaultSettings),
   version: CURRENT_CONFIG_VERSION,
   migrations: {
     2: async (settings: SettingsInterfaceVer2): Promise<SettingsInterfaceVer3> => {

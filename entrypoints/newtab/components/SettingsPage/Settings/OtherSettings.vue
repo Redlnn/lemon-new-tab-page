@@ -2,11 +2,11 @@
 import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
-
+import { browser } from 'wxt/browser'
 import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
-import { useWallpaperStore } from '@newtab/scripts/store'
-import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
+import { useSettingsStore, useWallpaperStore } from '@/shared/settings'
+import type { SyncMessage } from '@/shared/sync'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
@@ -36,9 +36,16 @@ async function clearExtensionData() {
   await useWallpaperStore.clear()
   await storage.clear('local')
   await storage.clear('session')
-  // await storage.clear('sync')
-  // await storage.clear('managed')
+  await storage.clear('sync')
+  await storage.clear('managed')
   location.reload()
+}
+
+function sendSyncMessage() {
+  if (!settingsStore.sync.enabled) return
+  browser.runtime.sendMessage({
+    type: 'SYNC_INIT'
+  } as SyncMessage)
 }
 </script>
 
@@ -48,6 +55,10 @@ async function clearExtensionData() {
     <span>{{ i18n.t('newtab.settings.other.title') }}</span>
   </div>
   <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">云同步</div>
+      <el-switch v-model="settingsStore.sync.enabled" @change="sendSyncMessage" />
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
       <el-switch v-model="settingsStore.search.enableYiyan" />
