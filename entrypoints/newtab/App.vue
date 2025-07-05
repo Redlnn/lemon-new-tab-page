@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { version } from '@/package.json'
 
-import { ElConfigProvider } from 'element-plus'
+import { browser } from 'wxt/browser'
+import { ElConfigProvider, ElNotification } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
 import { useColorMode, promiseTimeout } from '@vueuse/core'
-import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
+import en from 'element-plus/es/locale/lang/en.mjs'
+import type { Language } from 'element-plus/es/locale'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
@@ -20,6 +22,34 @@ import { verifyImageUrl } from '@/shared/image'
 import { useBgSwtichStore } from './scripts/store'
 import { reloadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
+
+const elementZhLocales = import.meta.glob<{ default: Language }>(
+  '/node_modules/element-plus/es/locale/lang/zh*.mjs'
+)
+
+// 由于考虑面向用户群体，只包含中文、英文
+async function loadElementLocale(_locale: string) {
+  if (locale.startsWith('zh')) {
+    const key = `element-plus/es/locale/lang/${_locale.toLowerCase()}.mjs`
+    const loader = elementZhLocales[key]
+    if (loader) {
+      const mod = await loader()
+      return mod.default
+    } else {
+      return (await import(`element-plus/es/locale/lang/zh-cn.mjs`)).default
+    }
+  } else {
+    return en
+  }
+}
+
+const elLocale = ref<Language>()
+
+onBeforeMount(async () => {
+  elLocale.value = await loadElementLocale(locale)
+})
+
+const locale = browser.i18n.getUILanguage()
 
 useColorMode()
 const settingsStore = useSettingsStore()
@@ -133,7 +163,7 @@ watch(
 </script>
 
 <template>
-  <el-config-provider :locale="zhCn">
+  <el-config-provider :locale="elLocale">
     <main
       :style="{
         justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,
