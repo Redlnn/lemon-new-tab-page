@@ -3,7 +3,6 @@ import { ColorLensOutlined } from '@vicons/material'
 import { computed, ref, watch } from 'vue'
 import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/core'
 
-import changeTheme from '@newtab/scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -130,18 +129,7 @@ watch(preferredDark, () => {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.theme.primaryColor') }}</div>
       <div class="settings__theme-mode">
-        <el-color-picker
-          v-model="settingsStore.primaryColor"
-          :predefine="predefineColors"
-          @change="
-            () => {
-              if (settingsStore.primaryColor === null) {
-                settingsStore.primaryColor = '#1677ff'
-              }
-              changeTheme(settingsStore.primaryColor)
-            }
-          "
-        />
+        <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
       </div>
     </div>
   </div>

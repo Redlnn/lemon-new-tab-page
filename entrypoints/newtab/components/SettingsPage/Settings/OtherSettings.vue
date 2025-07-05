@@ -1,12 +1,11 @@
 <script setup lang="ts">
-import 'element-plus/theme-chalk/el-message-box.css'
 import { ControlOutlined } from '@vicons/antd'
 import { DeleteForeverOutlined } from '@vicons/material'
 
 import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore, useWallpaperStore } from '@/shared/settings'
-import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
+import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
@@ -38,6 +37,14 @@ async function clearExtensionData() {
   await storage.clear('session')
   await storage.clear('sync')
   location.reload()
+}
+
+function sendSyncMessage() {
+  if (settingsStore.sync.enabled) {
+    initSyncSettings(settingsStore)
+  } else {
+    deinitSyncSettings()
+  }
 }
 </script>
 

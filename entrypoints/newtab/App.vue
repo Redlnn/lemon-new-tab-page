@@ -19,6 +19,7 @@ import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from '@/shared/image'
 import { useBgSwtichStore } from './scripts/store'
 import { reloadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
+import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
 useColorMode()
 const settingsStore = useSettingsStore()
@@ -78,6 +79,27 @@ onMounted(async () => {
   if (settingsStore.pluginVersion !== version) {
     ChangelogRef.value?.show()
   }
+
+  // 注册同步事件回调
+  setSyncEventCallback((type, payload) => {
+    if (type === 'version-mismatch') {
+      const p = payload as { cloud: string; local: string }
+      ElNotification({
+        title: '云同步失败',
+        message: `云端配置版本(${p.cloud})高于本地(${p.local})，请升级扩展后再使用云同步。`,
+        type: 'error',
+        duration: 8000
+      })
+    } else if (type === 'sync-error') {
+      const err = payload as Error
+      ElNotification({
+        title: '云同步异常',
+        message: err.message || '未知错误',
+        type: 'error',
+        duration: 8000
+      })
+    }
+  })
 
   await updateBackgroundURL(settingsStore.background.bgType)
 })
