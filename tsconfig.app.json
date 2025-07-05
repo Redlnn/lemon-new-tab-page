@@ -5,7 +5,8 @@
     "./.wxt/types/**/*",
     "./entrypoints/**/*",
     "./types/**/*",
-    "./utils/**/*"
+    "./utils/**/*",
+    "./shared/**/*"
   ],
   "exclude": ["./.output", "./utils/optimizeDeps.ts"],
   "compilerOptions": {
