@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { version } from '@/package.json'
 
-import { ElConfigProvider } from 'element-plus'
+import { browser } from 'wxt/browser'
+import { ElConfigProvider, ElNotification } from 'element-plus'
 import { SettingsOutlined } from '@vicons/material'
 import { useColorMode, promiseTimeout } from '@vueuse/core'
-import zhCn from 'element-plus/es/locale/lang/zh-cn.mjs'
-import { onMounted, ref, watch } from 'vue'
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
+import en from 'element-plus/es/locale/lang/en.mjs'
+import type { Language } from 'element-plus/es/locale'
 
 import Background from './components/Background.vue'
 import Changelog from './components/Changelog.vue'
@@ -16,9 +18,38 @@ import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
 
 import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
-import { verifyImageUrl } from '@/utils/image'
-import { reloadBackgroundImage, useSettingsStore, useBgSwtichStore } from './scripts/store'
-import { BgType } from './scripts/settings'
+import { verifyImageUrl } from '@/shared/image'
+import { useBgSwtichStore } from './scripts/store'
+import { reloadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
+import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
+
+const elementZhLocales = import.meta.glob<{ default: Language }>(
+  '/node_modules/element-plus/es/locale/lang/zh*.mjs'
+)
+
+// 由于考虑面向用户群体，只包含中文、英文
+async function loadElementLocale(_locale: string) {
+  if (locale.startsWith('zh')) {
+    const key = `element-plus/es/locale/lang/${_locale.toLowerCase()}.mjs`
+    const loader = elementZhLocales[key]
+    if (loader) {
+      const mod = await loader()
+      return mod.default
+    } else {
+      return (await import(`element-plus/es/locale/lang/zh-cn.mjs`)).default
+    }
+  } else {
+    return en
+  }
+}
+
+const elLocale = ref<Language>()
+
+onBeforeMount(async () => {
+  elLocale.value = await loadElementLocale(locale)
+})
+
+const locale = browser.i18n.getUILanguage()
 
 useColorMode()
 const settingsStore = useSettingsStore()
@@ -79,6 +110,27 @@ onMounted(async () => {
     ChangelogRef.value?.show()
   }
 
+  // 注册同步事件回调
+  setSyncEventCallback((type, payload) => {
+    if (type === 'version-mismatch') {
+      const p = payload as { cloud: string; local: string }
+      ElNotification({
+        title: '云同步失败',
+        message: `云端配置版本(${p.cloud})高于本地(${p.local})，请升级扩展后再使用云同步。`,
+        type: 'error',
+        duration: 8000
+      })
+    } else if (type === 'sync-error') {
+      const err = payload as Error
+      ElNotification({
+        title: '云同步异常',
+        message: err.message || '未知错误',
+        type: 'error',
+        duration: 8000
+      })
+    }
+  })
+
   await updateBackgroundURL(settingsStore.background.bgType)
 })
 
@@ -111,7 +163,7 @@ watch(
 </script>
 
 <template>
-  <el-config-provider :locale="zhCn">
+  <el-config-provider :locale="elLocale">
     <main
       :style="{
         justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,

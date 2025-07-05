@@ -7,5 +7,5 @@ export interface Bookmark {
 export const defaultBookmark: Bookmark = { items: [] }
 
 export const bookmarkStorage = storage.defineItem<Bookmark>('local:bookmark', {
-  fallback: defaultBookmark
+  fallback: structuredClone(defaultBookmark)
 })
