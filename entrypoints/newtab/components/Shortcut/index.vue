@@ -106,6 +106,8 @@ onMounted(async () => {
 
 watch(settingsStore.shortcut, refresh)
 watch(() => windowWidth.value, refresh)
+// 云同步导致书签变动时刷新
+bookmarkStorage.watch(refresh)
 </script>
 
 <template>
