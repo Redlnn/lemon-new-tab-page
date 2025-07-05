@@ -1,7 +1,7 @@
 import { defaultSettings } from '..'
-import type { OldSettingsInterface, SettingsInterfaceVer4 } from '../types'
+import type { OldSettingsInterface, SettingsInterfaceVer5 } from '../types'
 
-export function migrateFromVer1To4(oldSettings: OldSettingsInterface): SettingsInterfaceVer4 {
+export function migrateFromVer1To5(oldSettings: OldSettingsInterface): SettingsInterfaceVer5 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -60,7 +60,10 @@ export function migrateFromVer1To4(oldSettings: OldSettingsInterface): SettingsI
       whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
       marginTop: defaultSettings.shortcut.marginTop
     },
+    sync: {
+      enabled: false
+    },
     pluginVersion: oldSettings.version,
-    version: 4
+    version: 5
   }
 }

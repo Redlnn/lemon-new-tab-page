@@ -1,16 +1,5 @@
-export { BgType } from './types'
-export { migrateFromVer1To4, migrateFromVer2To3, migrateFromVer3To4 } from './migrate'
-export type {
-  OldSettingsInterface,
-  SettingsInterfaceVer2,
-  SettingsInterfaceVer3,
-  SettingsInterfaceVer4
-} from './types'
-
-import { BgType, type SettingsInterfaceVer4 } from './types'
-
-export const CURRENT_CONFIG_VERSION = 4
-export type CURRENT_CONFTG_INTERFACE = SettingsInterfaceVer4
+import { CURRENT_CONFIG_VERSION, type CURRENT_CONFTG_INTERFACE } from './current'
+import { BgType } from './types'
 
 export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
   primaryColor: '#FFBB00',
@@ -65,6 +54,9 @@ export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
     iconSize: 50,
     whiteTextInLightMode: true,
     marginTop: 50
+  },
+  sync: {
+    enabled: false
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION

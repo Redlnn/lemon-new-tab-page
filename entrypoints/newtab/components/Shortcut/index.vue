@@ -7,16 +7,12 @@ import { useWindowSize } from '@vueuse/core'
 import { useDraggable } from 'vue-draggable-plus'
 
 import { i18n } from '@/.wxt/i18n'
-import {
-  useFocusStore,
-  useSettingsStore,
-  initBookmark,
-  useBookmarkStore
-} from '@newtab/scripts/store'
+import { useSettingsStore } from '@/shared/settings'
+import { saveBookmark, initBookmark, useBookmarkStore, bookmarkStorage } from '@/shared/bookmark'
+import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
-import { saveBookmark } from '@newtab/scripts/store'
 import { blockSite, getTopSites } from './utils/topSites'
 import { removeBookmark, pinBookmark } from './utils/bookmark'
 
