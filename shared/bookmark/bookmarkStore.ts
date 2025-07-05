@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-import { type Bookmark, bookmarkStorage, defaultBookmark } from '../storages/bookmarkStorage'
+import { type Bookmark, bookmarkStorage, defaultBookmark } from './bookmarkStorage'
 
 export async function initBookmark() {
   const bookmark = await bookmarkStorage.getValue()

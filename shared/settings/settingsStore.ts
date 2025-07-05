@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia'
 import { v4 as uuidv4 } from 'uuid'
 
-import { isImageFile } from '@/utils/image'
-import { settingsStorage } from '../storages/settingsStorage'
+import { isImageFile } from '@/shared/image'
+import { settingsStorage } from './settingsStorage'
 import { useWallpaperStore } from './wallpaperStore'
 import type {
   OldSettingsInterface,
   SettingsInterfaceVer2,
-  SettingsInterfaceVer4
+  SettingsInterfaceVer5
 } from '../settings/types'
-import { migrateFromVer1To4, defaultSettings } from '../settings'
+import { migrateFromVer1To5, defaultSettings, type CURRENT_CONFTG_INTERFACE } from '../settings'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -21,9 +21,9 @@ type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
 
 async function migrateSettings(
   settings: OldStorageSettings
-): Promise<SettingsInterfaceVer4 | null> {
+): Promise<SettingsInterfaceVer5 | null> {
   if (!settings.version) {
-    settings.version = '' // 太旧版本可能没有version字段
+    settings.version = '0' // 太旧版本可能没有version字段
   }
 
   // 判断版本类型来确定具体的设置类型
@@ -33,33 +33,40 @@ async function migrateSettings(
       oldSettings.selectedSearchSuggestionAPI =
         searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]
     }
-    return migrateFromVer1To4(oldSettings)
+    return migrateFromVer1To5(oldSettings)
   }
 
   return null
 }
 
 export async function initSettings() {
-  let settings = await settingsStorage.getValue()
+  let settings
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
     const oldSettings: { settings: OldStorageSettings | null } = await chrome.storage.local.get({
       settings: null
     })
 
-    if (oldSettings.settings) {
+    if (oldSettings.settings && !('pluginVersion' in oldSettings.settings)) {
       // 迁移旧版本设置
       const migratedSettings = await migrateSettings(oldSettings.settings)
+      console.log('Initializing settings storage with config version', oldSettings.settings.version)
       if (migratedSettings) {
         settings = migratedSettings
         await saveSettings(settings)
       }
     }
   }
+
+  if (!settings) {
+    settings = await settingsStorage.getValue()
+    console.log('Initializing settings storage with config version', settings.version)
+  }
+
   const settingsStore = useSettingsStore()
   settingsStore.$patch(settings)
 }
 
-export async function saveSettings(settings: SettingsInterfaceVer4) {
+export async function saveSettings(settings: CURRENT_CONFTG_INTERFACE) {
   await settingsStorage.setValue(settings)
 }
 

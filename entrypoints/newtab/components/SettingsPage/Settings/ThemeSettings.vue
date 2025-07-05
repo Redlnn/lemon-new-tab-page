@@ -5,7 +5,7 @@ import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/c
 
 import changeTheme from '@newtab/scripts/use-element-plus-theme'
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@newtab/scripts/store/settingsStore'
+import { useSettingsStore } from '@/shared/settings'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()

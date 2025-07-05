@@ -5,9 +5,8 @@ import { Plus } from '@vicons/fa'
 import { type UploadProps, type UploadRequestOptions, type ElInput } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
-import { isImageFile } from '@/utils/image'
-import { uploadBackgroundImage, useSettingsStore } from '@newtab/scripts/store'
-import { BgType } from '@newtab/scripts/settings'
+import { isImageFile } from '@/shared/image'
+import { uploadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
