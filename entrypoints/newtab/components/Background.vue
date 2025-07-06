@@ -47,8 +47,7 @@ defineProps<{ url: string }>()
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--el-bg-color-page);
-  opacity: calc(1 - var(--mask-opacity));
+  background-color: var(--mask-color);
 }
 
 .background {
@@ -57,6 +56,7 @@ defineProps<{ url: string }>()
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  opacity: calc(1 - var(--mask-opacity));
   filter: blur(var(--blur-intensity));
   transition:
     transform 0.2s cubic-bezier(0.65, 0.05, 0.1, 1),
