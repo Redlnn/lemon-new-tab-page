@@ -1,0 +1,153 @@
+extension:
+  name: 檸檬起始頁
+  description: >
+    一個開源、簡潔、美觀又易用的瀏覽器起始頁。頁面上可直接開始搜尋，支援
+    Bing 每日圖片，可新增快速存取網站並顯示最常瀏覽網站。
+sync:
+  failMessage:
+    title: 雲端同步失敗
+    message: 雲端設定版本（$1）高於本機版本（$2），請更新擴充功能後再試
+  errorMessage:
+    title: 雲端同步異常
+newtab:
+  title: 新分頁
+  changelog: 更新日誌
+  settings:
+    title: 設定
+    background:
+      title: 背景設定
+      type:
+        title: 背景類型
+        none: 無
+        local: 本機圖片
+        bing: Bing 每日圖片
+        online: 線上圖片
+      enableVignetting: 暗角效果
+      blur: 模糊程度
+      maskOpacity: 遮罩不透明度
+      maskColor: 遮罩顏色
+      warning:
+        title: 警告
+        fileIsNotImage: 所選檔案並非圖片！
+        securityPolicy: 因應 Google 安全政策，需授權 $1 的訪問權限才能取得背景圖片，是否允許本擴充功能訪問此網址？
+        granted: 已授權訪問
+        notGranted: 尚未授權，無法讀取此網址
+        unknownSource: 使用來自不明來源的圖片作背景可能會危及你的裝置安全，是否繼續？
+      onlineTips:
+        a: 按下 Enter 鍵或點擊輸入框以外的區域以提交
+        b: 圖片快取策略取決於瀏覽器，離線時可能無法展示
+        c: 背景圖片載入前會短暫白屏，時間長短視乎你的網速
+        d: 請確認你使用的圖片 API 支援跨域請求，否則可能載入失敗
+    clock:
+      title: 時鐘設定
+      use12HourClock: 使用 12 小時制
+      showAMPM: 顯示「上午／下午」
+      showDate: 顯示日期
+      showLunar: 顯示農曆
+      enableShadow: 顯示陰影
+      invertColorLight: 淺色模式下使用深色文字
+      invertColorDark: 深色模式下使用深色文字
+    other:
+      title: 其他設定
+      yiyan: 一言
+      purgeData: 清除本擴充功能的資料
+      want_to_customize_chrome: 想自訂 Chrome？
+      customize_chrome_tips: >
+        如果你想自訂 Chrome（例如更改主題顏色），你必須開啟 Chrome 原生的新分頁
+        (chrome://new-tab-page)，然後點右下角圖示以開啟「自訂 Chrome」側邊欄。
+      confirmPurgeData:
+        title: 確定要清除所有資料？
+        message: 此操作將會重設擴充設定、已忽略的常用網站、已釘選或收藏的網站，以及已選擇的背景圖片等。
+        confirm: 好
+        cancel: 算啦
+        purging: 正在清除擴充功能資料...
+    about:
+      title: 關於
+      version: 目前版本
+      projectLink: 專案網址
+      chromeExtensionLink: Chrome 商店頁面
+      firefoxExtensionLink: Firefox 商店頁面
+      edgeExtensionLink: Edge 商店頁面
+      yiyanApiProvider: 一言 API 提供方：
+      license: 本專案採用 MIT 授權條款開源
+    search:
+      title: 搜尋設定
+      defaultSearchEngine: 預設搜尋引擎
+      searchSuggestionProvider: 搜尋建議 API
+      openInNewTab: 在新分頁中開啟
+      autoFocus: 自動聚焦搜尋框
+      enableShadow: 顯示搜尋框陰影
+      recordSearchHistory: 記錄搜尋歷史
+    theme:
+      title: 主題設定
+      darkMode: 深色模式
+      systemMode: 跟隨系統設定
+      primaryColor: 主題顏色
+      chromeTip: 在 Chrome 中，此選項不受「自訂 Chrome」側邊欄影響，只與系統設定有關。
+    shortcut:
+      title: 快速存取
+      tip: 小提示：可以拖動設定視窗來觀察快速存取區域的變化喔~
+      enable: 啟用
+      showTopSites: 顯示最常瀏覽網站
+      showPinnedIcon: 顯示釘選圖示
+      showTitle: 顯示標題
+      enableBg: 顯示區域背景
+      enableShadow: 顯示區域陰影
+      maxRows: 最大列數
+      maxColumns: 最大欄數
+      maxItemsTipForChrome: 僅支援最多 10 個常用網站
+      restoreDefault: 還原預設快速存取
+      restoreDefaultConfirm:
+        title: 確定還原預設快速存取？
+        confirm: 是
+        cancel: 否
+      whiteTextInLightMode: 淺色模式下使用白色文字
+      whiteTextTip: 關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好喔~
+      iconSize: 圖示大小
+      HorizontalIconSpacing: 圖示左右間距
+      VerticalIconSpacing: 圖示上下間距
+      marginTop: 快速存取區上邊距
+  shortcut:
+    addNewShortcut: 新增快速存取
+    pin: 釘選
+    unpin: 取消釘選
+    remove: 移除
+    addDialog:
+      dialogTitle: 新增快速存取
+      title: 標題
+      url: 網址
+      favicon: 圖示
+      confirm: 確定
+      cancel: 取消
+      invalidUrlError: 網址無效，請重新輸入~
+      confirmSvgTitle: 你選擇了一張 SVG 圖片
+      confirmSvgDesc: 你確定要使用 SVG 圖片嗎？為防範 XSS 和 XXE 攻擊，檸檬起始頁將對圖片進行處理，可能會導致圖片無法正常顯示。即便處理後仍有風險，請確認圖片來源安全。
+      confirmSvgOKBtn: 確定
+      confirmSvgCancelBtn: 還是不要了
+      tooLargeImageError: 圖片超過 100KiB，請重新選擇~
+      autoFetchFavicon: 自動取得圖示
+      uploadFaviconAlert: 支援格式：ico、svg、png、jpg、webp
+    removeTopMessage:
+      content: 已移除快速存取
+      revoke: 撤銷
+      restoreDefault: 還原預設快速存取
+    removePinnedMessage:
+      content: 已取消釘選連結
+      revoke: 撤銷
+  search:
+    placeholder: 搜尋
+    purgeSearchHistory: 清除搜尋歷史
+    searchEngineMenu:
+      current: 當前
+      tipPrefix: '小提示：按'
+      tipSuffix: 可切換搜尋引擎
+  searchEngineMenu:
+    bing: 必應
+    google: Google
+    baidu: 百度
+  notification:
+    bingWallpaper:
+      get: 正在取得 Bing 壁紙...
+      error:
+        title: 無法取得 Bing 壁紙
+        message: 請查看開發者工具中的主控台提示。

@@ -9,6 +9,14 @@ extension:
     An open-source, simple, user-friendly start page.
     You can search or custom wallpaper.
     It can also display the most visited links.
+sync:
+  failMessage:
+    title: Cloud Sync Failed
+    message: >
+      The cloud configuration version ($1) is newer than the local version ($2).
+      Please update the extension and try again.
+  errorMessage:
+    title: Cloud Sync Error
 newtab:
   title: New Tab
   changelog: Changelog
@@ -57,7 +65,7 @@ newtab:
         and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.
       confirmPurgeData:
         title: Are you sure to purge all data of this extension?
-        messgae: This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images, etc.
+        message: This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images, etc.
         confirm: OK
         cancel: Cancel
         purging: Clearing extension data..
@@ -102,7 +110,7 @@ newtab:
         confirm: 'Yes'
         cancel: 'No'
       whiteTextInLightMode: White Text in Light Mode
-      whiteTextTip: Disable the shortcut area background and enable the background mask can provide an enhanced experience.
+      whiteTextTip: Disable the “Shortcut Area Background” and set “Mask Opacity” to 0 for a better appearance.
       iconSize: Icon Size
       HorizontalIconSpacing: Horizontal Icon Spacing
       VerticalIconSpacing: Vertical Icon Spacing

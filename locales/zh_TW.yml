@@ -1,40 +1,47 @@
 extension:
   name: 檸檬起始頁
   description: >
-    一個開源、簡潔、美觀且方便使用的瀏覽器起始頁。頁面上可直接開始搜尋，支持
-    Bing 每日一圖，可添加捷徑並展示最常造訪網站。
+    一個開源、簡潔、美觀且易於使用的瀏覽器起始頁。頁面上可直接開始搜尋，支持
+    Bing 每日圖片，可添加捷徑並展示最常造訪網站。
+sync:
+  failMessage:
+    title: 雲端同步失敗
+    message: 雲端設定版本（$1）高於本機版本（$2），請更新擴充功能後再試一次
+  errorMessage:
+    title: 雲端同步發生異常
 newtab:
   title: 新分頁
   changelog: 更新日誌
   settings:
     title: 設定
     background:
-      title: 壁紙設定
+      title: 背景設定
       type:
-        title: 壁紙類型
+        title: 背景類型
         none: 無
-        local: 本地圖像
-        bing: Bing 每日一圖
-        online: 在線圖像
-      enableVignetting: 暗角
+        local: 本機圖片
+        bing: Bing 每日圖片
+        online: 線上圖片
+      enableVignetting: 暗角效果
       blur: 模糊強度
       maskOpacity: 遮罩不透明度
-      maskColor: 遮罩顔色
+      maskColor: 遮罩顏色
       warning:
-        fileIsNotImage: 所選檔案不是圖像!
-        securityPolicy: 由於 Google 的安全策略，需要授予 $1 的訪問權限才能獲取壁紙，是否允許本擴充功能申請訪問該連結的權限
+        title: 警告
+        fileIsNotImage: 所選檔案不是圖片！
+        securityPolicy: 由於 Google 的安全策略，需要授予 $1 的訪問權限才能獲取壁紙，是否允許本擴充功能申請訪問該連結的權限？
         granted: 已授予訪問權限
-        notGranted: 未授予權限，無法訪問該連結
-        unknownSource: 使用未知來源的圖像作為壁紙可能會使你的設備遭到攻擊，是否繼續？
+        notGranted: 未授權，無法載入背景圖片
+        unknownSource: 使用來源不明的圖片作為背景可能會使裝置遭到攻擊，是否繼續？
       onlineTips:
-        a: 按下 Enter 鍵或輸入框失去焦點後提交
-        b: 壁紙的快取策略取決於瀏覽器，離線時可能無法取得壁紙
-        c: 壁紙載入完成前會出現白屏，時間長短取決於你的網速
-        d: 請確認你使用的壁紙 API 允許跨域請求，否則會載入失敗
+        a: 按下 Enter 鍵或當輸入框失去焦點時會提交
+        b: 圖片的快取策略取決於瀏覽器，離線時可能無法載入圖片
+        c: 載入圖片前可能會短暫出現白畫面，時間長短取決於你的網路速度
+        d: 請確認使用的圖片 API 是否允許跨域請求，否則將無法載入圖片
     clock:
       title: 時鐘設定
-      use12HourClock: 12 小時制
-      showAMPM: 顯示「上午」/「下午」
+      use12HourClock: 使用 12 小時制
+      showAMPM: 顯示「上午 / 下午」
       showDate: 顯示日期
       showLunar: 顯示農曆
       enableShadow: 顯示陰影
@@ -43,30 +50,30 @@ newtab:
     other:
       title: 其他設定
       yiyan: 一言
-      purgeData: 清除本擴充功能資料
-      want_to_customize_chrome: 要自訂Chrome？
+      purgeData: 清除本擴充功能的資料
+      want_to_customize_chrome: 要自訂 Chrome 嗎？
       customize_chrome_tips: >
-        假如你要自訂 Chrome（例如更改顏色主題）的話，你只能打開 Chrome 的原生新分頁
-        (chrome://new-tab-page) 並點擊右下角的圖示來打開「自訂 Chrome」側邊欄。
+        假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁
+        (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。
       confirmPurgeData:
         title: 確定要清除所有資料嗎?
-        messgae: 該操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已置頂或收藏的網站、已選擇的背景圖像等。
+        message: 此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。
         confirm: 好
         cancel: 算了
         purging: 正在清除擴充功能資料...
     about:
       title: 關於
       version: 當前版本
-      projectLink: 專案位址
-      chromeExtensionLink: Chrome 商店連結
-      firefoxExtensionLink: Firefox 商店連結
-      edgeExtensionLink: Edge 商店連結
-      yiyanApiProvider: 一言 API 來自：
-      license: 本專案使用 MIT 協議開源
+      projectLink: 專案連結
+      chromeExtensionLink: Chrome 商店頁面
+      firefoxExtensionLink: Firefox 商店頁面
+      edgeExtensionLink: Edge 商店頁面
+      yiyanApiProvider: 一言 API 提供方：
+      license: 本專案以 MIT 授權條款開源
     search:
       title: 搜尋設定
-      defaultSearchEngine: 搜尋引擎
-      searchSuggestionProvider: 搜尋建議API
+      defaultSearchEngine: 預設搜尋引擎
+      searchSuggestionProvider: 搜尋建議 API
       openInNewTab: 在新分頁中開啟
       autoFocus: 自動聚焦於搜尋框
       enableShadow: 顯示搜尋框陰影
@@ -79,31 +86,31 @@ newtab:
       chromeTip: 在 Chrome 中，該選項不受到「自訂 Chrome」側邊欄的影響，只與系統設定相關。
     shortcut:
       title: 捷徑設定
-      tip: Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~
+      tip: 小提示：可以拖曳設定視窗以觀察捷徑區域的變化噢~
       enable: 啟用
       showTopSites: 顯示最常造訪
-      showPinnedIcon: 顯示置頂圖示
+      showPinnedIcon: 顯示釘選圖示
       showTitle: 顯示標題
-      enableBg: 顯示捷徑區域背景
-      enableShadow: 顯示捷徑區域陰影
-      maxRows: 最大行數
-      maxColumns: 最大列數
-      maxItemsTipForChrome: 最常造訪的上限只有 10 個噢~
-      restoreDefault: 恢復預設捷徑
+      enableBg: 顯示區塊背景
+      enableShadow: 顯示陰影效果
+      maxRows: 最大列數
+      maxColumns: 最大欄數
+      maxItemsTipForChrome: 最常造訪最多只有 10 個喔～
+      restoreDefault: 還原預設捷徑
       restoreDefaultConfirm:
-        title: 你確定要恢復預設捷徑嗎
-        confirm: 是
+        title: 確定要還原為預設捷徑嗎？
+        confirm: 是的
         cancel: 算了
       whiteTextInLightMode: 在淺色模式下使用白色字體
-      whiteTextTip: 搭配【關閉捷徑區域背景】和【背景遮罩】使用更好看哦~
-      iconSize: 連結大小
-      HorizontalIconSpacing: 橫向連結間距
-      VerticalIconSpacing: 縱向連結間距
+      whiteTextTip: 關閉【顯示區塊背景】並將【遮罩不透明度】設為 0，效果會更好喔~
+      iconSize: 圖示大小
+      HorizontalIconSpacing: 圖示左右間距
+      VerticalIconSpacing: 圖示上下間距
       marginTop: 捷徑區域上邊距
   shortcut:
     addNewShortcut: 新增捷徑
-    pin: 置頂
-    unpin: 取消置頂
+    pin: 釘選
+    unpin: 取消釘選
     remove: 移除
     addDialog:
       dialogTitle: 新增捷徑
@@ -113,26 +120,26 @@ newtab:
       confirm: 好了
       cancel: 不好
       invalidUrlError: 無效的連結，請重新輸入~
-      confirmSvgTitle: 你选择了一张 SVG 圖像
-      confirmSvgDesc: 你確定要使用 SVG 圖像嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對這個圖像進行處理，因此有可能會導致這個 SVG 圖像不會如期展示。但即使經過處理，你仍可能被你所選擇的圖像攻擊，請確保你所使用的圖像來源是安全的。
+      confirmSvgTitle: 你選擇了一張 SVG 圖片
+      confirmSvgDesc: 你確定要使用 SVG 圖片嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對這個圖片進行處理，因此有可能會導致這個 SVG 圖片不會如期展示。但即使經過處理，你有可能遭受攻擊，請確保你所使用的圖片來源安全。
       confirmSvgOKBtn: 是的
-      confirmSvgCancelBtn: 還是不要了
-      tooLargeImageError: 圖像檔案大小超過 100KiB，請重新選擇~
-      autoFetchFavicon: 自動取得圖示
-      uploadFaviconAlert: 可用的格式：ico、svg、png、jpg、webp
+      confirmSvgCancelBtn: 還是不要好了
+      tooLargeImageError: 圖片檔案大小超過 100KiB，請重新選擇~
+      autoFetchFavicon: 自動擷取圖示
+      uploadFaviconAlert: 支援格式：ico、svg、png、jpg、webp
     removeTopMessage:
       content: 已移除捷徑
       revoke: 復原
-      restoreDefault: 恢復預設捷徑
+      restoreDefault: 還原預設捷徑
     removePinnedMessage:
-      content: 已移除該置頂連結
+      content: 已移除該釘選連結
       revoke: 復原
   search:
     placeholder: 搜尋
     purgeSearchHistory: 清除搜尋歷史
     searchEngineMenu:
       current: 當前
-      tipPrefix: 'Tip: 按下'
+      tipPrefix: '小提示：按下'
       tipSuffix: 切換搜尋引擎
   searchEngineMenu:
     bing: Bing
@@ -140,7 +147,7 @@ newtab:
     baidu: 百度
   notification:
     bingWallpaper:
-      get: 正在獲取 Bing 壁紙...
+      get: 正在獲取 Bing 圖片...
       error:
-        title: 無法取得 Bing 壁紙
-        message: 請檢查開發者工具中的主控台訊息。
+        title: 無法取得 Bing 圖片
+        message: 請查看開發人員工具的主控台訊息。

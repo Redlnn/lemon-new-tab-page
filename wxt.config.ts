@@ -12,7 +12,7 @@ const baseManifest = {
   name: '__MSG_extension_name__',
   author: 'Red_lnn<lemon@redlnn.top>',
   description: '__MSG_extension_description__',
-  default_locale: 'zh_CN',
+  default_locale: 'en',
   icons: {
     512: '/icon.png'
   },

@@ -13,7 +13,7 @@ const settingsStore = useSettingsStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      i18n.t('newtab.settings.other.confirmPurgeData.messgae'),
+      i18n.t('newtab.settings.other.confirmPurgeData.message'),
       i18n.t('newtab.settings.other.confirmPurgeData.title'),
       {
         confirmButtonText: i18n.t('newtab.settings.other.confirmPurgeData.confirm'),

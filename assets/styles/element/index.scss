@@ -39,15 +39,17 @@ html {
       #{$font-apple}, 'HarmonyOS Sans SC', #{$font-common}, #{$font-sc}, #{$font-fallback};
   }
 
-  /* 繁体中文 香港 zh-Hant-HK 和 zh-HK */
+  /* 繁体中文 港澳 */
   &[lang^='zh-Hant-HK'],
-  &[lang^='zh-HK'] {
+  &[lang^='zh-HK'],
+  &[lang^='zh-Hant-MO'],
+  &[lang^='zh-MO'] {
     --el-font-family:
       #{$font-apple}, 'HarmonyOS Sans TC', #{$font-common}, #{$font-hk}, #{$font-fallback};
   }
 
-  /* 其他繁体 zh-Hant（不包括HK） */
-  &[lang^='zh-Hant']:not([lang^='zh-Hant-HK']),
+  /* 台湾正体 */
+  &[lang^='zh-Hant']:not([lang^='zh-Hant-HK'], [lang^='zh-Hant-MO']),
   &[lang^='zh-TW'] {
     --el-font-family:
       #{$font-apple}, 'HarmonyOS Sans TC', #{$font-common}, #{$font-tc}, #{$font-fallback};

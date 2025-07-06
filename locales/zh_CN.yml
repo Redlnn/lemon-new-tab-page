@@ -3,6 +3,12 @@ extension:
   description: >
     一个开源、简洁、美观且方便使用的浏览器起始页。页面上可直接开始搜索，支持
     Bing 每日一图，可添加快速访问网站并展示最常访问网站。
+sync:
+  failMessage:
+    title: 云同步失败
+    message: 云端配置版本（$1）高于本地（$2），请更新扩展后重试
+  errorMessage:
+    title: 云同步异常
 newtab:
   title: 新标签页
   changelog: 更新日志
@@ -14,15 +20,15 @@ newtab:
         title: 背景类型
         none: 无
         local: 本地图片
-        bing: Bing每日一图
+        bing: Bing 每日一图
         online: 在线图片
-      enableVignetting: 暗角
+      enableVignetting: 暗角效果
       blur: 模糊强度
       maskOpacity: 遮罩不透明度
       maskColor: 遮罩颜色
       warning:
         title: 警告
-        fileIsNotImage: 所选文件不是图片!
+        fileIsNotImage: 所选文件不是图片！
         securityPolicy: 由于 Google 的安全策略，需要授予 $1 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限
         granted: 已授予访问权限
         notGranted: 未授予权限，无法访问该地址
@@ -34,8 +40,8 @@ newtab:
         d: 请确保你使用的壁纸 API 允许跨域请求，否则会加载失败
     clock:
       title: 时钟设置
-      use12HourClock: 12 小时制
-      showAMPM: 显示「上午」/「下午」
+      use12HourClock: 使用 12 小时制
+      showAMPM: 显示「上午 / 下午」
       showDate: 显示日期
       showLunar: 显示农历
       enableShadow: 显示阴影
@@ -44,14 +50,14 @@ newtab:
     other:
       title: 其他设置
       yiyan: 一言
-      purgeData: 清除本扩展数据
+      purgeData: 清除扩展数据
       want_to_customize_chrome: 要自定义Chrome？
       customize_chrome_tips: >
         假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页
         (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。
       confirmPurgeData:
         title: 确定要清除所有数据吗?
-        messgae: 该操作将会重置扩展设置、已忽略的最常访问站点、已置顶或收藏的站点、已选择的背景图片等。
+        message: 该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片等。
         confirm: 好
         cancel: 算了
         purging: 正在清除扩展数据...
@@ -59,15 +65,15 @@ newtab:
       title: 关于
       version: 当前版本
       projectLink: 项目地址
-      chromeExtensionLink: Chrome 商店地址
-      firefoxExtensionLink: Firefox 商店地址
-      edgeExtensionLink: Edge 商店地址
-      yiyanApiProvider: 一言 API 来自：
+      chromeExtensionLink: Chrome 商店页面
+      firefoxExtensionLink: Firefox 商店页面
+      edgeExtensionLink: Edge 商店页面
+      yiyanApiProvider: 一言 API 提供方：
       license: 本项目使用 MIT 协议开源
     search:
       title: 搜索设置
       defaultSearchEngine: 搜索引擎
-      searchSuggestionProvider: 搜索建议API
+      searchSuggestionProvider: 搜索建议 API
       openInNewTab: 在新标签页中打开
       autoFocus: 自动聚焦于搜索框
       enableShadow: 显示搜索框阴影
@@ -85,21 +91,21 @@ newtab:
       showTopSites: 展示最常访问
       showPinnedIcon: 展示置顶图标
       showTitle: 显示标题
-      enableBg: 显示快速访问区域背景
-      enableShadow: 显示快速访问区域阴影
+      enableBg: 显示区域背景
+      enableShadow: 显示区域阴影
       maxRows: 最大行数
       maxColumns: 最大列数
       maxItemsTipForChrome: 最常访问的上限只有 10 个噢~
       restoreDefault: 恢复默认快捷方式
       restoreDefaultConfirm:
-        title: 你确定要恢复默认快捷方式吗
+        title: 你确定要恢复默认快捷方式吗？
         confirm: 对
         cancel: 算了
       whiteTextInLightMode: 在浅色模式下使用白色字体
-      whiteTextTip: 搭配【关闭快速访问区域背景】和【背景遮罩】食用更佳噢~
+      whiteTextTip: 关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~
       iconSize: 图标大小
-      HorizontalIconSpacing: 横向图标间隔
-      VerticalIconSpacing: 竖向图标间隔
+      HorizontalIconSpacing: 图标左右间距
+      VerticalIconSpacing: 图标上下间距
       marginTop: 快速访问区域上边距
   shortcut:
     addNewShortcut: 添加快速访问

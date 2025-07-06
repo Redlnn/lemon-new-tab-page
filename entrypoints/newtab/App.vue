@@ -22,6 +22,7 @@ import { verifyImageUrl } from '@/shared/image'
 import { useBgSwtichStore } from './scripts/store'
 import { reloadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
+import { i18n } from '#imports'
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
   '/node_modules/element-plus/es/locale/lang/zh*.mjs'
@@ -115,18 +116,16 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification({
-        title: '云同步失败',
-        message: `云端配置版本(${p.cloud})高于本地(${p.local})，请升级扩展后再使用云同步。`,
-        type: 'error',
-        duration: 8000
+        title: i18n.t('sync.failMessage.title'),
+        message: i18n.t('sync.failMessage.message', [p.cloud, p.local]),
+        type: 'error'
       })
     } else if (type === 'sync-error') {
       const err = payload as Error
       ElNotification({
-        title: '云同步异常',
-        message: err.message || '未知错误',
-        type: 'error',
-        duration: 8000
+        title: i18n.t('sync.errorMessage.title'),
+        message: err.message || 'Unknown error.',
+        type: 'error'
       })
     }
   })
