@@ -21,7 +21,8 @@ defineProps<{ url: string }>()
       class="background-wrapper"
       :style="{
         '--mask-opacity': settingsStore.background.bgMaskOpacity / 100,
-        '--mask-color': settingsStore.background.maskColor,
+        '--mask-color__light': settingsStore.background.lightMaskColor,
+        '--mask-color__night': settingsStore.background.nightMaskColor,
         '--blur-intensity': `${settingsStore.background.blurIntensity}px`
       }"
     >
@@ -47,7 +48,12 @@ defineProps<{ url: string }>()
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: var(--mask-color);
+  background-color: var(--mask-color__light);
+  transition: background-color var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
+
+  html.dark & {
+    background-color: var(--mask-color__night);
+  }
 }
 
 .background {
@@ -59,8 +65,8 @@ defineProps<{ url: string }>()
   opacity: calc(1 - var(--mask-opacity));
   filter: blur(var(--blur-intensity));
   transition:
-    transform 0.2s cubic-bezier(0.65, 0.05, 0.1, 1),
-    filter 0.2s cubic-bezier(0.65, 0.05, 0.1, 1);
+    transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
+    filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
   &--focused {
     filter: blur(calc(var(--blur-intensity) + 10px));

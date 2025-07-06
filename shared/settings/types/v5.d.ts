@@ -27,7 +27,8 @@ export interface SettingsInterfaceVer5 {
     enableVignetting: boolean
     blurIntensity: number
     bgMaskOpacity: number
-    maskColor: string
+    lightMaskColor: string
+    nightMaskColor: string
     onlineUrl: string
   }
   localBackground: {

@@ -28,7 +28,8 @@ export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
     enableVignetting: false,
     blurIntensity: 3,
     bgMaskOpacity: 0,
-    maskColor: '#000',
+    lightMaskColor: '#f2f3f5',
+    nightMaskColor: '#000',
     onlineUrl: ''
   },
   localBackground: {

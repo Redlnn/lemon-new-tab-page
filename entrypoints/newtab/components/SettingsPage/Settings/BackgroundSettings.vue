@@ -13,6 +13,8 @@ const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const tmpUrl = ref('')
 const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
 
+const predefineMaskColor = ['#f2f3f5', '#000']
+
 onMounted(() => {
   if (settingsStore.background.onlineUrl) {
     tmpUrl.value = settingsStore.background.onlineUrl
@@ -153,17 +155,32 @@ function onlineImageWarn() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
-      <el-color-picker
-        v-model="settingsStore.background.maskColor"
-        :predefine="['#fff', '#000']"
-        @change="
-          () => {
-            if (settingsStore.background.maskColor === null) {
-              settingsStore.background.maskColor = '#000'
+      <span>
+        <span>浅色模式：</span>
+        <el-color-picker
+          v-model="settingsStore.background.lightMaskColor"
+          :predefine="predefineMaskColor"
+          @change="
+            () => {
+              if (settingsStore.background.lightMaskColor === null) {
+                settingsStore.background.lightMaskColor = '#f2f3f5'
+              }
             }
-          }
-        "
-      />
+          "
+        />
+        <span style="margin-left: 1rem">深色模式：</span>
+        <el-color-picker
+          v-model="settingsStore.background.nightMaskColor"
+          :predefine="predefineMaskColor"
+          @change="
+            () => {
+              if (settingsStore.background.nightMaskColor === null) {
+                settingsStore.background.nightMaskColor = '#000'
+              }
+            }
+          "
+        />
+      </span>
     </div>
   </div>
 </template>

@@ -1,3 +1,4 @@
+import { defaultSettings } from '../default'
 import type { SettingsInterfaceVer4, SettingsInterfaceVer5 } from '../types'
 
 export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): SettingsInterfaceVer5 {
@@ -28,7 +29,8 @@ export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): Settings
       enableVignetting: oldSettings.background.enableVignetting,
       blurIntensity: oldSettings.background.blurIntensity,
       bgMaskOpacity: oldSettings.background.bgMaskOpacity,
-      maskColor: oldSettings.background.maskColor,
+      lightMaskColor: oldSettings.background.maskColor,
+      nightMaskColor: defaultSettings.background.nightMaskColor,
       onlineUrl: oldSettings.background.onlineUrl
     },
     localBackground: {

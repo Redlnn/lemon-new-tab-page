@@ -29,7 +29,8 @@ export function migrateFromVer1To5(oldSettings: OldSettingsInterface): SettingsI
       enableVignetting: oldSettings.bgDarkCorners,
       blurIntensity: oldSettings.bgBlur,
       bgMaskOpacity: oldSettings.bgMaskPpacity,
-      maskColor: defaultSettings.background.maskColor,
+      lightMaskColor: defaultSettings.background.lightMaskColor,
+      nightMaskColor: defaultSettings.background.nightMaskColor,
       onlineUrl: defaultSettings.background.onlineUrl
     },
     localBackground: {
