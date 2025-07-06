@@ -35,6 +35,7 @@ newtab:
       maskOpacity: Mask Opacity
       maskColor: Mask Color
       warning:
+        title: Warning
         fileIsNotImage: The selected file is not an image!
         securityPolicy: Due to Google's security policy, the extension needs permission to access $1 to get the background. Do you allow this extension to request access to this host?
         granted: Permission granted.
