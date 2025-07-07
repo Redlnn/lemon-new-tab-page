@@ -2,7 +2,32 @@
 
 > Translated by ChatGPT from Chinese.
 
-## Optimization
+## 2.2.0 (2025-07-07)
+
+### Features
+
+- Added toggle for switching between day and night mask colors.
+- Added reminder for items that do not support cloud synchronization.
+- Implemented cloud synchronization for settings and bookmarks. The following features do not support synchronization:
+  - Local or online background images
+  - Most visited sites (including ignored sites)
+  - Dark mode and system-following status, etc.
+
+### Optimization
+
+- Refactored a large amount of code.
+- Updated and completed translations.
+
+### Fixes
+
+- Fixed the issue where the background mask color did not take effect.
+- Fixed the issue where the default font did not apply for English systems.
+- Fixed the issue where Element components always used zhCn for i18n.
+- Prevented the description of the YiYan switch from being too long in English environments.
+
+## 2.1.0
+
+### Optimization
 
 - Set the clock font to monospace for improved visual appearance.
 - Adjusted font selection order to enhance aesthetics.
@@ -17,11 +42,11 @@
   - Fixed spelling errors.
   - Thanks to Copilot for assistance.
 
-## Fixes
+### Fixes
 
 - Fixed an issue where Latin text for some Linux users was falling back to emoji fonts.
 
-## Others
+### Others
 
 - Refactored code to improve readability.
 

@@ -2,6 +2,30 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>2.2.0</h1>
+    <h2>新特性</h2>
+    <ul>
+      <li>新增昼夜遮罩颜色切换</li>
+      <li>新增不支持云同步项目的提醒</li>
+      <li>实现云同步设置和书签，以下功能不支持同步：</li>
+      <ul>
+        <li>本地或在线背景图片</li>
+        <li>最常访问站点（含已忽略的站点）</li>
+        <li>深色模式及跟随系统状态等</li>
+      </ul>
+    </ul>
+    <h2>优化</h2>
+    <ul>
+      <li>重构大量代码</li>
+      <li>更新和补全翻译</li>
+    </ul>
+    <h2>修复</h2>
+    <ul>
+      <li>修复背景遮罩颜色不生效的问题</li>
+      <li>修复英文系统默认字体不生效的问题</li>
+      <li>修复 Element 组件 i18n 恒为 zhCn 的问题</li>
+      <li>防止“一言”开关描述在英语环境下过长</li>
+    </ul>
     <h1>2.1.0</h1>
     <h2>优化</h2>
     <ul>
@@ -83,6 +107,35 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>2.2.0</h1>
+    <h2>Features</h2>
+    <ul>
+      <li>Added toggle for switching between day and night mask colors.</li>
+      <li>Added reminder for items that do not support cloud synchronization.</li>
+      <li>
+        Implemented cloud synchronization for settings and bookmarks. The following features do not
+        support synchronization:
+      </li>
+      <ul>
+        <li>Local or online background images</li>
+        <li>Most visited sites (including ignored sites)</li>
+        <li>Dark mode and system-following status, etc</li>
+      </ul>
+    </ul>
+    <h2>Optimizations</h2>
+    <ul>
+      <li>Refactored a large amount of code.</li>
+      <li>Updated and completed translations.</li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>Fixed the issue where the background mask color did not take effect.</li>
+      <li>Fixed the issue where the default font did not apply for English systems.</li>
+      <li>Fixed the issue where Element components always used zhCn for i18n.</li>
+      <li>
+        Prevented the description of the YiYan switch from being too long in English environments.
+      </li>
+    </ul>
     <h1>2.1.0</h1>
     <h2>Optimizations</h2>
     <ul>
