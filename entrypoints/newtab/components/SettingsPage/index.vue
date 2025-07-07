@@ -48,7 +48,7 @@ defineExpose({ show, hide, toggleShow })
   align-items: center;
   margin: 30px 0 6px 10px;
   font-size: 1.1em;
-  font-weight: 900;
+  font-weight: 650;
 
   span {
     margin-left: 5px;

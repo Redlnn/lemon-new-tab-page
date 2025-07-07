@@ -18,7 +18,13 @@ $--slider: (
 
 $font-apple: -apple-system, BlinkMacSystemFont;
 $font-fallback: system-ui, sans-serif, emoji;
-$font-common: Inter, Ubuntu, 'Source Sans 3', 'Source Sans Pro', Roboto, Arial;
+$font-common:
+  Inter,
+  Segoe UI Variable Display,
+  Arial,
+  Roboto,
+  DejaVu Sans,
+  Liberation Sans;
 $font-sc:
   PingFangSC, 'Microsoft YaHei UI', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC';
 $font-hk:
