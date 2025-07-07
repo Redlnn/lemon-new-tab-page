@@ -61,7 +61,8 @@ newtab:
       syncWarning: >
         Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status.
         Items that are not supported for sync will have an icon like this on the right:
-      yiyan: Show a line of Chinese poetry when expanding the search box.
+      yiyan: YiYan
+      yiyanDescription: Show a line of Chinese poetry when the search box is expanded.
       purgeData: Purge the data of this extension.
       want_to_customize_chrome: Want to customize Chrome?
       customize_chrome_tips: >
