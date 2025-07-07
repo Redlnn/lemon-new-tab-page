@@ -80,6 +80,29 @@ defineExpose({ show, hide, toggleShow })
 }
 
 .settings__label {
+  display: flex;
+  align-items: center;
   margin: 10px 0 6px;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    margin-left: 0.5em;
+    opacity: 0.4;
+  }
+}
+
+.settings__item--note {
+  margin-top: 0;
+  font-size: 12px;
+  line-height: 1.5em;
+  color: var(--el-text-color-regular);
+
+  svg {
+    width: 1.2em;
+    height: 1.2em;
+    vertical-align: middle;
+    opacity: 0.4;
+  }
 }
 </style>

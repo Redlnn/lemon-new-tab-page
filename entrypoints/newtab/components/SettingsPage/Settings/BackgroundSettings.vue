@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
+import { CloudOffRound } from '@vicons/material'
 import { type UploadProps, type UploadRequestOptions, type ElInput } from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
@@ -98,18 +99,20 @@ function onlineImageWarn() {
     <div class="settings__item">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
       <el-radio-group v-model="settingsStore.background.bgType">
-        <el-radio :value="BgType.None">{{
-          i18n.t('newtab.settings.background.type.none')
-        }}</el-radio>
-        <el-radio :value="BgType.Local">{{
-          i18n.t('newtab.settings.background.type.local')
-        }}</el-radio>
-        <el-radio :value="BgType.Bing">{{
-          i18n.t('newtab.settings.background.type.bing')
-        }}</el-radio>
-        <el-radio :value="BgType.Online" @change="onlineImageWarn">{{
-          i18n.t('newtab.settings.background.type.online')
-        }}</el-radio>
+        <el-radio :value="BgType.None">
+          {{ i18n.t('newtab.settings.background.type.none') }}
+        </el-radio>
+        <el-radio :value="BgType.Local">
+          {{ i18n.t('newtab.settings.background.type.local') }}
+          <cloud-off-round />
+        </el-radio>
+        <el-radio :value="BgType.Bing">
+          {{ i18n.t('newtab.settings.background.type.bing') }}
+        </el-radio>
+        <el-radio :value="BgType.Online" @change="onlineImageWarn">
+          {{ i18n.t('newtab.settings.background.type.online') }}
+          <cloud-off-round />
+        </el-radio>
       </el-radio-group>
     </div>
     <el-input
@@ -168,7 +171,7 @@ function onlineImageWarn() {
             }
           "
         />
-        <span style="margin-left: 1rem">深色模式：</span>
+        <span style="margin-left: 1em">深色模式：</span>
         <el-color-picker
           v-model="settingsStore.background.nightMaskColor"
           :predefine="predefineMaskColor"
@@ -185,7 +188,7 @@ function onlineImageWarn() {
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .settings__bg-uploader-img {
   max-width: 100%;
   object-fit: cover;
@@ -227,6 +230,18 @@ function onlineImageWarn() {
 
   li {
     margin: 3px 0;
+  }
+}
+
+:deep() .el-radio__label {
+  display: flex;
+  align-items: center;
+
+  svg {
+    width: 1em;
+    height: 1em;
+    margin-left: 0.5em;
+    opacity: 0.5;
   }
 }
 </style>

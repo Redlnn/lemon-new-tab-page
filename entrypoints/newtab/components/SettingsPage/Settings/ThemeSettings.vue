@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ColorLensOutlined } from '@vicons/material'
+import { ColorLensOutlined, CloudOffRound } from '@vicons/material'
 import { computed, ref, watch } from 'vue'
 import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/core'
 
@@ -108,22 +108,20 @@ watch(preferredDark, () => {
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.theme.darkMode') }}</div>
+      <div class="settings__label">
+        {{ i18n.t('newtab.settings.theme.darkMode') }}
+        <cloud-off-round />
+      </div>
       <el-switch v-model="isDarkLocal" @change="toggleDark" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.theme.systemMode') }}</div>
+      <div class="settings__label">
+        {{ i18n.t('newtab.settings.theme.systemMode') }}
+        <cloud-off-round />
+      </div>
       <el-switch v-model="isAutoLocal" @change="toggleAuto" />
     </div>
-    <p
-      v-if="isGoogleChrome"
-      style="
-        margin-top: 0;
-        font-size: 12px;
-        line-height: 1.5em;
-        color: var(--el-text-color-regular);
-      "
-    >
+    <p v-if="isGoogleChrome" class="settings__item--note">
       {{ i18n.t('newtab.settings.theme.chromeTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">

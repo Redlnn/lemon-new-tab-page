@@ -49,6 +49,10 @@ newtab:
       invertColorDark: 深色模式下使用深色字体
     other:
       title: 其他设置
+      sync: 云同步
+      syncWarning: >
+        云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。
+        不支持同步的项目后面会有如右侧的标识：
       yiyan: 一言
       purgeData: 清除扩展数据
       want_to_customize_chrome: 要自定义Chrome？

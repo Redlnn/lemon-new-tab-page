@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ControlOutlined } from '@vicons/antd'
-import { DeleteForeverOutlined } from '@vicons/material'
+import { DeleteForeverOutlined, CloudOffRound } from '@vicons/material'
 
 import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
@@ -55,8 +55,14 @@ function sendSyncMessage() {
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">云同步</div>
+      <div class="settings__label">{{ i18n.t('newtab.settings.other.sync') }}</div>
       <el-switch v-model="settingsStore.sync.enabled" @change="sendSyncMessage" />
+    </div>
+    <div class="settings__item">
+      <p class="settings__item--note">
+        {{ i18n.t('newtab.settings.other.syncWarning') }}
+        <cloud-off-round />
+      </p>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
@@ -75,7 +81,7 @@ function sendSyncMessage() {
       <div class="settings__label">
         {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
       </div>
-      <p style="font-size: 12px; line-height: 1.5em; color: var(--el-text-color-regular)">
+      <p class="settings__item--note">
         {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
       </p>
     </div>

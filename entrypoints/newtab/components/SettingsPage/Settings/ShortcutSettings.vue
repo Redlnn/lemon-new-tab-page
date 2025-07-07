@@ -21,10 +21,7 @@ async function restoreDefaultTopSites() {
     <span>{{ i18n.t('newtab.settings.shortcut.title') }}</span>
   </div>
   <div class="settings__items-container">
-    <p
-      v-if="isChrome"
-      style="font-size: 12px; line-height: 1em; color: var(--el-text-color-regular)"
-    >
+    <p v-if="isChrome" class="settings__item--note" style="margin-top: 1em">
       {{ i18n.t('newtab.settings.shortcut.tip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
@@ -61,14 +58,7 @@ async function restoreDefaultTopSites() {
         </div>
         <el-switch v-model="settingsStore.shortcut.whiteTextInLightMode" />
       </div>
-      <p
-        style="
-          margin-top: 0;
-          font-size: 12px;
-          line-height: 1.5em;
-          color: var(--el-text-color-regular);
-        "
-      >
+      <p class="settings__item--note">
         {{ i18n.t('newtab.settings.shortcut.whiteTextTip') }}
       </p>
       <div class="settings__item">
