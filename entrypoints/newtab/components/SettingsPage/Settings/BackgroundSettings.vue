@@ -204,7 +204,7 @@ function onlineImageWarn() {
     transition: var(--el-transition-duration-fast);
   }
 
-  & .el-upload {
+  &:deep() .el-upload {
     position: relative;
     overflow: hidden;
     cursor: pointer;
