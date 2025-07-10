@@ -95,13 +95,16 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   if (!provider) return
 
   switchStore.start()
-  await promiseTimeout(300)
-  bgURL.value = ''
-
   if (provider.verify) {
     await provider.verify()
   }
-  bgURL.value = await provider.getURL()
+  const newUrl = await provider.getURL()
+
+  // 等待过渡动画
+  await promiseTimeout(200)
+  bgURL.value = ''
+  // 不直接赋值时因为避免看到壁纸变形
+  bgURL.value = newUrl
 
   switchStore.end()
 }
