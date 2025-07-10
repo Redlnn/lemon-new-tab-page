@@ -14,19 +14,21 @@ defineProps<{ url: string }>()
 </script>
 
 <template>
-  <Transition>
-    <div
-      v-show="!switchStore.isSwitching"
-      ref="backgroundWrapper"
-      class="background-wrapper"
-      :style="{
-        '--mask-opacity': settingsStore.background.bgMaskOpacity / 100,
-        '--mask-color__light': settingsStore.background.lightMaskColor,
-        '--mask-color__night': settingsStore.background.nightMaskColor,
-        '--blur-intensity': `${settingsStore.background.blurIntensity}px`
-      }"
-    >
+  <div
+    ref="backgroundWrapper"
+    class="background-wrapper"
+    :style="{
+      '--mask-opacity': settingsStore.background.bgMaskOpacity / 100,
+      '--mask-color__light': settingsStore.background.lightMaskColor,
+      '--mask-color__night': settingsStore.background.nightMaskColor,
+      '--blur-intensity': `${settingsStore.background.blurIntensity}px`
+    }"
+  >
+    <div class="background-mask"></div>
+    <div v-if="settingsStore.background.enableVignetting" class="background__vignette" />
+    <Transition>
       <div
+        v-show="!switchStore.isSwitching"
         ref="background"
         class="background"
         :class="{ 'background--focused': focusStore.isFocused }"
@@ -34,9 +36,8 @@ defineProps<{ url: string }>()
           backgroundImage: url
         }"
       />
-      <div v-if="settingsStore.background.enableVignetting" class="background__vignette" />
-    </div>
-  </Transition>
+    </Transition>
+  </div>
 </template>
 
 <style lang="scss">
@@ -48,7 +49,13 @@ defineProps<{ url: string }>()
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+.background-mask {
+  position: absolute;
+  inset: calc(var(--blur-intensity) * -2);
   background-color: var(--mask-color__light);
+  opacity: var(--mask-opacity);
   transition: background-color var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
   html.dark & {
@@ -59,10 +66,10 @@ defineProps<{ url: string }>()
 .background {
   position: absolute;
   inset: calc(var(--blur-intensity) * -2);
+  z-index: -2;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  opacity: calc(1 - var(--mask-opacity));
   filter: blur(var(--blur-intensity));
   transition:
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
@@ -78,6 +85,7 @@ defineProps<{ url: string }>()
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
   width: 100%;
   height: 100%;
   pointer-events: none;
