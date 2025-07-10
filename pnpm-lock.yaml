@@ -51,24 +51,24 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0(@types/sortablejs@1.15.8)
     devDependencies:
-      '@tsconfig/node22':
-        specifier: ^22.0.2
-        version: 22.0.2
+      '@tsconfig/node24':
+        specifier: ^24.0.1
+        version: 24.0.1
       '@types/chrome':
-        specifier: ^0.0.329
-        version: 0.0.329
+        specifier: ^0.0.332
+        version: 0.0.332
       '@types/lodash':
         specifier: ^4.17.20
         version: 4.17.20
       '@types/node':
-        specifier: ^24.0.10
-        version: 24.0.10
+        specifier: ^24.0.12
+        version: 24.0.12
       '@types/webextension-polyfill':
         specifier: ^0.12.3
         version: 0.12.3
       '@vitejs/plugin-vue-jsx':
         specifier: ^5.0.1
-        version: 5.0.1(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))
+        version: 5.0.1(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))
       '@vue/eslint-config-prettier':
         specifier: ^10.2.0
         version: 10.2.0(eslint@9.30.1(jiti@2.4.2))(prettier@3.6.2)
@@ -80,13 +80,13 @@ importers:
         version: 0.7.0(typescript@5.8.3)(vue@3.5.17(typescript@5.8.3))
       '@wxt-dev/i18n':
         specifier: ^0.2.4
-        version: 0.2.4(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
+        version: 0.2.4(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
       '@wxt-dev/module-vue':
         specifier: ^1.0.2
-        version: 1.0.2(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
+        version: 1.0.2(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
       '@wxt-dev/webextension-polyfill':
         specifier: ^1.0.0
-        version: 1.0.0(webextension-polyfill@0.12.0)(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
+        version: 1.0.0(webextension-polyfill@0.12.0)(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))
       eslint:
         specifier: ^9.30.1
         version: 9.30.1(jiti@2.4.2)
@@ -146,7 +146,7 @@ importers:
         version: 28.8.0(@babel/parser@7.28.0)(vue@3.5.17(typescript@5.8.3))
       vite:
         specifier: ^6.3.5
-        version: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
+        version: 6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
       vite-svg-loader:
         specifier: ^5.1.0
         version: 5.1.0(vue@3.5.17(typescript@5.8.3))
@@ -155,7 +155,7 @@ importers:
         version: 0.12.0
       wxt:
         specifier: ^0.20.7
-        version: 0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
+        version: 0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
 
 packages:
 
@@ -671,8 +671,8 @@ packages:
     resolution: {integrity: sha512-c83qWb22rNRuB0UaVCI0uRPNRr8Z0FWnEIvT47jiHAmOIUHbBOg5XvV7pM5x+rKn9HRpjxquDbXYSXr3fAKFcw==}
     engines: {node: '>=12'}
 
-  '@rolldown/pluginutils@1.0.0-beta.24':
-    resolution: {integrity: sha512-NMiim/enJlffMP16IanVj1ajFNEg8SaMEYyxyYfJoEyt5EiFT3HUH/T2GRdeStNWp+/kg5U8DiJqnQBgLQ8uCw==}
+  '@rolldown/pluginutils@1.0.0-beta.26':
+    resolution: {integrity: sha512-r/5po89voz/QRPDmoErL10+hVuTAuz1SHvokx+yWBlOIPB5C41jC7QhLqq9kaebx/+EHyoV3z22/qBfX81Ns8A==}
 
   '@rollup/rollup-android-arm-eabi@4.44.2':
     resolution: {integrity: sha512-g0dF8P1e2QYPOj1gu7s/3LVP6kze9A7m6x0BZ9iTdXK8N5c2V7cpBKHV3/9A4Zd8xxavdhK0t4PnqjkqVmUc9Q==}
@@ -792,11 +792,11 @@ packages:
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
 
-  '@tsconfig/node22@22.0.2':
-    resolution: {integrity: sha512-Kmwj4u8sDRDrMYRoN9FDEcXD8UpBSaPQQ24Gz+Gamqfm7xxn+GBR7ge/Z7pK8OXNGyUzbSwJj+TH6B+DS/epyA==}
+  '@tsconfig/node24@24.0.1':
+    resolution: {integrity: sha512-3+IXshza3bIrT0tbHBr9CixQDVf4iBf0HTR0hCYowhpLqkzJjswu3UY8aZWjRXZep31kYB+o2SQeD8KwIoUHYw==}
 
-  '@types/chrome@0.0.329':
-    resolution: {integrity: sha512-jAZX4QMnAa1bTSWoQ5/EhhiY1t+1B7a5ZCY5ZEs61tWiQfxXAkfBSxCkQWhGxJoiq/4b4vtcmYEebNEmlLKecg==}
+  '@types/chrome@0.0.332':
+    resolution: {integrity: sha512-Fl4luF9q/iroXMKbL1LQyr/nCKhKwkwkZQ9qeeePFECW/8SP/Lrx2kJ26wnpTpr0iAznkENoO8g924CP4mfNxw==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -822,8 +822,8 @@ packages:
   '@types/minimatch@3.0.5':
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
 
-  '@types/node@24.0.10':
-    resolution: {integrity: sha512-ENHwaH+JIRTDIEEbDK6QSQntAYGtbvdDXnMXnZaZ6k13Du1dPMmprkEHIL7ok2Wl2aZevetwTAb5S+7yIF+enA==}
+  '@types/node@24.0.12':
+    resolution: {integrity: sha512-LtOrbvDf5ndC9Xi+4QZjVL0woFymF/xSTKZKPgrrl7H7XoeDvnD+E2IclKVDyaK9UM756W/3BXqSU+JEHopA9g==}
 
   '@types/sortablejs@1.15.8':
     resolution: {integrity: sha512-b79830lW+RZfwaztgs1aVPgbasJ8e7AXtZYHTELNXZPsERt4ymJdjV4OccDbHQAvHrCcFpbF78jkm0R6h/pZVg==}
@@ -1537,8 +1537,8 @@ packages:
     resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
     engines: {node: '>=12'}
 
-  electron-to-chromium@1.5.180:
-    resolution: {integrity: sha512-ED+GEyEh3kYMwt2faNmgMB0b8O5qtATGgR4RmRsIp4T6p7B8vdMbIedYndnvZfsaXvSzegtpfqRMDNCjjiSduA==}
+  electron-to-chromium@1.5.181:
+    resolution: {integrity: sha512-+ISMj8OIQ+0qEeDj14Rt8WwcTOiqHyAB+5bnK1K7xNNLjBJ4hRCQfUkw8RWtcLbfBzDwc15ZnKH0c7SNOfwiyA==}
 
   element-plus@2.10.3:
     resolution: {integrity: sha512-OLpf0iekuvWJrz1+H9ybvem6TYTKSNk6L1QDA3tYq2YWbogKXJnWpHG1UAGKR1B7gx+vUH7M15VIH3EijE9Kgw==}
@@ -3977,7 +3977,7 @@ snapshots:
       '@pnpm/network.ca-file': 1.0.2
       config-chain: 1.1.13
 
-  '@rolldown/pluginutils@1.0.0-beta.24': {}
+  '@rolldown/pluginutils@1.0.0-beta.26': {}
 
   '@rollup/rollup-android-arm-eabi@4.44.2':
     optional: true
@@ -4043,9 +4043,9 @@ snapshots:
 
   '@trysound/sax@0.2.0': {}
 
-  '@tsconfig/node22@22.0.2': {}
+  '@tsconfig/node24@24.0.1': {}
 
-  '@types/chrome@0.0.329':
+  '@types/chrome@0.0.332':
     dependencies:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
@@ -4070,7 +4070,7 @@ snapshots:
 
   '@types/minimatch@3.0.5': {}
 
-  '@types/node@24.0.10':
+  '@types/node@24.0.12':
     dependencies:
       undici-types: 7.8.0
 
@@ -4087,7 +4087,7 @@ snapshots:
 
   '@types/yauzl@2.10.3':
     dependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.0.12
     optional: true
 
   '@typescript-eslint/eslint-plugin@8.36.0(@typescript-eslint/parser@8.36.0(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3))(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)':
@@ -4190,20 +4190,20 @@ snapshots:
 
   '@vicons/material@0.13.0': {}
 
-  '@vitejs/plugin-vue-jsx@5.0.1(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))':
+  '@vitejs/plugin-vue-jsx@5.0.1(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-transform-typescript': 7.28.0(@babel/core@7.28.0)
-      '@rolldown/pluginutils': 1.0.0-beta.24
+      '@rolldown/pluginutils': 1.0.0-beta.26
       '@vue/babel-plugin-jsx': 1.4.0(@babel/core@7.28.0)
-      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
+      vite: 6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
       vue: 3.5.17(typescript@5.8.3)
     transitivePeerDependencies:
       - supports-color
 
-  '@vitejs/plugin-vue@5.2.4(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))':
+  '@vitejs/plugin-vue@5.2.4(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))':
     dependencies:
-      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
+      vite: 6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
       vue: 3.5.17(typescript@5.8.3)
 
   '@vue/babel-helper-vue-transform-on@1.4.0': {}
@@ -4386,19 +4386,19 @@ snapshots:
       '@types/filesystem': 0.0.36
       '@types/har-format': 1.2.16
 
-  '@wxt-dev/i18n@0.2.4(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
+  '@wxt-dev/i18n@0.2.4(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
     dependencies:
       '@wxt-dev/browser': 0.0.318
       chokidar: 4.0.3
       confbox: 0.2.2
       fast-glob: 3.3.3
     optionalDependencies:
-      wxt: 0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
+      wxt: 0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
 
-  '@wxt-dev/module-vue@1.0.2(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
+  '@wxt-dev/module-vue@1.0.2(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
     dependencies:
-      '@vitejs/plugin-vue': 5.2.4(vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))
-      wxt: 0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
+      '@vitejs/plugin-vue': 5.2.4(vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2))(vue@3.5.17(typescript@5.8.3))
+      wxt: 0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
     transitivePeerDependencies:
       - vite
       - vue
@@ -4408,10 +4408,10 @@ snapshots:
       async-mutex: 0.5.0
       dequal: 2.0.3
 
-  '@wxt-dev/webextension-polyfill@1.0.0(webextension-polyfill@0.12.0)(wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
+  '@wxt-dev/webextension-polyfill@1.0.0(webextension-polyfill@0.12.0)(wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2))':
     dependencies:
       webextension-polyfill: 0.12.0
-      wxt: 0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
+      wxt: 0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2)
 
   acorn-jsx@5.3.2(acorn@8.15.0):
     dependencies:
@@ -4538,7 +4538,7 @@ snapshots:
   browserslist@4.25.1:
     dependencies:
       caniuse-lite: 1.0.30001727
-      electron-to-chromium: 1.5.180
+      electron-to-chromium: 1.5.181
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.25.1)
 
@@ -4616,7 +4616,7 @@ snapshots:
 
   chrome-launcher@1.1.2:
     dependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.0.12
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 2.0.1
@@ -4865,7 +4865,7 @@ snapshots:
 
   dotenv@16.6.1: {}
 
-  electron-to-chromium@1.5.180: {}
+  electron-to-chromium@1.5.181: {}
 
   element-plus@2.10.3(vue@3.5.17(typescript@5.8.3)):
     dependencies:
@@ -6672,13 +6672,13 @@ snapshots:
 
   varint@6.0.0: {}
 
-  vite-node@3.2.4(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2):
+  vite-node@3.2.4(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2):
     dependencies:
       cac: 6.7.14
       debug: 4.4.1
       es-module-lexer: 1.7.0
       pathe: 2.0.3
-      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
+      vite: 6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6698,7 +6698,7 @@ snapshots:
       svgo: 3.3.2
       vue: 3.5.17(typescript@5.8.3)
 
-  vite@6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2):
+  vite@6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2):
     dependencies:
       esbuild: 0.25.6
       fdir: 6.4.6(picomatch@4.0.2)
@@ -6707,7 +6707,7 @@ snapshots:
       rollup: 4.44.2
       tinyglobby: 0.2.14
     optionalDependencies:
-      '@types/node': 24.0.10
+      '@types/node': 24.0.12
       fsevents: 2.3.3
       jiti: 2.4.2
       sass-embedded: 1.89.2
@@ -6833,7 +6833,7 @@ snapshots:
 
   ws@8.18.1: {}
 
-  wxt@0.20.7(@types/node@24.0.10)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2):
+  wxt@0.20.7(@types/node@24.0.12)(jiti@2.4.2)(rollup@4.44.2)(sass-embedded@1.89.2):
     dependencies:
       '@1natsu/wait-element': 4.1.2
       '@aklinker1/rollup-plugin-visualizer': 5.12.0(rollup@4.44.2)
@@ -6877,8 +6877,8 @@ snapshots:
       publish-browser-extension: 3.0.1
       scule: 1.3.0
       unimport: 5.1.0
-      vite: 6.3.5(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
-      vite-node: 3.2.4(@types/node@24.0.10)(jiti@2.4.2)(sass-embedded@1.89.2)
+      vite: 6.3.5(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
+      vite-node: 3.2.4(@types/node@24.0.12)(jiti@2.4.2)(sass-embedded@1.89.2)
       web-ext-run: 0.2.3
     transitivePeerDependencies:
       - '@types/node'
