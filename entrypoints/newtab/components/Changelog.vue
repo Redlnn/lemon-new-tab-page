@@ -52,7 +52,7 @@ defineExpose({ show, hide, toggleShow })
     text-decoration: none;
   }
 
-  .changelog__blockquote {
+  blockquote {
     padding: 0.2em 1em;
     margin: 0.3em 0 0.5em;
     color: var(--el-text-color-regular);

@@ -2,6 +2,35 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>2.2.3</h1>
+    <h2>优化</h2>
+    <ul>
+      <li>关闭【展示最常访问】时自动隐藏置顶图标</li>
+    </ul>
+    <h2>修复</h2>
+    <ul>
+      <li>修复关闭【展示最常访问】时已上屏的最常访问没被清理的问题</li>
+      <li>
+        修复因云同步导致其他客户端壁纸变化
+        <blockquote>
+          由于本地图片受储存大小限制，在线图片受权限管控，因此无法同步，所以不同步壁纸相关数据
+        </blockquote>
+      </li>
+    </ul>
+    <h1>2.2.2</h1>
+    <h2>优化</h2>
+    <ul>
+      <li>调整背景图加载时机，尽量避免看到背景加载过程</li>
+    </ul>
+    <h2>修复</h2>
+    <ul>
+      <li>修复开启背景遮罩后，每次加载都会闪一下的问题</li>
+    </ul>
+    <h1>2.2.1</h1>
+    <h2>修复</h2>
+    <ul>
+      <li>修复本地背景选择框样式失效的问题</li>
+    </ul>
     <h1>2.2.0</h1>
     <h2>新特性</h2>
     <ul>
@@ -107,6 +136,45 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>2.2.3</h1>
+    <h2>Optimizations</h2>
+    <ul>
+      <li>
+        Automatically hide the pinned icon when <strong>Show Most Visited</strong> is turned off
+      </li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>
+        Fixed the issue where previously displayed Most Visited items were not removed after turning
+        off <strong>Show Most Visited</strong>
+      </li>
+      <li>
+        Fixed an issue where wallpapers would change on other clients due to cloud sync
+        <blockquote>
+          Since local images are limited by storage size and online images are restricted by
+          permissions, wallpapers cannot be synced, so wallpaper-related data will not be synced
+        </blockquote>
+      </li>
+    </ul>
+    <h1>2.2.2</h1>
+    <h2>Optimizations</h2>
+    <ul>
+      <li>
+        Adjusted background image loading timing to minimize visibility of the loading process
+      </li>
+    </ul>
+    <h2>Fixes</h2>
+    <ul>
+      <li>
+        Fixed a flickering issue that occurred during each load when the background mask was enabled
+      </li>
+    </ul>
+    <h1>2.2.1</h1>
+    <h2>Fixes</h2>
+    <ul>
+      <li>Fixed an issue where the local background selection box style was not applied</li>
+    </ul>
     <h1>2.2.0</h1>
     <h2>Features</h2>
     <ul>
