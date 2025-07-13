@@ -46,7 +46,10 @@ async function restoreDefaultTopSites() {
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.showPinnedIcon') }}</div>
-        <el-switch v-model="settingsStore.shortcut.showPinnedIcon" />
+        <el-switch
+          :disabled="!settingsStore.shortcut.enableTopSites"
+          v-model="settingsStore.shortcut.showPinnedIcon"
+        />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.showTitle') }}</div>

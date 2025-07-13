@@ -21,7 +21,12 @@ defineProps<{
   <div class="shortcut__item">
     <a class="shortcut__item-link" :href="url">
       <div class="shortcut__icon-container">
-        <div v-if="pined && settingsStore.shortcut.showPinnedIcon" class="shortcut__pin-icon">
+        <div
+          v-if="
+            pined && settingsStore.shortcut.showPinnedIcon && settingsStore.shortcut.enableTopSites
+          "
+          class="shortcut__pin-icon"
+        >
           <el-icon size="15">
             <pin16-regular />
           </el-icon>
