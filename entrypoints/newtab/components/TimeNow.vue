@@ -61,8 +61,9 @@ function getlunarCalendar() {
         v-if="settingsStore.time.showMeridiem && isChinese"
         class="clock__meridiem"
         style="margin-right: 5px"
-        >{{ timeNowMeridiemZH }}</span
       >
+        {{ timeNowMeridiemZH }}
+      </span>
       <span style="font-variant-numeric: tabular-nums">
         <span class="clock__hour">{{
           settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
