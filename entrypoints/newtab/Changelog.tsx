@@ -10,6 +10,7 @@ const changelogZH = (
     <h2>修复</h2>
     <ul>
       <li>修复关闭【展示最常访问】时已上屏的最常访问没被清理的问题</li>
+      <li>修复调整窗口大小的过程中 CPU 持续高占用的问题</li>
       <li>
         修复因云同步导致其他客户端壁纸变化
         <blockquote>
@@ -149,6 +150,7 @@ const changelog = (
         Fixed the issue where previously displayed Most Visited items were not removed after turning
         off <strong>Show Most Visited</strong>
       </li>
+      <li>Fixed the issue of high CPU usage during window resizing</li>
       <li>
         Fixed an issue where wallpapers would change on other clients due to cloud sync
         <blockquote>

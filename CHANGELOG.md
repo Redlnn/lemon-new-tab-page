@@ -11,6 +11,7 @@
 ### Fixes
 
 - Fixed the issue where previously displayed Most Visited items were not removed after turning off `Show Most Visited`
+- Fixed the issue of high CPU usage during window resizing
 - Fixed an issue where wallpapers would change on other clients due to cloud sync
   > Since local images are limited by storage size and online images are restricted by
   > permissions, wallpapers cannot be synced, so wallpaper-related data will not be synced
