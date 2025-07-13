@@ -3,7 +3,7 @@ import { ClearRound } from '@vicons/material'
 import type { TopSites } from 'webextension-polyfill'
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { onMounted, ref, watch } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { useDebounceFn, useWindowSize } from '@vueuse/core'
 import { useDraggable } from 'vue-draggable-plus'
 
 import { i18n } from '@/.wxt/i18n'
@@ -45,6 +45,8 @@ function getContainerWidth(num: number) {
   return width
 }
 
+const refreshDebounced = useDebounceFn(refresh, 100)
+
 async function refresh() {
   await initBookmark()
   // 先把书签单独存，避免计算过程直接对原 store 更改导致画面闪烁
@@ -54,6 +56,7 @@ async function refresh() {
   if (settingsStore.shortcut.enableTopSites) {
     //如果 getTopSites() 返回 undefined，默认空数组
     _topSites = (await getTopSites()) ?? []
+    topSites.value = []
 
     if (_topSites.length > 0) {
       // 拿到书签里的url，比对最常访问里有没有重复的，有就去掉
@@ -93,21 +96,25 @@ async function refresh() {
   // 如果书签数量小于可用格子，就把最常访问填充剩余格子上屏
   if (_bookmarks.length < totalCellsNum) {
     topSites.value = _topSites.slice(0, totalCellsNum - _bookmarks.length)
+  } else {
+    topSites.value = []
   }
+
+  console.log(topSites.value, _topSites)
 }
 
 const columnsNum = ref(0)
 const rowsNum = ref(settingsStore.shortcut.rows)
 
 onMounted(async () => {
-  await refresh()
+  await refreshDebounced()
   mounted.value = true
 })
 
-watch(settingsStore.shortcut, refresh)
-watch(() => windowWidth.value, refresh)
+watch(settingsStore.shortcut, refreshDebounced)
+watch(() => windowWidth.value, refreshDebounced)
 // 云同步导致书签变动时刷新
-bookmarkStorage.watch(refresh)
+bookmarkStorage.watch(refreshDebounced)
 </script>
 
 <template>
@@ -146,7 +153,7 @@ bookmarkStorage.watch(refresh)
         pined
       >
         <template #submenu>
-          <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refresh)">
+          <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refreshDebounced)">
             <el-icon>
               <pin-off16-regular />
             </el-icon>
@@ -165,7 +172,7 @@ bookmarkStorage.watch(refresh)
           <el-dropdown-item
             @click="
               async () => {
-                await blockSite(site.url, refresh)
+                await blockSite(site.url, refreshDebounced)
                 await refresh()
               }
             "
@@ -176,7 +183,7 @@ bookmarkStorage.watch(refresh)
             {{ i18n.t('newtab.shortcut.remove') }}
           </el-dropdown-item>
           <el-dropdown-item
-            @click="pinBookmark(bookmarkStore, refresh, site.url, site.title || '')"
+            @click="pinBookmark(bookmarkStore, refreshDebounced, site.url, site.title || '')"
           >
             <el-icon>
               <pin16-regular />
@@ -185,7 +192,7 @@ bookmarkStorage.watch(refresh)
           </el-dropdown-item>
         </template>
       </shortcut-item>
-      <add-bookmark :reload="refresh" />
+      <add-bookmark :reload="refreshDebounced" />
     </div>
   </section>
 </template>
