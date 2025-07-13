@@ -202,9 +202,12 @@ export const useSyncDataStore = defineStore('sync', {
         const localSettings = useSettingsStore()
         const cloudData = await syncDataStorage.getValue()
 
-        const { localBackground: _a, bingBackground: _b, ...newSettings } = cloudData.settings
+        cloudData.settings.background.bgType = localSettings.background.bgType // 保持本地背景类型
+        cloudData.settings.localBackground = localSettings.$state.localBackground // 保持本地壁纸数据
+        cloudData.settings.bingBackground = localSettings.$state.bingBackground // 保持本地必应壁纸数据
+        cloudData.settings.background.onlineUrl = localSettings.background.onlineUrl // 保持本地在线壁纸URL
 
-        localSettings.$patch(newSettings)
+        localSettings.$patch(cloudData.settings)
         saveBookmark(cloudData.bookmarks)
 
         await localSyncDataStorage.setValue({

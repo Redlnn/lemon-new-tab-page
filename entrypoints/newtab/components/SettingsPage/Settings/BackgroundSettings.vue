@@ -97,21 +97,22 @@ function onlineImageWarn() {
   </div>
   <div class="settings__items-container">
     <div class="settings__item">
-      <div class="settings__label">{{ i18n.t('newtab.settings.background.type.title') }}</div>
+      <div class="settings__label">
+        {{ i18n.t('newtab.settings.background.type.title') }}
+        <cloud-off-round />
+      </div>
       <el-radio-group v-model="settingsStore.background.bgType">
         <el-radio :value="BgType.None">
           {{ i18n.t('newtab.settings.background.type.none') }}
         </el-radio>
         <el-radio :value="BgType.Local">
           {{ i18n.t('newtab.settings.background.type.local') }}
-          <cloud-off-round />
         </el-radio>
         <el-radio :value="BgType.Bing">
           {{ i18n.t('newtab.settings.background.type.bing') }}
         </el-radio>
         <el-radio :value="BgType.Online" @change="onlineImageWarn">
           {{ i18n.t('newtab.settings.background.type.online') }}
-          <cloud-off-round />
         </el-radio>
       </el-radio-group>
     </div>
