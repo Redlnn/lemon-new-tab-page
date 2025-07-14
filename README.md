@@ -66,15 +66,17 @@
 <details>
 <summary>点击展开图片</summary>
 
-![主页](./preview/home.webp)
-![纯色背景主页](./preview/pure.webp)
-![设置页面](./preview/settings.webp)
+![普通主页](./preview/1.webp)
+![纯色背景主页](./preview/2.webp)
+![带快速访问区域背景主页](./preview/3.webp)
+![搜索页面](./preview/4.webp)
+![设置页面](./preview/5.webp)
 
 </details>
 
 ## 开发（Development）
 
-本项目使用 Vue 3 + Vite 4 + TypeScript + Element Plus 开发。
+本项目使用 Vue 3 (TypeScript) + Element Plus 开发。
 
 > [!NOTE]  
 > 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
