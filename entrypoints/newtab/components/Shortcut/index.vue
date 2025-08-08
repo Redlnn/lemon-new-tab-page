@@ -99,8 +99,6 @@ async function refresh() {
   } else {
     topSites.value = []
   }
-
-  console.log(topSites.value, _topSites)
 }
 
 const columnsNum = ref(0)
