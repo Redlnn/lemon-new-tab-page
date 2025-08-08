@@ -192,9 +192,7 @@ function isSvg(file: Blob) {
 .shortcut__item--add-bookmark {
   color: var(--el-text-color-primary);
   opacity: 0.7;
-  transition:
-    color var(--el-transition-duration-fast) ease,
-    opacity var(--el-transition-duration-fast) ease;
+  transition: color var(--el-transition-duration-fast) ease;
 
   &:hover,
   &:hover .shortcut__title {
