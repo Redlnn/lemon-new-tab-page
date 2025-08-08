@@ -1,8 +1,10 @@
 import { browser } from 'wxt/browser'
+
+import { defineBackground } from '#imports'
+
 import { BgType } from '@/shared/settings'
 import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
 import { localSyncDataStorage, syncDataStorage } from '@/shared/sync'
-import { defineBackground } from '#imports'
 
 let isInited = false
 let isRunning = false
