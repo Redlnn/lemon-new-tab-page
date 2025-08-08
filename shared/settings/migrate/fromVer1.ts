@@ -1,7 +1,7 @@
 import { defaultSettings } from '..'
-import type { OldSettingsInterface, SettingsInterfaceVer5 } from '../types'
+import type { OldSettingsInterface, SettingsInterfaceVer6 } from '../types'
 
-export function migrateFromVer1To5(oldSettings: OldSettingsInterface): SettingsInterfaceVer5 {
+export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInterfaceVer6 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -10,6 +10,7 @@ export function migrateFromVer1To5(oldSettings: OldSettingsInterface): SettingsI
       showDate: defaultSettings.time.showDate,
       showLunar: defaultSettings.time.showLunar,
       enableShadow: defaultSettings.time.enableShadow,
+      blinkingColon: defaultSettings.time.blinkingColon,
       invertColor: {
         light: defaultSettings.time.invertColor.light,
         night: defaultSettings.time.invertColor.night
@@ -65,6 +66,6 @@ export function migrateFromVer1To5(oldSettings: OldSettingsInterface): SettingsI
       enabled: false
     },
     pluginVersion: oldSettings.version,
-    version: 5
+    version: 6
   }
 }

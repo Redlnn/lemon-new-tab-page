@@ -45,6 +45,8 @@ newtab:
       showDate: 显示日期
       showLunar: 显示农历
       enableShadow: 显示阴影
+      blinkingColon: 闪烁时间分隔符
+      blinkingTip: 关掉可以降低 CPU 占用率（省电模式）
       invertColorLight: 浅色模式下使用深色字体
       invertColorDark: 深色模式下使用深色字体
     other:

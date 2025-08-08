@@ -2,6 +2,13 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.2.4 (WIP)
+
+### New Features
+
+- Power-saving mode (can disable blinking time separator)
+  > Shouldn't there be anyone who keeps the new tab page open all the time?
+
 ## 2.2.3 (07/13/2025)
 
 ### Optimization

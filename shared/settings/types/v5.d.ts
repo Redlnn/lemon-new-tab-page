@@ -59,5 +59,5 @@ export interface SettingsInterfaceVer5 {
     enabled: boolean
   }
   pluginVersion: string
-  version: number
+  version: 5
 }

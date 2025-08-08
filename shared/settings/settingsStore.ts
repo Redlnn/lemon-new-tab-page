@@ -7,9 +7,9 @@ import { useWallpaperStore } from './wallpaperStore'
 import type {
   OldSettingsInterface,
   SettingsInterfaceVer2,
-  SettingsInterfaceVer5
+  SettingsInterfaceVer6
 } from '../settings/types'
-import { migrateFromVer1To5, defaultSettings, type CURRENT_CONFTG_INTERFACE } from '../settings'
+import { migrateFromVer1, defaultSettings, type CURRENT_CONFIG_INTERFACE } from '../settings'
 
 const searchSuggestAPIsMap: Record<string, string> = {
   百度: 'baidu',
@@ -21,7 +21,7 @@ type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
 
 async function migrateSettings(
   settings: OldStorageSettings
-): Promise<SettingsInterfaceVer5 | null> {
+): Promise<SettingsInterfaceVer6 | null> {
   if (!settings.version) {
     settings.version = '0' // 太旧版本可能没有version字段
   }
@@ -33,7 +33,7 @@ async function migrateSettings(
       oldSettings.selectedSearchSuggestionAPI =
         searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]
     }
-    return migrateFromVer1To5(oldSettings)
+    return migrateFromVer1(oldSettings)
   }
 
   return null
@@ -66,7 +66,7 @@ export async function initSettings() {
   settingsStore.$patch(settings)
 }
 
-export async function saveSettings(settings: CURRENT_CONFTG_INTERFACE) {
+export async function saveSettings(settings: CURRENT_CONFIG_INTERFACE) {
   await settingsStorage.setValue(settings)
 }
 

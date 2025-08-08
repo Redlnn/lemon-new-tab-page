@@ -2,6 +2,14 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>2.2.4 (WIP)</h1>
+    <h2>新特性</h2>
+    <ul>
+      <li>
+        省电模式（可以禁止时间分隔符闪烁）
+        <blockquote>应该不会有人一直挂着新标签页不关吧？</blockquote>
+      </li>
+    </ul>
     <h1>2.2.3</h1>
     <h2>优化</h2>
     <ul>
@@ -137,6 +145,16 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>2.2.4 (WIP)</h1>
+    <h2>New Features</h2>
+    <ul>
+      <li>
+        Power-saving mode (can disable blinking time separator)
+        <blockquote>
+          Shouldn't there be anyone who keeps the new tab page open all the time?
+        </blockquote>
+      </li>
+    </ul>
     <h1>2.2.3</h1>
     <h2>Optimizations</h2>
     <ul>

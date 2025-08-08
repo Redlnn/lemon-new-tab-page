@@ -39,6 +39,13 @@ const isChinese = browser.i18n.getUILanguage().startsWith('zh')
       <el-switch v-model="settingsStore.time.enableShadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.blinkingColon') }}</div>
+      <el-switch v-model="settingsStore.time.blinkingColon" />
+    </div>
+    <p class="settings__item--note">
+      {{ i18n.t('newtab.settings.clock.blinkingTip') }}
+    </p>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.clock.invertColorLight') }}</div>
       <el-switch v-model="settingsStore.time.invertColor.light" />
     </div>

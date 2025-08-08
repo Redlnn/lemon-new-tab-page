@@ -51,5 +51,5 @@ export interface SettingsInterfaceVer2 {
     showQuickStartContainerBg: boolean
   }
   pluginVersion: string
-  version: number
+  version: 2
 }

@@ -68,7 +68,11 @@ function getlunarCalendar() {
         <span class="clock__hour">{{
           settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
         }}</span>
-        <span class="clock__colon">:</span>
+        <span
+          class="clock__colon"
+          :class="{ 'clock__colon--blinking': settingsStore.time.blinkingColon }"
+          >:</span
+        >
         <span class="clock__minute">{{ timeNowMinute }}</span>
       </span>
       <span
@@ -151,7 +155,7 @@ function getlunarCalendar() {
     font-size: 40px;
   }
 
-  &__colon {
+  &__colon.clock__colon--blinking {
     animation: twinkle 1s ease infinite;
   }
 }

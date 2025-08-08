@@ -1,7 +1,7 @@
-import { CURRENT_CONFIG_VERSION, type CURRENT_CONFTG_INTERFACE } from './current'
+import { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
 import { BgType } from './types'
 
-export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
+export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   primaryColor: '#FFBB00',
   time: {
     isMeridiem: false,
@@ -9,6 +9,7 @@ export const defaultSettings: CURRENT_CONFTG_INTERFACE = {
     showDate: true,
     showLunar: true,
     enableShadow: true,
+    blinkingColon: true,
     invertColor: {
       light: false,
       night: false

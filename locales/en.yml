@@ -53,6 +53,8 @@ newtab:
       showDate: Show Date
       showLunar: Show Chinese Lunar Calendar
       enableShadow: Show Text Shadow
+      blinkingColon: Blinking Colon
+      blinkingTip: Turning this off can reduce CPU usage (power-saving mode).
       invertColorLight: Use dark fonts in light mode
       invertColorDark: Use light fonts in dark mode
     other:

@@ -55,5 +55,5 @@ export interface SettingsInterfaceVer3 {
     marginTop: number
   }
   pluginVersion: string
-  version: number
+  version: 3
 }

@@ -1,7 +1,7 @@
 import { defaultSettings } from '../default'
-import type { SettingsInterfaceVer4, SettingsInterfaceVer5 } from '../types'
+import type { SettingsInterfaceVer5, SettingsInterfaceVer6 } from '../types'
 
-export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): SettingsInterfaceVer5 {
+export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): SettingsInterfaceVer6 {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -10,6 +10,7 @@ export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): Settings
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
       enableShadow: oldSettings.time.enableShadow,
+      blinkingColon: defaultSettings.time.blinkingColon,
       invertColor: {
         light: oldSettings.time.invertColor.light,
         night: oldSettings.time.invertColor.night
@@ -29,8 +30,8 @@ export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): Settings
       enableVignetting: oldSettings.background.enableVignetting,
       blurIntensity: oldSettings.background.blurIntensity,
       bgMaskOpacity: oldSettings.background.bgMaskOpacity,
-      lightMaskColor: oldSettings.background.maskColor,
-      nightMaskColor: defaultSettings.background.nightMaskColor,
+      lightMaskColor: oldSettings.background.lightMaskColor,
+      nightMaskColor: oldSettings.background.nightMaskColor,
       onlineUrl: oldSettings.background.onlineUrl
     },
     localBackground: {
@@ -58,9 +59,9 @@ export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): Settings
       marginTop: oldSettings.shortcut.marginTop
     },
     sync: {
-      enabled: defaultSettings.sync.enabled
+      enabled: oldSettings.sync.enabled
     },
     pluginVersion: oldSettings.pluginVersion,
-    version: 5
+    version: 6
   }
 }

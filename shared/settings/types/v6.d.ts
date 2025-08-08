@@ -1,6 +1,6 @@
 import type { BgType } from './enum'
 
-export interface SettingsInterfaceVer4 {
+export interface SettingsInterfaceVer6 {
   primaryColor: string
   time: {
     isMeridiem: boolean
@@ -8,6 +8,7 @@ export interface SettingsInterfaceVer4 {
     showDate: boolean
     showLunar: boolean
     enableShadow: boolean
+    blinkingColon: boolean
     invertColor: {
       light: boolean
       night: boolean
@@ -27,7 +28,8 @@ export interface SettingsInterfaceVer4 {
     enableVignetting: boolean
     blurIntensity: number
     bgMaskOpacity: number
-    maskColor: string
+    lightMaskColor: string
+    nightMaskColor: string
     onlineUrl: string
   }
   localBackground: {
@@ -54,6 +56,9 @@ export interface SettingsInterfaceVer4 {
     whiteTextInLightMode: boolean
     marginTop: number
   }
+  sync: {
+    enabled: boolean
+  }
   pluginVersion: string
-  version: 4
+  version: 6
 }
