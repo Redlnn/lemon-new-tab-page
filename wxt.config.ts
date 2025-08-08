@@ -1,5 +1,6 @@
-import { defineConfig } from 'wxt'
 import { URL, fileURLToPath } from 'node:url'
+
+import { defineConfig } from 'wxt'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
@@ -84,8 +85,7 @@ export default defineConfig({
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/styles/element/index.scss" as *;`,
-          api: 'modern-compiler'
+          additionalData: `@use "@/assets/styles/element/index.scss" as *;`
         }
       }
     },

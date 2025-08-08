@@ -2,7 +2,6 @@
   "extends": "@tsconfig/node24/tsconfig.json",
   "include": ["./wxt.config.ts", "./utils/optimizeDeps.ts"],
   "compilerOptions": {
-    "composite": true,
     "noEmit": true,
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
 
