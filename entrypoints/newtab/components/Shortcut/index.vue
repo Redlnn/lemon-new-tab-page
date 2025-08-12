@@ -300,15 +300,9 @@ bookmarkStorage.watch(refreshDebounced)
   }
 
   .shortcut__title {
-    display: -webkit-box;
     width: calc(var(--icon_size) + 30px);
-    overflow: hidden;
-    -webkit-line-clamp: 1;
-    line-clamp: 1;
     font-size: 13px;
     text-align: center;
-    overflow-wrap: anywhere;
-    -webkit-box-orient: vertical;
   }
 
   .shortcut__menu {

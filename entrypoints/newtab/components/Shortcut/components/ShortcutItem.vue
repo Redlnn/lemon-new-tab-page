@@ -45,9 +45,9 @@ defineProps<{
           ></span>
         </div>
       </div>
-      <div v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title">
+      <el-text v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title" truncated>
         {{ title }}
-      </div>
+      </el-text>
     </a>
     <el-dropdown class="shortcut__menu" trigger="click" placement="bottom-end" size="small">
       <span class="shortcut__menu-icon">

@@ -20,46 +20,51 @@ const year = useDateFormat(useNow(), 'YYYY')
       <p class="settings__ext-desc">{{ i18n.t('newtab.settings.about.version') }} {{ version }}</p>
     </div>
     <div class="settings__ext-links">
-      <a
+      <el-link
         class="settings__ext-link"
         href="https://github.com/Redlnn/lemon-new-tab-page/"
         target="_blank"
       >
         {{ i18n.t('newtab.settings.about.projectLink') }}
-      </a>
-      <a
+      </el-link>
+      <el-link
         class="settings__ext-link"
         href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
         target="_blank"
       >
         {{ i18n.t('newtab.settings.about.chromeExtensionLink') }}
-      </a>
-      <a
+      </el-link>
+      <el-link
         class="settings__ext-link"
         href="https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh"
         target="_blank"
       >
         {{ i18n.t('newtab.settings.about.edgeExtensionLink') }}
-      </a>
-      <a
+      </el-link>
+      <el-link
         class="settings__ext-link"
         href="https://addons.mozilla.org/zh-CN/firefox/addon/%E6%9F%A0%E6%AA%AC%E8%B5%B7%E5%A7%8B%E9%A1%B5/"
         target="_blank"
       >
         {{ i18n.t('newtab.settings.about.firefoxExtensionLink') }}
-      </a>
+      </el-link>
     </div>
     <div class="settings__ext-links">
       <span>
         {{ i18n.t('newtab.settings.about.yiyanApiProvider') }}
-        <a class="settings__ext-link" href="https://www.jinrishici.com" target="_blank">
-          今日诗词
-        </a>
       </span>
+      <el-link
+        class="settings__ext-link"
+        style="display: inline"
+        href="https://www.jinrishici.com"
+        target="_blank"
+      >
+        今日诗词
+      </el-link>
     </div>
     <div class="settings__ext-license">
-      <a>{{ i18n.t('newtab.settings.about.license') }}</a>
-      <a>Copyright © {{ year }} Red_lnn. All rights reserved.</a>
+      <div>{{ i18n.t('newtab.settings.about.license') }}</div>
+      <div>Copyright © {{ year }} Red_lnn. All rights reserved.</div>
     </div>
   </div>
 </template>
@@ -81,13 +86,13 @@ const year = useDateFormat(useNow(), 'YYYY')
     margin: 1em 0;
 
     a {
-      display: table-row;
+      display: block;
+      width: fit-content;
     }
   }
 
   &__ext-link {
     color: var(--el-color-primary);
-    text-decoration: none;
   }
 
   &__ext-license {
