@@ -50,6 +50,10 @@ defineExpose({ show, hide, toggleShow })
   a {
     color: #1677ff;
     text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   blockquote {

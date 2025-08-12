@@ -95,7 +95,6 @@ const changelogZH = (
         </span>
         <a
           target="_blank"
-          rel="noreferrer"
           href="https://github.com/Redlnn/lemon-new-tab-page#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98"
         >
           README
@@ -134,7 +133,6 @@ const changelogZH = (
       Tip: 过往版本的更新内容请前往 GitHub 查看。👉
       <a
         target="_blank"
-        rel="noreferrer"
         href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_zh.md"
       >
         点击跳转
@@ -262,7 +260,6 @@ const changelog = (
         </span>
         <a
           target="_blank"
-          rel="noreferrer"
           href="https://github.com/Redlnn/lemon-new-tab-page#%E5%B7%B2%E7%9F%A5%E9%97%AE%E9%A2%98"
         >
           README
@@ -317,7 +314,6 @@ const changelog = (
       Tip: To view the update details of previous versions, please visit GitHub. 👉
       <a
         target="_blank"
-        rel="noreferrer"
         href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_zh.md"
       >
         Click to redirect
