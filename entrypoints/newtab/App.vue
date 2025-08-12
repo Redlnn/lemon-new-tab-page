@@ -165,7 +165,10 @@ watch(
 </script>
 
 <template>
-  <el-config-provider :locale="elLocale">
+  <el-config-provider
+    :locale="elLocale"
+    :dialog="{ transition: 'dialog-bounce', alignCenter: true }"
+  >
     <main
       :style="{
         justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,
@@ -221,5 +224,27 @@ watch(
     box-shadow: var(--el-box-shadow-lighter);
     transition: none;
   }
+}
+
+/* Bounce Animation */
+.dialog-bounce-enter-active,
+.dialog-bounce-enter-active .el-dialog {
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.dialog-bounce-leave-active,
+.dialog-bounce-leave-active .el-dialog {
+  transition: all 0.3s cubic-bezier(0.2, 0, 1, 0.4);
+}
+
+.dialog-bounce-enter-from,
+.dialog-bounce-leave-to {
+  opacity: 0;
+}
+
+.dialog-bounce-enter-from .el-dialog,
+.dialog-bounce-leave-to .el-dialog {
+  opacity: 0;
+  transform: scale(0.3) translateY(-50px);
 }
 </style>
