@@ -41,10 +41,9 @@ function onOpen() {
 <template>
   <el-dialog
     :model-value="modelValue"
-    :width="windowWidth < 650 ? '90%' : 600"
+    :width="windowWidth < 650 ? '93%' : 600"
     :class="['base-dialog', containerClass]"
     :show-close="false"
-    align-center
     lock-scroll
     draggable
     @update:model-value="(val) => emit('update:modelValue', val)"
@@ -92,7 +91,7 @@ function onOpen() {
     padding: 0 19px 0 35px;
 
     @media screen and (width <= 650px) {
-      padding: 0 4px 0 20px;
+      padding: 0 10px 0 26px;
     }
   }
 
