@@ -31,6 +31,7 @@ defineExpose({ show, hide, toggleShow })
     :title="i18n.t('newtab.changelog')"
     container-class="changelog__dialog"
     @closed="() => (settingsStore.pluginVersion = version)"
+    acrylic
   >
     <component :is="Changelog"></component>
   </base-dialog>

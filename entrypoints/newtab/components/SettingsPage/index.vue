@@ -31,6 +31,7 @@ defineExpose({ show, hide, toggleShow })
     v-model="opened"
     :title="i18n.t('newtab.settings.title')"
     container-class="settings__dialog"
+    acrylic
   >
     <theme-settings />
     <clock-settings />

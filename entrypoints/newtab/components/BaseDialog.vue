@@ -5,9 +5,10 @@ import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
 interface Props {
-  title: string
+  title?: string
   modelValue: boolean
   containerClass?: string
+  acrylic?: boolean
 }
 
 defineProps<Props>()
@@ -42,7 +43,7 @@ function onOpen() {
   <el-dialog
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : 600"
-    :class="['base-dialog', containerClass]"
+    :class="['base-dialog', containerClass, { 'base-dialog--acrylic': acrylic }]"
     :show-close="false"
     lock-scroll
     draggable
@@ -59,7 +60,11 @@ function onOpen() {
         <component :is="CloseRound" />
       </span>
     </template>
-    <div class="base-dialog-divider" :style="{ opacity: !headerIsVisible ? 1 : 0 }"></div>
+    <div
+      v-if="title"
+      class="base-dialog-divider"
+      :style="{ opacity: !headerIsVisible ? 1 : 0 }"
+    ></div>
     <div class="base-dialog-container">
       <el-scrollbar ref="scrollbar" class="base-dialog-scrollbar">
         <div ref="header" class="base-dialog-list-title">
@@ -78,13 +83,17 @@ function onOpen() {
   max-height: 80%;
   padding: 0;
   overflow: hidden;
-  background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
+  background-color: var(--el-bg-color-page);
   border-radius: 10px;
   box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
-  backdrop-filter: blur(10px) saturate(1.4);
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
+
+  &--acrylic {
+    background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
+    backdrop-filter: blur(10px) saturate(1.4);
+  }
 
   &-container {
     height: 100%;
