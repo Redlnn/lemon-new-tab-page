@@ -3,7 +3,7 @@ import { version } from '@/package.json'
 
 import { browser } from 'wxt/browser'
 import { ElConfigProvider, ElNotification } from 'element-plus'
-import { SettingsOutlined } from '@vicons/material'
+import { SettingsRound } from '@vicons/material'
 import { useColorMode, promiseTimeout } from '@vueuse/core'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import en from 'element-plus/es/locale/lang/en.mjs'
@@ -187,7 +187,7 @@ watch(
       @click="SettingsPageRef?.toggleShow"
       @contextmenu.prevent.stop="ChangelogRef?.show"
     >
-      <el-icon><settings-outlined /></el-icon>
+      <el-icon><settings-round /></el-icon>
     </div>
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
@@ -211,9 +211,9 @@ watch(
   overflow: hidden;
   font-size: 25px;
   line-height: 1em;
-  color: color-mix(in srgb, var(--el-text-color-primary), transparent 20%);
+  color: color-mix(in srgb, var(--el-text-color-primary), transparent 60%);
   cursor: pointer;
-  background-color: color-mix(in srgb, var(--el-bg-color), transparent 80%);
+  background-color: color-mix(in srgb, var(--el-bg-color), transparent 85%);
   border-radius: 50%;
   backdrop-filter: blur(10px);
   transition: 0.1s;
@@ -222,7 +222,7 @@ watch(
     color: var(--el-color-primary);
     background-color: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-lighter);
-    transition: none;
+    transform: rotate(180deg);
   }
 }
 
