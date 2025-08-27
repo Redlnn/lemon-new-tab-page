@@ -8,7 +8,7 @@ import { Edge, Chrome, Github, Firefox } from '@vicons/fa'
 import { i18n } from '@/.wxt/i18n'
 import BaseDialog from './BaseDialog.vue'
 
-const opened = ref(true)
+const opened = ref(false)
 const year = useDateFormat(useNow(), 'YYYY')
 
 function show() {
