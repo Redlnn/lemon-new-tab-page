@@ -133,7 +133,7 @@ function onOpen() {
   }
 
   &-close-btn {
-    position: fixed;
+    position: absolute;
     right: 20px;
     height: 20px;
     color: var(--el-text-color-regular);
