@@ -19,7 +19,14 @@ sync:
     title: Cloud Sync Error
 newtab:
   title: New Tab
+  menu:
+    settings: Settings
+    searchEnginePreference: Search Engine Preference
+    changelog: Changelog
+    about: About
   changelog: Changelog
+  about:
+    yiyanApiProvider: Chinese poetry API provided by $1
   settings:
     title: Settings
     background:
@@ -77,15 +84,6 @@ newtab:
         confirm: OK
         cancel: Cancel
         purging: Clearing extension data..
-    about:
-      title: About
-      version: Current Version
-      projectLink: Project link
-      chromeExtensionLink: Link to Chrome Web Store
-      firefoxExtensionLink: Link to Firefox Add-ons
-      edgeExtensionLink: Link to Microsoft Edge Add-ons
-      yiyanApiProvider: 'Provider of Chinese poetry API:'
-      license: This project is open source under the MIT license
     search:
       title: Search Settings
       defaultSearchEngine: Search Engine

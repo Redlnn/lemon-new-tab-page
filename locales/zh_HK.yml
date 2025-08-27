@@ -12,6 +12,13 @@ sync:
 newtab:
   title: 新分頁
   changelog: 更新日誌
+  menu:
+    settings: 一般設定
+    searchEnginePreference: 搜尋引擎偏好
+    changelog: 更新日誌
+    about: 關於
+  about:
+    yiyanApiProvider: 一言 API 由 $1 提供
   settings:
     title: 設定
     background:
@@ -68,15 +75,6 @@ newtab:
         confirm: 好
         cancel: 算啦
         purging: 正在清除擴充功能資料...
-    about:
-      title: 關於
-      version: 目前版本
-      projectLink: 專案網址
-      chromeExtensionLink: Chrome 商店頁面
-      firefoxExtensionLink: Firefox 商店頁面
-      edgeExtensionLink: Edge 商店頁面
-      yiyanApiProvider: 一言 API 提供方：
-      license: 本專案採用 MIT 授權條款開源
     search:
       title: 搜尋設定
       defaultSearchEngine: 預設搜尋引擎

@@ -12,6 +12,13 @@ sync:
 newtab:
   title: 新标签页
   changelog: 更新日志
+  menu:
+    settings: 设置
+    searchEnginePreference: 搜索引擎偏好
+    changelog: 更新日志
+    about: 关于
+  about:
+    yiyanApiProvider: 一言 API 由 $1 提供
   settings:
     title: 设置
     background:
@@ -68,15 +75,6 @@ newtab:
         confirm: 好
         cancel: 算了
         purging: 正在清除扩展数据...
-    about:
-      title: 关于
-      version: 当前版本
-      projectLink: 项目地址
-      chromeExtensionLink: Chrome 商店页面
-      firefoxExtensionLink: Firefox 商店页面
-      edgeExtensionLink: Edge 商店页面
-      yiyanApiProvider: 一言 API 提供方：
-      license: 本项目使用 MIT 协议开源
     search:
       title: 搜索设置
       defaultSearchEngine: 搜索引擎

@@ -5,7 +5,6 @@ import BaseDialog from '../BaseDialog.vue'
 
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
-import MoreAbout from './Settings/MoreAbout.vue'
 import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
@@ -39,7 +38,6 @@ defineExpose({ show, hide, toggleShow })
     <background-settings />
     <shortcut-settings />
     <other-settings />
-    <more-about />
   </base-dialog>
 </template>
 

@@ -3,7 +3,7 @@ import { version } from '@/package.json'
 
 import { browser } from 'wxt/browser'
 import { ElConfigProvider, ElNotification } from 'element-plus'
-import { SettingsRound } from '@vicons/material'
+import { SettingsRound, SearchRound, AccessTimeFilledRound, InfoRound } from '@vicons/material'
 import { useColorMode, promiseTimeout } from '@vueuse/core'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import en from 'element-plus/es/locale/lang/en.mjs'
@@ -16,6 +16,7 @@ import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
+import About11 from './components/About.vue'
 
 import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from '@/shared/image'
@@ -57,6 +58,7 @@ const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
+const AboutRef = ref<InstanceType<typeof About11>>()
 const bgURL = ref('')
 
 interface BgURLProvider {
@@ -182,15 +184,40 @@ watch(
       <yi-yan />
     </main>
     <background :url="bgURL" />
-    <div
-      class="settings-icon"
-      @click="SettingsPageRef?.toggleShow"
-      @contextmenu.prevent.stop="ChangelogRef?.show"
+    <el-dropdown
+      style="display: block"
+      popper-class="settings-icon__popper"
+      placement="top-end"
+      trigger="click"
+      @contextmenu.prevent.stop
     >
-      <el-icon><settings-round /></el-icon>
-    </div>
+      <div class="settings-icon">
+        <el-icon><settings-round /></el-icon>
+      </div>
+      <template #dropdown>
+        <el-dropdown-menu>
+          <el-dropdown-item @click="SettingsPageRef?.toggleShow">
+            <el-icon :size="17"><settings-round /></el-icon>
+            {{ i18n.t('newtab.menu.settings') }}
+          </el-dropdown-item>
+          <el-dropdown-item>
+            <el-icon :size="17"><search-round /></el-icon>
+            {{ i18n.t('newtab.menu.searchEnginePreference') }}
+          </el-dropdown-item>
+          <el-dropdown-item @click="ChangelogRef?.show">
+            <el-icon :size="17"><access-time-filled-round /></el-icon>
+            {{ i18n.t('newtab.menu.changelog') }}
+          </el-dropdown-item>
+          <el-dropdown-item divided @click="AboutRef?.toggleShow">
+            <el-icon :size="17"><info-round /></el-icon>
+            {{ i18n.t('newtab.menu.about') }}
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
     <settings-page ref="SettingsPageRef" />
-    <changelog ref="ChangelogRef" />
+    <Changelog ref="ChangelogRef" />
+    <About11 ref="AboutRef" />
   </el-config-provider>
 </template>
 
@@ -223,6 +250,32 @@ watch(
     background-color: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-lighter);
     transform: rotate(180deg);
+  }
+
+  &__popper {
+    &.el-popper {
+      background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 30%);
+      backdrop-filter: blur(10px) saturate(150%) brightness(110%);
+    }
+
+    .el-dropdown-menu {
+      padding: 8px 10px;
+      background-color: transparent;
+    }
+
+    .el-dropdown-menu__item {
+      padding: 5px 18px 5px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+
+      .el-icon {
+        margin-right: 10px;
+      }
+    }
+
+    .el-popper__arrow {
+      display: none;
+    }
   }
 }
 
