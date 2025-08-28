@@ -62,8 +62,6 @@ newtab:
       syncWarning: >
         云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。
         不支持同步的项目后面会有如右侧的标识：
-      yiyan: 一言
-      yiyanDescription: 搜索框展开时显示一行古诗词
       purgeData: 清除扩展数据
       want_to_customize_chrome: 要自定义Chrome？
       customize_chrome_tips: >
@@ -112,6 +110,12 @@ newtab:
       HorizontalIconSpacing: 图标左右间距
       VerticalIconSpacing: 图标上下间距
       marginTop: 快速访问区域上边距
+    yiyan:
+      title: 一言
+      enabled: 启用
+      description: /
+      alwaysShow: 总是显示
+      normalyShowTip: 关闭时仅在搜索框聚焦时显示
   shortcut:
     addNewShortcut: 添加快速访问
     pin: 置顶

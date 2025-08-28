@@ -62,8 +62,6 @@ newtab:
       syncWarning: >
         雲端同步不支援同步以下項目：本機或線上背景圖片、最常瀏覽網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。
         不支援同步的項目會有如右側的標識：
-      yiyan: 一言
-      yiyanDescription: 搜尋框展開時顯示一行古詩词
       purgeData: 清除本擴充功能的資料
       want_to_customize_chrome: 想自訂 Chrome？
       customize_chrome_tips: >
@@ -112,6 +110,12 @@ newtab:
       HorizontalIconSpacing: 圖示左右間距
       VerticalIconSpacing: 圖示上下間距
       marginTop: 快速存取區上邊距
+    yiyan:
+      title: 一言
+      enable: 啟用
+      description: /
+      alwaysShow: 總是顯示
+      normalyShowTip: 關閉時僅在搜尋框聚焦時顯示
   shortcut:
     addNewShortcut: 新增快速存取
     pin: 釘選

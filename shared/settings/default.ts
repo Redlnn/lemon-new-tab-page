@@ -21,8 +21,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     selectedSearchEngine: 2,
     searchInNewTab: false,
     recordSearchHistory: true,
-    enableShadow: true,
-    enableYiyan: true
+    enableShadow: true
   },
   background: {
     bgType: BgType.Bing,
@@ -59,6 +58,10 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   },
   sync: {
     enabled: false
+  },
+  yiyan: {
+    enabled: true,
+    alwaysShow: true
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION

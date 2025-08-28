@@ -22,8 +22,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
       selectedSearchEngine: oldSettings.selectedSearchEngine,
       searchInNewTab: oldSettings.searchInNewTab,
       recordSearchHistory: oldSettings.recordSearchHistory,
-      enableShadow: defaultSettings.search.enableShadow,
-      enableYiyan: oldSettings.enableYiyan
+      enableShadow: defaultSettings.search.enableShadow
     },
     background: {
       bgType: oldSettings.bgType,
@@ -64,6 +63,10 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
     },
     sync: {
       enabled: false
+    },
+    yiyan: {
+      enabled: oldSettings.enableYiyan,
+      alwaysShow: defaultSettings.yiyan.alwaysShow
     },
     pluginVersion: oldSettings.version,
     version: 6

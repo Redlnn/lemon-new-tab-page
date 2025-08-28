@@ -21,7 +21,6 @@ export interface SettingsInterfaceVer6 {
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean
-    enableYiyan: boolean
   }
   background: {
     bgType: BgType
@@ -58,6 +57,10 @@ export interface SettingsInterfaceVer6 {
   }
   sync: {
     enabled: boolean
+  }
+  yiyan: {
+    enabled: boolean
+    alwaysShow: boolean
   }
   pluginVersion: string
   version: 6

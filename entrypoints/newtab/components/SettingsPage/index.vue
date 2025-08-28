@@ -9,6 +9,7 @@ import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
 import ShortcutSettings from './Settings/ShortcutSettings.vue'
+import YiyanSettings from './Settings/YiyanSettings.vue'
 
 const opened = ref(false)
 
@@ -37,6 +38,7 @@ defineExpose({ show, hide, toggleShow })
     <search-settings />
     <background-settings />
     <shortcut-settings />
+    <yiyan-settings />
     <other-settings />
   </base-dialog>
 </template>

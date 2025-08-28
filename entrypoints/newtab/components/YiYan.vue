@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { load } from 'jinrishici'
 import { useWindowSize } from '@vueuse/core'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { useFocusStore } from '@newtab/scripts/store'
 import { useSettingsStore } from '@/shared/settings'
@@ -24,14 +24,18 @@ onMounted(() => {
     }
   )
 })
+
+const isYiyanEnabled = computed(
+  () =>
+    settingsStore.yiyan.enabled &&
+    height.value >= 800 &&
+    (focusStore.isFocused || settingsStore.yiyan.alwaysShow)
+)
 </script>
 
 <template>
   <Transition>
-    <div
-      v-if="settingsStore.search.enableYiyan && focusStore.isFocused && height >= 800 && yiyan"
-      class="yiyan"
-    >
+    <div v-if="isYiyanEnabled" class="yiyan">
       <div
         class="yiyan__main"
         :class="[

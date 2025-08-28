@@ -65,13 +65,6 @@ function sendSyncMessage() {
       </p>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.other.yiyan') }}</div>
-      <el-switch v-model="settingsStore.search.enableYiyan" />
-    </div>
-    <p class="settings__item--note">
-      {{ i18n.t('newtab.settings.other.yiyanDescription') }}
-    </p>
-    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.other.purgeData') }}</div>
       <el-button
         type="danger"
