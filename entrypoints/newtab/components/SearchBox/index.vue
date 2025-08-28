@@ -121,16 +121,16 @@ function activeOneSuggest(index: number) {
   if (!suggestions) {
     return
   }
-  suggestions[index].classList.add('active')
+  suggestions[index]?.classList.add('active')
   suggedtionArea.value!.currentActiveSuggest = index
-  searchText.value = suggedtionArea.value!.searchSuggestions[index]
+  searchText.value = suggedtionArea.value!.searchSuggestions[index]!
 }
 
 function handleTabNavigation(direction: 1 | -1) {
   const newIndex =
     (settingsStore.search.selectedSearchEngine + direction + searchEngines.length) %
     searchEngines.length
-  settingsStore.search.selectedSearchEngine = newIndex
+  settingsStore.search.selectedSearchEngine = newIndex as TupleIndices<typeof searchEngines>
 }
 
 function handlePrevTab() {
@@ -168,7 +168,7 @@ const doSearchWithText = async (text: string) => {
   await saveSearchHistory(text)
 
   window.open(
-    searchEngines[settingsStore.search.selectedSearchEngine].url.replace('%s', text),
+    searchEngines[settingsStore.search.selectedSearchEngine]!.url.replace('%s', text),
     settingsStore.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()

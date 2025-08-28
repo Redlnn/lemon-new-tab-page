@@ -1,5 +1,3 @@
-import type { Component } from 'vue'
-
 import { Google } from '@vicons/fa'
 
 import { i18n } from '@/.wxt/i18n'
@@ -8,18 +6,7 @@ import Bing from '@newtab/assets/bing.svg?component'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'
 
-interface SearchEngine {
-  name: string
-  url: string
-  icon: Component
-}
-
-interface SearchSuggestAPI {
-  name: string
-  parser: (text: string) => Promise<string[]>
-}
-
-export const searchEngines: SearchEngine[] = [
+export const searchEngines = [
   {
     name: i18n.t('newtab.searchEngineMenu.google'),
     url: 'https://www.google.com/search?q=%s',
@@ -35,10 +22,10 @@ export const searchEngines: SearchEngine[] = [
     url: 'https://www.bing.com/search?q=%s',
     icon: Bing
   }
-]
+] as const
 
-export const searchSuggestAPIs: Record<string, SearchSuggestAPI> = {
+export const searchSuggestAPIs = {
   google: { name: i18n.t('newtab.searchEngineMenu.google'), parser: googleSuggestParser },
   baidu: { name: i18n.t('newtab.searchEngineMenu.baidu'), parser: baiduSuggestParser },
   bing: { name: i18n.t('newtab.searchEngineMenu.bing'), parser: bingSuggestParser }
-}
+} as const

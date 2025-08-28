@@ -48,7 +48,7 @@ const settingsStore = useSettingsStore()
       </div>
     </template>
     <el-icon class="search-engine-menu__icon">
-      <component :is="searchEngines[settingsStore.search.selectedSearchEngine]['icon']" />
+      <component :is="searchEngines[settingsStore.search.selectedSearchEngine]?.['icon']" />
     </el-icon>
   </el-tooltip>
 </template>

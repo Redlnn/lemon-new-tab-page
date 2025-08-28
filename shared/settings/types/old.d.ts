@@ -4,8 +4,8 @@ export interface OldSettingsInterface {
   primaryColor: string
   isMeridiem: boolean
   showMeridiem: boolean
-  selectedSearchSuggestionAPI: string
-  selectedSearchEngine: number
+  selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
+  selectedSearchEngine: TupleIndices<typeof import('@newtab/scripts/api/search').searchEngines>
   searchInNewTab: boolean
   recordSearchHistory: boolean
   bgType: BgType
