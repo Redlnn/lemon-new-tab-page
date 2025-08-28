@@ -272,10 +272,6 @@ watch(
         margin-right: 10px;
       }
     }
-
-    .el-popper__arrow {
-      display: none;
-    }
   }
 }
 
