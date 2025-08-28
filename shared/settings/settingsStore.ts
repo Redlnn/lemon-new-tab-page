@@ -31,7 +31,7 @@ async function migrateSettings(
     const oldSettings = settings as OldSettingsInterface
     if (searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]) {
       oldSettings.selectedSearchSuggestionAPI =
-        searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI]
+        searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI] || 'bing'
     }
     return migrateFromVer1(oldSettings)
   }
