@@ -1,32 +1,27 @@
 <script setup lang="ts">
-import { load } from 'jinrishici'
 import { useWindowSize } from '@vueuse/core'
 import { computed, onMounted, ref } from 'vue'
 
 import { useFocusStore } from '@newtab/scripts/store'
 import { useSettingsStore } from '@/shared/settings'
+import { yiyanProviders } from '@/shared/yiyan'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
 const { height } = useWindowSize()
 
-const yiyan = ref('')
-const yiyanOrigin = ref('')
+const yiyan = ref<string>()
+const yiyanOrigin = ref<string>()
 
-onMounted(() => {
-  load(
-    (res) => {
-      yiyan.value = res.data.content
-      yiyanOrigin.value = res.data.origin.title
-    },
-    () => {
-      // 这里不会触发，但不写又不行
-    }
-  )
+onMounted(async () => {
+  const res = await yiyanProviders[settingsStore.yiyan.provider].func()
+  yiyan.value = res.yiyan
+  yiyanOrigin.value = res.yiyanOrigin
 })
 
 const isYiyanEnabled = computed(
   () =>
+    yiyan.value &&
     settingsStore.yiyan.enabled &&
     height.value >= 800 &&
     (focusStore.isFocused || settingsStore.yiyan.alwaysShow)
@@ -45,7 +40,7 @@ const isYiyanEnabled = computed(
         ]"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>
-        <p class="yiyan__extra">—— 《{{ yiyanOrigin }}》</p>
+        <p v-if="yiyanOrigin" class="yiyan__extra">—— {{ yiyanOrigin }}</p>
       </div>
     </div>
   </Transition>

@@ -122,7 +122,7 @@ newtab:
     yiyan:
       title: Quote
       enabled: Enable
-      description: Show a line of Chinese poetry under the search box.
+      description: Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!
       alwaysShow: Always Show
       normalyShowTip: When disabled, only show when the search box is focused.
   shortcut:

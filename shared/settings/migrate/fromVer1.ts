@@ -66,7 +66,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
     },
     yiyan: {
       enabled: oldSettings.enableYiyan,
-      alwaysShow: defaultSettings.yiyan.alwaysShow
+      alwaysShow: defaultSettings.yiyan.alwaysShow,
+      provider: defaultSettings.yiyan.provider
     },
     pluginVersion: oldSettings.version,
     version: 6

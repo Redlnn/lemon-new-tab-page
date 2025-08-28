@@ -61,7 +61,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   },
   yiyan: {
     enabled: true,
-    alwaysShow: true
+    alwaysShow: true,
+    provider: 'jinrishici'
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION

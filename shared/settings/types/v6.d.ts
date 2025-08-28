@@ -61,6 +61,7 @@ export interface SettingsInterfaceVer6 {
   yiyan: {
     enabled: boolean
     alwaysShow: boolean
+    provider: keyof typeof import('@/shared/yiyan').yiyanProviders
   }
   pluginVersion: string
   version: 6
