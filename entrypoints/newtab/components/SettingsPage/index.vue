@@ -83,7 +83,6 @@ defineExpose({ show, hide, toggleShow })
 .settings__label {
   display: flex;
   align-items: center;
-  margin: 10px 0 6px;
 
   svg {
     width: 1em;
