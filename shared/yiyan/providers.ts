@@ -1,7 +1,7 @@
 import { browser } from 'wxt/browser'
 import { load } from 'jinrishici'
 
-import enhancedFetch from './network/fetch'
+import enhancedFetch from '@/shared/network/fetch'
 
 interface Hitokoto {
   id: number // 一言标识
@@ -21,13 +21,20 @@ interface Hitokoto {
 const lang = browser.i18n.getUILanguage()
 const isChinese = lang.startsWith('zh')
 
+export type YiyanResult = {
+  yiyan?: string
+  yiyanOrigin?: string
+}
+
+export type YiyanProviderKey = keyof typeof yiyanProviders
+
 export const yiyanProviders = {
   jinrishici: {
     name: isChinese ? '今日诗词' : 'Chinese Poetry',
     note: undefined,
     website: 'https://www.jinrishici.com',
-    func: () =>
-      new Promise<{ yiyan: string | undefined; yiyanOrigin: string | undefined }>((resolve) => {
+    load: () =>
+      new Promise<YiyanResult>((resolve) => {
         load(
           (res) =>
             resolve({
@@ -45,10 +52,11 @@ export const yiyanProviders = {
   hitokoto: {
     name: isChinese ? '一言（Hitokoto）' : 'Hitokoto.cn',
     note: isChinese
-      ? '请注意，Hitokoto.cn 的 QPS（每秒请求数）十分严格，频繁刷新将导致你的 IP 被 Ban 一段时间'
-      : 'Please note: The Hitokoto.cn API enforces strict rate limits (QPS). Making requests too quickly may result in your IP being temporarily blocked.',
+      ? '请注意，Hitokoto.cn 的 QPS（每秒请求数）十分严格，本插件已做缓存，但短时间来自不同站点请求仍会导致你的 IP 短时间被 Ban'
+      : 'Please note that Hitokoto.cn has a very strict QPS (queries per second) limit. \
+      This extension uses caching, but multiple requests from different sites in a short period may still cause your IP to be temporarily banned.',
     website: 'https://hitokoto.cn',
-    func: async () => {
+    load: async (): Promise<YiyanResult> => {
       try {
         const { hitokoto, from } = await enhancedFetch<Hitokoto>('https://v1.hitokoto.cn')
         return { yiyan: hitokoto, yiyanOrigin: from }

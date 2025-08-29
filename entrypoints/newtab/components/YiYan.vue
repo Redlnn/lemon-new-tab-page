@@ -4,7 +4,8 @@ import { computed, onMounted, ref } from 'vue'
 
 import { useFocusStore } from '@newtab/scripts/store'
 import { useSettingsStore } from '@/shared/settings'
-import { yiyanProviders } from '@/shared/yiyan'
+import { yiyanProviders } from '@/shared/yiyan/providers'
+import { getYiyanCache, isCacheFresh, setYiyanCache } from '@/shared/yiyan'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -14,9 +15,23 @@ const yiyan = ref<string>()
 const yiyanOrigin = ref<string>()
 
 onMounted(async () => {
-  const res = await yiyanProviders[settingsStore.yiyan.provider].func()
-  yiyan.value = res.yiyan
-  yiyanOrigin.value = res.yiyanOrigin
+  try {
+    const cache = await getYiyanCache()
+    if (isCacheFresh(cache) && cache?.provider === settingsStore.yiyan.provider) {
+      // use cached response (keeps original raw in cache.raw)
+      const res = cache.res
+      yiyan.value = res?.yiyan
+      yiyanOrigin.value = res?.yiyanOrigin
+    } else {
+      const res = await yiyanProviders[settingsStore.yiyan.provider].load()
+      yiyan.value = res.yiyan
+      yiyanOrigin.value = res.yiyanOrigin
+      // store provider name and original response
+      await setYiyanCache(settingsStore.yiyan.provider, res)
+    }
+  } catch (err) {
+    console.error('YiYan load error', err)
+  }
 })
 
 const isYiyanEnabled = computed(

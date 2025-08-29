@@ -1,4 +1,5 @@
 import type { BgType } from './enum'
+import type { YiyanProviderKey } from '@/shared/yiyan'
 
 export interface SettingsInterfaceVer6 {
   primaryColor: string
@@ -61,7 +62,7 @@ export interface SettingsInterfaceVer6 {
   yiyan: {
     enabled: boolean
     alwaysShow: boolean
-    provider: keyof typeof import('@/shared/yiyan').yiyanProviders
+    provider: YiyanProviderKey
   }
   pluginVersion: string
   version: 6
