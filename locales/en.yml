@@ -70,6 +70,15 @@ newtab:
       syncWarning: >
         Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status.
         Items that are not supported for sync will have an icon like this on the right:
+      importExport:
+        title: Import / Export Settings
+        export: Export
+        import: Import
+        warningDialog:
+          title: Are you sure to import settings from a file?
+          content: Importing settings will overwrite your current settings. Please be cautious when using this feature!
+          yes: Yes
+          no: No
       purgeData: Purge the data of this extension.
       want_to_customize_chrome: Want to customize Chrome?
       customize_chrome_tips: >

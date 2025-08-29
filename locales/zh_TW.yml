@@ -62,6 +62,15 @@ newtab:
       syncWarning: >
         雲端同步不支援同步以下項目：本機或線上背景圖片、最常造訪網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。
         不支援同步的項目會有如右側的標識：
+      importExport:
+        title: 匯入 / 匯出設定
+        export: 匯出
+        import: 匯入
+        warningDialog:
+          title: 你確定要從檔案匯入設定嗎？
+          content: 匯入設定會覆蓋你目前的設定，請謹慎使用此功能，是否繼續？
+          yes: 繼續
+          no: 不要啊
       purgeData: 清除本擴充功能的資料
       want_to_customize_chrome: 要自訂 Chrome 嗎？
       customize_chrome_tips: >

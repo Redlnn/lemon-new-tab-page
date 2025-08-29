@@ -62,6 +62,15 @@ newtab:
       syncWarning: >
         云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。
         不支持同步的项目后面会有如右侧的标识：
+      importExport:
+        title: 导入 / 导出设置
+        export: 导出
+        import: 导入
+        warningDialog:
+          title: 你确定要从文件导入设置吗？
+          content: 导入设置会覆盖你当前的设置，请谨慎使用该功能，是否继续？
+          yes: 继续
+          no: 不要啊
       purgeData: 清除扩展数据
       want_to_customize_chrome: 要自定义Chrome？
       customize_chrome_tips: >
