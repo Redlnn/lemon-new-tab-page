@@ -60,7 +60,7 @@ export async function getBingWallpaperURL() {
       // &mkt=zh-CN 加上区域后会导致后续访问 www.bing.com 被跳转到 cn.bing.com
     )
 
-    const imgUrl = `https://www.bing.com${data.images[0].url}`
+    const imgUrl = `https://www.bing.com${data.images[0]!.url}`
     const response = await fetch(imgUrl)
     if (!response.ok) {
       return imgUrl

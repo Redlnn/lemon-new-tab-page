@@ -11,7 +11,10 @@ import type {
 } from '../settings/types'
 import { migrateFromVer1, defaultSettings, type CURRENT_CONFIG_INTERFACE } from '../settings'
 
-const searchSuggestAPIsMap: Record<string, string> = {
+const searchSuggestAPIsMap: Record<
+  string,
+  keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
+> = {
   百度: 'baidu',
   必应: 'bing',
   谷歌: 'google'

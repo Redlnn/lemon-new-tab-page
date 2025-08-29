@@ -27,7 +27,9 @@ const settingsStore = useSettingsStore()
         :class="{
           'search-engine-menu__item--active': settingsStore.search.selectedSearchEngine === index
         }"
-        @click="settingsStore.search.selectedSearchEngine = index"
+        @click="
+          settingsStore.search.selectedSearchEngine = index as TupleIndices<typeof searchEngines>
+        "
       >
         <div style="display: flex; align-items: center">
           <el-icon><component :is="item['icon']" /></el-icon>

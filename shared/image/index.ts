@@ -48,12 +48,12 @@ export async function verifyImageUrl(url: string): Promise<boolean> {
  */
 export function convertBase64Svg(base64String: string): string {
   try {
-    const parts = base64String.split(',')
-    if (parts.length !== 2 || !parts[0].includes('data:image/svg+xml')) {
+    const parts = base64String.split(',', 2)
+    if (parts.length !== 2 || !parts[0]!.includes('data:image/svg+xml')) {
       throw new Error('Invalid SVG Base64 string format')
     }
 
-    const decodedSVG = atob(parts[1])
+    const decodedSVG = atob(parts[1]!)
     const parser = new DOMParser()
     const svgDoc = parser.parseFromString(decodedSVG, 'image/svg+xml')
 

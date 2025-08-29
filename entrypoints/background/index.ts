@@ -94,7 +94,7 @@ export default defineBackground(() => {
       active: true,
       status: 'complete'
     })
-    if (tab.id) {
+    if (tab?.id) {
       try {
         await browser.tabs.sendMessage(tab.id, {
           type: 'SYNC_UPDATE'

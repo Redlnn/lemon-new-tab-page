@@ -8,7 +8,7 @@ export async function removeBookmark(
   store: Store<'bookmark', Bookmark>,
   refresh: () => Promise<void>
 ) {
-  const { url, title, favicon } = store.items[index]
+  const { url, title, favicon } = store.items[index]!
   if (store.items.length > 1) {
     store.items = store.items.filter((_, i) => i !== index)
   } else {

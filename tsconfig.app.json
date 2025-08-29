@@ -1,12 +1,13 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
-    "./.wxt/i18n/**/*",
-    "./.wxt/types/**/*",
-    "./entrypoints/**/*",
-    "./types/**/*",
-    "./utils/**/*",
-    "./shared/**/*"
+    ".wxt/i18n/**/*.ts",
+    ".wxt/types/**/*.ts",
+    "entrypoints/**/*.ts",
+    "entrypoints/**/*.vue",
+    "types/**/*.ts",
+    "utils/**/*.ts",
+    "shared/**/*.ts"
   ],
   "exclude": ["./.output", "./utils/optimizeDeps.ts"],
   "compilerOptions": {
