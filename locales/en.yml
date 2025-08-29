@@ -101,6 +101,7 @@ newtab:
       recordSearchHistory: Record Search History
     theme:
       title: Theme Settings
+      lightMode: Light Mode
       darkMode: Dark Mode
       systemMode: Follow System
       primaryColor: Primary Color
@@ -135,12 +136,12 @@ newtab:
       alwaysShow: Always Show
       normalyShowTip: When disabled, only show when the search box is focused.
   shortcut:
-    addNewShortcut: Add New Shortcut
+    addNewShortcut: Add Shortcut
     pin: Pin
     unpin: Unpin
     remove: Remove
     addDialog:
-      dialogTitle: New Shortcut
+      dialogTitle: Add Shortcut
       title: Title
       url: URL
       favicon: Favicon

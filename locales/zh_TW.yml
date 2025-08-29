@@ -82,14 +82,6 @@ newtab:
         confirm: 好
         cancel: 算了
         purging: 正在清除擴充功能資料...
-    about:
-      title: 關於
-      version: 當前版本
-      projectLink: 專案連結
-      chromeExtensionLink: Chrome 商店頁面
-      firefoxExtensionLink: Firefox 商店頁面
-      edgeExtensionLink: Edge 商店頁面
-      license: 本專案以 MIT 授權條款開源
     search:
       title: 搜尋設定
       defaultSearchEngine: 預設搜尋引擎
@@ -100,6 +92,7 @@ newtab:
       recordSearchHistory: 記錄搜尋歷史
     theme:
       title: 主題設定
+      lightMode: 淺色模式
       darkMode: 深色模式
       systemMode: 跟隨系統
       primaryColor: 主題色

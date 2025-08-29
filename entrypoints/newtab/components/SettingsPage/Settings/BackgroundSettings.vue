@@ -160,7 +160,7 @@ function onlineImageWarn() {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
       <span>
-        <span>浅色模式：</span>
+        <span>{{ i18n.t('newtab.settings.theme.lightMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settingsStore.background.lightMaskColor"
           :predefine="predefineMaskColor"
@@ -172,7 +172,7 @@ function onlineImageWarn() {
             }
           "
         />
-        <span style="margin-left: 1em">深色模式：</span>
+        <span style="margin-left: 1em">{{ i18n.t('newtab.settings.theme.darkMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settingsStore.background.nightMaskColor"
           :predefine="predefineMaskColor"

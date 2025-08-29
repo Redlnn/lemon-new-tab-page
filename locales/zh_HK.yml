@@ -92,6 +92,7 @@ newtab:
       recordSearchHistory: 記錄搜尋歷史
     theme:
       title: 主題設定
+      lightMode: 淺色模式
       darkMode: 深色模式
       systemMode: 跟隨系統設定
       primaryColor: 主題顏色
