@@ -10,6 +10,7 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
+      small: defaultSettings.time.small,
       enableShadow: oldSettings.time.enableShadow,
       blinkingColon: defaultSettings.time.blinkingColon,
       invertColor: {
