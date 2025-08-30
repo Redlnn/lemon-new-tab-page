@@ -2,12 +2,28 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.2.4 (WIP)
+## 2.3.0 (WIP)
 
-### New Features
+### Features
 
+- Added search engine settings page
+- Support for importing and exporting configuration files for easy backup and migration
+- Enhanced "Hitokoto" feature: added caching and switchable APIs
+- New option to keep "Hitokoto" always visible
 - Power-saving mode (can disable blinking time separator)
-  > Shouldn't there be anyone who keeps the new tab page open all the time?
+  > Probably no one keeps the new tab page open forever, right?
+
+### Adjustments
+
+- Due to browser policy restrictions, auto-focus on the search box has never worked properly, so the description has been changed to “Expand search box by default”
+- UI, UX, and animation tweaks to improve the user experience
+- Moved the About section from Settings to a new dedicated About page
+- The new About page and Search Engine Settings page share the bottom-right entry point with the main Settings page
+
+### Fixes
+
+- Multiple stability improvements
+- Fixed missing translations and several minor bugs.
 
 ## 2.2.3 (07/13/2025)
 
