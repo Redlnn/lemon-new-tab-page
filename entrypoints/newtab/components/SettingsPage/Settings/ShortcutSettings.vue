@@ -64,7 +64,7 @@ async function restoreDefaultTopSites() {
       <p class="settings__item--note">
         {{ i18n.t('newtab.settings.shortcut.whiteTextTip') }}
       </p>
-      <div class="settings__item">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.maxRows') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.rows"
@@ -77,7 +77,7 @@ async function restoreDefaultTopSites() {
           :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
         />
       </div>
-      <div class="settings__item">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.maxColumns') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.columns"
@@ -101,7 +101,7 @@ async function restoreDefaultTopSites() {
       >
         {{ i18n.t('newtab.settings.shortcut.maxItemsTipForChrome') }}
       </p>
-      <div class="settings__item settings__item--shortcut-width">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.iconSize') }}</div>
         <el-slider
           v-model="settingsStore.shortcut.iconSize"
@@ -112,7 +112,7 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings__item settings__item--shortcut-width">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.HorizontalIconSpacing') }}
         </div>
@@ -125,7 +125,7 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings__item settings__item--shortcut-width">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.VerticalIconSpacing') }}
         </div>
@@ -138,7 +138,7 @@ async function restoreDefaultTopSites() {
           :show-tooltip="false"
         />
       </div>
-      <div class="settings__item settings__item--shortcut-width">
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">
           {{ i18n.t('newtab.settings.shortcut.marginTop') }}
         </div>
@@ -172,8 +172,8 @@ async function restoreDefaultTopSites() {
 </template>
 
 <style lang="scss">
-.settings__item--shortcut-width .el-input-number,
-.settings__item--shortcut-width .el-input {
+.settings__item--vertical .el-input-number,
+.settings__item--vertical .el-input {
   width: 60px;
 }
 </style>

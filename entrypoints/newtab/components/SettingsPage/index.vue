@@ -57,7 +57,7 @@ defineExpose({ show, hide, toggleShow })
 }
 
 .settings__items-container {
-  padding: 10px 25px;
+  padding: 14px 25px;
   background-color: var(--el-bg-color);
   border-radius: 8px;
   transition: background-color var(--el-transition-duration-fast) ease;
@@ -65,13 +65,25 @@ defineExpose({ show, hide, toggleShow })
 
 .settings__item {
   width: 100%;
-  min-height: 40px;
+  margin-top: 8px;
   overflow: hidden;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 
   &--horizontal {
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  &--vertical {
+    margin-top: 15px;
+
+    &:first-of-type {
+      margin-top: 8px;
+    }
   }
 
   .el-slider {
@@ -83,6 +95,10 @@ defineExpose({ show, hide, toggleShow })
 .settings__label {
   display: flex;
   align-items: center;
+
+  .settings__item--horizontal & {
+    min-height: 32px;
+  }
 
   svg {
     width: 1em;

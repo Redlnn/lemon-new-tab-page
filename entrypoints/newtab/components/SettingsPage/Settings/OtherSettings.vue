@@ -133,12 +133,10 @@ function handleFileChange(event: Event) {
       <div class="settings__label">{{ i18n.t('newtab.settings.other.sync') }}</div>
       <el-switch v-model="settingsStore.sync.enabled" @change="sendSyncMessage" />
     </div>
-    <div class="settings__item">
-      <p class="settings__item--note">
-        {{ i18n.t('newtab.settings.other.syncWarning') }}
-        <cloud-off-round />
-      </p>
-    </div>
+    <p class="settings__item--note">
+      {{ i18n.t('newtab.settings.other.syncWarning') }}
+      <cloud-off-round />
+    </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.other.importExport.title') }}</div>
       <span>
@@ -171,7 +169,7 @@ function handleFileChange(event: Event) {
       />
     </div>
     <div v-if="isGoogleChrome" class="settings__item">
-      <div class="settings__label">
+      <div class="settings__label" style="min-height: 32px">
         {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
       </div>
       <p class="settings__item--note">

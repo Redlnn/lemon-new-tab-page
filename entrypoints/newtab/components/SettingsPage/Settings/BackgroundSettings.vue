@@ -96,7 +96,7 @@ function onlineImageWarn() {
     <span>{{ i18n.t('newtab.settings.background.title') }}</span>
   </div>
   <div class="settings__items-container">
-    <div class="settings__item">
+    <div class="settings__item settings__item--vertical">
       <div class="settings__label">
         {{ i18n.t('newtab.settings.background.type.title') }}
         <cloud-off-round />
@@ -149,12 +149,17 @@ function onlineImageWarn() {
       <div class="settings__label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />
     </div>
-    <div v-if="settingsStore.background.bgType !== BgType.None" class="settings__item">
+    <div
+      v-if="settingsStore.background.bgType !== BgType.None"
+      class="settings__item settings__item--vertical"
+    >
       <div class="settings__label">{{ i18n.t('newtab.settings.background.blur') }}</div>
       <el-slider v-model="settingsStore.background.blurIntensity" :show-tooltip="false" />
     </div>
     <div class="settings__item">
-      <div class="settings__label">{{ i18n.t('newtab.settings.background.maskOpacity') }}</div>
+      <div class="settings__label settings__item--vertical">
+        {{ i18n.t('newtab.settings.background.maskOpacity') }}
+      </div>
       <el-slider v-model="settingsStore.background.bgMaskOpacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
