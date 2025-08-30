@@ -8,7 +8,7 @@ import { useSettingsStore } from '@/shared/settings'
 import BaseDialog from './BaseDialog.vue'
 import { i18n } from '#imports'
 
-const opened = ref(true)
+const opened = ref(false)
 
 function show() {
   opened.value = true
