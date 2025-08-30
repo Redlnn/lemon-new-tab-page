@@ -3,7 +3,7 @@
 ## 安装
 
 目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
-、[Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
+、[Microsoft Edge Add-Ons](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
 和 [Firefox Browser Add-Ons](https://addons.mozilla.org/firefox/addon/lemon-new-tab/)
 上架
 
@@ -20,8 +20,10 @@
 - :atom_symbol: 开放源代码
 - :globe_with_meridians: 多语言支持（目前只有`zh_CN`、`zh_TW`、`en`）
 
+更新日志（Changelog）：[中文](./CHANGELOG_zh.md) | [English](./CHANGELOG.md)
+
 > [!NOTE]  
-> 前排提醒：本插件模仿了青柠起始页的部分样式，不喜勿喷  
+> 本插件模仿了青柠起始页的部分样式，不喜勿喷  
 > 更多功能欢迎 PR，提 Issue 不一定会实现噢
 
 ## 浏览器兼容性
