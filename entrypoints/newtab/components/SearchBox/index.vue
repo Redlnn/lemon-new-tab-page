@@ -262,7 +262,7 @@ onMounted(() => {
       width var(--el-transition-duration-fast) var(--cubic-bezier);
 
     &--shadow {
-      box-shadow: var(--el-box-shadow-dark);
+      box-shadow: var(--el-box-shadow);
     }
 
     html.dark & {

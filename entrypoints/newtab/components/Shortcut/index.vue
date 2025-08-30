@@ -248,8 +248,13 @@ bookmarkStorage.watch(refreshDebounced)
     color: var(--el-text-color-regular);
     background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
     border-radius: 50%;
+    box-shadow: var(--el-box-shadow);
     backdrop-filter: blur(10px) saturate(1.4);
     transition: background-color 0.1s ease;
+
+    html.dark & {
+      box-shadow: var(--el-box-shadow-light);
+    }
 
     span {
       display: block;
@@ -267,6 +272,7 @@ bookmarkStorage.watch(refreshDebounced)
     }
   }
 
+  /* stylelint-disable-next-line no-descending-specificity */
   &:hover .shortcut__icon {
     background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
   }
@@ -303,6 +309,7 @@ bookmarkStorage.watch(refreshDebounced)
     width: calc(var(--icon_size) + 30px);
     font-size: 13px;
     text-align: center;
+    text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
   }
 
   .shortcut__menu {

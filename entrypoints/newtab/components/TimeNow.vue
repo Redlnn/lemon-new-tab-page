@@ -131,7 +131,11 @@ function getlunarCalendar() {
   animation: delayedFadeIn 0.5s;
 
   &--shadow {
-    text-shadow: 0 6px 16px rgb(0 0 0 / 40%);
+    text-shadow: 0 6px 13px color-mix(in srgb, var(--el-color-black), transparent 80%);
+
+    html.dark & {
+      text-shadow: 0 1px 8px color-mix(in srgb, var(--el-color-black), transparent 50%);
+    }
   }
 
   &__time {

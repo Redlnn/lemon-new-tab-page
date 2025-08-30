@@ -88,7 +88,7 @@ const isYiyanEnabled = computed(
     }
 
     &.yiyan--shadow {
-      text-shadow: 0 0 20px rgb(0 0 0 / 80%);
+      text-shadow: 0 1px 8px color-mix(in srgb, var(--el-color-black), transparent 20%);
     }
 
     &:hover {
