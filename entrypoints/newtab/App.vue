@@ -286,7 +286,7 @@ watch(
 
 .dialog-bounce-leave-active,
 .dialog-bounce-leave-active .el-dialog {
-  transition: all 0.3s cubic-bezier(0.2, 0, 1, 0.4);
+  transition: all 0.2s cubic-bezier(0.2, 0, 1, 0.4);
 }
 
 .dialog-bounce-enter-from,
