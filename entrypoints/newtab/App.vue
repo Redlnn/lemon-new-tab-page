@@ -16,7 +16,8 @@ import SearchBox from './components/SearchBox/index.vue'
 import SettingsPage from './components/SettingsPage/index.vue'
 import TimeNow from './components/TimeNow.vue'
 import YiYan from './components/YiYan.vue'
-import About11 from './components/About.vue'
+import AboutComp from './components/About.vue'
+import SearchEnginesSwitcher from './components/SearchEnginesSwitcher.vue'
 
 import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from '@/shared/image'
@@ -58,7 +59,8 @@ const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
-const AboutRef = ref<InstanceType<typeof About11>>()
+const AboutRef = ref<InstanceType<typeof AboutComp>>()
+const SESwitcherRef = ref<InstanceType<typeof SearchEnginesSwitcher>>()
 const bgURL = ref('')
 
 interface BgURLProvider {
@@ -200,7 +202,7 @@ watch(
             <el-icon :size="17"><settings-round /></el-icon>
             {{ i18n.t('newtab.menu.settings') }}
           </el-dropdown-item>
-          <el-dropdown-item>
+          <el-dropdown-item @click="SESwitcherRef?.show">
             <el-icon :size="17"><search-round /></el-icon>
             {{ i18n.t('newtab.menu.searchEnginePreference') }}
           </el-dropdown-item>
@@ -217,7 +219,8 @@ watch(
     </el-dropdown>
     <settings-page ref="SettingsPageRef" />
     <Changelog ref="ChangelogRef" />
-    <About11 ref="AboutRef" />
+    <about-comp ref="AboutRef" />
+    <search-engines-switcher ref="SESwitcherRef" />
   </el-config-provider>
 </template>
 
