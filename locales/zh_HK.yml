@@ -87,7 +87,7 @@ newtab:
       defaultSearchEngine: 預設搜尋引擎
       searchSuggestionProvider: 搜尋建議 API
       openInNewTab: 在新分頁中開啟
-      autoFocus: 自動聚焦搜尋框
+      autoFocus: 預設展開搜尋框
       enableShadow: 顯示搜尋框陰影
       recordSearchHistory: 記錄搜尋歷史
     theme:

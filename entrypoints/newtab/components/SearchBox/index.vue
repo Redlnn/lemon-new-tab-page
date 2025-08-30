@@ -184,7 +184,7 @@ onMounted(() => {
     handleFocus()
     searchInput.value?.focus()
   }
-  useTimeoutFn(() => (mounted.value = true), 100)
+  useTimeoutFn(() => (mounted.value = true), 300)
 })
 </script>
 

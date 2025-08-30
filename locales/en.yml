@@ -96,7 +96,7 @@ newtab:
       defaultSearchEngine: Search Engine
       searchSuggestionProvider: Search Suggestion API
       openInNewTab: Open in New Tab
-      autoFocus: Auto Focus
+      autoFocus: Default Expand Search Box
       enableShadow: Show Search Box Shadow
       recordSearchHistory: Record Search History
     theme:
