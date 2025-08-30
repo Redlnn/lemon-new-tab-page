@@ -1,3 +1,5 @@
+import { i18n } from '#imports'
+
 import { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
 import { BgType } from './types'
 
@@ -21,7 +23,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     selectedSearchEngine: 'bing',
     searchInNewTab: false,
     recordSearchHistory: true,
-    enableShadow: true
+    enableShadow: true,
+    placeholder: i18n.t('newtab.search.placeholder')
   },
   background: {
     bgType: BgType.Bing,

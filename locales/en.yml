@@ -99,6 +99,7 @@ newtab:
       autoFocus: Default Expand Search Box
       enableShadow: Show Search Box Shadow
       recordSearchHistory: Record Search History
+      placeholder: Search Placeholder
     theme:
       title: Theme Settings
       lightMode: Light Mode

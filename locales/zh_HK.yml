@@ -90,6 +90,7 @@ newtab:
       autoFocus: 預設展開搜尋框
       enableShadow: 顯示搜尋框陰影
       recordSearchHistory: 記錄搜尋歷史
+      placeholder: 搜尋框占位文字
     theme:
       title: 主題設定
       lightMode: 淺色模式

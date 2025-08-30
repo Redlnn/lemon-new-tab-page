@@ -62,5 +62,9 @@ const settingsStore = useSettingsStore()
       <div class="settings__label">{{ i18n.t('newtab.settings.search.recordSearchHistory') }}</div>
       <el-switch v-model="settingsStore.search.recordSearchHistory" />
     </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ i18n.t('newtab.settings.search.placeholder') }}</div>
+      <el-input v-model="settingsStore.search.placeholder" style="width: 240px" />
+    </div>
   </div>
 </template>

@@ -10,7 +10,6 @@ import {
 } from '@vueuse/core'
 import { onMounted, ref, watch, computed } from 'vue'
 
-import { i18n } from '@/.wxt/i18n'
 import { searchEngines } from '@newtab/scripts/api/search'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
@@ -44,7 +43,7 @@ const formClasses = computed(() => {
 })
 
 const searchPlaceholder = computed(() =>
-  focusStore.isFocused ? undefined : i18n.t('newtab.search.placeholder')
+  focusStore.isFocused ? undefined : settingsStore.search.placeholder
 )
 
 function resetSearch() {

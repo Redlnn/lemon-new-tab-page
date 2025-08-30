@@ -23,7 +23,8 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       selectedSearchEngine: searchEnginesMap[oldSettings.search.selectedSearchEngine],
       searchInNewTab: oldSettings.search.searchInNewTab,
       recordSearchHistory: oldSettings.search.recordSearchHistory,
-      enableShadow: oldSettings.search.enableShadow
+      enableShadow: oldSettings.search.enableShadow,
+      placeholder: defaultSettings.search.placeholder
     },
     background: {
       bgType: oldSettings.background.bgType,

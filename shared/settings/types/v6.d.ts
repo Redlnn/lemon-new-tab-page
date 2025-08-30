@@ -22,6 +22,7 @@ export interface SettingsInterfaceVer6 {
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean
+    placeholder: string
   }
   background: {
     bgType: BgType
