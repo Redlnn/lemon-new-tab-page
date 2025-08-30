@@ -35,7 +35,7 @@ const isChinese = browser.i18n.getUILanguage().startsWith('zh')
       <el-switch v-model="settingsStore.time.showLunar" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">时间小字体</div>
+      <div class="settings__label">{{ i18n.t('newtab.settings.clock.smallFont') }}</div>
       <el-switch v-model="settingsStore.time.small" />
     </div>
     <div class="settings__item settings__item--horizontal">

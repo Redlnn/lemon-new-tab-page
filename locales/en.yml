@@ -59,6 +59,7 @@ newtab:
       showAMPM: Show AM/PM
       showDate: Show Date
       showLunar: Show Chinese Lunar Calendar
+      smallFont: Small Time Font
       enableShadow: Show Text Shadow
       blinkingColon: Blinking Colon
       blinkingTip: Turning this off can reduce CPU usage (power-saving mode).

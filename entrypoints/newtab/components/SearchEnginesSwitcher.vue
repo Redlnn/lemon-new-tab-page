@@ -6,6 +6,7 @@ import { CheckmarkCircle12Filled } from '@vicons/fluent'
 import { searchEngines } from '@newtab/scripts/api/search'
 import { useSettingsStore } from '@/shared/settings'
 import BaseDialog from './BaseDialog.vue'
+import { i18n } from '#imports'
 
 const opened = ref(true)
 
@@ -25,7 +26,7 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-  <base-dialog v-model="opened" title="搜索引擎偏好" acrylic>
+  <base-dialog v-model="opened" :title="i18n.t('newtab.menu.searchEnginePreference')" acrylic>
     <div style="width: 100%; overflow: hidden">
       <el-row :gutter="10" class="se-switcher">
         <el-col

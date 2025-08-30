@@ -51,6 +51,7 @@ newtab:
       showAMPM: 显示「上午 / 下午」
       showDate: 显示日期
       showLunar: 显示农历
+      smallFont: 时间小号字体
       enableShadow: 显示阴影
       blinkingColon: 闪烁时间分隔符
       blinkingTip: 关掉可以降低 CPU 占用率（省电模式）
