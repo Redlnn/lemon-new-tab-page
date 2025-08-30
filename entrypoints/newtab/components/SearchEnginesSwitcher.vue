@@ -99,7 +99,7 @@ const settingsStore = useSettingsStore()
   }
 
   &__url {
-    margin-top: 2px;
+    margin-top: 1px;
     vertical-align: text-bottom;
     color: var(--el-text-color-secondary);
   }
