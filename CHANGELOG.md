@@ -6,6 +6,8 @@
 
 ### Features
 
+- Option to change the clock font to a smaller size (same as AM/PM)
+- Customizable search box placeholder text
 - Added search engine settings page
 - Support for importing and exporting configuration files for easy backup and migration
 - Enhanced "Hitokoto" feature: added caching and switchable APIs
@@ -16,7 +18,8 @@
 ### Adjustments
 
 - Due to browser policy restrictions, auto-focus on the search box has never worked properly, so the description has been changed to “Expand search box by default”
-- UI, UX, and animation tweaks to improve the user experience
+- Adjusted text and search box shadows, added shortcut shadows for better visual appearance
+- UI, UX, and animation refinements to enhance the user experience
 - Moved the About section from Settings to a new dedicated About page
 - The new About page and Search Engine Settings page share the bottom-right entry point with the main Settings page
 
