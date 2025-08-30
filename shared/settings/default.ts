@@ -18,7 +18,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   search: {
     autoFocus: false,
     selectedSearchSuggestionAPI: 'bing',
-    selectedSearchEngine: 2,
+  selectedSearchEngine: 'bing',
     searchInNewTab: false,
     recordSearchHistory: true,
     enableShadow: true

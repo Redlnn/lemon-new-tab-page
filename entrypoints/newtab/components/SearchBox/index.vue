@@ -127,10 +127,14 @@ function activeOneSuggest(index: number) {
 }
 
 function handleTabNavigation(direction: 1 | -1) {
-  const newIndex =
-    (settingsStore.search.selectedSearchEngine + direction + searchEngines.length) %
-    searchEngines.length
-  settingsStore.search.selectedSearchEngine = newIndex as TupleIndices<typeof searchEngines>
+  const currentKey = settingsStore.search.selectedSearchEngine
+  const searchEngineKeys = Object.keys(searchEngines) as (keyof typeof searchEngines)[]
+  const currentIndex = searchEngineKeys.indexOf(currentKey)
+
+  const newIndex = (currentIndex + direction + searchEngineKeys.length) % searchEngineKeys.length
+  settingsStore.search.selectedSearchEngine = searchEngineKeys[
+    newIndex
+  ] as keyof typeof searchEngines
 }
 
 function handlePrevTab() {
@@ -168,7 +172,7 @@ const doSearchWithText = async (text: string) => {
   await saveSearchHistory(text)
 
   window.open(
-    searchEngines[settingsStore.search.selectedSearchEngine]!.url.replace('%s', text),
+    searchEngines[settingsStore.search.selectedSearchEngine].url.replace('%s', text),
     settingsStore.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()
@@ -184,7 +188,7 @@ onMounted(() => {
     handleFocus()
     searchInput.value?.focus()
   }
-  useTimeoutFn(() => (mounted.value = true), 300)
+  useTimeoutFn(() => (mounted.value = true), 100)
 })
 </script>
 

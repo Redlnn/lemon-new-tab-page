@@ -22,10 +22,10 @@ const settingsStore = useSettingsStore()
         fit-input-width
       >
         <el-option
-          v-for="(item, index) in searchEngines"
-          :key="item.name"
-          :label="item.name"
-          :value="index"
+          v-for="key in Object.keys(searchEngines) as (keyof typeof searchEngines)[]"
+          :key="key"
+          :label="searchEngines[key].name"
+          :value="key"
         />
       </el-select>
     </div>

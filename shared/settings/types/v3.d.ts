@@ -16,7 +16,7 @@ export interface SettingsInterfaceVer3 {
   search: {
     autoFocus: boolean
     selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
-    selectedSearchEngine: TupleIndices<typeof import('@newtab/scripts/api/search').searchEngines>
+    selectedSearchEngine: keyof typeof import('../migrate/searchEnginesMap').searchEnginesMap
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean

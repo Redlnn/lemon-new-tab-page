@@ -21,22 +21,20 @@ const settingsStore = useSettingsStore()
   >
     <template #content>
       <div
-        v-for="(item, index) in searchEngines"
-        :key="index"
+        v-for="key in Object.keys(searchEngines) as (keyof typeof searchEngines)[]"
+        :key="key"
         class="search-engine-menu__item"
         :class="{
-          'search-engine-menu__item--active': settingsStore.search.selectedSearchEngine === index
+          'search-engine-menu__item--active': settingsStore.search.selectedSearchEngine === key
         }"
-        @click="
-          settingsStore.search.selectedSearchEngine = index as TupleIndices<typeof searchEngines>
-        "
+        @click="settingsStore.search.selectedSearchEngine = key"
       >
         <div style="display: flex; align-items: center">
-          <el-icon><component :is="item['icon']" /></el-icon>
-          <span>{{ item.name }}</span>
+          <el-icon><component :is="searchEngines[key].icon" /></el-icon>
+          <span>{{ searchEngines[key].name }}</span>
         </div>
         <div
-          v-if="index === settingsStore.search.selectedSearchEngine"
+          v-if="key === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
           {{ i18n.t('newtab.search.searchEngineMenu.current') }}
@@ -50,7 +48,7 @@ const settingsStore = useSettingsStore()
       </div>
     </template>
     <el-icon class="search-engine-menu__icon">
-      <component :is="searchEngines[settingsStore.search.selectedSearchEngine]?.['icon']" />
+      <component :is="searchEngines[settingsStore.search.selectedSearchEngine].icon" />
     </el-icon>
   </el-tooltip>
 </template>

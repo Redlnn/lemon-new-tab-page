@@ -1,5 +1,6 @@
 import { defaultSettings } from '..'
 import type { OldSettingsInterface, SettingsInterfaceVer6 } from '../types'
+import { searchEnginesMap } from './searchEnginesMap'
 
 export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInterfaceVer6 {
   return {
@@ -19,7 +20,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
     search: {
       autoFocus: defaultSettings.search.autoFocus,
       selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
-      selectedSearchEngine: oldSettings.selectedSearchEngine,
+      selectedSearchEngine: searchEnginesMap[oldSettings.selectedSearchEngine],
       searchInNewTab: oldSettings.searchInNewTab,
       recordSearchHistory: oldSettings.recordSearchHistory,
       enableShadow: defaultSettings.search.enableShadow

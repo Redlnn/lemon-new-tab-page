@@ -5,7 +5,7 @@ export interface OldSettingsInterface {
   isMeridiem: boolean
   showMeridiem: boolean
   selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
-  selectedSearchEngine: TupleIndices<typeof import('@newtab/scripts/api/search').searchEngines>
+  selectedSearchEngine: keyof typeof import('../migrate/searchEnginesMap').searchEnginesMap
   searchInNewTab: boolean
   recordSearchHistory: boolean
   bgType: BgType
