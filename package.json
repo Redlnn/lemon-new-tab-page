@@ -22,7 +22,7 @@
     "format": "prettier assets/ entrypoints/ locales/ shared/ types/ utils/ --write -u"
   },
   "dependencies": {
-    "dayjs": "^1.11.15",
+    "dayjs": "^1.11.18",
     "dompurify": "^3.2.6",
     "jinrishici": "^1.0.6",
     "localforage": "^1.10.0",
@@ -51,11 +51,11 @@
     "@wxt-dev/webextension-polyfill": "^1.0.0",
     "element-plus": "^2.11.1",
     "eslint": "^9.34.0",
-    "eslint-plugin-oxlint": "^1.13.0",
+    "eslint-plugin-oxlint": "^1.14.0",
     "eslint-plugin-vue": "^10.4.0",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^8.0.4",
-    "oxlint": "^1.13.0",
+    "oxlint": "^1.14.0",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
     "sass-embedded": "^1.91.0",
