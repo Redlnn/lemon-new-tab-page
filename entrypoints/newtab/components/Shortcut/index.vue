@@ -306,10 +306,13 @@ bookmarkStorage.watch(refreshDebounced)
   }
 
   .shortcut__title {
+    position: relative;
     width: calc(var(--icon_size) + 30px);
     font-size: 13px;
     text-align: center;
-    text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
+    text-shadow:
+      0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
+      1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 80%);
   }
 
   .shortcut__menu {

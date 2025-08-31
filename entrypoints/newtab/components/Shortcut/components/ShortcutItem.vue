@@ -45,7 +45,12 @@ defineProps<{
           ></span>
         </div>
       </div>
-      <el-text v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title" truncated>
+      <el-text
+        :data-content="title"
+        v-if="settingsStore.shortcut.showShortcutTitle"
+        class="shortcut__title"
+        truncated
+      >
         {{ title }}
       </el-text>
     </a>
