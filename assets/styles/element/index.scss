@@ -6,7 +6,10 @@ $--slider: (
 // comment next lines to use default color
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   // do not use same name, it will override.
-  $slider: $--slider
+  $slider: $--slider,
+  $border-radius: ('base': 8px),
+  $messagebox: ('border-radius': 8px),
+  $popper: ('border-radius': 8px)
 );
 
 // if you want to import all

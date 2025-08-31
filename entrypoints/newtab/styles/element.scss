@@ -1,6 +1,5 @@
 .el-message-box {
-  --el-messagebox-border-radius: 8px;
-  padding: 20px 24px;
+  padding: 20px 24px !important;
 
   & .el-message-box__title {
     font-size: var(--el-font-size-medium);
@@ -10,10 +9,6 @@
 
 .el-color-picker__panel {
   padding: 10px;
-}
-
-.el-popper {
-  --el-popover-border-radius: 8px;
 }
 
 .el-dialog {
