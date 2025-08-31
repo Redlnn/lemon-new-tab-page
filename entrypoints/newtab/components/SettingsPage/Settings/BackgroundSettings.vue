@@ -3,7 +3,14 @@ import { onMounted, ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
 import { CloudOffRound } from '@vicons/material'
-import { type UploadProps, type UploadRequestOptions, type ElInput } from 'element-plus'
+import { browser } from 'wxt/browser'
+import {
+  type UploadProps,
+  type UploadRequestOptions,
+  type ElInput,
+  ElMessage,
+  ElMessageBox
+} from 'element-plus'
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/shared/image'
@@ -30,31 +37,35 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   return true
 }
 
-function handlePermissions(_url: string, hostname: string) {
+async function handlePermissions(_url: string, hostname: string) {
   const permissions = { origins: [`*://${hostname}/*`] }
-  chrome.permissions.contains(permissions, (granted) => {
+  try {
+    const granted = await browser.permissions.contains(permissions)
     if (granted) {
       settingsStore.background.onlineUrl = _url
       return
     }
-    ElMessageBox.confirm(i18n.t('newtab.settings.background.warning.securityPolicy', [hostname]))
-      .then(() => {
-        chrome.permissions.request(permissions, (granted) => {
-          if (granted) {
-            ElMessage.success(i18n.t('newtab.settings.background.warning.granted'))
-            settingsStore.background.onlineUrl = _url
-            return
-          }
-          ElMessage.error(i18n.t('newtab.settings.background.warning.notGranted'))
-          settingsStore.background.bgType = BgType.None
-          tmpUrl.value = ''
-        })
-      })
-      .catch(() => {
+
+    const confirmed = await ElMessageBox.confirm(
+      i18n.t('newtab.settings.background.warning.securityPolicy', [hostname])
+    )
+
+    if (confirmed) {
+      const requested = await browser.permissions.request(permissions)
+      if (requested) {
+        ElMessage.success(i18n.t('newtab.settings.background.warning.granted'))
+        settingsStore.background.onlineUrl = _url
+      } else {
+        ElMessage.error(i18n.t('newtab.settings.background.warning.notGranted'))
         settingsStore.background.bgType = BgType.None
         tmpUrl.value = ''
-      })
-  })
+      }
+    }
+  } catch {
+    // User clicked cancel on the confirmation dialog
+    settingsStore.background.bgType = BgType.None
+    tmpUrl.value = ''
+  }
 }
 
 function changeOnlineBg(e: Event) {

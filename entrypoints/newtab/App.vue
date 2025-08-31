@@ -32,18 +32,18 @@ const elementZhLocales = import.meta.glob<{ default: Language }>(
 
 // 由于考虑面向用户群体，只包含中文、英文
 async function loadElementLocale(_locale: string) {
-  if (locale.startsWith('zh')) {
-    const key = `element-plus/es/locale/lang/${_locale.toLowerCase()}.mjs`
-    const loader = elementZhLocales[key]
-    if (loader) {
-      const mod = await loader()
-      return mod.default
-    } else {
-      return (await import(`element-plus/es/locale/lang/zh-cn.mjs`)).default
-    }
-  } else {
+  if (!_locale.startsWith('zh')) {
     return en
   }
+  const formattedLocale = _locale.replace('_', '-').toLowerCase()
+  const loader =
+    elementZhLocales[`/node_modules/element-plus/es/locale/lang/${formattedLocale}.mjs`]
+
+  if (loader) {
+    return (await loader()).default
+  }
+  // Fallback to zh-cn for unsupported zh locales
+  return (await import('element-plus/es/locale/lang/zh-cn.mjs')).default
 }
 
 const elLocale = ref<Language>()

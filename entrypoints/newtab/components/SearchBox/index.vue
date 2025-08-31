@@ -145,19 +145,15 @@ function handleNextTab() {
 }
 
 const saveSearchHistory = async (text: string) => {
-  if (!settingsStore.search.recordSearchHistory) {
+  if (!settingsStore.search.recordSearchHistory || !text) {
     return
   }
-  const searchHistories = await searchHistoriesStorage.getValue()
   // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
-  const index = searchHistories.indexOf(text)
-  if (index !== -1) {
-    searchHistories.splice(index, 1)
-  }
+  const searchHistories = (await searchHistoriesStorage.getValue()).filter((t) => t !== text)
   searchHistories.unshift(text)
   // 如果历史搜索词大于15个，则删除最后几个只留下15个
   if (searchHistories.length > 15) {
-    searchHistories.splice(15)
+    searchHistories.length = 15
   }
   await searchHistoriesStorage.setValue(searchHistories)
 }
