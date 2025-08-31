@@ -46,6 +46,7 @@ export interface SettingsInterfaceVer6 {
   shortcut: {
     enabled: boolean
     enableTopSites: boolean
+    enableAreaShadow: boolean
     enableShadow: boolean
     rows: number
     columns: number
@@ -65,6 +66,11 @@ export interface SettingsInterfaceVer6 {
     enabled: boolean
     alwaysShow: boolean
     provider: YiyanProviderKey
+    enableShadow: boolean
+    invertColor: {
+      light: boolean
+      night: boolean
+    }
   }
   pluginVersion: string
   version: 6

@@ -38,6 +38,13 @@ async function restoreDefaultTopSites() {
         <el-switch v-model="settingsStore.shortcut.showShortcutContainerBg" />
       </div>
       <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.enableAreaShadow') }}</div>
+        <el-switch
+          v-model="settingsStore.shortcut.enableAreaShadow"
+          :disabled="!settingsStore.shortcut.showShortcutContainerBg"
+        />
+      </div>
+      <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ i18n.t('newtab.settings.shortcut.enableShadow') }}</div>
         <el-switch
           v-model="settingsStore.shortcut.enableShadow"

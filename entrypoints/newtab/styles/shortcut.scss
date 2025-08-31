@@ -1,41 +1,3 @@
-.shortcut {
-  max-width: 85%;
-  transition: opacity 0.1s ease;
-
-  &__container {
-    z-index: 10;
-    display: grid;
-    place-items: center center;
-    transition:
-      background-color var(--el-transition-duration-fast) ease,
-      box-shadow var(--el-transition-duration-fast) ease;
-
-    a {
-      color: inherit;
-      text-decoration: inherit;
-    }
-
-    &--white-text-light .shortcut__title {
-      color: white;
-    }
-
-    &--bg {
-      padding: 20px;
-      background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
-      border-radius: 10px;
-      backdrop-filter: blur(10px) saturate(1.4);
-    }
-
-    &--bg.shortcut__container--shadow {
-      box-shadow: var(--el-box-shadow-dark);
-    }
-
-    html.dark &.shortcut__container--bg.shortcut__container--shadow {
-      box-shadow: var(--el-box-shadow-light);
-    }
-  }
-}
-
 .shortcut__item {
   position: relative;
   border-radius: 10px;
@@ -112,9 +74,22 @@
     width: calc(var(--icon_size) + 30px);
     font-size: 13px;
     text-align: center;
-    text-shadow:
-      0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
-      1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 60%);
+  }
+
+  .shortcut__container--item-shadow {
+    .shortcut__pin-icon {
+      box-shadow: var(--el-box-shadow);
+    }
+
+    .shortcut__title {
+      text-shadow:
+        0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
+        1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 60%);
+
+      :not(.shortcut__container--white-text-light) & {
+        text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
+      }
+    }
   }
 
   .shortcut__menu {
@@ -146,5 +121,44 @@
     height: 26px;
     padding: 3px;
     font-size: 20px;
+  }
+}
+
+.shortcut {
+  max-width: 85%;
+  transition: opacity 0.1s ease;
+
+  &__container {
+    z-index: 10;
+    display: grid;
+    place-items: center center;
+    transition:
+      background-color var(--el-transition-duration-fast) ease,
+      box-shadow var(--el-transition-duration-fast) ease;
+
+    a {
+      color: inherit;
+      text-decoration: inherit;
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    html:not(.dark) &--white-text-light .shortcut__title {
+      color: var(--el-color-white);
+    }
+
+    &--bg {
+      padding: 20px;
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+      border-radius: 10px;
+      backdrop-filter: blur(10px) saturate(1.4);
+    }
+
+    &--bg.shortcut__container--shadow {
+      box-shadow: var(--el-box-shadow-dark);
+    }
+
+    html.dark &.shortcut__container--bg.shortcut__container--shadow {
+      box-shadow: var(--el-box-shadow-light);
+    }
   }
 }

@@ -107,7 +107,8 @@ newtab:
       showPinnedIcon: 顯示釘選圖示
       showTitle: 顯示標題
       enableBg: 顯示區域背景
-      enableShadow: 顯示區域陰影
+      enableAreaShadow: 顯示區域陰影
+      enableShadow: 顯示快速存取陰影
       maxRows: 最大列數
       maxColumns: 最大欄數
       maxItemsTipForChrome: 僅支援最多 10 個常用網站
@@ -128,6 +129,9 @@ newtab:
       description: /
       alwaysShow: 總是顯示
       normalyShowTip: 關閉時僅在搜尋框聚焦時顯示
+      enableShadow: 顯示陰影
+      invertColorLight: 淺色模式下使用深色文字
+      invertColorDark: 深色模式下使用深色文字
   shortcut:
     addNewShortcut: 新增快速存取
     pin: 釘選

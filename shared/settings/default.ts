@@ -48,6 +48,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   shortcut: {
     enabled: true,
     enableTopSites: true,
+    enableAreaShadow: true,
     enableShadow: true,
     rows: 2,
     columns: 5,
@@ -66,7 +67,12 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   yiyan: {
     enabled: true,
     alwaysShow: true,
-    provider: 'jinrishici'
+    provider: 'jinrishici',
+    enableShadow: true,
+    invertColor: {
+      light: false,
+      night: false
+    }
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION

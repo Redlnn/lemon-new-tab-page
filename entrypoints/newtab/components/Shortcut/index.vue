@@ -128,7 +128,8 @@ bookmarkStorage.watch(refreshDebounced)
       class="shortcut__container"
       :class="[
         settingsStore.shortcut.showShortcutContainerBg ? 'shortcut__container--bg' : undefined,
-        settingsStore.shortcut.enableShadow ? 'shortcut__container--shadow' : undefined,
+        settingsStore.shortcut.enableAreaShadow ? 'shortcut__container--shadow' : undefined,
+        settingsStore.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
         settingsStore.shortcut.whiteTextInLightMode
           ? 'shortcut__container--white-text-light'
           : undefined

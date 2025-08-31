@@ -48,7 +48,8 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
     shortcut: {
       enabled: oldSettings.shortcut.enabled,
       enableTopSites: oldSettings.shortcut.enableTopSites,
-      enableShadow: oldSettings.shortcut.enableShadow,
+      enableAreaShadow: oldSettings.shortcut.enableShadow,
+      enableShadow: defaultSettings.shortcut.enableShadow,
       rows: oldSettings.shortcut.rows,
       columns: oldSettings.shortcut.columns,
       itemMarginH: oldSettings.shortcut.itemMarginH,
@@ -66,7 +67,12 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
     yiyan: {
       enabled: oldSettings.search.enableYiyan,
       alwaysShow: defaultSettings.yiyan.alwaysShow,
-      provider: defaultSettings.yiyan.provider
+      provider: defaultSettings.yiyan.provider,
+      enableShadow: defaultSettings.yiyan.enableShadow,
+      invertColor: {
+        light: defaultSettings.yiyan.invertColor.light,
+        night: defaultSettings.yiyan.invertColor.night
+      }
     },
     pluginVersion: oldSettings.pluginVersion,
     version: 6

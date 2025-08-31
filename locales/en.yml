@@ -60,7 +60,7 @@ newtab:
       showDate: Show Date
       showLunar: Show Chinese Lunar Calendar
       smallFont: Small Time Font
-      enableShadow: Show Text Shadow
+      enableShadow: Show Shadow
       blinkingColon: Blinking Colon
       blinkingTip: Turning this off can reduce CPU usage (power-saving mode).
       invertColorLight: Use dark fonts in light mode
@@ -116,7 +116,8 @@ newtab:
       showPinnedIcon: Show Pinned Icon
       showTitle: Show Link Title
       enableBg: Shortcut Area Background
-      enableShadow: Show Shortcut Area Shadow
+      enableAreaShadow: Show Shortcut Area Shadow
+      enableShadow: Show Icon Shadow
       maxRows: Maximum Rows
       maxColumns: Maximum Columns
       maxItemsTipForChrome: 'Tip: You can only have up to 10 most visited links.'
@@ -137,6 +138,9 @@ newtab:
       description: Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!
       alwaysShow: Always Show
       normalyShowTip: When disabled, only show when the search box is focused.
+      enableShadow: Show Shadow
+      invertColorLight: Use dark fonts in light mode
+      invertColorDark: Use light fonts in dark mode
   shortcut:
     addNewShortcut: Add Shortcut
     pin: Pin

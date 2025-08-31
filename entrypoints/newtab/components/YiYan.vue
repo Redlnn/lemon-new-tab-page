@@ -49,9 +49,9 @@ const isYiyanEnabled = computed(
       <div
         class="yiyan__main"
         :class="[
-          settingsStore.time.enableShadow ? 'yiyan--shadow' : undefined,
-          settingsStore.time.invertColor.light ? ['yiyan--invert', 'yiyan--light'] : undefined,
-          settingsStore.time.invertColor.night ? ['yiyan--invert', 'yiyan--night'] : undefined
+          settingsStore.yiyan.enableShadow ? 'yiyan--shadow' : undefined,
+          settingsStore.yiyan.invertColor.light ? ['yiyan--invert', 'yiyan--light'] : undefined,
+          settingsStore.yiyan.invertColor.night ? ['yiyan--invert', 'yiyan--night'] : undefined
         ]"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>
@@ -88,7 +88,11 @@ const isYiyanEnabled = computed(
     }
 
     &.yiyan--shadow {
-      text-shadow: 0 1px 8px color-mix(in srgb, var(--el-color-black), transparent 20%);
+      text-shadow: 1px 1px 3px color-mix(in srgb, var(--el-color-black), transparent 60%);
+
+      &:hover {
+        text-shadow: 1px 1px 3px color-mix(in srgb, var(--el-color-black), transparent 40%);
+      }
     }
 
     &:hover {

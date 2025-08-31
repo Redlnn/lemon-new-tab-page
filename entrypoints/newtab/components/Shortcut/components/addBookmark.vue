@@ -190,23 +190,26 @@ function isSvg(file: Blob) {
 
 <style lang="scss">
 .shortcut__item--add-bookmark {
-  color: var(--el-text-color-primary);
   opacity: 0.7;
   transition: color var(--el-transition-duration-fast) ease;
+
+  .shortcut__title,
+  .shortcut__icon {
+    color: var(--el-text-color-primary);
+  }
 
   &:hover,
   &:hover .shortcut__title {
     opacity: 1;
   }
 
-  .shortcut__container--white-text-light &,
-  .shortcut__container--white-text-light & .shortcut__icon {
-    color: var(--el-bg-color);
+  &:hover .shortcut__icon {
+    transition: color var(--el-transition-duration-fast) ease;
   }
 
-  &:hover .shortcut__icon {
-    color: var(--el-text-color-primary);
-    transition: color var(--el-transition-duration-fast) ease;
+  html:not(.dark) .shortcut__container--white-text-light &,
+  html:not(.dark) .shortcut__container--white-text-light & .shortcut__icon {
+    color: var(--el-bg-color);
   }
 
   .shortcut__icon {

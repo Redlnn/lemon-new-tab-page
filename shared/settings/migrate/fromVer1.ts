@@ -48,6 +48,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
     shortcut: {
       enabled: oldSettings.enabled,
       enableTopSites: oldSettings.enableTopSites,
+      enableAreaShadow: defaultSettings.shortcut.enableAreaShadow,
       enableShadow: defaultSettings.shortcut.enableShadow,
       rows: oldSettings.quickStartRows,
       columns: oldSettings.quickStartColumns,
@@ -70,7 +71,12 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
     yiyan: {
       enabled: oldSettings.enableYiyan,
       alwaysShow: defaultSettings.yiyan.alwaysShow,
-      provider: defaultSettings.yiyan.provider
+      provider: defaultSettings.yiyan.provider,
+      enableShadow: defaultSettings.yiyan.enableShadow,
+      invertColor: {
+        light: defaultSettings.yiyan.invertColor.light,
+        night: defaultSettings.yiyan.invertColor.night
+      }
     },
     pluginVersion: oldSettings.version,
     version: 6

@@ -107,7 +107,8 @@ newtab:
       showPinnedIcon: 展示置顶图标
       showTitle: 显示标题
       enableBg: 显示区域背景
-      enableShadow: 显示区域阴影
+      enableAreaShadow: 显示区域阴影
+      enableShadow: 显示图标阴影
       maxRows: 最大行数
       maxColumns: 最大列数
       maxItemsTipForChrome: 最常访问的上限只有 10 个噢~
@@ -116,7 +117,7 @@ newtab:
         title: 你确定要恢复默认快捷方式吗？
         confirm: 对
         cancel: 算了
-      whiteTextInLightMode: 在浅色模式下使用白色字体
+      whiteTextInLightMode: 浅色模式下使用白色字体
       whiteTextTip: 关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~
       iconSize: 图标大小
       HorizontalIconSpacing: 图标左右间距
@@ -128,6 +129,9 @@ newtab:
       description: /
       alwaysShow: 总是显示
       normalyShowTip: 关闭时仅在搜索框聚焦时显示
+      enableShadow: 显示阴影
+      invertColorLight: 浅色模式下使用深色字体
+      invertColorDark: 深色模式下使用深色字体
   shortcut:
     addNewShortcut: 添加快速访问
     pin: 置顶

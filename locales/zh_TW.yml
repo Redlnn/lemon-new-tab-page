@@ -107,7 +107,8 @@ newtab:
       showPinnedIcon: 顯示釘選圖示
       showTitle: 顯示標題
       enableBg: 顯示區塊背景
-      enableShadow: 顯示陰影效果
+      enableAreaShadow: 顯示區域陰影
+      enableShadow: 顯示捷徑陰影
       maxRows: 最大列數
       maxColumns: 最大欄數
       maxItemsTipForChrome: 最常造訪最多只有 10 個喔～
@@ -116,7 +117,7 @@ newtab:
         title: 確定要還原為預設捷徑嗎？
         confirm: 是的
         cancel: 算了
-      whiteTextInLightMode: 在淺色模式下使用白色字體
+      whiteTextInLightMode: 淺色模式下使用白色字體
       whiteTextTip: 關閉【顯示區塊背景】並將【遮罩不透明度】設為 0，效果會更好喔~
       iconSize: 圖示大小
       HorizontalIconSpacing: 圖示左右間距
@@ -128,6 +129,9 @@ newtab:
       description: /
       alwaysShow: 總是顯示
       normalyShowTip: 關閉時僅在搜尋框聚焦時顯示
+      enableShadow: 顯示陰影
+      invertColorLight: 淺色模式下使用深色字體
+      invertColorDark: 深色模式下使用深色字體
   shortcut:
     addNewShortcut: 新增捷徑
     pin: 釘選
