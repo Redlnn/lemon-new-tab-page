@@ -10,8 +10,9 @@
 - Customizable search box placeholder text
 - Added search engine settings page
 - Support for importing and exporting configuration files for easy backup and migration
-- Enhanced "Hitokoto" feature: added caching and switchable APIs
-- New option to keep "Hitokoto" always visible
+- Enhanced quote feature: added caching and switchable APIs
+- New option to keep quote always visible
+- Quote supports toggling shadows and adjusting inverse colors
 - Power-saving mode (can disable blinking time separator)
   > Probably no one keeps the new tab page open forever, right?
 
@@ -79,7 +80,7 @@
 - Fixed the issue where the background mask color did not take effect.
 - Fixed the issue where the default font did not apply for English systems.
 - Fixed the issue where Element components always used zhCn for i18n.
-- Prevented the description of the YiYan switch from being too long in English environments.
+- Prevented the description of quote switch from being too long in English environments.
 
 ## 2.1.0 (06/07/2025)
 
@@ -137,7 +138,7 @@
 
 - Fixed an issue where the search box could not lose focus by clicking the original
   quick access area after expanding.
-- Applied clock font settings to the YiYan (a line of Chinese poetry) to improve
+- Applied clock font settings to the quote to improve
   page appearance in dark mode.
 - Fixed an issue where clicks on some areas of the quick launch submenu did not work.
 - Fix auto focus search box not working (unfortunately Chrome prioritizes address bar).

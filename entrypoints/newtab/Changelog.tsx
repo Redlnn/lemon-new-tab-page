@@ -11,6 +11,8 @@ const changelogZH = (
       <li>支持导入与导出配置文件，方便备份和迁移设置</li>
       <li>“一言”增强：增加缓存、可切换 API</li>
       <li>“一言”新增可常驻显示</li>
+      <li>“一言”可开关阴影，调整反色</li>
+      <li>快速访问图标及文字阴影可开关</li>
       <li>
         省电模式（可以禁止时间分隔符闪烁）
         <blockquote>应该不会有人一直挂着新标签页不关吧？</blockquote>
@@ -50,8 +52,10 @@ const changelog = (
       <li>Customizable search box placeholder</li>
       <li>Added search engine settings page</li>
       <li>Support for importing and exporting configuration files for easy backup and migration</li>
-      <li>Enhanced "Hitokoto" feature: added caching and switchable APIs</li>
-      <li>New option to keep "Hitokoto" always visible</li>
+      <li>Enhanced quote feature: added caching and switchable APIs</li>
+      <li>New option to keep quote always visible</li>
+      <li>New option to keep quote always visible</li>
+      <li>Quote supports toggling shadows and adjusting inverse colors</li>
       <li>
         Power-saving mode (can disable blinking time separator)
         <blockquote>Probably no one keeps the new tab page open forever, right?</blockquote>
