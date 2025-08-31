@@ -1,0 +1,45 @@
+.el-message-box {
+  --el-messagebox-border-radius: 8px;
+  padding: 20px 24px;
+
+  & .el-message-box__title {
+    font-size: var(--el-font-size-medium);
+    font-weight: bold;
+  }
+}
+
+.el-color-picker__panel {
+  padding: 10px;
+}
+
+.el-popper {
+  --el-popover-border-radius: 8px;
+}
+
+.el-dialog {
+  & .el-dialog__header {
+    font-size: var(--el-font-size-medium);
+    font-weight: bold;
+  }
+}
+
+.el-notification {
+  background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 25%);
+  backdrop-filter: blur(10px) saturate(1.4);
+  transition: background-color var(--el-transition-duration-fast) ease;
+}
+
+.el-color-picker .el-color-picker__trigger {
+  padding: 0;
+  overflow: hidden;
+  border-radius: 8px;
+
+  .el-color-picker__color {
+    border: none;
+    border-radius: initial;
+  }
+}
+
+.el-popper__arrow {
+  display: none;
+}

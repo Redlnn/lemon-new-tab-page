@@ -102,8 +102,8 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
     padding: 3px 8px;
     margin: 0 auto;
     font-size: 13px;
-    color: color-mix(in srgb, var(--el-color-primary-dark-2), var(--el-color-primary-light-3) 50%);
-    background-color: color-mix(in srgb, var(--el-color-primary-light-7), transparent 30%);
+    color: var(--el-color-primary);
+    background-color: color-mix(in srgb, var(--el-color-primary-light-8), transparent 10%);
     border-radius: 5px;
   }
 
