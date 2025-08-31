@@ -67,6 +67,7 @@ defineProps<{ url: string }>()
   position: absolute;
   inset: calc(var(--blur-intensity) * -2);
   z-index: -2;
+  background-color: var(--el-bg-color);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
