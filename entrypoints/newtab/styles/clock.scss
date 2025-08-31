@@ -1,0 +1,107 @@
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes delayedFadeIn {
+  0%,
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.clock {
+  color: var(--el-fill-color-blank);
+  text-align: center;
+  transition:
+    font-size 0.25s cubic-bezier(0.5, 0, 0.5, 2),
+    transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),
+    text-shadow var(--el-transition-duration-fast) ease,
+    color var(--el-transition-duration-fast) ease;
+  animation: delayedFadeIn 0.5s;
+
+  &__time {
+    display: flex;
+    align-items: baseline;
+    font-size: 60px;
+
+    &-small {
+      align-items: center;
+      font-size: 46px;
+    }
+  }
+
+  &__date {
+    margin-bottom: 5px;
+  }
+
+  &--shadow {
+    .clock__time {
+      text-shadow:
+        0 6px 13px color-mix(in srgb, var(--el-color-black), transparent 80%),
+        1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+
+      html.dark & {
+        text-shadow:
+          0 1px 8px color-mix(in srgb, var(--el-color-black), transparent 50%),
+          1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+      }
+    }
+
+    .clock__date {
+      text-shadow:
+        0 3px 6px color-mix(in srgb, var(--el-color-black), transparent 70%),
+        1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+
+      html.dark & {
+        text-shadow:
+          0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
+          1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+      }
+    }
+  }
+
+  &--invert.clock--light,
+  html.dark & {
+    color: var(--el-text-color-primary);
+  }
+
+  html.dark &.clock--invert.clock--night {
+    color: var(--el-fill-color-extra-light);
+  }
+
+  &__meridiem {
+    margin-right: 5px;
+    font-size: 40px;
+  }
+
+  &__colon.clock__colon--blinking {
+    animation: twinkle 1s ease infinite;
+  }
+}
+
+@media screen and (width <= 600px) {
+  .clock {
+    &__time {
+      font-size: 50px;
+    }
+
+    &__meridiem {
+      font-size: 35px;
+    }
+
+    &__date {
+      font-size: 13px;
+    }
+  }
+}
