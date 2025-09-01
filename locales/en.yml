@@ -24,6 +24,8 @@ newtab:
     searchEnginePreference: Search Engine Preference
     changelog: Changelog
     about: About
+    sponsor: Sponsor
+    help: Help / Feedback
   changelog: Changelog
   about:
     yiyanApiProvider: Chinese poetry API provided by $1

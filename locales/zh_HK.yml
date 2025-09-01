@@ -17,6 +17,9 @@ newtab:
     searchEnginePreference: 搜尋引擎偏好
     changelog: 更新日誌
     about: 關於
+    sponsor: 支持我們
+    help: 幫助及反饋
+  sponsor: 呢個擴充功能是我當初利用業餘時間為了滿足自己的需求而開始開發的。很开心距可以對你有幫助！如果你真的想支持我噶话，可以聯繫我的郵箱：redlnn@outlook.com。多謝你噶關注同埋支持！
   about:
     yiyanApiProvider: 一言 API 由 $1 提供
   settings:

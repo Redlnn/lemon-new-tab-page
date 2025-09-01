@@ -3,7 +3,14 @@ import { version } from '@/package.json'
 
 import { browser } from 'wxt/browser'
 import { ElConfigProvider, ElNotification } from 'element-plus'
-import { SettingsRound, SearchRound, AccessTimeFilledRound, InfoRound } from '@vicons/material'
+import {
+  SettingsRound,
+  SearchRound,
+  AccessTimeFilledRound,
+  InfoRound,
+  HelpFilled
+} from '@vicons/material'
+import { HeartFilled } from '@vicons/antd'
 import { useColorMode, promiseTimeout } from '@vueuse/core'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import en from 'element-plus/es/locale/lang/en.mjs'
@@ -166,6 +173,14 @@ watch(
     switchStore.end()
   }
 )
+
+function sponsorMessage() {
+  ElMessageBox.alert(i18n.t('newtab.sponsor'), '支持我们')
+}
+
+function needHelp() {
+  window.open('https://github.com/Redlnn/lemon-new-tab-page/issues/new')
+}
 </script>
 
 <template>
@@ -206,9 +221,17 @@ watch(
             <el-icon :size="17"><search-round /></el-icon>
             {{ i18n.t('newtab.menu.searchEnginePreference') }}
           </el-dropdown-item>
-          <el-dropdown-item @click="ChangelogRef?.show">
+          <el-dropdown-item divided @click="ChangelogRef?.show">
             <el-icon :size="17"><access-time-filled-round /></el-icon>
             {{ i18n.t('newtab.menu.changelog') }}
+          </el-dropdown-item>
+          <el-dropdown-item @click="needHelp">
+            <el-icon :size="17"><help-filled /></el-icon>
+            {{ i18n.t('newtab.menu.help') }}
+          </el-dropdown-item>
+          <el-dropdown-item @click="sponsorMessage">
+            <el-icon :size="17"><heart-filled /></el-icon>
+            {{ i18n.t('newtab.menu.sponsor') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click="AboutRef?.toggleShow">
             <el-icon :size="17"><info-round /></el-icon>
