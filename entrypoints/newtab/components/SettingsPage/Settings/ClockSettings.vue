@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import { ClockCircleOutlined } from '@vicons/antd'
-import { browser } from 'wxt/browser'
 
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/shared/settings'
+import { isChinese } from '@/shared/lang'
 
 const settingsStore = useSettingsStore()
-const isChinese = browser.i18n.getUILanguage().startsWith('zh')
 </script>
 
 <template>

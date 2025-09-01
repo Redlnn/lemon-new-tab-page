@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { browser } from 'wxt/browser'
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
+import { isChinese, lang } from '@/shared/lang'
 
 const settingsStore = useSettingsStore()
 const time = ref()
@@ -25,8 +25,6 @@ function customMeridiem(hours: number) {
 }
 
 const timeNow = useNow({ interval: 1000 })
-const lang = browser.i18n.getUILanguage()
-const isChinese = lang.startsWith('zh')
 
 const timeNowHour: ComputedRef<string> = useDateFormat(timeNow, 'HH')
 const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(timeNow, 'h')

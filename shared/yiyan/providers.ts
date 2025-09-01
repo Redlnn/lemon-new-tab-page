@@ -1,7 +1,7 @@
-import { browser } from 'wxt/browser'
 import { load } from 'jinrishici'
 
 import enhancedFetch from '@/shared/network/fetch'
+import { isChinese } from '@/shared/lang'
 
 interface Hitokoto {
   id: number // 一言标识
@@ -17,9 +17,6 @@ interface Hitokoto {
   created_at: string // 添加时间
   length: number // 句子长度
 }
-
-const lang = browser.i18n.getUILanguage()
-const isChinese = lang.startsWith('zh')
 
 export type YiyanResult = {
   yiyan?: string
