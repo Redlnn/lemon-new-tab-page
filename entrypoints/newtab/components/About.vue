@@ -30,7 +30,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
 </script>
 
 <template>
-  <base-dialog v-model="opened" container-class="about__dialog">
+  <base-dialog v-model="opened" acrylic container-class="about__dialog">
     <section>
       <div class="ext-icon">
         <div class="ext-icon__container"></div>
