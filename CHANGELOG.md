@@ -7,13 +7,26 @@
 🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
 Huge thanks to everyone who supported, and tested it (in the best way). Here’s to another year of making your browsing better!
 
-### Adjustments
+### Known Issues❗
+
+- When upgrading from a version <2.3.0 to ≥2.3.0,
+  the search box appearance and functionality may appear abnormal.
+  However, this issue has not been fully reproduced yet.
+  You can reselect the search engine in the settings page to resolve it.
+  Thank you for your understanding.
+
+### Fixes🐛
+
+- Fixed abnormal state and ineffective issues with icon shadow toggle
+- Fixed spacing issues on the quick access settings page
+
+### Adjustments⚡️
 
 - Cleaned up some redundant code
 
 ## 2.3.0 (Sep 01, 2025)
 
-### Features
+### Features✨
 
 - Option to change the clock font to a smaller size (same as AM/PM)
 - Customizable search box placeholder text
@@ -25,7 +38,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 - Power-saving mode (can disable blinking time separator)
   > Probably no one keeps the new tab page open forever, right?
 
-### Adjustments
+### Adjustments⚡️
 
 - Due to browser policy restrictions, auto-focus on the search box has never worked properly, so the description has been changed to “Expand search box by default”
 - Adjusted text and search box shadows, added shortcut shadows for better visual appearance
@@ -33,18 +46,18 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 - Moved the About section from Settings to a new dedicated About page
 - The new About page and Search Engine Settings page share the bottom-right entry point with the main Settings page
 
-### Fixes
+### Fixes🐛
 
 - Multiple stability improvements
 - Fixed missing translations and several minor bugs.
 
 ## 2.2.3 (Jul 13, 2025)
 
-### Optimization
+### Optimization⚡️
 
 - Automatically hide the pinned icon when `Show Most Visited` is turned off
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where previously displayed Most Visited items were not removed after turning off `Show Most Visited`
 - Fixed the issue of high CPU usage during window resizing
@@ -54,23 +67,23 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 2.2.2 (Jul 10, 2025)
 
-### Optimization
+### Optimization⚡️
 
 - Adjusted background image loading timing to minimize visibility of the loading process
 
-### Fixes
+### Fixes🐛
 
 - Fixed a flickering issue that occurred during each load when the background mask was enabled
 
 ## 2.2.1 (Jul 07, 2025)
 
-### Fixes
+### Fixes🐛
 
 - Fixed an issue where the local background selection box style was not applied
 
 ## 2.2.0 (Jul 07, 2025)
 
-### Features
+### Features✨
 
 - Added toggle for switching between day and night mask colors.
 - Added reminder for items that do not support cloud synchronization.
@@ -79,12 +92,12 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
   - Most visited sites (including ignored sites)
   - Dark mode and system-following status, etc.
 
-### Optimization
+### Optimization⚡️
 
 - Refactored a large amount of code.
 - Updated and completed translations.
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where the background mask color did not take effect.
 - Fixed the issue where the default font did not apply for English systems.
@@ -93,7 +106,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 2.1.0 (Jun 07, 2025)
 
-### Optimization
+### Optimization⚡️
 
 - Set the clock font to monospace for improved visual appearance.
 - Adjusted font selection order to enhance aesthetics.
@@ -108,11 +121,11 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
   - Fixed spelling errors.
   - Thanks to Copilot for assistance.
 
-### Fixes
+### Fixes🐛
 
 - Fixed an issue where Latin text for some Linux users was falling back to emoji fonts.
 
-### Others
+### Others🙈
 
 - Refactored code to improve readability.
 
@@ -120,13 +133,13 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 **Important**: Major version upgrade, please carefully read the following changelog.
 
-### Known Issues
+### Known Issues❗
 
 - Some Windows devices may experience a freeze on startup when setting the
   Chromium-based browser’s homepage. The solution can be found in the
   [README](/README.md#已知问题).
 
-### Features
+### Features✨
 
 - Optimized performance to improve opening speed and avoid lag in certain situations.
 - Pinned quick access links can now be reordered by dragging.
@@ -143,7 +156,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
   (unfortunately, Firefox mobile add-ons cannot replace the new tab page).
 - Default search engine is now Bing.
 
-### Fixes
+### Fixes🐛
 
 - Fixed an issue where the search box could not lose focus by clicking the original
   quick access area after expanding.
@@ -154,7 +167,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 1.8.1 (Mar 05, 2025)
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue that background color does not follow system (or browser)
   when JS is not loaded (#19)
@@ -162,14 +175,14 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 1.8.0 (Jan 05, 2025)
 
-### Features
+### Features✨
 
 - You can now use online image APIs as wallpaper.
 - Added a toggle for dark clock font.
 
 ## 1.7.0 (Dec 17, 2024)
 
-### Features
+### Features✨
 
 - **Updated default theme colors and icons.**
 - Improved translation for zh_tw.
@@ -179,38 +192,38 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
   - The search box background is now static pure white with an added outline.
   - Added the option to disable shadows for the clock, search box, and quick access area.
 
-### Improvements
+### Improvements⚡️
 
 - Adjusted the timing of background loading to avoid freezing the page when fetching the background.
 - Standardized animation durations for a smoother experience.
 - Did not display the container for the quote when it was unavailable.
 - Show error message when failing to get Bing wallpaper.
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where wallpaper preview did not display after switching wallpaper types multiple times in the settings page.
 
 ## 1.6.1 (Dec 12, 2024)
 
-### Features
+### Features✨
 
 - Now the search box can automatically focus when opening the new tab (disabled by default).
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where the Quick Start area would flicker when loading the new tab page.
 - Optimized the style of the "Add New Shortcut" button by reducing its opacity when the mouse is not hovering over it.
 
 ## 1.6.0 (Oct 09, 2024)
 
-### Features
+### Features✨
 
 - Added support for customizing icons when adding pinned access.
 - You can now open the changelog again via the right-click settings button.
 - Improved visual experience when the color mode is set to follow the system.
 - Updated the default theme color and optimized the appearance of some components.
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where the browser would redirect Bing to the national region.
   > To restore non-national region access, you need to clear the \*.bing.com cookies in your browser.
@@ -219,7 +232,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 1.5.4 (Sep 18, 2024)
 
-### Features
+### Features✨
 
 - Added support for displaying the date and Chinese lunar calendar.
 - Brand new settings window and changelog window.
@@ -229,7 +242,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 - Optimized the position of the search bar after closing the quick access area.
 - [Firefox] Now supports setting it as the homepage (#12).
 
-### Fixes
+### Fixes🐛
 
 - Now the search engine dropdown in the settings page can display the full name of Google.
 - Fixed the issue where the background blur was set to a fixed value when focusing the search bar.
@@ -237,7 +250,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ## 1.5.3 (Sep 07, 2024)
 
-### Features
+### Features✨
 
 - Partial refactor to support Firefox browser.
 - Supports caching of Bing's daily image.
@@ -245,7 +258,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 - Optimized the display of the 12-hour clock format.
 - [i18n] Internationalization support.
 
-### Fixes
+### Fixes🐛
 
 - Fixed the issue where unpinning did not take effect.
 - Fixed the issue where frequently visited sites could not be deleted (#8).
