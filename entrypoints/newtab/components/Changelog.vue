@@ -57,6 +57,12 @@ defineExpose({ show, hide, toggleShow })
     }
   }
 
+  p,
+  strong,
+  b {
+    line-height: 1.6;
+  }
+
   blockquote {
     padding: 0.2em 1em;
     margin: 0.3em 0 0.5em;

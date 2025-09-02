@@ -2,7 +2,16 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.3.0 (09/01/2025)
+## 2.3.1 (Sep 07, 2025)
+
+🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
+Huge thanks to everyone who supported, and tested it (in the best way). Here’s to another year of making your browsing better!
+
+### Adjustments
+
+- Cleaned up some redundant code
+
+## 2.3.0 (Sep 01, 2025)
 
 ### Features
 
@@ -29,7 +38,7 @@
 - Multiple stability improvements
 - Fixed missing translations and several minor bugs.
 
-## 2.2.3 (07/13/2025)
+## 2.2.3 (Jul 13, 2025)
 
 ### Optimization
 
@@ -43,7 +52,7 @@
   > Since local images are limited by storage size and online images are restricted by
   > permissions, wallpapers cannot be synced, so wallpaper-related data will not be synced
 
-## 2.2.2 (07/10/2025)
+## 2.2.2 (Jul 10, 2025)
 
 ### Optimization
 
@@ -53,13 +62,13 @@
 
 - Fixed a flickering issue that occurred during each load when the background mask was enabled
 
-## 2.2.1 (07/07/2025)
+## 2.2.1 (Jul 07, 2025)
 
 ### Fixes
 
 - Fixed an issue where the local background selection box style was not applied
 
-## 2.2.0 (07/07/2025)
+## 2.2.0 (Jul 07, 2025)
 
 ### Features
 
@@ -82,7 +91,7 @@
 - Fixed the issue where Element components always used zhCn for i18n.
 - Prevented the description of quote switch from being too long in English environments.
 
-## 2.1.0 (06/07/2025)
+## 2.1.0 (Jun 07, 2025)
 
 ### Optimization
 
@@ -107,7 +116,7 @@
 
 - Refactored code to improve readability.
 
-## 2.0.0 (03/20/2025)
+## 2.0.0 (Mar 20, 2025)
 
 **Important**: Major version upgrade, please carefully read the following changelog.
 
@@ -143,7 +152,7 @@
 - Fixed an issue where clicks on some areas of the quick launch submenu did not work.
 - Fix auto focus search box not working (unfortunately Chrome prioritizes address bar).
 
-## 1.8.1 (03/05/2025)
+## 1.8.1 (Mar 05, 2025)
 
 ### Fixes
 
@@ -151,14 +160,14 @@
   when JS is not loaded (#19)
 - Fixed the logic and animation issues of "Dark mode" and "Follow system" switch</li>
 
-## 1.8.0 (01/05/2025)
+## 1.8.0 (Jan 05, 2025)
 
 ### Features
 
 - You can now use online image APIs as wallpaper.
 - Added a toggle for dark clock font.
 
-## 1.7.0 (12/17/2024)
+## 1.7.0 (Dec 17, 2024)
 
 ### Features
 
@@ -181,7 +190,7 @@
 
 - Fixed the issue where wallpaper preview did not display after switching wallpaper types multiple times in the settings page.
 
-## 1.6.1 (12/12/2024)
+## 1.6.1 (Dec 12, 2024)
 
 ### Features
 
@@ -192,7 +201,7 @@
 - Fixed the issue where the Quick Start area would flicker when loading the new tab page.
 - Optimized the style of the "Add New Shortcut" button by reducing its opacity when the mouse is not hovering over it.
 
-## 1.6.0 (10/09/2024)
+## 1.6.0 (Oct 09, 2024)
 
 ### Features
 
@@ -208,7 +217,7 @@
 - Reduced CPU usage
 - Moved the settings initialization phase earlier to avoid seeing the default settings state when opening a new tab.
 
-## 1.5.4 (09/18/2024)
+## 1.5.4 (Sep 18, 2024)
 
 ### Features
 
@@ -226,7 +235,7 @@
 - Fixed the issue where the background blur was set to a fixed value when focusing the search bar.
 - Fixed the issue of browser freezing, high CPU usage, and memory leaks when using local images as backgrounds.
 
-## 1.5.3 (09/07/2024)
+## 1.5.3 (Sep 07, 2024)
 
 ### Features
 

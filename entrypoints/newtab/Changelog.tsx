@@ -2,7 +2,16 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
-    <h1>2.3.0 (WIP)</h1>
+    <h1>2.3.1 (2025/09/07)</h1>
+    <strong>
+      🎉
+      柠檬起始页诞生满一年啦！这一年里，它从一个小小的个人项目，慢慢成长为能陪伴大家的工具。感谢一路以来的支持和反馈，有你们它才会变得更好，期待未来ta也能继续陪伴着你！
+    </strong>
+    <h2>调整</h2>
+    <ul>
+      <li>清理了一些冗余代码</li>
+    </ul>
+    <h1>2.3.0 (2025/09/01)</h1>
     <h2>新特性</h2>
     <ul>
       <li>可以将时钟字体改为小号字体（和 AM/PM 一样大）</li>
@@ -45,7 +54,17 @@ const changelogZH = (
 
 const changelog = (
   <section>
-    <h1>2.3.0 (WIP)</h1>
+    <h1>2.3.1 (Sep 07, 2025)</h1>
+    <p>
+      🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and
+      burn along the way! Huge thanks to everyone who supported, and tested it (in the best way).
+      Here’s to another year of making your browsing better!
+    </p>
+    <h2>Adjustments</h2>
+    <ul>
+      <li>Cleaned up some redundant code</li>
+    </ul>
+    <h1>2.3.0 (Sep 01, 2025)</h1>
     <h2>Features</h2>
     <ul>
       <li>Option to change the clock font to a smaller size (same as AM/PM)</li>
