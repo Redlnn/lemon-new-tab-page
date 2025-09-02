@@ -12,13 +12,8 @@
     color: var(--el-text-color-regular);
     background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
     border-radius: 50%;
-    box-shadow: var(--el-box-shadow);
     backdrop-filter: blur(10px) saturate(1.4);
     transition: background-color 0.1s ease;
-
-    html.dark & {
-      box-shadow: var(--el-box-shadow-light);
-    }
 
     span {
       display: block;
@@ -63,7 +58,7 @@
     width: 20px;
     height: 20px;
     color: var(--el-color-primary);
-    background-color: color-mix(in srgb, var(--el-fill-color-light), transparent 60%);
+    background-color: color-mix(in srgb, var(--el-fill-color-blank), transparent 60%);
     border-radius: 50%;
     box-shadow: var(--el-box-shadow-light);
     backdrop-filter: blur(10px);
@@ -74,22 +69,6 @@
     width: calc(var(--icon_size) + 30px);
     font-size: 13px;
     text-align: center;
-  }
-
-  .shortcut__container--item-shadow {
-    .shortcut__pin-icon {
-      box-shadow: var(--el-box-shadow);
-    }
-
-    .shortcut__title {
-      text-shadow:
-        0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
-        1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 60%);
-
-      :not(.shortcut__container--white-text-light) & {
-        text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
-      }
-    }
   }
 
   .shortcut__menu {
@@ -121,6 +100,27 @@
     height: 26px;
     padding: 3px;
     font-size: 20px;
+  }
+}
+
+.shortcut__container--item-shadow {
+  /* stylelint-disable-next-line no-descending-specificity */
+  .shortcut__icon {
+    box-shadow: var(--el-box-shadow);
+
+    html.dark & {
+      box-shadow: var(--el-box-shadow-light);
+    }
+  }
+
+  .shortcut__title {
+    text-shadow:
+      0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
+      1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 60%);
+
+    :not(.shortcut__container--white-text-light) & {
+      text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
+    }
   }
 }
 
