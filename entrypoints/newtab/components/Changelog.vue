@@ -1,28 +1,16 @@
 <script setup lang="ts">
 import { version } from '@/package.json'
 
-import { ref } from 'vue'
-
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/shared/settings'
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import Changelog from '@newtab/Changelog'
-
-import BaseDialog from './BaseDialog.vue'
+import { useSettingsStore } from '@/shared/settings'
+import { useDialog } from '@newtab/composables/useDialog'
 
 const settingsStore = useSettingsStore()
-const opened = ref(false)
 
-function show() {
-  opened.value = true
-}
-function hide() {
-  opened.value = false
-}
-function toggleShow() {
-  opened.value = !opened.value
-}
-
-defineExpose({ show, hide, toggleShow })
+const { opened, show, hide, toggle } = useDialog()
+defineExpose({ show, hide, toggle })
 </script>
 
 <template>

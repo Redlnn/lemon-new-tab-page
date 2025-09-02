@@ -41,12 +41,17 @@ async function confirmClearExtensionData() {
 
 async function clearExtensionData() {
   console.warn(i18n.t('newtab.settings.other.confirmPurgeData.purging'))
-  localStorage.clear()
-  sessionStorage.clear()
-  await useWallpaperStore.clear()
-  await storage.clear('local')
-  await storage.clear('session')
-  await storage.clear('sync')
+  // Clear browser storage
+  await Promise.all([localStorage.clear(), sessionStorage.clear()]).catch(console.error)
+
+  // Clear all extension storage in parallel
+  await Promise.all([
+    useWallpaperStore.clear(),
+    storage.clear('local'),
+    storage.clear('session'),
+    storage.clear('sync')
+  ]).catch(console.error)
+
   location.reload()
 }
 

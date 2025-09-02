@@ -213,7 +213,7 @@ function needHelp() {
       </div>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item @click="SettingsPageRef?.toggleShow">
+          <el-dropdown-item @click="SettingsPageRef?.toggle">
             <el-icon :size="17"><settings-round /></el-icon>
             {{ i18n.t('newtab.menu.settings') }}
           </el-dropdown-item>
@@ -233,7 +233,7 @@ function needHelp() {
             <el-icon :size="17"><heart-filled /></el-icon>
             {{ i18n.t('newtab.menu.sponsor') }}
           </el-dropdown-item>
-          <el-dropdown-item divided @click="AboutRef?.toggleShow">
+          <el-dropdown-item divided @click="AboutRef?.toggle">
             <el-icon :size="17"><info-round /></el-icon>
             {{ i18n.t('newtab.menu.about') }}
           </el-dropdown-item>

@@ -1,29 +1,20 @@
 <script setup lang="ts">
 import { version } from '@/package.json'
 
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import { useDateFormat, useNow } from '@vueuse/core'
 import { Edge, Chrome, Github, Firefox } from '@vicons/fa'
 
 import { i18n } from '@/.wxt/i18n'
-import BaseDialog from './BaseDialog.vue'
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { yiyanProviders } from '@/shared/yiyan'
 import { useSettingsStore } from '@/shared/settings'
+import { useDialog } from '@newtab/composables/useDialog'
 
-const opened = ref(false)
 const year = useDateFormat(useNow(), 'YYYY')
 
-function show() {
-  opened.value = true
-}
-function hide() {
-  opened.value = false
-}
-function toggleShow() {
-  opened.value = !opened.value
-}
-
-defineExpose({ show, hide, toggleShow })
+const { opened, show, hide, toggle } = useDialog()
+defineExpose({ show, hide, toggle })
 
 const settingsStore = useSettingsStore()
 const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.provider])

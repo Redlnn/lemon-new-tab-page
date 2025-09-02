@@ -1,26 +1,14 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 
+import { i18n } from '@/.wxt/i18n'
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { searchEngines } from '@newtab/scripts/api/search'
 import { useSettingsStore } from '@/shared/settings'
-import BaseDialog from './BaseDialog.vue'
-import { i18n } from '#imports'
+import { useDialog } from '@newtab/composables/useDialog'
 
-const opened = ref(false)
-
-function show() {
-  opened.value = true
-}
-function hide() {
-  opened.value = false
-}
-function toggleShow() {
-  opened.value = !opened.value
-}
-
-defineExpose({ show, hide, toggleShow })
+const { opened, show, hide, toggle } = useDialog()
+defineExpose({ show, hide, toggle })
 
 const settingsStore = useSettingsStore()
 </script>

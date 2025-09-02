@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { i18n } from '@/.wxt/i18n'
-import BaseDialog from '../BaseDialog.vue'
+import BaseDialog from '@newtab/components/BaseDialog.vue'
+import { useDialog } from '@newtab/composables/useDialog'
 
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
@@ -11,19 +11,8 @@ import ThemeSettings from './Settings/ThemeSettings.vue'
 import ShortcutSettings from './Settings/ShortcutSettings.vue'
 import YiyanSettings from './Settings/YiyanSettings.vue'
 
-const opened = ref(false)
-
-function show() {
-  opened.value = true
-}
-function hide() {
-  opened.value = false
-}
-function toggleShow() {
-  opened.value = !opened.value
-}
-
-defineExpose({ show, hide, toggleShow })
+const { opened, show, hide, toggle } = useDialog()
+defineExpose({ show, hide, toggle })
 </script>
 
 <template>
