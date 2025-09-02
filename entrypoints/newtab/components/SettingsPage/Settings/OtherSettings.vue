@@ -81,7 +81,6 @@ function handleFileChange(event: Event) {
     try {
       const json = JSON.parse(reader.result as string) as CURRENT_CONFIG_INTERFACE
       fileContent = json
-      console.log('Parsed JSON:', json)
     } catch (error) {
       console.error('Invalid JSON file:', error)
     }
