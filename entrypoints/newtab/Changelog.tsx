@@ -2,6 +2,20 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
+    <h1>2.3.2 (2025-09-15)</h1>
+    <h2>新特性✨</h2>
+    <ul>
+      <li>
+        新增支持分别设置浅色与深色模式壁纸
+        <blockquote>当没有独立设置深色模式壁纸的时候会回退使用浅色模式的壁纸</blockquote>
+      </li>
+      <li>新增支持删掉已选择的背景图片</li>
+    </ul>
+    <h2>修复🐛</h2>
+    <ul>
+      <li>修复重置插件数据时未清空所有缓存的问题</li>
+      <li>修复“添加快速访问”按钮背景模糊不生效的问题</li>
+    </ul>
     <h1>2.3.1 (2025/09/07)</h1>
     <p>
       🎉
@@ -65,6 +79,22 @@ const changelogZH = (
 
 const changelog = (
   <section>
+    <h1>2.3.2 (2025-09-15)</h1>
+    <h2>New Features ✨</h2>
+    <ul>
+      <li>
+        Added support for setting separate wallpapers for light and dark modes
+        <blockquote>
+          If no dark mode wallpaper is set, the light mode wallpaper will be used as a fallback
+        </blockquote>
+      </li>
+      <li>Added the ability to delete selected background images</li>
+    </ul>
+    <h2>Fixes 🐛</h2>
+    <ul>
+      <li>Fixed an issue where resetting the extension data did not clear all caches</li>
+      <li>Fixed an issue where the "Add Quick Access" button's background blur was not applied</li>
+    </ul>
     <h1>2.3.1 (Sep 07, 2025)</h1>
     <p>
       🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and

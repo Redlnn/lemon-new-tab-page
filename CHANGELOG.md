@@ -2,6 +2,19 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.3.2 (2025-09-15)
+
+### New Features ✨
+
+- Added support for setting separate wallpapers for light and dark modes
+  > If no dark mode wallpaper is set, the light mode wallpaper will be used as a fallback
+- Added the ability to delete selected background images
+
+### Fixes 🐛
+
+- Fixed an issue where resetting the extension data did not clear all caches
+- Fixed an issue where the "Add Shortcut" button's background blur was not applied
+
 ## 2.3.1 (Sep 07, 2025)
 
 🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
