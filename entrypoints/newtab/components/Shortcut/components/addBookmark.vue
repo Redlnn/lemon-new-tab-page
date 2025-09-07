@@ -190,43 +190,57 @@ function isSvg(file: Blob) {
 
 <style lang="scss">
 .shortcut__item--add-bookmark {
-  opacity: 0.7;
-  transition: color var(--el-transition-duration-fast) ease;
-
   .shortcut__title,
   .shortcut__icon {
-    color: var(--el-text-color-primary);
-  }
-
-  &:hover,
-  &:hover .shortcut__title {
-    opacity: 1;
-  }
-
-  &:hover .shortcut__icon {
-    transition: color var(--el-transition-duration-fast) ease;
-  }
-
-  html:not(.dark) .shortcut__container--white-text-light &,
-  html:not(.dark) .shortcut__container--white-text-light & .shortcut__icon {
-    color: var(--el-bg-color);
+    color: color-mix(in srgb, var(--el-text-color-regular), transparent 70%);
   }
 
   .shortcut__icon {
-    & svg {
+    background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+
+    svg {
       width: 70%;
     }
   }
 
-  .shortcut__favicon-uploader-img {
+  &:hover {
+    .shortcut__title,
+    .shortcut__icon {
+      color: var(--el-text-color-regular);
+    }
+
+    .shortcut__icon {
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 40%);
+    }
+  }
+
+  // 白色文本容器特化
+  html:not(.dark) .shortcut__container--white-text-light & {
+    .shortcut__title,
+    .shortcut__icon {
+      color: color-mix(in srgb, var(--el-color-white), transparent 30%);
+    }
+
+    &:hover {
+      .shortcut__title,
+      .shortcut__icon {
+        color: var(--el-color-white);
+      }
+    }
+  }
+
+  // 上传图标和图片
+  .shortcut__favicon-uploader-img,
+  .shortcut__favicon-uploader-icon {
     width: 100px;
     height: 100px;
+  }
+
+  .shortcut__favicon-uploader-img {
     object-fit: cover;
   }
 
   .shortcut__favicon-uploader-icon {
-    width: 100px;
-    height: 100px;
     font-size: 28px;
     color: var(--el-text-color-placeholder);
     text-align: center;
