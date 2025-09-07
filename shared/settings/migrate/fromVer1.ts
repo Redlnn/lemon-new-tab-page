@@ -40,6 +40,10 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
       id: oldSettings.bgId,
       url: oldSettings.bgUrl
     },
+    localDarkBackground: {
+      id: defaultSettings.localDarkBackground.id,
+      url: defaultSettings.localDarkBackground.url
+    },
     bingBackground: {
       id: oldSettings.bingWallpaper.bgId,
       url: oldSettings.bingWallpaper.url,
