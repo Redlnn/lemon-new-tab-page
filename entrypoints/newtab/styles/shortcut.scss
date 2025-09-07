@@ -67,7 +67,7 @@
   .shortcut__title {
     position: relative;
     width: calc(var(--icon_size) + 30px);
-    font-size: 13px;
+    font-size: var(--el-font-size-small);
     text-align: center;
   }
 
@@ -99,7 +99,7 @@
     width: 26px;
     height: 26px;
     padding: 3px;
-    font-size: 20px;
+    font-size: var(--el-font-size-extra-large);
   }
 }
 

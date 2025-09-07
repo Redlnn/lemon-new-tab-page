@@ -98,7 +98,7 @@ async function restoreDefaultTopSites() {
         v-if="isChrome"
         style="
           margin-top: 0;
-          font-size: 12px;
+          font-size: var(--el-font-size-extra-small);
           line-height: 1.5em;
           color: var(--el-text-color-regular);
         "

@@ -188,7 +188,7 @@ defineExpose({
   top: 60px;
   z-index: 1000;
   overflow: hidden;
-  font-size: 13px;
+  font-size: var(--el-font-size-small);
   background-color: color-mix(in srgb, var(--el-fill-color), transparent 50%);
   border-radius: 15px;
   backdrop-filter: blur(30px) saturate(1.2);
@@ -233,7 +233,7 @@ defineExpose({
   &__clear-history {
     display: flex;
     align-items: center;
-    font-size: 12px;
+    font-size: var(--el-font-size-extra-small);
     color: color-mix(in srgb, var(--el-text-color-primary), transparent 20%);
     background-color: transparent;
     transition:

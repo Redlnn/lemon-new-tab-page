@@ -70,7 +70,7 @@ const settingsStore = useSettingsStore()
     justify-content: space-between;
     padding: 8px 18px;
     overflow: hidden;
-    font-size: 12px;
+    font-size: var(--el-font-size-extra-small);
     color: var(--el-text-color-primary);
     cursor: pointer;
     border-radius: 5px;
@@ -81,7 +81,7 @@ const settingsStore = useSettingsStore()
 
     .el-icon {
       margin-right: 10px;
-      font-size: 13px;
+      font-size: var(--el-font-size-small);
       color: var(--el-text-color-regular);
     }
   }

@@ -137,7 +137,7 @@ function onOpen() {
   }
 
   &-title {
-    font-size: 18px;
+    font-size: var(--el-font-size-large);
     transition: opacity 0.1s ease;
   }
 
