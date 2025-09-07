@@ -11,6 +11,8 @@ import { ref } from 'vue'
 import { storage } from '#imports'
 import { i18n } from '@/.wxt/i18n'
 import {
+  useBingWallpaperStore,
+  useDarkWallpaperStore,
   useSettingsStore,
   useWallpaperStore,
   type CURRENT_CONFIG_INTERFACE
@@ -47,6 +49,8 @@ async function clearExtensionData() {
   // Clear all extension storage in parallel
   await Promise.all([
     useWallpaperStore.clear(),
+    useDarkWallpaperStore.clear(),
+    useBingWallpaperStore.clear(),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync')
