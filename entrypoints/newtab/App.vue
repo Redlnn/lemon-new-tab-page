@@ -197,11 +197,8 @@ watch(
 )
 
 watch(isDark, async (darked) => {
-  if (
-    settingsStore.background.bgType !== BgType.Local &&
-    (settingsStore.localBackground?.id == null || settingsStore.localBackground?.id === '')
-  )
-    return
+  if (settingsStore.background.bgType !== BgType.Local) return
+  if (settingsStore.localBackground?.id == null || settingsStore.localBackground?.id === '') return
   await bgTypeProviders[BgType.Local].verify?.()
   switchStore.start()
   await promiseTimeout(500)
