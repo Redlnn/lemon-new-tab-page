@@ -2,7 +2,7 @@
 import { onMounted, ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
-import { CloudOffRound } from '@vicons/material'
+import { CloudOffRound, CloseRound } from '@vicons/material'
 import { browser } from 'wxt/browser'
 import {
   type UploadProps,
@@ -14,7 +14,13 @@ import {
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/shared/image'
-import { uploadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
+import {
+  uploadBackgroundImage,
+  useSettingsStore,
+  BgType,
+  useDarkWallpaperStore,
+  useWallpaperStore
+} from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
@@ -99,6 +105,16 @@ function onlineImageWarn() {
     settingsStore.background.bgType = BgType.None
   })
 }
+
+async function deleteLocalBg(isDark = false) {
+  if (isDark) {
+    settingsStore.localDarkBackground = { id: '', url: '' }
+    useDarkWallpaperStore.clear()
+  } else {
+    settingsStore.localBackground = { id: '', url: '' }
+    useWallpaperStore.clear()
+  }
+}
 </script>
 
 <template>
@@ -157,12 +173,19 @@ function onlineImageWarn() {
           accept="image/*"
         >
           <img
-            v-if="settingsStore.localBackground.url"
+            v-if="settingsStore.localBackground.id"
             :src="settingsStore.localBackground.url"
             class="settings__bg-uploader-img"
           />
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
+        <div
+          v-if="settingsStore.localBackground.id"
+          class="settings__bg-uploader-delete"
+          @click="deleteLocalBg()"
+        >
+          <el-icon><CloseRound /></el-icon>
+        </div>
         <div class="settings__bg-uploader-title">
           {{ i18n.t('newtab.settings.theme.lightMode') }}
         </div>
@@ -176,12 +199,19 @@ function onlineImageWarn() {
           accept="image/*"
         >
           <img
-            v-if="settingsStore.localDarkBackground.url"
+            v-if="settingsStore.localDarkBackground.id"
             :src="settingsStore.localDarkBackground.url"
             class="settings__bg-uploader-img"
           />
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
+        <div
+          v-if="settingsStore.localDarkBackground.id"
+          class="settings__bg-uploader-delete"
+          @click="deleteLocalBg(true)"
+        >
+          <el-icon><CloseRound /></el-icon>
+        </div>
         <div class="settings__bg-uploader-title">
           {{ i18n.t('newtab.settings.theme.darkMode') }}
         </div>
@@ -243,6 +273,23 @@ function onlineImageWarn() {
   margin-top: -6px;
 }
 
+.settings__bg-uploader-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  color: var(--el-color-white);
+  cursor: pointer;
+  background-color: var(--el-color-danger);
+  border-radius: 50%;
+  box-shadow: var(--el-box-shadow-lighter);
+}
+
 .settings__bg-uploader-img {
   width: 100%;
   height: 100%;
@@ -250,6 +297,7 @@ function onlineImageWarn() {
 }
 
 .settings__bg-uploader-wrapper {
+  position: relative;
   width: 100%;
 }
 
