@@ -39,6 +39,7 @@ newtab:
         local: Local Image
         bing: Bing Wallpaper
         online: Online Image
+      tip: If no background is set for dark mode, the light mode background will be used.
       enableVignetting: Enable Vignetting
       blur: Blur Intensity
       maskOpacity: Mask Opacity

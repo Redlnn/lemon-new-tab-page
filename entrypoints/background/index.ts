@@ -33,6 +33,7 @@ async function processSyncQueue() {
   }
   // 重置壁纸缓存数据
   syncItem.settings.localBackground = { id: '', url: '' }
+  syncItem.settings.localDarkBackground = { id: '', url: '' }
   syncItem.settings.bingBackground = { id: '', url: '', updateDate: '' }
   // 由于无法同步在线壁纸，所以重置在线壁纸url
   syncItem.settings.background.onlineUrl = ''

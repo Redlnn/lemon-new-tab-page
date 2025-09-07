@@ -40,6 +40,10 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     id: '',
     url: ''
   },
+  localDarkBackground: {
+    id: '',
+    url: ''
+  },
   bingBackground: {
     id: '',
     url: '',

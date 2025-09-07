@@ -141,21 +141,52 @@ function onlineImageWarn() {
       <li>{{ i18n.t('newtab.settings.background.onlineTips.c') }}</li>
       <li>{{ i18n.t('newtab.settings.background.onlineTips.d') }}</li>
     </ul>
-    <el-upload
+    <p v-if="settingsStore.background.bgType === BgType.Local" class="settings__item--note">
+      {{ i18n.t('newtab.settings.background.tip') }}
+    </p>
+    <div
       v-if="settingsStore.background.bgType === BgType.Local"
-      class="settings__bg-uploader"
-      :show-file-list="false"
-      :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
-      :before-upload="beforeBackgroundUpload"
-      accept="image/*"
+      class="settings__bg-uploader-container"
     >
-      <img
-        v-if="settingsStore.localBackground.url"
-        :src="settingsStore.localBackground.url"
-        class="settings__bg-uploader-img"
-      />
-      <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
-    </el-upload>
+      <div class="settings__bg-uploader-wrapper">
+        <el-upload
+          class="settings__bg-uploader"
+          :show-file-list="false"
+          :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
+          :before-upload="beforeBackgroundUpload"
+          accept="image/*"
+        >
+          <img
+            v-if="settingsStore.localBackground.url"
+            :src="settingsStore.localBackground.url"
+            class="settings__bg-uploader-img"
+          />
+          <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
+        </el-upload>
+        <div class="settings__bg-uploader-title">
+          {{ i18n.t('newtab.settings.theme.lightMode') }}
+        </div>
+      </div>
+      <div class="settings__bg-uploader-wrapper">
+        <el-upload
+          class="settings__bg-uploader"
+          :show-file-list="false"
+          :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file, true)"
+          :before-upload="beforeBackgroundUpload"
+          accept="image/*"
+        >
+          <img
+            v-if="settingsStore.localDarkBackground.url"
+            :src="settingsStore.localDarkBackground.url"
+            class="settings__bg-uploader-img"
+          />
+          <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
+        </el-upload>
+        <div class="settings__bg-uploader-title">
+          {{ i18n.t('newtab.settings.theme.darkMode') }}
+        </div>
+      </div>
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />
@@ -206,15 +237,34 @@ function onlineImageWarn() {
 </template>
 
 <style lang="scss" scoped>
+.settings__bg-uploader-container {
+  display: flex;
+  gap: 15px;
+  margin-top: -6px;
+}
+
 .settings__bg-uploader-img {
-  max-width: 100%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
+.settings__bg-uploader-wrapper {
+  width: 100%;
+}
+
+.settings__bg-uploader-title {
+  margin-top: 8px;
+  font-size: var(--el-font-size-small);
+  color: var(--el-text-color-secondary);
+  text-align: center;
+}
+
 .settings__bg-uploader {
+  flex: 1;
+  height: 150px;
+
   & .settings__bg-uploader-icon {
-    width: 350px;
-    height: 200px;
     font-size: 28px;
     color: var(--el-text-color-placeholder);
     text-align: center;
@@ -223,6 +273,8 @@ function onlineImageWarn() {
 
   &:deep() .el-upload {
     position: relative;
+    width: 100%;
+    height: 100%;
     overflow: hidden;
     cursor: pointer;
     border: 1px dashed var(--el-border-color-darker);
@@ -242,7 +294,7 @@ function onlineImageWarn() {
 .settings__online-bg-tips {
   padding: 5px 15px 0;
   margin-top: 5px;
-  font-size: 12px;
+  font-size: var(--el-font-size-extra-small);
   color: var(--el-text-color-placeholder);
 
   li {

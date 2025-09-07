@@ -22,6 +22,6 @@ export {
   saveSettings
 } from './settingsStore'
 export { settingsStorage } from './settingsStorage'
-export { useBingWallpaperStore, useWallpaperStore } from './wallpaperStore'
+export { useBingWallpaperStore, useWallpaperStore, useDarkWallpaperStore } from './wallpaperStore'
 export { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
 export { defaultSettings } from './default'

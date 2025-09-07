@@ -55,13 +55,18 @@ html {
   box-sizing: border-box;
 }
 
+/* stylelint-disable-next-line no-duplicate-selectors */
+html {
+  background-color: var(--el-bg-color);
+}
+
 html,
 body {
   width: 100vw;
   height: 100vh;
   margin: 0;
   font-family: var(--el-font-family);
-  font-size: 14px;
+  font-size: var(--el-font-size-base);
   color: var(--el-text-color-primary);
 }
 

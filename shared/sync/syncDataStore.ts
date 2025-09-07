@@ -204,6 +204,10 @@ export const useSyncDataStore = defineStore('sync', {
 
         cloudData.settings.background.bgType = localSettings.background.bgType // 保持本地背景类型
         cloudData.settings.localBackground = localSettings.$state.localBackground // 保持本地壁纸数据
+        cloudData.settings.localDarkBackground = localSettings.$state.localDarkBackground || {
+          id: '',
+          url: ''
+        } // 保持本地暗黑壁纸数据
         cloudData.settings.bingBackground = localSettings.$state.bingBackground // 保持本地必应壁纸数据
         cloudData.settings.background.onlineUrl = localSettings.background.onlineUrl // 保持本地在线壁纸URL
 

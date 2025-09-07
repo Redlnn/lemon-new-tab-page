@@ -38,6 +38,10 @@ export interface SettingsInterfaceVer6 {
     id: string
     url: string
   }
+  localDarkBackground: {
+    id: string
+    url: string
+  }
   bingBackground: {
     id: string
     url: string

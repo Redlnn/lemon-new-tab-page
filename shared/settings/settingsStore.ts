@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 import { isImageFile } from '@/shared/image'
 import { settingsStorage } from './settingsStorage'
-import { useWallpaperStore } from './wallpaperStore'
+import { useWallpaperStore, useDarkWallpaperStore } from './wallpaperStore'
 import type {
   OldSettingsInterface,
   SettingsInterfaceVer2,
@@ -79,44 +79,52 @@ export const useSettingsStore = defineStore('opiton', {
   }
 })
 
-export async function uploadBackgroundImage(imageFile: File) {
+export async function uploadBackgroundImage(imageFile: File, isDarkMode = false) {
   const settingsStore = useSettingsStore()
-
-  // https://github.com/Devifish/light-tab
 
   const id = uuidv4()
   const url = URL.createObjectURL(imageFile)
-  const url_old = settingsStore.localBackground.url
+
+  // 根据模式选择对应的 store & state
+  const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
+  const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
+  const prevUrl = settingsStore[backgroundKey]?.url || ''
 
   // 清除上次壁纸，ObjectURL可能导致内存溢出
-  await useWallpaperStore.clear()
-  if (url_old.startsWith('blob:')) {
-    URL.revokeObjectURL(url_old)
+  await Promise.all([useWallpaperStore.clear(), useDarkWallpaperStore.clear()])
+  if (prevUrl.startsWith('blob:')) {
+    URL.revokeObjectURL(prevUrl)
   }
 
-  // 保存图片到IndexedDB
-  await useWallpaperStore.setItem<Blob>(id, imageFile)
-  settingsStore.localBackground = {
-    id: id,
-    url: url
-  }
+  // 保存图片到 IndexedDB 并更新状态
+  await store.setItem<Blob>(id, imageFile)
+  settingsStore[backgroundKey] = { id, url }
 }
 
-export async function reloadBackgroundImage() {
+export async function reloadBackgroundImage(isDarkMode = false) {
   const settingsStore = useSettingsStore()
 
-  const { id } = settingsStore.localBackground
-  const file = await useWallpaperStore.getItem<Blob>(id)
+  // 根据模式选择对应的 store & state
+  const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
+  const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
+  const background = settingsStore[backgroundKey]
+
+  if (!background?.id) {
+    return
+  }
+
+  const file = await store.getItem<Blob>(background.id)
 
   // 校验图片数据是否可用，否则删除该数据
   if (file && isImageFile(file)) {
     const url = URL.createObjectURL(file)
-    settingsStore.localBackground.url = url
-    // await saveSettings(settingsStore) // 会导致启动时卡死、CPU吃满和内存泄漏
+    background.url = url
   } else {
-    URL.revokeObjectURL(settingsStore.localBackground.url)
-    settingsStore.localBackground.id = ''
-    settingsStore.localBackground.url = ''
-    await useWallpaperStore.removeItem(id)
+    if (background.url?.startsWith('blob:')) {
+      URL.revokeObjectURL(background.url)
+    }
+    background.id = ''
+    background.url = ''
+    await store.removeItem(background.id)
   }
 }

@@ -40,6 +40,10 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       id: oldSettings.localBackground.id,
       url: oldSettings.localBackground.url
     },
+    localDarkBackground: {
+      id: defaultSettings.localDarkBackground.id,
+      url: defaultSettings.localDarkBackground.url
+    },
     bingBackground: {
       id: oldSettings.bingBackground.id,
       url: oldSettings.bingBackground.url,

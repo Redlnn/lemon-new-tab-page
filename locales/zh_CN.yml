@@ -32,6 +32,7 @@ newtab:
         local: 本地图片
         bing: Bing 每日一图
         online: 在线图片
+      tip: 深色模式背景没有选择的话会继续使用浅色模式的图片噢
       enableVignetting: 暗角效果
       blur: 模糊强度
       maskOpacity: 遮罩不透明度

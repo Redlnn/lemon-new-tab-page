@@ -11,7 +11,7 @@ import {
   HelpFilled
 } from '@vicons/material'
 import { HeartFilled } from '@vicons/antd'
-import { useColorMode, promiseTimeout } from '@vueuse/core'
+import { useDark, promiseTimeout } from '@vueuse/core'
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import en from 'element-plus/es/locale/lang/en.mjs'
 import type { Language } from 'element-plus/es/locale'
@@ -61,7 +61,7 @@ onBeforeMount(async () => {
 
 const locale = browser.i18n.getUILanguage()
 
-useColorMode()
+const isDark = useDark()
 const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
@@ -80,16 +80,38 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
     getURL: async () => `url(${await getBingWallpaperURL()})`
   },
   [BgType.Local]: {
-    getURL: async () => `url(${settingsStore.localBackground.url})`,
+    getURL: async () =>
+      isDark.value
+        ? `url(${settingsStore.localDarkBackground.url})`
+        : `url(${settingsStore.localBackground.url})`,
     verify: async () => {
-      if (!settingsStore.localBackground.url) {
-        await reloadBackgroundImage()
+      const settingsStore = useSettingsStore()
+      const { localBackground, localDarkBackground } = settingsStore
+
+      // 如果没 url，则尝试加载
+      if (!localBackground.url) {
+        await reloadBackgroundImage(false)
+        if (!localDarkBackground.id) return true
+      }
+      if (localDarkBackground.id && !localDarkBackground.url) {
+        await reloadBackgroundImage(true)
         return true
       }
-      const isValid = await verifyImageUrl(settingsStore.localBackground.url)
+
+      // 校验 URL 是否有效
+      const [isValid, isValidDark] = await Promise.all([
+        verifyImageUrl(localBackground.url),
+        localDarkBackground.url ? verifyImageUrl(localDarkBackground.url) : Promise.resolve(true)
+      ])
+
+      // 如无效则重新加载
       if (!isValid) {
-        await reloadBackgroundImage()
+        await reloadBackgroundImage(false)
       }
+      if (!isValidDark && localDarkBackground.id) {
+        await reloadBackgroundImage(true)
+      }
+
       return true
     }
   },
@@ -173,6 +195,23 @@ watch(
     switchStore.end()
   }
 )
+
+watch(isDark, async (darked) => {
+  if (
+    settingsStore.background.bgType !== BgType.Local &&
+    (settingsStore.localBackground?.id == null || settingsStore.localBackground?.id === '')
+  )
+    return
+  await bgTypeProviders[BgType.Local].verify?.()
+  switchStore.start()
+  await promiseTimeout(500)
+  if (darked) {
+    bgURL.value = `url(${settingsStore.localDarkBackground.url})`
+  } else {
+    bgURL.value = `url(${settingsStore.localBackground.url})`
+  }
+  switchStore.end()
+})
 
 function sponsorMessage() {
   ElMessageBox.alert(i18n.t('newtab.sponsor'), '支持我们')
@@ -291,7 +330,7 @@ function needHelp() {
 
     .el-dropdown-menu__item {
       padding: 5px 18px 5px 10px;
-      font-size: 12px;
+      font-size: var(--el-font-size-extra-small);
       border-radius: 6px;
 
       .el-icon {
