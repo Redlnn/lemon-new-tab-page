@@ -12,8 +12,8 @@ import {
   type UploadRequestOptions
 } from 'element-plus'
 
-import { i18n } from '@/.wxt/i18n'
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { t } from '@/shared/i18n'
 import { convertBase64Svg, isImageFile } from '@/shared/image'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -53,7 +53,7 @@ function isValidUrl(url: string) {
 
 async function add() {
   if (!isValidUrl(data.url)) {
-    ElMessage.error(i18n.t('newtab.shortcut.addDialog.invalidUrlError'))
+    ElMessage.error(t('newtab.shortcut.addDialog.invalidUrlError'))
     data.url = ''
     return
   }
@@ -88,11 +88,11 @@ async function uploadFavicon(file: File) {
 async function confirmSvgUpload() {
   try {
     await ElMessageBox.confirm(
-      i18n.t('newtab.shortcut.addDialog.confirmSvgDesc'),
-      i18n.t('newtab.shortcut.addDialog.confirmSvgTitle'),
+      t('newtab.shortcut.addDialog.confirmSvgDesc'),
+      t('newtab.shortcut.addDialog.confirmSvgTitle'),
       {
-        confirmButtonText: i18n.t('newtab.shortcut.addDialog.confirmSvgOKBtn'),
-        cancelButtonText: i18n.t('newtab.shortcut.addDialog.confirmSvgCancelBtn'),
+        confirmButtonText: t('newtab.shortcut.addDialog.confirmSvgOKBtn'),
+        cancelButtonText: t('newtab.shortcut.addDialog.confirmSvgCancelBtn'),
         closeOnClickModal: false,
         closeOnPressEscape: false,
         showClose: false,
@@ -107,14 +107,14 @@ async function confirmSvgUpload() {
 
 const beforeFaviconUpload: UploadProps['beforeUpload'] = async (rawFile) => {
   if (!isImageFile(rawFile, ['x-icon', 'svg+xml'])) {
-    ElMessage.error(i18n.t('newtab.settings.background.warning.fileIsNotImage'))
+    ElMessage.error(t('newtab.settings.background.warning.fileIsNotImage'))
     return false
   }
   if (isSvg(rawFile)) {
     return await confirmSvgUpload()
   }
   if (rawFile.size / 1024 > 100) {
-    ElMessage.error(i18n.t('newtab.shortcut.addDialog.tooLargeImageError'))
+    ElMessage.error(t('newtab.shortcut.addDialog.tooLargeImageError'))
     return false
   }
   return true
@@ -134,13 +134,13 @@ function isSvg(file: Blob) {
         </div>
       </div>
       <div v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title">
-        {{ i18n.t('newtab.shortcut.addNewShortcut') }}
+        {{ t('newtab.shortcut.addNewShortcut') }}
       </div>
     </div>
   </div>
   <el-dialog
     v-model="showDialog"
-    :title="i18n.t('newtab.shortcut.addDialog.dialogTitle')"
+    :title="t('newtab.shortcut.addDialog.dialogTitle')"
     :style="{
       padding: '30px 50px'
     }"
@@ -149,16 +149,16 @@ function isSvg(file: Blob) {
     destroy-on-close
   >
     <el-form ref="modelForm" :model="data">
-      <el-form-item :label="i18n.t('newtab.shortcut.addDialog.title')">
+      <el-form-item :label="t('newtab.shortcut.addDialog.title')">
         <el-input v-model="data.title" />
       </el-form-item>
-      <el-form-item :label="i18n.t('newtab.shortcut.addDialog.url')">
+      <el-form-item :label="t('newtab.shortcut.addDialog.url')">
         <el-input v-model="data.url" @keyup.enter="add" />
       </el-form-item>
-      <el-form-item :label="i18n.t('newtab.shortcut.addDialog.autoFetchFavicon')">
+      <el-form-item :label="t('newtab.shortcut.addDialog.autoFetchFavicon')">
         <el-switch v-model="getFaviconAuto" />
       </el-form-item>
-      <el-form-item v-if="!getFaviconAuto" :label="i18n.t('newtab.shortcut.addDialog.favicon')">
+      <el-form-item v-if="!getFaviconAuto" :label="t('newtab.shortcut.addDialog.favicon')">
         <el-upload
           class="shortcut__favicon-uploader"
           :show-file-list="false"
@@ -176,13 +176,13 @@ function isSvg(file: Blob) {
       type="info"
       show-icon
       :closable="false"
-      :title="i18n.t('newtab.shortcut.addDialog.uploadFaviconAlert')"
+      :title="t('newtab.shortcut.addDialog.uploadFaviconAlert')"
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ i18n.t('newtab.shortcut.addDialog.cancel') }}</el-button>
+        <el-button @click="cancel">{{ t('newtab.shortcut.addDialog.cancel') }}</el-button>
         <el-button type="primary" @click="add">{{
-          i18n.t('newtab.shortcut.addDialog.confirm')
+          t('newtab.shortcut.addDialog.confirm')
         }}</el-button>
       </span>
     </template>

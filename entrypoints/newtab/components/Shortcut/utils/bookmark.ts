@@ -1,8 +1,8 @@
 import type { Store } from 'pinia'
 import { h } from 'vue'
 
-import { i18n } from '@/.wxt/i18n'
 import { type Bookmark, saveBookmark } from '@/shared/bookmark'
+import { t } from '@/shared/i18n'
 
 export async function removeBookmark(
   index: number,
@@ -22,7 +22,7 @@ export async function removeBookmark(
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.shortcut.removePinnedMessage.content')
+        t('newtab.shortcut.removePinnedMessage.content')
       ),
       h(
         'span',
@@ -38,7 +38,7 @@ export async function removeBookmark(
             await refresh()
           }
         },
-        i18n.t('newtab.shortcut.removePinnedMessage.revoke')
+        t('newtab.shortcut.removePinnedMessage.revoke')
       )
     ]),
     type: 'success'

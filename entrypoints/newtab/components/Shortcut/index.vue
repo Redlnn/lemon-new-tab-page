@@ -7,8 +7,8 @@ import { ClearRound } from '@vicons/material'
 import { useDraggable } from 'vue-draggable-plus'
 import type { TopSites } from 'webextension-polyfill'
 
-import { i18n } from '@/.wxt/i18n'
 import { bookmarkStorage, initBookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { useFocusStore } from '@newtab/scripts/store'
@@ -158,7 +158,7 @@ bookmarkStorage.watch(refreshDebounced)
             <el-icon>
               <pin-off16-regular />
             </el-icon>
-            {{ i18n.t('newtab.shortcut.unpin') }}
+            {{ t('newtab.shortcut.unpin') }}
           </el-dropdown-item>
         </template>
       </shortcut-item>
@@ -181,7 +181,7 @@ bookmarkStorage.watch(refreshDebounced)
             <el-icon>
               <clear-round />
             </el-icon>
-            {{ i18n.t('newtab.shortcut.remove') }}
+            {{ t('newtab.shortcut.remove') }}
           </el-dropdown-item>
           <el-dropdown-item
             @click="pinBookmark(bookmarkStore, refreshDebounced, site.url, site.title || '')"
@@ -189,7 +189,7 @@ bookmarkStorage.watch(refreshDebounced)
             <el-icon>
               <pin16-regular />
             </el-icon>
-            {{ i18n.t('newtab.shortcut.pin') }}
+            {{ t('newtab.shortcut.pin') }}
           </el-dropdown-item>
         </template>
       </shortcut-item>

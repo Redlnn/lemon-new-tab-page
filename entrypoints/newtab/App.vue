@@ -15,10 +15,9 @@ import type { Language } from 'element-plus/es/locale'
 import en from 'element-plus/es/locale/lang/en.mjs'
 import { browser } from 'wxt/browser'
 
-import { i18n } from '#imports'
-
 import { version } from '@/package.json'
 
+import { t } from '@/shared/i18n'
 import { verifyImageUrl } from '@/shared/image'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
@@ -154,14 +153,14 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification({
-        title: i18n.t('sync.failMessage.title'),
-        message: i18n.t('sync.failMessage.message', [p.cloud, p.local]),
+        title: t('sync.failMessage.title'),
+        message: t('sync.failMessage.message', [p.cloud, p.local]),
         type: 'error'
       })
     } else if (type === 'sync-error') {
       const err = payload as Error
       ElNotification({
-        title: i18n.t('sync.errorMessage.title'),
+        title: t('sync.errorMessage.title'),
         message: err.message || 'Unknown error.',
         type: 'error'
       })
@@ -213,7 +212,7 @@ watch(isDark, async (darked) => {
 })
 
 function sponsorMessage() {
-  ElMessageBox.alert(i18n.t('newtab.sponsor'), '支持我们')
+  ElMessageBox.alert(t('newtab.sponsor'), '支持我们')
 }
 
 function needHelp() {
@@ -252,27 +251,27 @@ function needHelp() {
         <el-dropdown-menu>
           <el-dropdown-item @click="SettingsPageRef?.toggle">
             <el-icon :size="17"><settings-round /></el-icon>
-            {{ i18n.t('newtab.menu.settings') }}
+            {{ t('newtab.menu.settings') }}
           </el-dropdown-item>
           <el-dropdown-item @click="SESwitcherRef?.show">
             <el-icon :size="17"><search-round /></el-icon>
-            {{ i18n.t('newtab.menu.searchEnginePreference') }}
+            {{ t('newtab.menu.searchEnginePreference') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click="ChangelogRef?.show">
             <el-icon :size="17"><access-time-filled-round /></el-icon>
-            {{ i18n.t('newtab.menu.changelog') }}
+            {{ t('newtab.menu.changelog') }}
           </el-dropdown-item>
           <el-dropdown-item @click="needHelp">
             <el-icon :size="17"><help-filled /></el-icon>
-            {{ i18n.t('newtab.menu.help') }}
+            {{ t('newtab.menu.help') }}
           </el-dropdown-item>
           <el-dropdown-item @click="sponsorMessage">
             <el-icon :size="17"><heart-filled /></el-icon>
-            {{ i18n.t('newtab.menu.sponsor') }}
+            {{ t('newtab.menu.sponsor') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click="AboutRef?.toggle">
             <el-icon :size="17"><info-round /></el-icon>
-            {{ i18n.t('newtab.menu.about') }}
+            {{ t('newtab.menu.about') }}
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>

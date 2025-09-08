@@ -13,7 +13,7 @@ import {
 } from 'element-plus'
 import { browser } from 'wxt/browser'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { isImageFile } from '@/shared/image'
 import {
   BgType,
@@ -38,7 +38,7 @@ onMounted(() => {
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
   if (!isImageFile(rawFile)) {
-    ElMessage.error(i18n.t('newtab.settings.background.warning.fileIsNotImage'))
+    ElMessage.error(t('newtab.settings.background.warning.fileIsNotImage'))
     return false
   }
   return true
@@ -54,16 +54,16 @@ async function handlePermissions(_url: string, hostname: string) {
     }
 
     const confirmed = await ElMessageBox.confirm(
-      i18n.t('newtab.settings.background.warning.securityPolicy', [hostname])
+      t('newtab.settings.background.warning.securityPolicy', [hostname])
     )
 
     if (confirmed) {
       const requested = await browser.permissions.request(permissions)
       if (requested) {
-        ElMessage.success(i18n.t('newtab.settings.background.warning.granted'))
+        ElMessage.success(t('newtab.settings.background.warning.granted'))
         settingsStore.background.onlineUrl = _url
       } else {
-        ElMessage.error(i18n.t('newtab.settings.background.warning.notGranted'))
+        ElMessage.error(t('newtab.settings.background.warning.notGranted'))
         settingsStore.background.bgType = BgType.None
         tmpUrl.value = ''
       }
@@ -97,8 +97,8 @@ function changeOnlineBg(e: Event) {
 function onlineImageWarn() {
   if (settingsStore.background.onlineUrl) return
   ElMessageBox.confirm(
-    i18n.t('newtab.settings.background.warning.unknownSource'),
-    i18n.t('newtab.settings.background.warning.title'),
+    t('newtab.settings.background.warning.unknownSource'),
+    t('newtab.settings.background.warning.title'),
     {
       type: 'warning'
     }
@@ -121,26 +121,26 @@ async function deleteLocalBg(isDark = false) {
 <template>
   <div class="settings__title">
     <el-icon><picture-outlined /></el-icon>
-    <span>{{ i18n.t('newtab.settings.background.title') }}</span>
+    <span>{{ t('newtab.settings.background.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--vertical">
       <div class="settings__label">
-        {{ i18n.t('newtab.settings.background.type.title') }}
+        {{ t('newtab.settings.background.type.title') }}
         <cloud-off-round />
       </div>
       <el-radio-group v-model="settingsStore.background.bgType">
         <el-radio :value="BgType.None">
-          {{ i18n.t('newtab.settings.background.type.none') }}
+          {{ t('newtab.settings.background.type.none') }}
         </el-radio>
         <el-radio :value="BgType.Local">
-          {{ i18n.t('newtab.settings.background.type.local') }}
+          {{ t('newtab.settings.background.type.local') }}
         </el-radio>
         <el-radio :value="BgType.Bing">
-          {{ i18n.t('newtab.settings.background.type.bing') }}
+          {{ t('newtab.settings.background.type.bing') }}
         </el-radio>
         <el-radio :value="BgType.Online" @change="onlineImageWarn">
-          {{ i18n.t('newtab.settings.background.type.online') }}
+          {{ t('newtab.settings.background.type.online') }}
         </el-radio>
       </el-radio-group>
     </div>
@@ -153,13 +153,13 @@ async function deleteLocalBg(isDark = false) {
       placeholder="https://example.com/image.jpg"
     ></el-input>
     <ul v-if="settingsStore.background.bgType === BgType.Online" class="settings__online-bg-tips">
-      <li>{{ i18n.t('newtab.settings.background.onlineTips.a') }}</li>
-      <li>{{ i18n.t('newtab.settings.background.onlineTips.b') }}</li>
-      <li>{{ i18n.t('newtab.settings.background.onlineTips.c') }}</li>
-      <li>{{ i18n.t('newtab.settings.background.onlineTips.d') }}</li>
+      <li>{{ t('newtab.settings.background.onlineTips.a') }}</li>
+      <li>{{ t('newtab.settings.background.onlineTips.b') }}</li>
+      <li>{{ t('newtab.settings.background.onlineTips.c') }}</li>
+      <li>{{ t('newtab.settings.background.onlineTips.d') }}</li>
     </ul>
     <p v-if="settingsStore.background.bgType === BgType.Local" class="settings__item--note">
-      {{ i18n.t('newtab.settings.background.tip') }}
+      {{ t('newtab.settings.background.tip') }}
     </p>
     <div
       v-if="settingsStore.background.bgType === BgType.Local"
@@ -188,7 +188,7 @@ async function deleteLocalBg(isDark = false) {
           <el-icon><CloseRound /></el-icon>
         </div>
         <div class="settings__bg-uploader-title">
-          {{ i18n.t('newtab.settings.theme.lightMode') }}
+          {{ t('newtab.settings.theme.lightMode') }}
         </div>
       </div>
       <div class="settings__bg-uploader-wrapper">
@@ -214,31 +214,31 @@ async function deleteLocalBg(isDark = false) {
           <el-icon><CloseRound /></el-icon>
         </div>
         <div class="settings__bg-uploader-title">
-          {{ i18n.t('newtab.settings.theme.darkMode') }}
+          {{ t('newtab.settings.theme.darkMode') }}
         </div>
       </div>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.background.enableVignetting') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />
     </div>
     <div
       v-if="settingsStore.background.bgType !== BgType.None"
       class="settings__item settings__item--vertical"
     >
-      <div class="settings__label">{{ i18n.t('newtab.settings.background.blur') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.background.blur') }}</div>
       <el-slider v-model="settingsStore.background.blurIntensity" :show-tooltip="false" />
     </div>
     <div class="settings__item">
       <div class="settings__label settings__item--vertical">
-        {{ i18n.t('newtab.settings.background.maskOpacity') }}
+        {{ t('newtab.settings.background.maskOpacity') }}
       </div>
       <el-slider v-model="settingsStore.background.bgMaskOpacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.background.maskColor') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.background.maskColor') }}</div>
       <span>
-        <span>{{ i18n.t('newtab.settings.theme.lightMode') }}:&ensp;</span>
+        <span>{{ t('newtab.settings.theme.lightMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settingsStore.background.lightMaskColor"
           :predefine="predefineMaskColor"
@@ -250,7 +250,7 @@ async function deleteLocalBg(isDark = false) {
             }
           "
         />
-        <span style="margin-left: 1em">{{ i18n.t('newtab.settings.theme.darkMode') }}:&ensp;</span>
+        <span style="margin-left: 1em">{{ t('newtab.settings.theme.darkMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settingsStore.background.nightMaskColor"
           :predefine="predefineMaskColor"

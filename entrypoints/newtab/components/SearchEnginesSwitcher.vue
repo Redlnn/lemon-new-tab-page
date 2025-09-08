@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
@@ -15,7 +15,7 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-  <base-dialog v-model="opened" :title="i18n.t('newtab.menu.searchEnginePreference')" acrylic>
+  <base-dialog v-model="opened" :title="t('newtab.menu.searchEnginePreference')" acrylic>
     <div style="width: 100%; overflow: hidden">
       <el-row :gutter="10" class="se-switcher">
         <el-col

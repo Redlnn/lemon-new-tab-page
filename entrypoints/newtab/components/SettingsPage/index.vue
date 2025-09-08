@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
@@ -19,7 +19,7 @@ defineExpose({ show, hide, toggle })
 <template>
   <base-dialog
     v-model="opened"
-    :title="i18n.t('newtab.settings.title')"
+    :title="t('newtab.settings.title')"
     container-class="settings__dialog"
     acrylic
   >

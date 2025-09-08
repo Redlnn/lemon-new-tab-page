@@ -10,7 +10,7 @@ import { browser } from 'wxt/browser'
 
 import { version } from '@/package.json'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initSyncSettings } from '@/shared/sync'
 
@@ -59,7 +59,7 @@ let color = ''
 const lang = browser.i18n.getUILanguage()
 
 document.documentElement.lang = lang
-document.title = i18n.t('newtab.title')
+document.title = t('newtab.title')
 
 const app = createApp(App)
 const pinia = createPinia()

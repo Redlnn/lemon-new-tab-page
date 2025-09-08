@@ -4,7 +4,7 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { TrashAlt } from '@vicons/fa'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
@@ -177,7 +177,7 @@ defineExpose({
       @click="clearSearchHistories()"
     >
       <el-icon style="margin-right: 5px"><trash-alt /></el-icon>
-      <span>{{ i18n.t('newtab.search.purgeSearchHistory') }}</span>
+      <span>{{ t('newtab.search.purgeSearchHistory') }}</span>
     </div>
   </div>
 </template>

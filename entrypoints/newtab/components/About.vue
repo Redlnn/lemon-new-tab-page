@@ -6,7 +6,7 @@ import { Chrome, Edge, Firefox, Github } from '@vicons/fa'
 
 import { version } from '@/package.json'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
 
@@ -28,10 +28,10 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
       <div class="ext-icon">
         <div class="ext-icon__container"></div>
       </div>
-      <h1 class="ext-name">{{ i18n.t('extension.name') }}</h1>
+      <h1 class="ext-name">{{ t('extension.name') }}</h1>
       <div class="ext-version">{{ version }}</div>
       <el-link class="yiyan-links" :underline="'never'" :href="currentYiyanProvider.website">
-        {{ i18n.t('newtab.about.yiyanApiProvider', [currentYiyanProvider.name]) }}
+        {{ t('newtab.about.yiyanApiProvider', [currentYiyanProvider.name]) }}
       </el-link>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;

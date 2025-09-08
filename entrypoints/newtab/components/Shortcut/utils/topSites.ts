@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import browser from 'webextension-polyfill'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 
 import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
@@ -25,7 +25,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18n.t('newtab.shortcut.removeTopMessage.content')
+        t('newtab.shortcut.removeTopMessage.content')
       ),
       h(
         'span',
@@ -36,7 +36,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18n.t('newtab.shortcut.removeTopMessage.revoke')
+        t('newtab.shortcut.removeTopMessage.revoke')
       ),
       h(
         'span',
@@ -47,7 +47,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18n.t('newtab.shortcut.removeTopMessage.restoreDefault')
+        t('newtab.shortcut.removeTopMessage.restoreDefault')
       )
     ]),
     type: 'success'

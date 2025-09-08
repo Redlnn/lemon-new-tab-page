@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { version } from '@/package.json'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import Changelog from '@newtab/Changelog'
@@ -17,7 +17,7 @@ defineExpose({ show, hide, toggle })
 <template>
   <base-dialog
     v-model="opened"
-    :title="i18n.t('newtab.changelog')"
+    :title="t('newtab.changelog')"
     container-class="changelog__dialog"
     @closed="() => (settingsStore.pluginVersion = version)"
     acrylic

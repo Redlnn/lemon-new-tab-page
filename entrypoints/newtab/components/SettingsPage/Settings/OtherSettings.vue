@@ -11,7 +11,7 @@ import {
 
 import { storage } from '#imports'
 
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { downloadJSON } from '@/shared/json'
 import {
   type CURRENT_CONFIG_INTERFACE,
@@ -28,11 +28,11 @@ const settingsStore = useSettingsStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      i18n.t('newtab.settings.other.confirmPurgeData.message'),
-      i18n.t('newtab.settings.other.confirmPurgeData.title'),
+      t('newtab.settings.other.confirmPurgeData.message'),
+      t('newtab.settings.other.confirmPurgeData.title'),
       {
-        confirmButtonText: i18n.t('newtab.settings.other.confirmPurgeData.confirm'),
-        cancelButtonText: i18n.t('newtab.settings.other.confirmPurgeData.cancel'),
+        confirmButtonText: t('newtab.settings.other.confirmPurgeData.confirm'),
+        cancelButtonText: t('newtab.settings.other.confirmPurgeData.cancel'),
         type: 'warning'
       }
     )
@@ -44,7 +44,7 @@ async function confirmClearExtensionData() {
 }
 
 async function clearExtensionData() {
-  console.warn(i18n.t('newtab.settings.other.confirmPurgeData.purging'))
+  console.warn(t('newtab.settings.other.confirmPurgeData.purging'))
   // Clear browser storage
   await Promise.all([localStorage.clear(), sessionStorage.clear()]).catch(console.error)
 
@@ -74,11 +74,11 @@ const fileInput = ref<HTMLInputElement | null>(null)
 async function openFilePicker() {
   try {
     await ElMessageBox.confirm(
-      i18n.t('newtab.settings.other.importExport.warningDialog.title'),
-      i18n.t('newtab.settings.other.importExport.warningDialog.content'),
+      t('newtab.settings.other.importExport.warningDialog.title'),
+      t('newtab.settings.other.importExport.warningDialog.content'),
       {
-        confirmButtonText: i18n.t('newtab.settings.other.importExport.warningDialog.yes'),
-        cancelButtonText: i18n.t('newtab.settings.other.importExport.warningDialog.no'),
+        confirmButtonText: t('newtab.settings.other.importExport.warningDialog.yes'),
+        cancelButtonText: t('newtab.settings.other.importExport.warningDialog.no'),
         type: 'warning'
       }
     )
@@ -140,19 +140,19 @@ function handleFileChange(event: Event) {
 <template>
   <div class="settings__title">
     <el-icon><control-outlined /></el-icon>
-    <span>{{ i18n.t('newtab.settings.other.title') }}</span>
+    <span>{{ t('newtab.settings.other.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.other.sync') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.other.sync') }}</div>
       <el-switch v-model="settingsStore.sync.enabled" @change="sendSyncMessage" />
     </div>
     <p class="settings__item--note">
-      {{ i18n.t('newtab.settings.other.syncWarning') }}
+      {{ t('newtab.settings.other.syncWarning') }}
       <cloud-off-round />
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.other.importExport.title') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.other.importExport.title') }}</div>
       <span>
         <el-button
           type="primary"
@@ -166,15 +166,15 @@ function handleFileChange(event: Event) {
             )
           "
         >
-          {{ i18n.t('newtab.settings.other.importExport.export') }}
+          {{ t('newtab.settings.other.importExport.export') }}
         </el-button>
         <el-button :icon="FileUploadRound" round size="small" @click="openFilePicker">
-          {{ i18n.t('newtab.settings.other.importExport.import') }}
+          {{ t('newtab.settings.other.importExport.import') }}
         </el-button>
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ i18n.t('newtab.settings.other.purgeData') }}</div>
+      <div class="settings__label">{{ t('newtab.settings.other.purgeData') }}</div>
       <el-button
         type="danger"
         :icon="DeleteForeverOutlined"
@@ -184,10 +184,10 @@ function handleFileChange(event: Event) {
     </div>
     <div v-if="isGoogleChrome" class="settings__item">
       <div class="settings__label" style="min-height: 32px">
-        {{ i18n.t('newtab.settings.other.want_to_customize_chrome') }}
+        {{ t('newtab.settings.other.want_to_customize_chrome') }}
       </div>
       <p class="settings__item--note">
-        {{ i18n.t('newtab.settings.other.customize_chrome_tips') }}
+        {{ t('newtab.settings.other.customize_chrome_tips') }}
       </p>
     </div>
   </div>

@@ -1,6 +1,6 @@
-import { i18n } from '#imports'
+import { t } from '@/shared/i18n'
 
-import { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
+import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 import { BgType } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
@@ -25,7 +25,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     searchInNewTab: false,
     recordSearchHistory: true,
     enableShadow: true,
-    placeholder: i18n.t('newtab.search.placeholder')
+    placeholder: t('newtab.search.placeholder')
   },
   background: {
     bgType: BgType.Bing,

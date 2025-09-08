@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { i18n } from '@/.wxt/i18n'
+import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
@@ -38,14 +38,14 @@ const settingsStore = useSettingsStore()
           v-if="key === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
-          {{ i18n.t('newtab.search.searchEngineMenu.current') }}
+          {{ t('newtab.search.searchEngineMenu.current') }}
         </div>
       </div>
       <el-divider />
       <div class="search-engine-menu__tip">
-        <span>{{ i18n.t('newtab.search.searchEngineMenu.tipPrefix') }}</span>
+        <span>{{ t('newtab.search.searchEngineMenu.tipPrefix') }}</span>
         <kbd class="search-engine-menu__kbd">Tab</kbd>
-        <span>{{ i18n.t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
+        <span>{{ t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
     <el-icon class="search-engine-menu__icon">
