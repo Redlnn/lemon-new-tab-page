@@ -101,7 +101,7 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
       // 校验 URL 是否有效
       const [isValid, isValidDark] = await Promise.all([
         verifyImageUrl(localBackground.url),
-        localDarkBackground.url ? verifyImageUrl(localDarkBackground.url) : Promise.resolve(true)
+        localDarkBackground.url ? verifyImageUrl(localDarkBackground.url) : Promise.resolve(true) //（此处假设深色模式壁纸存在，不存在也返回true）
       ])
 
       // 如无效则重新加载
@@ -225,10 +225,9 @@ function needHelp() {
     :dialog="{ transition: 'dialog-bounce', alignCenter: true }"
   >
     <main
-      :style="{
-        justifyContent: settingsStore.shortcut.enabled ? 'center' : undefined,
-        paddingTop: settingsStore.shortcut.enabled ? undefined : '30vh'
-      }"
+      :style="[
+        settingsStore.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }
+      ]"
       class="app"
     >
       <time-now />
