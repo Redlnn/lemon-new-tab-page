@@ -4,173 +4,27 @@ extension:
   # Error: Package acceptance validation error.
   # The translation for field Description in locale en is too long.
   # It exceeds maximum size limit of 132 characters.
-  name: Lemon New Tab
   description: >
-    An open-source, simple, user-friendly start page.
-    You can search or custom wallpaper.
-    It can also display the most visited links.
-sync:
-  failMessage:
-    title: Cloud Sync Failed
-    message: >
-      The cloud configuration version ($1) is newer than the local version ($2).
-      Please update the extension and try again.
-  errorMessage:
-    title: Cloud Sync Error
+    An open-source, simple, user-friendly start page. You can search or custom
+    wallpaper. It can also display the most visited links.
+  name: Lemon New Tab
 newtab:
-  title: New Tab
-  menu:
-    settings: Settings
-    searchEnginePreference: Search Engine Preference
-    changelog: Changelog
-    about: About
-    sponsor: Sponsor
-    help: Help / Feedback
-  changelog: Changelog
   about:
     yiyanApiProvider: Chinese poetry API provided by $1
-  settings:
-    title: Settings
-    background:
-      title: Background Settings
-      type:
-        title: Background Type
-        none: None
-        local: Local Image
-        bing: Bing Wallpaper
-        online: Online Image
-      tip: If no background is set for dark mode, the light mode background will be used.
-      enableVignetting: Enable Vignetting
-      blur: Blur Intensity
-      maskOpacity: Mask Opacity
-      maskColor: Mask Color
-      warning:
-        title: Warning
-        fileIsNotImage: The selected file is not an image!
-        securityPolicy: Due to Google's security policy, the extension needs permission to access $1 to get the background. Do you allow this extension to request access to this host?
-        granted: Permission granted.
-        notGranted: Permission not granted, cannot access this host.
-        unknownSource: Using images from unknown sources as backgrounds may expose your device to attacks. Do you want to continue?
-      onlineTips:
-        a: Submit after pressing the Enter key or when the input field loses focus.
-        b: The wallpaper caching strategy depends on the browser, and wallpapers may not be accessible offline.
-        c: There will be a blank screen before the wallpaper finishes loading, and the duration depends on your internet speed.
-        d: Please ensure the wallpaper API you are using allows cross-origin requests; otherwise, it will fail to load.
-    clock:
-      title: Clock Settings
-      use12HourClock: '12-Hour Clock'
-      showAMPM: Show AM/PM
-      showDate: Show Date
-      showLunar: Show Chinese Lunar Calendar
-      smallFont: Small Time Font
-      enableShadow: Show Shadow
-      blinkingColon: Blinking Colon
-      blinkingTip: Turning this off can reduce CPU usage (power-saving mode).
-      invertColorLight: Use dark fonts in light mode
-      invertColorDark: Use light fonts in dark mode
-    other:
-      title: Other Settings
-      sync: Cloud Sync
-      syncWarning: >
-        Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status.
-        Items that are not supported for sync will have an icon like this on the right:
-      importExport:
-        title: Import / Export Settings
-        export: Export
-        import: Import
-        warningDialog:
-          title: Are you sure to import settings from a file?
-          content: Importing settings will overwrite your current settings. Please be cautious when using this feature!
-          yes: Yes
-          no: No
-      purgeData: Purge the data of this extension.
-      want_to_customize_chrome: Want to customize Chrome?
-      customize_chrome_tips: >
-        If you want to customize Chrome (e.g., change the color theme),
-        you can only open the native new tab page of Chrome (chrome://new-tab-page)
-        and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.
-      confirmPurgeData:
-        title: Are you sure to purge all data of this extension?
-        message: This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images, etc.
-        confirm: OK
-        cancel: Cancel
-        purging: Clearing extension data..
-    search:
-      title: Search Settings
-      defaultSearchEngine: Search Engine
-      searchSuggestionProvider: Search Suggestion API
-      openInNewTab: Open in New Tab
-      autoFocus: Default Expand Search Box
-      enableShadow: Show Search Box Shadow
-      recordSearchHistory: Record Search History
-      placeholder: Search Placeholder
-    theme:
-      title: Theme Settings
-      lightMode: Light Mode
-      darkMode: Dark Mode
-      systemMode: Follow System
-      primaryColor: Primary Color
-      chromeTip: In Chrome, this option is not affected by the 'Customize Chrome' sidebar and only related to system settings.
-    shortcut:
-      title: Shortcut Settings
-      tip: 'Tip: You can drag the settings window to see changes in the shortcut area.'
-      enable: Enable
-      showTopSites: Show Most Visited
-      showPinnedIcon: Show Pinned Icon
-      showTitle: Show Link Title
-      enableBg: Shortcut Area Background
-      enableAreaShadow: Show Shortcut Area Shadow
-      enableShadow: Show Icon Shadow
-      maxRows: Maximum Rows
-      maxColumns: Maximum Columns
-      maxItemsTipForChrome: 'Tip: You can only have up to 10 most visited links.'
-      restoreDefault: Restore default shortcuts
-      restoreDefaultConfirm:
-        title: Are you sure to restore default shortcuts?
-        confirm: 'Yes'
-        cancel: 'No'
-      whiteTextInLightMode: White Text in Light Mode
-      whiteTextTip: Disable the “Shortcut Area Background” and set “Mask Opacity” to 0 for a better appearance.
-      iconSize: Icon Size
-      HorizontalIconSpacing: Horizontal Icon Spacing
-      VerticalIconSpacing: Vertical Icon Spacing
-      marginTop: Shortcut Area Top Margin
-    yiyan:
-      title: Quote
-      enabled: Enable
-      description: Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!
-      alwaysShow: Always Show
-      normalyShowTip: When disabled, only show when the search box is focused.
-      enableShadow: Show Shadow
-      invertColorLight: Use dark fonts in light mode
-      invertColorDark: Use light fonts in dark mode
-  shortcut:
-    addNewShortcut: Add Shortcut
-    pin: Pin
-    unpin: Unpin
-    remove: Remove
-    addDialog:
-      dialogTitle: Add Shortcut
-      title: Title
-      url: URL
-      favicon: Favicon
-      confirm: OK
-      cancel: Cancel
-      invalidUrlError: Invalid URL. Please input a new one
-      confirmSvgTitle: You selected an SVG image
-      confirmSvgDesc: Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.
-      confirmSvgOKBtn: Right
-      confirmSvgCancelBtn: Oh no
-      tooLargeImageError: The image size exceeds 100KiB, please reselect a new one~
-      autoFetchFavicon: Use automatic favicon
-      uploadFaviconAlert: 'Available types: ico, svg, png, jpg, webp'
-    removeTopMessage:
-      content: Removed from shortcuts.
-      revoke: Revoke
-      restoreDefault: Restore default shortcuts
-    removePinnedMessage:
-      content: Removed from pinned links.
-      revoke: Revoke
+  changelog: Changelog
+  menu:
+    about: About
+    changelog: Changelog
+    help: Help / Feedback
+    searchEnginePreference: Search Engine Preference
+    settings: Settings
+    sponsor: Sponsor
+  notification:
+    bingWallpaper:
+      error:
+        message: Please check the console output in developer tools.
+        title: Failed to get Bing wallpaper
+      get: Fetching Bing wallpaper...
   search:
     placeholder: Search
     purgeSearchHistory: Clear Search History
@@ -179,12 +33,196 @@ newtab:
       tipPrefix: 'Tip: Press'
       tipSuffix: to switch search engine.
   searchEngineMenu:
+    baidu: Baidu
     bing: Bing
     google: Google
-    baidu: Baidu
-  notification:
-    bingWallpaper:
-      get: Fetching Bing wallpaper...
-      error:
-        title: Failed to get Bing wallpaper
-        message: Please check the console output in developer tools.
+  settings:
+    background:
+      blur: Blur Intensity
+      enableVignetting: Enable Vignetting
+      maskColor: Mask Color
+      maskOpacity: Mask Opacity
+      onlineTips:
+        a: >-
+          Submit after pressing the Enter key or when the input field loses
+          focus.
+        b: >-
+          The wallpaper caching strategy depends on the browser, and wallpapers
+          may not be accessible offline.
+        c: >-
+          There will be a blank screen before the wallpaper finishes loading,
+          and the duration depends on your internet speed.
+        d: >-
+          Please ensure the wallpaper API you are using allows cross-origin
+          requests; otherwise, it will fail to load.
+      tip: >-
+        If no background is set for dark mode, the light mode background will be
+        used.
+      title: Background Settings
+      type:
+        bing: Bing Wallpaper
+        local: Local Image
+        none: None
+        online: Online Image
+        title: Background Type
+      warning:
+        fileIsNotImage: The selected file is not an image!
+        granted: Permission granted.
+        notGranted: Permission not granted, cannot access this host.
+        securityPolicy: >-
+          Due to Google's security policy, the extension needs permission to
+          access $1 to get the background. Do you allow this extension to
+          request access to this host?
+        title: Warning
+        unknownSource: >-
+          Using images from unknown sources as backgrounds may expose your
+          device to attacks. Do you want to continue?
+    clock:
+      blinkingColon: Blinking Colon
+      blinkingTip: Turning this off can reduce CPU usage (power-saving mode).
+      enableShadow: Show Shadow
+      invertColorDark: Use light fonts in dark mode
+      invertColorLight: Use dark fonts in light mode
+      showAMPM: Show AM/PM
+      showDate: Show Date
+      showLunar: Show Chinese Lunar Calendar
+      smallFont: Small Time Font
+      title: Clock Settings
+      use12HourClock: 12-Hour Clock
+    other:
+      confirmPurgeData:
+        cancel: Cancel
+        confirm: OK
+        message: >-
+          This operation will reset the extension settings, ignored most visited
+          sites, pinned or favorited sites, selected background images, etc.
+        purging: Clearing extension data..
+        title: Are you sure to purge all data of this extension?
+      customize_chrome_tips: >
+        If you want to customize Chrome (e.g., change the color theme), you can
+        only open the native new tab page of Chrome (chrome://new-tab-page) and
+        click the icon in the bottom right corner to open the 'Customize Chrome'
+        sidebar.
+      importExport:
+        export: Export
+        import: Import
+        title: Import / Export Settings
+        warningDialog:
+          content: >-
+            Importing settings will overwrite your current settings. Please be
+            cautious when using this feature!
+          'no': 'No'
+          title: Are you sure you want to import settings from the file?
+          'yes': 'Yes'
+      purgeData: Purge the data of this extension.
+      sync: Cloud Sync
+      syncWarning: >
+        Cloud sync does not support syncing the following items: local or online
+        background images, most visited sites (including ignored sites), dark
+        mode, and system follow status. Items that are not supported for sync
+        will have an icon like this on the right:
+      title: Other Settings
+      want_to_customize_chrome: Want to customize Chrome?
+    search:
+      autoFocus: Default Expand Search Box
+      defaultSearchEngine: Search Engine
+      enableShadow: Show Search Box Shadow
+      openInNewTab: Open in New Tab
+      placeholder: Search Placeholder
+      recordSearchHistory: Record Search History
+      searchSuggestionProvider: Search Suggestion API
+      title: Search Settings
+    shortcut:
+      HorizontalIconSpacing: Horizontal Icon Spacing
+      VerticalIconSpacing: Vertical Icon Spacing
+      enable: Enable
+      enableAreaShadow: Show Shortcut Area Shadow
+      enableBg: Shortcut Area Background
+      enableShadow: Show Icon Shadow
+      iconSize: Icon Size
+      marginTop: Shortcut Area Top Margin
+      maxColumns: Maximum Columns
+      maxItemsTipForChrome: 'Tip: You can only have up to 10 most visited links.'
+      maxRows: Maximum Rows
+      restoreDefault: Restore default shortcuts
+      restoreDefaultConfirm:
+        cancel: 'No'
+        confirm: 'Yes'
+        title: Are you sure to restore default shortcuts?
+      showPinnedIcon: Show Pinned Icon
+      showTitle: Show Link Title
+      showTopSites: Show Most Visited
+      tip: >-
+        Tip: You can drag the settings window to see changes in the shortcut
+        area.
+      title: Shortcut Settings
+      whiteTextInLightMode: White Text in Light Mode
+      whiteTextTip: >-
+        Disable the “Shortcut Area Background” and set “Mask Opacity” to 0 for a
+        better appearance.
+    theme:
+      chromeTip: >-
+        In Chrome, this option is not affected by the 'Customize Chrome' sidebar
+        and only related to system settings.
+      darkMode: Dark Mode
+      lightMode: Light Mode
+      primaryColor: Primary Color
+      systemMode: Follow System
+      title: Theme Settings
+    title: Settings
+    yiyan:
+      alwaysShow: Always Show
+      description: >-
+        Display a random Chinese quote below the search bar. Give it a try — you
+        can always turn it off later!
+      enableShadow: Show Shadow
+      enabled: Enable
+      invertColorDark: Use light fonts in dark mode
+      invertColorLight: Use dark fonts in light mode
+      normalyShowTip: When disabled, only show when the search box is focused.
+      title: Quote
+  shortcut:
+    addDialog:
+      autoFetchFavicon: Use automatic favicon
+      cancel: Cancel
+      confirm: OK
+      confirmSvgCancelBtn: Oh no
+      confirmSvgDesc: >-
+        Are you sure you want to use SVG images? To avoid XSS and XXE attacks,
+        Lemon New Tab will process the image, so it may cause the SVG image not
+        to be displayed as expected. But even after processing, you may still be
+        attacked by the image you choose, so make sure the image source you use
+        is safe.
+      confirmSvgOKBtn: Right
+      confirmSvgTitle: You selected an SVG image
+      dialogTitle: Add Shortcut
+      favicon: Favicon
+      invalidUrlError: Invalid URL. Please input a new one
+      title: Title
+      tooLargeImageError: The image size exceeds 100KiB, please reselect a new one~
+      uploadFaviconAlert: 'Available types: ico, svg, png, jpg, webp'
+      url: URL
+    addNewShortcut: Add Shortcut
+    pin: Pin
+    remove: Remove
+    removePinnedMessage:
+      content: Removed from pinned links.
+      revoke: Revoke
+    removeTopMessage:
+      content: Removed from shortcuts.
+      restoreDefault: Restore default shortcuts
+      revoke: Revoke
+    unpin: Unpin
+  sponsor: >-
+    I first built this extension in my free time to meet my own needs, and I’m
+    glad it’s useful for you too! If you’d like to support me, you can reach me
+    at: redlnn@outlook.com. Thanks for your support!
+  title: New Tab
+sync:
+  errorMessage:
+    title: Cloud Sync Error
+  failMessage:
+    message: >
+      The cloud configuration version ($1) is newer than the local version ($2).
+      Please update the extension and try again.
+    title: Cloud Sync Failed

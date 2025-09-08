@@ -73,11 +73,15 @@ const fileInput = ref<HTMLInputElement | null>(null)
 
 async function openFilePicker() {
   try {
-    await ElMessageBox.confirm('导入配置文件将覆盖当前设置，是否继续？', '原有配置将被覆盖', {
-      confirmButtonText: '继续！',
-      cancelButtonText: '不要啊',
-      type: 'warning'
-    })
+    await ElMessageBox.confirm(
+      i18n.t('newtab.settings.other.importExport.warningDialog.title'),
+      i18n.t('newtab.settings.other.importExport.warningDialog.content'),
+      {
+        confirmButtonText: i18n.t('newtab.settings.other.importExport.warningDialog.yes'),
+        cancelButtonText: i18n.t('newtab.settings.other.importExport.warningDialog.no'),
+        type: 'warning'
+      }
+    )
     fileInput.value?.click()
   } catch {}
 }
