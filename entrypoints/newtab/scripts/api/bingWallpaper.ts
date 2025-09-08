@@ -1,9 +1,9 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import { i18n } from '@/.wxt/i18n'
-import enhancedFetch from '@/shared/network/fetch'
-import { useBingWallpaperStore, saveSettings, useSettingsStore } from '@/shared/settings'
 import { isImageFile, verifyImageUrl } from '@/shared/image'
+import enhancedFetch from '@/shared/network/fetch'
+import { saveSettings, useBingWallpaperStore, useSettingsStore } from '@/shared/settings'
 
 interface BingWallpaperResp {
   images: {

@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core'
 import { computed, onMounted, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
+
+import { useSettingsStore } from '@/shared/settings'
+import { getYiyanCache, isCacheFresh, setYiyanCache } from '@/shared/yiyan'
+import { yiyanProviders } from '@/shared/yiyan/providers'
 
 import { useFocusStore } from '@newtab/scripts/store'
-import { useSettingsStore } from '@/shared/settings'
-import { yiyanProviders } from '@/shared/yiyan/providers'
-import { getYiyanCache, isCacheFresh, setYiyanCache } from '@/shared/yiyan'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

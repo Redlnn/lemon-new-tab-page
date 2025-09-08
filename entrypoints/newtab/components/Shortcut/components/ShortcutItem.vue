@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { MoreVertRound } from '@vicons/material'
 import { Pin16Regular } from '@vicons/fluent'
+import { MoreVertRound } from '@vicons/material'
 
-import { useSettingsStore } from '@/shared/settings'
 import { convertBase64Svg } from '@/shared/image'
+import { useSettingsStore } from '@/shared/settings'
 
 import { getFaviconURLChrome } from '../utils/topSites'
 

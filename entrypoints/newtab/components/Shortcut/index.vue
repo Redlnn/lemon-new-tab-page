@@ -1,20 +1,22 @@
 <script setup lang="ts">
-import { ClearRound } from '@vicons/material'
-import type { TopSites } from 'webextension-polyfill'
-import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { onMounted, ref, watch } from 'vue'
 import { useDebounceFn, useWindowSize } from '@vueuse/core'
+
+import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
+import { ClearRound } from '@vicons/material'
 import { useDraggable } from 'vue-draggable-plus'
+import type { TopSites } from 'webextension-polyfill'
 
 import { i18n } from '@/.wxt/i18n'
+import { bookmarkStorage, initBookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
-import { saveBookmark, initBookmark, useBookmarkStore, bookmarkStorage } from '@/shared/bookmark'
+
 import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
+import { pinBookmark, removeBookmark } from './utils/bookmark'
 import { blockSite, getTopSites } from './utils/topSites'
-import { removeBookmark, pinBookmark } from './utils/bookmark'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

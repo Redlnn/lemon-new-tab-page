@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import { version } from '@/package.json'
-
 import { computed } from 'vue'
 import { useDateFormat, useNow } from '@vueuse/core'
-import { Edge, Chrome, Github, Firefox } from '@vicons/fa'
+
+import { Chrome, Edge, Firefox, Github } from '@vicons/fa'
+
+import { version } from '@/package.json'
 
 import { i18n } from '@/.wxt/i18n'
-import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { yiyanProviders } from '@/shared/yiyan'
 import { useSettingsStore } from '@/shared/settings'
+import { yiyanProviders } from '@/shared/yiyan'
+
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 
 const year = useDateFormat(useNow(), 'YYYY')

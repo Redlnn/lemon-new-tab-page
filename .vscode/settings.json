@@ -19,5 +19,18 @@
   "editor.formatOnSave": true,
   "css.validate": false,
   "less.validate": false,
-  "scss.validate": false
+  "scss.validate": false,
+  "tsImportSorter.configuration.groupRules": [
+    "^react(-dom)?$",
+    "^@angular/",
+    ["^pinia", "^vue$", "^@vueuse"],
+    "^node:",
+    "^@(?!newtab)[^/]+$",
+    {},
+    "^#",
+    "^@/package.json$",
+    "^@/",
+    "^@newtab",
+    "^[.]"
+  ]
 }

@@ -2,8 +2,8 @@
 import { ClockCircleOutlined } from '@vicons/antd'
 
 import { i18n } from '@/.wxt/i18n'
-import { useSettingsStore } from '@/shared/settings'
 import { isChinese } from '@/shared/lang'
+import { useSettingsStore } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 </script>

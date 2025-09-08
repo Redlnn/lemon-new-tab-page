@@ -2,9 +2,10 @@
 import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 
-import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/shared/settings'
+
+import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const settingsStore = useSettingsStore()

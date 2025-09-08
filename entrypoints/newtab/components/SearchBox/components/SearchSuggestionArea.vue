@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { TrashAlt } from '@vicons/fa'
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
+import { TrashAlt } from '@vicons/fa'
+
 import { i18n } from '@/.wxt/i18n'
-import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
-import { searchSuggestAPIs } from '@newtab/scripts/api/search'
-import { useFocusStore } from '@newtab/scripts/store'
 import { useSettingsStore } from '@/shared/settings'
+
+import { searchSuggestAPIs } from '@newtab/scripts/api/search'
+import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
+import { useFocusStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

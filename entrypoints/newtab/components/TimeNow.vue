@@ -2,8 +2,8 @@
 import { type ComputedRef, ref, watch } from 'vue'
 import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
 
-import { useSettingsStore } from '@/shared/settings'
 import { isChinese, lang } from '@/shared/lang'
+import { useSettingsStore } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 const time = ref()

@@ -1,37 +1,39 @@
 <script lang="ts" setup>
+import { onBeforeMount, onMounted, ref, watch } from 'vue'
+import { promiseTimeout, useDark } from '@vueuse/core'
+
+import { HeartFilled } from '@vicons/antd'
+import {
+  AccessTimeFilledRound,
+  HelpFilled,
+  InfoRound,
+  SearchRound,
+  SettingsRound
+} from '@vicons/material'
+import { ElConfigProvider, ElNotification } from 'element-plus'
+import type { Language } from 'element-plus/es/locale'
+import en from 'element-plus/es/locale/lang/en.mjs'
+import { browser } from 'wxt/browser'
+
+import { i18n } from '#imports'
+
 import { version } from '@/package.json'
 
-import { browser } from 'wxt/browser'
-import { ElConfigProvider, ElNotification } from 'element-plus'
-import {
-  SettingsRound,
-  SearchRound,
-  AccessTimeFilledRound,
-  InfoRound,
-  HelpFilled
-} from '@vicons/material'
-import { HeartFilled } from '@vicons/antd'
-import { useDark, promiseTimeout } from '@vueuse/core'
-import { onBeforeMount, onMounted, ref, watch } from 'vue'
-import en from 'element-plus/es/locale/lang/en.mjs'
-import type { Language } from 'element-plus/es/locale'
-
-import Background from './components/Background.vue'
-import Changelog from './components/Changelog.vue'
-import Shortcut from './components/Shortcut/index.vue'
-import SearchBox from './components/SearchBox/index.vue'
-import SettingsPage from './components/SettingsPage/index.vue'
-import TimeNow from './components/TimeNow.vue'
-import YiYan from './components/YiYan.vue'
-import AboutComp from './components/About.vue'
-import SearchEnginesSwitcher from './components/SearchEnginesSwitcher.vue'
-
-import { getBingWallpaperURL } from './scripts/api/bingWallpaper'
 import { verifyImageUrl } from '@/shared/image'
-import { useBgSwtichStore } from './scripts/store'
-import { reloadBackgroundImage, useSettingsStore, BgType } from '@/shared/settings'
+import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
-import { i18n } from '#imports'
+
+import AboutComp from '@newtab/components/About.vue'
+import Background from '@newtab/components/Background.vue'
+import Changelog from '@newtab/components/Changelog.vue'
+import SearchBox from '@newtab/components/SearchBox/index.vue'
+import SearchEnginesSwitcher from '@newtab/components/SearchEnginesSwitcher.vue'
+import SettingsPage from '@newtab/components/SettingsPage/index.vue'
+import Shortcut from '@newtab/components/Shortcut/index.vue'
+import TimeNow from '@newtab/components/TimeNow.vue'
+import YiYan from '@newtab/components/YiYan.vue'
+import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
+import { useBgSwtichStore } from '@newtab/scripts/store'
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
   '/node_modules/element-plus/es/locale/lang/zh*.mjs'

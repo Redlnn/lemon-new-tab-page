@@ -1,24 +1,26 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import { ControlOutlined } from '@vicons/antd'
 import {
-  DeleteForeverOutlined,
   CloudOffRound,
+  DeleteForeverOutlined,
   DownloadRound,
   FileUploadRound
 } from '@vicons/material'
-import { ref } from 'vue'
 
 import { storage } from '#imports'
+
 import { i18n } from '@/.wxt/i18n'
+import { downloadJSON } from '@/shared/json'
 import {
+  type CURRENT_CONFIG_INTERFACE,
   useBingWallpaperStore,
   useDarkWallpaperStore,
   useSettingsStore,
-  useWallpaperStore,
-  type CURRENT_CONFIG_INTERFACE
+  useWallpaperStore
 } from '@/shared/settings'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
-import { downloadJSON } from '@/shared/json'
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()

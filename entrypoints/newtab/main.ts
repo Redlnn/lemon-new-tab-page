@@ -1,19 +1,21 @@
+import './scripts/plugins/dayjs'
+import 'element-plus/theme-chalk/el-message-box.css'
+import './styles/index.scss'
+
 import { createPinia } from 'pinia'
-import { useDebounceFn } from '@vueuse/core'
 import { createApp, toRaw } from 'vue'
+import { useDebounceFn } from '@vueuse/core'
+
 import { browser } from 'wxt/browser'
 
 import { version } from '@/package.json'
-import './scripts/plugins/dayjs'
-import changeTheme from './scripts/use-element-plus-theme'
+
 import { i18n } from '@/.wxt/i18n'
 import { initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initSyncSettings } from '@/shared/sync'
 
-import 'element-plus/theme-chalk/el-message-box.css'
-import './styles/index.scss'
-
 import App from './App.vue'
+import changeTheme from './scripts/use-element-plus-theme'
 
 const banner = `
 

@@ -1,8 +1,10 @@
-import browser from 'webextension-polyfill'
 import { h } from 'vue'
 
-import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import browser from 'webextension-polyfill'
+
 import { i18n } from '@/.wxt/i18n'
+
+import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
 async function getTopSites() {
   let topSites
@@ -76,4 +78,4 @@ function getFaviconURLChrome(url: string, size = '128') {
   return _url.toString()
 }
 
-export { blockSite, getTopSites, getFaviconURLChrome }
+export { blockSite, getFaviconURLChrome, getTopSites }

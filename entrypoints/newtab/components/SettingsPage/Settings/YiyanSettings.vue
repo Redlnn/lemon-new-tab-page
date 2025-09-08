@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { browser } from 'wxt/browser'
+import { computed } from 'vue'
+
 import { FormatQuoteRound } from '@vicons/material'
+import { browser } from 'wxt/browser'
 
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
-import { computed } from 'vue'
 
 const lang = browser.i18n.getUILanguage()
 const isNotChinese = !lang.startsWith('zh')

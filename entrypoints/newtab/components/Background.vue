@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { useFocusStore, useBgSwtichStore } from '@newtab/scripts/store'
 import { useSettingsStore } from '@/shared/settings'
+
+import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()

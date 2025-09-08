@@ -1,7 +1,9 @@
 <script setup lang="ts">
+import { reactive, ref } from 'vue'
+
+import { Plus } from '@vicons/fa'
 import { AddRound } from '@vicons/material'
 import DOMPurify from 'dompurify'
-import { Plus } from '@vicons/fa'
 import {
   ElMessage,
   ElMessageBox,
@@ -9,12 +11,11 @@ import {
   type UploadProps,
   type UploadRequestOptions
 } from 'element-plus'
-import { reactive, ref } from 'vue'
 
 import { i18n } from '@/.wxt/i18n'
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
-import { useSettingsStore } from '@/shared/settings'
 import { convertBase64Svg, isImageFile } from '@/shared/image'
+import { useSettingsStore } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 const bookmarkStore = useBookmarkStore()

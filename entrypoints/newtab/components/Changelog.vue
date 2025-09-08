@@ -2,9 +2,10 @@
 import { version } from '@/package.json'
 
 import { i18n } from '@/.wxt/i18n'
-import BaseDialog from '@newtab/components/BaseDialog.vue'
-import Changelog from '@newtab/Changelog'
 import { useSettingsStore } from '@/shared/settings'
+
+import Changelog from '@newtab/Changelog'
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 
 const settingsStore = useSettingsStore()

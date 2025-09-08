@@ -1,7 +1,8 @@
-import { type Bookmark, saveBookmark } from '@/shared/bookmark'
 import type { Store } from 'pinia'
 import { h } from 'vue'
+
 import { i18n } from '@/.wxt/i18n'
+import { type Bookmark, saveBookmark } from '@/shared/bookmark'
 
 export async function removeBookmark(
   index: number,

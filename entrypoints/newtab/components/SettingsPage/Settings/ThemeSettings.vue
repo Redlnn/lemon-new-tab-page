@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { ColorLensOutlined, CloudOffRound } from '@vicons/material'
 import { computed, ref, watch } from 'vue'
-import { useColorMode, useDark, useTimeoutFn, usePreferredDark } from '@vueuse/core'
+import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/core'
+
+import { CloudOffRound, ColorLensOutlined } from '@vicons/material'
 
 import { i18n } from '@/.wxt/i18n'
 import { useSettingsStore } from '@/shared/settings'

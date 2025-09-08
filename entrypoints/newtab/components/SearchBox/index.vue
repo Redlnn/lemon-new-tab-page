@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import { Search } from '@vicons/fa'
-import type { TooltipInstance } from 'element-plus'
+import { computed, onMounted, ref, watch } from 'vue'
 import {
   onClickOutside,
   useActiveElement,
@@ -8,12 +7,15 @@ import {
   useTimeoutFn,
   useWindowFocus
 } from '@vueuse/core'
-import { onMounted, ref, watch, computed } from 'vue'
+
+import { Search } from '@vicons/fa'
+import type { TooltipInstance } from 'element-plus'
+
+import { useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
-import { useSettingsStore } from '@/shared/settings'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'

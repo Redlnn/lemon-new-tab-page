@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { i18n } from '@/.wxt/i18n'
+
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 
@@ -7,8 +8,8 @@ import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
 import OtherSettings from './Settings/OtherSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
-import ThemeSettings from './Settings/ThemeSettings.vue'
 import ShortcutSettings from './Settings/ShortcutSettings.vue'
+import ThemeSettings from './Settings/ThemeSettings.vue'
 import YiyanSettings from './Settings/YiyanSettings.vue'
 
 const { opened, show, hide, toggle } = useDialog()

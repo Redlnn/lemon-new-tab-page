@@ -1,24 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
-import { CloudOffRound, CloseRound } from '@vicons/material'
-import { browser } from 'wxt/browser'
+import { CloseRound, CloudOffRound } from '@vicons/material'
 import {
-  type UploadProps,
-  type UploadRequestOptions,
   type ElInput,
   ElMessage,
-  ElMessageBox
+  ElMessageBox,
+  type UploadProps,
+  type UploadRequestOptions
 } from 'element-plus'
+import { browser } from 'wxt/browser'
 
 import { i18n } from '@/.wxt/i18n'
 import { isImageFile } from '@/shared/image'
 import {
-  uploadBackgroundImage,
-  useSettingsStore,
   BgType,
+  uploadBackgroundImage,
   useDarkWallpaperStore,
+  useSettingsStore,
   useWallpaperStore
 } from '@/shared/settings'
 

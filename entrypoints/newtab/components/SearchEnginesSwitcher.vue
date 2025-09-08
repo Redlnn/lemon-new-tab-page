@@ -2,10 +2,11 @@
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 
 import { i18n } from '@/.wxt/i18n'
-import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { searchEngines } from '@newtab/scripts/api/search'
 import { useSettingsStore } from '@/shared/settings'
+
+import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
+import { searchEngines } from '@newtab/scripts/api/search'
 
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
