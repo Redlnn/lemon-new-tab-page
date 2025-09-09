@@ -1,5 +1,11 @@
 ![lemon-new-tab-page](https://socialify.git.ci/redlnn/lemon-new-tab-page/image?custom_description=%E4%B8%80%E4%B8%AA%E7%AE%80%E7%BA%A6%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E6%89%A9%E5%B1%95&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab-page%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)
 
+<div align="center">
+
+中文 | [Enlgish](README_en.md)
+
+</div>
+
 ## 安装
 
 目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
@@ -18,13 +24,16 @@
 - :joystick: 切换搜索引擎和多种搜索建议来源
 - :art: 复刻青柠起始页的部分 UI 及动画
 - :atom_symbol: 开放源代码
-- :globe_with_meridians: 多语言支持（目前只有`zh_CN`、`zh_TW`、`en`）
-
-更新日志（Changelog）：[中文](./CHANGELOG_zh.md) | [English](./CHANGELOG.md)
+- :globe_with_meridians: 多语言支持（目前支持`zh-CN`、`zh-HK`、`zh-TW`、`en`）
+  > `zh-HK` 不一定会生效，理论上支持，是否调用取决于浏览器
 
 > [!NOTE]  
 > 本插件模仿了青柠起始页的部分样式，不喜勿喷  
 > 更多功能欢迎 PR，提 Issue 不一定会实现噢
+
+## 更新日志（Changelog）
+
+[中文](./CHANGELOG.md) | [English](./CHANGELOG_en.md)
 
 ## 浏览器兼容性
 
@@ -34,7 +43,7 @@
 |  Edge   |  ✅  |  Edge 96 及更高版本   |
 | Firefox |  ✅  | Firefox 63 及更高版本 |
 
-## 预览
+## 预览图
 
 <details>
 <summary>点击展开图片</summary>
@@ -83,16 +92,16 @@
 
 </details>
 
-## 开发（Development）
+## 开发
 
 本项目使用 Vue 3 (TypeScript) + Element Plus 开发。
 
 > [!NOTE]  
 > 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
 
-### 构建（Build）
+### 构建
 
-#### 如果你使用 Chrome 浏览器（For Chrome）
+#### 如果你使用 Chrome 浏览器
 
 ```sh
 git clone https://github.com/Redlnn/lemon-new-tab-page.git
@@ -121,8 +130,8 @@ pnpm zip:firefox  # 打包 Firefox 扩展
 1. 部分 Windows 设备上的 Chromium 内核浏览器会在启动时卡死，**禁用 GPU
    硬件加速**或者在 [Experiments](chrome://flags/#use-angle) 页面将
    **Choose ANGLE graphics backend** 更改为 `OpenGL` 后可缓解
-   > - 考虑是因为显卡驱动 / 系统问题 / 浏览器被注入等原因造成
-   > - Chromium 不推荐使用 OpenGL API 渲染，改成其他可能会有效（可能会不卡但掉帧）
+   > - 考虑是因为显卡驱动 / 系统问题等原因造成
+   > - Chromium 不推荐使用 OpenGL API 渲染，改成其他也可能会有效（可能会不卡但掉帧）
 
 ## 鸣谢
 

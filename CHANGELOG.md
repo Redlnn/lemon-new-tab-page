@@ -1,284 +1,265 @@
-# Changelog
-
-> Translated by ChatGPT from Chinese.
+# 更新日志
 
 ## 2.3.2 (2025-09-15)
 
-### New Features ✨
+### 新特性✨
 
-- Added support for setting separate wallpapers for light and dark modes
-  > If no dark mode wallpaper is set, the light mode wallpaper will be used as a fallback
-- Added the ability to delete selected background images
+- 新增支持分别设置浅色与深色模式壁纸
+  > 当没有独立设置深色模式壁纸的时候会回退使用浅色模式的壁纸
+- 新增支持删掉已选择的背景图片
 
-### Fixes 🐛
+### 修复🐛
 
-- Fixed an issue where resetting the extension data did not clear all caches
-- Fixed an issue where the "Add Shortcut" button's background blur was not applied
+- 修复重置插件数据时未清空所有缓存的问题
+- 修复“添加快速访问”按钮背景模糊不生效的问题
 
-## 2.3.1 (Sep 07, 2025)
+## 2.3.1 (2025-09-07)
 
-🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
-Huge thanks to everyone who supported, and tested it (in the best way). Here’s to another year of making your browsing better!
+🎉 柠檬起始页诞生满一年啦！这一年里，它从一个小小的个人项目，慢慢成长为能陪伴大家的工具。感谢一路以来的支持和反馈，有你们它才会变得更好，期待未来ta也能继续陪伴着你！
 
-### Known Issues❗
+### 已知问题❗
 
-- When upgrading from a version <2.3.0 to ≥2.3.0,
-  the search box appearance and functionality may appear abnormal.
-  However, this issue has not been fully reproduced yet.
-  You can reselect the search engine in the settings page to resolve it.
-  Thank you for your understanding.
+- 当你从<2.3.0的版本升级到≥2.3.0时，搜索框排版及其功能可能会出现异常，但暂时未能完全复现，您可以在设置页面重新选择一次搜索引擎即可，谢谢您的理解
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed abnormal state and ineffective issues with icon shadow toggle
-- Fixed spacing issues on the quick access settings page
+- 修复图标阴影开关状态异常及不生效的问题
+- 修复快速访问设置页的间隔问题
 
-### Adjustments⚡️
+### 调整⚡️
 
-- Cleaned up some redundant code
+- 清理了一些代码
 
-## 2.3.0 (Sep 01, 2025)
+## 2.3.0 (2025-09-01)
 
-### Features✨
+### 新特性✨
 
-- Option to change the clock font to a smaller size (same as AM/PM)
-- Customizable search box placeholder text
-- Added search engine settings page
-- Support for importing and exporting configuration files for easy backup and migration
-- Enhanced quote feature: added caching and switchable APIs
-- New option to keep quote always visible
-- Quote supports toggling shadows and adjusting inverse colors
-- Power-saving mode (can disable blinking time separator)
-  > Probably no one keeps the new tab page open forever, right?
+- 可以将时钟字体改为小号字体（和 AM/PM 一样大）
+- 可自定义搜索框占位符
+- 新增搜索引擎设置页
+- 支持导入与导出配置文件，方便备份和迁移设置
+- “一言”增强：增加缓存、可切换 API
+- “一言”新增可常驻显示
+- “一言”可开关阴影，调整反色
+- 快速访问图标及文字阴影可开关
+- 省电模式（可以禁止时间分隔符闪烁）
+  > 应该不会有人一直挂着新标签页不关吧？
 
-### Adjustments⚡️
+### 调整⚡️
 
-- Due to browser policy restrictions, auto-focus on the search box has never worked properly, so the description has been changed to “Expand search box by default”
-- Adjusted text and search box shadows, added shortcut shadows for better visual appearance
-- UI, UX, and animation refinements to enhance the user experience
-- Moved the About section from Settings to a new dedicated About page
-- The new About page and Search Engine Settings page share the bottom-right entry point with the main Settings page
+- 由于各浏览器策略影响，自动聚焦搜索框一直无法正常工作，故更改描述为“默认展开搜索框”
+- 调整各处文字、搜索框的阴影，新增快捷方式阴影，以提升观感
+- UI、UX、动画细节调整，提升使用体验
+- 移动设置中的关于内容到新的关于页面
+- 新的关于页、搜索引擎设置页与设置页共用右下角入口
 
-### Fixes🐛
+### 修复🐛
 
-- Multiple stability improvements
-- Fixed missing translations and several minor bugs.
+- 多处健壮性修复
+- 修复缺失翻译与其他若干小 bug。
 
-## 2.2.3 (Jul 13, 2025)
+## 2.2.3 (2025-07-13)
 
-### Optimization⚡️
+### 优化⚡️
 
-- Automatically hide the pinned icon when `Show Most Visited` is turned off
+- 关闭【展示最常访问】时自动隐藏置顶图标
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where previously displayed Most Visited items were not removed after turning off `Show Most Visited`
-- Fixed the issue of high CPU usage during window resizing
-- Fixed an issue where wallpapers would change on other clients due to cloud sync
-  > Since local images are limited by storage size and online images are restricted by
-  > permissions, wallpapers cannot be synced, so wallpaper-related data will not be synced
+- 修复关闭【展示最常访问】时已上屏的最常访问没被清理的问题
+- 修复了调整窗口大小的过程中 CPU 持续高占用的问题
+- 修复因云同步导致其他客户端壁纸变化
+  > 由于本地图片受储存大小限制，在线图片受权限管控，因此无法同步，所以不同步壁纸相关数据
 
-## 2.2.2 (Jul 10, 2025)
+## 2.2.2 (2025-07-10)
 
-### Optimization⚡️
+### 优化⚡️
 
-- Adjusted background image loading timing to minimize visibility of the loading process
+- 调整背景图加载时机，尽量避免看到背景加载过程
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed a flickering issue that occurred during each load when the background mask was enabled
+- 修复开启背景遮罩后，每次加载都会闪一下的问题
 
-## 2.2.1 (Jul 07, 2025)
+## 2.2.1 (2025-07-07)
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed an issue where the local background selection box style was not applied
+- 修复本地背景选择框样式失效的问题
 
-## 2.2.0 (Jul 07, 2025)
+## 2.2.0 (2025-07-07)
 
-### Features✨
+### 新特性✨
 
-- Added toggle for switching between day and night mask colors.
-- Added reminder for items that do not support cloud synchronization.
-- Implemented cloud synchronization for settings and bookmarks. The following features do not support synchronization:
-  - Local or online background images
-  - Most visited sites (including ignored sites)
-  - Dark mode and system-following status, etc.
+- 新增昼夜遮罩颜色切换
+- 新增不支持云同步项目的提醒
+- 实现云同步设置和书签，以下功能不支持同步：
+  - 本地或在线背景图片
+  - 最常访问站点（含已忽略的站点）
+  - 深色模式及跟随系统状态等
 
-### Optimization⚡️
+### 优化⚡️
 
-- Refactored a large amount of code.
-- Updated and completed translations.
+- 重构大量代码
+- 更新和补全翻译
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where the background mask color did not take effect.
-- Fixed the issue where the default font did not apply for English systems.
-- Fixed the issue where Element components always used zhCn for i18n.
-- Prevented the description of quote switch from being too long in English environments.
+- 修复背景遮罩颜色不生效的问题
+- 修复英文系统默认字体不生效的问题
+- 修复 Element 组件 i18n 恒为 zhCn 的问题
+- 防止“一言”开关描述在英语环境下过长
 
-## 2.1.0 (Jun 07, 2025)
+## 2.1.0 (2025-06-07)
 
-### Optimization⚡️
+### 优化⚡️
 
-- Set the clock font to monospace for improved visual appearance.
-- Adjusted font selection order to enhance aesthetics.
-- When manually adding a shortcut, pressing Enter now submits it to improve user experience.
-- Reduced background opacity of the pin icon on pinned shortcuts to improve visual
-  appearance.
-- Adjusted CSS order and removed component restrictions to reduce extension size.
-- Refactored most of the JS and some CSS to improve performance.
-  - Fixed bugs related to configuration upgrades.
-  - Replaced axios with fetch API to reduce size.
-  - Implemented background change animations with new syntax.
-  - Fixed spelling errors.
-  - Thanks to Copilot for assistance.
+- 时钟字体设置为等宽，提升观感
+- 调整字体选择顺序，提升观感
+- 手动添加快捷方式时，可以回车进行提交，提升用户体验
+- 降低置顶快捷方式的图钉图标的背景透明度，提升观感
+- 调整CSS顺序和解除组件限制以减小插件体积
+- 重构大部分 JS 和部分 CSS 以提高性能
+  - 修复了配置升级的bug
+  - 使用 fetch api 代替 axios 以缩减体积
+  - 使用新的写法实现背景更换动画
+  - 修复了拼写错误
+  - 感谢 Copilot
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed an issue where Latin text for some Linux users was falling back to emoji fonts.
+- 修复了部分 Linux 用户的拉丁文文字字体被 fallback 到 emoji 字体上
 
-### Others🙈
+### 其他🙈
 
-- Refactored code to improve readability.
+- 重构代码提升代码可读性
 
-## 2.0.0 (Mar 20, 2025)
+## 2.0.0 (2025-03-20)
 
-**Important**: Major version upgrade, please carefully read the following changelog.
+**重要**：大版本升级，请仔细阅读以下更新日志。
 
-### Known Issues❗
+### 已知问题❗
 
-- Some Windows devices may experience a freeze on startup when setting the
-  Chromium-based browser’s homepage. The solution can be found in the
-  [README](/README.md#已知问题).
+- 部分 Windows 设备的 Chromium 内核浏览器设置启动页后会在启动时卡死，解决办法见 [README](/README.md#已知问题)
 
-### Features✨
+### 新特性✨
 
-- Optimized performance to improve opening speed and avoid lag in certain situations.
-- Pinned quick access links can now be reordered by dragging.
-- Refactored the layout style of the quick access area for better compatibility.
-  Due to this refactoring, some existing settings may have been reset.
-  We apologize for any inconvenience.
-- Refactored configuration storage and internal version iterations.
-  Due to this, some existing settings may be misaligned during configuration upgrades.
-  We apologize for any inconvenience.
-- Added options for “using white font in light mode for quick access” and “icon spacing”.
-  The original “icon width” setting has been changed to “icon size”.
-- "Adjust the page's responsive styles to prevent misalignment when shrinking the browser,
-  thus supporting use on narrow-screen devices
-  (unfortunately, Firefox mobile add-ons cannot replace the new tab page).
-- Default search engine is now Bing.
+- 优化性能，提升打开速度，避免在部分情况下卡顿
+- 已置顶的快速访问链接现在可以通过拖动排序了
+- 重构了快速访问区域的排版样式，兼容性更强。由于该项重构，部分原有设置项已被重置，不便之处敬请原谅~
+- 重构了配置储存及内部版本迭代。由于该项重构，在配置升级时部分原有设置项可能会出现错乱，不便之处敬请原谅~
+- 新增“快捷访问在浅色模式下使用白色字体”、“图标间隔”的设置项，原有的“图标宽度”更改为“图标大小”
+- 调整页面响应式样式，防止缩小浏览器时错位，因此也支持在窄屏设备上使用（可惜
+  Firefox 移动版不能替换新标签页）
+- 默认使用 Bing 作为搜索引擎
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed an issue where the search box could not lose focus by clicking the original
-  quick access area after expanding.
-- Applied clock font settings to the quote to improve
-  page appearance in dark mode.
-- Fixed an issue where clicks on some areas of the quick launch submenu did not work.
-- Fix auto focus search box not working (unfortunately Chrome prioritizes address bar).
+- 修复搜索框展开后无法通过点击原快速访问区域使搜索框失焦的问题
+- 使时钟的字体设置应用于一言以提升神色模式下的页面观感
+- 修复快速启动子菜单部分区域点击不生效的问题
+- 修复自动聚焦搜索框不生效（但很遗憾 Chrome 优先聚焦地址栏）
 
-## 1.8.1 (Mar 05, 2025)
+## 1.8.1 (2025-03-05)
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue that background color does not follow system (or browser)
-  when JS is not loaded (#19)
-- Fixed the logic and animation issues of "Dark mode" and "Follow system" switch</li>
+- 修复JS未加载时背景色不跟随系统（或浏览器）的问题 (#19)
+- 修复“深色模式”与“跟随系统”开关的逻辑、动画问题
 
-## 1.8.0 (Jan 05, 2025)
+## 1.8.0 (2025-01-05)
 
-### Features✨
+### 新特性✨
 
-- You can now use online image APIs as wallpaper.
-- Added a toggle for dark clock font.
+- 支持使用在线图片 API 作为壁纸
+- 添加了深色时钟字体的开关
 
-## 1.7.0 (Dec 17, 2024)
+## 1.7.0 (2024-12-17)
 
-### Features✨
+### 新特性✨
 
-- **Updated default theme colors and icons.**
-- Improved translation for zh_tw.
-- Added transition effects when switching background types. However, users with slow internet or low-performance devices may still notice the new background image appearing abruptly.
-- Enhanced the display effect for solid color backgrounds (when the background type is set to "None").
-  - Clock font color now inverts on solid color backgrounds.
-  - The search box background is now static pure white with an added outline.
-  - Added the option to disable shadows for the clock, search box, and quick access area.
+- **更新了默认主题色和扩展图标**
+- 重点优化了繁中的翻译
+- 切换背景类型时增加渐变效果，网速或设备性能较差时仍然有可能看到新背景图突然跳出
+- 优化了纯色背景（背景类型设置为「无」）时的显示效果
+  - 纯色背景时，时钟字体颜色反色
+  - 纯色背景时，搜索框背景调整为静态纯白色并增加描边
+  - 现在允许关闭时钟、搜索框、快速访问区域的阴影了
 
-### Improvements⚡️
+### 优化⚡️
 
-- Adjusted the timing of background loading to avoid freezing the page when fetching the background.
-- Standardized animation durations for a smoother experience.
-- Did not display the container for the quote when it was unavailable.
-- Show error message when failing to get Bing wallpaper.
+- 调整加载背景的时机以避免在获取背景时卡住页面
+- 统一动画持续时间以获得更好的体验
+- 未获取到一言的时候不展示其容器
+- 获取 Bing 壁纸失败时报错
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where wallpaper preview did not display after switching wallpaper types multiple times in the settings page.
+- 修复了在设置页面多次切换壁纸类型后不展示壁纸预览图的问题
 
-## 1.6.1 (Dec 12, 2024)
+## 1.6.1 (2024-12-12)
 
-### Features✨
+### 新特性✨
 
-- Now the search box can automatically focus when opening the new tab (disabled by default).
+- 现在打开新标签页时可以直接聚焦搜索框了（默认关闭）
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where the Quick Start area would flicker when loading the new tab page.
-- Optimized the style of the "Add New Shortcut" button by reducing its opacity when the mouse is not hovering over it.
+- 修复了启动时看到快速访问区域跳动的问题
+- 优化了“添加快速访问”按钮的样式，鼠标不悬浮时降低不透明度
 
-## 1.6.0 (Oct 09, 2024)
+## 1.6.0 (2024-10-09)
 
-### Features✨
+### 新特性✨
 
-- Added support for customizing icons when adding pinned access.
-- You can now open the changelog again via the right-click settings button.
-- Improved visual experience when the color mode is set to follow the system.
-- Updated the default theme color and optimized the appearance of some components.
+- 现在添加置顶访问时支持自定义图标了
+- 现在可以通过右键设置按钮再次打开更新日志了
+- 现在当颜色模式选择为跟随系统时更直观了
+- 更新了默认主题色，优化了部分组件外观
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where the browser would redirect Bing to the national region.
-  > To restore non-national region access, you need to clear the \*.bing.com cookies in your browser.
-- Reduced CPU usage
-- Moved the settings initialization phase earlier to avoid seeing the default settings state when opening a new tab.
+- 再次修复会使得浏览器 Bing 跳转到国区的问题
+  > 如需恢复非国区访问，需在浏览器中清理 \*.bing.com 的 cookie
+- 降低 CPU 占用
+- 将设置初始化的阶段提前以避免刚打开新标签页时看到默认设置状态的问题
 
-## 1.5.4 (Sep 18, 2024)
+## 1.5.4 (2024-09-18)
 
-### Features✨
+### 新特性✨
 
-- Added support for displaying the date and Chinese lunar calendar.
-- Brand new settings window and changelog window.
-- Using <www.bing.com> instead of cn.bing.com to avoid redirection when using Bing.
-- Now you can change the background mask color.
-- Now you can disable the background of the quick access area.
-- Optimized the position of the search bar after closing the quick access area.
-- [Firefox] Now supports setting it as the homepage (#12).
+- 支持显示日期和农历了
+- 全新的设置窗口和更新日志窗口
+- 使用 <www.bing.com> 而不是 cn.bing.com 避免后续使用 Bing 被重定向
+- 现在可以改变背景遮罩的颜色了
+- 现在可以关闭快捷访问区域的背景了
+- 优化了关闭快速访问区域后搜索栏的位置
+- [Firefox] 现在支持将设置为主页了 (#12)
 
-### Fixes🐛
+### 修复🐛
 
-- Now the search engine dropdown in the settings page can display the full name of Google.
-- Fixed the issue where the background blur was set to a fixed value when focusing the search bar.
-- Fixed the issue of browser freezing, high CPU usage, and memory leaks when using local images as backgrounds.
+- 现在设置页的搜索引擎下拉可以显示完整的 Google 了
+- 修复聚焦搜索栏时背景模糊被设置为固定数值
+- 修复使用本地图片作为背景时在浏览器启动时卡死、吃很多 CPU 且内存泄漏的问题
 
-## 1.5.3 (Sep 07, 2024)
+## 1.5.3 (2024-09-07)
 
-### Features✨
+### 新特性✨
 
-- Partial refactor to support Firefox browser.
-- Supports caching of Bing's daily image.
-- Added transition animation for local backgrounds or cached Bing wallpapers.
-- Optimized the display of the 12-hour clock format.
-- [i18n] Internationalization support.
+- 部分重构以支持 Firefox 浏览器
+- 支持缓存 Bing 每日一图
+- 本地背景或已缓存的 Bing 壁纸新增进入动画
+- 优化十二小时制时间表示
+- [i18n] 国际化支持
 
-### Fixes🐛
+### 修复🐛
 
-- Fixed the issue where unpinning did not take effect.
-- Fixed the issue where frequently visited sites could not be deleted (#8).
-- Fixed the issue where the "Enable Most Visited" switch did not work.
-- Fixed the issue where duplicate bookmarks appeared after hiding most visited.
-- Hid Chrome-specific hints in Firefox browser.
-- Fixed the issue where search suggestion API candidates and icons could not be displayed.
+- 修复撤销取消置顶不生效的问题
+- 修复无法删除经常访问的问题 (#8)
+- 修复【启用最常访问】开关不生效的问题
+- 修复隐藏最常访问后可能出现重复书签的问题
+- 在 Firefox 浏览器隐藏Chrome独有提示
+- 修复无法显示搜索建议API候选及无法显示图标的问题
 - Remove Herobrine
 
-> For earlier update logs, please refer to the commit history
+> 早期更新日志请查看提交历史
