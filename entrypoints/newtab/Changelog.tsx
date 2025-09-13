@@ -2,7 +2,19 @@ import { browser } from 'wxt/browser'
 
 const changelogZH = (
   <section>
-    <h1>2.3.2 (2025-09-15)</h1>
+    <h2>
+      <u>重要提示❗</u>
+    </h2>
+    <p>
+      当你从&lt;2.3.0的版本升级到≥2.3.0时，搜索框排版及其功能可能会出现异常，但暂时未能完全复现，您可以在设置页面重新选择一次搜索引擎即可，谢谢您的理解
+    </p>
+    <h1>2.3.3 (2025-09-13)</h1>
+    <h2>修复🐛</h2>
+    <ul>
+      <li>修复时间小字体时间不居中的问题</li>
+      <li>修复部分对话框未国际化</li>
+    </ul>
+    <h1>2.3.2 (2025-09-07)</h1>
     <h2>新特性✨</h2>
     <ul>
       <li>
@@ -20,12 +32,6 @@ const changelogZH = (
     <p>
       🎉
       柠檬起始页诞生满一年啦！这一年里，它从一个小小的个人项目，慢慢成长为能陪伴大家的工具。感谢一路以来的支持和反馈，有你们它才会变得更好，期待未来ta也能继续陪伴着你！
-    </p>
-    <h2>
-      <u>已知问题❗</u>
-    </h2>
-    <p>
-      当你从&lt;2.3.0的版本升级到≥2.3.0时，搜索框排版及其功能可能会出现异常，但暂时未能完全复现，您可以在设置页面重新选择一次搜索引擎即可，谢谢您的理解
     </p>
     <h2>修复🐛</h2>
     <ul>
@@ -79,7 +85,19 @@ const changelogZH = (
 
 const changelog = (
   <section>
-    <h1>2.3.2 (2025-09-15)</h1>
+    <h2>Important Notice❗</h2>
+    <p>
+      When upgrading from a version &lt;2.3.0 to ≥2.3.0, the search box appearance and functionality
+      may appear abnormal. However, this issue has not been fully reproduced yet. You can reselect
+      the search engine in the settings page to resolve it. Thank you for your understanding.
+    </p>
+    <h1>2.3.3 (2025-09-13)</h1>
+    <h2>Fixes 🐛</h2>
+    <ul>
+      <li>Fix the issue where the clock is not centered when "Small Time Font" is turned on</li>
+      <li>Fix some dialogs that are not internationalized</li>
+    </ul>
+    <h1>2.3.2 (2025-09-07)</h1>
     <h2>New Features ✨</h2>
     <ul>
       <li>
@@ -101,13 +119,7 @@ const changelog = (
       burn along the way! Huge thanks to everyone who supported, and tested it (in the best way).
       Here’s to another year of making your browsing better!
     </p>
-
-    <h2>Known Issues❗</h2>
-    <p>
-      When upgrading from a version &lt;2.3.0 to ≥2.3.0, the search box appearance and functionality
-      may appear abnormal. However, this issue has not been fully reproduced yet. You can reselect
-      the search engine in the settings page to resolve it. Thank you for your understanding.
-    </p>
+    <h2>Fixes 🐛</h2>
     <ul>
       <li>Fixed abnormal state and ineffective issues with icon shadow toggle</li>
       <li>Fixed spacing issues on the quick access settings page</li>

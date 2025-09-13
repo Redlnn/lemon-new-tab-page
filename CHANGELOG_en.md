@@ -2,7 +2,15 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.3.2 (2025-09-15)
+## 2.3.3 (Sep 13, 2025)
+
+### Fixes 🐛
+
+- Fix the issue where the clock is not centered when
+  "Small Time Font" is turned on
+- Fix some dialogs that are not internationalized
+
+## 2.3.2 (Sep 07, 2025)
 
 ### New Features ✨
 
@@ -15,7 +23,7 @@
 - Fixed an issue where resetting the extension data did not clear all caches
 - Fixed an issue where the "Add Shortcut" button's background blur was not applied
 
-## 2.3.1 (Sep 07, 2025)
+## 2.3.1 (Sep 02, 2025)
 
 🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
 Huge thanks to everyone who supported, and tested it (in the best way). Here’s to another year of making your browsing better!
