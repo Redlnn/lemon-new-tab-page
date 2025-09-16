@@ -19,7 +19,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     }
   },
   search: {
-    autoFocus: false,
+    alwaysExpandSearchBar: false,
     selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 'bing',
     searchInNewTab: false,
@@ -77,6 +77,17 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
       light: false,
       night: false
     }
+  },
+  perf: {
+    disableDialogTransparent: false,
+    disableDialogBlur: false,
+    disableFocusScale: false,
+    disableFocusBlur: false,
+    disableShortcutTransparent: false,
+    disableShortcutBlur: false,
+    disableSearchBarTransparent: false,
+    disableSearchBarBlur: false,
+    disableYiyanBlur: false
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION
