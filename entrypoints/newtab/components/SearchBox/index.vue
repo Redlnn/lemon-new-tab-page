@@ -40,7 +40,10 @@ const { width: searchFormWidth } = useElementSize(searchForm)
 const formClasses = computed(() => {
   return {
     'search-box__form--shadow': settingsStore.search.enableShadow,
-    'search-box__form--dark': settingsStore.background.bgType === 0
+    'search-box__form--dark': settingsStore.background.bgType === 0,
+    'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar,
+    'search-box__form--opacity': !settingsStore.perf.disableSearchBarTransparent,
+    'search-box__form--blur': !settingsStore.perf.disableSearchBarBlur
   }
 })
 
@@ -181,10 +184,6 @@ function doSearch() {
 }
 
 onMounted(() => {
-  if (settingsStore.search.autoFocus) {
-    handleFocus()
-    searchInput.value?.focus()
-  }
   useTimeoutFn(() => (mounted.value = true), 100)
 })
 </script>
@@ -210,7 +209,6 @@ onMounted(() => {
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
-        :autofocus="settingsStore.search.autoFocus"
       />
       <div class="search-box__btn">
         <el-icon @click="doSearch"><search /></el-icon>

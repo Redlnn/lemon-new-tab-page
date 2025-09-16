@@ -123,8 +123,19 @@ newtab:
         will have an icon like this on the right:
       title: Other Settings
       want_to_customize_chrome: Want to customize Chrome?
+    perf:
+      title: Performance settings
+      disableDialogTransparent: Disable dialog transparency
+      disableDialogBlur: Disable dialog blur
+      disableFocusScale: Disable background scaling when focusing search bar
+      disableFocusBlur: Disable background blur when focusing search bar
+      disableShortcutTransparent: Disable shortcut icon transparency
+      disableShortcutBlur: Disable shortcut icon blur
+      disableSearchBarTransparent: Disable search bar transparency
+      disableSearchBarBlur: Disable search bar blur
+      disableYiyanBlur: Disable quote background blur
     search:
-      autoFocus: Default Expand Search Box
+      alwaysExpandSearchBar: Always expand search bar
       defaultSearchEngine: Search Engine
       enableShadow: Show Search Box Shadow
       openInNewTab: Open in New Tab

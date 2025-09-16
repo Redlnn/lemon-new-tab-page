@@ -52,7 +52,8 @@ const isYiyanEnabled = computed(
         :class="[
           settingsStore.yiyan.enableShadow ? 'yiyan--shadow' : undefined,
           settingsStore.yiyan.invertColor.light ? ['yiyan--invert', 'yiyan--light'] : undefined,
-          settingsStore.yiyan.invertColor.night ? ['yiyan--invert', 'yiyan--night'] : undefined
+          settingsStore.yiyan.invertColor.night ? ['yiyan--invert', 'yiyan--night'] : undefined,
+          settingsStore.perf.disableYiyanBlur ? undefined : 'yiyan--blur'
         ]"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>
@@ -99,7 +100,10 @@ const isYiyanEnabled = computed(
     &:hover {
       color: var(--el-fill-color-blank);
       background-color: color-mix(in srgb, var(--el-bg-color), transparent 90%);
-      backdrop-filter: blur(10px) saturate(1.2);
+
+      &.yiyan--blur {
+        backdrop-filter: blur(10px) saturate(1.2);
+      }
 
       .yiyan__extra {
         opacity: 1;

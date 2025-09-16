@@ -10,10 +10,21 @@
     width: var(--icon_size);
     height: var(--icon_size);
     color: var(--el-text-color-regular);
-    background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+    background: var(--el-fill-color-darker);
     border-radius: 50%;
-    backdrop-filter: blur(10px) saturate(1.4);
     transition: background-color 0.1s ease;
+
+    html.dark & {
+      background: var(--el-fill-color-extra-light);
+    }
+
+    &--blur {
+      backdrop-filter: blur(10px) saturate(1.4);
+    }
+
+    &--opacity {
+      background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+    }
 
     span {
       display: block;
@@ -33,7 +44,15 @@
 
   /* stylelint-disable-next-line no-descending-specificity */
   &:hover .shortcut__icon {
-    background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
+    background: var(--el-fill-color-extra-light);
+
+    html.dark & {
+      background: var(--el-fill-color-light);
+    }
+
+    &--opacity {
+      background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
+    }
   }
 
   .shortcut__item-link {
@@ -108,6 +127,7 @@
   .shortcut__icon {
     box-shadow: var(--el-box-shadow);
 
+    /* stylelint-disable-next-line no-descending-specificity */
     html.dark & {
       box-shadow: var(--el-box-shadow-light);
     }

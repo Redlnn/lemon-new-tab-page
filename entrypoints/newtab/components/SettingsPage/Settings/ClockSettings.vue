@@ -42,13 +42,6 @@ const settingsStore = useSettingsStore()
       <el-switch v-model="settingsStore.time.enableShadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.clock.blinkingColon') }}</div>
-      <el-switch v-model="settingsStore.time.blinkingColon" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('newtab.settings.clock.blinkingTip') }}
-    </p>
-    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.clock.invertColorLight') }}</div>
       <el-switch v-model="settingsStore.time.invertColor.light" />
     </div>

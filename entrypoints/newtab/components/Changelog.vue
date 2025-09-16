@@ -21,6 +21,7 @@ defineExpose({ show, hide, toggle })
     container-class="changelog__dialog"
     @closed="() => (settingsStore.pluginVersion = version)"
     acrylic
+    opacity
   >
     <component :is="Changelog"></component>
   </base-dialog>
