@@ -54,11 +54,14 @@ function getlunarCalendar() {
       settingsStore.time.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
-    <div class="clock__time" :class="[settingsStore.time.small ? 'clock__time-small' : undefined]">
-      <div v-if="settingsStore.time.showMeridiem && isChinese" class="clock__meridiem">
+    <div
+      class="clock__time-container"
+      :class="[settingsStore.time.small ? 'clock__time-container-small' : undefined]"
+    >
+      <span v-if="settingsStore.time.showMeridiem && isChinese" class="clock__meridiem">
         {{ timeNowMeridiemZH }}
-      </div>
-      <div style="font-variant-numeric: tabular-nums">
+      </span>
+      <span class="clock__time">
         <span class="clock__hour">{{
           settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
         }}</span>
@@ -68,7 +71,7 @@ function getlunarCalendar() {
           >:</span
         >
         <span class="clock__minute">{{ timeNowMinute }}</span>
-      </div>
+      </span>
       <span
         v-if="settingsStore.time.showMeridiem && !isChinese"
         class="clock__meridiem"
