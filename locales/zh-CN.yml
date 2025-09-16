@@ -58,7 +58,7 @@ newtab:
         unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
     clock:
       blinkingColon: 闪烁时间分隔符
-      blinkingTip: 关掉可以降低 CPU 占用率（省电模式）
+      blinkingTip: 关掉可以降低 GPU 占用率
       enableShadow: 显示阴影
       invertColorDark: 深色模式下使用深色字体
       invertColorLight: 浅色模式下使用深色字体
@@ -93,8 +93,19 @@ newtab:
         云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：
       title: 其他设置
       want_to_customize_chrome: 要自定义Chrome？
+    perf:
+      title: 性能设置
+      disableDialogTransparent: 弹窗背景不透明
+      disableDialogBlur: 弹窗背景不模糊
+      disableFocusScale: 点击搜索框不缩放背景
+      disableFocusBlur: 点击搜索框不模糊背景
+      disableShortcutTransparent: 快捷访问图标背景不透明
+      disableShortcutBlur: 快捷访问图标背景不模糊
+      disableSearchBarTransparent: 搜索框背景不透明
+      disableSearchBarBlur: 搜索框背景不模糊
+      disableYiyanBlur: 一言背景区域不模糊
     search:
-      autoFocus: 默认展开搜索框
+      alwaysExpandSearchBar: 一直展开搜索框
       defaultSearchEngine: 搜索引擎
       enableShadow: 显示搜索框阴影
       openInNewTab: 在新标签页中打开

@@ -5,11 +5,14 @@ import { useElementVisibility, useWindowSize } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
+import { useSettingsStore } from '@/shared/settings'
+
 interface Props {
   title?: string
   modelValue: boolean
   containerClass?: string
   acrylic?: boolean
+  opacity?: boolean
 }
 
 defineProps<Props>()
@@ -24,6 +27,8 @@ const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
 const headerIsVisible = useElementVisibility(header)
 const { width: windowWidth } = useWindowSize()
+
+const settingsStore = useSettingsStore()
 
 function onClose() {
   emit('close')
@@ -44,7 +49,17 @@ function onOpen() {
   <el-dialog
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : 600"
-    :class="['base-dialog', containerClass, { 'base-dialog--acrylic': acrylic }]"
+    :class="[
+      'base-dialog',
+      containerClass,
+      {
+        'base-dialog--acrylic':
+          acrylic &&
+          !settingsStore.perf.disableDialogTransparent &&
+          !settingsStore.perf.disableDialogBlur
+      },
+      { 'base-dialog--opacity': opacity && !settingsStore.perf.disableDialogTransparent }
+    ]"
     :show-close="false"
     lock-scroll
     draggable
@@ -91,8 +106,11 @@ function onOpen() {
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
 
-  &--acrylic {
+  &--opacity {
     background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
+  }
+
+  &--acrylic {
     backdrop-filter: blur(10px) saturate(1.4);
   }
 

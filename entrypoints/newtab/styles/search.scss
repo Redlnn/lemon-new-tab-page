@@ -1,3 +1,4 @@
+/* stylelint-disable no-descending-specificity */
 .search-box {
   position: relative;
   z-index: 10;
@@ -21,32 +22,54 @@
     height: var(--height);
     font-size: 15px;
     color: transparent;
-    background-color: color-mix(in srgb, var(--el-fill-color), transparent 60%);
+    background-color: var(--el-fill-color-darker);
     border-radius: calc(var(--height) / 2);
-    backdrop-filter: blur(10px) saturate(1.4);
     transition:
       background-color var(--el-transition-duration-fast) ease,
       box-shadow var(--el-transition-duration-fast) ease,
       border var(--el-transition-duration-fast) ease,
       width var(--el-transition-duration-fast) var(--cubic-bezier);
 
-    &--shadow {
-      box-shadow: var(--el-box-shadow);
+    &--blur {
+      backdrop-filter: blur(10px) saturate(1.4);
+    }
+
+    &--opacity {
+      background-color: color-mix(in srgb, var(--el-fill-color), transparent 60%);
     }
 
     html.dark & {
       --search-form-placeholder-color: var(--el-text-color-secondary);
+
+      &:not(.search-box__form--opacity) {
+        background-color: var(--el-fill-color);
+      }
 
       &--shadow {
         box-shadow: var(--el-box-shadow-light);
       }
     }
 
+    &--shadow {
+      box-shadow: var(--el-box-shadow);
+    }
+
+    &--expand {
+      --width: 500px;
+    }
+
     &:hover:not(.search-box__form--focus) {
       --width: 500px;
       --search-form-placeholder-color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color-dark);
 
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
+      html.dark &:not(.search-box__form--opacity) {
+        background-color: var(--el-fill-color-light);
+      }
+
+      &.search-box__form--opacity {
+        background-color: color-mix(in srgb, var(--el-fill-color), transparent 40%);
+      }
     }
 
     html:not(.dark) &.search-box__form--dark {
@@ -71,8 +94,15 @@
 
     &--focus {
       --width: 500px;
+      background-color: var(--el-fill-color);
 
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
+      html.dark &:not(.search-box__form--opacity) {
+        background-color: var(--el-fill-color-lighter);
+      }
+
+      &.search-box__form--opacity {
+        background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
+      }
 
       .search-engine-menu__icon {
         color: var(--el-text-color-regular);

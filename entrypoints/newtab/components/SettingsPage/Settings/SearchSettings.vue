@@ -52,8 +52,8 @@ const settingsStore = useSettingsStore()
       <el-switch v-model="settingsStore.search.searchInNewTab" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.autoFocus') }}</div>
-      <el-switch v-model="settingsStore.search.autoFocus" />
+      <div class="settings__label">{{ t('newtab.settings.search.alwaysExpandSearchBar') }}</div>
+      <el-switch v-model="settingsStore.search.alwaysExpandSearchBar" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.search.enableShadow') }}</div>

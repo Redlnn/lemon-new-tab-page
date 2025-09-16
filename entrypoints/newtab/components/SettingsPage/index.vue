@@ -7,6 +7,7 @@ import { useDialog } from '@newtab/composables/useDialog'
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'
 import OtherSettings from './Settings/OtherSettings.vue'
+import PerformanceSettings from './Settings/PerformanceSettings.vue'
 import SearchSettings from './Settings/SearchSettings.vue'
 import ShortcutSettings from './Settings/ShortcutSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
@@ -22,6 +23,7 @@ defineExpose({ show, hide, toggle })
     :title="t('newtab.settings.title')"
     container-class="settings__dialog"
     acrylic
+    opacity
   >
     <theme-settings />
     <clock-settings />
@@ -29,6 +31,7 @@ defineExpose({ show, hide, toggle })
     <background-settings />
     <shortcut-settings />
     <yiyan-settings />
+    <performance-settings />
     <other-settings />
   </base-dialog>
 </template>

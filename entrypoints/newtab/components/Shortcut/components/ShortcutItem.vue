@@ -32,7 +32,13 @@ defineProps<{
           </el-icon>
         </div>
         <!-- eslint-disable vue/no-v-html -->
-        <div class="shortcut__icon">
+        <div
+          class="shortcut__icon"
+          :class="{
+            'shortcut__icon--opacity': !settingsStore.perf.disableShortcutTransparent,
+            'shortcut__icon--blur': !settingsStore.perf.disableShortcutBlur
+          }"
+        >
           <span
             v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
             v-html="convertBase64Svg(favicon as string)"

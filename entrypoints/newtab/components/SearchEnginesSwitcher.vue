@@ -15,7 +15,7 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-  <base-dialog v-model="opened" :title="t('newtab.menu.searchEnginePreference')" acrylic>
+  <base-dialog v-model="opened" :title="t('newtab.menu.searchEnginePreference')" acrylic opacity>
     <div style="width: 100%; overflow: hidden">
       <el-row :gutter="10" class="se-switcher">
         <el-col

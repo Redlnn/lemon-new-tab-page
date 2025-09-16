@@ -32,7 +32,12 @@ defineProps<{ url: string }>()
         v-show="!switchStore.isSwitching"
         ref="background"
         class="background"
-        :class="{ 'background--focused': focusStore.isFocused }"
+        :class="{
+          'background--deafult-scale': settingsStore.perf.disableFocusScale,
+          'background--focused__scale':
+            focusStore.isFocused && !settingsStore.perf.disableFocusScale,
+          'background--focused__blur': focusStore.isFocused && !settingsStore.perf.disableFocusBlur
+        }"
         :style="{
           backgroundImage: url
         }"
@@ -77,9 +82,18 @@ defineProps<{ url: string }>()
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
-  &--focused {
-    filter: blur(calc(var(--blur-intensity) + 10px));
+  &--deafult-scale {
     transform: scale(1.1);
+  }
+
+  &--focused {
+    &__scale {
+      transform: scale(1.1);
+    }
+
+    &__blur {
+      filter: blur(calc(var(--blur-intensity) + 10px));
+    }
   }
 }
 

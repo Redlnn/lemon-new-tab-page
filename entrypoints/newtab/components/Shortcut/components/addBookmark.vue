@@ -129,7 +129,13 @@ function isSvg(file: Blob) {
   <div class="shortcut__item shortcut__item--add-bookmark">
     <div class="shortcut__item-link" style="cursor: pointer" @click="showDialog = true">
       <div class="shortcut__icon-container">
-        <div class="shortcut__icon">
+        <div
+          class="shortcut__icon"
+          :class="{
+            'shortcut__icon--opacity': !settingsStore.perf.disableShortcutTransparent,
+            'shortcut__icon--blur': !settingsStore.perf.disableShortcutBlur
+          }"
+        >
           <add-round />
         </div>
       </div>
@@ -197,8 +203,6 @@ function isSvg(file: Blob) {
   }
 
   .shortcut__icon {
-    background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
-
     svg {
       width: 70%;
     }
@@ -209,10 +213,6 @@ function isSvg(file: Blob) {
     .shortcut__icon {
       color: var(--el-text-color-regular);
     }
-
-    .shortcut__icon {
-      background-color: color-mix(in srgb, var(--el-bg-color), transparent 40%);
-    }
   }
 
   // 白色文本容器特化
@@ -220,12 +220,24 @@ function isSvg(file: Blob) {
     .shortcut__title,
     .shortcut__icon {
       color: color-mix(in srgb, var(--el-color-white), transparent 30%);
+
+      &:not(.shortcut__icon--opacity) {
+        svg {
+          color: color-mix(in srgb, var(--el-text-color-regular), transparent 70%);
+        }
+      }
     }
 
     &:hover {
       .shortcut__title,
       .shortcut__icon {
         color: var(--el-color-white);
+
+        &:not(.shortcut__icon--opacity) {
+          svg {
+            color: var(--el-text-color-regular);
+          }
+        }
       }
     }
   }

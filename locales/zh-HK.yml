@@ -93,8 +93,19 @@ newtab:
         雲端同步不支援同步以下項目：本機或線上背景圖片、最常瀏覽網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。 不支援同步的項目會有如右側的標識：
       title: 其他設定
       want_to_customize_chrome: 想自訂 Chrome？
+    perf:
+      title: 效能設定
+      disableDialogTransparent: 對話框背景不透明
+      disableDialogBlur: 對話框背景不模糊
+      disableFocusScale: 點搜尋框時不縮放背景
+      disableFocusBlur: 點搜尋框時背景不模糊
+      disableShortcutTransparent: 快速存取圖示背景不透明
+      disableShortcutBlur: 快速存取圖示背景不模糊
+      disableSearchBarTransparent: 搜尋框背景不透明
+      disableSearchBarBlur: 搜尋框背景不模糊
+      disableYiyanBlur: 一言背景區域不模糊
     search:
-      autoFocus: 預設展開搜尋框
+      alwaysExpandSearchBar: 一直展開搜尋框
       defaultSearchEngine: 預設搜尋引擎
       enableShadow: 顯示搜尋框陰影
       openInNewTab: 在新分頁中開啟
