@@ -83,7 +83,9 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Local]: {
     getURL: async () =>
       isDark.value
-        ? `url(${settingsStore.localDarkBackground.url})`
+        ? settingsStore.localDarkBackground.id
+          ? `url(${settingsStore.localDarkBackground.url})`
+          : `url(${settingsStore.localBackground.url})`
         : `url(${settingsStore.localBackground.url})`,
     verify: async () => {
       const settingsStore = useSettingsStore()
@@ -199,7 +201,8 @@ watch(
 
 watch(isDark, async (darked) => {
   if (settingsStore.background.bgType !== BgType.Local) return
-  if (settingsStore.localBackground?.id == null || settingsStore.localBackground?.id === '') return
+  if (settingsStore.localDarkBackground?.id == null || settingsStore.localDarkBackground?.id === '')
+    return
   await bgTypeProviders[BgType.Local].verify?.()
   switchStore.start()
   await promiseTimeout(500)
