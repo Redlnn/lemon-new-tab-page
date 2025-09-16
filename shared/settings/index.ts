@@ -12,16 +12,17 @@ export type {
   SettingsInterfaceVer3,
   SettingsInterfaceVer4,
   SettingsInterfaceVer5,
-  SettingsInterfaceVer6
+  SettingsInterfaceVer6,
+  SettingsInterfaceVer7
 } from './types'
 export {
   initSettings,
   reloadBackgroundImage,
+  saveSettings,
   uploadBackgroundImage,
-  useSettingsStore,
-  saveSettings
+  useSettingsStore
 } from './settingsStore'
 export { settingsStorage } from './settingsStorage'
-export { useBingWallpaperStore, useWallpaperStore, useDarkWallpaperStore } from './wallpaperStore'
-export { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
+export { useBingWallpaperStore, useDarkWallpaperStore, useWallpaperStore } from './wallpaperStore'
+export { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 export { defaultSettings } from './default'

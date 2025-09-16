@@ -1,19 +1,22 @@
 import { storage } from '#imports'
+
+import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
+import { defaultSettings } from './default'
+import {
+  migrateFromVer2To3,
+  migrateFromVer3To4,
+  migrateFromVer4To5,
+  migrateFromVer5To6,
+  migrateFromVer6To7
+} from './migrate'
 import type {
   SettingsInterfaceVer2,
   SettingsInterfaceVer3,
   SettingsInterfaceVer4,
   SettingsInterfaceVer5,
-  SettingsInterfaceVer6
+  SettingsInterfaceVer6,
+  SettingsInterfaceVer7
 } from './types'
-import {
-  migrateFromVer2To3,
-  migrateFromVer3To4,
-  migrateFromVer4To5,
-  migrateFromVer5To6
-} from './migrate'
-import { defaultSettings } from './default'
-import { CURRENT_CONFIG_VERSION, type CURRENT_CONFIG_INTERFACE } from './current'
 
 // 合并重复的迁移逻辑，通过辅助函数创建迁移函数
 function createMigration<From, To>(
@@ -39,6 +42,7 @@ export const settingsStorage = storage.defineItem<CURRENT_CONFIG_INTERFACE>('loc
     2: createMigration<SettingsInterfaceVer2, SettingsInterfaceVer3>(2, migrateFromVer2To3),
     3: createMigration<SettingsInterfaceVer3, SettingsInterfaceVer4>(3, migrateFromVer3To4),
     4: createMigration<SettingsInterfaceVer4, SettingsInterfaceVer5>(4, migrateFromVer4To5),
-    5: createMigration<SettingsInterfaceVer5, SettingsInterfaceVer6>(5, migrateFromVer5To6)
+    5: createMigration<SettingsInterfaceVer5, SettingsInterfaceVer6>(5, migrateFromVer5To6),
+    6: createMigration<SettingsInterfaceVer6, SettingsInterfaceVer7>(6, migrateFromVer6To7)
   }
 })
