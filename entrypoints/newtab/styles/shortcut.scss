@@ -46,7 +46,7 @@
   &:hover .shortcut__icon {
     background: var(--el-fill-color-extra-light);
 
-    html.dark & {
+    html.dark &:not(.shortcut__icon--opacity) {
       background: var(--el-fill-color-light);
     }
 
