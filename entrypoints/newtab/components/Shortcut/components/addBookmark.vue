@@ -133,7 +133,10 @@ function isSvg(file: Blob) {
           class="shortcut__icon"
           :class="{
             'shortcut__icon--opacity': !settingsStore.perf.disableShortcutTransparent,
-            'shortcut__icon--blur': !settingsStore.perf.disableShortcutBlur
+            'shortcut__icon--blur': !(
+              settingsStore.perf.disableShortcutBlur ||
+              settingsStore.perf.disableShortcutTransparent
+            )
           }"
         >
           <add-round />
