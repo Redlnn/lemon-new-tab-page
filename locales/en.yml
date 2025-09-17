@@ -79,7 +79,7 @@ newtab:
           device to attacks. Do you want to continue?
     clock:
       blinkingColon: Blinking colon
-      blinkingTip: Turning this off can reduce CPU usage (power-saving mode).
+      blinkingTip: Turning this off can reduce sustained GPU usage.
       enableShadow: Show shadow
       invertColorDark: Use light fonts in dark mode
       invertColorLight: Use dark fonts in light mode
