@@ -49,12 +49,12 @@ const isYiyanEnabled = computed(
     <div v-if="isYiyanEnabled" class="yiyan">
       <div
         class="yiyan__main"
-        :class="[
-          settingsStore.yiyan.enableShadow ? 'yiyan--shadow' : undefined,
-          settingsStore.yiyan.invertColor.light ? ['yiyan--invert', 'yiyan--light'] : undefined,
-          settingsStore.yiyan.invertColor.night ? ['yiyan--invert', 'yiyan--night'] : undefined,
-          settingsStore.perf.disableYiyanBlur ? undefined : 'yiyan--blur'
-        ]"
+        :class="{
+          'yiyan--shadow': settingsStore.yiyan.enableShadow,
+          'yiyan--invert yiyan--light': settingsStore.yiyan.invertColor.light,
+          'yiyan--invert yiyan--night': settingsStore.yiyan.invertColor.night,
+          'yiyan--blur': !settingsStore.perf.disableYiyanBlur
+        }"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>
         <p v-if="yiyanOrigin" class="yiyan__extra">—— {{ yiyanOrigin }}</p>
