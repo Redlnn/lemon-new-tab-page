@@ -35,7 +35,9 @@ newtab:
   searchEngineMenu:
     baidu: Baidu
     bing: Bing
+    duckduckgo: DuckDuckGo
     google: Google
+    yandex: Yandex
   settings:
     background:
       blur: Blur intensity
@@ -124,16 +126,16 @@ newtab:
       title: Other settings
       want_to_customize_chrome: Want to customize Chrome?
     perf:
-      title: Performance settings
-      disableDialogTransparent: Disable dialog transparency
       disableDialogBlur: Disable dialog blur
-      disableFocusScale: Disable background scaling when focusing search bar
+      disableDialogTransparent: Disable dialog transparency
       disableFocusBlur: Disable background blur when focusing search bar
-      disableShortcutTransparent: Disable shortcut icon transparency
-      disableShortcutBlur: Disable shortcut icon blur
-      disableSearchBarTransparent: Disable search bar transparency
+      disableFocusScale: Disable background scaling when focusing search bar
       disableSearchBarBlur: Disable search bar blur
+      disableSearchBarTransparent: Disable search bar transparency
+      disableShortcutBlur: Disable shortcut icon blur
+      disableShortcutTransparent: Disable shortcut icon transparency
       disableYiyanBlur: Disable quote background blur
+      title: Performance settings
     search:
       alwaysExpandSearchBar: Always expand search bar
       defaultSearchEngine: Search engine
@@ -157,8 +159,8 @@ newtab:
       maxRows: Maximum rows
       restoreDefault: Restore default shortcuts
       restoreDefaultConfirm:
-        cancel: No
-        confirm: Yes
+        cancel: 'No'
+        confirm: 'Yes'
         title: Are you sure you want to restore default shortcuts?
       showPinnedIcon: Show pinned icon
       showTitle: Show link title

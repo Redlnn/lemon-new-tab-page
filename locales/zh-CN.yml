@@ -29,7 +29,9 @@ newtab:
   searchEngineMenu:
     baidu: 百度
     bing: 必应
+    duckduckgo: DuckDuckGo
     google: Google
+    yandex: Yandex
   settings:
     background:
       blur: 模糊强度
@@ -94,16 +96,16 @@ newtab:
       title: 其他设置
       want_to_customize_chrome: 要自定义Chrome？
     perf:
-      title: 性能设置
-      disableDialogTransparent: 弹窗背景不透明
       disableDialogBlur: 弹窗背景不模糊
-      disableFocusScale: 点击搜索框不缩放背景
+      disableDialogTransparent: 弹窗背景不透明
       disableFocusBlur: 点击搜索框不模糊背景
-      disableShortcutTransparent: 快捷访问图标背景不透明
-      disableShortcutBlur: 快捷访问图标背景不模糊
-      disableSearchBarTransparent: 搜索框背景不透明
+      disableFocusScale: 点击搜索框不缩放背景
       disableSearchBarBlur: 搜索框背景不模糊
+      disableSearchBarTransparent: 搜索框背景不透明
+      disableShortcutBlur: 快捷访问图标背景不模糊
+      disableShortcutTransparent: 快捷访问图标背景不透明
       disableYiyanBlur: 一言背景区域不模糊
+      title: 性能设置
     search:
       alwaysExpandSearchBar: 一直展开搜索框
       defaultSearchEngine: 搜索引擎

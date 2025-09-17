@@ -150,3 +150,7 @@ pnpm zip:firefox    # Package Firefox extension
   Layout, animations, and some CSS were referenced.
 - [Light Tab Page](https://github.com/Devifish/light-tab-page):
   Source of custom wallpaper storage implementation.
+
+## License
+
+This project is open-sourced under the MIT License, except for trademark-related images in `entrypoints/newtab/assets`.

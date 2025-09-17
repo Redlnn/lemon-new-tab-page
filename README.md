@@ -137,3 +137,7 @@ pnpm zip:firefox  # 打包 Firefox 扩展
 
 - [青柠起始页](https://limestart.cn/)：柠檬起始页的模仿对象，模仿了布局和动画，参考了部分 CSS
 - [Light Tab Page 轻标签页](https://github.com/Devifish/light-tab-page)：自定义壁纸储存的实现来源
+
+## License
+
+本项目以 MIT 协议开源，`entrypoints/newtab/assets` 中的涉及到商标的图片除外

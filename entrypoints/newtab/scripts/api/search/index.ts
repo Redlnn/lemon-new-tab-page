@@ -1,9 +1,10 @@
-import { Google } from '@vicons/fa'
-
 import { t } from '@/shared/i18n'
 
 import Baidu from '@newtab/assets/baidu.svg?component'
 import Bing from '@newtab/assets/bing.svg?component'
+import DuckDuckGo from '@newtab/assets/duckduckgo.svg?component'
+import Google from '@newtab/assets/google.svg?component'
+import Yandex from '@newtab/assets/yandex.svg?component'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'
 
@@ -22,6 +23,16 @@ export const searchEngines = {
     name: t('newtab.searchEngineMenu.bing'),
     url: 'https://www.bing.com/search?q=%s',
     icon: Bing
+  },
+  yandex: {
+    name: t('newtab.searchEngineMenu.yandex'),
+    url: 'https://yandex.com/search?text=%s',
+    icon: Yandex
+  },
+  duckduckgo: {
+    name: t('newtab.searchEngineMenu.duckduckgo'),
+    url: 'https://duckduckgo.com/?q=%s',
+    icon: DuckDuckGo
   }
 } as const
 

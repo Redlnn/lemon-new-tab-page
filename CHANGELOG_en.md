@@ -7,6 +7,7 @@
 ### New Features ✨
 
 - Added performance settings to disable high-performance effects for a better experience on low- and mid-range devices
+- Added 2 new candidate search engines
 
 ### Fixes 🐛
 

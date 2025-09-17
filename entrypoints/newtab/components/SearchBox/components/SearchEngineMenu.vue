@@ -48,7 +48,7 @@ const settingsStore = useSettingsStore()
         <span>{{ t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
-    <el-icon class="search-engine-menu__icon">
+    <el-icon class="search-engine-menu__icon" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">
       <component :is="searchEngines[settingsStore.search.selectedSearchEngine].icon" />
     </el-icon>
   </el-tooltip>

@@ -12,6 +12,7 @@ const changelogZH = (
     <h2>新特性✨</h2>
     <ul>
       <li>新增性能设置，可关闭高性能占用效果以在中低性能设备上获得更好的体验</li>
+      <li>新增2个候选搜索引擎</li>
     </ul>
     <h2>修复🐛</h2>
     <ul>
@@ -107,6 +108,7 @@ const changelog = (
         Added performance settings to disable high-performance effects for a better experience on
         low- and mid-range devices
       </li>
+      <li>Added 2 new candidate search engines</li>
     </ul>
     <h2>Fixes 🐛</h2>
     <ul>

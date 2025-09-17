@@ -212,7 +212,7 @@ onMounted(() => {
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
       />
-      <div class="search-box__btn">
+      <div class="search-box__btn" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">
         <el-icon @click="doSearch"><search /></el-icon>
       </div>
     </form>
