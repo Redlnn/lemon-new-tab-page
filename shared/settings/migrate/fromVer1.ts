@@ -1,8 +1,8 @@
+import type { CURRENT_CONFIG_INTERFACE, OldSettingsInterface } from '..'
 import { defaultSettings } from '..'
-import type { OldSettingsInterface, SettingsInterfaceVer6 } from '../types'
 import { searchEnginesMap } from './searchEnginesMap'
 
-export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInterfaceVer6 {
+export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONFIG_INTERFACE {
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -19,7 +19,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
       }
     },
     search: {
-      autoFocus: defaultSettings.search.autoFocus,
+      alwaysExpandSearchBar: defaultSettings.search.alwaysExpandSearchBar,
       selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
       selectedSearchEngine: searchEnginesMap[oldSettings.selectedSearchEngine],
       searchInNewTab: oldSettings.searchInNewTab,
@@ -82,7 +82,18 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInte
         night: defaultSettings.yiyan.invertColor.night
       }
     },
+    perf: {
+      disableDialogTransparent: defaultSettings.perf.disableDialogTransparent,
+      disableDialogBlur: defaultSettings.perf.disableDialogBlur,
+      disableFocusScale: defaultSettings.perf.disableFocusScale,
+      disableFocusBlur: defaultSettings.perf.disableFocusBlur,
+      disableShortcutTransparent: defaultSettings.perf.disableShortcutTransparent,
+      disableShortcutBlur: defaultSettings.perf.disableShortcutBlur,
+      disableSearchBarTransparent: defaultSettings.perf.disableSearchBarTransparent,
+      disableSearchBarBlur: defaultSettings.perf.disableSearchBarBlur,
+      disableYiyanBlur: defaultSettings.perf.disableYiyanBlur
+    },
     pluginVersion: oldSettings.version,
-    version: 6
+    version: 7
   }
 }
