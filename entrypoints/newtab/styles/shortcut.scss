@@ -14,7 +14,7 @@
     border-radius: 50%;
     transition: background-color 0.1s ease;
 
-    html.dark & {
+    html.dark &:not(.shortcut__icon--opacity) {
       background: var(--el-fill-color-extra-light);
     }
 
