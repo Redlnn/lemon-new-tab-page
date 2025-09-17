@@ -2,6 +2,17 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.3.4 (Sep 17, 2025)
+
+### New Features ✨
+
+- Added performance settings to disable high-performance effects for a better experience on low- and mid-range devices
+
+### Fixes 🐛
+
+- Fix the issue where the clock is not centered when
+  "Small Time Font" is turned on
+
 ## 2.3.3 (Sep 13, 2025)
 
 ### Fixes 🐛

@@ -8,6 +8,15 @@ const changelogZH = (
     <p>
       当你从&lt;2.3.0的版本升级到≥2.3.0时，搜索框排版及其功能可能会出现异常，但暂时未能完全复现，您可以在设置页面重新选择一次搜索引擎即可，谢谢您的理解
     </p>
+    <h1>2.3.4 (2025-09-17)</h1>
+    <h2>新特性✨</h2>
+    <ul>
+      <li>新增性能设置，可关闭高性能占用效果以在中低性能设备上获得更好的体验</li>
+    </ul>
+    <h2>修复🐛</h2>
+    <ul>
+      <li>修复时间小字体时间不居中的问题</li>
+    </ul>
     <h1>2.3.3 (2025-09-13)</h1>
     <h2>修复🐛</h2>
     <ul>
@@ -28,7 +37,7 @@ const changelogZH = (
       <li>修复重置插件数据时未清空所有缓存的问题</li>
       <li>修复“添加快速访问”按钮背景模糊不生效的问题</li>
     </ul>
-    <h1>2.3.1 (2025/09/07)</h1>
+    <h1>2.3.1 (2025/09/02)</h1>
     <p>
       🎉
       柠檬起始页诞生满一年啦！这一年里，它从一个小小的个人项目，慢慢成长为能陪伴大家的工具。感谢一路以来的支持和反馈，有你们它才会变得更好，期待未来ta也能继续陪伴着你！
@@ -91,13 +100,25 @@ const changelog = (
       may appear abnormal. However, this issue has not been fully reproduced yet. You can reselect
       the search engine in the settings page to resolve it. Thank you for your understanding.
     </p>
-    <h1>2.3.3 (2025-09-13)</h1>
+    <h1>2.3.4 (Sep 17, 2025)</h1>
+    <h2>New Features ✨</h2>
+    <ul>
+      <li>
+        Added performance settings to disable high-performance effects for a better experience on
+        low- and mid-range devices
+      </li>
+    </ul>
+    <h2>Fixes 🐛</h2>
+    <ul>
+      <li>Fix the issue where the clock is not centered when "Small Time Font" is turned on</li>
+    </ul>
+    <h1>2.3.3 (Sep 13, 2025)</h1>
     <h2>Fixes 🐛</h2>
     <ul>
       <li>Fix the issue where the clock is not centered when "Small Time Font" is turned on</li>
       <li>Fix some dialogs that are not internationalized</li>
     </ul>
-    <h1>2.3.2 (2025-09-07)</h1>
+    <h1>2.3.2 (Sep 07, 2025)</h1>
     <h2>New Features ✨</h2>
     <ul>
       <li>
@@ -113,7 +134,7 @@ const changelog = (
       <li>Fixed an issue where resetting the extension data did not clear all caches</li>
       <li>Fixed an issue where the "Add Quick Access" button's background blur was not applied</li>
     </ul>
-    <h1>2.3.1 (Sep 07, 2025)</h1>
+    <h1>2.3.1 (Sep 02, 2025)</h1>
     <p>
       🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and
       burn along the way! Huge thanks to everyone who supported, and tested it (in the best way).
