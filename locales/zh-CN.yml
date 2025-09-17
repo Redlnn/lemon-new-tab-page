@@ -58,7 +58,7 @@ newtab:
         unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
     clock:
       blinkingColon: 闪烁时间分隔符
-      blinkingTip: 关掉可以降低 GPU 占用率
+      blinkingTip: 关闭可缓解持续性的 GPU 占用
       enableShadow: 显示阴影
       invertColorDark: 深色模式下使用深色字体
       invertColorLight: 浅色模式下使用深色字体

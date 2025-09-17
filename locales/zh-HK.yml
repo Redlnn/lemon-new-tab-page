@@ -58,7 +58,7 @@ newtab:
         unknownSource: 使用來自不明來源的圖片作背景可能會危及你的裝置安全，是否繼續？
     clock:
       blinkingColon: 閃爍時間分隔符
-      blinkingTip: 關閉此功能可降低 CPU 使用率（省電模式）
+      blinkingTip: 關閉可減輕持續嘅 GPU 使用
       enableShadow: 顯示陰影
       invertColorDark: 深色模式下使用深色文字
       invertColorLight: 淺色模式下使用深色文字
