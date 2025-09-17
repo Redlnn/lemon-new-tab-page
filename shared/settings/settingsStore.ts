@@ -1,15 +1,17 @@
 import { defineStore } from 'pinia'
+
 import { v4 as uuidv4 } from 'uuid'
 
 import { isImageFile } from '@/shared/image'
-import { settingsStorage } from './settingsStorage'
-import { useWallpaperStore, useDarkWallpaperStore } from './wallpaperStore'
+
 import type {
+  CURRENT_CONFIG_INTERFACE,
   OldSettingsInterface,
-  SettingsInterfaceVer2,
-  SettingsInterfaceVer6
-} from '../settings/types'
-import { migrateFromVer1, defaultSettings, type CURRENT_CONFIG_INTERFACE } from '../settings'
+  SettingsInterfaceVer2
+} from '../settings'
+import { defaultSettings, migrateFromVer1 } from '../settings'
+import { settingsStorage } from './settingsStorage'
+import { useDarkWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 const searchSuggestAPIsMap: Record<
   string,
@@ -24,7 +26,7 @@ type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
 
 async function migrateSettings(
   settings: OldStorageSettings
-): Promise<SettingsInterfaceVer6 | null> {
+): Promise<CURRENT_CONFIG_INTERFACE | null> {
   if (!settings.version) {
     settings.version = '0' // 太旧版本可能没有version字段
   }
