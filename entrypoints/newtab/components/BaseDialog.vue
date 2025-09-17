@@ -55,8 +55,7 @@ function onOpen() {
       {
         'base-dialog--acrylic':
           acrylic &&
-          !settingsStore.perf.disableDialogTransparent &&
-          !settingsStore.perf.disableDialogBlur
+          !(settingsStore.perf.disableDialogTransparent || settingsStore.perf.disableDialogBlur)
       },
       { 'base-dialog--opacity': opacity && !settingsStore.perf.disableDialogTransparent }
     ]"

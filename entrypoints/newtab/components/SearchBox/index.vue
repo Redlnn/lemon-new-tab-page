@@ -43,7 +43,9 @@ const formClasses = computed(() => {
     'search-box__form--dark': settingsStore.background.bgType === 0,
     'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar,
     'search-box__form--opacity': !settingsStore.perf.disableSearchBarTransparent,
-    'search-box__form--blur': !settingsStore.perf.disableSearchBarBlur
+    'search-box__form--blur': !(
+      settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent
+    )
   }
 })
 
