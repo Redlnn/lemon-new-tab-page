@@ -9,7 +9,8 @@
   "i18n-ally.extract.autoDetect": true,
   "markdownlint.config": {
     "MD033": false,
-    "MD024": false
+    "MD024": false,
+    "MD041": false
   },
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
