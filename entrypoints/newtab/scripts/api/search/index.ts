@@ -1,10 +1,10 @@
 import { t } from '@/shared/i18n'
 
-import Baidu from '@newtab/assets/baidu.svg?component'
-import Bing from '@newtab/assets/bing.svg?component'
-import DuckDuckGo from '@newtab/assets/duckduckgo.svg?component'
-import Google from '@newtab/assets/google.svg?component'
-import Yandex from '@newtab/assets/yandex.svg?component'
+import Baidu from '@newtab/assets/baidu.svg?skipsvgo'
+import Bing from '@newtab/assets/bing.svg?skipsvgo'
+import DuckDuckGo from '@newtab/assets/duckduckgo.svg?skipsvgo'
+import Google from '@newtab/assets/google.svg?skipsvgo'
+import Yandex from '@newtab/assets/yandex.svg?skipsvgo'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'
 
