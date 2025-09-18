@@ -75,7 +75,21 @@ const settingsStore = useSettingsStore()
 
   &__icon {
     flex-grow: 0;
-    margin-right: 12px;
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    margin-right: 8px;
+    background-color: var(--el-fill-color-blank);
+    border-radius: 50%;
+
+    html.dark & {
+      background-color: color-mix(in srgb, var(--el-text-color-primary), transparent 70%);
+    }
+
+    html.dark .se-switcher-item:hover &,
+    html.dark .se-switcher-item.is-active & {
+      background-color: var(--el-text-color-primary);
+    }
   }
 
   &__content {
@@ -94,7 +108,7 @@ const settingsStore = useSettingsStore()
   }
 
   &.is-active &__url {
-    color: var(--el-fill-color-darker);
+    color: var(--el-fill-color);
   }
 
   &__checked {
