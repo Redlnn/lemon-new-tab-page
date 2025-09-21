@@ -85,6 +85,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
     perf: {
       disableDialogTransparent: defaultSettings.perf.disableDialogTransparent,
       disableDialogBlur: defaultSettings.perf.disableDialogBlur,
+      disableDialogAnimation: defaultSettings.perf.disableDialogAnimation,
       disableFocusScale: defaultSettings.perf.disableFocusScale,
       disableFocusBlur: defaultSettings.perf.disableFocusBlur,
       disableShortcutTransparent: defaultSettings.perf.disableShortcutTransparent,

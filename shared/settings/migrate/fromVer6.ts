@@ -80,6 +80,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
     perf: {
       disableDialogTransparent: defaultSettings.perf.disableDialogTransparent,
       disableDialogBlur: defaultSettings.perf.disableDialogBlur,
+      disableDialogAnimation: defaultSettings.perf.disableDialogAnimation,
       disableFocusScale: defaultSettings.perf.disableFocusScale,
       disableFocusBlur: defaultSettings.perf.disableFocusBlur,
       disableShortcutTransparent: defaultSettings.perf.disableShortcutTransparent,

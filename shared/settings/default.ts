@@ -81,6 +81,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   perf: {
     disableDialogTransparent: false,
     disableDialogBlur: false,
+    disableDialogAnimation: false,
     disableFocusScale: false,
     disableFocusBlur: false,
     disableShortcutTransparent: false,

@@ -80,6 +80,7 @@ export interface SettingsInterfaceVer7 {
   perf: {
     disableDialogTransparent: boolean
     disableDialogBlur: boolean
+    disableDialogAnimation: boolean
     disableFocusScale: boolean
     disableFocusBlur: boolean
     disableShortcutTransparent: boolean

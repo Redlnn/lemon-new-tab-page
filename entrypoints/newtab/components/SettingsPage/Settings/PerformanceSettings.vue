@@ -32,6 +32,10 @@ const settingsStore = useSettingsStore()
       />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab.settings.perf.disableDialogAnimation') }}</div>
+      <el-switch v-model="settingsStore.perf.disableDialogAnimation" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.perf.disableFocusScale') }}</div>
       <el-switch v-model="settingsStore.perf.disableFocusScale" />
     </div>

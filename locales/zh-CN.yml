@@ -96,6 +96,7 @@ newtab:
       title: 其他设置
       want_to_customize_chrome: 要自定义Chrome？
     perf:
+      disableDialogAnimation: 禁用弹窗动画
       disableDialogBlur: 弹窗背景不模糊
       disableDialogTransparent: 弹窗背景不透明
       disableFocusBlur: 点击搜索框不模糊背景

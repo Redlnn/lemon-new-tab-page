@@ -12,6 +12,10 @@
 
 ## 2.3.5 (WIP)
 
+### New Features ✨
+
+- Support disabling dialog popup animations
+
 ### Adjustments ⚡️
 
 - Improved CSS readability, fine-tuned details, and removed invalid CSS

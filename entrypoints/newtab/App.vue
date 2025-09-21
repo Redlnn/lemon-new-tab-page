@@ -226,7 +226,10 @@ function needHelp() {
 <template>
   <el-config-provider
     :locale="elLocale"
-    :dialog="{ transition: 'dialog-bounce', alignCenter: true }"
+    :dialog="{
+      transition: settingsStore.perf.disableDialogAnimation ? 'none' : 'dialog',
+      alignCenter: true
+    }"
   >
     <main
       :style="[
@@ -340,25 +343,24 @@ function needHelp() {
   }
 }
 
-/* Bounce Animation */
-.dialog-bounce-enter-active,
-.dialog-bounce-enter-active .el-dialog {
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+.dialog-enter-active,
+.dialog-enter-active .el-dialog {
+  transition: all 0.15s ease-out;
 }
 
-.dialog-bounce-leave-active,
-.dialog-bounce-leave-active .el-dialog {
-  transition: all 0.2s cubic-bezier(0.2, 0, 1, 0.4);
+.dialog-leave-active,
+.dialog-leave-active .el-dialog {
+  transition: all 0.15s ease-in;
 }
 
-.dialog-bounce-enter-from,
-.dialog-bounce-leave-to {
+.dialog-enter-from,
+.dialog-leave-to {
   opacity: 0;
 }
 
-.dialog-bounce-enter-from .el-dialog,
-.dialog-bounce-leave-to .el-dialog {
+.dialog-enter-from .el-dialog,
+.dialog-leave-to .el-dialog {
   opacity: 0;
-  transform: scale(0.3) translateY(-50px);
+  transform: scale(1.05);
 }
 </style>

@@ -126,6 +126,7 @@ newtab:
       title: Other settings
       want_to_customize_chrome: Want to customize Chrome?
     perf:
+      disableDialogAnimation: Disable dialog animation
       disableDialogBlur: Disable dialog blur
       disableDialogTransparent: Disable dialog transparency
       disableFocusBlur: Disable background blur when focusing search bar
