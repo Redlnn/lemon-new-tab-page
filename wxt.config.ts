@@ -7,7 +7,7 @@ import Components from 'unplugin-vue-components/vite'
 import svgLoader from 'vite-svg-loader'
 import { defineConfig } from 'wxt'
 
-import optimizeDeps from './utils/optimizeDeps'
+import optimizeDeps from './scripts/optimizeDeps'
 
 const baseManifest = {
   name: '__MSG_extension_name__',
