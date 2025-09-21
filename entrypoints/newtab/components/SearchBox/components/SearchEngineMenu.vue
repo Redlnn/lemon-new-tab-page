@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
+import type { TooltipInstance } from 'element-plus'
+
 import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -7,6 +11,13 @@ import { useFocusStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
+const searchEngineMenu = ref<TooltipInstance>()
+
+function hide() {
+  searchEngineMenu.value?.hide()
+}
+
+defineExpose({ hide })
 </script>
 
 <template>

@@ -9,7 +9,6 @@ import {
 } from '@vueuse/core'
 
 import { Search } from '@vicons/fa'
-import type { TooltipInstance } from 'element-plus'
 
 import { useSettingsStore } from '@/shared/settings'
 
@@ -24,7 +23,7 @@ const searchBox = ref<HTMLDivElement>()
 const searchForm = ref<HTMLFormElement>()
 const searchInput = ref<HTMLInputElement>()
 const suggedtionArea = ref<InstanceType<typeof SearchSuggestionArea>>()
-const searchEngineMenuRef = ref<TooltipInstance>()
+const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
 
 const searchText = ref('')
 const originSearchText = ref<string | null>(null)
@@ -70,13 +69,19 @@ watch(isWindowFocused, (isFocused) => {
 })
 
 onClickOutside(searchBox, (e) => {
-  if (activeElement.value?.classList.contains('search-engine-menu')) {
-    searchInput.value?.focus()
-    searchEngineMenuRef.value?.hide()
+  if (!focusStore.isFocused) {
     return
   }
+
+  if (activeElement.value?.classList.contains('search-engine-menu')) {
+    searchEngineMenuRef.value?.hide()
+    useTimeoutFn(() => searchInput.value?.focus(), 10)
+    return
+  }
+
   const target = e.target as HTMLElement
-  if (!(target.localName == 'main' || target.classList.contains('shortcut-wrapper'))) {
+  console.log(target)
+  if (target.classList.contains('yiyan__main')) {
     return
   }
   resetSearch()
@@ -199,7 +204,7 @@ onMounted(() => {
       :style="{ '--width': mounted ? undefined : '0' }"
       @submit.prevent="doSearch"
     >
-      <search-engine-menu />
+      <search-engine-menu ref="searchEngineMenuRef" />
       <input
         ref="searchInput"
         v-model="searchText"
