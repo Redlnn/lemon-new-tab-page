@@ -1,61 +1,14 @@
 @use './element.scss';
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
-@use './pingfang.scss';
+@use './font.scss';
 @use './clock.scss';
-@use './shortcut.scss';
 @use './settings.scss';
 @use './search.scss';
-
-$font-apple: -apple-system, BlinkMacSystemFont;
-$font-fallback: system-ui, sans-serif, emoji;
-$font-common:
-  Inter,
-  Segoe UI Variable Display,
-  Arial,
-  Roboto,
-  DejaVu Sans,
-  Liberation Sans;
-$font-sc:
-  PingFangSC, 'Microsoft YaHei UI', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC';
-$font-hk:
-  PingFangHK, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans HK', 'Noto Sans CJK HK';
-$font-tc:
-  PingFangTC, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans TC', 'Noto Sans CJK TC';
-
-html {
-  &[lang^='zh-Hans'],
-  &[lang^='zh-CN'],
-  &[lang^='zh-SG'] {
-    --el-font-family:
-      #{$font-apple}, 'HarmonyOS Sans SC', #{$font-common}, #{$font-sc}, #{$font-fallback};
-  }
-
-  /* 繁体中文 港澳 */
-  &[lang^='zh-Hant-HK'],
-  &[lang^='zh-HK'],
-  &[lang^='zh-Hant-MO'],
-  &[lang^='zh-MO'] {
-    --el-font-family:
-      #{$font-apple}, 'HarmonyOS Sans TC', #{$font-common}, #{$font-hk}, #{$font-fallback};
-  }
-
-  /* 台湾正体 */
-  &[lang^='zh-Hant']:not([lang^='zh-Hant-HK'], [lang^='zh-Hant-MO']),
-  &[lang^='zh-TW'] {
-    --el-font-family:
-      #{$font-apple}, 'HarmonyOS Sans TC', #{$font-common}, #{$font-tc}, #{$font-fallback};
-  }
-}
-
-:root {
-  --el-font-family: #{$font-apple}, #{$font-common}, #{$font-fallback};
-}
 
 * {
   box-sizing: border-box;
 }
 
-/* stylelint-disable-next-line no-duplicate-selectors */
 html {
   background-color: var(--el-bg-color);
 }

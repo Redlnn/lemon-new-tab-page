@@ -45,9 +45,11 @@ defineProps<{
           <span
             v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
             v-html="convertBase64Svg(favicon as string)"
+            class="span"
           ></span>
           <span
             v-else
+            class="span"
             :style="{
               backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
             }"

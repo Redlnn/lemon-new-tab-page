@@ -202,7 +202,7 @@ function isSvg(file: Blob) {
 .shortcut__item--add-bookmark {
   .shortcut__title,
   .shortcut__icon {
-    color: color-mix(in srgb, var(--el-text-color-regular), transparent 70%);
+    color: color-mix(in srgb, var(--el-text-color-regular), transparent 60%);
   }
 
   .shortcut__icon {
@@ -216,6 +216,10 @@ function isSvg(file: Blob) {
     .shortcut__icon {
       color: var(--el-text-color-regular);
     }
+  }
+
+  .shortcut__container--item-shadow &:not(:hover) .shortcut__title {
+    text-shadow: 1px 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
   }
 
   // 白色文本容器特化

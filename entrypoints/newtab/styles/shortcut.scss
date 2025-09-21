@@ -1,149 +1,3 @@
-.shortcut__item {
-  position: relative;
-  border-radius: 10px;
-
-  .shortcut__icon {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: var(--icon_size);
-    height: var(--icon_size);
-    color: var(--el-text-color-regular);
-    background: var(--el-fill-color-darker);
-    border-radius: 50%;
-    transition: background-color 0.1s ease;
-
-    html.dark &:not(.shortcut__icon--opacity) {
-      background: var(--el-fill-color-extra-light);
-    }
-
-    &--blur {
-      backdrop-filter: blur(10px) saturate(1.4);
-    }
-
-    &--opacity {
-      background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
-    }
-
-    span {
-      display: block;
-      width: calc(var(--icon_size) / 2);
-      height: calc(var(--icon_size) / 2);
-      background-repeat: no-repeat;
-      background-position: center center;
-      background-size: cover;
-      border-radius: 3px;
-
-      svg {
-        width: 30px;
-        height: 30px;
-      }
-    }
-  }
-
-  /* stylelint-disable-next-line no-descending-specificity */
-  &:hover .shortcut__icon {
-    background: var(--el-fill-color-extra-light);
-
-    html.dark &:not(.shortcut__icon--opacity) {
-      background: var(--el-fill-color-light);
-    }
-
-    &--opacity {
-      background-color: color-mix(in srgb, var(--el-bg-color), transparent 30%);
-    }
-  }
-
-  .shortcut__item-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .shortcut__icon-container {
-    position: relative;
-    margin-bottom: 8px;
-  }
-
-  .shortcut__pin-icon {
-    position: absolute;
-    right: -3px;
-    bottom: -3px;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    color: var(--el-color-primary);
-    background-color: color-mix(in srgb, var(--el-fill-color-blank), transparent 60%);
-    border-radius: 50%;
-    box-shadow: var(--el-box-shadow-light);
-    backdrop-filter: blur(10px);
-  }
-
-  .shortcut__title {
-    position: relative;
-    width: calc(var(--icon_size) + 30px);
-    font-size: var(--el-font-size-small);
-    text-align: center;
-  }
-
-  .shortcut__menu {
-    position: absolute;
-    top: -5px;
-    right: -5px;
-    overflow: hidden;
-    color: transparent;
-    cursor: pointer;
-    border-radius: 50%;
-
-    & > span {
-      outline: none;
-    }
-
-    &:hover {
-      color: var(--el-text-color-primary);
-      background-color: var(--el-bg-color);
-      box-shadow: var(--el-box-shadow-light);
-    }
-  }
-
-  &:hover .shortcut__menu {
-    color: var(--el-text-color-regular);
-  }
-
-  .shortcut__menu-icon {
-    width: 26px;
-    height: 26px;
-    padding: 3px;
-    font-size: var(--el-font-size-extra-large);
-  }
-}
-
-.shortcut__container--item-shadow {
-  /* stylelint-disable-next-line no-descending-specificity */
-  .shortcut__icon {
-    box-shadow: var(--el-box-shadow);
-
-    /* stylelint-disable-next-line no-descending-specificity */
-    html.dark & {
-      box-shadow: var(--el-box-shadow-light);
-    }
-  }
-
-  .shortcut__title {
-    text-shadow:
-      0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
-      1px 1px 1px color-mix(in srgb, var(--el-color-black), transparent 60%);
-
-    :not(.shortcut__container--white-text-light) & {
-      text-shadow: 0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%);
-    }
-  }
-}
-
 .shortcut {
   max-width: 85%;
   transition: opacity 0.1s ease;
@@ -161,24 +15,165 @@
       text-decoration: inherit;
     }
 
-    /* stylelint-disable-next-line no-descending-specificity */
-    html:not(.dark) &--white-text-light .shortcut__title {
-      color: var(--el-color-white);
-    }
-
+    // 区域阴影
     &--bg {
       padding: 20px;
       background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
       border-radius: 10px;
       backdrop-filter: blur(10px) saturate(1.4);
+
+      &.shortcut__container--shadow {
+        box-shadow: var(--el-box-shadow);
+
+        html.dark & {
+          box-shadow: var(--el-box-shadow-light);
+        }
+      }
+    }
+  }
+
+  &__item {
+    position: relative;
+    border-radius: 10px;
+
+    &-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .shortcut__icon-container {
+        position: relative;
+        margin-bottom: 8px;
+
+        .shortcut__pin-icon {
+          position: absolute;
+          right: -3px;
+          bottom: -3px;
+          z-index: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 20px;
+          height: 20px;
+          color: var(--el-color-primary);
+          background-color: color-mix(in srgb, var(--el-fill-color-blank), transparent 60%);
+          border-radius: 50%;
+          box-shadow: var(--el-box-shadow-light);
+          backdrop-filter: blur(10px);
+        }
+
+        .shortcut__icon {
+          position: relative;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: var(--icon_size);
+          height: var(--icon_size);
+          color: var(--el-text-color-regular);
+          background: var(--el-fill-color-darker);
+          border-radius: 50%;
+          transition: background-color 0.1s ease;
+
+          &--blur {
+            backdrop-filter: blur(10px) saturate(1.4);
+          }
+
+          .shortcut__item:hover & {
+            background: var(--el-fill-color-extra-light);
+          }
+
+          &--opacity {
+            background: color-mix(in srgb, var(--el-bg-color), transparent 60%);
+
+            .shortcut__item:hover & {
+              background: color-mix(in srgb, var(--el-bg-color), transparent 30%);
+            }
+          }
+
+          html.dark &:not(.shortcut__icon--opacity) {
+            background: var(--el-fill-color-extra-light);
+
+            .shortcut__item:hover & {
+              background: var(--el-fill-color-light);
+            }
+          }
+
+          /* stylelint-disable-next-line no-descending-specificity */
+          .shortcut__container--item-shadow & {
+            box-shadow: var(--el-box-shadow);
+
+            /* stylelint-disable-next-line no-descending-specificity */
+            html.dark & {
+              box-shadow: var(--el-box-shadow-light);
+            }
+          }
+
+          .span {
+            display: block;
+            width: calc(var(--icon_size) / 2);
+            height: calc(var(--icon_size) / 2);
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            border-radius: 3px;
+
+            svg {
+              width: 30px;
+              height: 30px;
+            }
+          }
+        }
+      }
+
+      .shortcut__title {
+        position: relative;
+        width: calc(var(--icon_size) + 30px);
+        font-size: var(--el-font-size-small);
+        text-align: center;
+
+        .shortcut__container--item-shadow & {
+          text-shadow:
+            1px 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
+            0 0 6px color-mix(in srgb, var(--el-color-black), transparent 90%);
+        }
+
+        html:not(.dark) .shortcut__container--white-text-light & {
+          color: var(--el-color-white);
+        }
+      }
     }
 
-    &--bg.shortcut__container--shadow {
-      box-shadow: var(--el-box-shadow-dark);
+    .shortcut__menu {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      overflow: hidden;
+      color: transparent;
+      cursor: pointer;
+      border-radius: 50%;
+
+      & > span {
+        outline: none;
+      }
+
+      &:hover {
+        color: var(--el-text-color-primary);
+        background-color: var(--el-bg-color);
+        box-shadow: var(--el-box-shadow-light);
+      }
+
+      .shortcut__menu-icon {
+        width: 26px;
+        height: 26px;
+        padding: 3px;
+        font-size: var(--el-font-size-extra-large);
+      }
     }
 
-    html.dark &.shortcut__container--bg.shortcut__container--shadow {
-      box-shadow: var(--el-box-shadow-light);
+    &:hover {
+      .shortcut__menu {
+        color: var(--el-text-color-regular);
+      }
     }
   }
 }
