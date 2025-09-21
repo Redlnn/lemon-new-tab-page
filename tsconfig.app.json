@@ -6,10 +6,9 @@
     "entrypoints/**/*.ts",
     "entrypoints/**/*.vue",
     "types/**/*.ts",
-    "scripts/**/*.ts",
     "shared/**/*.ts"
   ],
-  "exclude": ["./.output", "scripts/optimizeDeps.ts"],
+  "exclude": [".output", "scripts/**/*.ts"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 

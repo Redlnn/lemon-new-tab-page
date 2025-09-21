@@ -2,6 +2,13 @@
 /// <reference types="vite-svg-loader" />
 /// <reference types="chrome" />
 
+declare module '*.md' {
+  import type { ComponentOptions } from 'vue'
+
+  const Component: ComponentOptions
+  export default Component
+}
+
 declare module 'jinrishici' {
   interface Origin {
     title: string

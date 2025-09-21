@@ -1,12 +1,14 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import vueJsx from '@vitejs/plugin-vue-jsx'
+import Vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
+import Markdown from 'unplugin-vue-markdown/vite'
 import svgLoader from 'vite-svg-loader'
 import { defineConfig } from 'wxt'
 
+import { removeH1Plugin } from './scripts/mdit-remove-h1'
 import optimizeDeps from './scripts/optimizeDeps'
 
 const baseManifest = {
@@ -46,7 +48,7 @@ const chromeManifest = {
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  modules: ['@wxt-dev/module-vue', '@wxt-dev/i18n/module', '@wxt-dev/webextension-polyfill'],
+  modules: ['@wxt-dev/i18n/module', '@wxt-dev/webextension-polyfill'],
   imports: false,
   manifest: ({ browser }) => {
     if (browser === 'firefox') {
@@ -57,8 +59,15 @@ export default defineConfig({
   },
   vite: () => ({
     plugins: [
+      Vue({
+        include: [/\.vue$/, /\.md$/]
+      }), // 自己添加 @vitejs/plugin-vue 就不能使用 @wxt-dev/module-bue
       svgLoader(),
-      vueJsx(),
+      Markdown({
+        markdownItSetup(md) {
+          md.use(removeH1Plugin)
+        }
+      }),
       AutoImport({
         resolvers: [
           ElementPlusResolver({
@@ -76,6 +85,9 @@ export default defineConfig({
         dts: 'types/components.d.ts'
       })
     ],
+    build: {
+      sourcemap: false // for HMP (@wxt-dev/module-bue 会自动添加)
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./', import.meta.url)),

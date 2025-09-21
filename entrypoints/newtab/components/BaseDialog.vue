@@ -182,6 +182,7 @@ function onOpen() {
   &-list-title {
     margin-top: 30px;
     font-size: 28px;
+    font-weight: 600;
   }
 }
 </style>

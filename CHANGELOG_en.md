@@ -2,11 +2,33 @@
 
 > Translated by ChatGPT from Chinese.
 
+## Important Notice❗
+
+- When upgrading from a version <2.3.0 to ≥2.3.0,
+  the search box appearance and functionality may appear abnormal.
+  However, this issue has not been fully reproduced yet.
+  You can reselect the search engine in the settings page to resolve it.
+  Thank you for your understanding.
+
+## 2.3.5 (WIP)
+
+### Adjustments ⚡️
+
+- Improved CSS readability, fine-tuned details, and removed invalid CSS
+
+### Fixes 🐛
+
+- Fixed an issue where a pure white or pure black background was unexpectedly
+  applied when no background was set
+- Fixed an issue where the menu failed to disappear after switching the search
+  engine in the search bar
+
 ## 2.3.4 (Sep 17, 2025)
 
 ### New Features ✨
 
-- Added performance settings to disable high-performance effects for a better experience on low- and mid-range devices
+- Added performance settings to disable high-performance effects for a better
+  experience on low- and mid-range devices
 - Added 2 new candidate search engines
 
 ### Fixes 🐛
@@ -37,16 +59,10 @@
 
 ## 2.3.1 (Sep 02, 2025)
 
-🎉 Today marks the first anniversary of Lemon New Tab — and thankfully, it didn’t crash and burn along the way!
-Huge thanks to everyone who supported, and tested it (in the best way). Here’s to another year of making your browsing better!
-
-### Known Issues❗
-
-- When upgrading from a version <2.3.0 to ≥2.3.0,
-  the search box appearance and functionality may appear abnormal.
-  However, this issue has not been fully reproduced yet.
-  You can reselect the search engine in the settings page to resolve it.
-  Thank you for your understanding.
+🎉 Today marks the first anniversary of Lemon New Tab — and thankfully,
+it didn’t crash and burn along the way!
+Huge thanks to everyone who supported, and tested it (in the best way).
+Here’s to another year of making your browsing better!
 
 ### Fixes🐛
 
@@ -73,7 +89,8 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ### Adjustments⚡️
 
-- Due to browser policy restrictions, auto-focus on the search box has never worked properly, so the description has been changed to “Expand search box by default”
+- Due to browser policy restrictions, auto-focus on the search box has never worked properly,
+  so the description has been changed to “Expand search box by default”
 - Adjusted text and search box shadows, added shortcut shadows for better visual appearance
 - UI, UX, and animation refinements to enhance the user experience
 - Moved the About section from Settings to a new dedicated About page
@@ -92,7 +109,8 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 ### Fixes🐛
 
-- Fixed the issue where previously displayed Most Visited items were not removed after turning off `Show Most Visited`
+- Fixed the issue where previously displayed Most Visited items were not removed after
+  turning off `Show Most Visited`
 - Fixed the issue of high CPU usage during window resizing
 - Fixed an issue where wallpapers would change on other clients due to cloud sync
   > Since local images are limited by storage size and online images are restricted by
@@ -120,7 +138,8 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 - Added toggle for switching between day and night mask colors.
 - Added reminder for items that do not support cloud synchronization.
-- Implemented cloud synchronization for settings and bookmarks. The following features do not support synchronization:
+- Implemented cloud synchronization for settings and bookmarks. The following features
+  do not support synchronization:
   - Local or online background images
   - Most visited sites (including ignored sites)
   - Dark mode and system-following status, etc.
@@ -204,7 +223,7 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 - Fixed the issue that background color does not follow system (or browser)
   when JS is not loaded (#19)
-- Fixed the logic and animation issues of "Dark mode" and "Follow system" switch</li>
+- Fixed the logic and animation issues of "Dark mode" and "Follow system" switch
 
 ## 1.8.0 (Jan 05, 2025)
 
@@ -219,15 +238,19 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 
 - **Updated default theme colors and icons.**
 - Improved translation for zh_tw.
-- Added transition effects when switching background types. However, users with slow internet or low-performance devices may still notice the new background image appearing abruptly.
-- Enhanced the display effect for solid color backgrounds (when the background type is set to "None").
+- Added transition effects when switching background types. However,
+  users with slow internet or low-performance devices may still notice
+  the new background image appearing abruptly.
+- Enhanced the display effect for solid color backgrounds
+  (when the background type is set to "None").
   - Clock font color now inverts on solid color backgrounds.
   - The search box background is now static pure white with an added outline.
   - Added the option to disable shadows for the clock, search box, and quick access area.
 
 ### Improvements⚡️
 
-- Adjusted the timing of background loading to avoid freezing the page when fetching the background.
+- Adjusted the timing of background loading to avoid freezing the page
+  when fetching the background.
 - Standardized animation durations for a smoother experience.
 - Did not display the container for the quote when it was unavailable.
 - Show error message when failing to get Bing wallpaper.
@@ -245,7 +268,8 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 ### Fixes🐛
 
 - Fixed the issue where the Quick Start area would flicker when loading the new tab page.
-- Optimized the style of the "Add New Shortcut" button by reducing its opacity when the mouse is not hovering over it.
+- Optimized the style of the "Add New Shortcut" button by reducing its opacity
+  when the mouse is not hovering over it.
 
 ## 1.6.0 (Oct 09, 2024)
 
@@ -259,7 +283,8 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 ### Fixes🐛
 
 - Fixed the issue where the browser would redirect Bing to the national region.
-  > To restore non-national region access, you need to clear the \*.bing.com cookies in your browser.
+  > To restore non-national region access, you need to clear the \*.bing.com
+  > cookies in your browser.
 - Reduced CPU usage
 - Moved the settings initialization phase earlier to avoid seeing the default settings state when opening a new tab.
 
@@ -278,8 +303,10 @@ Huge thanks to everyone who supported, and tested it (in the best way). Here’s
 ### Fixes🐛
 
 - Now the search engine dropdown in the settings page can display the full name of Google.
-- Fixed the issue where the background blur was set to a fixed value when focusing the search bar.
-- Fixed the issue of browser freezing, high CPU usage, and memory leaks when using local images as backgrounds.
+- Fixed the issue where the background blur was set to a fixed value
+  when focusing the search bar.
+- Fixed the issue of browser freezing, high CPU usage,
+  and memory leaks when using local images as backgrounds.
 
 ## 1.5.3 (Sep 07, 2024)
 
