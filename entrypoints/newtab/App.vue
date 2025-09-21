@@ -18,7 +18,7 @@ import { browser } from 'wxt/browser'
 import { version } from '@/package.json'
 
 import { t } from '@/shared/i18n'
-import { verifyImageUrl } from '@/shared/image'
+import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
@@ -78,15 +78,15 @@ interface BgURLProvider {
 
 const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Bing]: {
-    getURL: async () => `url(${await getBingWallpaperURL()})`
+    getURL: async () => await getBingWallpaperURL()
   },
   [BgType.Local]: {
     getURL: async () =>
       isDark.value
         ? settingsStore.localDarkBackground.id
-          ? `url(${settingsStore.localDarkBackground.url})`
-          : `url(${settingsStore.localBackground.url})`
-        : `url(${settingsStore.localBackground.url})`,
+          ? settingsStore.localDarkBackground.url
+          : settingsStore.localBackground.url
+        : settingsStore.localBackground.url,
     verify: async () => {
       const settingsStore = useSettingsStore()
       const { localBackground, localDarkBackground } = settingsStore
@@ -119,7 +119,7 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
     }
   },
   [BgType.Online]: {
-    getURL: () => Promise.resolve(`url(${settingsStore.background.onlineUrl})`)
+    getURL: () => Promise.resolve(settingsStore.background.onlineUrl)
   },
   [BgType.None]: {
     getURL: () => Promise.resolve('')
@@ -139,7 +139,8 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   // 等待过渡动画
   await promiseTimeout(200)
   bgURL.value = ''
-  // 不直接赋值时因为避免看到壁纸变形
+  // 不直接赋值是因为避免看到壁纸变形
+  // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
   bgURL.value = newUrl
 
   switchStore.end()
@@ -182,7 +183,7 @@ watch(
     if (settingsStore.background.bgType !== BgType.Local) return
     switchStore.start()
     await promiseTimeout(500)
-    bgURL.value = `url(${settingsStore.localBackground.url})`
+    bgURL.value = settingsStore.localBackground.url
     switchStore.end()
   }
 )
@@ -194,7 +195,7 @@ watch(
     if (settingsStore.background.bgType !== BgType.Online) return
     switchStore.start()
     await promiseTimeout(500)
-    bgURL.value = `url(${settingsStore.background.onlineUrl})`
+    bgURL.value = settingsStore.background.onlineUrl
     switchStore.end()
   }
 )
@@ -207,9 +208,9 @@ watch(isDark, async (darked) => {
   switchStore.start()
   await promiseTimeout(500)
   if (darked) {
-    bgURL.value = `url(${settingsStore.localDarkBackground.url})`
+    bgURL.value = settingsStore.localDarkBackground.url
   } else {
-    bgURL.value = `url(${settingsStore.localBackground.url})`
+    bgURL.value = settingsStore.localBackground.url
   }
   switchStore.end()
 })

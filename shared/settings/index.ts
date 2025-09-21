@@ -19,7 +19,7 @@ export {
   initSettings,
   reloadBackgroundImage,
   saveSettings,
-  uploadBackgroundImage,
+  uploadBackground,
   useSettingsStore
 } from './settingsStore'
 export { settingsStorage } from './settingsStorage'

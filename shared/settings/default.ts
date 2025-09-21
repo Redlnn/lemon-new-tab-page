@@ -38,11 +38,13 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   },
   localBackground: {
     id: '',
-    url: ''
+    url: '',
+    mediaType: undefined
   },
   localDarkBackground: {
     id: '',
-    url: ''
+    url: '',
+    mediaType: undefined
   },
   bingBackground: {
     id: '',

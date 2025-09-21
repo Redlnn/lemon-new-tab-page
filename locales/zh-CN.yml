@@ -43,11 +43,11 @@ newtab:
         b: 壁纸缓存策略却决于浏览器，断网后会获取不到壁纸
         c: 壁纸加载完成前会白屏一段时间，时长取决于你的网速
         d: 请确保你使用的壁纸 API 允许跨域请求，否则会加载失败
-      tip: 深色模式背景没有选择的话会继续使用浅色模式的图片噢
+      tip: 深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢
       title: 背景设置
       type:
         bing: Bing 每日一图
-        local: 本地图片
+        local: 本地图片/视频
         none: 无
         online: 在线图片
         title: 背景类型
@@ -58,6 +58,9 @@ newtab:
         securityPolicy: 由于 Google 的安全策略，需要授予 $1 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限
         title: 警告
         unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
+        tooLarge:
+          title: 文件过大
+          message: 文件过大（$1），可能会影响性能或占用较多空间，是否继续？
     clock:
       blinkingColon: 闪烁时间分隔符
       blinkingTip: 关闭可缓解持续性的 GPU 占用

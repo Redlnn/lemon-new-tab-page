@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useDark, useWindowFocus } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
 
@@ -10,8 +11,42 @@ const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const background = ref<HTMLDivElement>()
+const videoRef = ref<HTMLVideoElement>()
 
 defineProps<{ url: string }>()
+
+const isDark = useDark()
+const isWindowFocused = useWindowFocus()
+
+// Pause/play video depending on focus and page visibility
+function updateVideoPlayback() {
+  const vid = videoRef.value
+  if (!vid) return
+  // If not focused or page hidden, pause; otherwise play
+  if (!isWindowFocused.value || document.hidden) {
+    try {
+      vid.pause()
+    } catch {}
+  } else {
+    try {
+      // play returns a promise; ignore rejection to avoid uncaught
+      void vid.play()
+    } catch {}
+  }
+}
+
+// watch focus changes
+watch(
+  () => isWindowFocused.value,
+  () => {
+    updateVideoPlayback()
+  }
+)
+
+// listen to visibility change
+document.addEventListener('visibilitychange', () => {
+  updateVideoPlayback()
+})
 </script>
 
 <template>
@@ -28,20 +63,42 @@ defineProps<{ url: string }>()
     <div class="background-mask"></div>
     <div v-if="settingsStore.background.enableVignetting" class="background__vignette" />
     <Transition>
-      <div
-        v-show="!switchStore.isSwitching"
-        ref="background"
-        class="background"
-        :class="{
-          'background--deafult-scale': settingsStore.perf.disableFocusScale,
-          'background--focused__scale':
-            focusStore.isFocused && !settingsStore.perf.disableFocusScale,
-          'background--focused__blur': focusStore.isFocused && !settingsStore.perf.disableFocusBlur
-        }"
-        :style="{
-          backgroundImage: url
-        }"
-      />
+      <div v-show="!switchStore.isSwitching" ref="background">
+        <video
+          v-if="
+            (!isDark && settingsStore.localBackground.mediaType === 'video') ||
+            (isDark && settingsStore.localDarkBackground.mediaType === 'video')
+          "
+          class="background background--video"
+          :class="{
+            'background--deafult-scale': settingsStore.perf.disableFocusScale,
+            'background--focused__scale':
+              focusStore.isFocused && !settingsStore.perf.disableFocusScale,
+            'background--focused__blur':
+              focusStore.isFocused && !settingsStore.perf.disableFocusBlur
+          }"
+          ref="videoRef"
+          :src="url || ''"
+          autoplay
+          muted
+          loop
+          playsinline
+        ></video>
+        <div
+          v-else
+          class="background"
+          :class="{
+            'background--deafult-scale': settingsStore.perf.disableFocusScale,
+            'background--focused__scale':
+              focusStore.isFocused && !settingsStore.perf.disableFocusScale,
+            'background--focused__blur':
+              focusStore.isFocused && !settingsStore.perf.disableFocusBlur
+          }"
+          :style="{
+            backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
+          }"
+        ></div>
+      </div>
     </Transition>
   </div>
 </template>
@@ -95,6 +152,13 @@ defineProps<{ url: string }>()
       filter: blur(calc(var(--blur-intensity) + 10px));
     }
   }
+}
+
+video.background {
+  width: calc(100% + 4 * var(--blur-intensity));
+  height: calc(100% + 4 * var(--blur-intensity));
+  object-fit: cover;
+  will-change: transform;
 }
 
 .background__vignette {

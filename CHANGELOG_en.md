@@ -10,10 +10,11 @@
   You can reselect the search engine in the settings page to resolve it.
   Thank you for your understanding.
 
-## 2.3.5 (WIP)
+## 2.4.0 (WIP)
 
 ### New Features ✨
 
+- **Support setting video wallpapers**
 - Support disabling dialog popup animations
 
 ### Adjustments ⚡️

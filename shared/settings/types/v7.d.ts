@@ -38,10 +38,14 @@ export interface SettingsInterfaceVer7 {
   localBackground: {
     id: string
     url: string
+    // 可选的媒体类型: 'image' | 'video'，用于在渲染时选择 <img> 或 <video>
+    mediaType?: 'image' | 'video'
   }
   localDarkBackground: {
     id: string
     url: string
+    // 可选的媒体类型: 'image' | 'video'
+    mediaType?: 'image' | 'video'
   }
   bingBackground: {
     id: string

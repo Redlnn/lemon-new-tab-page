@@ -14,10 +14,10 @@ import {
 import { browser } from 'wxt/browser'
 
 import { t } from '@/shared/i18n'
-import { isImageFile } from '@/shared/image'
+import { isMediaFile } from '@/shared/media'
 import {
   BgType,
-  uploadBackgroundImage,
+  uploadBackground,
   useDarkWallpaperStore,
   useSettingsStore,
   useWallpaperStore
@@ -30,17 +30,71 @@ const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
 
 const predefineMaskColor = ['#f2f3f5', '#000']
 
+// 大小阈值 (字节)，超过会提示用户。这里设置为 50MB
+const WARN_SIZE_BYTES = 50 * 1024 * 1024
+
+function formatBytes(bytes: number) {
+  if (bytes === 0) return '0 B'
+  const k = 1024
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
+
+// 存储上传后的元信息，用于在 UI 显示：{ width, height, duration?, size }
+const metaLight = ref<{ width?: number; height?: number; duration?: number; size?: number } | null>(
+  null
+)
+const metaDark = ref<{ width?: number; height?: number; duration?: number; size?: number } | null>(
+  null
+)
+
 onMounted(() => {
   if (settingsStore.background.onlineUrl) {
     tmpUrl.value = settingsStore.background.onlineUrl
   }
 })
 
-const beforeBackgroundUpload: UploadProps['beforeUpload'] = (rawFile) => {
-  if (!isImageFile(rawFile)) {
+// 当本地壁纸被上传/更改时，自动读取并显示元信息
+// 自定义上传处理：调用 uploadBackground 并在上传完成后读取并显示媒体元信息
+async function handleUpload(option: UploadRequestOptions, isDark = false) {
+  const file = option.file as File
+
+  await uploadBackground(file, isDark)
+
+  // 上传完成后立即读取元信息以展示
+  const setMeta = (m: { width?: number; height?: number; duration?: number }) => {
+    if (isDark) {
+      metaDark.value = { ...metaDark.value, ...m, size: file.size }
+    } else {
+      metaLight.value = { ...metaLight.value, ...m, size: file.size }
+    }
+  }
+
+  readMediaMeta(file, setMeta)
+}
+
+const beforeBackgroundUpload: UploadProps['beforeUpload'] = async (rawFile) => {
+  if (!isMediaFile(rawFile)) {
     ElMessage.error(t('newtab.settings.background.warning.fileIsNotImage'))
     return false
   }
+
+  // 检查大小
+  if (rawFile.size > WARN_SIZE_BYTES) {
+    // 提示用户文件较大，确认是否继续
+    try {
+      await ElMessageBox.confirm(
+        t('newtab.settings.background.warning.tooLarge.message', [formatBytes(rawFile.size)]),
+        t('newtab.settings.background.warning.tooLarge.title'),
+        { type: 'warning' }
+      )
+    } catch {
+      // 用户取消上传
+      return false
+    }
+  }
+
   return true
 }
 
@@ -109,13 +163,95 @@ function onlineImageWarn() {
 
 async function deleteLocalBg(isDark = false) {
   if (isDark) {
-    settingsStore.localDarkBackground = { id: '', url: '' }
+    settingsStore.localDarkBackground = { id: '', url: '', mediaType: undefined }
+    metaDark.value = null
     useDarkWallpaperStore.clear()
   } else {
-    settingsStore.localBackground = { id: '', url: '' }
+    settingsStore.localBackground = { id: '', url: '', mediaType: undefined }
+    metaLight.value = null
     useWallpaperStore.clear()
   }
 }
+
+function readMediaMeta(
+  file: File,
+  cb: (meta: { width?: number; height?: number; duration?: number }) => void
+) {
+  if (!file) return
+  if (file.type.startsWith('image/')) {
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      cb({ width: img.naturalWidth, height: img.naturalHeight })
+      URL.revokeObjectURL(url)
+    }
+    img.onerror = () => {
+      URL.revokeObjectURL(url)
+      cb({})
+    }
+    img.src = url
+  } else if (file.type.startsWith('video/')) {
+    const url = URL.createObjectURL(file)
+    const video = document.createElement('video')
+    const cleanup = () => {
+      video.onloadedmetadata = null
+      video.onerror = null
+      video.src = ''
+      URL.revokeObjectURL(url)
+    }
+    video.onloadedmetadata = () => {
+      cb({ width: video.videoWidth, height: video.videoHeight, duration: video.duration })
+      cleanup()
+    }
+    video.onerror = () => {
+      cleanup()
+      cb({})
+    }
+    video.src = url
+  } else {
+    cb({})
+  }
+}
+
+onMounted(async () => {
+  // 加载已存在的本地壁纸元数据（light & dark）以便在设置页显示
+  if (settingsStore.localBackground?.id) {
+    try {
+      const file = await useWallpaperStore.getItem<Blob>(settingsStore.localBackground.id)
+      if (file) {
+        // set size
+        metaLight.value = { size: (file as File).size }
+        // read media meta
+        readMediaMeta(file as File, (m) => {
+          metaLight.value = { ...metaLight.value, ...m }
+        })
+        // set mediaType if missing
+        if (!settingsStore.localBackground.mediaType) {
+          settingsStore.localBackground.mediaType = file.type.startsWith('video/')
+            ? 'video'
+            : 'image'
+        }
+      }
+    } catch {}
+  }
+
+  if (settingsStore.localDarkBackground?.id) {
+    try {
+      const file = await useDarkWallpaperStore.getItem<Blob>(settingsStore.localDarkBackground.id)
+      if (file) {
+        metaDark.value = { size: (file as File).size }
+        readMediaMeta(file as File, (m) => {
+          metaDark.value = { ...metaDark.value, ...m }
+        })
+        if (!settingsStore.localDarkBackground.mediaType) {
+          settingsStore.localDarkBackground.mediaType = file.type.startsWith('video/')
+            ? 'video'
+            : 'image'
+        }
+      }
+    } catch {}
+  }
+})
 </script>
 
 <template>
@@ -169,15 +305,25 @@ async function deleteLocalBg(isDark = false) {
         <el-upload
           class="settings__bg-uploader"
           :show-file-list="false"
-          :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file)"
+          :http-request="(option: UploadRequestOptions) => handleUpload(option)"
           :before-upload="beforeBackgroundUpload"
-          accept="image/*"
+          accept="image/*,video/*"
         >
-          <img
-            v-if="settingsStore.localBackground.id"
-            :src="settingsStore.localBackground.url"
-            class="settings__bg-uploader-img"
-          />
+          <template v-if="settingsStore.localBackground.id">
+            <video
+              v-if="settingsStore.localBackground.mediaType === 'video'"
+              :src="settingsStore.localBackground.url"
+              class="settings__bg-uploader-img"
+              muted
+              loop
+              playsinline
+            ></video>
+            <img
+              v-else
+              :src="settingsStore.localBackground.url"
+              class="settings__bg-uploader-img"
+            />
+          </template>
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
         <div
@@ -190,20 +336,37 @@ async function deleteLocalBg(isDark = false) {
         <div class="settings__bg-uploader-title">
           {{ t('newtab.settings.theme.lightMode') }}
         </div>
+        <div v-if="metaLight" class="settings__bg-uploader-meta">
+          <div>
+            {{ metaLight.size ? formatBytes(metaLight.size) : '' }}
+            {{ metaLight.width ? `${metaLight.width}×${metaLight.height}` : '' }}
+            {{ metaLight.duration ? `${metaLight.duration.toFixed(1)}s` : '' }}
+          </div>
+        </div>
       </div>
       <div class="settings__bg-uploader-wrapper">
         <el-upload
           class="settings__bg-uploader"
           :show-file-list="false"
-          :http-request="(option: UploadRequestOptions) => uploadBackgroundImage(option.file, true)"
+          :http-request="(option: UploadRequestOptions) => handleUpload(option, true)"
           :before-upload="beforeBackgroundUpload"
-          accept="image/*"
+          accept="image/*,video/*"
         >
-          <img
-            v-if="settingsStore.localDarkBackground.id"
-            :src="settingsStore.localDarkBackground.url"
-            class="settings__bg-uploader-img"
-          />
+          <template v-if="settingsStore.localDarkBackground.id">
+            <video
+              v-if="settingsStore.localDarkBackground.mediaType === 'video'"
+              :src="settingsStore.localDarkBackground.url"
+              class="settings__bg-uploader-img"
+              muted
+              loop
+              playsinline
+            ></video>
+            <img
+              v-else
+              :src="settingsStore.localDarkBackground.url"
+              class="settings__bg-uploader-img"
+            />
+          </template>
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
         <div
@@ -215,6 +378,13 @@ async function deleteLocalBg(isDark = false) {
         </div>
         <div class="settings__bg-uploader-title">
           {{ t('newtab.settings.theme.darkMode') }}
+        </div>
+        <div v-if="metaDark" class="settings__bg-uploader-meta">
+          <div>
+            {{ metaDark.size ? formatBytes(metaDark.size) : '' }}
+            {{ metaDark.width ? `${metaDark.width}×${metaDark.height}` : '' }}
+            {{ metaDark.duration ? `${metaDark.duration.toFixed(1)}s` : '' }}
+          </div>
         </div>
       </div>
     </div>
@@ -309,6 +479,13 @@ async function deleteLocalBg(isDark = false) {
   text-align: center;
 }
 
+.settings__bg-uploader-meta {
+  margin-top: 6px;
+  font-size: var(--el-font-size-extra-small);
+  color: var(--el-text-color-placeholder);
+  text-align: center;
+}
+
 .settings__bg-uploader {
   flex: 1;
   height: 150px;
@@ -351,15 +528,19 @@ async function deleteLocalBg(isDark = false) {
   }
 }
 
-:deep() .el-radio__label {
-  display: flex;
-  align-items: center;
+:deep() .el-radio {
+  margin-right: 15px;
 
-  svg {
-    width: 1em;
-    height: 1em;
-    margin-left: 0.5em;
-    opacity: 0.5;
+  &__label {
+    display: flex;
+    align-items: center;
+
+    svg {
+      width: 1em;
+      height: 1em;
+      margin-left: 0.5em;
+      opacity: 0.5;
+    }
   }
 }
 </style>
