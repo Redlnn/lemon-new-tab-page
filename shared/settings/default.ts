@@ -34,7 +34,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     bgMaskOpacity: 0,
     lightMaskColor: '#f2f3f5',
     nightMaskColor: '#000',
-    onlineUrl: ''
+    onlineUrl: '',
+    pauseWhenBlur: false
   },
   localBackground: {
     id: '',

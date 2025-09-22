@@ -388,6 +388,17 @@ onMounted(async () => {
         </div>
       </div>
     </div>
+    <div
+      v-if="
+        settingsStore.background.bgType === BgType.Local &&
+        (settingsStore.localBackground.mediaType === 'video' ||
+          settingsStore.localDarkBackground.mediaType === 'video')
+      "
+      class="settings__item settings__item--horizontal"
+    >
+      <div class="settings__label">{{ t('newtab.settings.background.pauseWhenBlur') }}</div>
+      <el-switch v-model="settingsStore.background.pauseWhenBlur" />
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />

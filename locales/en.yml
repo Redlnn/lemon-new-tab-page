@@ -67,6 +67,7 @@ newtab:
         none: None
         online: Online image
         title: Background type
+      pauseWhenBlur: Pause video background when the tab loses focus
       warning:
         fileIsNotImage: The selected file is not an image!
         granted: Permission granted.

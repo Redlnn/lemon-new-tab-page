@@ -34,6 +34,7 @@ export interface SettingsInterfaceVer7 {
     lightMaskColor: string
     nightMaskColor: string
     onlineUrl: string
+    pauseWhenBlur: boolean // 视频壁纸
   }
   localBackground: {
     id: string

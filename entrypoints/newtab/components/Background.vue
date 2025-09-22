@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
-import { useDark, useWindowFocus } from '@vueuse/core'
+import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
 
@@ -18,12 +18,14 @@ defineProps<{ url: string }>()
 const isDark = useDark()
 const isWindowFocused = useWindowFocus()
 
-// Pause/play video depending on focus and page visibility
 function updateVideoPlayback() {
   const vid = videoRef.value
   if (!vid) return
   // If not focused or page hidden, pause; otherwise play
-  if (!isWindowFocused.value || document.hidden) {
+  if (
+    document.visibilityState === 'hidden' ||
+    (settingsStore.background.pauseWhenBlur && !isWindowFocused.value)
+  ) {
     try {
       vid.pause()
     } catch {}
@@ -35,18 +37,16 @@ function updateVideoPlayback() {
   }
 }
 
-// watch focus changes
-watch(
-  () => isWindowFocused.value,
-  () => {
-    updateVideoPlayback()
-  }
-)
+const backgroundCss = {
+  'background--deafult-scale': settingsStore.perf.disableFocusScale,
+  'background--focused__scale': focusStore.isFocused && !settingsStore.perf.disableFocusScale,
+  'background--focused__blur': focusStore.isFocused && !settingsStore.perf.disableFocusBlur
+}
 
-// listen to visibility change
-document.addEventListener('visibilitychange', () => {
-  updateVideoPlayback()
-})
+const visibility = useDocumentVisibility()
+
+watch(isWindowFocused, updateVideoPlayback)
+watch(visibility, updateVideoPlayback)
 </script>
 
 <template>
@@ -70,13 +70,7 @@ document.addEventListener('visibilitychange', () => {
             (isDark && settingsStore.localDarkBackground.mediaType === 'video')
           "
           class="background background--video"
-          :class="{
-            'background--deafult-scale': settingsStore.perf.disableFocusScale,
-            'background--focused__scale':
-              focusStore.isFocused && !settingsStore.perf.disableFocusScale,
-            'background--focused__blur':
-              focusStore.isFocused && !settingsStore.perf.disableFocusBlur
-          }"
+          :class="backgroundCss"
           ref="videoRef"
           :src="url || ''"
           autoplay
@@ -87,13 +81,7 @@ document.addEventListener('visibilitychange', () => {
         <div
           v-else
           class="background"
-          :class="{
-            'background--deafult-scale': settingsStore.perf.disableFocusScale,
-            'background--focused__scale':
-              focusStore.isFocused && !settingsStore.perf.disableFocusScale,
-            'background--focused__blur':
-              focusStore.isFocused && !settingsStore.perf.disableFocusBlur
-          }"
+          :class="backgroundCss"
           :style="{
             backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
           }"

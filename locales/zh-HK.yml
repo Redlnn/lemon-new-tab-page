@@ -51,6 +51,7 @@ newtab:
         none: 無
         online: 線上圖片
         title: 背景類型
+      pauseWhenBlur: 當分頁失去焦點時暫停影片背景
       warning:
         fileIsNotImage: 所選檔案並非圖片！
         granted: 已授權訪問

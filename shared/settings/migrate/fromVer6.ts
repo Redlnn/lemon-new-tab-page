@@ -33,7 +33,8 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       bgMaskOpacity: oldSettings.background.bgMaskOpacity,
       lightMaskColor: oldSettings.background.lightMaskColor,
       nightMaskColor: oldSettings.background.nightMaskColor,
-      onlineUrl: oldSettings.background.onlineUrl
+      onlineUrl: oldSettings.background.onlineUrl,
+      pauseWhenBlur: defaultSettings.background.pauseWhenBlur
     },
     localBackground: {
       id: oldSettings.localBackground.id,

@@ -47,10 +47,11 @@ newtab:
       title: 背景設定
       type:
         bing: Bing 每日圖片
-        local: 本機圖片影片
+        local: 本機圖片/影片
         none: 無
         online: 線上圖片
         title: 背景類型
+      pauseWhenBlur: 分頁失去焦點時暫停影片背景
       warning:
         fileIsNotImage: 所選檔案不是圖片！
         granted: 已授予訪問權限

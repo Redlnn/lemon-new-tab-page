@@ -51,6 +51,7 @@ newtab:
         none: 无
         online: 在线图片
         title: 背景类型
+      pauseWhenBlur: 标签页失去焦点时暂停视频背景
       warning:
         fileIsNotImage: 所选文件不是图片！
         granted: 已授予访问权限
