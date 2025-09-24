@@ -2,7 +2,7 @@
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 
-import { convertBase64Svg } from '@/shared/image'
+import { convertBase64Svg } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getFaviconURLChrome } from '../utils/topSites'

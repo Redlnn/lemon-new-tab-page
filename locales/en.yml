@@ -58,15 +58,16 @@ newtab:
           Please ensure the wallpaper API you are using allows cross-origin
           requests; otherwise, it will fail to load.
       tip: >-
-        If no background is set for dark mode, the light mode background will be
-        used.
+        If no background is set for dark mode, the light mode background or
+        video will be used.
       title: Background settings
       type:
         bing: Bing wallpaper
-        local: Local image
+        local: Local image / video
         none: None
         online: Online image
         title: Background type
+      pauseWhenBlur: Pause video background when the tab loses focus
       warning:
         fileIsNotImage: The selected file is not an image!
         granted: Permission granted.
@@ -76,6 +77,11 @@ newtab:
           access $1 to get the background. Do you allow this extension to
           request access to this host?
         title: Warning
+        tooLarge:
+          message: >-
+            The file is too large ($1) and may affect performance or occupy significant storage.
+            Do you want to continue?
+          title: Large File Warning
         unknownSource: >-
           Using images from unknown sources as backgrounds may expose your
           device to attacks. Do you want to continue?

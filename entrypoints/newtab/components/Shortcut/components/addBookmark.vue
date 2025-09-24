@@ -14,7 +14,7 @@ import {
 
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { t } from '@/shared/i18n'
-import { convertBase64Svg, isImageFile } from '@/shared/image'
+import { convertBase64Svg, isImageFile } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()

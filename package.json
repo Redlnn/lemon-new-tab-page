@@ -15,11 +15,11 @@
     "zip:edge": "wxt zip -b edge",
     "postinstall": "wxt prepare",
     "type-check": "vue-tsc --noEmit --project tsconfig.app.json",
-    "lint:oxlint": "oxlint entrypoints/ shared/ types/ utils/ --fix -D correctness --ignore-path .gitignore",
-    "lint:eslint": "eslint entrypoints/ shared/ types/ utils/ --fix",
+    "lint:oxlint": "oxlint entrypoints/ shared/ types/ scripts/ --fix -D correctness --ignore-path .gitignore",
+    "lint:eslint": "eslint entrypoints/ shared/ types/ scripts/ --fix",
     "lint:style": "stylelint entrypoints/**/*.{css,scss,sass,less,vue,html} assets/**/*.{css,scss,sass,less,vue,html} --cache --fix",
     "lint": "run-s lint:*",
-    "format": "prettier assets/ entrypoints/ locales/ shared/ types/ utils/ --write -u"
+    "format": "prettier assets/ entrypoints/ locales/ shared/ types/ scripts/ --write -u"
   },
   "dependencies": {
     "dayjs": "^1.11.18",

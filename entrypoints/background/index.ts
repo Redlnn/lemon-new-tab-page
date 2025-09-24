@@ -3,8 +3,8 @@ import { browser } from 'wxt/browser'
 import { defineBackground } from '#imports'
 
 import { BgType } from '@/shared/settings'
-import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
 import { localSyncDataStorage, syncDataStorage } from '@/shared/sync'
+import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
 
 let isInited = false
 let isRunning = false
@@ -32,8 +32,8 @@ async function processSyncQueue() {
     syncItem.settings.background.bgType = BgType.Bing
   }
   // 重置壁纸缓存数据
-  syncItem.settings.localBackground = { id: '', url: '' }
-  syncItem.settings.localDarkBackground = { id: '', url: '' }
+  syncItem.settings.localBackground = { id: '', url: '', mediaType: undefined }
+  syncItem.settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
   syncItem.settings.bingBackground = { id: '', url: '', updateDate: '' }
   // 由于无法同步在线壁纸，所以重置在线壁纸url
   syncItem.settings.background.onlineUrl = ''

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 import { v4 as uuidv4 } from 'uuid'
 
-import { isImageFile } from '@/shared/image'
+import { isMediaFile, isVideoFile } from '@/shared/media'
 
 import type {
   CURRENT_CONFIG_INTERFACE,
@@ -81,7 +81,7 @@ export const useSettingsStore = defineStore('opiton', {
   }
 })
 
-export async function uploadBackgroundImage(imageFile: File, isDarkMode = false) {
+export async function uploadBackground(imageFile: File, isDarkMode = false) {
   const settingsStore = useSettingsStore()
 
   const id = uuidv4()
@@ -92,15 +92,18 @@ export async function uploadBackgroundImage(imageFile: File, isDarkMode = false)
   const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
   const prevUrl = settingsStore[backgroundKey]?.url || ''
 
-  // 清除上次壁纸，ObjectURL可能导致内存溢出
-  await Promise.all([useWallpaperStore.clear(), useDarkWallpaperStore.clear()])
-  if (prevUrl.startsWith('blob:')) {
-    URL.revokeObjectURL(prevUrl)
+  // 清除当前模式上次壁纸（IndexedDB）以节省空间。如果之前的 URL 是 blob:，撤销它
+  await store.clear()
+  if (prevUrl?.startsWith('blob:')) {
+    try {
+      URL.revokeObjectURL(prevUrl)
+    } catch {}
   }
 
-  // 保存图片到 IndexedDB 并更新状态
+  // 保存媒体文件到 IndexedDB 并更新状态，记录 mediaType
+  const mediaType: 'image' | 'video' = isVideoFile(imageFile) ? 'video' : 'image'
   await store.setItem<Blob>(id, imageFile)
-  settingsStore[backgroundKey] = { id, url }
+  settingsStore[backgroundKey] = { id, url, mediaType }
 }
 
 export async function reloadBackgroundImage(isDarkMode = false) {
@@ -117,16 +120,29 @@ export async function reloadBackgroundImage(isDarkMode = false) {
 
   const file = await store.getItem<Blob>(background.id)
 
-  // 校验图片数据是否可用，否则删除该数据
-  if (file && isImageFile(file)) {
+  // 校验媒体数据是否可用，否则删除该数据
+  if (file && isMediaFile(file)) {
     const url = URL.createObjectURL(file)
+    // 根据文件类型更新 mediaType（兼容旧数据）
     background.url = url
+    if (isVideoFile(file)) {
+      Object.assign(background, { mediaType: 'video' })
+    } else {
+      Object.assign(background, { mediaType: 'image' })
+    }
   } else {
     if (background.url?.startsWith('blob:')) {
-      URL.revokeObjectURL(background.url)
+      try {
+        URL.revokeObjectURL(background.url)
+      } catch {}
     }
-    background.id = ''
-    background.url = ''
-    await store.removeItem(background.id)
+
+    try {
+      await store.removeItem(background.id)
+    } finally {
+      background.id = ''
+      background.url = ''
+      background.mediaType = undefined
+    }
   }
 }

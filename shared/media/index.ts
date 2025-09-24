@@ -1,4 +1,15 @@
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+const ALLOWED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/gif',
+  'image/apng',
+  'image/avif',
+  'image/bmp',
+  'image/tiff'
+]
+
+const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']
 
 /**
  * 检查文件是否为有效的图片文件
@@ -9,6 +20,21 @@ const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif
 export function isImageFile(file: Blob, extraTypes: string[] = []): boolean {
   const allowedTypes = [...ALLOWED_IMAGE_TYPES, ...extraTypes]
   return allowedTypes.includes(file.type)
+}
+
+/**
+ * 检查文件是否为视频文件
+ */
+export function isVideoFile(file: Blob, extraTypes: string[] = []): boolean {
+  const allowedTypes = [...ALLOWED_VIDEO_TYPES, ...extraTypes]
+  return allowedTypes.includes(file.type)
+}
+
+/**
+ * 检查是否为支持的媒体文件（图片或视频）
+ */
+export function isMediaFile(file: Blob): boolean {
+  return isImageFile(file) || isVideoFile(file)
 }
 
 /**

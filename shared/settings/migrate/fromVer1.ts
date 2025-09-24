@@ -34,7 +34,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       bgMaskOpacity: oldSettings.bgMaskPpacity,
       lightMaskColor: defaultSettings.background.lightMaskColor,
       nightMaskColor: defaultSettings.background.nightMaskColor,
-      onlineUrl: defaultSettings.background.onlineUrl
+      onlineUrl: defaultSettings.background.onlineUrl,
+      pauseWhenBlur: defaultSettings.background.pauseWhenBlur
     },
     localBackground: {
       id: oldSettings.bgId,

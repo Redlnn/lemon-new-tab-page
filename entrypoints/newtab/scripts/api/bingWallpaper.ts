@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid'
 
 import { t } from '@/shared/i18n'
-import { isImageFile, verifyImageUrl } from '@/shared/image'
+import { isImageFile, verifyImageUrl } from '@/shared/media'
 import enhancedFetch from '@/shared/network/fetch'
 import { saveSettings, useBingWallpaperStore, useSettingsStore } from '@/shared/settings'
 

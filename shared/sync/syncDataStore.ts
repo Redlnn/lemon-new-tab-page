@@ -1,10 +1,10 @@
-import { useDebounceFn } from '@vueuse/core'
-import { browser } from 'wxt/browser'
 import { defineStore, MutationType } from 'pinia'
+import { useDebounceFn } from '@vueuse/core'
 
+import { browser } from 'wxt/browser'
+
+import { defaultBookmark, saveBookmark, useBookmarkStore } from '../bookmark'
 import { defaultSettings, useSettingsStore } from '../settings'
-import { defaultBookmark, useBookmarkStore, saveBookmark } from '../bookmark'
-
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
 
@@ -206,8 +206,9 @@ export const useSyncDataStore = defineStore('sync', {
         cloudData.settings.localBackground = localSettings.$state.localBackground // 保持本地壁纸数据
         cloudData.settings.localDarkBackground = localSettings.$state.localDarkBackground || {
           id: '',
-          url: ''
-        } // 保持本地暗黑壁纸数据
+          url: '',
+          mediaType: undefined
+        } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
         cloudData.settings.bingBackground = localSettings.$state.bingBackground // 保持本地必应壁纸数据
         cloudData.settings.background.onlineUrl = localSettings.background.onlineUrl // 保持本地在线壁纸URL
 

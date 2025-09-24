@@ -43,20 +43,24 @@ newtab:
         b: 圖片快取策略取決於瀏覽器，離線時可能無法展示
         c: 背景圖片載入前會短暫白屏，時間長短視乎你的網速
         d: 請確認你使用的圖片 API 支援跨域請求，否則可能載入失敗
-      tip: 如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片噢
+      tip: 如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片/影片噢
       title: 背景設定
       type:
         bing: Bing 每日圖片
-        local: 本機圖片
+        local: 本機圖片/影片
         none: 無
         online: 線上圖片
         title: 背景類型
+      pauseWhenBlur: 當分頁失去焦點時暫停影片背景
       warning:
         fileIsNotImage: 所選檔案並非圖片！
         granted: 已授權訪問
         notGranted: 尚未授權，無法讀取此網址
         securityPolicy: 因應 Google 安全政策，需授權 $1 的訪問權限才能取得背景圖片，是否允許本擴充功能訪問此網址？
         title: 警告
+        tooLarge:
+          message: 檔案太大（$1），可能會影響效能或者佔用好多空間，仲要繼續？
+          title: 檔案太大
         unknownSource: 使用來自不明來源的圖片作背景可能會危及你的裝置安全，是否繼續？
     clock:
       blinkingColon: 閃爍時間分隔符
