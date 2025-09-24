@@ -14,8 +14,6 @@ lerna-debug.log*
 node_modules
 .DS_Store
 .output
-stats.html
-stats-*.json
 .wxt
 web-ext.config.ts
 

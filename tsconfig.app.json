@@ -1,14 +1,14 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
-    ".wxt/i18n/**/*.ts",
-    ".wxt/types/**/*.ts",
-    "entrypoints/**/*.ts",
+    ".wxt/i18n/**/*",
+    ".wxt/types/**/*",
+    "entrypoints/**/*",
     "entrypoints/**/*.vue",
-    "types/**/*.ts",
-    "shared/**/*.ts"
+    "types/**/*",
+    "shared/**/*"
   ],
-  "exclude": [".output", "scripts/**/*.ts"],
+  "exclude": [".output", "scripts/**/*"],
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
 
