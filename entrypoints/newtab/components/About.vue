@@ -30,7 +30,12 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
       </div>
       <h1 class="ext-name">{{ t('extension.name') }}</h1>
       <div class="ext-version">{{ version }}</div>
-      <el-link class="yiyan-links" :underline="'never'" :href="currentYiyanProvider.website">
+      <el-link
+        class="yiyan-links"
+        :underline="'never'"
+        target="_blank"
+        :href="currentYiyanProvider.website"
+      >
         {{ t('newtab.about.yiyanApiProvider', [currentYiyanProvider.name]) }}
       </el-link>
       <div class="copyright">
@@ -38,24 +43,30 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
         <el-link :underline="'never'" href="https://github.com/Redlnn"> Red_lnn </el-link>
       </div>
       <el-space class="ext-links" :size="12">
-        <el-link :underline="'never'" href="https://github.com/Redlnn/lemon-new-tab-page/">
+        <el-link
+          :underline="'never'"
+          target="_blank"
+          href="https://github.com/Redlnn/lemon-new-tab-page/"
+        >
           <el-icon :size="20"><Github /></el-icon>
         </el-link>
         <el-link
           :underline="'never'"
+          target="_blank"
           href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
         >
           <el-icon :size="20"><Chrome /></el-icon>
         </el-link>
         <el-link
           :underline="'never'"
-          class="ext-link"
+          target="_blank"
           href="https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh"
         >
           <el-icon :size="20"><Edge /></el-icon>
         </el-link>
         <el-link
           :underline="'never'"
+          target="_blank"
           href="https://addons.mozilla.org/firefox/addon/lemon-new-tab/"
         >
           <el-icon :size="20"><Firefox /></el-icon>
