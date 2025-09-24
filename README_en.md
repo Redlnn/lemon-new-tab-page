@@ -65,14 +65,14 @@ The extension is now available on
 | Most-visited sites |        ✅        |       ❌        |
 |  Custom wallpaper  |        ✅        |       ✅        |
 |     Dark mode      |        ✅        |       ✅        |
-|  Video wallpaper   |        ❌        |       ✅        |
+|  Video wallpaper   |        ✅        |       ✅        |
 |       Quotes       |        ✅        |       ✅        |
 |  Custom shortcuts  |        ✅        |       ✅        |
-|       Notes        |        ❌        |       ✅        |
 |   Settings sync    |        ✅        |       ✅        |
+|       Notes        |        ❌        |       ✅        |
 |      Weather       |        ❌        |       ✅        |
 | Project promotion  |        ❌        |       ✅        |
-|   Account system   | Built-in browser |   Independent   |
+|   Account system   | Built-in browser |   Third Party   |
 
 ## Why this extension?
 
