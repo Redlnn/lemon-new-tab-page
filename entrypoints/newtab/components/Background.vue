@@ -21,7 +21,7 @@ const isWindowFocused = useWindowFocus()
 function updateVideoPlayback() {
   const vid = videoRef.value
   if (!vid) return
-  // If not focused or page hidden, pause; otherwise play
+  // 如果页面不可见，或者窗口失去焦点且设置了失去焦点时暂停视频，则暂停视频
   if (
     document.visibilityState === 'hidden' ||
     (settingsStore.background.pauseWhenBlur && !isWindowFocused.value)
@@ -31,7 +31,7 @@ function updateVideoPlayback() {
     } catch {}
   } else {
     try {
-      // play returns a promise; ignore rejection to avoid uncaught
+      // play() 会返回一个 Promise，使用 void 忽略未处理的 Promise 警告
       void vid.play()
     } catch {}
   }

@@ -25,21 +25,13 @@ import {
 
 const settingsStore = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
-const tmpUrl = ref('')
+const tmpUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
 const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
 
 const predefineMaskColor = ['#f2f3f5', '#000']
 
 // 大小阈值 (字节)，超过会提示用户。这里设置为 50MB
 const WARN_SIZE_BYTES = 50 * 1024 * 1024
-
-function formatBytes(bytes: number) {
-  if (bytes === 0) return '0 B'
-  const k = 1024
-  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
-  const i = Math.floor(Math.log(bytes) / Math.log(k))
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
-}
 
 // 存储上传后的元信息，用于在 UI 显示：{ width, height, duration?, size }
 const metaLight = ref<{ width?: number; height?: number; duration?: number; size?: number } | null>(
@@ -54,6 +46,14 @@ onMounted(() => {
     tmpUrl.value = settingsStore.background.onlineUrl
   }
 })
+
+function formatBytes(bytes: number) {
+  if (bytes === 0) return '0 B'
+  const k = 1024
+  const sizes = ['B', 'KB', 'MB', 'GB', 'TB']
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
+}
 
 // 当本地壁纸被上传/更改时，自动读取并显示元信息
 // 自定义上传处理：调用 uploadBackground 并在上传完成后读取并显示媒体元信息
@@ -123,7 +123,7 @@ async function handlePermissions(_url: string, hostname: string) {
       }
     }
   } catch {
-    // User clicked cancel on the confirmation dialog
+    // 用户取消或报错
     settingsStore.background.bgType = BgType.None
     tmpUrl.value = ''
   }
