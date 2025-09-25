@@ -2,7 +2,7 @@
 
 <div align="center">
 
-Enlgish | [Chinese](README.md)
+[Simplified Chinese](README.md) | English
 
 </div>
 
@@ -17,19 +17,23 @@ The extension is now available on
 
 ## Features
 
-- :zap: Lightning-fast loading
-- :gear: Rich customization options for flexible layouts
-- :top: Display most-visited sites and custom shortcuts
-- :framed_picture: Use custom wallpapers or Bing daily wallpapers
-- :joystick: Switch search engines and multiple suggestion sources
-- :art: Partial UI and animation reproduction of Lime Start Page
-- :atom_symbol: Open source
-- :globe_with_meridians: Multi-language support (`en`, `zh-CN`, `zh-HK`, `zh-TW`)
-  > `zh-HK` may not always work as expected. It theoretically works, but depends on browser behavior.
+- Fast⚡ – Purely local, high-performance, fast loading
+- Search 🔍 – Real-time suggestions and search engine selection
+- Flexible 🌈 – Customize and combine page layouts with rich options
+- Elegant 🎨 – Clean and visually pleasing interface
+- Wallpapers 🖼️ – Support for Bing daily wallpapers, custom online APIs, and local images/videos
+- Quotes 💬 – A classical Chinese poem or motivational quote each time you open a new tab
+- Open Source ⚛️ – No worries about privacy leaks or malicious code
+- Internationalization 🌐 – Built-in multi-language support (Simplified Chinese, Traditional Chinese， Cantonese, extensible)
+- Customization ⚙️ – Flexible configuration to adjust appearance to your preference
+- Shortcuts 🪜 – Display/pin frequently visited sites and add your own custom shortcuts
+- Dark Mode 🌓 – Support for dark mode, with automatic system theme detection
 
 > [!NOTE]  
 > This extension mimics part of Lime Start Page’s style—if that’s not your taste, please skip.  
 > Contributions via PRs are welcome. Issues may not always be implemented.
+>
+> `zh-HK` may not always work as expected. It theoretically works, but depends on browser behavior.
 
 ## Changelog
 
