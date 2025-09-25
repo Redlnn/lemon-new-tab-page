@@ -10,7 +10,7 @@
   You can reselect the search engine in the settings page to resolve it.
   Thank you for your understanding.
 
-## 2.4.0 (WIP)
+## 2.4.0 (Sep 25, 2025)
 
 ### New Features ✨
 

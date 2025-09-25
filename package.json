@@ -1,7 +1,7 @@
 {
   "name": "lemon-tab-page",
   "private": true,
-  "version": "2.3.4",
+  "version": "2.4.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -28,7 +28,7 @@
     "localforage": "^1.10.0",
     "pinia": "^3.0.3",
     "uuid": "^13.0.0",
-    "vue": "^3.5.21",
+    "vue": "^3.5.22",
     "vue-draggable-plus": "^0.6.0"
   },
   "devDependencies": {
@@ -53,11 +53,11 @@
     "@wxt-dev/webextension-polyfill": "^1.0.0",
     "element-plus": "^2.11.3",
     "eslint": "^9.36.0",
-    "eslint-plugin-oxlint": "^1.17.0",
+    "eslint-plugin-oxlint": "^1.18.0",
     "eslint-plugin-vue": "^10.5.0",
     "fast-glob": "^3.3.3",
     "npm-run-all2": "^8.0.4",
-    "oxlint": "^1.17.0",
+    "oxlint": "^1.18.0",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
     "sass-embedded": "^1.93.2",
