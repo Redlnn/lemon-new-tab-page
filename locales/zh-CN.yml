@@ -43,6 +43,7 @@ newtab:
         b: 壁纸缓存策略却决于浏览器，断网后会获取不到壁纸
         c: 壁纸加载完成前会白屏一段时间，时长取决于你的网速
         d: 请确保你使用的壁纸 API 允许跨域请求，否则会加载失败
+      pauseWhenBlur: 标签页失去焦点时暂停视频背景
       tip: 深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢
       title: 背景设置
       type:
@@ -51,17 +52,20 @@ newtab:
         none: 无
         online: 在线图片
         title: 背景类型
-      pauseWhenBlur: 标签页失去焦点时暂停视频背景
+      videoBlurTip: 打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用
+      videoWarning: >-
+        使用视频作为背景将会大量消耗 GPU 资源，建议避免同时开多个新标签页以免吃满
+        GPU，建议禁用时间分隔符闪烁、快捷方式模糊、搜索框模糊、点击搜索框缩放/模糊背景以降低性能消耗
       warning:
         fileIsNotImage: 所选文件不是图片！
         granted: 已授予访问权限
         notGranted: 未授予权限，无法访问该地址
         securityPolicy: 由于 Google 的安全策略，需要授予 $1 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限
         title: 警告
-        unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
         tooLarge:
-          title: 文件过大
           message: 文件过大（$1），可能会影响性能或占用较多空间，是否继续？
+          title: 文件过大
+        unknownSource: 使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？
     clock:
       blinkingColon: 闪烁时间分隔符
       blinkingTip: 关闭可缓解持续性的 GPU 占用
@@ -105,11 +109,11 @@ newtab:
       disableDialogTransparent: 弹窗背景不透明
       disableFocusBlur: 点击搜索框不模糊背景
       disableFocusScale: 点击搜索框不缩放背景
-      disableSearchBarBlur: 搜索框背景不模糊
-      disableSearchBarTransparent: 搜索框背景不透明
-      disableShortcutBlur: 快捷访问图标背景不模糊
-      disableShortcutTransparent: 快捷访问图标背景不透明
-      disableYiyanBlur: 一言背景区域不模糊
+      disableSearchBarBlur: 搜索框不模糊
+      disableSearchBarTransparent: 搜索框不透明
+      disableShortcutBlur: 快捷访问图标不模糊
+      disableShortcutTransparent: 快捷访问图标不透明
+      disableYiyanBlur: 一言背景不模糊
       title: 性能设置
     search:
       alwaysExpandSearchBar: 一直展开搜索框

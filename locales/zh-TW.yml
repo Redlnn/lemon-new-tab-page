@@ -43,6 +43,7 @@ newtab:
         b: 圖片的快取策略取決於瀏覽器，離線時可能無法載入圖片
         c: 載入圖片前可能會短暫出現白畫面，時間長短取決於你的網路速度
         d: 請確認使用的圖片 API 是否允許跨域請求，否則將無法載入圖片
+      pauseWhenBlur: 分頁失去焦點時暫停影片背景
       tip: 如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片/影片噢
       title: 背景設定
       type:
@@ -51,7 +52,10 @@ newtab:
         none: 無
         online: 線上圖片
         title: 背景類型
-      pauseWhenBlur: 分頁失去焦點時暫停影片背景
+      videoBlurTip: 開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用
+      videoWarning: >-
+        使用影片作為背景將會大量消耗 GPU 資源，建議避免同時開啟多個新分頁，以免佔滿
+        GPU。也建議停用時間分隔符閃爍、捷徑模糊、搜尋框模糊，以及點擊搜尋框時的縮放/模糊背景，以降低效能消耗。
       warning:
         fileIsNotImage: 所選檔案不是圖片！
         granted: 已授予訪問權限
@@ -105,11 +109,11 @@ newtab:
       disableDialogTransparent: 對話框背景不透明
       disableFocusBlur: 點擊搜尋框時背景不模糊
       disableFocusScale: 點擊搜尋框時不縮放背景
-      disableSearchBarBlur: 搜尋框背景不模糊
-      disableSearchBarTransparent: 搜尋框背景不透明
-      disableShortcutBlur: 捷徑背景不模糊
-      disableShortcutTransparent: 捷徑背景不透明
-      disableYiyanBlur: 一言背景區域不模糊
+      disableSearchBarBlur: 搜尋框不模糊
+      disableSearchBarTransparent: 搜尋框不透明
+      disableShortcutBlur: 捷徑不模糊
+      disableShortcutTransparent: 捷徑不透明
+      disableYiyanBlur: 一言背景不模糊
       title: 效能設定
     search:
       alwaysExpandSearchBar: 一直展開搜尋框

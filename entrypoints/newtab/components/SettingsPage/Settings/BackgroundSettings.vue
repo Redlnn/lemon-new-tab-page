@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
@@ -252,6 +252,13 @@ onMounted(async () => {
     } catch {}
   }
 })
+
+const isVideoBg = computed(
+  () =>
+    settingsStore.background.bgType === BgType.Local &&
+    (settingsStore.localBackground.mediaType === 'video' ||
+      settingsStore.localDarkBackground.mediaType === 'video')
+)
 </script>
 
 <template>
@@ -388,17 +395,16 @@ onMounted(async () => {
         </div>
       </div>
     </div>
-    <div
-      v-if="
-        settingsStore.background.bgType === BgType.Local &&
-        (settingsStore.localBackground.mediaType === 'video' ||
-          settingsStore.localDarkBackground.mediaType === 'video')
-      "
-      class="settings__item settings__item--horizontal"
-    >
+    <p v-if="isVideoBg" class="settings__item--note" style="margin-top: 0.5em">
+      {{ t('newtab.settings.background.videoWarning') }}
+    </p>
+    <div v-if="isVideoBg" class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.background.pauseWhenBlur') }}</div>
       <el-switch v-model="settingsStore.background.pauseWhenBlur" />
     </div>
+    <p v-if="isVideoBg" class="settings__item--note">
+      {{ t('newtab.settings.background.videoBlurTip') }}
+    </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.background.enableVignetting') }}</div>
       <el-switch v-model="settingsStore.background.enableVignetting" />

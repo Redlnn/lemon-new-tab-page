@@ -57,6 +57,7 @@ newtab:
         d: >-
           Please ensure the wallpaper API you are using allows cross-origin
           requests; otherwise, it will fail to load.
+      pauseWhenBlur: Pause video background when the tab loses focus
       tip: >-
         If no background is set for dark mode, the light mode background or
         video will be used.
@@ -67,7 +68,15 @@ newtab:
         none: None
         online: Online image
         title: Background type
-      pauseWhenBlur: Pause video background when the tab loses focus
+      videoBlurTip: >-
+        Turn on to reduce performance usage when multiple new tabs or windows
+        are open on the screen simultaneously.
+      videoWarning: >-
+        Using a video as the background will heavily consume GPU resources. To
+        avoid maxing out the GPU, it’s recommended not to open multiple new tabs
+        at the same time. It’s also recommended to disable the blinking time
+        separator, shortcut blur, search bar blur, and background zoom/blur on
+        search bar click to reduce performance overhead.
       warning:
         fileIsNotImage: The selected file is not an image!
         granted: Permission granted.
@@ -79,8 +88,8 @@ newtab:
         title: Warning
         tooLarge:
           message: >-
-            The file is too large ($1) and may affect performance or occupy significant storage.
-            Do you want to continue?
+            The file is too large ($1) and may affect performance or occupy
+            significant storage. Do you want to continue?
           title: Large File Warning
         unknownSource: >-
           Using images from unknown sources as backgrounds may expose your
@@ -141,7 +150,7 @@ newtab:
       disableSearchBarTransparent: Disable search bar transparency
       disableShortcutBlur: Disable shortcut icon blur
       disableShortcutTransparent: Disable shortcut icon transparency
-      disableYiyanBlur: Disable quote background blur
+      disableYiyanBlur: Disable quote blur
       title: Performance settings
     search:
       alwaysExpandSearchBar: Always expand search bar
