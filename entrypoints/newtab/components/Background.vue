@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
+import useTransientWillChange from '@/shared/composables/useTransientWillChange'
 import { useSettingsStore } from '@/shared/settings'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
@@ -10,7 +11,7 @@ const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
-const background = ref<HTMLDivElement>()
+const imageRef = ref<HTMLDivElement>()
 const videoRef = ref<HTMLVideoElement>()
 
 defineProps<{ url: string }>()
@@ -47,6 +48,26 @@ const visibility = useDocumentVisibility()
 
 watch(isWindowFocused, updateVideoPlayback)
 watch(visibility, updateVideoPlayback)
+
+// 当 focus 状态变化会触发缩放类的切换，在 DOM 更新（class 变更）之前
+// 先设置 will-change，这样浏览器可以在合成层上做优化。使用 flush: 'pre'。
+const { trigger: triggerWillChange } = useTransientWillChange({
+  property: 'transform',
+  timeout: 1000
+})
+
+watch(
+  () => focusStore.isFocused,
+  async () => {
+    await Promise.all([
+      // If video/image exist, ensure will-change is applied before DOM
+      // changes by awaiting the trigger (which waits for next rAF).
+      videoRef.value ? triggerWillChange(videoRef) : Promise.resolve(),
+      imageRef.value ? triggerWillChange(imageRef) : Promise.resolve()
+    ])
+  },
+  { flush: 'pre' }
+)
 </script>
 
 <template>
@@ -63,7 +84,7 @@ watch(visibility, updateVideoPlayback)
     <div class="background-mask"></div>
     <div v-if="settingsStore.background.enableVignetting" class="background__vignette" />
     <Transition>
-      <div v-show="!switchStore.isSwitching" ref="background">
+      <div v-show="!switchStore.isSwitching">
         <video
           v-if="
             (!isDark && settingsStore.localBackground.mediaType === 'video') ||
@@ -81,6 +102,7 @@ watch(visibility, updateVideoPlayback)
         <div
           v-else
           class="background"
+          ref="imageRef"
           :class="backgroundCss"
           :style="{
             backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
@@ -146,7 +168,6 @@ video.background {
   width: calc(100% + 4 * var(--blur-intensity));
   height: calc(100% + 4 * var(--blur-intensity));
   object-fit: cover;
-  will-change: transform;
 }
 
 .background__vignette {

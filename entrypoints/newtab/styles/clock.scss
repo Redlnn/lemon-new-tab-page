@@ -91,6 +91,7 @@
 
   &__colon.clock__colon--blinking {
     animation: twinkle 1s ease infinite;
+    will-change: opacity;
   }
 }
 
