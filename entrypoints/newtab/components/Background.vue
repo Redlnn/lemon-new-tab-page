@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
@@ -37,11 +37,11 @@ function updateVideoPlayback() {
   }
 }
 
-const backgroundCss = {
+const backgroundCss = computed(() => ({
   'background--deafult-scale': settingsStore.perf.disableFocusScale,
   'background--focused__scale': focusStore.isFocused && !settingsStore.perf.disableFocusScale,
   'background--focused__blur': focusStore.isFocused && !settingsStore.perf.disableFocusBlur
-}
+}))
 
 const visibility = useDocumentVisibility()
 
