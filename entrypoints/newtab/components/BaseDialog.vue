@@ -100,6 +100,7 @@ const dialogId = computed(() => {
         <el-backtop
           v-if="dialogId"
           :target="`#${dialogId} .el-scrollbar__wrap`"
+          style="position: absolute"
           :right="40"
           :bottom="20"
         />
