@@ -97,6 +97,7 @@ newtab:
           'no': 唔好啊
           title: 你確定要從檔案匯入設定嗎？
           'yes': 繼續
+      purge: 清除
       purgeData: 清除本擴充功能的資料
       sync: 雲端同步
       syncWarning: |
@@ -107,6 +108,8 @@ newtab:
       dialogAnimation: 對話框動畫
       dialogBlur: 對話框背景模糊
       dialogTransparent: 對話框背景透明
+      disableAll: 一鍵禁用所有
+      disableAllBlur: 模糊效果
       focusBlur: 點擊搜尋框時背景模糊
       focusScale: 點擊搜尋框時縮放背景
       searchBarBlur: 搜尋框模糊
@@ -116,6 +119,7 @@ newtab:
       shortcutBlur: 快速存取圖示模糊
       shortcutTransparent: 快速存取圖示透明
       title: 效能設定
+      transparent: 透明效果
       yiyanBlur: 一言背景模糊
     search:
       alwaysExpandSearchBar: 一直展開搜尋框

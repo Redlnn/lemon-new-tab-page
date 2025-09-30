@@ -34,6 +34,21 @@ const searchBarBlur = useNegate(settingsStore.perf, 'disableSearchBarBlur')
 const yiyanBlur = useNegate(settingsStore.perf, 'disableYiyanBlur')
 const settingsBtnBlur = useNegate(settingsStore.perf, 'disableSettingsBtnBlur')
 const settingsBtnTransparent = useNegate(settingsStore.perf, 'disableSettingsBtnTransparent')
+
+function disableTransparentSettings() {
+  settingsStore.perf.disableDialogTransparent = true
+  settingsStore.perf.disableSearchBarTransparent = true
+  settingsStore.perf.disableSettingsBtnTransparent = true
+  settingsStore.perf.disableShortcutTransparent = true
+}
+
+function disableBlurSettings() {
+  settingsStore.perf.disableDialogBlur = true
+  settingsStore.perf.disableSearchBarBlur = true
+  settingsStore.perf.disableSettingsBtnBlur = true
+  settingsStore.perf.disableShortcutBlur = true
+  settingsStore.perf.disableYiyanBlur = true
+}
 </script>
 
 <template>
@@ -49,6 +64,17 @@ const settingsBtnTransparent = useNegate(settingsStore.perf, 'disableSettingsBtn
     <p class="settings__item--note">
       {{ t('newtab.settings.clock.blinkingTip') }}
     </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab.settings.perf.disableAll') }}</div>
+      <span>
+        <el-button @click="disableTransparentSettings">
+          {{ t('newtab.settings.perf.transparent') }}
+        </el-button>
+        <el-button @click="disableBlurSettings">
+          {{ t('newtab.settings.perf.disableAllBlur') }}
+        </el-button>
+      </span>
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.perf.dialogTransparent') }}</div>
       <el-switch v-model="dialogTransparent" />

@@ -126,6 +126,7 @@ newtab:
           'no': 'No'
           title: Are you sure you want to import settings from the file?
           'yes': 'Yes'
+      purge: Purge
       purgeData: Purge the data of this extension.
       sync: Cloud sync
       syncWarning: >
@@ -139,6 +140,8 @@ newtab:
       dialogAnimation: Dialog animation
       dialogBlur: Dialog blur
       dialogTransparent: Dialog transparency
+      disableAll: One-click to disable all
+      disableAllBlur: Blur
       focusBlur: Blur the background when focusing the search bar
       focusScale: Scale the background when focusing the search bar
       searchBarBlur: Search bar blur
@@ -148,6 +151,7 @@ newtab:
       shortcutBlur: Shortcut icon blur
       shortcutTransparent: Shortcut icon transparency
       title: Performance settings
+      transparent: Transparency
       yiyanBlur: Quote blur
     search:
       alwaysExpandSearchBar: Always expand search bar

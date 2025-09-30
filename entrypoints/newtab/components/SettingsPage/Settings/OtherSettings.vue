@@ -157,8 +157,6 @@ function handleFileChange(event: Event) {
         <el-button
           type="primary"
           :icon="DownloadRound"
-          round
-          size="small"
           @click="
             downloadJSON<CURRENT_CONFIG_INTERFACE>(
               settingsStore.$state,
@@ -168,19 +166,16 @@ function handleFileChange(event: Event) {
         >
           {{ t('newtab.settings.other.importExport.export') }}
         </el-button>
-        <el-button :icon="FileUploadRound" round size="small" @click="openFilePicker">
+        <el-button :icon="FileUploadRound" @click="openFilePicker">
           {{ t('newtab.settings.other.importExport.import') }}
         </el-button>
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab.settings.other.purgeData') }}</div>
-      <el-button
-        type="danger"
-        :icon="DeleteForeverOutlined"
-        circle
-        @click="confirmClearExtensionData"
-      />
+      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">{{
+        t('newtab.settings.other.purge')
+      }}</el-button>
     </div>
     <div v-if="isGoogleChrome" class="settings__item">
       <div class="settings__label" style="min-height: 32px">

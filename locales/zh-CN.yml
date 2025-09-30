@@ -97,6 +97,7 @@ newtab:
           'no': 不要啊
           title: 你确定要从文件导入设置吗？
           'yes': 继续
+      purge: 清除
       purgeData: 清除扩展数据
       sync: 云同步
       syncWarning: |
@@ -107,6 +108,8 @@ newtab:
       dialogAnimation: 弹窗动画
       dialogBlur: 弹窗背景模糊
       dialogTransparent: 弹窗背景透明
+      disableAll: 一键禁用所有
+      disableAllBlur: 模糊效果
       focusBlur: 点击搜索框模糊背景
       focusScale: 点击搜索框缩放背景
       searchBarBlur: 搜索框模糊
@@ -116,6 +119,7 @@ newtab:
       shortcutBlur: 快捷访问图标模糊
       shortcutTransparent: 快捷访问图标透明
       title: 性能设置
+      transparent: 透明效果
       yiyanBlur: 一言背景模糊
     search:
       alwaysExpandSearchBar: 一直展开搜索框
