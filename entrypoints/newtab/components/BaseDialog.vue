@@ -110,7 +110,7 @@ function onOpen() {
   }
 
   &--acrylic {
-    backdrop-filter: blur(10px) saturate(1.4);
+    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
   }
 
   &-container {

@@ -20,7 +20,7 @@
       padding: 20px;
       background-color: color-mix(in srgb, var(--el-bg-color), transparent 60%);
       border-radius: 10px;
-      backdrop-filter: blur(10px) saturate(1.4);
+      backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
 
       &.shortcut__container--shadow {
         box-shadow: var(--el-box-shadow);
@@ -59,7 +59,7 @@
           background-color: color-mix(in srgb, var(--el-fill-color-blank), transparent 60%);
           border-radius: 50%;
           box-shadow: var(--el-box-shadow-light);
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
         }
 
         .shortcut__icon {
@@ -75,7 +75,7 @@
           transition: background-color 0.1s ease;
 
           &--blur {
-            backdrop-filter: blur(10px) saturate(1.4);
+            backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
           }
 
           .shortcut__item:hover & {

@@ -193,7 +193,7 @@ defineExpose({
   font-size: var(--el-font-size-small);
   background-color: color-mix(in srgb, var(--el-fill-color), transparent 50%);
   border-radius: 15px;
-  backdrop-filter: blur(30px) saturate(1.2);
+  backdrop-filter: blur(30px) saturate(1.4) brightness(1.1);
   transition:
     height 0.1s var(--cubic-bezier),
     background-color var(--el-transition-duration-fast) ease,
