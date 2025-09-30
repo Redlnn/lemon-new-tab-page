@@ -28,6 +28,7 @@
 ### Bug Fixes 🐛
 
 - Fixed search bar animations not triggering on click
+- Fixed CSS broken due to upstream updates
 
 ## 2.4.0 (Sep 25, 2025)
 
