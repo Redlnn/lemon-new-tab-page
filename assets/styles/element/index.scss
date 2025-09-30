@@ -9,7 +9,11 @@ $--slider: (
   $slider: $--slider,
   $border-radius: ('base': 8px),
   $messagebox: ('border-radius': 8px),
-  $popper: ('border-radius': 8px)
+  $popper: ('border-radius': 8px),
+  $backtop: (
+    'bg-color': color-mix(in srgb, var(--el-color-primary), transparent 90%),
+    'hover-bg-color': color-mix(in srgb, var(--el-color-primary-light-5), transparent 60%)
+  )
 );
 
 // if you want to import all

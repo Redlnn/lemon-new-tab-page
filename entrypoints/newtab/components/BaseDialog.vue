@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import { CloseRound } from '@vicons/material'
@@ -25,6 +25,7 @@ const emit = defineEmits<{
 
 const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
+const dialog = ref<InstanceType<typeof import('element-plus').ElDialog>>()
 const headerIsVisible = useElementVisibility(header)
 const { width: windowWidth } = useWindowSize()
 
@@ -43,10 +44,19 @@ function onOpen() {
   emit('open')
   scrollbar.value?.setScrollTop(0)
 }
+
+const dialogId = computed(() => {
+  return (
+    (dialog.value?.$el as HTMLElement)?.nextElementSibling?.firstElementChild?.getAttribute(
+      'aria-describedby'
+    ) ?? null
+  )
+})
 </script>
 
 <template>
   <el-dialog
+    ref="dialog"
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : 600"
     :class="[
@@ -87,6 +97,12 @@ function onOpen() {
         </div>
         <slot></slot>
         <div class="base-dialog-bottom-spacing"></div>
+        <el-backtop
+          v-if="dialogId"
+          :target="`#${dialogId} .el-scrollbar__wrap`"
+          :right="40"
+          :bottom="20"
+        />
       </el-scrollbar>
     </div>
   </el-dialog>

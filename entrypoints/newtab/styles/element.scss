@@ -38,3 +38,8 @@
 .el-popper__arrow {
   display: none;
 }
+
+.el-backtop {
+  backdrop-filter: blur(3px) saturate(1.4) brightness(1.1);
+  transition: background-color var(--el-transition-duration-fast) ease;
+}
