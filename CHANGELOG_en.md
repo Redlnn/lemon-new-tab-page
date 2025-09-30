@@ -10,6 +10,25 @@
   You can reselect the search engine in the settings page to resolve it.
   Thank you for your understanding.
 
+## 2.4.1 (Sep 30, 2025)
+
+### New Features ✨
+
+- Added performance options to the settings button at the bottom-right corner
+- Added one-click disable effects, unified button styles on the settings page
+- Added "back to top" buttons for increasingly long settings and changelog pages
+
+### Improvements ⚡️
+
+- Added performance tips related to video backgrounds
+- Performance optimizations
+- Unified descriptions of performance options: previously “enable switch to disable xxx,” now “switch to turn off xxx”
+- Standardized blur effects across the app (except for some that affect visuals)
+
+### Bug Fixes 🐛
+
+- Fixed search bar animations not triggering on click
+
 ## 2.4.0 (Sep 25, 2025)
 
 ### New Features ✨
@@ -303,7 +322,7 @@ Here’s to another year of making your browsing better!
 - Now you can change the background mask color.
 - Now you can disable the background of the quick access area.
 - Optimized the position of the search bar after closing the quick access area.
-- [Firefox] Now supports setting it as the homepage (#12).
+- **Firefox**: Now supports setting it as the homepage (#12).
 
 ### Fixes🐛
 
@@ -321,7 +340,7 @@ Here’s to another year of making your browsing better!
 - Supports caching of Bing's daily image.
 - Added transition animation for local backgrounds or cached Bing wallpapers.
 - Optimized the display of the 12-hour clock format.
-- [i18n] Internationalization support.
+- Internationalization support.
 
 ### Fixes🐛
 
