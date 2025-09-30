@@ -104,17 +104,19 @@ newtab:
       title: 其他设置
       want_to_customize_chrome: 要自定义Chrome？
     perf:
-      disableDialogAnimation: 禁用弹窗动画
-      disableDialogBlur: 弹窗背景不模糊
-      disableDialogTransparent: 弹窗背景不透明
-      disableFocusBlur: 点击搜索框不模糊背景
-      disableFocusScale: 点击搜索框不缩放背景
-      disableSearchBarBlur: 搜索框不模糊
-      disableSearchBarTransparent: 搜索框不透明
-      disableShortcutBlur: 快捷访问图标不模糊
-      disableShortcutTransparent: 快捷访问图标不透明
-      disableYiyanBlur: 一言背景不模糊
+      dialogAnimation: 弹窗动画
+      dialogBlur: 弹窗背景模糊
+      dialogTransparent: 弹窗背景透明
+      focusBlur: 点击搜索框模糊背景
+      focusScale: 点击搜索框缩放背景
+      searchBarBlur: 搜索框模糊
+      searchBarTransparent: 搜索框透明
+      settingsBtnBlur: 设置按钮模糊
+      settingsBtnTransparent: 设置按钮透明
+      shortcutBlur: 快捷访问图标模糊
+      shortcutTransparent: 快捷访问图标透明
       title: 性能设置
+      yiyanBlur: 一言背景模糊
     search:
       alwaysExpandSearchBar: 一直展开搜索框
       defaultSearchEngine: 搜索引擎

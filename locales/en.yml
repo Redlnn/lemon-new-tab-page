@@ -1,9 +1,4 @@
 extension:
-  # ==> A Fxxxing Restriction from Microsoft <==
-  # Message: Can't publish extension as the package is not valid.
-  # Error: Package acceptance validation error.
-  # The translation for field Description in locale en is too long.
-  # It exceeds maximum size limit of 132 characters.
   description: >
     An open-source, simple, user-friendly start page. You can search or custom
     wallpaper. It can also display the most visited links.
@@ -141,17 +136,19 @@ newtab:
       title: Other settings
       want_to_customize_chrome: Want to customize Chrome?
     perf:
-      disableDialogAnimation: Disable dialog animation
-      disableDialogBlur: Disable dialog blur
-      disableDialogTransparent: Disable dialog transparency
-      disableFocusBlur: Disable background blur when focusing search bar
-      disableFocusScale: Disable background scaling when focusing search bar
-      disableSearchBarBlur: Disable search bar blur
-      disableSearchBarTransparent: Disable search bar transparency
-      disableShortcutBlur: Disable shortcut icon blur
-      disableShortcutTransparent: Disable shortcut icon transparency
-      disableYiyanBlur: Disable quote blur
+      dialogAnimation: Dialog animation
+      dialogBlur: Dialog blur
+      dialogTransparent: Dialog transparency
+      focusBlur: Blur the background when focusing the search bar
+      focusScale: Scale the background when focusing the search bar
+      searchBarBlur: Search bar blur
+      searchBarTransparent: Search bar transparency
+      settingsBtnBlur: Settings button blur
+      settingsBtnTransparent: Settings button transparent
+      shortcutBlur: Shortcut icon blur
+      shortcutTransparent: Shortcut icon transparency
       title: Performance settings
+      yiyanBlur: Quote blur
     search:
       alwaysExpandSearchBar: Always expand search bar
       defaultSearchEngine: Search engine
