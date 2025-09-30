@@ -251,7 +251,16 @@ function needHelp() {
       trigger="click"
       @contextmenu.prevent.stop
     >
-      <div class="settings-icon">
+      <div
+        class="settings-icon"
+        :class="{
+          'settings-icon--tran': !settingsStore.perf.disableSettingsBtnTransparent,
+          'settings-icon--blur': !(
+            settingsStore.perf.disableSettingsBtnBlur ||
+            settingsStore.perf.disableSettingsBtnTransparent
+          )
+        }"
+      >
         <el-icon><settings-round /></el-icon>
       </div>
       <template #dropdown>
@@ -307,16 +316,27 @@ function needHelp() {
   overflow: hidden;
   font-size: 25px;
   line-height: 1em;
-  color: color-mix(in srgb, var(--el-text-color-primary), transparent 60%);
+  color: var(--el-text-color-secondary);
   cursor: pointer;
-  background-color: color-mix(in srgb, var(--el-bg-color), transparent 85%);
+  background-color: var(--el-bg-color);
   border-radius: 50%;
-  backdrop-filter: blur(10px);
   transition: 0.1s;
+
+  &--blur {
+    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+  }
+
+  &--tran {
+    color: color-mix(in srgb, var(--el-text-color-primary), transparent 65%);
+    background-color: color-mix(in srgb, var(--el-bg-color), transparent 85%);
+
+    &:hover {
+      background-color: var(--el-bg-color);
+    }
+  }
 
   &:hover {
     color: var(--el-color-primary);
-    background-color: var(--el-bg-color);
     box-shadow: var(--el-box-shadow-lighter);
     transform: rotate(180deg);
   }
@@ -324,7 +344,7 @@ function needHelp() {
   &__popper {
     &.el-popper {
       background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 30%);
-      backdrop-filter: blur(10px) saturate(150%) brightness(110%);
+      backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
     }
 
     .el-dropdown-menu {

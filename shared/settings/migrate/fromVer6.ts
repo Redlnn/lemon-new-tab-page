@@ -88,7 +88,9 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       disableShortcutBlur: defaultSettings.perf.disableShortcutBlur,
       disableSearchBarTransparent: defaultSettings.perf.disableSearchBarTransparent,
       disableSearchBarBlur: defaultSettings.perf.disableSearchBarBlur,
-      disableYiyanBlur: defaultSettings.perf.disableYiyanBlur
+      disableYiyanBlur: defaultSettings.perf.disableYiyanBlur,
+      disableSettingsBtnBlur: defaultSettings.perf.disableSettingsBtnBlur,
+      disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent
     },
     pluginVersion: oldSettings.pluginVersion,
     version: 7

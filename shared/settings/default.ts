@@ -91,7 +91,9 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableShortcutBlur: false,
     disableSearchBarTransparent: false,
     disableSearchBarBlur: false,
-    disableYiyanBlur: false
+    disableYiyanBlur: false,
+    disableSettingsBtnBlur: false,
+    disableSettingsBtnTransparent: false
   },
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION

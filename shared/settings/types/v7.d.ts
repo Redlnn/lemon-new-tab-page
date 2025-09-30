@@ -93,6 +93,8 @@ export interface SettingsInterfaceVer7 {
     disableSearchBarTransparent: boolean
     disableSearchBarBlur: boolean
     disableYiyanBlur: boolean
+    disableSettingsBtnBlur: boolean
+    disableSettingsBtnTransparent: boolean
   }
   pluginVersion: string
   version: 7
