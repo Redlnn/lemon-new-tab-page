@@ -11,6 +11,10 @@
 
 html {
   background-color: var(--el-bg-color-page);
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 html,

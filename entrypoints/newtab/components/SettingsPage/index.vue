@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { t } from '@/shared/i18n'
+import { useTranslation } from 'i18next-vue'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
@@ -13,6 +13,8 @@ import ShortcutSettings from './Settings/ShortcutSettings.vue'
 import ThemeSettings from './Settings/ThemeSettings.vue'
 import YiyanSettings from './Settings/YiyanSettings.vue'
 
+const { t } = useTranslation()
+
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 </script>
@@ -20,7 +22,7 @@ defineExpose({ show, hide, toggle })
 <template>
   <base-dialog
     v-model="opened"
-    :title="t('newtab.settings.title')"
+    :title="t('newtab:settings.title')"
     container-class="settings__dialog"
     acrylic
     opacity

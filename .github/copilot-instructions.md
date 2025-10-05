@@ -1,29 +1,18 @@
-## About this Project
+# .github/copilot-instructions.md — AI coding agent quick guide
 
-This is a browser extension that replaces the default new tab page. It's built with Vue 3, TypeScript, and the [WXT framework](https://wxt.dev/). The extension is highly customizable, allowing users to change wallpapers, search engines, shortcuts, and more.
+Purpose: help an AI (or a contributor AI assistant) become productive fast in this repository. Keep changes small, reference files, and prefer conservative edits.
 
-## Core Architecture & Key Directories
+## Big picture (why/how)
 
-The project structure is organized by the WXT framework, which uses "entrypoints" to define different parts of the extension.
+This is a browser extension that replaces the default new tab page. It's built with Vue 3 + TypeScript using the [WXT framework](https://wxt.dev/). WXT defines multiple "entrypoints" (notably `entrypoints/newtab` and `entrypoints/background`) that become extension pages and the service worker. Shared logic lives in `shared/` (settings, i18n, sync, media APIs).
 
-- `wxt.config.ts`: The main configuration file for the WXT build tool. It defines entrypoints, permissions, and other extension manifest properties.
-- `entrypoints/`: This is the most important directory.
-  - `newtab/`: The main UI for the new tab page. It's a complete Vue 3 application.
-    - `App.vue`: The root component of the new tab page.
-    - `main.ts`: Initializes the Vue app, Pinia stores, and i18n.
-    - `components/`: Contains all the UI components.
-    - `scripts/store/`: Contains Pinia stores for managing UI state (e.g., `backgroundSwitchStore`, `focusStore`).
-    - `scripts/api/`: Handles fetching data from external services like Bing Wallpaper.
-  - `background/`: The background service worker for the extension. It handles tasks that don't require a UI.
-- `shared/`: Contains code and logic shared across different entrypoints (like `newtab` and `background`).
-  - `settings/`: This is a critical module for managing all user settings.
-    - `default.ts`: Defines the default values for all settings.
-    - `settingsStore.ts`: A Pinia store that provides reactive access to settings throughout the app.
-    - `settingsStorage.ts`: Handles the persistence of settings to the browser's storage (`localforage`).
-    - `migrate/`: Contains migration scripts to update user settings from older versions of the extension. This is crucial for backward compatibility.
-  - `i18n.ts`: Sets up the internationalization using `vue-i18n`.
-  - `locales/`: Contains the YAML translation files for different languages.
-- `public/`: Static assets that are copied directly to the extension's root.
+## Key files to read first
+
+- `wxt.config.ts` — build and manifest logic, browser-specific manifest branches (chrome vs firefox)
+- `package.json` — scripts (dev/build/zip), pnpm overrides and postinstall hook
+- `entrypoints/newtab/main.ts` — app bootstrap (Pinia, i18n)
+- `shared/settings/default.ts` and `shared/settings/settingsStore.ts` — settings default values, types and persistence pattern
+- `shared/i18n.ts` and `locales/` — i18n wiring and translation files
 
 ## Developer Workflow
 
@@ -46,37 +35,70 @@ The project uses `pnpm` as the package manager.
   - Run `pnpm format` to format the code with Prettier.
   - Run `pnpm type-check` to check for TypeScript type errors.
 
-## Key Patterns & Conventions
+- Note: `postinstall` runs `wxt prepare` which generates platform artifacts
 
-### Settings Management
+## Project-specific conventions and patterns
 
-The settings system in `shared/settings/` is central to the extension. To add a new user setting:
+### Settings system
 
-1.  **Add the default value:** Add the new setting and its default value to the object in `shared/settings/default.ts`.
-2.  **Update the type:** Add the new property to the `Settings` type in `shared/settings/types/v7.d.ts` (or the latest version).
-3.  **Access the setting:** Use the `useSettingsStore` Pinia store to reactively access or modify the setting from any Vue component. The store automatically handles persistence.
+- Defaults: `shared/settings/default.ts` is the single source of default values.
+- Types: versioned under `shared/settings/types/v7.d.ts` (increment types when structure changes).
+- Persistence: `shared/settings/settingsStore.ts` uses `settingsStorage.ts` (localforage) and migration scripts in `shared/settings/migrate/`.
+- To add a new setting: (1) add default in `default.ts`; (2) update the Settings type; (3) use it via `useSettingsStore()`; (4) if incompatible with prior versions add a migration in `shared/settings/migrate/` and register it.
 
-    ```typescript
-    // Example in a Vue component
-    import { useSettingsStore } from '@/shared/settings/settingsStore';
+### State management
 
-    const settingsStore = useSettingsStore();
-    // Access a value
-    console.log(settingsStore.search.searchEngines);
-    // Modify a value
-    settingsStore.search.searchEngines = [...];
-    ```
+Pinia for all reactive state. UI ephemeral stores live under `entrypoints/newtab/scripts/store/`.
 
-4.  **Migration (if necessary):** If the setting change is not backward-compatible, you may need to add a migration script in `shared/settings/migrate/` to ensure smooth updates for existing users.
+### i18n
 
-### State Management
+translations live in `locales/*` and manifest locale strings are in `public/_locales/*/messages.json`. `vite-plugin-i18next-loader` and `shared/i18n.ts` handle wiring.
 
-- **Pinia** is used for all state management.
-- For UI-specific state that doesn't need to be persisted, use the stores in `entrypoints/newtab/scripts/store/`.
-- For settings that need to be persisted and shared across the extension, use the stores in `shared/settings/`.
+### Build plugins & generated types
 
-### Internationalization (i18n)
+`unplugin-auto-import` and `unplugin-vue-components` generate d.ts files in `types/` (e.g., `types/auto-imports.d.ts`). If you change auto-import or components, regenerate types by running `pnpm install` or restarting dev.
 
-- All user-facing strings must be added to the locale files in `locales/`.
-- Use the `t()` function from `vue-i18n` in Vue components to display translated text.
-- The setup is handled in `shared/i18n.ts`.
+### Manifest branching
+
+`wxt.config.ts` returns different manifest objects for firefox vs chrome — check `baseManifest.host_permissions` and browser-specific `permissions`.
+
+### CSS/ElementPlus
+
+global Element Plus SCSS is injected by Vite (`additionalData` pointing to `@/assets/styles/element/index.scss`).
+
+## Integration points & external dependencies to watch
+
+- External hosts (see `wxt.config.ts` host_permissions): bing, api.bing.com, suggestion.baidu.com, suggestqueries.google.com, v2.jinrishici.com. These map to API code under `entrypoints/newtab/scripts/api/` and `shared/network`.
+- Persistence: `localforage` used for settings & sync storage (`shared/settings/settingsStorage.ts`, `shared/sync/`).
+- WebExtension polyfill: `@wxt-dev/webextension-polyfill` and `@types/webextension-polyfill` are used — prefer that API surface in background scripts.
+
+## Concrete examples (copyable patterns)
+
+- Access a persisted setting:
+
+  ```ts
+  import { useSettingsStore } from '@/shared/settings/settingsStore'
+  const settings = useSettingsStore()
+  // Read a value
+  console.log(settingsStore.search.searchEngines);
+  // Modify a value
+  settingsStore.search.searchEngines = [...];
+  ```
+
+- Add a new setting named `foo`:
+  - add default in `shared/settings/default.ts`, e.g. `foo: { enabled: true }`
+  - update the `Settings` type under `shared/settings/types/**.d.ts` (use the latest version)
+  - if the new shape is incompatible with previous versions, add a migration in `shared/settings/migrate/` and export it from `index.ts` there.
+- Update manifest permissions for a host:
+  - edit `wxt.config.ts` baseManifest.host_permissions and run `pnpm build` or `pnpm dev`
+
+## Debug notes & gotchas
+
+- `.output/` contains the unpacked extension during dev — if Chrome/Firefox doesn't load hot changes, inspect `.output/` and reload the extension in the browser.
+- Vite is overridden via pnpm to use `rolldown-vite`.
+
+## Safety & editing style for AI edits
+
+- Prefer small, reversible changes (one feature or fix per PR).
+- Avoid changing manifest host permissions or optional permissions without explicit test steps and a short justification in PR description.
+- When touching settings, update default values, types, and migrations together to avoid runtime errors for existing users.

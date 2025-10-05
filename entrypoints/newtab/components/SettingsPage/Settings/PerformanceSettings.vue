@@ -3,9 +3,11 @@ import type { ComputedRef, Ref } from 'vue'
 import { computed, toRef } from 'vue'
 
 import { ApiRound } from '@vicons/material'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
+
+const { t } = useTranslation()
 
 const settingsStore = useSettingsStore()
 
@@ -54,76 +56,76 @@ function disableBlurSettings() {
 <template>
   <div class="settings__title">
     <el-icon><api-round /></el-icon>
-    <span>{{ t('newtab.settings.perf.title') }}</span>
+    <span>{{ t('newtab:settings.perf.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.clock.blinkingColon') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.clock.blinkingColon') }}</div>
       <el-switch v-model="settingsStore.time.blinkingColon" />
     </div>
     <p class="settings__item--note">
-      {{ t('newtab.settings.clock.blinkingTip') }}
+      {{ t('newtab:settings.clock.blinkingTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.disableAll') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.disableAll') }}</div>
       <span>
         <el-button @click="disableTransparentSettings">
-          {{ t('newtab.settings.perf.transparent') }}
+          {{ t('newtab:settings.perf.transparent') }}
         </el-button>
         <el-button @click="disableBlurSettings">
-          {{ t('newtab.settings.perf.disableAllBlur') }}
+          {{ t('newtab:settings.perf.disableAllBlur') }}
         </el-button>
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.dialogTransparent') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.dialogTransparent') }}</div>
       <el-switch v-model="dialogTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.dialogBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.dialogBlur') }}</div>
       <el-switch :disabled="settingsStore.perf.disableDialogTransparent" v-model="dialogBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.dialogAnimation') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.dialogAnimation') }}</div>
       <el-switch v-model="dialogAnimation" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.focusScale') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.focusScale') }}</div>
       <el-switch v-model="focusScale" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.focusBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.focusBlur') }}</div>
       <el-switch v-model="focusBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.searchBarTransparent') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.searchBarTransparent') }}</div>
       <el-switch v-model="searchBarTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.searchBarBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.searchBarBlur') }}</div>
       <el-switch
         :disabled="settingsStore.perf.disableSearchBarTransparent"
         v-model="searchBarBlur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.shortcutTransparent') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.shortcutTransparent') }}</div>
       <el-switch v-model="shortcutTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.shortcutBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.shortcutBlur') }}</div>
       <el-switch :disabled="settingsStore.perf.disableShortcutTransparent" v-model="shortcutBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.yiyanBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.yiyanBlur') }}</div>
       <el-switch v-model="yiyanBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.settingsBtnTransparent') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.settingsBtnTransparent') }}</div>
       <el-switch v-model="settingsBtnTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.perf.settingsBtnBlur') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.settingsBtnBlur') }}</div>
       <el-switch
         :disabled="settingsStore.perf.disableSettingsBtnTransparent"
         v-model="settingsBtnBlur"

@@ -12,4 +12,4 @@ usageMatchRegex:
   - "[^\\w\\d]t\\(['\"`]({key})['\"`]"
 
 # Disable other built-in i18n ally frameworks
-monopoly: true
+monopoly: false

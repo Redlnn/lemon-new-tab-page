@@ -3,9 +3,11 @@ import { computed, ref, watch } from 'vue'
 import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 
 import { CloudOffRound, ColorLensOutlined } from '@vicons/material'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
+
+const { t } = useTranslation()
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
@@ -105,28 +107,28 @@ watch(preferredDark, () => {
 <template>
   <div class="settings__title">
     <el-icon><color-lens-outlined /></el-icon>
-    <span>{{ t('newtab.settings.theme.title') }}</span>
+    <span>{{ t('newtab:settings.theme.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab.settings.theme.darkMode') }}
+        {{ t('newtab:settings.theme.darkMode') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isDarkLocal" @change="toggleDark" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab.settings.theme.systemMode') }}
+        {{ t('newtab:settings.theme.systemMode') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isAutoLocal" @change="toggleAuto" />
     </div>
     <p v-if="isGoogleChrome" class="settings__item--note">
-      {{ t('newtab.settings.theme.chromeTip') }}
+      {{ t('newtab:settings.theme.chromeTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.theme.primaryColor') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
       <div class="settings__theme-mode">
         <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
       </div>

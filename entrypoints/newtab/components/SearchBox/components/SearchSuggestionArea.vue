@@ -3,13 +3,15 @@ import { computed, ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { TrashAlt } from '@vicons/fa'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
+
+const { t } = useTranslation()
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -177,7 +179,7 @@ defineExpose({
       @click="clearSearchHistories()"
     >
       <el-icon style="margin-right: 5px"><trash-alt /></el-icon>
-      <span>{{ t('newtab.search.purgeSearchHistory') }}</span>
+      <span>{{ t('newtab:search.purgeSearchHistory') }}</span>
     </div>
   </div>
 </template>

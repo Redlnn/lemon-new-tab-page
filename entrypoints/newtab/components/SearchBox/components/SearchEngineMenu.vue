@@ -2,12 +2,14 @@
 import { ref } from 'vue'
 
 import type { TooltipInstance } from 'element-plus'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
 import { useFocusStore } from '@newtab/scripts/store'
+
+const { t } = useTranslation()
 
 const focusStore = useFocusStore()
 const settingsStore = useSettingsStore()
@@ -49,14 +51,14 @@ defineExpose({ hide })
           v-if="key === settingsStore.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
-          {{ t('newtab.search.searchEngineMenu.current') }}
+          {{ t('newtab:search.searchEngineMenu.current') }}
         </div>
       </div>
       <el-divider />
       <div class="search-engine-menu__tip">
-        <span>{{ t('newtab.search.searchEngineMenu.tipPrefix') }}</span>
+        <span>{{ t('newtab:search.searchEngineMenu.tipPrefix') }}</span>
         <kbd class="search-engine-menu__kbd">Tab</kbd>
-        <span>{{ t('newtab.search.searchEngineMenu.tipSuffix') }}</span>
+        <span>{{ t('newtab:search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
     <el-icon class="search-engine-menu__icon" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">

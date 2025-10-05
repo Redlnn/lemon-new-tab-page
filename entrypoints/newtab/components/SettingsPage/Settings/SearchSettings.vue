@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { SearchOutlined } from '@vicons/antd'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchEngines, searchSuggestAPIs } from '@newtab/scripts/api/search'
+
+const { t } = useTranslation()
 
 const settingsStore = useSettingsStore()
 </script>
@@ -12,11 +14,11 @@ const settingsStore = useSettingsStore()
 <template>
   <div class="settings__title">
     <el-icon><search-outlined /></el-icon>
-    <span>{{ t('newtab.settings.search.title') }}</span>
+    <span>{{ t('newtab:settings.search.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.defaultSearchEngine') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.defaultSearchEngine') }}</div>
       <el-select
         v-model="settingsStore.search.selectedSearchEngine"
         style="width: 100px"
@@ -32,7 +34,7 @@ const settingsStore = useSettingsStore()
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab.settings.search.searchSuggestionProvider') }}
+        {{ t('newtab:settings.search.searchSuggestionProvider') }}
       </div>
       <el-select
         v-model="settingsStore.search.selectedSearchSuggestionAPI"
@@ -48,23 +50,23 @@ const settingsStore = useSettingsStore()
       </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.openInNewTab') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.openInNewTab') }}</div>
       <el-switch v-model="settingsStore.search.searchInNewTab" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.alwaysExpandSearchBar') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.alwaysExpandSearchBar') }}</div>
       <el-switch v-model="settingsStore.search.alwaysExpandSearchBar" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.enableShadow') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.enableShadow') }}</div>
       <el-switch v-model="settingsStore.search.enableShadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.recordSearchHistory') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.recordSearchHistory') }}</div>
       <el-switch v-model="settingsStore.search.recordSearchHistory" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.search.placeholder') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.search.placeholder') }}</div>
       <el-input v-model="settingsStore.search.placeholder" style="width: 240px" />
     </div>
   </div>

@@ -3,15 +3,18 @@ import { computed } from 'vue'
 import { useDateFormat, useNow } from '@vueuse/core'
 
 import { Chrome, Edge, Firefox, Github } from '@vicons/fa'
+import { useTranslation } from 'i18next-vue'
+import { browser } from 'wxt/browser'
 
 import { version } from '@/package.json'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
+
+const { t } = useTranslation()
 
 const year = useDateFormat(useNow(), 'YYYY')
 
@@ -28,7 +31,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
       <div class="ext-icon">
         <div class="ext-icon__container"></div>
       </div>
-      <h1 class="ext-name">{{ t('extension.name') }}</h1>
+      <h1 class="ext-name">{{ browser.i18n.getMessage('extension_name') }}</h1>
       <div class="ext-version">{{ version }}</div>
       <el-link
         class="yiyan-links"
@@ -36,7 +39,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
         target="_blank"
         :href="currentYiyanProvider.website"
       >
-        {{ t('newtab.about.yiyanApiProvider', [currentYiyanProvider.name]) }}
+        {{ t('newtab:about.yiyanApiProvider', { provider: currentYiyanProvider.name }) }}
       </el-link>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;

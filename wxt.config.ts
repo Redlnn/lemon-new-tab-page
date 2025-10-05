@@ -5,6 +5,7 @@ import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from 'unplugin-vue-markdown/vite'
+import i18nextLoader from 'vite-plugin-i18next-loader'
 import svgLoader from 'vite-svg-loader'
 import { defineConfig } from 'wxt'
 
@@ -48,7 +49,7 @@ const chromeManifest = {
 
 // See https://wxt.dev/api/config.html
 export default defineConfig({
-  modules: ['@wxt-dev/i18n/module', '@wxt-dev/webextension-polyfill'],
+  modules: ['@wxt-dev/webextension-polyfill'],
   imports: false,
   manifest: ({ browser }) => {
     if (browser === 'firefox') {
@@ -62,6 +63,9 @@ export default defineConfig({
       Vue({
         include: [/\.vue$/, /\.md$/]
       }), // 自己添加 @vitejs/plugin-vue 就不能使用 @wxt-dev/module-bue
+      i18nextLoader({
+        paths: ['./locales']
+      }),
       svgLoader(),
       Markdown({
         markdownItSetup(md) {

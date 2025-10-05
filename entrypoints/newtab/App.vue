@@ -13,11 +13,11 @@ import {
 import { ElConfigProvider, ElNotification } from 'element-plus'
 import type { Language } from 'element-plus/es/locale'
 import en from 'element-plus/es/locale/lang/en.mjs'
-import { browser } from 'wxt/browser'
+import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import { t } from '@/shared/i18n'
+import { lang } from '@/shared/lang'
 import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
@@ -33,6 +33,8 @@ import TimeNow from '@newtab/components/TimeNow.vue'
 import YiYan from '@newtab/components/YiYan.vue'
 import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
+
+const { t } = useTranslation()
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
   '/node_modules/element-plus/es/locale/lang/zh*.mjs'
@@ -57,10 +59,8 @@ async function loadElementLocale(_locale: string) {
 const elLocale = ref<Language>()
 
 onBeforeMount(async () => {
-  elLocale.value = await loadElementLocale(locale)
+  elLocale.value = await loadElementLocale(lang || 'en')
 })
-
-const locale = browser.i18n.getUILanguage()
 
 const isDark = useDark()
 const settingsStore = useSettingsStore()
@@ -156,8 +156,8 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification({
-        title: t('sync.failMessage.title'),
-        message: t('sync.failMessage.message', [p.cloud, p.local]),
+        title: t('sync:failMessage.title'),
+        message: t('sync:failMessage.message', { cloud: p.cloud, local: p.local }),
         type: 'error'
       })
     } else if (type === 'sync-error') {
@@ -267,27 +267,27 @@ function needHelp() {
         <el-dropdown-menu>
           <el-dropdown-item @click="SettingsPageRef?.toggle">
             <el-icon :size="17"><settings-round /></el-icon>
-            {{ t('newtab.menu.settings') }}
+            {{ t('newtab:settings.title') }}
           </el-dropdown-item>
           <el-dropdown-item @click="SESwitcherRef?.show">
             <el-icon :size="17"><search-round /></el-icon>
-            {{ t('newtab.menu.searchEnginePreference') }}
+            {{ t('newtab:menu.searchEnginePreference') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click="ChangelogRef?.show">
             <el-icon :size="17"><access-time-filled-round /></el-icon>
-            {{ t('newtab.menu.changelog') }}
+            {{ t('newtab:changelog.title') }}
           </el-dropdown-item>
           <el-dropdown-item @click="needHelp">
             <el-icon :size="17"><help-filled /></el-icon>
-            {{ t('newtab.menu.help') }}
+            {{ t('newtab:menu.help') }}
           </el-dropdown-item>
           <el-dropdown-item @click="sponsorMessage">
             <el-icon :size="17"><heart-filled /></el-icon>
-            {{ t('newtab.menu.sponsor') }}
+            {{ t('newtab:menu.sponsor') }}
           </el-dropdown-item>
           <el-dropdown-item divided @click="AboutRef?.toggle">
             <el-icon :size="17"><info-round /></el-icon>
-            {{ t('newtab.menu.about') }}
+            {{ t('newtab:menu.about') }}
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>

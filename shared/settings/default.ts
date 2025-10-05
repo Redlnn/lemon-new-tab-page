@@ -1,4 +1,4 @@
-import { t } from '@/shared/i18n'
+import i18next from 'i18next'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 import { BgType } from './types'
@@ -25,7 +25,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     searchInNewTab: false,
     recordSearchHistory: true,
     enableShadow: true,
-    placeholder: t('newtab.search.placeholder')
+    placeholder: i18next.t('newtab:search.placeholder')
   },
   background: {
     bgType: BgType.Bing,

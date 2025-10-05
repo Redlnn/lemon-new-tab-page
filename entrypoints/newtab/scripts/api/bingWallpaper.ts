@@ -1,6 +1,6 @@
+import i18next from 'i18next'
 import { v4 as uuidv4 } from 'uuid'
 
-import { t } from '@/shared/i18n'
 import { isImageFile, verifyImageUrl } from '@/shared/media'
 import enhancedFetch from '@/shared/network/fetch'
 import { saveSettings, useBingWallpaperStore, useSettingsStore } from '@/shared/settings'
@@ -53,7 +53,7 @@ export async function getBingWallpaperURL() {
     await useBingWallpaperStore.removeItem(id)
   }
 
-  ElMessage(t('newtab.notification.bingWallpaper.get'))
+  ElMessage(i18next.t('newtab:notification.bingWallpaper.get'))
   try {
     const data: BingWallpaperResp = await enhancedFetch(
       'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'
@@ -90,8 +90,8 @@ export async function getBingWallpaperURL() {
   } catch (error) {
     console.error('Failed to get Bing wallpaper:', error)
     ElNotification({
-      title: t('newtab.notification.bingWallpaper.error.title'),
-      message: t('newtab.notification.bingWallpaper.error.message'),
+      title: i18next.t('newtab:notification.bingWallpaper.error.title'),
+      message: i18next.t('newtab:notification.bingWallpaper.error.message'),
       type: 'error'
     })
     throw error

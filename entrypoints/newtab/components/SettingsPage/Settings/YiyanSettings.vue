@@ -2,14 +2,13 @@
 import { computed } from 'vue'
 
 import { FormatQuoteRound } from '@vicons/material'
-import { browser } from 'wxt/browser'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
+import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
 
-const lang = browser.i18n.getUILanguage()
-const isNotChinese = !lang.startsWith('zh')
+const { t } = useTranslation()
 
 const settingsStore = useSettingsStore()
 
@@ -19,25 +18,25 @@ const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.pr
 <template>
   <div class="settings__title">
     <el-icon><format-quote-round /></el-icon>
-    <span>{{ t('newtab.settings.yiyan.title') }}</span>
+    <span>{{ t('newtab:settings.yiyan.title') }}</span>
   </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.enabled') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.enabled') }}</div>
       <el-switch v-model="settingsStore.yiyan.enabled" />
     </div>
-    <p v-if="isNotChinese" class="settings__item--note">
-      {{ t('newtab.settings.yiyan.description') }}
+    <p v-if="!isChinese" class="settings__item--note">
+      {{ t('newtab:settings.yiyan.description') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.alwaysShow') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.alwaysShow') }}</div>
       <el-switch v-model="settingsStore.yiyan.alwaysShow" />
     </div>
     <p class="settings__item--note">
-      {{ t('newtab.settings.yiyan.normalyShowTip') }}
+      {{ t('newtab:settings.yiyan.normalyShowTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.title') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.title') }}</div>
       <el-select v-model="settingsStore.yiyan.provider" style="width: 180px" fit-input-width>
         <el-option
           v-for="(provider, key) in yiyanProviders"
@@ -48,15 +47,15 @@ const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.pr
       </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.enableShadow') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.enableShadow') }}</div>
       <el-switch v-model="settingsStore.yiyan.enableShadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.invertColorLight') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorLight') }}</div>
       <el-switch v-model="settingsStore.yiyan.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab.settings.yiyan.invertColorDark') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorDark') }}</div>
       <el-switch v-model="settingsStore.yiyan.invertColor.night" />
     </div>
     <p v-if="currentProviderNote" class="settings__item--note">

@@ -1,0 +1,8 @@
+{
+  "extension_description": {
+    "message": "一个开源、简洁、美观且方便使用的浏览器起始页。页面上可直接开始搜索，支持 Bing 每日一图，可添加快速访问网站并展示最常访问网站。\n"
+  },
+  "extension_name": {
+    "message": "柠檬起始页"
+  }
+}

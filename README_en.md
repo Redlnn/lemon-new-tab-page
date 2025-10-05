@@ -32,8 +32,6 @@ The extension is now available on
 > [!NOTE]  
 > This extension mimics part of Lime Start Page’s style—if that’s not your taste, please skip.  
 > Contributions via PRs are welcome. Issues may not always be implemented.
->
-> `zh-HK` may not always work as expected. It theoretically works, but depends on browser behavior.
 
 ## Changelog
 

@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
+import { useTranslation } from 'i18next-vue'
 
-import { t } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 import { searchEngines } from '@newtab/scripts/api/search'
+
+const { t } = useTranslation()
 
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
@@ -15,7 +17,7 @@ const settingsStore = useSettingsStore()
 </script>
 
 <template>
-  <base-dialog v-model="opened" :title="t('newtab.menu.searchEnginePreference')" acrylic opacity>
+  <base-dialog v-model="opened" :title="t('newtab:menu.searchEnginePreference')" acrylic opacity>
     <div style="width: 100%; overflow: hidden">
       <el-row :gutter="10" class="se-switcher">
         <el-col

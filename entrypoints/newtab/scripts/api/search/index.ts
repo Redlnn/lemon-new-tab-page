@@ -1,4 +1,4 @@
-import { t } from '@/shared/i18n'
+import i18next from 'i18next'
 
 import Baidu from '@newtab/assets/baidu.svg?skipsvgo'
 import Bing from '@newtab/assets/bing.svg?skipsvgo'
@@ -10,34 +10,34 @@ import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './su
 
 export const searchEngines = {
   google: {
-    name: t('newtab.searchEngineMenu.google'),
+    name: i18next.t('newtab:searchEngineMenu.google'),
     url: 'https://www.google.com/search?q=%s',
     icon: Google
   },
   baidu: {
-    name: t('newtab.searchEngineMenu.baidu'),
+    name: i18next.t('newtab:searchEngineMenu.baidu'),
     url: 'https://www.baidu.com/#ie=utf-8&wd=%s',
     icon: Baidu
   },
   bing: {
-    name: t('newtab.searchEngineMenu.bing'),
+    name: i18next.t('newtab:searchEngineMenu.bing'),
     url: 'https://www.bing.com/search?q=%s',
     icon: Bing
   },
   yandex: {
-    name: t('newtab.searchEngineMenu.yandex'),
+    name: i18next.t('newtab:searchEngineMenu.yandex'),
     url: 'https://yandex.com/search?text=%s',
     icon: Yandex
   },
   duckduckgo: {
-    name: t('newtab.searchEngineMenu.duckduckgo'),
+    name: i18next.t('newtab:searchEngineMenu.duckduckgo'),
     url: 'https://duckduckgo.com/?q=%s',
     icon: DuckDuckGo
   }
-} as const
+}
 
 export const searchSuggestAPIs = {
-  google: { name: t('newtab.searchEngineMenu.google'), parser: googleSuggestParser },
-  baidu: { name: t('newtab.searchEngineMenu.baidu'), parser: baiduSuggestParser },
-  bing: { name: t('newtab.searchEngineMenu.bing'), parser: bingSuggestParser }
-} as const
+  google: { name: i18next.t('newtab:searchEngineMenu.google'), parser: googleSuggestParser },
+  baidu: { name: i18next.t('newtab:searchEngineMenu.baidu'), parser: baiduSuggestParser },
+  bing: { name: i18next.t('newtab:searchEngineMenu.bing'), parser: bingSuggestParser }
+}

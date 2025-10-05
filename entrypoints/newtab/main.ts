@@ -6,18 +6,17 @@ import { createPinia } from 'pinia'
 import { createApp, toRaw } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
-import { browser } from 'wxt/browser'
-
 import { version } from '@/package.json'
 
-import { t } from '@/shared/i18n'
+import { i18n } from '@/shared/i18n'
 import { initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initSyncSettings } from '@/shared/sync'
 
 import App from './App.vue'
 import changeTheme from './scripts/use-element-plus-theme'
 
-const banner = `
+export const main = async () => {
+  const banner = `
 
 %c Lemon New Tab %c ${version} %c
 
@@ -48,49 +47,41 @@ const banner = `
                     ~<~<~<~~~~~~<~<~<~<~
 `
 
-console.log(
-  banner,
-  'padding: 2px 6px; border-radius: 4px 0 0 4px; color: #fff; background: #ff9d00; font-weight: bold;',
-  'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
-  'color: orange;line-height:0.8rem;'
-)
+  console.log(
+    banner,
+    'padding: 2px 6px; border-radius: 4px 0 0 4px; color: #fff; background: #ff9d00; font-weight: bold;',
+    'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
+    'color: orange;line-height:0.8rem;'
+  )
 
-let color = ''
-const lang = browser.i18n.getUILanguage()
+  let color = ''
+  const app = i18n(createApp(App))
+  const pinia = createPinia()
 
-document.documentElement.lang = lang
-document.title = t('newtab.title')
+  app.use(pinia)
 
-const app = createApp(App)
-const pinia = createPinia()
+  // 先初始化设置，再挂载vue，再初始化云同步
+  await initSettings()
+  const settingsStore = useSettingsStore()
+  const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
-app.use(pinia)
+  changeTheme(settingsStore.primaryColor)
+  color = settingsStore.primaryColor
 
-// 先初始化设置，再挂载vue，再初始化云同步
-initSettings()
-  .then(() => {
-    const settingsStore = useSettingsStore()
-    const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
-
-    changeTheme(settingsStore.primaryColor)
-    color = settingsStore.primaryColor
-
-    settingsStore.$subscribe(async (_mutation, state) => {
-      await saveSettingsDebounced(toRaw(state))
-      if (state.primaryColor !== color) {
-        if (state.primaryColor === null) {
-          state.primaryColor = '#1677ff'
-        }
-        color = state.primaryColor
-        changeTheme(state.primaryColor)
+  settingsStore.$subscribe(async (_mutation, state) => {
+    await saveSettingsDebounced(toRaw(state))
+    if (state.primaryColor !== color) {
+      if (state.primaryColor === null) {
+        state.primaryColor = '#1677ff'
       }
-    })
-
-    app.mount('body')
-  })
-  .then(() => {
-    const settingsStore = useSettingsStore()
-    if (settingsStore.sync.enabled) {
-      initSyncSettings(settingsStore)
+      color = state.primaryColor
+      changeTheme(state.primaryColor)
     }
   })
+
+  app.mount('body')
+
+  if (settingsStore.sync.enabled) {
+    initSyncSettings(settingsStore)
+  }
+}
