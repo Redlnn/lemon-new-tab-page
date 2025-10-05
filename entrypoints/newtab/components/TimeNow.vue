@@ -1,17 +1,15 @@
 <script lang="ts" setup>
-import { type ComputedRef, ref, watch } from 'vue'
-import { useDateFormat, useElementHover, useNow } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
+import { useElementHover, useNow } from '@vueuse/core'
 
-import { isChinese, lang } from '@/shared/lang'
+import dayjs from 'dayjs/esm'
+
+import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 
 const settingsStore = useSettingsStore()
 const time = ref()
 const isTimeHovered = useElementHover(time)
-
-watch(isTimeHovered, (isTimeHovered) => {
-  time.value.style.transform = isTimeHovered ? 'scale(1.1)' : null
-})
 
 function customMeridiem(hours: number) {
   if (hours < 2) return '深夜'
@@ -25,23 +23,33 @@ function customMeridiem(hours: number) {
 }
 
 const timeNow = useNow({ interval: 1000 })
+// date doesn't need to update every second. update once per minute instead.
+const dateNow = useNow({ interval: 60 * 1000 })
 
-const timeNowHour: ComputedRef<string> = useDateFormat(timeNow, 'HH')
-const timeNowHourMeridiem: ComputedRef<string> = useDateFormat(timeNow, 'h')
-const timeNowMinute = useDateFormat(timeNow, 'mm')
-const timeNowMeridiemZH = useDateFormat(timeNow, 'aa', { customMeridiem })
-const timeNowMeridiem = useDateFormat(timeNow, 'A', { locales: lang })
-const timeNowWeekday = useDateFormat(timeNow, 'dddd')
+const formattedTime = computed(() => {
+  const now = dayjs(timeNow.value)
+  return {
+    hour: now.format('HH'),
+    hourMeridiem: now.format('h'),
+    minute: now.format('mm'),
+    meridiem: now.format('A'),
+    lunar: now.format('LhLK')
+  }
+})
 
-function getlunarCalendar() {
-  const lunarCalendarMatchRes = /([^年]{1,2}月.{2})/.exec(
-    timeNow.value.toLocaleDateString(isChinese ? lang : 'zh', {
-      dateStyle: 'long',
-      calendar: 'chinese'
-    })
-  )
-  return lunarCalendarMatchRes ? lunarCalendarMatchRes[0] : ''
-}
+const formattedDate = computed(() => {
+  const now = dayjs(dateNow.value)
+  return {
+    meridiemZH: customMeridiem(now.hour()),
+    weekday: now.format('dddd'),
+    date: now.format('LL'),
+    lunar: now.format('LMLD')
+  }
+})
+
+watch(isTimeHovered, (isTimeHovered) => {
+  time.value.style.transform = isTimeHovered ? 'scale(1.1)' : null
+})
 </script>
 
 <template>
@@ -59,37 +67,33 @@ function getlunarCalendar() {
       :class="[settingsStore.time.small ? 'clock__time-container-small' : undefined]"
     >
       <span v-if="settingsStore.time.showMeridiem && isChinese" class="clock__meridiem">
-        {{ timeNowMeridiemZH }}
+        {{ formattedDate.meridiemZH }}
       </span>
       <span class="clock__time">
         <span class="clock__hour">{{
-          settingsStore.time.isMeridiem ? timeNowHourMeridiem : timeNowHour
+          settingsStore.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour
         }}</span>
         <span
           class="clock__colon"
           :class="{ 'clock__colon--blinking': settingsStore.time.blinkingColon }"
           >:</span
         >
-        <span class="clock__minute">{{ timeNowMinute }}</span>
+        <span class="clock__minute">{{ formattedTime.minute }}</span>
       </span>
       <span
         v-if="settingsStore.time.showMeridiem && !isChinese"
         class="clock__meridiem"
         style="margin-left: 5px"
       >
-        {{ timeNowMeridiem }}
+        {{ formattedTime.meridiem }}
       </span>
     </div>
     <div v-if="settingsStore.time.showDate" class="clock__date">
       <span>
-        {{
-          timeNow.toLocaleDateString(undefined, {
-            dateStyle: 'long'
-          })
-        }}
-        {{ timeNowWeekday }}
+        {{ formattedDate.date }}
+        {{ formattedDate.weekday }}
       </span>
-      <span v-if="settingsStore.time.showLunar && isChinese">{{ ` ${getlunarCalendar()}` }}</span>
+      <span v-if="settingsStore.time.showLunar && isChinese">{{ ` ${formattedDate.lunar}` }}</span>
     </div>
   </div>
 </template>
