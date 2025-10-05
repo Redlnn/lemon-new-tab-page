@@ -33,6 +33,7 @@
   &__time-container {
     display: flex;
     align-items: baseline;
+    justify-content: center;
     margin-bottom: 5px;
     font-size: 60px;
     font-variant-numeric: tabular-nums;
@@ -40,7 +41,6 @@
 
     &-small {
       align-items: center;
-      justify-content: center;
       font-size: 40px;
     }
   }
