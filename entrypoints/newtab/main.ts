@@ -1,4 +1,3 @@
-import './scripts/plugins/dayjs'
 import 'element-plus/theme-chalk/el-message-box.css'
 import './styles/index.scss'
 
