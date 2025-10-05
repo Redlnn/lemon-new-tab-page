@@ -10,7 +10,6 @@ import svgLoader from 'vite-svg-loader'
 import { defineConfig } from 'wxt'
 
 import { removeH1Plugin } from './scripts/mdit-remove-h1'
-import optimizeDeps from './scripts/optimizeDeps'
 
 const baseManifest = {
   name: '__MSG_extension_name__',
@@ -47,6 +46,10 @@ const chromeManifest = {
   optional_host_permissions: ['*://*/*']
 }
 
+const elementPlusResolver = ElementPlusResolver({
+  importStyle: 'sass'
+})
+
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   modules: ['@wxt-dev/webextension-polyfill'],
@@ -62,7 +65,7 @@ export default defineConfig({
     plugins: [
       Vue({
         include: [/\.vue$/, /\.md$/]
-      }), // 自己添加 @vitejs/plugin-vue 就不能使用 @wxt-dev/module-bue
+      }), // 自己添加 @vitejs/plugin-vue 不使用 @wxt-dev/module-vue
       i18nextLoader({
         paths: ['./locales']
       }),
@@ -73,24 +76,16 @@ export default defineConfig({
         }
       }),
       AutoImport({
-        resolvers: [
-          ElementPlusResolver({
-            importStyle: 'sass'
-          })
-        ],
+        resolvers: [elementPlusResolver],
         dts: 'types/auto-imports.d.ts'
       }),
       Components({
-        resolvers: [
-          ElementPlusResolver({
-            importStyle: 'sass'
-          })
-        ],
+        resolvers: [elementPlusResolver],
         dts: 'types/components.d.ts'
       })
     ],
     build: {
-      sourcemap: false // for HMP (@wxt-dev/module-bue 会自动添加)
+      sourcemap: false // for HMP (@wxt-dev/module-vue 会自动添加)
     },
     resolve: {
       alias: {
@@ -104,9 +99,6 @@ export default defineConfig({
           additionalData: `@use "@/assets/styles/element/index.scss" as *;`
         }
       }
-    },
-    optimizeDeps: {
-      include: optimizeDeps
     }
   })
 })
