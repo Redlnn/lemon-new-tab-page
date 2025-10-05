@@ -52,3 +52,33 @@ body {
   backdrop-filter: blur(3px) saturate(1.4) brightness(1.1);
   transition: background-color var(--el-transition-duration-fast) ease;
 }
+
+.el-switch {
+  .el-switch__core {
+    box-shadow: 0 0 6px rgb(0 0 0 / 12%);
+  }
+
+  .el-switch__core .el-switch__action {
+    left: 2px;
+    width: 18px;
+    height: 14px;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgb(0 0 0 / 10%);
+  }
+
+  &:active .el-switch__core .el-switch__action {
+    left: 3px;
+    width: 16px;
+    height: 13px;
+  }
+
+  &.is-checked {
+    .el-switch__core .el-switch__action {
+      left: calc(100% - 20px) !important;
+    }
+
+    &:active .el-switch__core .el-switch__action {
+      left: calc(100% - 19px) !important;
+    }
+  }
+}

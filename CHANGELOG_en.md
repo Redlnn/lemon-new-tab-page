@@ -20,6 +20,7 @@
 
 - Replaced i18n framework to prevent Windows from treating `zh-HK` as `zh-TW`, ensuring `zh-HK` translations display correctly
 - Adjusted font weight of buttons and some links for better appearance
+- Optimized button animations and styles
 - Optimized clock formatting code to improve performance and readability
 - Adjusted Element Plus i18n import method to enhance performance and reduce bundle size
 - Removed obsolete code
