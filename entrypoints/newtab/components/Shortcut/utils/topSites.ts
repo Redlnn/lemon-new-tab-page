@@ -1,6 +1,7 @@
 import { h } from 'vue'
 
 import i18next from 'i18next'
+// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import browser from 'webextension-polyfill'
 
 import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'

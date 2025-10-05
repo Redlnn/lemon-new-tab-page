@@ -6,6 +6,7 @@ import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { ClearRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 import { useDraggable } from 'vue-draggable-plus'
+// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
 import { bookmarkStorage, initBookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
