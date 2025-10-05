@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted, ref } from 'vue'
+import { defineAsyncComponent, onMounted } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
@@ -21,8 +21,6 @@ defineExpose({ show, hide, toggle })
 const ChangelogZh = defineAsyncComponent(() => import('@/CHANGELOG.md'))
 const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOg_En.md'))
 
-const a = ref(false)
-
 onMounted(async () => {
   await import('@newtab/styles/github-markdown.css')
 })
@@ -40,7 +38,7 @@ onMounted(async () => {
     <div class="changelog-wrapper">
       <div class="changelog-no-popup">
         <div style="margin-right: 5px">{{ t('newtab:changelog.noPopup') }}</div>
-        <el-switch v-model="a" />
+        <el-switch v-model="settingsStore.dontShowChangeLog" />
       </div>
       <component :is="isChinese ? ChangelogZh : ChangelogEn" />
     </div>

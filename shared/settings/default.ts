@@ -95,6 +95,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableSettingsBtnBlur: false,
     disableSettingsBtnTransparent: false
   },
+  dontShowChangeLog: false,
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION
 }

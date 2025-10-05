@@ -145,7 +145,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 }
 
 onMounted(async () => {
-  if (settingsStore.pluginVersion !== version) {
+  if (!settingsStore.dontShowChangeLog && settingsStore.pluginVersion !== version) {
     ChangelogRef.value?.show()
   }
 

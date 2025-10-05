@@ -4,7 +4,7 @@
   },
   "changelog": {
     "title": "Changelog",
-    "noPopup": "No popup after update"
+    "noPopup": "Don’t open after update"
   },
   "menu": {
     "about": "About",
@@ -65,7 +65,7 @@
         "fileIsNotImage": "The selected file is not an image!",
         "granted": "Permission granted.",
         "notGranted": "Permission not granted, cannot access this host.",
-        "securityPolicy": "Due to Google's security policy, the extension needs permission to access {{host}} to get the background. Do you allow this extension to request access to this host?",
+        "securityPolicy": "Due to Google’s security policy, the extension needs permission to access {{host}} to get the background. Do you allow this extension to request access to this host?",
         "title": "Warning",
         "tooLarge": {
           "message": "The file is too large ({{size}}) and may affect performance or occupy significant storage. Do you want to continue?",
@@ -95,7 +95,7 @@
         "purging": "Clearing extension data..",
         "title": "Are you sure you want to purge all data of this extension?"
       },
-      "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.\n",
+      "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the ‘Customize Chrome’ sidebar.\n",
       "importExport": {
         "export": "Export",
         "import": "Import",
@@ -169,7 +169,7 @@
       "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
     },
     "theme": {
-      "chromeTip": "In Chrome, this option is not affected by the 'Customize Chrome' sidebar and only related to system settings.",
+      "chromeTip": "In Chrome, this option is not affected by the ‘Customize Chrome’ sidebar and only related to system settings.",
       "darkMode": "Dark mode",
       "lightMode": "Light mode",
       "primaryColor": "Primary color",

@@ -10,6 +10,25 @@
   You can reselect the search engine in the settings page to resolve it.
   Thank you for your understanding.
 
+## 2.5.0 (WIP)
+
+### New Features ✨
+
+- Added a toggle to not open the changelog page after update
+
+### Improvements ⚡️
+
+- Replaced i18n framework to prevent Windows from treating `zh-HK` as `zh-TW`, ensuring `zh-HK` translations display correctly
+- Adjusted font weight of buttons and some links for better appearance
+- Optimized clock formatting code to improve performance and readability
+- Adjusted Element Plus i18n import method to enhance performance and reduce bundle size
+- Removed obsolete code
+
+### Bug Fixes 🐛
+
+- Fixed dayjs i18n not working
+- Fixed time not being centered when "Small Clock Font" is disabled
+
 ## 2.4.1 (Sep 30, 2025)
 
 ### New Features ✨
