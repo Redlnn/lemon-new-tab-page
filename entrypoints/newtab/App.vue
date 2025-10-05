@@ -12,7 +12,6 @@ import {
 } from '@vicons/material'
 import { ElConfigProvider, ElNotification } from 'element-plus'
 import type { Language } from 'element-plus/es/locale'
-import en from 'element-plus/es/locale/lang/en.mjs'
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
@@ -41,11 +40,8 @@ const elementZhLocales = import.meta.glob<{ default: Language }>(
 )
 
 // 由于考虑面向用户群体，只包含中文、英文
-async function loadElementLocale(_locale: string) {
-  if (!_locale.startsWith('zh')) {
-    return en
-  }
-  const formattedLocale = _locale.replace('_', '-').toLowerCase()
+async function loadElementLocale(): Promise<Language> {
+  const formattedLocale = lang.toLowerCase()
   const loader =
     elementZhLocales[`/node_modules/element-plus/es/locale/lang/${formattedLocale}.mjs`]
 
@@ -59,7 +55,9 @@ async function loadElementLocale(_locale: string) {
 const elLocale = ref<Language>()
 
 onBeforeMount(async () => {
-  elLocale.value = await loadElementLocale(lang || 'en')
+  if (lang.startsWith('zh')) {
+    elLocale.value = await loadElementLocale()
+  }
 })
 
 const isDark = useDark()
