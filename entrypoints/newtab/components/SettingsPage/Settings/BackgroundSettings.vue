@@ -4,13 +4,7 @@ import { computed, onMounted, ref } from 'vue'
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
 import { CloseRound, CloudOffRound } from '@vicons/material'
-import {
-  type ElInput,
-  ElMessage,
-  ElMessageBox,
-  type UploadProps,
-  type UploadRequestOptions
-} from 'element-plus'
+import type { ElInput, UploadProps, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { browser } from 'wxt/browser'
 

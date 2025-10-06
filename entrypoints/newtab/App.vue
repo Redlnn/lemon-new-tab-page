@@ -10,7 +10,6 @@ import {
   SearchRound,
   SettingsRound
 } from '@vicons/material'
-import { ElConfigProvider, ElNotification } from 'element-plus'
 import type { Language } from 'element-plus/es/locale'
 import { useTranslation } from 'i18next-vue'
 
