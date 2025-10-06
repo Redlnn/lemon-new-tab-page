@@ -4,13 +4,7 @@ import { reactive, ref } from 'vue'
 import { Plus } from '@vicons/fa'
 import { AddRound } from '@vicons/material'
 import DOMPurify from 'dompurify'
-import {
-  ElMessage,
-  ElMessageBox,
-  type FormInstance,
-  type UploadProps,
-  type UploadRequestOptions
-} from 'element-plus'
+import type { FormInstance, UploadProps, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
@@ -152,6 +146,7 @@ function isSvg(file: Blob) {
   <el-dialog
     v-model="showDialog"
     :title="t('newtab:shortcut.addDialog.dialogTitle')"
+    class="base-dialog--acrylic base-dialog--opacity"
     :style="{
       padding: '30px 50px'
     }"

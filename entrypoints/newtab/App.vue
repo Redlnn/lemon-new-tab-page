@@ -145,8 +145,12 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 }
 
 onMounted(async () => {
-  if (!settingsStore.dontShowChangeLog && settingsStore.pluginVersion !== version) {
-    ChangelogRef.value?.show()
+  if (!settingsStore.perf.disableDialogTransparent) {
+    document.documentElement.classList.add('dialog-transparent')
+  }
+
+  if (!settingsStore.perf.disableDialogTransparent && !settingsStore.perf.disableDialogBlur) {
+    document.documentElement.classList.add('dialog-acrylic')
   }
 
   // 注册同步事件回调
@@ -170,6 +174,28 @@ onMounted(async () => {
 
   await updateBackgroundURL(settingsStore.background.bgType)
 })
+
+watch(
+  () => settingsStore.perf.disableDialogTransparent,
+  () => {
+    if (settingsStore.perf.disableDialogTransparent) {
+      document.documentElement.classList.remove('dialog-transparent')
+    } else {
+      document.documentElement.classList.add('dialog-transparent')
+    }
+  }
+)
+
+watch(
+  () => settingsStore.perf.disableDialogBlur,
+  () => {
+    if (settingsStore.perf.disableDialogBlur) {
+      document.documentElement.classList.remove('dialog-acrylic')
+    } else {
+      document.documentElement.classList.add('dialog-acrylic')
+    }
+  }
+)
 
 // Watch for background type changes
 watch(() => settingsStore.background.bgType, updateBackgroundURL)

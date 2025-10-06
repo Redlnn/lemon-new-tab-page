@@ -5,14 +5,15 @@ import { useElementVisibility, useWindowSize } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
-import { useSettingsStore } from '@/shared/settings'
-
 interface Props {
   title?: string
   modelValue: boolean
   containerClass?: string
   acrylic?: boolean
   opacity?: boolean
+  appendToBody?: boolean
+  destroyOnClose?: boolean
+  style?: object | string
 }
 
 defineProps<Props>()
@@ -28,8 +29,6 @@ const scrollbar = ref<ScrollbarInstance>()
 const dialog = ref<InstanceType<typeof import('element-plus').ElDialog>>()
 const headerIsVisible = useElementVisibility(header)
 const { width: windowWidth } = useWindowSize()
-
-const settingsStore = useSettingsStore()
 
 function onClose() {
   emit('close')
@@ -62,16 +61,15 @@ const dialogId = computed(() => {
     :class="[
       'base-dialog',
       containerClass,
-      {
-        'base-dialog--acrylic':
-          acrylic &&
-          !(settingsStore.perf.disableDialogTransparent || settingsStore.perf.disableDialogBlur)
-      },
-      { 'base-dialog--opacity': opacity && !settingsStore.perf.disableDialogTransparent }
+      { 'base-dialog--acrylic': acrylic },
+      { 'base-dialog--opacity': opacity }
     ]"
+    :style="style"
     :show-close="false"
     lock-scroll
     draggable
+    :append-to-body="appendToBody"
+    :destroy-on-close="destroyOnClose"
     @update:model-value="(val) => emit('update:modelValue', val)"
     @open="onOpen"
     @close="onClose"
@@ -121,14 +119,6 @@ const dialogId = computed(() => {
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
-
-  &--opacity {
-    background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
-  }
-
-  &--acrylic {
-    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
-  }
 
   &-container {
     height: 100%;

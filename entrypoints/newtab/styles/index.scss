@@ -34,3 +34,17 @@ body {
   -khtml-user-select: none;
   user-select: none;
 }
+
+html.dialog-transparent {
+  .el-message-box,
+  .base-dialog--opacity {
+    background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
+  }
+}
+
+html.dialog-acrylic {
+  .el-message-box,
+  .base-dialog--acrylic {
+    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+  }
+}
