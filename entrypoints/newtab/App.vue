@@ -246,7 +246,7 @@ watch(isDark, async (darked) => {
 })
 
 function sponsorMessage() {
-  ElMessageBox.alert(t('newtab.sponsor'), '支持我们')
+  ElMessageBox.alert(t('newtab:sponsor'), '支持我们')
 }
 
 function needHelp() {
