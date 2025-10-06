@@ -255,6 +255,9 @@ function needHelp() {
       transition: settingsStore.perf.disableDialogAnimation ? 'none' : 'dialog',
       alignCenter: true
     }"
+    :message="{
+      placement: 'bottom'
+    }"
   >
     <main
       :style="[
