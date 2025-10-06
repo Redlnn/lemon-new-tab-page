@@ -518,7 +518,7 @@ const isVideoBg = computed(
     height: 100%;
     overflow: hidden;
     cursor: pointer;
-    border: 1px dashed var(--el-border-color-darker);
+    border: 1px dashed var(--el-text-color-placeholder);
     border-radius: 6px;
     transition: var(--el-transition-duration-fast);
 

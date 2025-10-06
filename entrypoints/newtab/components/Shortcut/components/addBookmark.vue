@@ -245,39 +245,39 @@ function isSvg(file: Blob) {
       }
     }
   }
+}
 
-  // 上传图标和图片
-  .shortcut__favicon-uploader-img,
-  .shortcut__favicon-uploader-icon {
-    width: 100px;
-    height: 100px;
-  }
+// 上传图标和图片
+.shortcut__favicon-uploader-img,
+.shortcut__favicon-uploader-icon {
+  width: 50px;
+  height: 50px;
+}
 
-  .shortcut__favicon-uploader-img {
-    object-fit: cover;
-  }
+.shortcut__favicon-uploader-img {
+  object-fit: cover;
+}
 
-  .shortcut__favicon-uploader-icon {
-    font-size: 28px;
-    color: var(--el-text-color-placeholder);
-    text-align: center;
-    transition: var(--el-transition-duration-fast);
-  }
+.shortcut__favicon-uploader-icon {
+  font-size: 20px;
+  color: var(--el-text-color-placeholder);
+  text-align: center;
+  transition: var(--el-transition-duration-fast);
+}
 
-  .shortcut__favicon-uploader .el-upload {
-    position: relative;
-    overflow: hidden;
-    cursor: pointer;
-    border: 1px dashed var(--el-border-color-darker);
-    border-radius: 6px;
-    transition: var(--el-transition-duration-fast);
+.shortcut__favicon-uploader .el-upload {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px dashed var(--el-text-color-placeholder);
+  border-radius: 6px;
+  transition: var(--el-transition-duration-fast);
 
-    &:hover {
-      border-color: var(--el-color-primary);
+  &:hover {
+    border-color: var(--el-color-primary);
 
-      .shortcut__favicon-uploader-icon {
-        color: var(--el-color-primary);
-      }
+    .shortcut__favicon-uploader-icon {
+      color: var(--el-color-primary);
     }
   }
 }
