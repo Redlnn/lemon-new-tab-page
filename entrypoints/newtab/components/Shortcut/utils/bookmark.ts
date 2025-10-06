@@ -18,7 +18,7 @@ export async function removeBookmark(
   }
   await saveBookmark(store)
   await refresh()
-  ElMessage({
+  ElMessage.success({
     message: h('p', null, [
       h(
         'span',
@@ -41,8 +41,7 @@ export async function removeBookmark(
         },
         i18next.t('newtab:shortcut.removePinnedMessage.revoke')
       )
-    ]),
-    type: 'success'
+    ])
   })
 }
 

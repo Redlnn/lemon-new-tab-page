@@ -53,7 +53,7 @@ export async function getBingWallpaperURL() {
     await useBingWallpaperStore.removeItem(id)
   }
 
-  ElMessage(i18next.t('newtab:notification.bingWallpaper.get'))
+  ElMessage.primary(i18next.t('newtab:notification.bingWallpaper.get'))
   try {
     const data: BingWallpaperResp = await enhancedFetch(
       'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1'

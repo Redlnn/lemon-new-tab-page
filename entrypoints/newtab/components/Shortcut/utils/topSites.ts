@@ -20,7 +20,7 @@ async function getTopSites() {
 }
 
 function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
-  ElMessage({
+  ElMessage.success({
     message: h('p', null, [
       h(
         'span',
@@ -49,8 +49,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
         },
         i18next.t('newtab:shortcut.removeTopMessage.restoreDefault')
       )
-    ]),
-    type: 'success'
+    ])
   })
 }
 

@@ -118,15 +118,9 @@ function handleFileChange(event: Event) {
               deinitSyncSettings()
             }
           }
-          ElMessage({
-            message: '导入成功',
-            type: 'success'
-          })
+          ElMessage.success('导入成功')
         } else {
-          ElMessage({
-            message: '导入失败',
-            type: 'error'
-          })
+          ElMessage.error('导入失败')
         }
         // reset input so selecting the same file again will trigger change
         if (fileInput.value) fileInput.value.value = ''
