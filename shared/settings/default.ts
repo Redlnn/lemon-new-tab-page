@@ -4,7 +4,7 @@ import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current
 import { BgType } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
-  primaryColor: '#FFBB00',
+  primaryColor: '#F5B800',
   time: {
     isMeridiem: false,
     showMeridiem: true,

@@ -5,7 +5,7 @@ import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/c
 import { CloudOffRound, ColorLensOutlined } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { useSettingsStore } from '@/shared/settings'
+import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation()
 
@@ -14,15 +14,16 @@ const settingsStore = useSettingsStore()
 const { store } = useColorMode()
 
 const predefineColors = ref([
-  '#ff4500',
-  '#ff8c00',
-  '#ffd700',
-  '#90ee90',
-  '#00ced1',
-  '#1e90ff',
-  '#c71585',
-  '#1677ff',
-  '#FFBB00'
+  '#D75455',
+  '#EC6800',
+  defaultSettings.primaryColor,
+  '#AACF53',
+  '#008899',
+  '#1677FF', // Ant Design Primary
+  '#1E50A2',
+  '#4D5AAF',
+  '#E5004f', // Bang Dream
+  '#FF6496' // 波奇酱
 ])
 
 const isDark = useDark()
@@ -130,6 +131,7 @@ watch(preferredDark, () => {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
       <div class="settings__theme-mode">
+        <!-- TODO: 预设改为下拉菜单，选自定义才出调色板 -->
         <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
       </div>
     </div>

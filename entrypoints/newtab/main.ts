@@ -8,7 +8,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { version } from '@/package.json'
 
 import { i18n } from '@/shared/i18n'
-import { initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
+import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initSyncSettings } from '@/shared/sync'
 
 import App from './App.vue'
@@ -64,6 +64,12 @@ export const main = async () => {
   const settingsStore = useSettingsStore()
   const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
+  if (settingsStore.primaryColor.toLowerCase() === '#ffbb00') {
+    // 强制替换旧版本对比度过低的主题色
+    settingsStore.primaryColor = defaultSettings.primaryColor
+    await saveSettings(toRaw(settingsStore))
+  }
+
   changeTheme(settingsStore.primaryColor)
   color = settingsStore.primaryColor
 
@@ -71,7 +77,7 @@ export const main = async () => {
     await saveSettingsDebounced(toRaw(state))
     if (state.primaryColor !== color) {
       if (state.primaryColor === null) {
-        state.primaryColor = '#1677ff'
+        state.primaryColor = defaultSettings.primaryColor
       }
       color = state.primaryColor
       changeTheme(state.primaryColor)
