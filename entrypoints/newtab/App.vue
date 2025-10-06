@@ -144,6 +144,13 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 }
 
 onMounted(async () => {
+  if (true || (!settingsStore.dontShowChangeLog && settingsStore.pluginVersion !== version)) {
+    // ChangelogRef.value?.show()
+    // TODO: 用消息提示替代直接弹窗，badge还未联动
+    ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
+    settingsStore.pluginVersion = version
+  }
+
   if (!settingsStore.perf.disableDialogTransparent) {
     document.documentElement.classList.add('dialog-transparent')
   }
@@ -287,33 +294,37 @@ function needHelp() {
           )
         }"
       >
-        <el-icon><settings-round /></el-icon>
+        <el-badge is-dot :offset="[3, 0]">
+          <el-icon><settings-round /></el-icon>
+        </el-badge>
       </div>
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item @click="SettingsPageRef?.toggle">
             <el-icon :size="17"><settings-round /></el-icon>
-            {{ t('newtab:settings.title') }}
+            <span>{{ t('newtab:settings.title') }}</span>
           </el-dropdown-item>
           <el-dropdown-item @click="SESwitcherRef?.show">
             <el-icon :size="17"><search-round /></el-icon>
-            {{ t('newtab:menu.searchEnginePreference') }}
+            <span>{{ t('newtab:menu.searchEnginePreference') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item divided @click="ChangelogRef?.show">
-            <el-icon :size="17"><access-time-filled-round /></el-icon>
-            {{ t('newtab:changelog.title') }}
-          </el-dropdown-item>
+          <el-badge is-dot :offset="[-3, 17]" style="width: 100%">
+            <el-dropdown-item divided @click="ChangelogRef?.show">
+              <el-icon :size="17"><access-time-filled-round /></el-icon>
+              <span>{{ t('newtab:changelog.title') }}</span>
+            </el-dropdown-item>
+          </el-badge>
           <el-dropdown-item @click="needHelp">
             <el-icon :size="17"><help-filled /></el-icon>
-            {{ t('newtab:menu.help') }}
+            <span>{{ t('newtab:menu.help') }}</span>
           </el-dropdown-item>
           <el-dropdown-item @click="sponsorMessage">
             <el-icon :size="17"><heart-filled /></el-icon>
-            {{ t('newtab:menu.sponsor') }}
+            <span>{{ t('newtab:menu.sponsor') }}</span>
           </el-dropdown-item>
           <el-dropdown-item divided @click="AboutRef?.toggle">
             <el-icon :size="17"><info-round /></el-icon>
-            {{ t('newtab:menu.about') }}
+            <span>{{ t('newtab:menu.about') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>
@@ -339,14 +350,15 @@ function needHelp() {
   bottom: 20px;
   height: calc(1em + 12px);
   padding: 6px;
-  overflow: hidden;
   font-size: 25px;
   line-height: 1em;
   color: var(--el-text-color-secondary);
   cursor: pointer;
   background-color: var(--el-bg-color);
   border-radius: 50%;
-  transition: 0.1s;
+  transition:
+    color 0.1s ease,
+    background-color var(--el-transition-duration-fast) ease;
 
   &--blur {
     backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
@@ -361,10 +373,17 @@ function needHelp() {
     }
   }
 
+  .el-icon {
+    transition: transform 0.1s ease;
+  }
+
   &:hover {
     color: var(--el-color-primary);
     box-shadow: var(--el-box-shadow-lighter);
-    transform: rotate(180deg);
+
+    .el-icon {
+      transform: rotate(180deg);
+    }
   }
 
   &__popper {

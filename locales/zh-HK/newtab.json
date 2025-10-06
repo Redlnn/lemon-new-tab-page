@@ -3,8 +3,8 @@
     "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
   },
   "changelog": {
-    "title": "更新日誌",
-    "noPopup": "更新後不再彈出"
+    "newVersionMsg": "你嘅起始頁更新着啦~",
+    "title": "更新日誌"
   },
   "menu": {
     "about": "關於",

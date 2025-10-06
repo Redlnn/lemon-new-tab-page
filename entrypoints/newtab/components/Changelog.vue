@@ -36,25 +36,7 @@ onMounted(async () => {
     opacity
   >
     <div class="changelog-wrapper">
-      <div class="changelog-no-popup">
-        <div style="margin-right: 5px">{{ t('newtab:changelog.noPopup') }}</div>
-        <el-switch v-model="settingsStore.dontShowChangeLog" />
-      </div>
       <component :is="isChinese ? ChangelogZh : ChangelogEn" />
     </div>
   </base-dialog>
 </template>
-
-<style lang="scss" scoped>
-.changelog-wrapper {
-  position: relative;
-}
-
-.changelog-no-popup {
-  position: absolute;
-  top: -32px;
-  right: 5px;
-  display: flex;
-  align-items: center;
-}
-</style>
