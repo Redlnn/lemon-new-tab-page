@@ -15,20 +15,28 @@
 ### New Features ✨
 
 - Added a toggle to not open the changelog page after update
+- Revised and expanded preset color schemes with added color names
+- Replaced changelog pop-up with bottom toast notifications to reduce interruptions during frequent updates
+- Added red dot indicator at the bottom-right corner to show unread changelog updates
 
 ### Improvements ⚡️
 
-- Replaced i18n framework to prevent Windows from treating `zh-HK` as `zh-TW`, ensuring `zh-HK` translations display correctly
+- Changed default theme color
+- Replaced i18n framework to prevent Windows from treating `zh-HK` as `zh-TW`, ensuring proper display of `zh-HK` translations display correctly
 - Adjusted font weight of buttons and some links for better appearance
 - Optimized button animations and styles
 - Optimized clock formatting code to improve performance and readability
 - Adjusted Element Plus i18n import method to enhance performance and reduce bundle size
 - Removed obsolete code
+- Notifications now appear from the bottom
 
 ### Bug Fixes 🐛
 
-- Fixed dayjs i18n not working
-- Fixed time not being centered when "Small Clock Font" is disabled
+- Fixed issue where dayjs i18n was not working
+- Fixed time alignment issue when "Small Clock Font" is disabled
+- Fixed incorrect style of the custom shortcut icon upload button
+- Fixed a missing translation
+- Fixed an issue where the config version might not update in time
 
 ## 2.4.1 (Sep 30, 2025)
 
