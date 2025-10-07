@@ -144,9 +144,9 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 }
 
 onMounted(async () => {
-  if (true || (!settingsStore.dontShowChangeLog && settingsStore.pluginVersion !== version)) {
+  if (settingsStore.pluginVersion !== version) {
     // ChangelogRef.value?.show()
-    // TODO: 用消息提示替代直接弹窗，badge还未联动
+    settingsStore.readedChangeLog = false
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
     settingsStore.pluginVersion = version
   }
@@ -294,7 +294,7 @@ function needHelp() {
           )
         }"
       >
-        <el-badge is-dot :offset="[3, 0]">
+        <el-badge is-dot :offset="[3, 0]" :hidden="settingsStore.readedChangeLog">
           <el-icon><settings-round /></el-icon>
         </el-badge>
       </div>
@@ -308,7 +308,12 @@ function needHelp() {
             <el-icon :size="17"><search-round /></el-icon>
             <span>{{ t('newtab:menu.searchEnginePreference') }}</span>
           </el-dropdown-item>
-          <el-badge is-dot :offset="[-3, 17]" style="width: 100%">
+          <el-badge
+            is-dot
+            :offset="[-3, 17]"
+            :hidden="settingsStore.readedChangeLog"
+            style="width: 100%"
+          >
             <el-dropdown-item divided @click="ChangelogRef?.show">
               <el-icon :size="17"><access-time-filled-round /></el-icon>
               <span>{{ t('newtab:changelog.title') }}</span>

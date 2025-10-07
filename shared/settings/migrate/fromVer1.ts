@@ -97,7 +97,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       disableSettingsBtnBlur: defaultSettings.perf.disableSettingsBtnBlur,
       disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent
     },
-    dontShowChangeLog: defaultSettings.dontShowChangeLog,
+    readedChangeLog: defaultSettings.readedChangeLog,
     pluginVersion: oldSettings.version,
     version: 7
   }

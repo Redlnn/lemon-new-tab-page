@@ -3,8 +3,6 @@ import { defineAsyncComponent, onMounted } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
-import { version } from '@/package.json'
-
 import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -24,6 +22,11 @@ const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOg_En.md'))
 onMounted(async () => {
   await import('@newtab/styles/github-markdown.css')
 })
+
+function handleClose() {
+  // settingsStore.pluginVersion = version
+  settingsStore.readedChangeLog = true
+}
 </script>
 
 <template>
@@ -31,7 +34,7 @@ onMounted(async () => {
     v-model="opened"
     :title="t('newtab:changelog.title')"
     container-class="changelog__dialog"
-    @closed="() => (settingsStore.pluginVersion = version)"
+    @closed="handleClose"
     acrylic
     opacity
   >
