@@ -13,18 +13,33 @@ const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settingsStore = useSettingsStore()
 const { store } = useColorMode()
 
-const predefineColors = ref([
-  '#D75455',
-  '#EC6800',
-  defaultSettings.primaryColor,
-  '#AACF53',
-  '#008899',
-  '#1677FF', // Ant Design Primary
-  '#1E50A2',
-  '#4D5AAF',
-  '#E5004f', // Bang Dream
-  '#FF6496' // 波奇酱
-])
+const predefineColorsMapClassic = [
+  { value: '#d75455', label: '深緋' },
+  { value: '#ec6800', label: '黄赤' },
+  { value: defaultSettings.primaryColor, label: '山吹' },
+  { value: '#aacf53', label: '萌黄' },
+  { value: '#008899', label: '納戸' },
+  { value: '#1677ff', label: 'Ant Design' }, // Ant Design Primary
+  { value: '#1e50a2', label: '瑠璃' },
+  { value: '#4d5aaf', label: '紺桔梗' }
+]
+
+const predefineColorsMapAnime = [
+  { value: '#38b', label: 'MyGO!!!!!' },
+  { value: '#730f40', label: 'Ave Mujica' },
+  { value: '#f7b3c2', label: '後藤ひとり' },
+  { value: '#ff2291', label: '結束バンド' },
+  { value: '#d90e2c', label: 'TOGENASHI TOGEARI' }
+]
+
+const predefineColorsMap = [
+  { label: 'Classic', options: predefineColorsMapClassic },
+  { label: 'Anime', options: predefineColorsMapAnime }
+]
+
+const predefineColors = predefineColorsMapClassic
+  .concat(predefineColorsMapAnime)
+  .map((i) => i.value)
 
 const isDark = useDark()
 const isDarkLocal = ref(isDark.value)
@@ -130,8 +145,30 @@ watch(preferredDark, () => {
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
-      <div class="settings__theme-mode">
-        <!-- TODO: 预设改为下拉菜单，选自定义才出调色板 -->
+      <div class="settings__theme">
+        <el-select
+          v-model="settingsStore.primaryColor"
+          style="width: 183px"
+          popper-class="settings__theme-popper"
+        >
+          <el-option-group
+            v-for="group in predefineColorsMap"
+            :key="group.label"
+            :label="group.label"
+          >
+            <el-option
+              v-for="item in group.options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+              <div class="settings__theme-item">
+                <el-tag :color="item.value" style="margin-right: 8px" size="small" />
+                <span :style="{ color: item.value }">{{ item.label }}</span>
+              </div>
+            </el-option>
+          </el-option-group>
+        </el-select>
         <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
       </div>
     </div>
@@ -139,25 +176,25 @@ watch(preferredDark, () => {
 </template>
 
 <style lang="scss">
-.settings__theme-mode {
+.settings__theme {
   display: flex;
   column-gap: 8px;
+  align-items: center;
+}
 
-  .settings__theme-item {
-    position: relative;
-    cursor: pointer;
+.settings__theme-popper {
+  padding: 6px 0;
+  overflow: hidden;
 
-    & .settings__theme-selected {
-      display: none;
-    }
+  .el-select-dropdown__list {
+    padding: 2px 0;
+  }
+}
 
-    &.settings__theme-item--active .settings__theme-selected {
-      position: absolute;
-      right: 8px;
-      bottom: 8px;
-      display: block;
-      color: var(--el-color-primary);
-    }
+.settings__theme-item {
+  .el-tag {
+    aspect-ratio: 1;
+    border: none;
   }
 }
 </style>
