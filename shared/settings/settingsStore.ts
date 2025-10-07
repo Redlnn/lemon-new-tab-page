@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import { v4 as uuidv4 } from 'uuid'
+import { browser } from 'wxt/browser'
 
 import { isMediaFile, isVideoFile } from '@/shared/media'
 
@@ -64,6 +65,10 @@ export async function initSettings() {
 
   if (!settings) {
     settings = await settingsStorage.getValue()
+    const wxtSettingsVer = (await browser.storage.local.get('settings$')).settings$.v
+    if (settings.version !== wxtSettingsVer) {
+      settings.version = wxtSettingsVer
+    }
     console.log('Initializing settings storage with config version', settings.version)
   }
 
