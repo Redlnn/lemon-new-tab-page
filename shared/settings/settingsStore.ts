@@ -65,9 +65,9 @@ export async function initSettings() {
 
   if (!settings) {
     settings = await settingsStorage.getValue()
-    const wxtSettingsVer = (await browser.storage.local.get('settings$')).settings$.v
-    if (settings.version !== wxtSettingsVer) {
-      settings.version = wxtSettingsVer
+    const wxtSettings = await browser.storage.local.get('settings$')
+    if (wxtSettings.settings$ && settings.version !== wxtSettings.settings$.v) {
+      settings.version = wxtSettings.settings$.v
     }
     console.log('Initializing settings storage with config version', settings.version)
   }
