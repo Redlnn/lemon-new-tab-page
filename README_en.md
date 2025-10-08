@@ -19,18 +19,16 @@ The extension is now available on
 
 - Fast⚡ – Purely local, high-performance, fast loading
 - Search 🔍 – Real-time suggestions and search engine selection
-- Flexible 🌈 – Customize and combine page layouts with rich options
+- Flexible 🌈 – Customize and combine page layouts to adjust appearance to your preference with rich options
 - Elegant 🎨 – Clean and visually pleasing interface
 - Wallpapers 🖼️ – Support for Bing daily wallpapers, custom online APIs, and local images/videos
 - Quotes 💬 – A classical Chinese poem or motivational quote each time you open a new tab
 - Open Source ⚛️ – No worries about privacy leaks or malicious code
-- Internationalization 🌐 – Built-in multi-language support (Simplified Chinese, Traditional Chinese， Cantonese, extensible)
-- Customization ⚙️ – Flexible configuration to adjust appearance to your preference
+- Internationalization 🌐 – Built-in multi-language support (Include Simplified / Traditional Chinese, Cantonese)
 - Shortcuts 🪜 – Display/pin frequently visited sites and add your own custom shortcuts
-- Dark Mode 🌓 – Support for dark mode, with automatic system theme detection
+- Dark Mode 🌓 – Support for dark mode, with an option to follow the system setting
 
 > [!NOTE]  
-> This extension mimics part of Lime Start Page’s style—if that’s not your taste, please skip.  
 > Contributions via PRs are welcome. Issues may not always be implemented.
 
 ## Changelog
@@ -39,11 +37,14 @@ The extension is now available on
 
 ## Browser Compatibility
 
-| Browser | Supported |        Notes         |
-| :-----: | :-------: | :------------------: |
-| Chrome  |    ✅     | Chrome 96 and above  |
-|  Edge   |    ✅     |  Edge 96 and above   |
-| Firefox |    ✅     | Firefox 63 and above |
+|              Browser               | Supported |         Notes         |
+| :--------------------------------: | :-------: | :-------------------: |
+|               Chrome               |    ✅     | Chrome 116 and above  |
+|                Edge                |    ✅     |  Edge 116 and above   |
+|              Firefox               |    ✅     | Firefox 128 and above |
+| Chromium-based<br/>Mobile Browsers |    ❓     |       untested        |
+|            Edge Mobile             |    ❓     |       untested        |
+|           Firefox Mobile           |    ❌     |      unsupported      |
 
 ## Preview
 
@@ -55,51 +56,6 @@ The extension is now available on
 ![Homepage with quick access background](./preview/3.webp)  
 ![Search page](./preview/4.webp)  
 ![Settings page](./preview/5.webp)
-
-</details>
-
-### Comparison with Lime Start Page
-
-> Built to satisfy personal needs, so many features are missing. PRs welcome (issues may not always be addressed).
-
-|    Key Features    | Lemon Start Page | Lime Start Page |
-| :----------------: | :--------------: | :-------------: |
-| Most-visited sites |        ✅        |       ❌        |
-|  Custom wallpaper  |        ✅        |       ✅        |
-|     Dark mode      |        ✅        |       ✅        |
-|  Video wallpaper   |        ✅        |       ✅        |
-|       Quotes       |        ✅        |       ✅        |
-|  Custom shortcuts  |        ✅        |       ✅        |
-|   Settings sync    |        ✅        |       ✅        |
-|       Notes        |        ❌        |       ✅        |
-|      Weather       |        ❌        |       ✅        |
-| Project promotion  |        ❌        |       ✅        |
-|   Account system   | Built-in browser |   Third Party   |
-
-## Why this extension?
-
-<details>
-<summary>Main reasons (rambling ahead):</summary>
-<br />
-
-1. When Chrome’s default search engine is set to something other than Google,
-   the new tab page has no search bar or wallpaper.
-2. Setting Chrome’s search engine to Bing makes the new tab page resemble
-   Edge’s Bing homepage—with cluttered buttons, ugly news, and search bar/shortcuts
-   placed too high.
-3. I like Lime Start Page’s look, but it performs an HTTP request every time it opens.
-   Strictly speaking, it’s a navigation page, not a start page
-   (never understood why it’s server-hosted).
-4. Lime Start Page is not a native browser extension and doesn’t support displaying
-   frequently visited sites (again, baffling), while I prefer quick access to them.
-5. Lime Start Page places shortcuts on a secondary page, but I want them on the main tab.
-   Although you can default to that page, it hides the search bar.
-6. Lime Start Page isn’t open source, making it hard to customize—so I decided
-   to build my own based on my needs.
-
-> ~~Heard Lime Start Page was getting a full refactor with new features,~~
-> ~~maybe I’ll stop updating then?~~  
-> It got updated, but mostly UI tweaks, not many new features (lol).
 
 </details>
 
