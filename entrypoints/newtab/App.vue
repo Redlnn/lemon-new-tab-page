@@ -146,7 +146,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 onMounted(async () => {
   if (settingsStore.pluginVersion !== version) {
     // ChangelogRef.value?.show()
-    settingsStore.readedChangeLog = false
+    settingsStore.readChangeLog = false
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
     settingsStore.pluginVersion = version
   }
@@ -309,7 +309,7 @@ function needHelp() {
           )
         }"
       >
-        <el-badge is-dot :offset="[3, 0]" :hidden="settingsStore.readedChangeLog">
+        <el-badge is-dot :offset="[3, 0]" :hidden="settingsStore.readChangeLog">
           <el-icon><settings-round /></el-icon>
         </el-badge>
       </div>
@@ -326,7 +326,7 @@ function needHelp() {
           <el-badge
             is-dot
             :offset="[-3, 17]"
-            :hidden="settingsStore.readedChangeLog"
+            :hidden="settingsStore.readChangeLog"
             style="width: 100%"
           >
             <el-dropdown-item divided @click="ChangelogRef?.show">

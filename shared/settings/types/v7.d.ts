@@ -97,7 +97,7 @@ export interface SettingsInterfaceVer7 {
     disableSettingsBtnBlur: boolean
     disableSettingsBtnTransparent: boolean
   }
-  readedChangeLog: boolean
+  readChangeLog: boolean
   pluginVersion: string
   version: 7
 }

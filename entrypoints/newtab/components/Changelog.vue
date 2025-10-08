@@ -25,7 +25,7 @@ onMounted(async () => {
 
 function handleClose() {
   // settingsStore.pluginVersion = version
-  settingsStore.readedChangeLog = true
+  settingsStore.readChangeLog = true
 }
 </script>
 

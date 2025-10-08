@@ -93,7 +93,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       disableSettingsBtnBlur: defaultSettings.perf.disableSettingsBtnBlur,
       disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent
     },
-    readedChangeLog: defaultSettings.readedChangeLog,
+    readChangeLog: defaultSettings.readChangeLog,
     pluginVersion: oldSettings.pluginVersion,
     version: 7
   }
