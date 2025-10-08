@@ -370,8 +370,8 @@ function needHelp() {
   }
 
   &--tran {
-    color: color-mix(in srgb, var(--el-text-color-primary), transparent 65%);
-    background-color: color-mix(in srgb, var(--el-bg-color), transparent 85%);
+    color: color-mix(in oklch, var(--el-text-color-primary), transparent 65%);
+    background-color: color-mix(in oklch, var(--el-bg-color), transparent 85%);
 
     &:hover {
       background-color: var(--el-bg-color);
@@ -393,7 +393,7 @@ function needHelp() {
 
   &__popper {
     &.el-popper {
-      background-color: color-mix(in srgb, var(--el-bg-color-overlay), transparent 30%);
+      background-color: color-mix(in oklch, var(--el-bg-color-overlay), transparent 30%);
       backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
     }
 

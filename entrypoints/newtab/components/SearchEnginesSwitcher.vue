@@ -85,7 +85,7 @@ const settingsStore = useSettingsStore()
     border-radius: 50%;
 
     html.dark & {
-      background-color: color-mix(in srgb, var(--el-text-color-primary), transparent 70%);
+      background-color: color-mix(in oklch, var(--el-text-color-primary), transparent 70%);
     }
 
     html.dark .se-switcher-item:hover &,

@@ -90,16 +90,16 @@ const isYiyanEnabled = computed(
     }
 
     &.yiyan--shadow {
-      text-shadow: 1px 1px 3px color-mix(in srgb, var(--el-color-black), transparent 60%);
+      text-shadow: 1px 1px 3px color-mix(in oklch, var(--el-color-black), transparent 60%);
 
       &:hover {
-        text-shadow: 1px 1px 3px color-mix(in srgb, var(--el-color-black), transparent 40%);
+        text-shadow: 1px 1px 3px color-mix(in oklch, var(--el-color-black), transparent 40%);
       }
     }
 
     &:hover {
       color: var(--el-fill-color-blank);
-      background-color: color-mix(in srgb, var(--el-bg-color), transparent 90%);
+      background-color: color-mix(in oklch, var(--el-bg-color), transparent 90%);
 
       &.yiyan--blur {
         backdrop-filter: blur(10px) saturate(1.2);

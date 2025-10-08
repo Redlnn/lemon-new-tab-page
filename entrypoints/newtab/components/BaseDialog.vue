@@ -115,7 +115,7 @@ const dialogId = computed(() => {
   overflow: hidden;
   background-color: var(--el-bg-color-page);
   border-radius: 10px;
-  box-shadow: 0 0 15px 0 color-mix(in srgb, var(--el-bg-color-page), transparent 60%);
+  box-shadow: 0 0 15px 0 color-mix(in oklch, var(--el-bg-color-page), transparent 60%);
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
@@ -136,7 +136,7 @@ const dialogId = computed(() => {
   &-divider {
     width: 100%;
     height: 1px;
-    border-top: 1px color-mix(in srgb, var(--el-border-color), transparent 30%)
+    border-top: 1px color-mix(in oklch, var(--el-border-color), transparent 30%)
       var(--el-border-style);
     transition: opacity 0.1s ease;
   }

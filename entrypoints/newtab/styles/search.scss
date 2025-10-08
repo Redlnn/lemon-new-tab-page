@@ -70,14 +70,14 @@
 
     // 透明时搜索框背景变化
     &--opacity {
-      background-color: color-mix(in srgb, var(--el-fill-color), transparent 50%);
+      background-color: color-mix(in oklch, var(--el-fill-color), transparent 50%);
 
       &:hover:not(.search-box__form--focus) {
-        background-color: color-mix(in srgb, var(--el-fill-color), transparent 35%);
+        background-color: color-mix(in oklch, var(--el-fill-color), transparent 35%);
       }
 
       &.search-box__form--focus {
-        background-color: color-mix(in srgb, var(--el-fill-color), transparent 20%);
+        background-color: color-mix(in oklch, var(--el-fill-color), transparent 20%);
       }
     }
 

@@ -38,7 +38,7 @@ body {
 html.dialog-transparent {
   .el-message-box,
   .base-dialog--opacity {
-    background-color: color-mix(in srgb, var(--el-bg-color-page), transparent 20%);
+    background-color: color-mix(in oklch, var(--el-bg-color-page), transparent 20%);
   }
 }
 

@@ -11,8 +11,8 @@ $--slider: (
   $messagebox: ('border-radius': 8px),
   $popper: ('border-radius': 8px),
   $backtop: (
-    'bg-color': color-mix(in srgb, var(--el-color-primary), transparent 90%),
-    'hover-bg-color': color-mix(in srgb, var(--el-color-primary-light-5), transparent 60%)
+    'bg-color': color-mix(in oklch, var(--el-color-primary), transparent 90%),
+    'hover-bg-color': color-mix(in oklch, var(--el-color-primary-light-5), transparent 60%)
   )
 );
 

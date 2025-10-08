@@ -52,25 +52,25 @@
   &--shadow {
     .clock__time-container {
       text-shadow:
-        0 6px 13px color-mix(in srgb, var(--el-color-black), transparent 80%),
-        1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+        0 6px 13px color-mix(in oklch, var(--el-color-black), transparent 80%),
+        1px 1px 2px color-mix(in oklch, var(--el-color-black), transparent 90%);
 
       html.dark & {
         text-shadow:
-          0 1px 8px color-mix(in srgb, var(--el-color-black), transparent 50%),
-          1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+          0 1px 8px color-mix(in oklch, var(--el-color-black), transparent 50%),
+          1px 1px 2px color-mix(in oklch, var(--el-color-black), transparent 90%);
       }
     }
 
     .clock__date {
       text-shadow:
-        0 3px 6px color-mix(in srgb, var(--el-color-black), transparent 70%),
-        1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+        0 3px 6px color-mix(in oklch, var(--el-color-black), transparent 70%),
+        1px 1px 2px color-mix(in oklch, var(--el-color-black), transparent 90%);
 
       html.dark & {
         text-shadow:
-          0 1px 4px color-mix(in srgb, var(--el-color-black), transparent 50%),
-          1px 1px 2px color-mix(in srgb, var(--el-color-black), transparent 90%);
+          0 1px 4px color-mix(in oklch, var(--el-color-black), transparent 50%),
+          1px 1px 2px color-mix(in oklch, var(--el-color-black), transparent 90%);
       }
     }
   }
