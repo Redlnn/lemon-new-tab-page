@@ -78,8 +78,8 @@
       "blinkingColon": "Blinking colon",
       "blinkingTip": "Turning this off can reduce sustained GPU usage.",
       "enableShadow": "Show shadow",
-      "invertColorDark": "Use light fonts in dark mode",
-      "invertColorLight": "Use dark fonts in light mode",
+      "invertColorDark": "[Clock] Use light text in dark mode",
+      "invertColorLight": "[Clock] Use dark text in light mode",
       "showAMPM": "Show AM/PM",
       "showDate": "Show date",
       "showLunar": "Show Chinese lunar calendar",
@@ -165,7 +165,7 @@
       "showTopSites": "Show most visited",
       "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
       "title": "Shortcut settings",
-      "whiteTextInLightMode": "White text in light mode",
+      "whiteTextInLightMode": "[Shortcut] Use white text in light mode",
       "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
     },
     "theme": {
@@ -183,8 +183,8 @@
       "description": "Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!",
       "enableShadow": "Show shadow",
       "enabled": "Enable",
-      "invertColorDark": "Use light fonts in dark mode",
-      "invertColorLight": "Use dark fonts in light mode",
+      "invertColorDark": "[Quote] Use light text in dark mode",
+      "invertColorLight": "[Quote] Use dark text in light mode",
       "normalyShowTip": "When disabled, only show when the search box is focused.",
       "title": "Quote"
     }

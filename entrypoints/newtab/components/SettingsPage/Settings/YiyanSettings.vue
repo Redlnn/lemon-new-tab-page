@@ -50,14 +50,6 @@ const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.pr
       <div class="settings__label">{{ t('newtab:settings.yiyan.enableShadow') }}</div>
       <el-switch v-model="settingsStore.yiyan.enableShadow" />
     </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorLight') }}</div>
-      <el-switch v-model="settingsStore.yiyan.invertColor.light" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorDark') }}</div>
-      <el-switch v-model="settingsStore.yiyan.invertColor.night" />
-    </div>
     <p v-if="currentProviderNote" class="settings__item--note">
       {{ currentProviderNote }}
     </p>

@@ -62,12 +62,6 @@ async function restoreDefaultTopSites() {
         <div class="settings__label">{{ t('newtab:settings.shortcut.showTitle') }}</div>
         <el-switch v-model="settingsStore.shortcut.showShortcutTitle" />
       </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">
-          {{ t('newtab:settings.shortcut.whiteTextInLightMode') }}
-        </div>
-        <el-switch v-model="settingsStore.shortcut.whiteTextInLightMode" />
-      </div>
       <p class="settings__item--note">
         {{ t('newtab:settings.shortcut.whiteTextTip') }}
       </p>

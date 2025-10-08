@@ -78,8 +78,8 @@
       "blinkingColon": "閃爍時間分隔符",
       "blinkingTip": "關閉可減輕持續嘅 GPU 使用",
       "enableShadow": "顯示陰影",
-      "invertColorDark": "深色模式下使用深色文字",
-      "invertColorLight": "淺色模式下使用深色文字",
+      "invertColorDark": "【時鐘】深色模式下使用淺色文字",
+      "invertColorLight": "【時鐘】淺色模式下使用深色文字",
       "showAMPM": "顯示「上午／下午」",
       "showDate": "顯示日期",
       "showLunar": "顯示農曆",
@@ -165,7 +165,7 @@
       "showTopSites": "顯示最常瀏覽網站",
       "tip": "小提示：可以拖動設定視窗來觀察快速存取區域的變化喔~",
       "title": "快速存取",
-      "whiteTextInLightMode": "淺色模式下使用白色文字",
+      "whiteTextInLightMode": "【快速存取】淺色模式下使用白色文字",
       "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好喔~"
     },
     "theme": {
@@ -183,8 +183,8 @@
       "description": "/",
       "enableShadow": "顯示陰影",
       "enabled": "啟用",
-      "invertColorDark": "深色模式下使用深色文字",
-      "invertColorLight": "淺色模式下使用深色文字",
+      "invertColorDark": "【一言】色模式下使用淺色文字",
+      "invertColorLight": "【一言】淺色模式下使用深色文字",
       "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
       "title": "一言"
     }

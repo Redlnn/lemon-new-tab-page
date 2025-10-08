@@ -181,6 +181,28 @@ watch(preferredDark, () => {
       </div>
       <el-switch v-model="settingsStore.colorfulMode" />
     </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.clock.invertColorLight') }}</div>
+      <el-switch v-model="settingsStore.time.invertColor.light" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.clock.invertColorDark') }}</div>
+      <el-switch v-model="settingsStore.time.invertColor.night" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">
+        {{ t('newtab:settings.shortcut.whiteTextInLightMode') }}
+      </div>
+      <el-switch v-model="settingsStore.shortcut.whiteTextInLightMode" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorLight') }}</div>
+      <el-switch v-model="settingsStore.yiyan.invertColor.light" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorDark') }}</div>
+      <el-switch v-model="settingsStore.yiyan.invertColor.night" />
+    </div>
   </div>
 </template>
 

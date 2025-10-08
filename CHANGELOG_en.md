@@ -29,6 +29,7 @@
 - Adjusted Element Plus i18n import method to enhance performance and reduce bundle size
 - Removed obsolete code
 - Notifications now appear from the bottom
+- Adjust the positions of some options
 
 ### Bug Fixes 🐛
 

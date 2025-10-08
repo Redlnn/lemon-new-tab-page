@@ -43,13 +43,5 @@ const settingsStore = useSettingsStore()
       <div class="settings__label">{{ t('newtab:settings.clock.enableShadow') }}</div>
       <el-switch v-model="settingsStore.time.enableShadow" />
     </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.clock.invertColorLight') }}</div>
-      <el-switch v-model="settingsStore.time.invertColor.light" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.clock.invertColorDark') }}</div>
-      <el-switch v-model="settingsStore.time.invertColor.night" />
-    </div>
   </div>
 </template>
