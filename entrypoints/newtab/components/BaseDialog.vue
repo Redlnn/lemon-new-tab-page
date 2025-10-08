@@ -115,7 +115,7 @@ const dialogId = computed(() => {
   overflow: hidden;
   background-color: var(--el-bg-color-page);
   border-radius: 10px;
-  box-shadow: 0 0 15px 0 color-mix(in oklch, var(--el-bg-color-page), transparent 60%);
+  box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;

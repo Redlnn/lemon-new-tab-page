@@ -4,6 +4,7 @@ import type { BgType } from './enum'
 
 export interface SettingsInterfaceVer7 {
   primaryColor: string
+  colorfulMode: boolean
   time: {
     isMeridiem: boolean
     showMeridiem: boolean

@@ -159,6 +159,10 @@ onMounted(async () => {
     document.documentElement.classList.add('dialog-acrylic')
   }
 
+  if (settingsStore.colorfulMode) {
+    document.documentElement.classList.add('colorful')
+  }
+
   // 注册同步事件回调
   setSyncEventCallback((type, payload) => {
     if (type === 'version-mismatch') {
@@ -180,6 +184,17 @@ onMounted(async () => {
 
   await updateBackgroundURL(settingsStore.background.bgType)
 })
+
+watch(
+  () => settingsStore.colorfulMode,
+  (colorful) => {
+    if (colorful) {
+      document.documentElement.classList.add('colorful')
+    } else {
+      document.documentElement.classList.remove('colorful')
+    }
+  }
+)
 
 watch(
   () => settingsStore.perf.disableDialogTransparent,
@@ -359,7 +374,7 @@ function needHelp() {
   line-height: 1em;
   color: var(--el-text-color-secondary);
   cursor: pointer;
-  background-color: var(--el-bg-color);
+  background-color: var(--el-bg-color-overlay);
   border-radius: 50%;
   transition:
     color 0.1s ease,
@@ -370,16 +385,16 @@ function needHelp() {
   }
 
   &--tran {
-    color: color-mix(in oklch, var(--el-text-color-primary), transparent 65%);
-    background-color: color-mix(in oklch, var(--el-bg-color), transparent 85%);
+    color: var(--le-text-color-primary-opacity-65);
+    background-color: var(--le-bg-color-overlay-opacity-60);
 
     &:hover {
-      background-color: var(--el-bg-color);
+      background-color: var(--el-bg-color-overlay);
     }
   }
 
   .el-icon {
-    transition: transform 0.1s ease;
+    transition: transform 0.15s ease;
   }
 
   &:hover {
@@ -393,7 +408,7 @@ function needHelp() {
 
   &__popper {
     &.el-popper {
-      background-color: color-mix(in oklch, var(--el-bg-color-overlay), transparent 30%);
+      background-color: var(--le-bg-color-overlay-opacity-30);
       backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
     }
 

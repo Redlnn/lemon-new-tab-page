@@ -1,0 +1,34 @@
+@mixin gen-var-opacity($base-name, $css-var-name, $ops) {
+  @each $op in $ops {
+    --#{$base-name}-opacity-#{$op}: color-mix(
+      in oklch,
+      var(--#{$css-var-name}),
+      transparent #{$op}%
+    );
+  }
+}
+
+@mixin gen-colorful-var-opacity($base-name, $css-var-name, $p, $ops) {
+  @each $op in $ops {
+    --#{$base-name}-opacity-#{$op}: color-mix(
+      in oklch,
+      color-mix(in oklch, var(--#{$css-var-name}) 100%, var(--el-color-primary) #{$p}%),
+      transparent #{$op}%
+    );
+  }
+}
+
+:root {
+  @include gen-var-opacity('le-bg-color-overlay', 'el-bg-color-overlay', (20, 30, 35, 50, 50, 60));
+  @include gen-var-opacity('le-text-color-primary', 'el-text-color-primary', (65));
+  @include gen-var-opacity('le-bg-color-page', 'el-bg-color-page', (60));
+}
+
+html.colorful {
+  @include gen-colorful-var-opacity(
+    'le-bg-color-overlay',
+    'el-bg-color-overlay',
+    30,
+    (20, 30, 35, 50, 60)
+  );
+}

@@ -25,7 +25,9 @@ const predefineColorsMapClassic = [
 ]
 
 const predefineColorsMapAnime = [
-  { value: '#38b', label: 'MyGO!!!!!' },
+  { value: '#39C5BB', label: '初音ミク' },
+  { value: '#66CCFF', label: '洛天依' },
+  { value: '#3388bb', label: 'MyGO!!!!!' },
   { value: '#730f40', label: 'Ave Mujica' },
   { value: '#f7b3c2', label: '後藤ひとり' },
   { value: '#ff2291', label: '結束バンド' },
@@ -34,7 +36,7 @@ const predefineColorsMapAnime = [
 
 const predefineColorsMap = [
   { label: 'Classic', options: predefineColorsMapClassic },
-  { label: 'Anime', options: predefineColorsMapAnime }
+  { label: 'ACGN', options: predefineColorsMapAnime }
 ]
 
 const predefineColors = predefineColorsMapClassic
@@ -171,6 +173,13 @@ watch(preferredDark, () => {
         </el-select>
         <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
       </div>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">
+        {{ t('newtab:settings.theme.colorfulMode') }}
+        <cloud-off-round />
+      </div>
+      <el-switch v-model="settingsStore.colorfulMode" />
     </div>
   </div>
 </template>

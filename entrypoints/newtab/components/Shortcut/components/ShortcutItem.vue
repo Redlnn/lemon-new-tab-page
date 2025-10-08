@@ -65,7 +65,13 @@ defineProps<{
         {{ title }}
       </el-text>
     </a>
-    <el-dropdown class="shortcut__menu" trigger="click" placement="bottom-end" size="small">
+    <el-dropdown
+      class="shortcut__menu"
+      trigger="click"
+      placement="bottom-end"
+      size="small"
+      popper-class="shortcut__menu-popper"
+    >
       <span class="shortcut__menu-icon">
         <el-icon>
           <more-vert-round />

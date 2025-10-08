@@ -18,7 +18,7 @@
     // 区域阴影
     &--bg {
       padding: 20px;
-      background-color: color-mix(in oklch, var(--el-bg-color), transparent 60%);
+      background-color: var(--le-bg-color-overlay-opacity-60);
       border-radius: 10px;
       backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
 
@@ -56,7 +56,7 @@
           width: 20px;
           height: 20px;
           color: var(--el-color-primary);
-          background-color: color-mix(in oklch, var(--el-fill-color-blank), transparent 60%);
+          background-color: var(--le-bg-color-overlay-opacity-50);
           border-radius: 50%;
           box-shadow: var(--el-box-shadow-light);
           backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
@@ -83,10 +83,10 @@
           }
 
           &--opacity {
-            background: color-mix(in oklch, var(--el-bg-color), transparent 60%);
+            background: var(--le-bg-color-overlay-opacity-60);
 
             .shortcut__item:hover & {
-              background: color-mix(in oklch, var(--el-bg-color), transparent 30%);
+              background: var(--le-bg-color-overlay-opacity-30);
             }
           }
 
@@ -133,8 +133,8 @@
 
         .shortcut__container--item-shadow & {
           text-shadow:
-            1px 1px 4px color-mix(in oklch, var(--el-color-black), transparent 50%),
-            0 0 6px color-mix(in oklch, var(--el-color-black), transparent 90%);
+            1px 1px 4px rgb(0 0 0 / 50%),
+            0 0 6px rgb(0 0 0 / 10%);
         }
 
         html:not(.dark) .shortcut__container--white-text-light & {
@@ -158,7 +158,7 @@
 
       &:hover {
         color: var(--el-text-color-primary);
-        background-color: var(--el-bg-color);
+        background-color: var(--el-bg-color-overlay);
         box-shadow: var(--el-box-shadow-light);
       }
 
@@ -175,5 +175,14 @@
         color: var(--el-text-color-regular);
       }
     }
+  }
+}
+
+.shortcut__menu-popper.el-dropdown__popper.el-popper {
+  background-color: var(--le-bg-color-overlay-opacity-30);
+  backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+
+  .el-dropdown-menu {
+    background-color: initial;
   }
 }

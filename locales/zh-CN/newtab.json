@@ -170,6 +170,7 @@
     },
     "theme": {
       "chromeTip": "在 Chrome 中，该选项不受到“自定义 Chrome”侧边栏的影响，只与系统设置相关。",
+      "colorfulMode": "将主题色应用到更多元素",
       "darkMode": "深色模式",
       "lightMode": "浅色模式",
       "primaryColor": "主题色",

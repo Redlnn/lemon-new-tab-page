@@ -170,6 +170,7 @@
     },
     "theme": {
       "chromeTip": "在 Chrome 中，此選項不受「自訂 Chrome」側邊欄影響，只與系統設定有關。",
+      "colorfulMode": "將主題色應用到更多介面元素",
       "darkMode": "深色模式",
       "lightMode": "淺色模式",
       "primaryColor": "主題顏色",

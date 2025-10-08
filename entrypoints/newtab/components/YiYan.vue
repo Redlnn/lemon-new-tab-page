@@ -90,19 +90,19 @@ const isYiyanEnabled = computed(
     }
 
     &.yiyan--shadow {
-      text-shadow: 1px 1px 3px color-mix(in oklch, var(--el-color-black), transparent 60%);
+      text-shadow: 1px 1px 3px rgb(0 0 0 / 40%);
 
       &:hover {
-        text-shadow: 1px 1px 3px color-mix(in oklch, var(--el-color-black), transparent 40%);
+        text-shadow: 1px 1px 3px rgb(0 0 0 / 60%);
       }
     }
 
     &:hover {
       color: var(--el-fill-color-blank);
-      background-color: color-mix(in oklch, var(--el-bg-color), transparent 90%);
+      background-color: var(--le-bg-color-overlay-opacity-60);
 
       &.yiyan--blur {
-        backdrop-filter: blur(10px) saturate(1.2);
+        backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
       }
 
       .yiyan__extra {

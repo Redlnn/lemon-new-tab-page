@@ -28,7 +28,7 @@ body {
 }
 
 .el-notification {
-  background-color: color-mix(in oklch, var(--el-bg-color-overlay), transparent 25%);
+  background-color: var(--le-bg-color-overlay-opacity-20);
   backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
   transition: background-color var(--el-transition-duration-fast) ease;
 }

@@ -10,7 +10,7 @@ import {
 
 import { Search } from '@vicons/fa'
 
-import { useSettingsStore } from '@/shared/settings'
+import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
@@ -39,7 +39,7 @@ const { width: searchFormWidth } = useElementSize(searchForm)
 const formClasses = computed(() => {
   return {
     'search-box__form--shadow': settingsStore.search.enableShadow,
-    'search-box__form--dark': settingsStore.background.bgType === 0,
+    'search-box__form--dark': settingsStore.background.bgType === BgType.None,
     'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar,
     'search-box__form--opacity': !settingsStore.perf.disableSearchBarTransparent,
     'search-box__form--blur': !(

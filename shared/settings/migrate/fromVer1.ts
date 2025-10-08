@@ -5,6 +5,7 @@ import { searchEnginesMap } from './searchEnginesMap'
 export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONFIG_INTERFACE {
   return {
     primaryColor: oldSettings.primaryColor,
+    colorfulMode: false,
     time: {
       isMeridiem: oldSettings.isMeridiem,
       showMeridiem: oldSettings.showMeridiem,

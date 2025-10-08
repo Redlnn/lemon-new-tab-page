@@ -199,7 +199,7 @@ function isSvg(file: Blob) {
 .shortcut__item--add-bookmark {
   .shortcut__title,
   .shortcut__icon {
-    color: color-mix(in oklch, var(--el-text-color-regular), transparent 60%);
+    color: var(--le-text-color-primary-opacity-65);
   }
 
   .shortcut__icon {
@@ -211,23 +211,23 @@ function isSvg(file: Blob) {
   &:hover {
     .shortcut__title,
     .shortcut__icon {
-      color: var(--el-text-color-regular);
+      color: var(--el-text-color-primary);
     }
   }
 
   .shortcut__container--item-shadow &:not(:hover) .shortcut__title {
-    text-shadow: 1px 1px 4px color-mix(in oklch, var(--el-color-black), transparent 50%);
+    text-shadow: 1px 1px 4px rgb(0 0 0 / 50%);
   }
 
   // 白色文本容器特化
   html:not(.dark) .shortcut__container--white-text-light & {
     .shortcut__title,
     .shortcut__icon {
-      color: color-mix(in oklch, var(--el-color-white), transparent 30%);
+      color: rgb(255 255 255 / 70%);
 
       &:not(.shortcut__icon--opacity) {
         svg {
-          color: color-mix(in oklch, var(--el-text-color-regular), transparent 70%);
+          color: var(--le-text-color-primary-opacity-65);
         }
       }
     }

@@ -31,7 +31,6 @@ defineExpose({ hide })
     popper-class="search-engine-menu"
     placement="bottom-start"
     effect="customized"
-    raw-content
   >
     <template #content>
       <div
@@ -72,7 +71,8 @@ defineExpose({ hide })
   &.is-customized {
     min-width: 210px;
     padding: 5px;
-    background-color: var(--el-bg-color);
+    background-color: var(--le-bg-color-overlay-opacity-30);
+    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
 
     --el-popper-border-radius: 10px;
     transition: background-color var(--el-transition-duration-fast) ease;

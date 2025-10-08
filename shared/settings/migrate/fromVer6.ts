@@ -4,6 +4,7 @@ import type { SettingsInterfaceVer6, SettingsInterfaceVer7 } from '../types'
 export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): SettingsInterfaceVer7 {
   return {
     primaryColor: oldSettings.primaryColor,
+    colorfulMode: false,
     time: {
       isMeridiem: oldSettings.time.isMeridiem,
       showMeridiem: oldSettings.time.showMeridiem,

@@ -4,6 +4,7 @@
 @use './clock.scss';
 @use './settings.scss';
 @use './search.scss';
+@use './color.scss';
 
 * {
   box-sizing: border-box;
@@ -38,7 +39,7 @@ body {
 html.dialog-transparent {
   .el-message-box,
   .base-dialog--opacity {
-    background-color: color-mix(in oklch, var(--el-bg-color-page), transparent 20%);
+    background-color: var(--le-bg-color-overlay-opacity-20);
   }
 }
 

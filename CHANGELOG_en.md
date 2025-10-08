@@ -14,7 +14,7 @@
 
 ### New Features ✨
 
-- Added a toggle to not open the changelog page after update
+- Added option to "Apply theme color to more elements"
 - Revised and expanded preset color schemes with added color names
 - Replaced changelog pop-up with bottom toast notifications to reduce interruptions during frequent updates
 - Added red dot indicator at the bottom-right corner to show unread changelog updates

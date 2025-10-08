@@ -5,7 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { TrashAlt } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 
-import { useSettingsStore } from '@/shared/settings'
+import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
@@ -34,7 +34,7 @@ const emit = defineEmits<{
 const areaClasses = computed(() => ({
   'search-suggestion-area--shadow': settingsStore.search.enableShadow,
   'search-suggestion-area--dark':
-    settingsStore.background.bgType === 0 && searchSuggestions.value.length > 0
+    settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0
 }))
 
 const areaHeight = computed(() => {
@@ -193,7 +193,7 @@ defineExpose({
   z-index: 1000;
   overflow: hidden;
   font-size: var(--el-font-size-small);
-  background-color: color-mix(in oklch, var(--el-fill-color), transparent 50%);
+  background-color: var(--le-bg-color-overlay-opacity-50);
   border-radius: 15px;
   backdrop-filter: blur(30px) saturate(1.4) brightness(1.1);
   transition:
@@ -206,7 +206,7 @@ defineExpose({
     box-shadow: var(--el-box-shadow-light);
   }
 
-  &--dark {
+  html:not(.colorful) &--dark {
     background-color: var(--el-fill-color-blank);
     border: solid 1px var(--el-border-color-light);
   }
@@ -230,7 +230,7 @@ defineExpose({
 
     &--active {
       padding-left: 30px;
-      background-color: color-mix(in oklch, var(--el-fill-color), transparent 60%);
+      background-color: var(--le-bg-color-overlay-opacity-60);
     }
   }
 
@@ -238,7 +238,7 @@ defineExpose({
     display: flex;
     align-items: center;
     font-size: var(--el-font-size-extra-small);
-    color: color-mix(in oklch, var(--el-text-color-primary), transparent 20%);
+    color: var(--el-text-color-regular);
     background-color: transparent;
     transition:
       padding var(--el-transition-duration-fast) var(--cubic-bezier),
@@ -247,7 +247,7 @@ defineExpose({
 
     &:hover {
       padding-left: 30px;
-      background-color: color-mix(in oklch, var(--el-fill-color), transparent 60%);
+      background-color: var(--le-bg-color-overlay-opacity-60);
     }
   }
 }

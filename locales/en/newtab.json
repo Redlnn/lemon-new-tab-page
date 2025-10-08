@@ -170,6 +170,7 @@
     },
     "theme": {
       "chromeTip": "In Chrome, this option is not affected by the ‘Customize Chrome’ sidebar and only related to system settings.",
+      "colorfulMode": "Apply the theme color to more elements",
       "darkMode": "Dark mode",
       "lightMode": "Light mode",
       "primaryColor": "Primary color",
