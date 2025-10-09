@@ -1,47 +1,45 @@
 /* 集中过渡类：Vue 过渡与对话框过渡 */
 
-@layer components {
-  /* Vue 默认过渡占位类 */
-  .v-enter-active,
-  .v-leave-active {
-    transition: all var(--el-transition-duration-fast) ease-in-out;
-  }
+/* Vue 默认过渡占位类 */
+.v-enter-active,
+.v-leave-active {
+  transition: all var(--el-transition-duration-fast) ease-in-out;
+}
 
-  .v-enter-from,
-  .v-leave-to {
-    opacity: 0;
-  }
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 
-  /* 背景淡入淡出可覆盖上面的默认值 */
-  .v-fade-enter-active,
-  .v-fade-leave-active {
-    transition: opacity 0.5s ease;
-  }
+/* 背景淡入淡出可覆盖上面的默认值 */
+.v-fade-enter-active,
+.v-fade-leave-active {
+  transition: opacity 0.5s ease;
+}
 
-  .v-fade-enter-from,
-  .v-fade-leave-to {
-    opacity: 0;
-  }
+.v-fade-enter-from,
+.v-fade-leave-to {
+  opacity: 0;
+}
 
-  /* 对话框进入/离开 */
-  .dialog-enter-active,
-  .dialog-enter-active .el-dialog {
-    transition: all 0.15s ease-out;
-  }
+/* 对话框进入/离开 */
+.dialog-enter-active,
+.dialog-enter-active .el-dialog {
+  transition: all 0.15s ease-out;
+}
 
-  .dialog-leave-active,
-  .dialog-leave-active .el-dialog {
-    transition: all 0.15s ease-in;
-  }
+.dialog-leave-active,
+.dialog-leave-active .el-dialog {
+  transition: all 0.15s ease-in;
+}
 
-  .dialog-enter-from,
-  .dialog-leave-to {
-    opacity: 0;
-  }
+.dialog-enter-from,
+.dialog-leave-to {
+  opacity: 0;
+}
 
-  .dialog-enter-from .el-dialog,
-  .dialog-leave-to .el-dialog {
-    opacity: 0;
-    transform: scale(1.05);
-  }
+.dialog-enter-from .el-dialog,
+.dialog-leave-to .el-dialog {
+  opacity: 0;
+  transform: scale(1.05);
 }

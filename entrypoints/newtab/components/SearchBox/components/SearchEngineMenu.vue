@@ -4,6 +4,7 @@ import { ref } from 'vue'
 import type { TooltipInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
@@ -28,13 +29,15 @@ defineExpose({ hide })
     trigger="click"
     :disabled="!focusStore.isFocused"
     :show-arrow="false"
-    :popper-class="`search-engine-menu ${
-      !settingsStore.perf.disableSearchBarTransparent ? 'search-engine-menu--opacity' : ''
-    } ${
-      !(settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent)
-        ? 'search-engine-menu--blur'
-        : ''
-    }`"
+    :popper-class="
+      getPerfClasses(
+        {
+          transparentOff: settingsStore.perf.disableSearchBarTransparent,
+          blurOff: settingsStore.perf.disableSearchBarBlur
+        },
+        'search-engine-menu'
+      )
+    "
     placement="bottom-start"
     effect="customized"
   >
@@ -81,6 +84,7 @@ defineExpose({ hide })
 
     min-width: 210px;
     padding: 5px;
+    background-color: var(--el-bg-color-overlay);
     transition: background-color var(--el-transition-duration-fast) ease;
 
     &.search-engine-menu--opacity {

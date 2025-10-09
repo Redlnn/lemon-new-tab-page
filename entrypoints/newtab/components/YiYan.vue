@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
 import { getYiyanCache, isCacheFresh, setYiyanCache } from '@/shared/yiyan'
 import { yiyanProviders } from '@/shared/yiyan/providers'
@@ -49,12 +50,18 @@ const isYiyanEnabled = computed(
     <div v-if="isYiyanEnabled" class="yiyan">
       <div
         class="yiyan__main"
-        :class="{
-          'yiyan--shadow': settingsStore.yiyan.enableShadow,
-          'yiyan--invert yiyan--light': settingsStore.yiyan.invertColor.light,
-          'yiyan--invert yiyan--night': settingsStore.yiyan.invertColor.night,
-          'yiyan--blur': !settingsStore.perf.disableYiyanBlur
-        }"
+        :class="[
+          {
+            'yiyan--shadow': settingsStore.yiyan.enableShadow,
+            'yiyan--invert yiyan--light': settingsStore.yiyan.invertColor.light,
+            'yiyan--invert yiyan--night': settingsStore.yiyan.invertColor.night
+          },
+          getPerfClasses(
+            { transparentOff: false, blurOff: settingsStore.perf.disableYiyanBlur },
+            'yiyan',
+            { withoutPrefix: true }
+          )
+        ]"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>
         <p v-if="yiyanOrigin" class="yiyan__extra">—— {{ yiyanOrigin }}</p>
@@ -100,8 +107,13 @@ const isYiyanEnabled = computed(
     }
 
     &:hover {
-      color: var(--el-fill-color-blank);
-      background-color: var(--le-bg-color-overlay-opacity-60);
+      color: var(--el-text-color-regular);
+      background-color: var(--el-bg-color-overlay);
+
+      &.yiyan--opacity {
+        color: var(--el-fill-color-blank);
+        background-color: var(--le-bg-color-overlay-opacity-60);
+      }
 
       &.yiyan--blur {
         @include acrylic.acrylic;

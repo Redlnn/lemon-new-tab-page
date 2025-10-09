@@ -8,55 +8,46 @@
 @use './mixins/acrylic.scss' as acrylic;
 @use './transitions.scss';
 
-/* 定义层级顺序：基础样式 -> 组件 -> 工具类 */
-@layer base, components, utilities;
+* {
+  box-sizing: border-box;
+}
 
-@layer base {
-  * {
-    box-sizing: border-box;
-  }
+html {
+  background-color: var(--el-bg-color-page);
+  text-rendering: optimizeLegibility;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-  html {
-    background-color: var(--el-bg-color-page);
-    text-rendering: optimizeLegibility;
-    text-rendering: geometricPrecision;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+html,
+body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  font-family: var(--el-font-family);
+  font-size: var(--el-font-size-base);
+  color: var(--el-text-color-primary);
+}
 
-  html,
-  body {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    font-family: var(--el-font-family);
-    font-size: var(--el-font-size-base);
-    color: var(--el-text-color-primary);
+html.dialog-transparent {
+  .el-message-box,
+  .base-dialog--opacity {
+    background-color: var(--le-bg-color-overlay-opacity-20);
   }
 }
 
-@layer components {
-  html.dialog-transparent {
-    .el-message-box,
-    .base-dialog--opacity {
-      background-color: var(--le-bg-color-overlay-opacity-20);
-    }
-  }
-
-  html.dialog-acrylic {
-    .el-message-box,
-    .base-dialog--acrylic {
-      @include acrylic.acrylic;
-    }
+html.dialog-acrylic {
+  .el-message-box,
+  .base-dialog--blur {
+    @include acrylic.acrylic;
   }
 }
 
-@layer utilities {
-  .noselect {
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    -khtml-user-select: none;
-    user-select: none;
-  }
+.noselect {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
 }

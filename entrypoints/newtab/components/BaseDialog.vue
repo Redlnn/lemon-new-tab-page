@@ -5,6 +5,8 @@ import { useElementVisibility, useWindowSize } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
+
 interface Props {
   title?: string
   modelValue: boolean
@@ -59,10 +61,8 @@ const dialogId = computed(() => {
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : 600"
     :class="[
-      'base-dialog',
       containerClass,
-      { 'base-dialog--acrylic': acrylic },
-      { 'base-dialog--opacity': opacity }
+      getPerfClasses({ transparentOff: !opacity, blurOff: !acrylic }, 'base-dialog')
     ]"
     :style="style"
     :show-close="false"

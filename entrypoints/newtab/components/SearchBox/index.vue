@@ -10,6 +10,7 @@ import {
 
 import { Search } from '@vicons/fa'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchEngines } from '@newtab/scripts/api/search'
@@ -36,17 +37,20 @@ const activeElement = useActiveElement()
 
 const { width: searchFormWidth } = useElementSize(searchForm)
 
-const formClasses = computed(() => {
-  return {
+const formClasses = computed(() => [
+  {
     'search-box__form--shadow': settingsStore.search.enableShadow,
     'search-box__form--dark': settingsStore.background.bgType === BgType.None,
-    'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar,
-    'search-box__form--opacity': !settingsStore.perf.disableSearchBarTransparent,
-    'search-box__form--blur': !(
-      settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent
-    )
-  }
-})
+    'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar
+  },
+  getPerfClasses(
+    {
+      transparentOff: settingsStore.perf.disableSearchBarTransparent,
+      blurOff: settingsStore.perf.disableSearchBarBlur
+    },
+    'search-box__form'
+  )
+])
 
 const searchPlaceholder = computed(() =>
   focusStore.isFocused ? undefined : settingsStore.search.placeholder

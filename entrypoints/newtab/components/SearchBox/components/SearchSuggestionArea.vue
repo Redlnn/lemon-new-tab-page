@@ -5,6 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { TrashAlt } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
@@ -31,15 +32,20 @@ const emit = defineEmits<{
   doSearchWithText: [text: string]
 }>()
 
-const areaClasses = computed(() => ({
-  'search-suggestion-area--shadow': settingsStore.search.enableShadow,
-  'search-suggestion-area--dark':
-    settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0,
-  'search-suggestion-area--opacity': !settingsStore.perf.disableSearchBarTransparent,
-  'search-suggestion-area--blur': !(
-    settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent
+const areaClasses = computed(() => [
+  {
+    'search-suggestion-area--shadow': settingsStore.search.enableShadow,
+    'search-suggestion-area--dark':
+      settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0
+  },
+  getPerfClasses(
+    {
+      transparentOff: settingsStore.perf.disableSearchBarTransparent,
+      blurOff: settingsStore.perf.disableSearchBarBlur
+    },
+    'search-suggestion-area'
   )
-}))
+])
 
 const areaHeight = computed(() => {
   const length = searchSuggestions.value.length

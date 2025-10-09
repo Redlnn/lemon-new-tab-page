@@ -15,6 +15,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { lang } from '@/shared/lang'
 import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
@@ -294,16 +295,15 @@ function needHelp() {
     <background :url="bgURL" />
     <el-dropdown
       style="display: block"
-      :popper-class="`settings-icon__popper ${
-        !settingsStore.perf.disableSettingsBtnTransparent ? 'settings-icon__popper--opacity' : ''
-      } ${
-        !(
-          settingsStore.perf.disableSettingsBtnBlur ||
-          settingsStore.perf.disableSettingsBtnTransparent
+      :popper-class="
+        getPerfClasses(
+          {
+            transparentOff: settingsStore.perf.disableSettingsBtnTransparent,
+            blurOff: settingsStore.perf.disableSettingsBtnBlur
+          },
+          'settings-icon__popper'
         )
-          ? 'settings-icon__popper--blur'
-          : ''
-      }`"
+      "
       placement="top-end"
       trigger="click"
       @contextmenu.prevent.stop

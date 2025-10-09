@@ -8,6 +8,7 @@ import type { FormInstance, UploadProps, UploadRequestOptions } from 'element-pl
 import { useTranslation } from 'i18next-vue'
 
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { convertBase64Svg, isImageFile } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -131,13 +132,15 @@ function isSvg(file: Blob) {
       <div class="shortcut__icon-container">
         <div
           class="shortcut__icon"
-          :class="{
-            'shortcut__icon--opacity': !settingsStore.perf.disableShortcutTransparent,
-            'shortcut__icon--blur': !(
-              settingsStore.perf.disableShortcutBlur ||
-              settingsStore.perf.disableShortcutTransparent
+          :class="
+            getPerfClasses(
+              {
+                transparentOff: settingsStore.perf.disableShortcutTransparent,
+                blurOff: settingsStore.perf.disableShortcutBlur
+              },
+              'shortcut__icon'
             )
-          }"
+          "
         >
           <add-round />
         </div>
@@ -150,7 +153,7 @@ function isSvg(file: Blob) {
   <el-dialog
     v-model="showDialog"
     :title="t('newtab:shortcut.addDialog.dialogTitle')"
-    class="base-dialog--acrylic base-dialog--opacity"
+    class="base-dialog--blur base-dialog--opacity"
     :style="{
       padding: '30px 50px'
     }"

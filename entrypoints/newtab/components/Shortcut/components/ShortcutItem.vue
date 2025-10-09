@@ -2,6 +2,7 @@
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 
+import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { convertBase64Svg } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -27,11 +28,13 @@ defineProps<{
           "
           :class="[
             'shortcut__pin-icon',
-            !settingsStore.perf.disableShortcutTransparent && 'shortcut__pin-icon--opacity',
-            !(
-              settingsStore.perf.disableShortcutBlur ||
-              settingsStore.perf.disableShortcutTransparent
-            ) && 'shortcut__pin-icon--blur'
+            getPerfClasses(
+              {
+                transparentOff: settingsStore.perf.disableShortcutTransparent,
+                blurOff: settingsStore.perf.disableShortcutBlur
+              },
+              'shortcut__pin-icon'
+            )
           ]"
         >
           <el-icon size="15">
@@ -41,13 +44,15 @@ defineProps<{
         <!-- eslint-disable vue/no-v-html -->
         <div
           class="shortcut__icon"
-          :class="{
-            'shortcut__icon--opacity': !settingsStore.perf.disableShortcutTransparent,
-            'shortcut__icon--blur': !(
-              settingsStore.perf.disableShortcutBlur ||
-              settingsStore.perf.disableShortcutTransparent
+          :class="
+            getPerfClasses(
+              {
+                transparentOff: settingsStore.perf.disableShortcutTransparent,
+                blurOff: settingsStore.perf.disableShortcutBlur
+              },
+              'shortcut__icon'
             )
-          }"
+          "
         >
           <span
             v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
@@ -77,13 +82,15 @@ defineProps<{
       trigger="click"
       placement="bottom-end"
       size="small"
-      :popper-class="`shortcut__menu-popper ${
-        !settingsStore.perf.disableShortcutTransparent ? 'shortcut__menu-popper--opacity' : ''
-      } ${
-        !(settingsStore.perf.disableShortcutBlur || settingsStore.perf.disableShortcutTransparent)
-          ? 'shortcut__menu-popper--blur'
-          : ''
-      }`"
+      :popper-class="
+        getPerfClasses(
+          {
+            transparentOff: settingsStore.perf.disableShortcutTransparent,
+            blurOff: settingsStore.perf.disableShortcutBlur
+          },
+          'shortcut__menu-popper'
+        )
+      "
     >
       <span class="shortcut__menu-icon">
         <el-icon>
