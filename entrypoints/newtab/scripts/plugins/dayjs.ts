@@ -9,7 +9,7 @@ const dayjsZhLocales = import.meta.glob('/node_modules/dayjs/esm/locale/zh*.js')
   string,
   () => Promise<{ default: ILocale }>
 >
-console.log(dayjsZhLocales)
+
 dayjs.extend(localizedFormat)
 dayjs.extend(PluginLunar as PluginFunc<{ traditional?: boolean }>)
 
