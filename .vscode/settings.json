@@ -35,5 +35,14 @@
     "^@newtab",
     "^[.]"
   ],
-  "oxc.enable": true
+  "chat.tools.terminal.autoApprove": {
+    "pnpm -s type-check": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm -s lint:style": {
+      "approve": true,
+      "matchCommandLine": true
+    }
+  }
 }

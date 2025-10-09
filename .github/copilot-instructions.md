@@ -1,104 +1,71 @@
 # .github/copilot-instructions.md — AI coding agent quick guide
 
-Purpose: help an AI (or a contributor AI assistant) become productive fast in this repository. Keep changes small, reference files, and prefer conservative edits.
+Purpose: make AI contributions effective fast. Keep edits small, reference files, and follow existing patterns.
 
-## Big picture (why/how)
+## Big picture
 
-This is a browser extension that replaces the default new tab page. It's built with Vue 3 + TypeScript using the [WXT framework](https://wxt.dev/). WXT defines multiple "entrypoints" (notably `entrypoints/newtab` and `entrypoints/background`) that become extension pages and the service worker. Shared logic lives in `shared/` (settings, i18n, sync, media APIs).
+Browser extension (new tab) built with Vue 3 + TypeScript on WXT. Pages live under `entrypoints/` (`newtab` app, `background` service worker). Cross-cutting code is under `shared/` (settings, i18n, sync, storage, media).
 
-## Key files to read first
+## Start here (keys to scan)
 
-- `wxt.config.ts` — build and manifest logic, browser-specific manifest branches (chrome vs firefox)
-- `package.json` — scripts (dev/build/zip), pnpm overrides and postinstall hook
-- `entrypoints/newtab/main.ts` — app bootstrap (Pinia, i18n)
-- `shared/settings/default.ts` and `shared/settings/settingsStore.ts` — settings default values, types and persistence pattern
-- `shared/i18n.ts` and `locales/` — i18n wiring and translation files
+- `wxt.config.ts` — manifest branching (Chrome/Firefox/Edge), host_permissions, Vite plugins, path aliases (`@`, `@newtab`).
+- `package.json` — scripts: dev/build/zip, lint stack.
+- `entrypoints/newtab/main.ts` — app bootstrap, Pinia, i18n init, settings init/save, theme switch.
+- `shared/settings/{current.ts,default.ts,settingsStore.ts}` — CURRENT_CONFIG_VERSION, defaults, persistence, migrations.
+- `shared/i18n.ts` and `locales/*` — runtime-loaded i18n with special zh fallback rules; manifest strings in `public/_locales/*/messages.json`.
 
-## Developer Workflow
+## Dev workflow (pnpm)
 
-The project uses `pnpm` as the package manager.
+- Run: `pnpm dev` (or `dev:firefox`, `dev:edge`) → WXT unpacks to `.output/` with HMR.
+- Build: `pnpm build` (also `build:firefox`, `build:edge`), Zip: `pnpm zip*`.
+- Checks: `pnpm type-check`, `pnpm lint` (eslint + oxlint + stylelint), `pnpm format`.
 
-- **To start the development server:**
-  - For Chrome: `pnpm dev`
-  - For Firefox: `pnpm dev:firefox`
-  - For Edge: `pnpm dev:edge`
-    WXT will create a `.output/` directory with the unpacked extension and enable hot-reloading.
+## Patterns that matter
 
-- **To build the extension for production:**
-  - `pnpm build` (or `build:firefox`, `build:edge`)
+- Settings
+  - Single source of defaults: `shared/settings/default.ts`; type at `shared/settings/types/v7.d.ts` (or newer versions); current exported via `shared/settings/current.ts`.
+  - Store: `useSettingsStore()` from `shared/settings/settingsStore.ts` persists with `settingsStorage` (localforage). Old versions migrate on init; Chrome/Edge also read legacy `chrome.storage.local`.
+  - Background sync intentionally resets non-syncable wallpaper fields (local/online) — see `entrypoints/background/index.ts`.
+- i18n
+  - `i18next` + `vite-plugin-i18next-loader`. Resources loaded dynamically: `@/locales/${lng}/${ns}.json`.
+  - Fallback: zh-MO→zh-HK, generic zh→zh-CN; Windows zh-TW may switch to zh-HK based on timezone.
+- Build/Vite
+  - Vue SFC via `@vitejs/plugin-vue`; Markdown SFC via `unplugin-vue-markdown` (see `scripts/mdit-remove-h1.ts`).
+  - Auto imports/components generate d.ts in `types/*`; after changing resolvers, re-run dev or `pnpm install` to regenerate.
+  - Global Element Plus SCSS injected via Vite `css.preprocessorOptions.scss.additionalData`.
+- Aliases: use `@` for repo root and `@newtab` for `entrypoints/newtab`.
 
-- **To create a distributable .zip file:**
-  - `pnpm zip` (or `zip:firefox`, `zip:edge`)
+## Integration points
 
-- **Linting and Formatting:**
-  - Run `pnpm lint` to check for code quality issues.
-  - Run `pnpm format` to format the code with Prettier.
-  - Run `pnpm type-check` to check for TypeScript type errors.
+- Network permissions in `wxt.config.ts`: bing/api.bing, baidu, google suggest, jinrishici; dev adds `http://localhost/`.
+- APIs live under `entrypoints/newtab/scripts/api/*`; network helpers in `shared/network/*`.
+- Storage: `localforage` in `shared/settings/settingsStorage.ts`; wallpaper blobs indexed by `shared/settings/wallpaperStore.ts`.
+- WebExtension API via `@wxt-dev/webextension-polyfill` (`browser.*`). In background, use `defineBackground` and alarms for periodic work.
 
-- Note: `postinstall` runs `wxt prepare` which generates platform artifacts
+## Copyable snippets (correct to this repo)
 
-## Project-specific conventions and patterns
-
-### Settings system
-
-- Defaults: `shared/settings/default.ts` is the single source of default values.
-- Types: versioned under `shared/settings/types/v7.d.ts` (increment types when structure changes).
-- Persistence: `shared/settings/settingsStore.ts` uses `settingsStorage.ts` (localforage) and migration scripts in `shared/settings/migrate/`.
-- To add a new setting: (1) add default in `default.ts`; (2) update the Settings type; (3) use it via `useSettingsStore()`; (4) if incompatible with prior versions add a migration in `shared/settings/migrate/` and register it.
-
-### State management
-
-Pinia for all reactive state. UI ephemeral stores live under `entrypoints/newtab/scripts/store/`.
-
-### i18n
-
-translations live in `locales/*` and manifest locale strings are in `public/_locales/*/messages.json`. `vite-plugin-i18next-loader` and `shared/i18n.ts` handle wiring.
-
-### Build plugins & generated types
-
-`unplugin-auto-import` and `unplugin-vue-components` generate d.ts files in `types/` (e.g., `types/auto-imports.d.ts`). If you change auto-import or components, regenerate types by running `pnpm install` or restarting dev.
-
-### Manifest branching
-
-`wxt.config.ts` returns different manifest objects for firefox vs chrome — check `baseManifest.host_permissions` and browser-specific `permissions`.
-
-### CSS/ElementPlus
-
-global Element Plus SCSS is injected by Vite (`additionalData` pointing to `@/assets/styles/element/index.scss`).
-
-## Integration points & external dependencies to watch
-
-- External hosts (see `wxt.config.ts` host_permissions): bing, api.bing.com, suggestion.baidu.com, suggestqueries.google.com, v2.jinrishici.com. These map to API code under `entrypoints/newtab/scripts/api/` and `shared/network`.
-- Persistence: `localforage` used for settings & sync storage (`shared/settings/settingsStorage.ts`, `shared/sync/`).
-- WebExtension polyfill: `@wxt-dev/webextension-polyfill` and `@types/webextension-polyfill` are used — prefer that API surface in background scripts.
-
-## Concrete examples (copyable patterns)
-
-- Access a persisted setting:
-
+- Read/modify settings
   ```ts
-  import { useSettingsStore } from '@/shared/settings/settingsStore'
-  const settings = useSettingsStore()
+  import { useSettingsStore, saveSettings } from '@/shared/settings'
+  const settingsStore = useSettingsStore()
   // Read a value
   console.log(settingsStore.search.searchEngines);
   // Modify a value
   settingsStore.search.searchEngines = [...];
   ```
+- Add a setting
+  1. Add default in `shared/settings/default.ts`
+  2. Update `shared/settings/types/v7.d.ts` (or bump version + migrate under `shared/settings/migrate/*`)
+  3. Access via `useSettingsStore()`; if breaking change, write a migration and export it
+- Update host permissions
+  - Edit `baseManifest.host_permissions` in `wxt.config.ts` and run dev/build
 
-- Add a new setting named `foo`:
-  - add default in `shared/settings/default.ts`, e.g. `foo: { enabled: true }`
-  - update the `Settings` type under `shared/settings/types/**.d.ts` (use the latest version)
-  - if the new shape is incompatible with previous versions, add a migration in `shared/settings/migrate/` and export it from `index.ts` there.
-- Update manifest permissions for a host:
-  - edit `wxt.config.ts` baseManifest.host_permissions and run `pnpm build` or `pnpm dev`
+## Debug notes
 
-## Debug notes & gotchas
+- If HMR stalls, reload the unpacked extension from `.output/` in the browser.
+- Background sync queue uses alarms and local timers; messages use `type: 'SYNC_*'` — see `shared/sync/*` for types and storage.
 
-- `.output/` contains the unpacked extension during dev — if Chrome/Firefox doesn't load hot changes, inspect `.output/` and reload the extension in the browser.
-- Vite is overridden via pnpm to use `rolldown-vite`.
+## Safety for AI edits
 
-## Safety & editing style for AI edits
-
-- Prefer small, reversible changes (one feature or fix per PR).
-- Avoid changing manifest host permissions or optional permissions without explicit test steps and a short justification in PR description.
-- When touching settings, update default values, types, and migrations together to avoid runtime errors for existing users.
+- Keep changes small; avoid manifest permission changes without test steps and rationale.
+- When touching settings, update defaults + types (+ migration if needed) in the same PR to prevent runtime errors.
