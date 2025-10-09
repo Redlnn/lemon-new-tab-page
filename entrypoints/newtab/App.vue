@@ -11,12 +11,13 @@ import {
   SettingsRound
 } from '@vicons/material'
 import type { Language } from 'element-plus/es/locale'
+import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
 import { getPerfClasses } from '@/shared/composables/perfClasses'
-import { lang } from '@/shared/lang'
+import { getLang } from '@/shared/lang'
 import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
@@ -41,7 +42,7 @@ const elementZhLocales = import.meta.glob<{ default: Language }>(
 
 // 由于考虑面向用户群体，只包含中文、英文
 async function loadElementLocale(): Promise<Language> {
-  const formattedLocale = lang.toLowerCase()
+  const formattedLocale = getLang().toLowerCase()
   const loader =
     elementZhLocales[`/node_modules/element-plus/es/locale/lang/${formattedLocale}.mjs`]
 
@@ -55,10 +56,20 @@ async function loadElementLocale(): Promise<Language> {
 const elLocale = ref<Language>()
 
 onBeforeMount(async () => {
-  if (lang.startsWith('zh')) {
+  if (getLang().startsWith('zh')) {
     elLocale.value = await loadElementLocale()
   }
 })
+
+// 在语言切换时同步 Element Plus 语言包（仅中文按需加载，英文使用默认）
+const onLngChanged = async (lng: string) => {
+  if (lng?.startsWith('zh')) {
+    elLocale.value = await loadElementLocale()
+  } else {
+    elLocale.value = undefined
+  }
+}
+i18next.on('languageChanged', onLngChanged)
 
 const isDark = useDark()
 const settingsStore = useSettingsStore()

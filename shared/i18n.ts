@@ -13,6 +13,11 @@ function isHKorMO() {
   return false
 }
 
+function changeDocument() {
+  document.documentElement.lang = i18next.language
+  document.title = i18next.t('newtab:title')
+}
+
 const languageDetector = new LanguageDetector(null, { order: ['navigator'] })
 
 export const i18nInitPromise = i18next
@@ -40,8 +45,9 @@ export const i18nInitPromise = i18next
     }
   })
   .then(() => {
-    document.documentElement.lang = i18next.language
-    document.title = i18next.t('newtab:title')
+    changeDocument()
+    // 同步 UI：当语言变化时，更新 <html lang> 与标题
+    i18next.on('languageChanged', changeDocument)
   })
 
 export const i18n = <T extends App>(app: T) => {
