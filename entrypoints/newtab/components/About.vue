@@ -92,7 +92,6 @@ const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.p
       background-image: url('/icon.png');
       background-repeat: no-repeat;
       background-position: center;
-      background-size: cover;
       background-size: 80%;
       border: var(--el-border);
       border-radius: 15px;
