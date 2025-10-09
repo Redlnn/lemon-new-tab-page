@@ -48,7 +48,8 @@ async function confirmClearExtensionData() {
 async function clearExtensionData() {
   console.warn(t('newtab:settings.other.confirmPurgeData.purging'))
   // Clear browser storage
-  await Promise.all([localStorage.clear(), sessionStorage.clear()]).catch(console.error)
+  localStorage.clear()
+  sessionStorage.clear()
 
   // Clear all extension storage in parallel
   await Promise.all([
