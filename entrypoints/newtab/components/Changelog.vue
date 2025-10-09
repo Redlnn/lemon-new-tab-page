@@ -17,7 +17,7 @@ const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
 const ChangelogZh = defineAsyncComponent(() => import('@/CHANGELOG.md'))
-const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOg_En.md'))
+const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOG_en.md'))
 
 onMounted(async () => {
   await import('@newtab/styles/github-markdown.css')
