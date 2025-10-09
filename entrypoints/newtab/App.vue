@@ -357,6 +357,8 @@ function needHelp() {
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .app {
   display: flex;
   flex-direction: column;
@@ -381,7 +383,7 @@ function needHelp() {
     background-color var(--el-transition-duration-fast) ease;
 
   &--blur {
-    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+    @include acrylic.acrylic(10px, 1.4, 1.1);
   }
 
   &--tran {
@@ -397,6 +399,10 @@ function needHelp() {
     transition: transform 0.15s ease;
   }
 
+  .el-badge {
+    display: block;
+  }
+
   &:hover {
     color: var(--el-color-primary);
     box-shadow: var(--el-box-shadow-lighter);
@@ -409,7 +415,8 @@ function needHelp() {
   &__popper {
     &.el-popper {
       background-color: var(--le-bg-color-overlay-opacity-30);
-      backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+
+      @include acrylic.acrylic(10px, 1.4, 1.1);
     }
 
     .el-dropdown-menu {
@@ -427,26 +434,5 @@ function needHelp() {
       }
     }
   }
-}
-
-.dialog-enter-active,
-.dialog-enter-active .el-dialog {
-  transition: all 0.15s ease-out;
-}
-
-.dialog-leave-active,
-.dialog-leave-active .el-dialog {
-  transition: all 0.15s ease-in;
-}
-
-.dialog-enter-from,
-.dialog-leave-to {
-  opacity: 0;
-}
-
-.dialog-enter-from .el-dialog,
-.dialog-leave-to .el-dialog {
-  opacity: 0;
-  transform: scale(1.05);
 }
 </style>
