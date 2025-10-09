@@ -29,12 +29,12 @@ const baseManifest = {
 }
 
 if (import.meta.env.DEV) {
-  baseManifest.host_permissions.push('http://localhost:3000/')
+  baseManifest.host_permissions.push('http://localhost/')
 }
 
 const firefoxManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage'],
+  permissions: ['topSites', 'storage', 'alarms'],
   chrome_settings_overrides: {
     homepage: 'newtab.html'
   }
@@ -42,7 +42,7 @@ const firefoxManifest = {
 
 const chromeManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'favicon'],
+  permissions: ['topSites', 'storage', 'favicon', 'alarms'],
   optional_host_permissions: ['*://*/*']
 }
 

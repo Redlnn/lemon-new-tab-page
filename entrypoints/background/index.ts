@@ -2,7 +2,7 @@ import { browser } from 'wxt/browser'
 
 import { defineBackground } from '#imports'
 
-import { BgType } from '@/shared/settings'
+import { BgType, defaultSettings } from '@/shared/settings'
 import { localSyncDataStorage, syncDataStorage } from '@/shared/sync'
 import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
 
@@ -11,6 +11,14 @@ let isRunning = false
 const syncQueue: SyncData[] = []
 let lastSyncTime = 0
 const SYNC_INTERVAL = 2000 // 2 seconds
+const ALARM_NAME = 'sync-queue-tick'
+let localTimer: ReturnType<typeof setTimeout> | null = null
+
+function debugLog(...args: unknown[]) {
+  if (import.meta.env.DEV) {
+    console.log('[sync]', ...args)
+  }
+}
 
 // 检查是否可以执行同步
 function canSync(): boolean {
@@ -23,23 +31,38 @@ async function processSyncQueue() {
     return
   }
 
-  const syncItem = syncQueue.shift()
-  if (syncItem === undefined) {
+  const firstItem = syncQueue.shift()
+  if (firstItem === undefined) {
     return
   }
+  const queueLenAtStart = 1 + syncQueue.length
+  const t0 = performance?.now?.() ?? Date.now()
+
+  // 在开始处理前记录时间，确保以“开始时间”为节流基准，避免下个周期被跳过
+  lastSyncTime = Date.now()
+
+  // 批量聚合：选取 lastUpdate 最大的项进行写入，丢弃旧项以减少 IO 次数
+  let syncItem: SyncData = firstItem
+  let aggregatedCount = 1
+  for (let i = 0, len = syncQueue.length; i < len; i++) {
+    const next = syncQueue[i]!
+    aggregatedCount += 1
+    if (next.lastUpdate >= syncItem.lastUpdate) {
+      syncItem = next
+    }
+  }
+  // 清空队列中已被聚合的旧项（因为 syncItem 是全量快照，旧项没有继续保留的必要）
+  syncQueue.splice(0, syncQueue.length)
   // 由于本地壁纸不同步且在线壁纸要重新由用户触发权限申请，所以重置回默认设置
   if ([BgType.Local, BgType.Online].includes(syncItem.settings.background.bgType)) {
     syncItem.settings.background.bgType = BgType.Bing
   }
   // 重置壁纸缓存数据
-  syncItem.settings.localBackground = { id: '', url: '', mediaType: undefined }
-  syncItem.settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
-  syncItem.settings.bingBackground = { id: '', url: '', updateDate: '' }
+  syncItem.settings.localBackground = defaultSettings.localBackground
+  syncItem.settings.localDarkBackground = defaultSettings.localDarkBackground
+  syncItem.settings.bingBackground = defaultSettings.bingBackground
   // 由于无法同步在线壁纸，所以重置在线壁纸url
-  syncItem.settings.background.onlineUrl = ''
-
-  // 标记本次同步完成的时间，用于节流控制
-  lastSyncTime = Date.now()
+  syncItem.settings.background.onlineUrl = defaultSettings.background.onlineUrl
 
   await syncDataStorage.setValue({
     settings: syncItem.settings,
@@ -49,6 +72,38 @@ async function processSyncQueue() {
   await localSyncDataStorage.setValue({
     lastUpdate: syncItem.lastUpdate
   })
+
+  const t1 = performance?.now?.() ?? Date.now()
+  debugLog('processed', {
+    queueLenAtStart,
+    aggregatedCount,
+    remaining: syncQueue.length,
+    durationMs: Math.round(t1 - t0)
+  })
+
+  // 若仍有队列项，精确安排下一次处理
+  if (syncQueue.length > 0) {
+    scheduleLocalTick(SYNC_INTERVAL)
+  }
+}
+
+function scheduleLocalTick(delay = SYNC_INTERVAL) {
+  // 避免重复定时
+  if (localTimer != null) {
+    return
+  }
+  localTimer = setTimeout(async () => {
+    localTimer = null
+    if (!isInited || isRunning) {
+      return
+    }
+    isRunning = true
+    try {
+      await processSyncQueue()
+    } finally {
+      isRunning = false
+    }
+  }, delay)
 }
 
 // --------------------------------------
@@ -86,6 +141,13 @@ export default defineBackground(() => {
 
     if (isSyncRequestMessage(message)) {
       syncQueue.push(message.data)
+      debugLog('enqueue', { length: syncQueue.length, lastUpdate: message.data.lastUpdate })
+      // 尽快处理一次，降低延迟
+      if (!isRunning) {
+        const elapsed = Date.now() - lastSyncTime
+        const remaining = elapsed >= SYNC_INTERVAL ? 0 : SYNC_INTERVAL - elapsed
+        scheduleLocalTick(remaining)
+      }
     }
   })
 
@@ -107,8 +169,12 @@ export default defineBackground(() => {
     }
   })
 
-  // 定期检查同步队列
-  setInterval(async () => {
+  // 使用浏览器 Alarms API 定期唤醒，避免 SW 挂起后 setInterval 丢失
+  browser.alarms.onAlarm.addListener(async (alarm) => {
+    if (alarm.name !== ALARM_NAME) {
+      return
+    }
+    debugLog('alarm')
     if (!isInited || isRunning) {
       return
     }
@@ -119,5 +185,16 @@ export default defineBackground(() => {
     } finally {
       isRunning = false
     }
-  }, SYNC_INTERVAL)
+  })
+
+  // 创建周期性 alarm（注意：periodInMinutes 最小粒度通常为 1 分钟）
+  try {
+    browser.alarms.create(ALARM_NAME, {
+      periodInMinutes: Math.max(SYNC_INTERVAL / 60000, 1)
+    })
+  } catch (err) {
+    debugLog('alarms.create failed, fallback to local tick only', err)
+    // 兜底：如果浏览器不支持 alarms，则维持本地 tick
+    scheduleLocalTick(SYNC_INTERVAL)
+  }
 })
