@@ -10,7 +10,7 @@ import { yiyanProviders } from '@/shared/yiyan/providers'
 import { useFocusStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const { height } = useWindowSize()
 
 const yiyan = ref<string>()
@@ -19,17 +19,17 @@ const yiyanOrigin = ref<string>()
 onMounted(async () => {
   try {
     const cache = await getYiyanCache()
-    if (isCacheFresh(cache) && cache?.provider === settingsStore.yiyan.provider) {
+    if (isCacheFresh(cache) && cache?.provider === settings.yiyan.provider) {
       // use cached response (keeps original raw in cache.raw)
       const res = cache.res
       yiyan.value = res?.yiyan
       yiyanOrigin.value = res?.yiyanOrigin
     } else {
-      const res = await yiyanProviders[settingsStore.yiyan.provider].load()
+      const res = await yiyanProviders[settings.yiyan.provider].load()
       yiyan.value = res.yiyan
       yiyanOrigin.value = res.yiyanOrigin
       // store provider name and original response
-      await setYiyanCache(settingsStore.yiyan.provider, res)
+      await setYiyanCache(settings.yiyan.provider, res)
     }
   } catch (err) {
     console.error('YiYan load error', err)
@@ -39,9 +39,9 @@ onMounted(async () => {
 const isYiyanEnabled = computed(
   () =>
     yiyan.value &&
-    settingsStore.yiyan.enabled &&
+    settings.yiyan.enabled &&
     height.value >= 800 &&
-    (focusStore.isFocused || settingsStore.yiyan.alwaysShow)
+    (focusStore.isFocused || settings.yiyan.alwaysShow)
 )
 </script>
 
@@ -52,12 +52,12 @@ const isYiyanEnabled = computed(
         class="yiyan__main"
         :class="[
           {
-            'yiyan--shadow': settingsStore.yiyan.enableShadow,
-            'yiyan--invert yiyan--light': settingsStore.yiyan.invertColor.light,
-            'yiyan--invert yiyan--night': settingsStore.yiyan.invertColor.night
+            'yiyan--shadow': settings.yiyan.enableShadow,
+            'yiyan--invert yiyan--light': settings.yiyan.invertColor.light,
+            'yiyan--invert yiyan--night': settings.yiyan.invertColor.night
           },
           getPerfClasses(
-            { transparentOff: false, blurOff: settingsStore.perf.disableYiyanBlur },
+            { transparentOff: false, blurOff: settings.perf.disableYiyanBlur },
             'yiyan',
             { withoutPrefix: true }
           )

@@ -72,22 +72,21 @@ export async function initSettings() {
     console.log('Initializing settings storage with config version', settings.version)
   }
 
-  const settingsStore = useSettingsStore()
-  settingsStore.$patch(settings)
+  useSettingsStore().$patch(settings)
 }
 
 export async function saveSettings(settings: CURRENT_CONFIG_INTERFACE) {
   await settingsStorage.setValue(settings)
 }
 
-export const useSettingsStore = defineStore('opiton', {
+export const useSettingsStore = defineStore('option', {
   state: () => {
     return structuredClone(defaultSettings)
   }
 })
 
 export async function uploadBackground(imageFile: File, isDarkMode = false) {
-  const settingsStore = useSettingsStore()
+  const settings = useSettingsStore()
 
   const id = uuidv4()
   const url = URL.createObjectURL(imageFile)
@@ -95,7 +94,7 @@ export async function uploadBackground(imageFile: File, isDarkMode = false) {
   // 根据模式选择对应的 store & state
   const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
   const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
-  const prevUrl = settingsStore[backgroundKey]?.url || ''
+  const prevUrl = settings[backgroundKey]?.url || ''
 
   // 清除当前模式上次壁纸（IndexedDB）以节省空间。如果之前的 URL 是 blob:，撤销它
   await store.clear()
@@ -108,16 +107,16 @@ export async function uploadBackground(imageFile: File, isDarkMode = false) {
   // 保存媒体文件到 IndexedDB 并更新状态，记录 mediaType
   const mediaType: 'image' | 'video' = isVideoFile(imageFile) ? 'video' : 'image'
   await store.setItem<Blob>(id, imageFile)
-  settingsStore[backgroundKey] = { id, url, mediaType }
+  settings[backgroundKey] = { id, url, mediaType }
 }
 
 export async function reloadBackgroundImage(isDarkMode = false) {
-  const settingsStore = useSettingsStore()
+  const settings = useSettingsStore()
 
   // 根据模式选择对应的 store & state
   const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
   const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
-  const background = settingsStore[backgroundKey]
+  const background = settings[backgroundKey]
 
   if (!background?.id) {
     return

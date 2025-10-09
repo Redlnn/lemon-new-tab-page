@@ -47,11 +47,11 @@ Browser extension (new tab) built with Vue 3 + TypeScript on WXT. Pages live und
 - Read/modify settings
   ```ts
   import { useSettingsStore, saveSettings } from '@/shared/settings'
-  const settingsStore = useSettingsStore()
+  const settings = useSettingsStore()
   // Read a value
-  console.log(settingsStore.search.searchEngines);
+  console.log(settings.search.searchEngines);
   // Modify a value
-  settingsStore.search.searchEngines = [...];
+  settings.search.searchEngines = [...];
   ```
 - Add a setting
   1. Add default in `shared/settings/default.ts`

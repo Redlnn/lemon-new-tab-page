@@ -21,8 +21,8 @@ const year = useDateFormat(useNow(), 'YYYY')
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
-const settingsStore = useSettingsStore()
-const currentYiyanProvider = computed(() => yiyanProviders[settingsStore.yiyan.provider])
+const settings = useSettingsStore()
+const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provider])
 </script>
 
 <template>

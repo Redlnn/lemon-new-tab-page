@@ -10,7 +10,7 @@ import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorag
 const { t } = useTranslation()
 
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
 async function restoreDefaultTopSites() {
   await blockedTopStitesStorage.setValue([])
@@ -29,38 +29,38 @@ async function restoreDefaultTopSites() {
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.shortcut.enable') }}</div>
-      <el-switch v-model="settingsStore.shortcut.enabled" />
+      <el-switch v-model="settings.shortcut.enabled" />
     </div>
-    <div v-show="settingsStore.shortcut.enabled" style="margin-top: 8px">
+    <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.showTopSites') }}</div>
-        <el-switch v-model="settingsStore.shortcut.enableTopSites" />
+        <el-switch v-model="settings.shortcut.enableTopSites" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.enableBg') }}</div>
-        <el-switch v-model="settingsStore.shortcut.showShortcutContainerBg" />
+        <el-switch v-model="settings.shortcut.showShortcutContainerBg" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.enableAreaShadow') }}</div>
         <el-switch
-          v-model="settingsStore.shortcut.enableAreaShadow"
-          :disabled="!settingsStore.shortcut.showShortcutContainerBg"
+          v-model="settings.shortcut.enableAreaShadow"
+          :disabled="!settings.shortcut.showShortcutContainerBg"
         />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.enableShadow') }}</div>
-        <el-switch v-model="settingsStore.shortcut.enableShadow" />
+        <el-switch v-model="settings.shortcut.enableShadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.showPinnedIcon') }}</div>
         <el-switch
-          :disabled="!settingsStore.shortcut.enableTopSites"
-          v-model="settingsStore.shortcut.showPinnedIcon"
+          :disabled="!settings.shortcut.enableTopSites"
+          v-model="settings.shortcut.showPinnedIcon"
         />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('newtab:settings.shortcut.showTitle') }}</div>
-        <el-switch v-model="settingsStore.shortcut.showShortcutTitle" />
+        <el-switch v-model="settings.shortcut.showShortcutTitle" />
       </div>
       <p class="settings__item--note">
         {{ t('newtab:settings.shortcut.whiteTextTip') }}
@@ -68,7 +68,7 @@ async function restoreDefaultTopSites() {
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ t('newtab:settings.shortcut.maxRows') }}</div>
         <el-slider
-          v-model="settingsStore.shortcut.rows"
+          v-model="settings.shortcut.rows"
           :step="1"
           :min="1"
           :max="5"
@@ -81,7 +81,7 @@ async function restoreDefaultTopSites() {
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ t('newtab:settings.shortcut.maxColumns') }}</div>
         <el-slider
-          v-model="settingsStore.shortcut.columns"
+          v-model="settings.shortcut.columns"
           :step="1"
           :min="1"
           :max="10"
@@ -105,7 +105,7 @@ async function restoreDefaultTopSites() {
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ t('newtab:settings.shortcut.iconSize') }}</div>
         <el-slider
-          v-model="settingsStore.shortcut.iconSize"
+          v-model="settings.shortcut.iconSize"
           :min="10"
           :max="200"
           show-input
@@ -118,7 +118,7 @@ async function restoreDefaultTopSites() {
           {{ t('newtab:settings.shortcut.HorizontalIconSpacing') }}
         </div>
         <el-slider
-          v-model="settingsStore.shortcut.itemMarginH"
+          v-model="settings.shortcut.itemMarginH"
           :min="0"
           :max="50"
           show-input
@@ -131,7 +131,7 @@ async function restoreDefaultTopSites() {
           {{ t('newtab:settings.shortcut.VerticalIconSpacing') }}
         </div>
         <el-slider
-          v-model="settingsStore.shortcut.itemMarginV"
+          v-model="settings.shortcut.itemMarginV"
           :min="5"
           :max="30"
           show-input
@@ -144,7 +144,7 @@ async function restoreDefaultTopSites() {
           {{ t('newtab:settings.shortcut.marginTop') }}
         </div>
         <el-slider
-          v-model="settingsStore.shortcut.marginTop"
+          v-model="settings.shortcut.marginTop"
           :min="10"
           :max="150"
           show-input

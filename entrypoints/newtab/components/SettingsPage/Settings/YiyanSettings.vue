@@ -10,9 +10,9 @@ import { yiyanProviders } from '@/shared/yiyan'
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
-const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.provider]?.note)
+const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provider]?.note)
 </script>
 
 <template>
@@ -23,21 +23,21 @@ const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.pr
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.enabled') }}</div>
-      <el-switch v-model="settingsStore.yiyan.enabled" />
+      <el-switch v-model="settings.yiyan.enabled" />
     </div>
     <p v-if="!isChinese" class="settings__item--note">
       {{ t('newtab:settings.yiyan.description') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.alwaysShow') }}</div>
-      <el-switch v-model="settingsStore.yiyan.alwaysShow" />
+      <el-switch v-model="settings.yiyan.alwaysShow" />
     </div>
     <p class="settings__item--note">
       {{ t('newtab:settings.yiyan.normalyShowTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.title') }}</div>
-      <el-select v-model="settingsStore.yiyan.provider" style="width: 180px" fit-input-width>
+      <el-select v-model="settings.yiyan.provider" style="width: 180px" fit-input-width>
         <el-option
           v-for="(provider, key) in yiyanProviders"
           :key="key"
@@ -48,7 +48,7 @@ const currentProviderNote = computed(() => yiyanProviders[settingsStore.yiyan.pr
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.enableShadow') }}</div>
-      <el-switch v-model="settingsStore.yiyan.enableShadow" />
+      <el-switch v-model="settings.yiyan.enableShadow" />
     </div>
     <p v-if="currentProviderNote" class="settings__item--note">
       {{ currentProviderNote }}

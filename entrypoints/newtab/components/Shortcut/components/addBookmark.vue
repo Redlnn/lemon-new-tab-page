@@ -14,7 +14,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 const modelForm = ref<FormInstance>()
 
@@ -135,8 +135,8 @@ function isSvg(file: Blob) {
           :class="
             getPerfClasses(
               {
-                transparentOff: settingsStore.perf.disableShortcutTransparent,
-                blurOff: settingsStore.perf.disableShortcutBlur
+                transparentOff: settings.perf.disableShortcutTransparent,
+                blurOff: settings.perf.disableShortcutBlur
               },
               'shortcut__icon'
             )
@@ -145,7 +145,7 @@ function isSvg(file: Blob) {
           <add-round />
         </div>
       </div>
-      <div v-if="settingsStore.shortcut.showShortcutTitle" class="shortcut__title">
+      <div v-if="settings.shortcut.showShortcutTitle" class="shortcut__title">
         {{ t('newtab:shortcut.addNewShortcut') }}
       </div>
     </div>

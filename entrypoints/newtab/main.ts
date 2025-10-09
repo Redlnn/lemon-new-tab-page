@@ -66,19 +66,19 @@ export const main = async () => {
 
   // 先初始化设置，再挂载vue，再初始化云同步
   await initSettings()
-  const settingsStore = useSettingsStore()
+  const settings = useSettingsStore()
   const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
 
-  if (settingsStore.primaryColor.toLowerCase() === '#ffbb00') {
+  if (settings.primaryColor.toLowerCase() === '#ffbb00') {
     // 强制替换旧版本对比度过低的主题色
-    settingsStore.primaryColor = defaultSettings.primaryColor
-    await saveSettings(toRaw(settingsStore))
+    settings.primaryColor = defaultSettings.primaryColor
+    await saveSettings(toRaw(settings))
   }
 
-  changeTheme(settingsStore.primaryColor)
-  color = settingsStore.primaryColor
+  changeTheme(settings.primaryColor)
+  color = settings.primaryColor
 
-  settingsStore.$subscribe(async (_mutation, state) => {
+  settings.$subscribe(async (_mutation, state) => {
     await saveSettingsDebounced(toRaw(state))
     if (state.primaryColor !== color) {
       if (state.primaryColor === null) {
@@ -91,7 +91,7 @@ export const main = async () => {
 
   app.mount('body')
 
-  if (settingsStore.sync.enabled) {
-    initSyncSettings(settingsStore)
+  if (settings.sync.enabled) {
+    initSyncSettings(settings)
   }
 }

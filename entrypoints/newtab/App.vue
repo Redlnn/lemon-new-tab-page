@@ -72,7 +72,7 @@ const onLngChanged = async (lng: string) => {
 i18next.on('languageChanged', onLngChanged)
 
 const isDark = useDark()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
@@ -92,13 +92,12 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Local]: {
     getURL: async () =>
       isDark.value
-        ? settingsStore.localDarkBackground.id
-          ? settingsStore.localDarkBackground.url
-          : settingsStore.localBackground.url
-        : settingsStore.localBackground.url,
+        ? settings.localDarkBackground.id
+          ? settings.localDarkBackground.url
+          : settings.localBackground.url
+        : settings.localBackground.url,
     verify: async () => {
-      const settingsStore = useSettingsStore()
-      const { localBackground, localDarkBackground } = settingsStore
+      const { localBackground, localDarkBackground } = useSettingsStore()
 
       // 如果没 url，则尝试加载
       if (!localBackground.url) {
@@ -128,7 +127,7 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
     }
   },
   [BgType.Online]: {
-    getURL: () => Promise.resolve(settingsStore.background.onlineUrl)
+    getURL: () => Promise.resolve(settings.background.onlineUrl)
   },
   [BgType.None]: {
     getURL: () => Promise.resolve('')
@@ -156,22 +155,22 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 }
 
 onMounted(async () => {
-  if (settingsStore.pluginVersion !== version) {
+  if (settings.pluginVersion !== version) {
     // ChangelogRef.value?.show()
-    settingsStore.readChangeLog = false
+    settings.readChangeLog = false
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
-    settingsStore.pluginVersion = version
+    settings.pluginVersion = version
   }
 
-  if (!settingsStore.perf.disableDialogTransparent) {
+  if (!settings.perf.disableDialogTransparent) {
     document.documentElement.classList.add('dialog-transparent')
   }
 
-  if (!settingsStore.perf.disableDialogTransparent && !settingsStore.perf.disableDialogBlur) {
+  if (!settings.perf.disableDialogTransparent && !settings.perf.disableDialogBlur) {
     document.documentElement.classList.add('dialog-acrylic')
   }
 
-  if (settingsStore.colorfulMode) {
+  if (settings.colorfulMode) {
     document.documentElement.classList.add('colorful')
   }
 
@@ -194,11 +193,11 @@ onMounted(async () => {
     }
   })
 
-  await updateBackgroundURL(settingsStore.background.bgType)
+  await updateBackgroundURL(settings.background.bgType)
 })
 
 watch(
-  () => settingsStore.colorfulMode,
+  () => settings.colorfulMode,
   (colorful) => {
     if (colorful) {
       document.documentElement.classList.add('colorful')
@@ -209,9 +208,9 @@ watch(
 )
 
 watch(
-  () => settingsStore.perf.disableDialogTransparent,
+  () => settings.perf.disableDialogTransparent,
   () => {
-    if (settingsStore.perf.disableDialogTransparent) {
+    if (settings.perf.disableDialogTransparent) {
       document.documentElement.classList.remove('dialog-transparent')
     } else {
       document.documentElement.classList.add('dialog-transparent')
@@ -220,9 +219,9 @@ watch(
 )
 
 watch(
-  () => settingsStore.perf.disableDialogBlur,
+  () => settings.perf.disableDialogBlur,
   () => {
-    if (settingsStore.perf.disableDialogBlur) {
+    if (settings.perf.disableDialogBlur) {
       document.documentElement.classList.remove('dialog-acrylic')
     } else {
       document.documentElement.classList.add('dialog-acrylic')
@@ -231,43 +230,42 @@ watch(
 )
 
 // Watch for background type changes
-watch(() => settingsStore.background.bgType, updateBackgroundURL)
+watch(() => settings.background.bgType, updateBackgroundURL)
 
 // Watch for local background URL changes
 watch(
-  () => settingsStore.localBackground.url,
+  () => settings.localBackground.url,
   async () => {
-    if (settingsStore.background.bgType !== BgType.Local) return
+    if (settings.background.bgType !== BgType.Local) return
     switchStore.start()
     await promiseTimeout(500)
-    bgURL.value = settingsStore.localBackground.url
+    bgURL.value = settings.localBackground.url
     switchStore.end()
   }
 )
 
 // Watch for online background URL changes
 watch(
-  () => settingsStore.background.onlineUrl,
+  () => settings.background.onlineUrl,
   async () => {
-    if (settingsStore.background.bgType !== BgType.Online) return
+    if (settings.background.bgType !== BgType.Online) return
     switchStore.start()
     await promiseTimeout(500)
-    bgURL.value = settingsStore.background.onlineUrl
+    bgURL.value = settings.background.onlineUrl
     switchStore.end()
   }
 )
 
 watch(isDark, async (darked) => {
-  if (settingsStore.background.bgType !== BgType.Local) return
-  if (settingsStore.localDarkBackground?.id == null || settingsStore.localDarkBackground?.id === '')
-    return
+  if (settings.background.bgType !== BgType.Local) return
+  if (settings.localDarkBackground?.id == null || settings.localDarkBackground?.id === '') return
   await bgTypeProviders[BgType.Local].verify?.()
   switchStore.start()
   await promiseTimeout(500)
   if (darked) {
-    bgURL.value = settingsStore.localDarkBackground.url
+    bgURL.value = settings.localDarkBackground.url
   } else {
-    bgURL.value = settingsStore.localBackground.url
+    bgURL.value = settings.localBackground.url
   }
   switchStore.end()
 })
@@ -285,7 +283,7 @@ function needHelp() {
   <el-config-provider
     :locale="elLocale"
     :dialog="{
-      transition: settingsStore.perf.disableDialogAnimation ? 'none' : 'dialog',
+      transition: settings.perf.disableDialogAnimation ? 'none' : 'dialog',
       alignCenter: true
     }"
     :message="{
@@ -293,14 +291,12 @@ function needHelp() {
     }"
   >
     <main
-      :style="[
-        settingsStore.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }
-      ]"
+      :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
     >
       <time-now />
       <search-box style="margin-top: 10px" />
-      <shortcut v-if="settingsStore.shortcut.enabled" />
+      <shortcut v-if="settings.shortcut.enabled" />
       <yi-yan />
     </main>
     <background :url="bgURL" />
@@ -309,8 +305,8 @@ function needHelp() {
       :popper-class="
         getPerfClasses(
           {
-            transparentOff: settingsStore.perf.disableSettingsBtnTransparent,
-            blurOff: settingsStore.perf.disableSettingsBtnBlur
+            transparentOff: settings.perf.disableSettingsBtnTransparent,
+            blurOff: settings.perf.disableSettingsBtnBlur
           },
           'settings-icon__popper'
         )
@@ -322,14 +318,13 @@ function needHelp() {
       <div
         class="settings-icon"
         :class="{
-          'settings-icon--tran': !settingsStore.perf.disableSettingsBtnTransparent,
+          'settings-icon--tran': !settings.perf.disableSettingsBtnTransparent,
           'settings-icon--blur': !(
-            settingsStore.perf.disableSettingsBtnBlur ||
-            settingsStore.perf.disableSettingsBtnTransparent
+            settings.perf.disableSettingsBtnBlur || settings.perf.disableSettingsBtnTransparent
           )
         }"
       >
-        <el-badge is-dot :offset="[3, 0]" :hidden="settingsStore.readChangeLog">
+        <el-badge is-dot :offset="[3, 0]" :hidden="settings.readChangeLog">
           <el-icon><settings-round /></el-icon>
         </el-badge>
       </div>
@@ -343,12 +338,7 @@ function needHelp() {
             <el-icon :size="17"><search-round /></el-icon>
             <span>{{ t('newtab:menu.searchEnginePreference') }}</span>
           </el-dropdown-item>
-          <el-badge
-            is-dot
-            :offset="[-3, 17]"
-            :hidden="settingsStore.readChangeLog"
-            style="width: 100%"
-          >
+          <el-badge is-dot :offset="[-3, 17]" :hidden="settings.readChangeLog" style="width: 100%">
             <el-dropdown-item divided @click="ChangelogRef?.show">
               <el-icon :size="17"><access-time-filled-round /></el-icon>
               <span>{{ t('newtab:changelog.title') }}</span>

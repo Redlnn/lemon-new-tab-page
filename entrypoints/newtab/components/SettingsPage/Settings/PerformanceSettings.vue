@@ -9,7 +9,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
 function useNegate(source: Ref<boolean>): ComputedRef<boolean>
 function useNegate<T extends object, K extends keyof T>(obj: T, key: K): ComputedRef<boolean>
@@ -24,32 +24,32 @@ function useNegate(arg1: Ref<boolean> | object, arg2?: string) {
   })
 }
 
-const dialogTransparent = useNegate(settingsStore.perf, 'disableDialogTransparent')
-const dialogBlur = useNegate(settingsStore.perf, 'disableDialogBlur')
-const dialogAnimation = useNegate(settingsStore.perf, 'disableDialogAnimation')
-const focusScale = useNegate(settingsStore.perf, 'disableFocusScale')
-const focusBlur = useNegate(settingsStore.perf, 'disableFocusBlur')
-const shortcutTransparent = useNegate(settingsStore.perf, 'disableShortcutTransparent')
-const shortcutBlur = useNegate(settingsStore.perf, 'disableShortcutBlur')
-const searchBarTransparent = useNegate(settingsStore.perf, 'disableSearchBarTransparent')
-const searchBarBlur = useNegate(settingsStore.perf, 'disableSearchBarBlur')
-const yiyanBlur = useNegate(settingsStore.perf, 'disableYiyanBlur')
-const settingsBtnBlur = useNegate(settingsStore.perf, 'disableSettingsBtnBlur')
-const settingsBtnTransparent = useNegate(settingsStore.perf, 'disableSettingsBtnTransparent')
+const dialogTransparent = useNegate(settings.perf, 'disableDialogTransparent')
+const dialogBlur = useNegate(settings.perf, 'disableDialogBlur')
+const dialogAnimation = useNegate(settings.perf, 'disableDialogAnimation')
+const focusScale = useNegate(settings.perf, 'disableFocusScale')
+const focusBlur = useNegate(settings.perf, 'disableFocusBlur')
+const shortcutTransparent = useNegate(settings.perf, 'disableShortcutTransparent')
+const shortcutBlur = useNegate(settings.perf, 'disableShortcutBlur')
+const searchBarTransparent = useNegate(settings.perf, 'disableSearchBarTransparent')
+const searchBarBlur = useNegate(settings.perf, 'disableSearchBarBlur')
+const yiyanBlur = useNegate(settings.perf, 'disableYiyanBlur')
+const settingsBtnBlur = useNegate(settings.perf, 'disableSettingsBtnBlur')
+const settingsBtnTransparent = useNegate(settings.perf, 'disableSettingsBtnTransparent')
 
 function disableTransparentSettings() {
-  settingsStore.perf.disableDialogTransparent = true
-  settingsStore.perf.disableSearchBarTransparent = true
-  settingsStore.perf.disableSettingsBtnTransparent = true
-  settingsStore.perf.disableShortcutTransparent = true
+  settings.perf.disableDialogTransparent = true
+  settings.perf.disableSearchBarTransparent = true
+  settings.perf.disableSettingsBtnTransparent = true
+  settings.perf.disableShortcutTransparent = true
 }
 
 function disableBlurSettings() {
-  settingsStore.perf.disableDialogBlur = true
-  settingsStore.perf.disableSearchBarBlur = true
-  settingsStore.perf.disableSettingsBtnBlur = true
-  settingsStore.perf.disableShortcutBlur = true
-  settingsStore.perf.disableYiyanBlur = true
+  settings.perf.disableDialogBlur = true
+  settings.perf.disableSearchBarBlur = true
+  settings.perf.disableSettingsBtnBlur = true
+  settings.perf.disableShortcutBlur = true
+  settings.perf.disableYiyanBlur = true
 }
 </script>
 
@@ -61,7 +61,7 @@ function disableBlurSettings() {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.blinkingColon') }}</div>
-      <el-switch v-model="settingsStore.time.blinkingColon" />
+      <el-switch v-model="settings.time.blinkingColon" />
     </div>
     <p class="settings__item--note">
       {{ t('newtab:settings.clock.blinkingTip') }}
@@ -83,7 +83,7 @@ function disableBlurSettings() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.dialogBlur') }}</div>
-      <el-switch :disabled="settingsStore.perf.disableDialogTransparent" v-model="dialogBlur" />
+      <el-switch :disabled="settings.perf.disableDialogTransparent" v-model="dialogBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.dialogAnimation') }}</div>
@@ -103,10 +103,7 @@ function disableBlurSettings() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.searchBarBlur') }}</div>
-      <el-switch
-        :disabled="settingsStore.perf.disableSearchBarTransparent"
-        v-model="searchBarBlur"
-      />
+      <el-switch :disabled="settings.perf.disableSearchBarTransparent" v-model="searchBarBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.shortcutTransparent') }}</div>
@@ -114,7 +111,7 @@ function disableBlurSettings() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.shortcutBlur') }}</div>
-      <el-switch :disabled="settingsStore.perf.disableShortcutTransparent" v-model="shortcutBlur" />
+      <el-switch :disabled="settings.perf.disableShortcutTransparent" v-model="shortcutBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.yiyanBlur') }}</div>
@@ -127,7 +124,7 @@ function disableBlurSettings() {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.settingsBtnBlur') }}</div>
       <el-switch
-        :disabled="settingsStore.perf.disableSettingsBtnTransparent"
+        :disabled="settings.perf.disableSettingsBtnTransparent"
         v-model="settingsBtnBlur"
       />
     </div>

@@ -8,7 +8,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { getFaviconURLChrome } from '../utils/topSites'
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
 defineProps<{
   url: string
@@ -23,15 +23,13 @@ defineProps<{
     <a class="shortcut__item-link" :href="url">
       <div class="shortcut__icon-container">
         <div
-          v-if="
-            pined && settingsStore.shortcut.showPinnedIcon && settingsStore.shortcut.enableTopSites
-          "
+          v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
           :class="[
             'shortcut__pin-icon',
             getPerfClasses(
               {
-                transparentOff: settingsStore.perf.disableShortcutTransparent,
-                blurOff: settingsStore.perf.disableShortcutBlur
+                transparentOff: settings.perf.disableShortcutTransparent,
+                blurOff: settings.perf.disableShortcutBlur
               },
               'shortcut__pin-icon'
             )
@@ -47,8 +45,8 @@ defineProps<{
           :class="
             getPerfClasses(
               {
-                transparentOff: settingsStore.perf.disableShortcutTransparent,
-                blurOff: settingsStore.perf.disableShortcutBlur
+                transparentOff: settings.perf.disableShortcutTransparent,
+                blurOff: settings.perf.disableShortcutBlur
               },
               'shortcut__icon'
             )
@@ -70,7 +68,7 @@ defineProps<{
       </div>
       <el-text
         :data-content="title"
-        v-if="settingsStore.shortcut.showShortcutTitle"
+        v-if="settings.shortcut.showShortcutTitle"
         class="shortcut__title"
         truncated
       >
@@ -85,8 +83,8 @@ defineProps<{
       :popper-class="
         getPerfClasses(
           {
-            transparentOff: settingsStore.perf.disableShortcutTransparent,
-            blurOff: settingsStore.perf.disableShortcutBlur
+            transparentOff: settings.perf.disableShortcutTransparent,
+            blurOff: settings.perf.disableShortcutBlur
           },
           'shortcut__menu-popper'
         )

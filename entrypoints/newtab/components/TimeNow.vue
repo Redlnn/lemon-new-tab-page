@@ -7,7 +7,7 @@ import dayjs from 'dayjs/esm'
 import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const time = ref()
 const isTimeHovered = useElementHover(time)
 
@@ -57,43 +57,43 @@ watch(isTimeHovered, (isTimeHovered) => {
     ref="time"
     class="clock"
     :class="[
-      settingsStore.time.enableShadow ? 'clock--shadow' : undefined,
-      settingsStore.time.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
-      settingsStore.time.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
+      settings.time.enableShadow ? 'clock--shadow' : undefined,
+      settings.time.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
+      settings.time.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
     <div
       class="clock__time-container"
-      :class="[settingsStore.time.small ? 'clock__time-container-small' : undefined]"
+      :class="[settings.time.small ? 'clock__time-container-small' : undefined]"
     >
-      <span v-if="settingsStore.time.showMeridiem && isChinese" class="clock__meridiem">
+      <span v-if="settings.time.showMeridiem && isChinese" class="clock__meridiem">
         {{ formattedDate.meridiemZH }}
       </span>
       <span class="clock__time">
         <span class="clock__hour">{{
-          settingsStore.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour
+          settings.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour
         }}</span>
         <span
           class="clock__colon"
-          :class="{ 'clock__colon--blinking': settingsStore.time.blinkingColon }"
+          :class="{ 'clock__colon--blinking': settings.time.blinkingColon }"
           >:</span
         >
         <span class="clock__minute">{{ formattedTime.minute }}</span>
       </span>
       <span
-        v-if="settingsStore.time.showMeridiem && !isChinese"
+        v-if="settings.time.showMeridiem && !isChinese"
         class="clock__meridiem"
         style="margin-left: 5px"
       >
         {{ formattedTime.meridiem }}
       </span>
     </div>
-    <div v-if="settingsStore.time.showDate" class="clock__date">
+    <div v-if="settings.time.showDate" class="clock__date">
       <span>
         {{ formattedDate.date }}
         {{ formattedDate.weekday }}
       </span>
-      <span v-if="settingsStore.time.showLunar && isChinese">{{ ` ${formattedDate.lunar}` }}</span>
+      <span v-if="settings.time.showLunar && isChinese">{{ ` ${formattedDate.lunar}` }}</span>
     </div>
   </div>
 </template>

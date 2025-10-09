@@ -19,7 +19,7 @@ import {
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const tmpUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
 const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
@@ -38,8 +38,8 @@ const metaDark = ref<{ width?: number; height?: number; duration?: number; size?
 )
 
 onMounted(() => {
-  if (settingsStore.background.onlineUrl) {
-    tmpUrl.value = settingsStore.background.onlineUrl
+  if (settings.background.onlineUrl) {
+    tmpUrl.value = settings.background.onlineUrl
   }
 })
 
@@ -101,7 +101,7 @@ async function handlePermissions(_url: string, hostname: string) {
   try {
     const granted = await browser.permissions.contains(permissions)
     if (granted) {
-      settingsStore.background.onlineUrl = _url
+      settings.background.onlineUrl = _url
       return
     }
 
@@ -113,16 +113,16 @@ async function handlePermissions(_url: string, hostname: string) {
       const requested = await browser.permissions.request(permissions)
       if (requested) {
         ElMessage.success(t('newtab:settings.background.warning.granted'))
-        settingsStore.background.onlineUrl = _url
+        settings.background.onlineUrl = _url
       } else {
         ElMessage.error(t('newtab:settings.background.warning.notGranted'))
-        settingsStore.background.bgType = BgType.None
+        settings.background.bgType = BgType.None
         tmpUrl.value = ''
       }
     }
   } catch {
     // 用户取消或报错
-    settingsStore.background.bgType = BgType.None
+    settings.background.bgType = BgType.None
     tmpUrl.value = ''
   }
 }
@@ -131,15 +131,15 @@ function changeOnlineBg(e: Event) {
   onlineUrlInput.value?.blur()
   const _url = (e.target as HTMLInputElement).value
   if (!_url) {
-    settingsStore.background.bgType = BgType.None
-    settingsStore.background.onlineUrl = ''
+    settings.background.bgType = BgType.None
+    settings.background.onlineUrl = ''
     tmpUrl.value = ''
     return
   }
   const hostname = new URL(_url).hostname
 
   if (!isChrome) {
-    settingsStore.background.onlineUrl = _url
+    settings.background.onlineUrl = _url
     return
   }
 
@@ -147,7 +147,7 @@ function changeOnlineBg(e: Event) {
 }
 
 function onlineImageWarn() {
-  if (settingsStore.background.onlineUrl) return
+  if (settings.background.onlineUrl) return
   ElMessageBox.confirm(
     t('newtab:settings.background.warning.unknownSource'),
     t('newtab:settings.background.warning.title'),
@@ -155,17 +155,17 @@ function onlineImageWarn() {
       type: 'warning'
     }
   ).catch(() => {
-    settingsStore.background.bgType = BgType.None
+    settings.background.bgType = BgType.None
   })
 }
 
 async function deleteLocalBg(isDark = false) {
   if (isDark) {
-    settingsStore.localDarkBackground = { id: '', url: '', mediaType: undefined }
+    settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
     metaDark.value = null
     useDarkWallpaperStore.clear()
   } else {
-    settingsStore.localBackground = { id: '', url: '', mediaType: undefined }
+    settings.localBackground = { id: '', url: '', mediaType: undefined }
     metaLight.value = null
     useWallpaperStore.clear()
   }
@@ -213,9 +213,9 @@ function readMediaMeta(
 
 onMounted(async () => {
   // 加载已存在的本地壁纸元数据（light & dark）以便在设置页显示
-  if (settingsStore.localBackground?.id) {
+  if (settings.localBackground?.id) {
     try {
-      const file = await useWallpaperStore.getItem<Blob>(settingsStore.localBackground.id)
+      const file = await useWallpaperStore.getItem<Blob>(settings.localBackground.id)
       if (file) {
         // set size
         metaLight.value = { size: (file as File).size }
@@ -224,25 +224,23 @@ onMounted(async () => {
           metaLight.value = { ...metaLight.value, ...m }
         })
         // set mediaType if missing
-        if (!settingsStore.localBackground.mediaType) {
-          settingsStore.localBackground.mediaType = file.type.startsWith('video/')
-            ? 'video'
-            : 'image'
+        if (!settings.localBackground.mediaType) {
+          settings.localBackground.mediaType = file.type.startsWith('video/') ? 'video' : 'image'
         }
       }
     } catch {}
   }
 
-  if (settingsStore.localDarkBackground?.id) {
+  if (settings.localDarkBackground?.id) {
     try {
-      const file = await useDarkWallpaperStore.getItem<Blob>(settingsStore.localDarkBackground.id)
+      const file = await useDarkWallpaperStore.getItem<Blob>(settings.localDarkBackground.id)
       if (file) {
         metaDark.value = { size: (file as File).size }
         readMediaMeta(file as File, (m) => {
           metaDark.value = { ...metaDark.value, ...m }
         })
-        if (!settingsStore.localDarkBackground.mediaType) {
-          settingsStore.localDarkBackground.mediaType = file.type.startsWith('video/')
+        if (!settings.localDarkBackground.mediaType) {
+          settings.localDarkBackground.mediaType = file.type.startsWith('video/')
             ? 'video'
             : 'image'
         }
@@ -253,9 +251,9 @@ onMounted(async () => {
 
 const isVideoBg = computed(
   () =>
-    settingsStore.background.bgType === BgType.Local &&
-    (settingsStore.localBackground.mediaType === 'video' ||
-      settingsStore.localDarkBackground.mediaType === 'video')
+    settings.background.bgType === BgType.Local &&
+    (settings.localBackground.mediaType === 'video' ||
+      settings.localDarkBackground.mediaType === 'video')
 )
 </script>
 
@@ -270,7 +268,7 @@ const isVideoBg = computed(
         {{ t('newtab:settings.background.type.title') }}
         <cloud-off-round />
       </div>
-      <el-radio-group v-model="settingsStore.background.bgType">
+      <el-radio-group v-model="settings.background.bgType">
         <el-radio :value="BgType.None">
           {{ t('newtab:settings.background.type.none') }}
         </el-radio>
@@ -286,26 +284,23 @@ const isVideoBg = computed(
       </el-radio-group>
     </div>
     <el-input
-      v-if="settingsStore.background.bgType === BgType.Online"
+      v-if="settings.background.bgType === BgType.Online"
       ref="onlineUrlInput"
       v-model="tmpUrl"
       @blur="changeOnlineBg"
       @keydown.enter="changeOnlineBg"
       placeholder="https://example.com/image.jpg"
     ></el-input>
-    <ul v-if="settingsStore.background.bgType === BgType.Online" class="settings__online-bg-tips">
+    <ul v-if="settings.background.bgType === BgType.Online" class="settings__online-bg-tips">
       <li>{{ t('newtab:settings.background.onlineTips.a') }}</li>
       <li>{{ t('newtab:settings.background.onlineTips.b') }}</li>
       <li>{{ t('newtab:settings.background.onlineTips.c') }}</li>
       <li>{{ t('newtab:settings.background.onlineTips.d') }}</li>
     </ul>
-    <p v-if="settingsStore.background.bgType === BgType.Local" class="settings__item--note">
+    <p v-if="settings.background.bgType === BgType.Local" class="settings__item--note">
       {{ t('newtab:settings.background.tip') }}
     </p>
-    <div
-      v-if="settingsStore.background.bgType === BgType.Local"
-      class="settings__bg-uploader-container"
-    >
+    <div v-if="settings.background.bgType === BgType.Local" class="settings__bg-uploader-container">
       <div class="settings__bg-uploader-wrapper">
         <el-upload
           class="settings__bg-uploader"
@@ -314,25 +309,21 @@ const isVideoBg = computed(
           :before-upload="beforeBackgroundUpload"
           accept="image/*,video/*"
         >
-          <template v-if="settingsStore.localBackground.id">
+          <template v-if="settings.localBackground.id">
             <video
-              v-if="settingsStore.localBackground.mediaType === 'video'"
-              :src="settingsStore.localBackground.url"
+              v-if="settings.localBackground.mediaType === 'video'"
+              :src="settings.localBackground.url"
               class="settings__bg-uploader-img"
               muted
               loop
               playsinline
             ></video>
-            <img
-              v-else
-              :src="settingsStore.localBackground.url"
-              class="settings__bg-uploader-img"
-            />
+            <img v-else :src="settings.localBackground.url" class="settings__bg-uploader-img" />
           </template>
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
         <div
-          v-if="settingsStore.localBackground.id"
+          v-if="settings.localBackground.id"
           class="settings__bg-uploader-delete"
           @click="deleteLocalBg()"
         >
@@ -357,25 +348,21 @@ const isVideoBg = computed(
           :before-upload="beforeBackgroundUpload"
           accept="image/*,video/*"
         >
-          <template v-if="settingsStore.localDarkBackground.id">
+          <template v-if="settings.localDarkBackground.id">
             <video
-              v-if="settingsStore.localDarkBackground.mediaType === 'video'"
-              :src="settingsStore.localDarkBackground.url"
+              v-if="settings.localDarkBackground.mediaType === 'video'"
+              :src="settings.localDarkBackground.url"
               class="settings__bg-uploader-img"
               muted
               loop
               playsinline
             ></video>
-            <img
-              v-else
-              :src="settingsStore.localDarkBackground.url"
-              class="settings__bg-uploader-img"
-            />
+            <img v-else :src="settings.localDarkBackground.url" class="settings__bg-uploader-img" />
           </template>
           <el-icon v-else class="settings__bg-uploader-icon"><plus /></el-icon>
         </el-upload>
         <div
-          v-if="settingsStore.localDarkBackground.id"
+          v-if="settings.localDarkBackground.id"
           class="settings__bg-uploader-delete"
           @click="deleteLocalBg(true)"
         >
@@ -398,51 +385,51 @@ const isVideoBg = computed(
     </p>
     <div v-if="isVideoBg" class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.background.pauseWhenBlur') }}</div>
-      <el-switch v-model="settingsStore.background.pauseWhenBlur" />
+      <el-switch v-model="settings.background.pauseWhenBlur" />
     </div>
     <p v-if="isVideoBg" class="settings__item--note">
       {{ t('newtab:settings.background.videoBlurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.background.enableVignetting') }}</div>
-      <el-switch v-model="settingsStore.background.enableVignetting" />
+      <el-switch v-model="settings.background.enableVignetting" />
     </div>
     <div
-      v-if="settingsStore.background.bgType !== BgType.None"
+      v-if="settings.background.bgType !== BgType.None"
       class="settings__item settings__item--vertical"
     >
       <div class="settings__label">{{ t('newtab:settings.background.blur') }}</div>
-      <el-slider v-model="settingsStore.background.blurIntensity" :show-tooltip="false" />
+      <el-slider v-model="settings.background.blurIntensity" :show-tooltip="false" />
     </div>
     <div class="settings__item">
       <div class="settings__label settings__item--vertical">
         {{ t('newtab:settings.background.maskOpacity') }}
       </div>
-      <el-slider v-model="settingsStore.background.bgMaskOpacity" :show-tooltip="false" />
+      <el-slider v-model="settings.background.bgMaskOpacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.background.maskColor') }}</div>
       <span>
         <span>{{ t('newtab:settings.theme.lightMode') }}:&ensp;</span>
         <el-color-picker
-          v-model="settingsStore.background.lightMaskColor"
+          v-model="settings.background.lightMaskColor"
           :predefine="predefineMaskColor"
           @change="
             () => {
-              if (settingsStore.background.lightMaskColor === null) {
-                settingsStore.background.lightMaskColor = '#f2f3f5'
+              if (settings.background.lightMaskColor === null) {
+                settings.background.lightMaskColor = '#f2f3f5'
               }
             }
           "
         />
         <span style="margin-left: 1em">{{ t('newtab:settings.theme.darkMode') }}:&ensp;</span>
         <el-color-picker
-          v-model="settingsStore.background.nightMaskColor"
+          v-model="settings.background.nightMaskColor"
           :predefine="predefineMaskColor"
           @change="
             () => {
-              if (settingsStore.background.nightMaskColor === null) {
-                settingsStore.background.nightMaskColor = '#000'
+              if (settings.background.nightMaskColor === null) {
+                settings.background.nightMaskColor = '#000'
               }
             }
           "

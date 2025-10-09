@@ -31,7 +31,7 @@ const originSearchText = ref<string | null>(null)
 const mounted = ref(false)
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 
@@ -39,21 +39,21 @@ const { width: searchFormWidth } = useElementSize(searchForm)
 
 const formClasses = computed(() => [
   {
-    'search-box__form--shadow': settingsStore.search.enableShadow,
-    'search-box__form--dark': settingsStore.background.bgType === BgType.None,
-    'search-box__form--expand': settingsStore.search.alwaysExpandSearchBar
+    'search-box__form--shadow': settings.search.enableShadow,
+    'search-box__form--dark': settings.background.bgType === BgType.None,
+    'search-box__form--expand': settings.search.alwaysExpandSearchBar
   },
   getPerfClasses(
     {
-      transparentOff: settingsStore.perf.disableSearchBarTransparent,
-      blurOff: settingsStore.perf.disableSearchBarBlur
+      transparentOff: settings.perf.disableSearchBarTransparent,
+      blurOff: settings.perf.disableSearchBarBlur
     },
     'search-box__form'
   )
 ])
 
 const searchPlaceholder = computed(() =>
-  focusStore.isFocused ? undefined : settingsStore.search.placeholder
+  focusStore.isFocused ? undefined : settings.search.placeholder
 )
 
 function resetSearch() {
@@ -142,14 +142,12 @@ function activeOneSuggest(index: number) {
 }
 
 function handleTabNavigation(direction: 1 | -1) {
-  const currentKey = settingsStore.search.selectedSearchEngine
+  const currentKey = settings.search.selectedSearchEngine
   const searchEngineKeys = Object.keys(searchEngines) as (keyof typeof searchEngines)[]
   const currentIndex = searchEngineKeys.indexOf(currentKey)
 
   const newIndex = (currentIndex + direction + searchEngineKeys.length) % searchEngineKeys.length
-  settingsStore.search.selectedSearchEngine = searchEngineKeys[
-    newIndex
-  ] as keyof typeof searchEngines
+  settings.search.selectedSearchEngine = searchEngineKeys[newIndex] as keyof typeof searchEngines
 }
 
 function handlePrevTab() {
@@ -161,7 +159,7 @@ function handleNextTab() {
 }
 
 const saveSearchHistory = async (text: string) => {
-  if (!settingsStore.search.recordSearchHistory || !text) {
+  if (!settings.search.recordSearchHistory || !text) {
     return
   }
   // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
@@ -183,8 +181,8 @@ const doSearchWithText = async (text: string) => {
   await saveSearchHistory(text)
 
   window.open(
-    searchEngines[settingsStore.search.selectedSearchEngine].url.replace('%s', text),
-    settingsStore.search.searchInNewTab ? '_blank' : '_self'
+    searchEngines[settings.search.selectedSearchEngine].url.replace('%s', text),
+    settings.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }

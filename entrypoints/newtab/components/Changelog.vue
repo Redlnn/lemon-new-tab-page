@@ -11,8 +11,6 @@ import { useDialog } from '@newtab/composables/useDialog'
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
-
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
@@ -24,8 +22,8 @@ onMounted(async () => {
 })
 
 function handleClose() {
-  // settingsStore.pluginVersion = version
-  settingsStore.readChangeLog = true
+  // useSettingsStore().pluginVersion = version
+  useSettingsStore().readChangeLog = true
 }
 </script>
 

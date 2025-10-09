@@ -7,7 +7,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation()
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 </script>
 
 <template>
@@ -18,30 +18,30 @@ const settingsStore = useSettingsStore()
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.use12HourClock') }}</div>
-      <el-switch v-model="settingsStore.time.isMeridiem" />
+      <el-switch v-model="settings.time.isMeridiem" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.showAMPM') }}</div>
-      <el-switch v-model="settingsStore.time.showMeridiem" />
+      <el-switch v-model="settings.time.showMeridiem" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.showDate') }}</div>
-      <el-switch v-model="settingsStore.time.showDate" />
+      <el-switch v-model="settings.time.showDate" />
     </div>
     <div
-      v-if="settingsStore.time.showDate && isChinese"
+      v-if="settings.time.showDate && isChinese"
       class="settings__item settings__item--horizontal"
     >
       <div class="settings__label">{{ t('newtab:settings.clock.showLunar') }}</div>
-      <el-switch v-model="settingsStore.time.showLunar" />
+      <el-switch v-model="settings.time.showLunar" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.smallFont') }}</div>
-      <el-switch v-model="settingsStore.time.small" />
+      <el-switch v-model="settings.time.small" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.enableShadow') }}</div>
-      <el-switch v-model="settingsStore.time.enableShadow" />
+      <el-switch v-model="settings.time.enableShadow" />
     </div>
   </div>
 </template>

@@ -10,7 +10,7 @@ import { defaultSettings, useSettingsStore } from '@/shared/settings'
 const { t } = useTranslation()
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const { store } = useColorMode()
 
 const predefineColorsMapClassic = [
@@ -149,7 +149,7 @@ watch(preferredDark, () => {
       <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
       <div class="settings__theme">
         <el-select
-          v-model="settingsStore.primaryColor"
+          v-model="settings.primaryColor"
           style="width: 183px"
           popper-class="settings__theme-popper"
         >
@@ -171,7 +171,7 @@ watch(preferredDark, () => {
             </el-option>
           </el-option-group>
         </el-select>
-        <el-color-picker v-model="settingsStore.primaryColor" :predefine="predefineColors" />
+        <el-color-picker v-model="settings.primaryColor" :predefine="predefineColors" />
       </div>
     </div>
     <div class="settings__item settings__item--horizontal">
@@ -179,29 +179,29 @@ watch(preferredDark, () => {
         {{ t('newtab:settings.theme.colorfulMode') }}
         <cloud-off-round />
       </div>
-      <el-switch v-model="settingsStore.colorfulMode" />
+      <el-switch v-model="settings.colorfulMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.invertColorLight') }}</div>
-      <el-switch v-model="settingsStore.time.invertColor.light" />
+      <el-switch v-model="settings.time.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.invertColorDark') }}</div>
-      <el-switch v-model="settingsStore.time.invertColor.night" />
+      <el-switch v-model="settings.time.invertColor.night" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
         {{ t('newtab:settings.shortcut.whiteTextInLightMode') }}
       </div>
-      <el-switch v-model="settingsStore.shortcut.whiteTextInLightMode" />
+      <el-switch v-model="settings.shortcut.whiteTextInLightMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorLight') }}</div>
-      <el-switch v-model="settingsStore.yiyan.invertColor.light" />
+      <el-switch v-model="settings.yiyan.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorDark') }}</div>
-      <el-switch v-model="settingsStore.yiyan.invertColor.night" />
+      <el-switch v-model="settings.yiyan.invertColor.night" />
     </div>
   </div>
 </template>

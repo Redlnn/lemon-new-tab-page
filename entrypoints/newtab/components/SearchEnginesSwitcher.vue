@@ -13,7 +13,7 @@ const { t } = useTranslation()
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 </script>
 
 <template>
@@ -28,8 +28,8 @@ const settingsStore = useSettingsStore()
         >
           <div
             class="se-switcher-item"
-            :class="{ 'is-active': settingsStore.search.selectedSearchEngine === key }"
-            @click="settingsStore.search.selectedSearchEngine = key"
+            :class="{ 'is-active': settings.search.selectedSearchEngine === key }"
+            @click="settings.search.selectedSearchEngine = key"
           >
             <el-icon size="16" class="se-switcher-item__icon">
               <component :is="searchEngines[key].icon" />

@@ -22,7 +22,7 @@ import { blockSite, getTopSites } from './utils/topSites'
 const { t } = useTranslation()
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 
 const topSites = ref<TopSites.MostVisitedURL[]>([])
@@ -42,9 +42,8 @@ useDraggable(shortcutContainerRef, bookmarks, {
 
 function getContainerWidth(num: number) {
   const width =
-    num * (15 + settingsStore.shortcut.iconSize + 15) +
-    (num - 1) * settingsStore.shortcut.itemMarginH
-  if (settingsStore.shortcut.showShortcutContainerBg) {
+    num * (15 + settings.shortcut.iconSize + 15) + (num - 1) * settings.shortcut.itemMarginH
+  if (settings.shortcut.showShortcutContainerBg) {
     return width + 40
   }
   return width
@@ -58,7 +57,7 @@ async function refresh() {
   const _bookmarks = bookmarkStore.items.slice()
   let _topSites: TopSites.MostVisitedURL[] = []
 
-  if (settingsStore.shortcut.enableTopSites) {
+  if (settings.shortcut.enableTopSites) {
     //如果 getTopSites() 返回 undefined，默认空数组
     _topSites = (await getTopSites()) ?? []
     topSites.value = []
@@ -74,7 +73,7 @@ async function refresh() {
   const _itemCount = _bookmarks.length + _topSites.length + 1
 
   // 当元素总数少于设置中的列数时，使实际列数=元素总数
-  let _columnsCount = Math.min(settingsStore.shortcut.columns, _itemCount)
+  let _columnsCount = Math.min(settings.shortcut.columns, _itemCount)
   // 遍历列数，计算小于多少列时，容器大小不会超出页面
   const containerWidth = windowWidth.value * 0.85
   for (let i = _columnsCount; i > 0; i--) {
@@ -91,7 +90,7 @@ async function refresh() {
     rowsNum.value = 1
   } else {
     // 讲元素总数÷实际列数（所需行数）与最大行数比较，取小的作为实际行数
-    rowsNum.value = Math.min(settingsStore.shortcut.rows, Math.ceil(_itemCount / _columnsCount))
+    rowsNum.value = Math.min(settings.shortcut.rows, Math.ceil(_itemCount / _columnsCount))
   }
 
   // 定好行数和列数后才把书签上屏避免闪烁
@@ -107,14 +106,14 @@ async function refresh() {
 }
 
 const columnsNum = ref(0)
-const rowsNum = ref(settingsStore.shortcut.rows)
+const rowsNum = ref(settings.shortcut.rows)
 
 onMounted(async () => {
   await refreshDebounced()
   mounted.value = true
 })
 
-watch(settingsStore.shortcut, refreshDebounced)
+watch(settings.shortcut, refreshDebounced)
 watch(() => windowWidth.value, refreshDebounced)
 // 云同步导致书签变动时刷新
 bookmarkStorage.watch(refreshDebounced)
@@ -125,26 +124,24 @@ bookmarkStorage.watch(refreshDebounced)
     class="shortcut"
     :style="{
       opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
-      marginTop: `${settingsStore.shortcut.marginTop}px`
+      marginTop: `${settings.shortcut.marginTop}px`
     }"
   >
     <div
       ref="shortcutContainerRef"
       class="shortcut__container"
       :class="[
-        settingsStore.shortcut.showShortcutContainerBg ? 'shortcut__container--bg' : undefined,
-        settingsStore.shortcut.enableAreaShadow ? 'shortcut__container--shadow' : undefined,
-        settingsStore.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-        settingsStore.shortcut.whiteTextInLightMode
-          ? 'shortcut__container--white-text-light'
-          : undefined
+        settings.shortcut.showShortcutContainerBg ? 'shortcut__container--bg' : undefined,
+        settings.shortcut.enableAreaShadow ? 'shortcut__container--shadow' : undefined,
+        settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
+        settings.shortcut.whiteTextInLightMode ? 'shortcut__container--white-text-light' : undefined
       ]"
       :style="{
         pointerEvents: focusStore.isFocused ? 'none' : 'auto',
         gridTemplateColumns: `repeat(${columnsNum}, 1fr)`,
         gridTemplateRows: `repeat(${rowsNum}, 1fr)`,
-        gridGap: `${2 * settingsStore.shortcut.itemMarginV}px ${settingsStore.shortcut.itemMarginH}px`,
-        '--icon_size': `${settingsStore.shortcut.iconSize}px`
+        gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+        '--icon_size': `${settings.shortcut.iconSize}px`
       }"
     >
       <shortcut-item

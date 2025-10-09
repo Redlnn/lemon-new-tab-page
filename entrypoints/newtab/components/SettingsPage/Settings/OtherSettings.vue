@@ -25,7 +25,7 @@ import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 const { t } = useTranslation()
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
 async function confirmClearExtensionData() {
   try {
@@ -65,8 +65,8 @@ async function clearExtensionData() {
 }
 
 function sendSyncMessage() {
-  if (settingsStore.sync.enabled) {
-    initSyncSettings(settingsStore)
+  if (settings.sync.enabled) {
+    initSyncSettings(settings)
   } else {
     deinitSyncSettings()
   }
@@ -109,12 +109,12 @@ function handleFileChange(event: Event) {
     return new Promise<void>((resolve) => {
       reader.onloadend = () => {
         if (fileContent) {
-          const originalSyncState = settingsStore.sync.enabled
-          settingsStore.$patch(fileContent)
-          if (originalSyncState !== settingsStore.sync.enabled) {
+          const originalSyncState = settings.sync.enabled
+          settings.$patch(fileContent)
+          if (originalSyncState !== settings.sync.enabled) {
             // 如果同步状态有变化，重新初始化或取消同步
-            if (settingsStore.sync.enabled) {
-              initSyncSettings(settingsStore)
+            if (settings.sync.enabled) {
+              initSyncSettings(settings)
             } else {
               deinitSyncSettings()
             }
@@ -142,7 +142,7 @@ function handleFileChange(event: Event) {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.other.sync') }}</div>
-      <el-switch v-model="settingsStore.sync.enabled" @change="sendSyncMessage" />
+      <el-switch v-model="settings.sync.enabled" @change="sendSyncMessage" />
     </div>
     <p class="settings__item--note">
       {{ t('newtab:settings.other.syncWarning') }}
@@ -155,10 +155,7 @@ function handleFileChange(event: Event) {
           type="primary"
           :icon="DownloadRound"
           @click="
-            downloadJSON<CURRENT_CONFIG_INTERFACE>(
-              settingsStore.$state,
-              'lemon-tab-page-settings.json'
-            )
+            downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
           "
         >
           {{ t('newtab:settings.other.importExport.export') }}

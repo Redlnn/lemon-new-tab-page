@@ -13,7 +13,7 @@ import { useFocusStore } from '@newtab/scripts/store'
 const { t } = useTranslation()
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const searchEngineMenu = ref<TooltipInstance>()
 
 function hide() {
@@ -32,8 +32,8 @@ defineExpose({ hide })
     :popper-class="
       getPerfClasses(
         {
-          transparentOff: settingsStore.perf.disableSearchBarTransparent,
-          blurOff: settingsStore.perf.disableSearchBarBlur
+          transparentOff: settings.perf.disableSearchBarTransparent,
+          blurOff: settings.perf.disableSearchBarBlur
         },
         'search-engine-menu'
       )
@@ -47,16 +47,16 @@ defineExpose({ hide })
         :key="key"
         class="search-engine-menu__item"
         :class="{
-          'search-engine-menu__item--active': settingsStore.search.selectedSearchEngine === key
+          'search-engine-menu__item--active': settings.search.selectedSearchEngine === key
         }"
-        @click="settingsStore.search.selectedSearchEngine = key"
+        @click="settings.search.selectedSearchEngine = key"
       >
         <div style="display: flex; align-items: center">
           <el-icon><component :is="searchEngines[key].icon" /></el-icon>
           <span>{{ searchEngines[key].name }}</span>
         </div>
         <div
-          v-if="key === settingsStore.search.selectedSearchEngine"
+          v-if="key === settings.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
           {{ t('newtab:search.searchEngineMenu.current') }}
@@ -70,7 +70,7 @@ defineExpose({ hide })
       </div>
     </template>
     <el-icon class="search-engine-menu__icon" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">
-      <component :is="searchEngines[settingsStore.search.selectedSearchEngine].icon" />
+      <component :is="searchEngines[settings.search.selectedSearchEngine].icon" />
     </el-icon>
   </el-tooltip>
 </template>

@@ -8,7 +8,7 @@ import { useSettingsStore } from '@/shared/settings'
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLDivElement>()
@@ -25,7 +25,7 @@ function updateVideoPlayback() {
   // 如果页面不可见，或者窗口失去焦点且设置了失去焦点时暂停视频，则暂停视频
   if (
     document.visibilityState === 'hidden' ||
-    (settingsStore.background.pauseWhenBlur && !isWindowFocused.value)
+    (settings.background.pauseWhenBlur && !isWindowFocused.value)
   ) {
     try {
       vid.pause()
@@ -39,9 +39,9 @@ function updateVideoPlayback() {
 }
 
 const backgroundCss = computed(() => ({
-  'background--deafult-scale': settingsStore.perf.disableFocusScale,
-  'background--focused__scale': focusStore.isFocused && !settingsStore.perf.disableFocusScale,
-  'background--focused__blur': focusStore.isFocused && !settingsStore.perf.disableFocusBlur
+  'background--deafult-scale': settings.perf.disableFocusScale,
+  'background--focused__scale': focusStore.isFocused && !settings.perf.disableFocusScale,
+  'background--focused__blur': focusStore.isFocused && !settings.perf.disableFocusBlur
 }))
 
 const visibility = useDocumentVisibility()
@@ -75,20 +75,20 @@ watch(
     ref="backgroundWrapper"
     class="background-wrapper"
     :style="{
-      '--mask-opacity': settingsStore.background.bgMaskOpacity / 100,
-      '--mask-color__light': settingsStore.background.lightMaskColor,
-      '--mask-color__night': settingsStore.background.nightMaskColor,
-      '--blur-intensity': `${settingsStore.background.blurIntensity}px`
+      '--mask-opacity': settings.background.bgMaskOpacity / 100,
+      '--mask-color__light': settings.background.lightMaskColor,
+      '--mask-color__night': settings.background.nightMaskColor,
+      '--blur-intensity': `${settings.background.blurIntensity}px`
     }"
   >
     <div class="background-mask"></div>
-    <div v-if="settingsStore.background.enableVignetting" class="background__vignette" />
+    <div v-if="settings.background.enableVignetting" class="background__vignette" />
     <Transition>
       <div v-show="!switchStore.isSwitching">
         <video
           v-if="
-            (!isDark && settingsStore.localBackground.mediaType === 'video') ||
-            (isDark && settingsStore.localDarkBackground.mediaType === 'video')
+            (!isDark && settings.localBackground.mediaType === 'video') ||
+            (isDark && settings.localDarkBackground.mediaType === 'video')
           "
           class="background background--video"
           :class="backgroundCss"

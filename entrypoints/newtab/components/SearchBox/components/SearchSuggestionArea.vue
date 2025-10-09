@@ -15,7 +15,7 @@ import { useFocusStore } from '@newtab/scripts/store'
 const { t } = useTranslation()
 
 const focusStore = useFocusStore()
-const settingsStore = useSettingsStore()
+const settings = useSettingsStore()
 
 const clearSearchHistory = ref<HTMLDivElement>()
 const isShowSearchHistories = ref(false)
@@ -34,14 +34,14 @@ const emit = defineEmits<{
 
 const areaClasses = computed(() => [
   {
-    'search-suggestion-area--shadow': settingsStore.search.enableShadow,
+    'search-suggestion-area--shadow': settings.search.enableShadow,
     'search-suggestion-area--dark':
-      settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0
+      settings.background.bgType === BgType.None && searchSuggestions.value.length > 0
   },
   getPerfClasses(
     {
-      transparentOff: settingsStore.perf.disableSearchBarTransparent,
-      blurOff: settingsStore.perf.disableSearchBarBlur
+      transparentOff: settings.perf.disableSearchBarTransparent,
+      blurOff: settings.perf.disableSearchBarBlur
     },
     'search-suggestion-area'
   )
@@ -103,7 +103,7 @@ function showSuggestionsDebounced() {
     return
   }
 
-  const api = searchSuggestAPIs[settingsStore.search.selectedSearchSuggestionAPI]
+  const api = searchSuggestAPIs[settings.search.selectedSearchSuggestionAPI]
   if (!api) {
     console.error('Selected search suggestion API not found')
     return
