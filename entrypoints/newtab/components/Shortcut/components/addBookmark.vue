@@ -75,7 +75,11 @@ async function uploadFavicon(file: File) {
       res = DOMPurify.sanitize(convertBase64Svg(res), {
         USE_PROFILES: { svg: true, svgFilters: true }
       })
-      res = `data:image/svg+xml;base64,${btoa(res)}`
+      // 处理非 ASCII 字符，确保 UTF-8 安全
+      const utf8 = encodeURIComponent(res).replace(/%([0-9A-F]{2})/g, (_, p1) =>
+        String.fromCharCode(parseInt(p1, 16))
+      )
+      res = `data:image/svg+xml;base64,${btoa(utf8)}`
     }
     data.favicon = res
   }

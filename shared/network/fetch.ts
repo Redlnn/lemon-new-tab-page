@@ -37,8 +37,10 @@ export async function enhancedFetch<T = unknown>(
 
   // 添加默认 headers
   const headers = new Headers(fetchOptions.headers)
-  if (!headers.has('Content-Type')) {
-    headers.set('Content-Type', 'application/json')
+  // 仅当存在 body 或非 GET 请求时设置默认 Content-Type
+  const method = (fetchOptions.method || 'GET').toUpperCase()
+  if ((!headers.has('Content-Type') && fetchOptions.body) || method !== 'GET') {
+    headers.set('Content-Type', headers.get('Content-Type') || 'application/json')
   }
 
   const controller = new AbortController()
