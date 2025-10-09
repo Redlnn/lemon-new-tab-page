@@ -71,10 +71,9 @@ async function showSearchHistories() {
   }
 
   const searchHistories = await searchHistoriesStorage.getValue()
-  if (searchHistories.length > 0 && clearSearchHistory.value) {
+  if (searchHistories.length > 0) {
     searchSuggestions.value = searchHistories
     isShowSearchHistories.value = true
-    clearSearchHistory.value.style.display = 'flex'
   }
 }
 
@@ -111,10 +110,6 @@ function clearActiveSuggest() {
 }
 
 function hideSearchHistories() {
-  if (!clearSearchHistory.value) {
-    return
-  }
-  clearSearchHistory.value.style.display = 'none'
   isShowSearchHistories.value = false
 }
 
@@ -173,6 +168,7 @@ defineExpose({
       {{ item }}
     </div>
     <div
+      v-show="isShowSearchHistories"
       ref="clearSearchHistory"
       class="search-suggestion-area__item search-suggestion-area__clear-history noselect"
       style="display: none"
