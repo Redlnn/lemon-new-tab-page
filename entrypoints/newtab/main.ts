@@ -16,9 +16,19 @@ import changeTheme from './scripts/use-element-plus-theme'
 
 export const main = async () => {
   const banner = `
+%c Lemon New Tab %c ${version}%c
 
-%c Lemon New Tab %c ${version} %c
+`
 
+  console.log(
+    banner,
+    'padding: 2px 6px; border-radius: 4px 0 0 4px; color: #fff; background: #ff9d00; font-weight: bold;',
+    'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
+    ''
+  )
+
+  if (import.meta.env.DEV) {
+    const devBanner = `%c
                     ~~<~<~~<~<~~<~<~~<~~
               <~~<~~<~{{{rhhhahhhhx}{{~<~~<~~<
            <~<~<~|Uhhhahhhhao&W*ahhhhahhhU|~<~<~<
@@ -45,13 +55,8 @@ export const main = async () => {
               <<~<~~~~{}{nhhhhhhahn}{{~~~~~<~<
                     ~<~<~<~~~~~~<~<~<~<~
 `
-
-  console.log(
-    banner,
-    'padding: 2px 6px; border-radius: 4px 0 0 4px; color: #fff; background: #ff9d00; font-weight: bold;',
-    'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
-    'color: orange;line-height:0.8rem;'
-  )
+    console.log(devBanner, 'color: orange;line-height:0.8rem;')
+  }
 
   let color = ''
   const app = i18n(createApp(App))
