@@ -9,7 +9,7 @@ import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync/ty
 let isInited = false
 let isRunning = false
 const syncQueue: SyncData[] = []
-const lastSyncTime = 0
+let lastSyncTime = 0
 const SYNC_INTERVAL = 2000 // 2 seconds
 
 // 检查是否可以执行同步
@@ -37,6 +37,9 @@ async function processSyncQueue() {
   syncItem.settings.bingBackground = { id: '', url: '', updateDate: '' }
   // 由于无法同步在线壁纸，所以重置在线壁纸url
   syncItem.settings.background.onlineUrl = ''
+
+  // 标记本次同步完成的时间，用于节流控制
+  lastSyncTime = Date.now()
 
   await syncDataStorage.setValue({
     settings: syncItem.settings,
