@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-import { useDebounceFn } from '@vueuse/core'
+import { computed, onUnmounted, ref } from 'vue'
 
 import { TrashAlt } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
@@ -9,6 +8,7 @@ import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
+import { createSuggestRunner } from '@newtab/scripts/api/search/suggestRunner'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
 
@@ -67,6 +67,7 @@ const displayedSuggestions = computed(() =>
 function handleInput() {
   if (focusStore.isFocused && !props.searchText) {
     // 如果搜索词为空，则显示搜索历史
+    runner.cancel()
     clearSearchSuggestions()
     showSearchHistories()
   } else {
@@ -87,7 +88,17 @@ async function showSearchHistories() {
   }
 }
 
-const showSuggestionsDebounced = useDebounceFn(async () => {
+// 统一“请求 + 取消 + 防抖 + 重试”（重试统一在运行器层）
+const runner = createSuggestRunner({ debounceMs: 200, maxRetries: 2, retryDelay: 100 })
+runner.onResult((list) => {
+  searchSuggestions.value = list
+})
+runner.onError((err) => {
+  console.error('Failed to fetch search suggestions:', err)
+  searchSuggestions.value = []
+})
+
+function showSuggestionsDebounced() {
   if (props.searchText.length <= 0) {
     return
   }
@@ -97,15 +108,12 @@ const showSuggestionsDebounced = useDebounceFn(async () => {
     console.error('Selected search suggestion API not found')
     return
   }
+  runner.run(props.searchText, api.parser)
+}
 
-  try {
-    const suggestions = await api.parser(props.searchText)
-    searchSuggestions.value = suggestions
-  } catch (error) {
-    console.error('Failed to fetch search suggestions:', error)
-    searchSuggestions.value = []
-  }
-}, 200)
+onUnmounted(() => {
+  runner.cancel()
+})
 
 function clearActiveSuggest() {
   const suggestions = searchSuggestionArea.value?.children

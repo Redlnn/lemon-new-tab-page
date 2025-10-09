@@ -27,7 +27,7 @@ const RETRY_DELAY = 100
 /**
  * 带重试的API调用
  */
-async function retryableRequest<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
+export async function retryableRequest<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
   try {
     return await fn()
   } catch (error) {
@@ -42,7 +42,7 @@ async function retryableRequest<T>(fn: () => Promise<T>, retries = MAX_RETRIES):
 async function bingSuggestParser(text: string): Promise<string[]> {
   try {
     const url = `https://api.bing.com/qsonhs.aspx?q=${encodeURIComponent(text)}`
-    const resp: BingSuggest = await retryableRequest(() => enhancedFetch(url))
+    const resp: BingSuggest = await enhancedFetch(url)
 
     if (resp.AS.FullResults <= 0) {
       return []
@@ -65,16 +65,14 @@ function baiduJsonpParser(text: string): string[] {
 async function baiduSuggestParser(text: string): Promise<string[]> {
   try {
     const url = `https://suggestion.baidu.com/su?wd=${encodeURIComponent(text)}&cb=window.baidu.sug`
-    const suggestions = await retryableRequest(() =>
-      fetchJsonp({
-        url,
-        params: {},
-        callbackParam: 'cb',
-        callbackName: 'window.baidu.sug',
-        parser: baiduJsonpParser,
-        encoding: 'gbk' // 百度搜索建议 API 使用 GBK 编码
-      })
-    )
+    const suggestions = await fetchJsonp({
+      url,
+      params: {},
+      callbackParam: 'cb',
+      callbackName: 'window.baidu.sug',
+      parser: baiduJsonpParser,
+      encoding: 'gbk' // 百度搜索建议 API 使用 GBK 编码
+    })
 
     if (suggestions[0] === text) {
       return suggestions.slice(1)
@@ -108,7 +106,7 @@ interface GoogleSuggest {
 async function googleSuggestParser(text: string): Promise<string[]> {
   try {
     const url = `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(text)}`
-    const resp: GoogleSuggest = await retryableRequest(() => enhancedFetch(url))
+    const resp: GoogleSuggest = await enhancedFetch(url)
     return resp[1]
   } catch (error) {
     console.error('Google suggestion error:', error)
