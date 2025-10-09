@@ -383,7 +383,7 @@ function needHelp() {
     background-color var(--el-transition-duration-fast) ease;
 
   &--blur {
-    @include acrylic.acrylic(10px, 1.4, 1.1);
+    @include acrylic.acrylic;
   }
 
   &--tran {
@@ -414,9 +414,8 @@ function needHelp() {
 
   &__popper {
     &.el-popper {
+      @include acrylic.acrylic;
       background-color: var(--le-bg-color-overlay-opacity-30);
-
-      @include acrylic.acrylic(10px, 1.4, 1.1);
     }
 
     .el-dropdown-menu {

@@ -67,14 +67,17 @@ defineExpose({ hide })
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .search-engine-menu {
   &.is-customized {
+    @include acrylic.acrylic;
+
+    --el-popper-border-radius: 10px;
+
     min-width: 210px;
     padding: 5px;
     background-color: var(--le-bg-color-overlay-opacity-30);
-    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
-
-    --el-popper-border-radius: 10px;
     transition: background-color var(--el-transition-duration-fast) ease;
   }
 

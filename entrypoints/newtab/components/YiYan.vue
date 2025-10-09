@@ -64,6 +64,8 @@ const isYiyanEnabled = computed(
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .yiyan {
   position: absolute;
   bottom: 100px;
@@ -102,7 +104,7 @@ const isYiyanEnabled = computed(
       background-color: var(--le-bg-color-overlay-opacity-60);
 
       &.yiyan--blur {
-        backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+        @include acrylic.acrylic;
       }
 
       .yiyan__extra {
@@ -136,15 +138,5 @@ const isYiyanEnabled = computed(
       width: 80%;
     }
   }
-}
-
-.v-enter-active,
-.v-leave-active {
-  transition: all var(--el-transition-duration-fast) ease-in-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
 }
 </style>

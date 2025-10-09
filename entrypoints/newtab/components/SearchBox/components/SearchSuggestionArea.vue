@@ -181,7 +181,11 @@ defineExpose({
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .search-suggestion-area {
+  @include acrylic.acrylic(30px);
+
   --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
 
   position: absolute;
@@ -191,7 +195,6 @@ defineExpose({
   font-size: var(--el-font-size-small);
   background-color: var(--le-bg-color-overlay-opacity-50);
   border-radius: 15px;
-  backdrop-filter: blur(30px) saturate(1.4) brightness(1.1);
   transition:
     height 0.1s var(--cubic-bezier),
     background-color var(--el-transition-duration-fast) ease,

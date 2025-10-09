@@ -1,3 +1,5 @@
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 body {
   --el-font-weight-primary: 400;
 }
@@ -28,8 +30,8 @@ body {
 }
 
 .el-notification {
+  @include acrylic.acrylic;
   background-color: var(--le-bg-color-overlay-opacity-20);
-  backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 
@@ -58,7 +60,7 @@ body {
 }
 
 .el-backtop {
-  backdrop-filter: blur(3px) saturate(1.4) brightness(1.1);
+  @include acrylic.acrylic(3px);
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 

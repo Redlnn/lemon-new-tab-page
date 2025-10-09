@@ -5,47 +5,58 @@
 @use './settings.scss';
 @use './search.scss';
 @use './color.scss';
+@use './mixins/acrylic.scss' as acrylic;
+@use './transitions.scss';
 
-* {
-  box-sizing: border-box;
-}
+/* 定义层级顺序：基础样式 -> 组件 -> 工具类 */
+@layer base, components, utilities;
 
-html {
-  background-color: var(--el-bg-color-page);
-  text-rendering: optimizeLegibility;
-  text-rendering: geometricPrecision;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
 
-html,
-body {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  font-family: var(--el-font-family);
-  font-size: var(--el-font-size-base);
-  color: var(--el-text-color-primary);
-}
+  html {
+    background-color: var(--el-bg-color-page);
+    text-rendering: optimizeLegibility;
+    text-rendering: geometricPrecision;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-.noselect {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  -khtml-user-select: none;
-  user-select: none;
-}
-
-html.dialog-transparent {
-  .el-message-box,
-  .base-dialog--opacity {
-    background-color: var(--le-bg-color-overlay-opacity-20);
+  html,
+  body {
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    font-family: var(--el-font-family);
+    font-size: var(--el-font-size-base);
+    color: var(--el-text-color-primary);
   }
 }
 
-html.dialog-acrylic {
-  .el-message-box,
-  .base-dialog--acrylic {
-    backdrop-filter: blur(10px) saturate(1.4) brightness(1.1);
+@layer components {
+  html.dialog-transparent {
+    .el-message-box,
+    .base-dialog--opacity {
+      background-color: var(--le-bg-color-overlay-opacity-20);
+    }
+  }
+
+  html.dialog-acrylic {
+    .el-message-box,
+    .base-dialog--acrylic {
+      @include acrylic.acrylic;
+    }
+  }
+}
+
+@layer utilities {
+  .noselect {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    user-select: none;
   }
 }
