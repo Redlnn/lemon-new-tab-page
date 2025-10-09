@@ -28,7 +28,13 @@ defineExpose({ hide })
     trigger="click"
     :disabled="!focusStore.isFocused"
     :show-arrow="false"
-    popper-class="search-engine-menu"
+    :popper-class="`search-engine-menu ${
+      !settingsStore.perf.disableSearchBarTransparent ? 'search-engine-menu--opacity' : ''
+    } ${
+      !(settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent)
+        ? 'search-engine-menu--blur'
+        : ''
+    }`"
     placement="bottom-start"
     effect="customized"
   >
@@ -71,14 +77,19 @@ defineExpose({ hide })
 
 .search-engine-menu {
   &.is-customized {
-    @include acrylic.acrylic;
-
     --el-popper-border-radius: 10px;
 
     min-width: 210px;
     padding: 5px;
-    background-color: var(--le-bg-color-overlay-opacity-30);
     transition: background-color var(--el-transition-duration-fast) ease;
+
+    &.search-engine-menu--opacity {
+      background-color: var(--le-bg-color-overlay-opacity-30);
+    }
+
+    &.search-engine-menu--blur {
+      @include acrylic.acrylic;
+    }
   }
 
   &__item {

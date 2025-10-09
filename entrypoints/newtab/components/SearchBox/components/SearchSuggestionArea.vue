@@ -34,7 +34,11 @@ const emit = defineEmits<{
 const areaClasses = computed(() => ({
   'search-suggestion-area--shadow': settingsStore.search.enableShadow,
   'search-suggestion-area--dark':
-    settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0
+    settingsStore.background.bgType === BgType.None && searchSuggestions.value.length > 0,
+  'search-suggestion-area--opacity': !settingsStore.perf.disableSearchBarTransparent,
+  'search-suggestion-area--blur': !(
+    settingsStore.perf.disableSearchBarBlur || settingsStore.perf.disableSearchBarTransparent
+  )
 }))
 
 const areaHeight = computed(() => {
@@ -184,8 +188,6 @@ defineExpose({
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
 .search-suggestion-area {
-  @include acrylic.acrylic(30px);
-
   --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
 
   position: absolute;
@@ -193,7 +195,14 @@ defineExpose({
   z-index: 1000;
   overflow: hidden;
   font-size: var(--el-font-size-small);
-  background-color: var(--le-bg-color-overlay-opacity-50);
+
+  &.search-suggestion-area--opacity {
+    background-color: var(--le-bg-color-overlay-opacity-50);
+  }
+
+  &.search-suggestion-area--blur {
+    @include acrylic.acrylic(30px);
+  }
   border-radius: 15px;
   transition:
     height 0.1s var(--cubic-bezier),

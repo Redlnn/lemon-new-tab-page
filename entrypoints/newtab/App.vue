@@ -294,7 +294,16 @@ function needHelp() {
     <background :url="bgURL" />
     <el-dropdown
       style="display: block"
-      popper-class="settings-icon__popper"
+      :popper-class="`settings-icon__popper ${
+        !settingsStore.perf.disableSettingsBtnTransparent ? 'settings-icon__popper--opacity' : ''
+      } ${
+        !(
+          settingsStore.perf.disableSettingsBtnBlur ||
+          settingsStore.perf.disableSettingsBtnTransparent
+        )
+          ? 'settings-icon__popper--blur'
+          : ''
+      }`"
       placement="top-end"
       trigger="click"
       @contextmenu.prevent.stop
@@ -414,8 +423,13 @@ function needHelp() {
 
   &__popper {
     &.el-popper {
-      @include acrylic.acrylic;
-      background-color: var(--le-bg-color-overlay-opacity-30);
+      &.settings-icon__popper--opacity {
+        background-color: var(--le-bg-color-overlay-opacity-30);
+      }
+
+      &.settings-icon__popper--blur {
+        @include acrylic.acrylic;
+      }
     }
 
     .el-dropdown-menu {

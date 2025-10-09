@@ -48,7 +48,6 @@
         margin-bottom: 8px;
 
         .shortcut__pin-icon {
-          @include acrylic.acrylic;
           position: absolute;
           right: -3px;
           bottom: -3px;
@@ -59,9 +58,16 @@
           width: 20px;
           height: 20px;
           color: var(--el-color-primary);
-          background-color: var(--le-bg-color-overlay-opacity-50);
           border-radius: 50%;
           box-shadow: var(--el-box-shadow-light);
+
+          &--opacity {
+            background-color: var(--le-bg-color-overlay-opacity-50);
+          }
+
+          &--blur {
+            @include acrylic.acrylic;
+          }
         }
 
         .shortcut__icon {
@@ -181,8 +187,13 @@
 }
 
 .shortcut__menu-popper.el-dropdown__popper.el-popper {
-  @include acrylic.acrylic;
-  background-color: var(--le-bg-color-overlay-opacity-30);
+  &.shortcut__menu-popper--opacity {
+    background-color: var(--le-bg-color-overlay-opacity-30);
+  }
+
+  &.shortcut__menu-popper--blur {
+    @include acrylic.acrylic;
+  }
 
   .el-dropdown-menu {
     background-color: initial;

@@ -25,7 +25,14 @@ defineProps<{
           v-if="
             pined && settingsStore.shortcut.showPinnedIcon && settingsStore.shortcut.enableTopSites
           "
-          class="shortcut__pin-icon"
+          :class="[
+            'shortcut__pin-icon',
+            !settingsStore.perf.disableShortcutTransparent && 'shortcut__pin-icon--opacity',
+            !(
+              settingsStore.perf.disableShortcutBlur ||
+              settingsStore.perf.disableShortcutTransparent
+            ) && 'shortcut__pin-icon--blur'
+          ]"
         >
           <el-icon size="15">
             <pin16-regular />
@@ -70,7 +77,13 @@ defineProps<{
       trigger="click"
       placement="bottom-end"
       size="small"
-      popper-class="shortcut__menu-popper"
+      :popper-class="`shortcut__menu-popper ${
+        !settingsStore.perf.disableShortcutTransparent ? 'shortcut__menu-popper--opacity' : ''
+      } ${
+        !(settingsStore.perf.disableShortcutBlur || settingsStore.perf.disableShortcutTransparent)
+          ? 'shortcut__menu-popper--blur'
+          : ''
+      }`"
     >
       <span class="shortcut__menu-icon">
         <el-icon>
