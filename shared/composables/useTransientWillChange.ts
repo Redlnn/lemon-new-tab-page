@@ -54,28 +54,11 @@ export function useTransientWillChange(options?: {
     let cleared = false
     const node = target
 
-    const onEnd = (e: TransitionEvent) => {
-      // if no propertyName, treat as all finished
-      if (!e.propertyName) {
-        clearAll()
-        return
-      }
-      const name = e.propertyName
-      if (pending.has(name)) {
-        pending.delete(name)
-      }
-      if (pending.size === 0) {
-        clearAll()
-      }
-    }
+    // 占位：稍后赋值，以便在 clearAll 中调用
+    let stopListener: () => void = () => {}
+    let timeoutStop: () => void = () => {}
 
-    const stopListener = useEventListener(target, 'transitionend', onEnd)
-
-    // fallback：如果 transitionend 没有触发，timeout 后强制清理
-    const { stop } = useTimeoutFn(() => {
-      clearAll()
-    }, timeout)
-
+    // 提前声明，便于阅读（回调中会引用该函数）
     const clearAll = () => {
       if (cleared) {
         return
@@ -95,7 +78,32 @@ export function useTransientWillChange(options?: {
         }
       } catch {}
       stopListener()
-      stop()
+      timeoutStop()
+    }
+
+    const onEnd = (e: TransitionEvent) => {
+      // if no propertyName, treat as all finished
+      if (!e.propertyName) {
+        clearAll()
+        return
+      }
+      const name = e.propertyName
+      if (pending.has(name)) {
+        pending.delete(name)
+      }
+      if (pending.size === 0) {
+        clearAll()
+      }
+    }
+
+    stopListener = useEventListener(target, 'transitionend', onEnd)
+
+    // fallback：如果 transitionend 没有触发，timeout 后强制清理
+    {
+      const { stop } = useTimeoutFn(() => {
+        clearAll()
+      }, timeout)
+      timeoutStop = stop
     }
   }
 
