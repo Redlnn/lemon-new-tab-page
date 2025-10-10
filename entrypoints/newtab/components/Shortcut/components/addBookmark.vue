@@ -55,7 +55,7 @@ async function add() {
     return
   }
   bookmarkStore.items.push({ ...data })
-  await saveBookmark(bookmarkStore)
+  await saveBookmark(bookmarkStore.$state)
   await props.reload()
   showDialog.value = false
   resetFields()

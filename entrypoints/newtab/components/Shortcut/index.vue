@@ -1,23 +1,25 @@
 <script setup lang="ts">
 import { onMounted, ref, watch } from 'vue'
-import { useDebounceFn, useWindowSize } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 
 import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { ClearRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
-import { useDraggable } from 'vue-draggable-plus'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
-import { bookmarkStorage, initBookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { bookmarkStorage, initBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
 
+import { useShortcutDrag } from '@newtab/composables/useShortcutDrag'
+import { useShortcutLayout } from '@newtab/composables/useShortcutLayout'
+import { useTopSitesMerge } from '@newtab/composables/useTopSitesMerge'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import { pinBookmark, removeBookmark } from './utils/bookmark'
-import { blockSite, getTopSites } from './utils/topSites'
+import { blockSite } from './utils/topSites'
 
 const { t } = useTranslation()
 
@@ -28,85 +30,68 @@ const bookmarkStore = useBookmarkStore()
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
-const { width: windowWidth } = useWindowSize()
+
+const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
 const shortcutContainerRef = ref()
-useDraggable(shortcutContainerRef, bookmarks, {
-  animation: 150,
-  handle: '.shortcut__item',
-  onUpdate() {
-    bookmarkStore.items = bookmarks.value
-    saveBookmark(bookmarkStore)
-  }
-})
-
-function getContainerWidth(num: number) {
-  const width =
-    num * (15 + settings.shortcut.iconSize + 15) + (num - 1) * settings.shortcut.itemMarginH
-  if (settings.shortcut.showShortcutContainerBg) {
-    return width + 40
-  }
-  return width
-}
+useShortcutDrag(shortcutContainerRef, bookmarks)
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 
 async function refresh() {
   await initBookmark()
-  // 先把书签单独存，避免计算过程直接对原 store 更改导致画面闪烁
+  // 拆分数据读取与布局计算，避免频繁响应写入
   const _bookmarks = bookmarkStore.items.slice()
-  let _topSites: TopSites.MostVisitedURL[] = []
 
+  // 1) 纯计算：基于窗口宽度与设置确定列数上限（fitColumns 可能大于实际项目数）
+  const fitColumns = computeFitColumns()
+
+  // 2) 首先保证“书签 + 添加按钮”可布局（不够就增加行数，已由 computeRowsGivenColumns 约束至上限）
+  const baseItemCount = _bookmarks.length + 1
+  const baseRows = computeNeededRows(baseItemCount, fitColumns)
+  // 初始容量（预留添加按钮）
+  let capacity = fitColumns * baseRows - 1
+
+  // 3) 合并最常访问：一次性基于“列*最大行 - 1”的容量进行去重与截断
+  let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.shortcut.enableTopSites) {
-    //如果 getTopSites() 返回 undefined，默认空数组
-    _topSites = (await getTopSites()) ?? []
-    topSites.value = []
+    const topList = await useTopSitesMerge({
+      bookmarks: _bookmarks,
+      columns: fitColumns,
+      maxRows: settings.shortcut.rows
+    })
+    mergedTop = topList
+    // 合并后的完整项目数（包含添加按钮）
+    const totalItems = _bookmarks.length + mergedTop.length + 1
 
-    if (_topSites.length > 0) {
-      // 拿到书签里的url，比对最常访问里有没有重复的，有就去掉
-      const bookmarkUrlsSet = new Set(_bookmarks.map((item) => item.url))
-      _topSites = _topSites.filter((site) => !bookmarkUrlsSet.has(site.url))
+    // 4) 最终列数不应超过实际项目数
+    const finalColumns = Math.min(fitColumns, totalItems)
+    if (columnsNum.value !== finalColumns) {
+      columnsNum.value = finalColumns
     }
-  }
 
-  // 计算快捷访问元素总数，为书签数+最常访问数+添加按钮
-  const _itemCount = _bookmarks.length + _topSites.length + 1
-
-  // 当元素总数少于设置中的列数时，使实际列数=元素总数
-  let _columnsCount = Math.min(settings.shortcut.columns, _itemCount)
-  // 遍历列数，计算小于多少列时，容器大小不会超出页面
-  const containerWidth = windowWidth.value * 0.85
-  for (let i = _columnsCount; i > 0; i--) {
-    if (getContainerWidth(i) < containerWidth) {
-      _columnsCount = i
-      break
+    // 5) 使用最终列数重新计算行数与容量，并对 TopSites 做最终截断
+    const finalRows = computeNeededRows(totalItems, finalColumns)
+    capacity = finalColumns * finalRows - 1
+    if (_bookmarks.length < capacity) {
+      mergedTop = mergedTop.slice(0, capacity - _bookmarks.length)
+    } else {
+      mergedTop = []
     }
-  }
-
-  columnsNum.value = _columnsCount
-  // 当项目数量小于等于设置的列数时，行数为1
-  // 否则计算实际需要的行数
-  if (_itemCount <= _columnsCount) {
-    rowsNum.value = 1
   } else {
-    // 讲元素总数÷实际列数（所需行数）与最大行数比较，取小的作为实际行数
-    rowsNum.value = Math.min(settings.shortcut.rows, Math.ceil(_itemCount / _columnsCount))
+    // 6) 未启用 TopSites，同样收敛列数至“书签 + 添加按钮”总数
+    const totalItems = _bookmarks.length + 1
+    const finalColumns = Math.min(fitColumns, totalItems)
+    if (columnsNum.value !== finalColumns) {
+      columnsNum.value = finalColumns
+    }
+    const finalRows = computeNeededRows(totalItems, finalColumns)
+    capacity = finalColumns * finalRows - 1
   }
 
-  // 定好行数和列数后才把书签上屏避免闪烁
   bookmarks.value = _bookmarks
-  // 计算实际可用的格子
-  const totalCellsNum = _columnsCount * rowsNum.value - 1
-  // 如果书签数量小于可用格子，就把最常访问填充剩余格子上屏
-  if (_bookmarks.length < totalCellsNum) {
-    topSites.value = _topSites.slice(0, totalCellsNum - _bookmarks.length)
-  } else {
-    topSites.value = []
-  }
+  topSites.value = _bookmarks.length < capacity ? mergedTop : []
 }
-
-const columnsNum = ref(0)
-const rowsNum = ref(settings.shortcut.rows)
 
 onMounted(async () => {
   await refreshDebounced()
@@ -114,7 +99,8 @@ onMounted(async () => {
 })
 
 watch(settings.shortcut, refreshDebounced)
-watch(() => windowWidth.value, refreshDebounced)
+watch(() => columnsNum.value, refreshDebounced)
+
 // 云同步导致书签变动时刷新
 bookmarkStorage.watch(refreshDebounced)
 </script>
@@ -174,7 +160,7 @@ bookmarkStorage.watch(refreshDebounced)
             @click="
               async () => {
                 await blockSite(site.url, refreshDebounced)
-                await refresh()
+                await refreshDebounced()
               }
             "
           >
