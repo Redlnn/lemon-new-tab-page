@@ -52,7 +52,6 @@ function isValidUrl(url: string) {
 async function add() {
   if (!isValidUrl(data.url)) {
     ElMessage.error(t('newtab:shortcut.addDialog.invalidUrlError'))
-    data.url = ''
     return
   }
   bookmarkStore.items.push({ ...data })
