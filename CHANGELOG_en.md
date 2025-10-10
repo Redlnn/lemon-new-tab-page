@@ -30,6 +30,9 @@
 - Removed obsolete code
 - Notifications now appear from the bottom
 - Adjust the positions of some options
+- Improved performance and code maintainability
+- Optimized configuration sync strategy
+- Expanded the effective scope of performance options
 
 ### Bug Fixes 🐛
 
