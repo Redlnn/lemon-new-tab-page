@@ -217,13 +217,11 @@ onMounted(async () => {
     try {
       const file = await useWallpaperStore.getItem<Blob>(settings.localBackground.id)
       if (file) {
-        // set size
         metaLight.value = { size: (file as File).size }
-        // read media meta
         readMediaMeta(file as File, (m) => {
           metaLight.value = { ...metaLight.value, ...m }
         })
-        // set mediaType if missing
+        // 如果没有 mediaType，则根据文件类型自动设置
         if (!settings.localBackground.mediaType) {
           settings.localBackground.mediaType = file.type.startsWith('video/') ? 'video' : 'image'
         }

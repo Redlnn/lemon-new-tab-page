@@ -11,7 +11,7 @@ export function useTransientWillChange(options?: {
   const propOpt = options?.property ?? 'transform'
   const timeout = options?.timeout ?? 1000
 
-  // normalize to array of properties
+  // 规范化为属性数组
   const normalizeProps = (p: string | string[]) => (Array.isArray(p) ? p.map(String) : [String(p)])
 
   const trigger = async (el?: Ref<HTMLElement | undefined>, property?: string | string[]) => {
@@ -27,7 +27,7 @@ export function useTransientWillChange(options?: {
 
     const props = normalizeProps(property ?? propOpt)
 
-    // If already contains all properties, skip
+    // 如果已包含所有属性，直接跳过
     const currentWill = (target.style.willChange || '')
       .split(',')
       .map((s) => s.trim())
@@ -39,19 +39,17 @@ export function useTransientWillChange(options?: {
       return
     }
 
-    // set will-change to include existing + needed
+    // 设置 will-change：保留已有并加入需要的属性
     const newWillSet = new Set<string>([...currentWill, ...needToAdd])
     target.style.willChange = [...newWillSet].join(', ')
 
-    // Wait for the next animation frame so callers can `await trigger(...)`
-    // to ensure the browser observes the new will-change before applying
-    // subsequent style/class changes. Using requestAnimationFrame is
-    // clearer than forcing layout via reading offsetHeight.
+    // 等待下一帧：使调用方可以 `await trigger(...)`，确保浏览器观测到 will-change
+    // 再应用后续样式/类变更。使用 requestAnimationFrame 比通过读取 offsetHeight 强制回流更明确
     try {
       await new Promise<void>((res) => requestAnimationFrame(() => res()))
     } catch {}
 
-    // pending set: properties that still need transitionend
+    // 待完成集合：仍需等待 transitionend 的属性
     const pending = new Set(needToAdd)
     let cleared = false
     const node = target
@@ -67,7 +65,7 @@ export function useTransientWillChange(options?: {
       }
       cleared = true
       try {
-        // remove only the properties we added; keep other will-change values
+        // 仅移除这次添加的属性；保留其他 will-change 的值
         const removeSet = new Set(needToAdd)
         const remain = (node.style.willChange || '')
           .split(',')
@@ -85,7 +83,7 @@ export function useTransientWillChange(options?: {
     }
 
     const onEnd = (e: TransitionEvent) => {
-      // if no propertyName, treat as all finished
+      // 如果没有 propertyName，视为全部完成
       if (!e.propertyName) {
         clearAll()
         return

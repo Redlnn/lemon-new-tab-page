@@ -47,11 +47,10 @@ async function confirmClearExtensionData() {
 
 async function clearExtensionData() {
   console.warn(t('newtab:settings.other.confirmPurgeData.purging'))
-  // Clear browser storage
+
   localStorage.clear()
   sessionStorage.clear()
 
-  // Clear all extension storage in parallel
   await Promise.all([
     useWallpaperStore.clear(),
     useDarkWallpaperStore.clear(),
@@ -123,7 +122,7 @@ function handleFileChange(event: Event) {
         } else {
           ElMessage.error('导入失败')
         }
-        // reset input so selecting the same file again will trigger change
+        // 重置 file input 以允许导入同一个文件
         if (fileInput.value) fileInput.value.value = ''
         resolve()
       }

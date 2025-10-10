@@ -45,8 +45,6 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
 
       try {
         let attempt = 0
-        // 至少尝试 1 次
-        // maxRetries 指额外重试次数
         while (true) {
           try {
             const list = await fetcher(text)

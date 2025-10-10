@@ -40,6 +40,10 @@ export function useShortcutLayout(): UseShortcutLayout {
     const unitWidth = settings.shortcut.iconSize + 30 + marginH // 每列占用的宽度（图标+两侧内边距+列间距）
     const extra = settings.shortcut.showShortcutContainerBg ? 40 : 0
 
+    // 假设有 n 列，则总宽度为 n * unitWidth - marginH + extra
+    // 其中 - marginH 是因为最后一列不需要右侧间距
+    // 要求这个总宽度小于等于 containerWidth
+    // 因此有不等式
     // n * unitWidth - marginH + extra < containerWidth
     // n < (containerWidth + marginH - extra) / unitWidth
     const raw = Math.floor((containerWidth + marginH - extra) / unitWidth)

@@ -1,4 +1,5 @@
 import { storage } from '#imports'
+
 import type { YiyanProviderKey, YiyanResult } from './providers'
 
 type YiyanCache = {
@@ -7,7 +8,7 @@ type YiyanCache = {
   ts: number
 }
 
-// use session driver via storage.defineItem
+// 使用 storage.defineItem 的会话级存储
 const KEY = 'session:lemon:yiyan:cache'
 const TTL = 10 * 1000 // 10 seconds
 

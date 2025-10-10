@@ -57,11 +57,11 @@ interface ViteHotContext {
   decline(): void
   invalidate(): void
 
-  // `InferCustomEventPayload` provides types for built-in Vite events
+  // `InferCustomEventPayload` 为内置 Vite 事件提供类型
   on<T extends string>(event: T, cb: (payload: InferCustomEventPayload<T>) => void): void
   send<T extends string>(event: T, data?: InferCustomEventPayload<T>): void
 }
 
-// Allow for virtual module imports
-// https://vitejs.dev/guide/api-plugin.html#virtual-modules-convention
+// 允许导入虚拟模块
+// 参考: https://vitejs.dev/guide/api-plugin.html#virtual-modules-convention
 declare module 'virtual:*'

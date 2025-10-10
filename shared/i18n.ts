@@ -21,8 +21,8 @@ function changeDocument() {
 const languageDetector = new LanguageDetector(null, { order: ['navigator'] })
 
 export const i18nInitPromise = i18next
-  // detect user language
-  // learn more: https://github.com/i18next/i18next-browser-languageDetector
+  // 检测用户语言
+  // 参考: https://github.com/i18next/i18next-browser-languageDetector
   .use(languageDetector)
   .use(resourcesToBackend((lng: string, ns: string) => import(`@/locales/${lng}/${ns}.json`)))
   .init({

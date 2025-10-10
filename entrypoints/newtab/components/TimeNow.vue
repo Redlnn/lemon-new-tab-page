@@ -23,7 +23,6 @@ function customMeridiem(hours: number) {
 }
 
 const timeNow = useNow({ interval: 1000 })
-// date doesn't need to update every second. update once per minute instead.
 const dateNow = useNow({ interval: 60 * 1000 })
 
 const formattedTime = computed(() => {

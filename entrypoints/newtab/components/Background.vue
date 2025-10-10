@@ -60,8 +60,7 @@ watch(
   () => focusStore.isFocused,
   async () => {
     await Promise.all([
-      // If video/image exist, ensure will-change is applied before DOM
-      // changes by awaiting the trigger (which waits for next rAF).
+      // 如果视频/图片存在，通过等待下一个 rAF触发确保在 DOM 变更之前应用 will-change。
       videoRef.value ? triggerWillChange(videoRef) : Promise.resolve(),
       imageRef.value ? triggerWillChange(imageRef) : Promise.resolve()
     ])

@@ -41,7 +41,8 @@ async function loadElementLocale(): Promise<Language> {
   if (loader) {
     return (await loader()).default
   }
-  // Fallback to zh-cn for unsupported zh locales
+
+  // 当遇到不支持的 zh 语言时，回退到 zh-cn
   return (await import('element-plus/es/locale/lang/zh-cn.mjs')).default
 }
 
@@ -221,10 +222,8 @@ watch(
   }
 )
 
-// Watch for background type changes
 watch(() => settings.background.bgType, updateBackgroundURL)
 
-// Watch for local background URL changes
 watch(
   () => settings.localBackground.url,
   async () => {
@@ -236,7 +235,6 @@ watch(
   }
 )
 
-// Watch for online background URL changes
 watch(
   () => settings.background.onlineUrl,
   async () => {

@@ -73,7 +73,7 @@ async function restoreBlockedSite(url: string) {
 
 function getFaviconURLChrome(url: string, size = '128') {
   const _url = new URL(chrome.runtime.getURL('/_favicon/'))
-  _url.searchParams.set('pageUrl', encodeURI(url)) // this encodes the URL as well
+  _url.searchParams.set('pageUrl', encodeURI(url)) // 同时对 URL 本身进行编码
   _url.searchParams.set('size', size)
   return _url.toString()
 }
