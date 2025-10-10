@@ -6,7 +6,7 @@ import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { convertBase64Svg } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getFaviconURLChrome } from '../utils/topSites'
+import { getFaviconURL } from '../utils/topSites'
 
 const settings = useSettingsStore()
 
@@ -61,7 +61,7 @@ defineProps<{
             v-else
             class="span"
             :style="{
-              backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURLChrome(url)})`
+              backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURL(url)})`
             }"
           ></span>
         </div>

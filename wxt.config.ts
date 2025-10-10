@@ -25,7 +25,10 @@ const baseManifest = {
     'https://suggestion.baidu.com/',
     'https://suggestqueries.google.com/',
     'https://v2.jinrishici.com/'
-  ]
+  ],
+  content_security_policy: {
+    extension_pages: "script-src 'self'; object-src 'none'; img-src 'self' https: data: blob:"
+  }
 }
 
 if (import.meta.env.DEV) {
