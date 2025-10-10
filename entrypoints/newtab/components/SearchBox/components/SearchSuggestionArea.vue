@@ -12,6 +12,8 @@ import { createSuggestRunner } from '@newtab/scripts/api/search/suggestRunner'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
 
+import SuggestListItem from './SuggestListItem.vue'
+
 const { t } = useTranslation()
 
 const focusStore = useFocusStore()
@@ -116,14 +118,6 @@ onUnmounted(() => {
 })
 
 function clearActiveSuggest() {
-  const suggestions = searchSuggestionArea.value?.children
-  if (!suggestions) {
-    return
-  }
-
-  for (const suggestion of suggestions) {
-    suggestion.classList.remove('active')
-  }
   currentActiveSuggest.value = null
 }
 
@@ -167,24 +161,15 @@ defineExpose({
       height: areaHeight
     }"
   >
-    <div
+    <suggest-list-item
       v-for="(item, index) in displayedSuggestions"
       :key="index"
-      class="search-suggestion-area__item noselect"
-      :class="{ 'search-suggestion-area__item--active': currentActiveSuggest === index }"
+      :text="item"
+      :active="currentActiveSuggest === index"
       @click="emit('doSearchWithText', item)"
-      @mouseover="
-        (e) => {
-          ;(e.target as HTMLDivElement).classList.add('search-suggestion-area__item--active')
-          currentActiveSuggest = index
-        }
-      "
-      @mouseout="
-        (e) => (e.target as HTMLDivElement).classList.remove('search-suggestion-area__item--active')
-      "
-    >
-      {{ item }}
-    </div>
+      @hover="currentActiveSuggest = index"
+      @leave="currentActiveSuggest = currentActiveSuggest === index ? null : currentActiveSuggest"
+    />
     <div
       v-show="isShowSearchHistories"
       ref="clearSearchHistory"
