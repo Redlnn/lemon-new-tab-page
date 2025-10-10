@@ -18,16 +18,16 @@ const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg', 'video/quic
  * @returns 是否为有效的图片文件
  */
 export function isImageFile(file: Blob, extraTypes: string[] = []): boolean {
-  const allowedTypes = [...ALLOWED_IMAGE_TYPES, ...extraTypes]
-  return allowedTypes.includes(file.type)
+  const allowedTypes = new Set([...ALLOWED_IMAGE_TYPES, ...extraTypes])
+  return allowedTypes.has(file.type)
 }
 
 /**
  * 检查文件是否为视频文件
  */
 export function isVideoFile(file: Blob, extraTypes: string[] = []): boolean {
-  const allowedTypes = [...ALLOWED_VIDEO_TYPES, ...extraTypes]
-  return allowedTypes.includes(file.type)
+  const allowedTypes = new Set([...ALLOWED_VIDEO_TYPES, ...extraTypes])
+  return allowedTypes.has(file.type)
 }
 
 /**

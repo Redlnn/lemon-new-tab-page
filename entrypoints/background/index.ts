@@ -31,7 +31,8 @@ async function processSyncQueue() {
     return
   }
 
-  const firstItem = syncQueue.shift()
+  // 避免 shift 造成 O(n) 移动，改为读取首元素并整体清空/复用索引
+  const firstItem = syncQueue[0]
   if (firstItem === undefined) {
     return
   }
@@ -44,7 +45,8 @@ async function processSyncQueue() {
   // 批量聚合：选取 lastUpdate 最大的项进行写入，丢弃旧项以减少 IO 次数
   let syncItem: SyncData = firstItem
   let aggregatedCount = 1
-  for (let i = 0, len = syncQueue.length; i < len; i++) {
+  // 跳过首元素
+  for (let i = 1, len = syncQueue.length; i < len; i++) {
     const next = syncQueue[i]!
     aggregatedCount += 1
     if (next.lastUpdate >= syncItem.lastUpdate) {
@@ -52,7 +54,7 @@ async function processSyncQueue() {
     }
   }
   // 清空队列中已被聚合的旧项（因为 syncItem 是全量快照，旧项没有继续保留的必要）
-  syncQueue.splice(0, syncQueue.length)
+  syncQueue.length = 0
   // 由于本地壁纸不同步且在线壁纸要重新由用户触发权限申请，所以重置回默认设置
   if ([BgType.Local, BgType.Online].includes(syncItem.settings.background.bgType)) {
     syncItem.settings.background.bgType = BgType.Bing

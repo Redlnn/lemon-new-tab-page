@@ -32,14 +32,16 @@ export function useTransientWillChange(options?: {
       .split(',')
       .map((s) => s.trim())
       .filter(Boolean)
-    const needToAdd = props.filter((p) => !currentWill.includes(p))
+    // 使用 Set 进行 O(1) 包含判断，避免在数组上多次 includes
+    const currentSet = new Set(currentWill)
+    const needToAdd = props.filter((p) => !currentSet.has(p))
     if (needToAdd.length === 0) {
       return
     }
 
     // set will-change to include existing + needed
-    const newWill = Array.from(new Set([...currentWill, ...needToAdd]))
-    target.style.willChange = newWill.join(', ')
+    const newWillSet = new Set<string>([...currentWill, ...needToAdd])
+    target.style.willChange = [...newWillSet].join(', ')
 
     // Wait for the next animation frame so callers can `await trigger(...)`
     // to ensure the browser observes the new will-change before applying
@@ -66,11 +68,12 @@ export function useTransientWillChange(options?: {
       cleared = true
       try {
         // remove only the properties we added; keep other will-change values
+        const removeSet = new Set(needToAdd)
         const remain = (node.style.willChange || '')
           .split(',')
           .map((s) => s.trim())
           .filter(Boolean)
-          .filter((v) => !needToAdd.includes(v))
+          .filter((v) => !removeSet.has(v))
         if (remain.length > 0) {
           node.style.willChange = remain.join(', ')
         } else {

@@ -54,12 +54,13 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
 }
 
 async function blockSite(url: string, reloadFunc: () => Promise<void>) {
-  const blockedTopStites = await blockedTopStitesStorage.getValue()
-  if (blockedTopStites.includes(url)) {
+  const list = await blockedTopStitesStorage.getValue()
+  const set = new Set(list)
+  if (set.has(url)) {
     return
   }
-  blockedTopStites.push(url)
-  await blockedTopStitesStorage.setValue(blockedTopStites)
+  set.add(url)
+  await blockedTopStitesStorage.setValue(Array.from(set))
   showBlockedMessage(url, reloadFunc)
 }
 
