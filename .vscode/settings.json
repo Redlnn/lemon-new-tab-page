@@ -40,7 +40,15 @@
       "approve": true,
       "matchCommandLine": true
     },
-    "pnpm -s lint:style": {
+    "pnpm -s lint": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm type-check": {
+      "approve": true,
+      "matchCommandLine": true
+    },
+    "pnpm lint": {
       "approve": true,
       "matchCommandLine": true
     }
