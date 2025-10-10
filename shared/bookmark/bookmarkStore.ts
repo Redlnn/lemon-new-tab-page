@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { toRaw } from 'vue'
 
 import { type Bookmark, bookmarkStorage, defaultBookmark } from './bookmarkStorage'
 
@@ -9,7 +10,8 @@ export async function initBookmark() {
 }
 
 export async function saveBookmark(bookmark: Bookmark) {
-  await bookmarkStorage.setValue({ items: Object.values(bookmark.items) })
+  const rawItems = toRaw(bookmark.items)
+  await bookmarkStorage.setValue({ items: Object.values(rawItems) })
 }
 
 export const useBookmarkStore = defineStore('bookmark', {

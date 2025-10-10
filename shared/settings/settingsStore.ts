@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { toRaw } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 import { browser } from 'wxt/browser'
@@ -76,7 +77,7 @@ export async function initSettings() {
 }
 
 export async function saveSettings(settings: CURRENT_CONFIG_INTERFACE) {
-  await settingsStorage.setValue(settings)
+  await settingsStorage.setValue(toRaw(settings))
 }
 
 export const useSettingsStore = defineStore('option', {
