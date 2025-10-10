@@ -7,6 +7,7 @@
 @use './color.scss';
 @use './mixins/acrylic.scss' as acrylic;
 @use './transitions.scss';
+@use './settings-btn.scss';
 
 * {
   box-sizing: border-box;
@@ -42,6 +43,13 @@ html.dialog-acrylic {
   .base-dialog--blur {
     @include acrylic.acrylic;
   }
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
 .noselect {

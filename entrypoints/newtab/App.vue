@@ -2,21 +2,13 @@
 import { onBeforeMount, onMounted, ref, watch } from 'vue'
 import { promiseTimeout, useDark } from '@vueuse/core'
 
-import { HeartFilled } from '@vicons/antd'
-import {
-  AccessTimeFilledRound,
-  HelpFilled,
-  InfoRound,
-  SearchRound,
-  SettingsRound
-} from '@vicons/material'
 import type { Language } from 'element-plus/es/locale'
 import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
+import SettingsBtn from '@/entrypoints/newtab/components/SettingsBtn.vue'
 import { getLang } from '@/shared/lang'
 import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
@@ -269,14 +261,6 @@ watch(isDark, async (darked) => {
   }
   switchStore.end()
 })
-
-function sponsorMessage() {
-  ElMessageBox.alert(t('newtab:sponsor'), '支持我们')
-}
-
-function needHelp() {
-  window.open('https://github.com/Redlnn/lemon-new-tab-page/issues/new')
-}
 </script>
 
 <template>
@@ -300,153 +284,15 @@ function needHelp() {
       <yi-yan />
     </main>
     <background :url="bgURL" />
-    <el-dropdown
-      style="display: block"
-      :popper-class="
-        getPerfClasses(
-          {
-            transparentOff: settings.perf.disableSettingsBtnTransparent,
-            blurOff: settings.perf.disableSettingsBtnBlur
-          },
-          'settings-icon__popper'
-        )
-      "
-      placement="top-end"
-      trigger="click"
-      @contextmenu.prevent.stop
-    >
-      <div
-        class="settings-icon"
-        :class="{
-          'settings-icon--tran': !settings.perf.disableSettingsBtnTransparent,
-          'settings-icon--blur': !(
-            settings.perf.disableSettingsBtnBlur || settings.perf.disableSettingsBtnTransparent
-          )
-        }"
-      >
-        <el-badge is-dot :offset="[3, 0]" :hidden="settings.readChangeLog">
-          <el-icon><settings-round /></el-icon>
-        </el-badge>
-      </div>
-      <template #dropdown>
-        <el-dropdown-menu>
-          <el-dropdown-item @click="SettingsPageRef?.toggle">
-            <el-icon :size="17"><settings-round /></el-icon>
-            <span>{{ t('newtab:settings.title') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item @click="SESwitcherRef?.show">
-            <el-icon :size="17"><search-round /></el-icon>
-            <span>{{ t('newtab:menu.searchEnginePreference') }}</span>
-          </el-dropdown-item>
-          <el-badge is-dot :offset="[-3, 17]" :hidden="settings.readChangeLog" style="width: 100%">
-            <el-dropdown-item divided @click="ChangelogRef?.show">
-              <el-icon :size="17"><access-time-filled-round /></el-icon>
-              <span>{{ t('newtab:changelog.title') }}</span>
-            </el-dropdown-item>
-          </el-badge>
-          <el-dropdown-item @click="needHelp">
-            <el-icon :size="17"><help-filled /></el-icon>
-            <span>{{ t('newtab:menu.help') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item @click="sponsorMessage">
-            <el-icon :size="17"><heart-filled /></el-icon>
-            <span>{{ t('newtab:menu.sponsor') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item divided @click="AboutRef?.toggle">
-            <el-icon :size="17"><info-round /></el-icon>
-            <span>{{ t('newtab:menu.about') }}</span>
-          </el-dropdown-item>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+    <settings-btn
+      @open-settings="SettingsPageRef?.toggle"
+      @open-changelog="ChangelogRef?.show"
+      @open-about="AboutRef?.toggle"
+      @open-search-engine-preference="SESwitcherRef?.show"
+    />
     <settings-page ref="SettingsPageRef" />
     <Changelog ref="ChangelogRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />
   </el-config-provider>
 </template>
-
-<style lang="scss">
-@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
-
-.app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-}
-
-.settings-icon {
-  position: fixed;
-  right: 30px;
-  bottom: 20px;
-  height: calc(1em + 12px);
-  padding: 6px;
-  font-size: 25px;
-  line-height: 1em;
-  color: var(--el-text-color-secondary);
-  cursor: pointer;
-  background-color: var(--el-bg-color-overlay);
-  border-radius: 50%;
-  transition:
-    color 0.1s ease,
-    background-color var(--el-transition-duration-fast) ease;
-
-  &--blur {
-    @include acrylic.acrylic;
-  }
-
-  &--tran {
-    color: var(--le-text-color-primary-opacity-65);
-    background-color: var(--le-bg-color-overlay-opacity-60);
-
-    &:hover {
-      background-color: var(--el-bg-color-overlay);
-    }
-  }
-
-  .el-icon {
-    transition: transform 0.15s ease;
-  }
-
-  .el-badge {
-    display: block;
-  }
-
-  &:hover {
-    color: var(--el-color-primary);
-    box-shadow: var(--el-box-shadow-lighter);
-
-    .el-icon {
-      transform: rotate(180deg);
-    }
-  }
-
-  &__popper {
-    &.el-popper {
-      &.settings-icon__popper--opacity {
-        background-color: var(--le-bg-color-overlay-opacity-30);
-      }
-
-      &.settings-icon__popper--blur {
-        @include acrylic.acrylic;
-      }
-    }
-
-    .el-dropdown-menu {
-      padding: 8px 10px;
-      background-color: transparent;
-    }
-
-    .el-dropdown-menu__item {
-      padding: 5px 18px 5px 10px;
-      font-size: var(--el-font-size-extra-small);
-      border-radius: 6px;
-
-      .el-icon {
-        margin-right: 10px;
-      }
-    }
-  }
-}
-</style>
