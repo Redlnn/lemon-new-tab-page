@@ -8,11 +8,11 @@ import { browser } from 'wxt/browser'
 
 import { version } from '@/package.json'
 
+import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { useDialog } from '@newtab/composables/useDialog'
 
 const { t } = useTranslation()
 

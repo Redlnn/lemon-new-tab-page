@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
+import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
+
 import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { useDialog } from '@newtab/composables/useDialog'
 
 import BackgroundSettings from './Settings/BackgroundSettings.vue'
 import ClockSettings from './Settings/ClockSettings.vue'

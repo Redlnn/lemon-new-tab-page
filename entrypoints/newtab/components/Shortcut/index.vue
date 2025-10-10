@@ -8,12 +8,12 @@ import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
+import { useShortcutDrag } from '@/entrypoints/newtab/components/Shortcut/composables/useShortcutDrag'
+import { useShortcutLayout } from '@/entrypoints/newtab/components/Shortcut/composables/useShortcutLayout'
+import { useTopSitesMerge } from '@/entrypoints/newtab/components/Shortcut/composables/useTopSitesMerge'
 import { bookmarkStorage, initBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
 
-import { useShortcutDrag } from '@newtab/composables/useShortcutDrag'
-import { useShortcutLayout } from '@newtab/composables/useShortcutLayout'
-import { useTopSitesMerge } from '@newtab/composables/useTopSitesMerge'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'

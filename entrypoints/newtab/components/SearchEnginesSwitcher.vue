@@ -2,10 +2,10 @@
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 import { useTranslation } from 'i18next-vue'
 
+import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { useDialog } from '@newtab/composables/useDialog'
 import { searchEngines } from '@newtab/scripts/api/search'
 
 const { t } = useTranslation()

@@ -6,11 +6,10 @@ import { AddRound } from '@vicons/material'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
+import { useFaviconUpload } from '@/entrypoints/newtab/components/Shortcut/composables/useFaviconUpload'
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
-
-import { useFaviconUpload } from '@newtab/composables/useFaviconUpload'
 
 const { t } = useTranslation()
 

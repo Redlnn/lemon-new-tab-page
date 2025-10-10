@@ -3,11 +3,11 @@ import { defineAsyncComponent, onMounted } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
+import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
 import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { useDialog } from '@newtab/composables/useDialog'
 
 const { t } = useTranslation()
 
