@@ -3,14 +3,14 @@ import { reactive, ref } from 'vue'
 
 import { Plus } from '@vicons/fa'
 import { AddRound } from '@vicons/material'
-import DOMPurify from 'dompurify'
-import type { FormInstance, UploadProps, UploadRequestOptions } from 'element-plus'
+import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { getPerfClasses } from '@/shared/composables/perfClasses'
-import { convertBase64Svg, isImageFile } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
+
+import { useFaviconUpload } from '@newtab/composables/useFaviconUpload'
 
 const { t } = useTranslation()
 
@@ -32,6 +32,8 @@ const data: {
   title: '',
   favicon: ''
 })
+
+const { beforeFaviconUpload, httpRequest } = useFaviconUpload({ maxKB: 100 })
 
 function resetFields() {
   modelForm.value?.resetFields()
@@ -64,65 +66,6 @@ async function add() {
 async function cancel() {
   showDialog.value = false
   resetFields()
-}
-
-async function uploadFavicon(file: File) {
-  // 转为base64
-  const reader = new FileReader()
-  reader.readAsDataURL(file)
-  reader.onloadend = () => {
-    let res = reader.result as string
-    if (res.startsWith('data:image/svg+xml')) {
-      res = DOMPurify.sanitize(convertBase64Svg(res), {
-        USE_PROFILES: { svg: true, svgFilters: true }
-      })
-      // 处理非 ASCII 字符，确保 UTF-8 安全
-      const utf8 = encodeURIComponent(res).replace(/%([0-9A-F]{2})/g, (_, p1) =>
-        String.fromCharCode(parseInt(p1, 16))
-      )
-      res = `data:image/svg+xml;base64,${btoa(utf8)}`
-    }
-    data.favicon = res
-  }
-}
-
-async function confirmSvgUpload() {
-  try {
-    await ElMessageBox.confirm(
-      t('newtab:shortcut.addDialog.confirmSvgDesc'),
-      t('newtab:shortcut.addDialog.confirmSvgTitle'),
-      {
-        confirmButtonText: t('newtab:shortcut.addDialog.confirmSvgOKBtn'),
-        cancelButtonText: t('newtab:shortcut.addDialog.confirmSvgCancelBtn'),
-        closeOnClickModal: false,
-        closeOnPressEscape: false,
-        showClose: false,
-        type: 'warning'
-      }
-    )
-    return true
-  } catch {
-    return false
-  }
-}
-
-const beforeFaviconUpload: UploadProps['beforeUpload'] = async (rawFile) => {
-  if (!isImageFile(rawFile, ['x-icon', 'svg+xml'])) {
-    ElMessage.error(t('newtab:settings.background.warning.fileIsNotImage'))
-    return false
-  }
-  if (isSvg(rawFile)) {
-    return await confirmSvgUpload()
-  }
-  if (rawFile.size / 1024 > 100) {
-    ElMessage.error(t('newtab:shortcut.addDialog.tooLargeImageError'))
-    return false
-  }
-  return true
-}
-
-function isSvg(file: Blob) {
-  return file.type.endsWith('svg+xml')
 }
 </script>
 
@@ -175,7 +118,9 @@ function isSvg(file: Blob) {
         <el-upload
           class="shortcut__favicon-uploader"
           :show-file-list="false"
-          :http-request="(option: UploadRequestOptions) => uploadFavicon(option.file)"
+          :http-request="
+            (option: UploadRequestOptions) => httpRequest(option, (b64) => (data.favicon = b64))
+          "
           :before-upload="beforeFaviconUpload"
           accept="image/*"
         >
