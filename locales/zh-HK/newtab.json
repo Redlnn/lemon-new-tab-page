@@ -78,7 +78,7 @@
       "blinkingColon": "閃爍時間分隔符",
       "blinkingTip": "關閉可減輕持續嘅 GPU 使用",
       "enableShadow": "顯示陰影",
-      "invertColorDark": "【時鐘】深色模式下使用淺色文字",
+      "invertColorDark": "【時鐘】深色模式下使用深色文字",
       "invertColorLight": "【時鐘】淺色模式下使用深色文字",
       "showAMPM": "顯示「上午／下午」",
       "showDate": "顯示日期",

@@ -78,7 +78,7 @@
       "blinkingColon": "Blinking colon",
       "blinkingTip": "Turning this off can reduce sustained GPU usage.",
       "enableShadow": "Show shadow",
-      "invertColorDark": "[Clock] Use light text in dark mode",
+      "invertColorDark": "[Clock] Use dark text in dark mode",
       "invertColorLight": "[Clock] Use dark text in light mode",
       "showAMPM": "Show AM/PM",
       "showDate": "Show date",
@@ -183,7 +183,7 @@
       "description": "Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!",
       "enableShadow": "Show shadow",
       "enabled": "Enable",
-      "invertColorDark": "[Quote] Use light text in dark mode",
+      "invertColorDark": "[Quote] Use dark text in dark mode",
       "invertColorLight": "[Quote] Use dark text in light mode",
       "normalyShowTip": "When disabled, only show when the search box is focused.",
       "title": "Quote"

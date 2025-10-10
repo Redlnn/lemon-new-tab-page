@@ -78,7 +78,7 @@
       "blinkingColon": "闪烁时间分隔符",
       "blinkingTip": "关闭可缓解持续性的 GPU 占用",
       "enableShadow": "显示阴影",
-      "invertColorDark": "【时钟】深色模式下使用浅色文字",
+      "invertColorDark": "【时钟】深色模式下使用深色文字",
       "invertColorLight": "【时钟】浅色模式下使用深色文字",
       "showAMPM": "显示「上午 / 下午」",
       "showDate": "显示日期",
@@ -183,7 +183,7 @@
       "description": "/",
       "enableShadow": "显示阴影",
       "enabled": "启用",
-      "invertColorDark": "【一言】深色模式下使用浅色文字",
+      "invertColorDark": "【一言】深色模式下使用深色文字",
       "invertColorLight": "【一言】浅色模式下使用深色文字",
       "normalyShowTip": "关闭时仅在搜索框聚焦时显示",
       "title": "一言"
