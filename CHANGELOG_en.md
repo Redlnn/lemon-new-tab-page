@@ -18,6 +18,7 @@
 - Revised and expanded preset color schemes with added color names
 - Replaced changelog pop-up with bottom toast notifications to reduce interruptions during frequent updates
 - Added red dot indicator at the bottom-right corner to show unread changelog updates
+- Added automatic favicon fetching for shortcuts on Firefox (mostly ineffective due to cross-origin restrictions)
 
 ### Improvements ⚡️
 
@@ -33,6 +34,7 @@
 - Improved performance and code maintainability
 - Optimized configuration sync strategy
 - Expanded the effective scope of performance options
+- Input field no longer clears when adding a shortcut with an invalid URL
 
 ### Bug Fixes 🐛
 
@@ -41,6 +43,7 @@
 - Fixed incorrect style of the custom shortcut icon upload button
 - Fixed a missing translation
 - Fixed an issue where the config version might not update in time
+- Fixed issue where bookmarks could not be saved on Firefox (#37)
 
 ## 2.4.1 (Sep 30, 2025)
 
