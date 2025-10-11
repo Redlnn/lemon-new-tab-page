@@ -1,7 +1,7 @@
 {
   "name": "lemon-tab-page",
   "private": true,
-  "version": "2.4.1",
+  "version": "2.5.0",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -44,10 +44,10 @@
   "devDependencies": {
     "@prettier/plugin-oxc": "^0.0.4",
     "@tsconfig/node24": "^24.0.1",
-    "@types/chrome": "^0.1.22",
+    "@types/chrome": "^0.1.24",
     "@types/lodash": "^4.17.20",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^24.7.1",
+    "@types/node": "^24.7.2",
     "@types/webextension-polyfill": "^0.12.4",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/eslint-config-prettier": "^10.2.0",
