@@ -37,6 +37,7 @@
 - Optimized configuration sync strategy
 - Expanded the effective scope of performance options
 - Input field no longer clears when adding a shortcut with an invalid URL
+- Less frequently used pages have been changed to dynamic imports to reduce memory usage and speed up loading times
 
 ### Bug Fixes 🐛
 

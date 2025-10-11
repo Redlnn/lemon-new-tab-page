@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { onBeforeMount, onMounted, ref, watch } from 'vue'
+import { defineAsyncComponent, onBeforeMount, onMounted, ref, watch } from 'vue'
 import { promiseTimeout, useDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'
@@ -14,12 +14,12 @@ import { verifyImageUrl } from '@/shared/media'
 import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
-import AboutComp from '@newtab/components/About.vue'
+import type AboutCompComponent from '@newtab/components/About.vue'
 import Background from '@newtab/components/Background.vue'
-import Changelog from '@newtab/components/Changelog.vue'
+import type ChangelogComponent from '@newtab/components/Changelog.vue'
 import SearchBox from '@newtab/components/SearchBox/index.vue'
-import SearchEnginesSwitcher from '@newtab/components/SearchEnginesSwitcher.vue'
-import SettingsPage from '@newtab/components/SettingsPage/index.vue'
+import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher.vue'
+import type SettingsPageComponent from '@newtab/components/SettingsPage/index.vue'
 import Shortcut from '@newtab/components/Shortcut/index.vue'
 import TimeNow from '@newtab/components/TimeNow.vue'
 import YiYan from '@newtab/components/YiYan.vue'
@@ -64,13 +64,26 @@ const onLngChanged = async (lng: string) => {
 }
 i18next.on('languageChanged', onLngChanged)
 
+const SettingsPage = defineAsyncComponent(() => import('@newtab/components/SettingsPage/index.vue'))
+const Changelog = defineAsyncComponent(() => import('@newtab/components/Changelog.vue'))
+const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vue'))
+const SearchEnginesSwitcher = defineAsyncComponent(
+  () => import('@newtab/components/SearchEnginesSwitcher.vue')
+)
+
+type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>
+type ChangelogInstance = InstanceType<typeof ChangelogComponent>
+type AboutCompInstance = InstanceType<typeof AboutCompComponent>
+type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
+
+const SettingsPageRef = ref<SettingsPageInstance>()
+const ChangelogRef = ref<ChangelogInstance>()
+const AboutRef = ref<AboutCompInstance>()
+const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
+
 const isDark = useDark()
 const settings = useSettingsStore()
 const switchStore = useBgSwtichStore()
-const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
-const ChangelogRef = ref<InstanceType<typeof Changelog>>()
-const AboutRef = ref<InstanceType<typeof AboutComp>>()
-const SESwitcherRef = ref<InstanceType<typeof SearchEnginesSwitcher>>()
 const bgURL = ref('')
 
 interface BgURLProvider {
