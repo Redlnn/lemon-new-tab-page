@@ -10,8 +10,8 @@ export async function initBookmark() {
 }
 
 export async function saveBookmark(bookmark: Bookmark) {
-  const rawItems = toRaw(bookmark.items)
-  await bookmarkStorage.setValue({ items: Object.values(rawItems) })
+  const rawItems = bookmark.items.map((item) => toRaw(item))
+  await bookmarkStorage.setValue({ items: rawItems })
 }
 
 export const useBookmarkStore = defineStore('bookmark', {
