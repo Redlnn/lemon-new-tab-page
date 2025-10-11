@@ -78,21 +78,4 @@ function getFaviconURLChrome(url: string, size = '128') {
   return _url.toString()
 }
 
-// 跨浏览器的 favicon 获取：
-// - Chrome/Edge：使用内部 /_favicon/ 端点
-// - Firefox：没有等价端点，回退到站点根的 /favicon.ico（大多数站点可用）
-function getFaviconURL(url: string, size = '128') {
-  if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    return getFaviconURLChrome(url, size)
-  }
-  if (import.meta.env.FIREFOX) {
-    try {
-      return new URL('/favicon.ico', url).toString()
-    } catch {
-      return ''
-    }
-  }
-  return ''
-}
-
-export { blockSite, getFaviconURL, getFaviconURLChrome, getTopSites }
+export { blockSite, getFaviconURLChrome, getTopSites }

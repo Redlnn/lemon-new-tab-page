@@ -27,7 +27,7 @@ const baseManifest = {
     'https://v2.jinrishici.com/'
   ],
   content_security_policy: {
-    extension_pages: "script-src 'self'; object-src 'none'; img-src 'self' https: data: blob:"
+    extension_pages: "script-src 'self'; object-src 'none'; img-src 'self' https: http: data: blob:"
   }
 }
 

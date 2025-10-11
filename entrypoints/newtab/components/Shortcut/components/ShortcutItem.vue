@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
+
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 
@@ -6,20 +8,49 @@ import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { convertBase64Svg } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getFaviconURL } from '../utils/topSites'
+import { getFaviconURLChrome } from '../utils/topSites'
 
 const settings = useSettingsStore()
 
-defineProps<{
+const props = defineProps<{
   url: string
   title: string
   pined?: boolean
   favicon?: string
 }>()
+
+const fallbackIcon = '/favicon.png'
+const iconUrl = ref(fallbackIcon)
+
+watch(
+  () => props,
+  () => {
+    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+      iconUrl.value = props.favicon || getFaviconURLChrome(props.url)
+    } else {
+      const primary = props.favicon || new URL('/favicon.ico', props.url).toString()
+
+      if (!primary) {
+        iconUrl.value = fallbackIcon
+        return
+      }
+
+      const img = new Image()
+      img.onload = () => {
+        iconUrl.value = primary
+      }
+      img.onerror = () => {
+        iconUrl.value = fallbackIcon
+      }
+      img.src = primary
+    }
+  },
+  { immediate: true, deep: true }
+)
 </script>
 
 <template>
-  <div class="shortcut__item">
+  <div class="shortcut__item" :class="[{ pined: pined }]">
     <a class="shortcut__item-link" :href="url">
       <div class="shortcut__icon-container">
         <div
@@ -53,7 +84,7 @@ defineProps<{
           "
         >
           <span
-            v-if="!!favicon && favicon.startsWith('data:image/svg+xml')"
+            v-if="favicon && favicon.startsWith('data:image/svg+xml')"
             v-html="convertBase64Svg(favicon as string)"
             class="span"
           ></span>
@@ -61,7 +92,7 @@ defineProps<{
             v-else
             class="span"
             :style="{
-              backgroundImage: favicon ? `url(${favicon})` : `url(${getFaviconURL(url)})`
+              backgroundImage: `url(${iconUrl})`
             }"
           ></span>
         </div>
