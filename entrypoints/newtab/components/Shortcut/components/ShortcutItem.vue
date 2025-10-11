@@ -23,29 +23,29 @@ const fallbackIcon = '/favicon.png'
 const iconUrl = ref(fallbackIcon)
 
 watch(
-  () => props,
-  () => {
+  () => ({ url: props.url, favicon: props.favicon, title: props.title }),
+  ({ url, favicon }) => {
     if (import.meta.env.CHROME || import.meta.env.EDGE) {
-      iconUrl.value = props.favicon || getFaviconURLChrome(props.url)
-    } else {
-      const primary = props.favicon || new URL('/favicon.ico', props.url).toString()
-
-      if (!primary) {
-        iconUrl.value = fallbackIcon
-        return
-      }
-
-      const img = new Image()
-      img.onload = () => {
-        iconUrl.value = primary
-      }
-      img.onerror = () => {
-        iconUrl.value = fallbackIcon
-      }
-      img.src = primary
+      iconUrl.value = favicon || getFaviconURLChrome(url)
+      return
     }
+
+    const primary = favicon || new URL('/favicon.ico', url).toString()
+    if (!primary) {
+      iconUrl.value = fallbackIcon
+      return
+    }
+
+    const img = new Image()
+    img.onload = () => {
+      iconUrl.value = primary
+    }
+    img.onerror = () => {
+      iconUrl.value = fallbackIcon
+    }
+    img.src = primary
   },
-  { immediate: true, deep: true }
+  { immediate: true }
 )
 </script>
 

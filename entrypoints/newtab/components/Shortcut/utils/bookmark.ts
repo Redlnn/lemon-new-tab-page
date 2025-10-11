@@ -11,11 +11,7 @@ export async function removeBookmark(
   refresh: () => Promise<void>
 ) {
   const { url, title, favicon } = store.items[index]!
-  if (store.items.length > 1) {
-    store.items = store.items.filter((_, i) => i !== index)
-  } else {
-    store.items = []
-  }
+  store.items.splice(index, 1)
   await saveBookmark(store.$state)
   await refresh()
   ElMessage.success({

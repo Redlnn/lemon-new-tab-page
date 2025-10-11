@@ -55,19 +55,20 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
 
 async function blockSite(url: string, reloadFunc: () => Promise<void>) {
   const list = await blockedTopStitesStorage.getValue()
-  const set = new Set(list)
-  if (set.has(url)) {
+  if (list.includes(url)) {
     return
   }
-  set.add(url)
-  await blockedTopStitesStorage.setValue(Array.from(set))
+  await blockedTopStitesStorage.setValue([...list, url])
   showBlockedMessage(url, reloadFunc)
 }
 
 async function restoreBlockedSite(url: string) {
-  const blockedTopStites = new Set(await blockedTopStitesStorage.getValue())
-  if (blockedTopStites.delete(url)) {
-    await blockedTopStitesStorage.setValue(Array.from(blockedTopStites))
+  const list = await blockedTopStitesStorage.getValue()
+  const index = list.indexOf(url)
+  if (index !== -1) {
+    const next = list.slice()
+    next.splice(index, 1)
+    await blockedTopStitesStorage.setValue(next)
   }
 }
 
