@@ -16,7 +16,7 @@
 
 - Added option to "Apply theme color to more elements"
 - Revised and expanded preset color schemes with added color names
-- Replaced changelog pop-up with bottom toast notifications to reduce interruptions during frequent updates
+- For minor version updates, replaced changelog pop-up with a bottom notification message to avoid frequent interruptions
 - Added red dot indicator at the bottom-right corner to show unread changelog updates
 - Added automatic favicon fetching for shortcuts on Firefox (mostly ineffective due to cross-origin restrictions)
 - Support editing pinned shortcuts

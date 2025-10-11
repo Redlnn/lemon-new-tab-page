@@ -3,6 +3,8 @@ import { defineAsyncComponent, onMounted } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
+import { version } from '@/package.json'
+
 import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
 import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
@@ -22,8 +24,9 @@ onMounted(async () => {
 })
 
 function handleClose() {
-  // useSettingsStore().pluginVersion = version
-  useSettingsStore().readChangeLog = true
+  const settings = useSettingsStore()
+  settings.pluginVersion = version
+  settings.readChangeLog = true
 }
 </script>
 
