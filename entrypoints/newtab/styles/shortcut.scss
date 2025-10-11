@@ -126,8 +126,8 @@
             border-radius: 3px;
 
             svg {
-              width: 30px;
-              height: 30px;
+              width: calc(var(--icon_size) / 2);
+              height: calc(var(--icon_size) / 2);
             }
           }
         }
