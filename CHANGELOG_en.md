@@ -20,6 +20,7 @@
 - Added red dot indicator at the bottom-right corner to show unread changelog updates
 - Added automatic favicon fetching for shortcuts on Firefox (mostly ineffective due to cross-origin restrictions)
 - Support editing pinned shortcuts
+- Added automatic favicon fetching on Firefox (mostly defaults due to cross-origin restrictions)
 
 ### Improvements ⚡️
 
@@ -45,6 +46,8 @@
 - Fixed a missing translation
 - Fixed an issue where the config version might not update in time
 - Fixed issue where bookmarks could not be saved on Firefox (#37)
+- Fixed issue where dragging non-pinned shortcuts caused the shortcut area to disappear
+- Fixed misalignment issue when using SVG for custom shortcut icons
 
 ## 2.4.1 (Sep 30, 2025)
 

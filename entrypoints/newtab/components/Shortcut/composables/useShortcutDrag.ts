@@ -11,7 +11,7 @@ export function useShortcutDrag(
   const bookmarkStore = useBookmarkStore()
   useDraggable(containerRef, bookmarks, {
     animation: 150,
-    handle: '.shortcut__item',
+    handle: '.shortcut__item.pined',
     onUpdate() {
       bookmarkStore.items = bookmarks.value
       saveBookmark(bookmarkStore.$state)
