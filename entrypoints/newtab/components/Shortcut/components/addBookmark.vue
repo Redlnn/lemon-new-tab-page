@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 
 import { Plus } from '@vicons/fa'
 import { AddRound } from '@vicons/material'
@@ -22,6 +22,7 @@ const props = defineProps<{
 }>()
 const getFaviconAuto = ref(true)
 const showDialog = ref(false)
+const editingIndex = ref<number | null>(null)
 const data: {
   url: string
   title: string
@@ -34,10 +35,42 @@ const data: {
 
 const { beforeFaviconUpload, httpRequest } = useFaviconUpload({ maxKB: 100 })
 
+const isEditing = computed(() => editingIndex.value !== null)
+const dialogTitle = computed(() =>
+  t(
+    isEditing.value
+      ? 'newtab:shortcut.editDialog.dialogTitle'
+      : 'newtab:shortcut.addDialog.dialogTitle'
+  )
+)
+const confirmLabel = computed(() =>
+  t(isEditing.value ? 'newtab:shortcut.editDialog.confirm' : 'newtab:shortcut.addDialog.confirm')
+)
+
 function resetFields() {
   modelForm.value?.resetFields()
   Object.assign(data, { url: '', title: '', favicon: '' })
   getFaviconAuto.value = true
+  editingIndex.value = null
+}
+
+function openAddDialog() {
+  resetFields()
+  showDialog.value = true
+}
+
+function openEditDialog(index: number) {
+  const target = bookmarkStore.items[index]
+  if (!target) return
+  modelForm.value?.resetFields()
+  editingIndex.value = index
+  Object.assign(data, {
+    url: target.url,
+    title: target.title,
+    favicon: target.favicon ?? ''
+  })
+  getFaviconAuto.value = !target.favicon
+  showDialog.value = true
 }
 
 function isValidUrl(url: string) {
@@ -49,12 +82,21 @@ function isValidUrl(url: string) {
   }
 }
 
-async function add() {
+async function submit() {
   if (!isValidUrl(data.url)) {
     ElMessage.error(t('newtab:shortcut.addDialog.invalidUrlError'))
     return
   }
-  bookmarkStore.items.push({ ...data })
+  const bookmark = {
+    url: data.url.trim(),
+    title: data.title.trim(),
+    ...(getFaviconAuto.value || !data.favicon ? {} : { favicon: data.favicon })
+  }
+  if (isEditing.value && editingIndex.value !== null) {
+    bookmarkStore.items.splice(editingIndex.value, 1, bookmark)
+  } else {
+    bookmarkStore.items.push(bookmark)
+  }
   await saveBookmark(bookmarkStore.$state)
   await props.reload()
   showDialog.value = false
@@ -65,11 +107,15 @@ async function cancel() {
   showDialog.value = false
   resetFields()
 }
+
+defineExpose({
+  openEditDialog
+})
 </script>
 
 <template>
   <div class="shortcut__item shortcut__item--add-bookmark">
-    <div class="shortcut__item-link" style="cursor: pointer" @click="showDialog = true">
+    <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
       <div class="shortcut__icon-container">
         <div
           class="shortcut__icon"
@@ -93,7 +139,7 @@ async function cancel() {
   </div>
   <el-dialog
     v-model="showDialog"
-    :title="t('newtab:shortcut.addDialog.dialogTitle')"
+    :title="dialogTitle"
     class="base-dialog--blur base-dialog--opacity"
     :style="{
       padding: '30px 50px'
@@ -107,7 +153,7 @@ async function cancel() {
         <el-input v-model="data.title" />
       </el-form-item>
       <el-form-item :label="t('newtab:shortcut.addDialog.url')">
-        <el-input v-model="data.url" @keyup.enter="add" />
+        <el-input v-model="data.url" @keyup.enter="submit" />
       </el-form-item>
       <el-form-item :label="t('newtab:shortcut.addDialog.autoFetchFavicon')">
         <el-switch v-model="getFaviconAuto" />
@@ -137,9 +183,7 @@ async function cancel() {
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="cancel">{{ t('newtab:shortcut.addDialog.cancel') }}</el-button>
-        <el-button type="primary" @click="add">{{
-          t('newtab:shortcut.addDialog.confirm')
-        }}</el-button>
+        <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>
   </el-dialog>

@@ -206,6 +206,11 @@
       "uploadFaviconAlert": "可用的格式：ico、svg、png、jpg、webp",
       "url": "地址"
     },
+    "edit": "编辑",
+    "editDialog": {
+      "confirm": "保存",
+      "dialogTitle": "编辑快速访问"
+    },
     "addNewShortcut": "添加快速访问",
     "pin": "置顶",
     "remove": "移除",

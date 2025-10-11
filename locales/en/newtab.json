@@ -206,6 +206,11 @@
       "uploadFaviconAlert": "Available types: ico, svg, png, jpg, webp",
       "url": "URL"
     },
+    "edit": "Edit",
+    "editDialog": {
+      "confirm": "Save",
+      "dialogTitle": "Edit Shortcut"
+    },
     "addNewShortcut": "Add Shortcut",
     "pin": "Pin",
     "remove": "Remove",

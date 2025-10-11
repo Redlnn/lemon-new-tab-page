@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
-import { Pin16Regular, PinOff16Regular } from '@vicons/fluent'
+import { Edit16Regular, Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { ClearRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
@@ -26,6 +26,7 @@ const { t } = useTranslation()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
+const bookmarkEditorRef = ref<InstanceType<typeof addBookmark> | null>(null)
 
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
@@ -140,6 +141,12 @@ bookmarkStorage.watch(refreshDebounced)
         pined
       >
         <template #submenu>
+          <el-dropdown-item @click="bookmarkEditorRef?.openEditDialog(index)">
+            <el-icon>
+              <edit16-regular />
+            </el-icon>
+            {{ t('newtab:shortcut.edit') }}
+          </el-dropdown-item>
           <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refreshDebounced)">
             <el-icon>
               <pin-off16-regular />
@@ -179,7 +186,7 @@ bookmarkStorage.watch(refreshDebounced)
           </el-dropdown-item>
         </template>
       </shortcut-item>
-      <add-bookmark :reload="refreshDebounced" />
+      <add-bookmark ref="bookmarkEditorRef" :reload="refreshDebounced" />
     </div>
   </section>
 </template>

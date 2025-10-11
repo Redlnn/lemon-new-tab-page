@@ -19,6 +19,7 @@
 - Replaced changelog pop-up with bottom toast notifications to reduce interruptions during frequent updates
 - Added red dot indicator at the bottom-right corner to show unread changelog updates
 - Added automatic favicon fetching for shortcuts on Firefox (mostly ineffective due to cross-origin restrictions)
+- Support editing pinned shortcuts
 
 ### Improvements ⚡️
 

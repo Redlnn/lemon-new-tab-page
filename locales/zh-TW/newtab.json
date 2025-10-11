@@ -206,6 +206,11 @@
       "uploadFaviconAlert": "支援格式：ico、svg、png、jpg、webp",
       "url": "連結"
     },
+    "edit": "編輯",
+    "editDialog": {
+      "confirm": "儲存",
+      "dialogTitle": "編輯捷徑"
+    },
     "addNewShortcut": "新增捷徑",
     "pin": "釘選",
     "remove": "移除",
