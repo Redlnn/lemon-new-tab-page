@@ -271,9 +271,24 @@ watch(
   () => settings.localBackground.url,
   async () => {
     if (settings.background.bgType !== BgType.Local) return
+    if (isDark.value && settings.localDarkBackground?.id) return
     switchStore.start()
     await promiseTimeout(500)
     bgURL.value = settings.localBackground.url
+    switchStore.end()
+  }
+)
+
+watch(
+  () => settings.localDarkBackground.url,
+  async () => {
+    if (settings.background.bgType !== BgType.Local) return
+    if (!isDark.value) return
+    switchStore.start()
+    await promiseTimeout(500)
+    bgURL.value = settings.localDarkBackground.id
+      ? settings.localDarkBackground.url
+      : settings.localBackground.url
     switchStore.end()
   }
 )
