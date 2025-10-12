@@ -10,6 +10,29 @@
   You can reselect the search engine in the settings page to resolve it.
   Thank you for your understanding.
 
+## 2.5.1 (Oct 12, 2025)
+
+> This update fixes a potential issue where deleting wallpapers in the extension
+> might not actually remove the wallpaper cache from the browser.  
+> It is recommended to use the "Clear Wallpaper Cache" feature to clean up past caches.
+
+### New Features ✨
+
+- Option to clear wallpaper cache separately
+
+### Improvements ⚡️
+
+- Improved extension stability
+- Optimized extension performance
+
+> ~~MIUI couplets update~~ (just kidding)
+
+### Bug Fixes 🐛
+
+- Fixed issue where changelog window did not pop up during major version updates
+- Adjusted clock CSS styles to fix inconsistent spacing between time and date in different states
+- Fixed issue where dark mode-specific wallpapers did not refresh correctly in dark mode
+
 ## 2.5.0 (Oct 11, 2025)
 
 ### New Features ✨
