@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
-import { useElementHover, useNow } from '@vueuse/core'
+import { computed, ref } from 'vue'
+import { useNow } from '@vueuse/core'
 
 import dayjs from 'dayjs/esm'
 
@@ -9,7 +9,6 @@ import { useSettingsStore } from '@/shared/settings'
 
 const settings = useSettingsStore()
 const time = ref()
-const isTimeHovered = useElementHover(time)
 
 function customMeridiem(hours: number) {
   if (hours < 2) return '深夜'
@@ -44,10 +43,6 @@ const formattedDate = computed(() => {
     date: now.format('LL'),
     lunar: now.format('LMLD')
   }
-})
-
-watch(isTimeHovered, (isTimeHovered) => {
-  time.value.style.transform = isTimeHovered ? 'scale(1.1)' : null
 })
 </script>
 

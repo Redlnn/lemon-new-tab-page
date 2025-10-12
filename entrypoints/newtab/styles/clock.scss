@@ -30,6 +30,10 @@
     color var(--el-transition-duration-fast) ease;
   animation: delayedFadeIn 0.5s;
 
+  &:hover {
+    transform: scale(1.1);
+  }
+
   &__time-container {
     display: flex;
     align-items: baseline;
