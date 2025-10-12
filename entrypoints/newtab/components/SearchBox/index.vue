@@ -84,7 +84,6 @@ onClickOutside(searchBox, (e) => {
   }
 
   const target = e.target as HTMLElement
-  console.log(target)
   if (target.classList.contains('yiyan__main')) {
     return
   }
