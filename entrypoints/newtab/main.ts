@@ -1,4 +1,3 @@
-import 'element-plus/theme-chalk/el-message-box.css'
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'

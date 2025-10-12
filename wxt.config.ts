@@ -2,6 +2,7 @@ import { fileURLToPath, URL } from 'node:url'
 
 import Vue from '@vitejs/plugin-vue'
 import AutoImport from 'unplugin-auto-import/vite'
+import ElementPlus from 'unplugin-element-plus/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from 'unplugin-vue-markdown/vite'
@@ -85,7 +86,8 @@ export default defineConfig({
       Components({
         resolvers: [elementPlusResolver],
         dts: 'types/components.d.ts'
-      })
+      }),
+      ElementPlus({})
     ],
     build: {
       sourcemap: false // for HMP (@wxt-dev/module-vue 会自动添加)

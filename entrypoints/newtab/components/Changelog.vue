@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { defineAsyncComponent, onMounted } from 'vue'
+import '@newtab/styles/github-markdown.css'
+
+import { defineAsyncComponent } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
@@ -18,10 +20,6 @@ defineExpose({ show, hide, toggle })
 
 const ChangelogZh = defineAsyncComponent(() => import('@/CHANGELOG.md'))
 const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOG_en.md'))
-
-onMounted(async () => {
-  await import('@newtab/styles/github-markdown.css')
-})
 
 function handleClose() {
   const settings = useSettingsStore()
