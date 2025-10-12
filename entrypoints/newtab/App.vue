@@ -185,7 +185,14 @@ onMounted(async () => {
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
 
     if (shouldShowChangelog(settings.pluginVersion, version)) {
-      ChangelogRef.value?.show()
+      watch(
+        () => ChangelogRef.value,
+        (instance) => {
+          if (!instance) return
+          instance.show()
+        },
+        { once: true, flush: 'post' }
+      )
     } else {
       settings.pluginVersion = version
     }
