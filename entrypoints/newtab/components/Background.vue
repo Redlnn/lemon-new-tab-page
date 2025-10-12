@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
 import useTransientWillChange from '@/shared/composables/useTransientWillChange'
-import { useSettingsStore } from '@/shared/settings'
+import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
 
@@ -18,6 +18,7 @@ defineProps<{ url: string }>()
 
 const isDark = useDark()
 const isWindowFocused = useWindowFocus()
+const documentVisibility = useDocumentVisibility()
 
 function updateVideoPlayback() {
   const vid = videoRef.value
@@ -44,10 +45,52 @@ const backgroundCss = computed(() => ({
   'background--focused__blur': focusStore.isFocused && !settings.perf.disableFocusBlur
 }))
 
-const visibility = useDocumentVisibility()
+// 仅在“视频壁纸”时才处理播放/暂停
+const isVideoWallpaper = computed(
+  () =>
+    settings.background.bgType === BgType.Local &&
+    (isDark.value
+      ? settings.localDarkBackground.mediaType !== 'image'
+      : settings.localBackground.mediaType === 'video')
+)
 
-watch(isWindowFocused, updateVideoPlayback)
-watch(visibility, updateVideoPlayback)
+let stopFocusWatch: (() => void) | null = null
+let stopVisWatch: (() => void) | null = null
+
+watch(
+  [isVideoWallpaper, () => settings.background.pauseWhenBlur],
+  ([isVideo, pauseWhenBlur]) => {
+    // 先清理旧的监听，避免重复注册
+    if (stopFocusWatch) {
+      stopFocusWatch()
+      stopFocusWatch = null
+    }
+    if (stopVisWatch) {
+      stopVisWatch()
+      stopVisWatch = null
+    }
+
+    if (isVideo) {
+      // 文档可见性：视频壁纸时始终关注（不可见时一律暂停）
+      stopVisWatch = watch(documentVisibility, updateVideoPlayback)
+      // 窗口焦点：仅在设置开启“失焦暂停”时才关注
+      if (pauseWhenBlur) {
+        stopFocusWatch = watch(isWindowFocused, updateVideoPlayback)
+      }
+      // 首次同步延后到下一帧，确保 video 元素已渲染并可操作
+      requestAnimationFrame(() => updateVideoPlayback())
+    } else {
+      // 切换为非视频壁纸时，确保视频被暂停
+      const vid = videoRef.value
+      if (vid) {
+        try {
+          vid.pause()
+        } catch {}
+      }
+    }
+  },
+  { immediate: true }
+)
 
 // 当 focus 状态变化会触发缩放类的切换，在 DOM 更新（class 变更）之前
 // 先设置 will-change，这样浏览器可以在合成层上做优化。使用 flush: 'pre'。
@@ -85,10 +128,7 @@ watch(
     <Transition>
       <div v-show="!switchStore.isSwitching">
         <video
-          v-if="
-            (!isDark && settings.localBackground.mediaType === 'video') ||
-            (isDark && settings.localDarkBackground.mediaType === 'video')
-          "
+          v-if="isVideoWallpaper"
           class="background background--video"
           :class="backgroundCss"
           ref="videoRef"
