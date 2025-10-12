@@ -95,6 +95,11 @@
         "purging": "正在清除擴充功能資料...",
         "title": "確定要清除所有資料嗎?"
       },
+      "confirmPurgeWallpaper": {
+        "message": "此操作將會刪除已選擇的背景圖片/影片。",
+        "purging": "正在清除壁紙快取...",
+        "title": "確定要清除壁紙快取？"
+      },
       "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
       "importExport": {
         "export": "匯出",
@@ -109,6 +114,7 @@
       },
       "purge": "清除",
       "purgeData": "清除本擴充功能的資料",
+      "purgeWallpaperData": "清除壁紙快取",
       "sync": "雲端同步",
       "syncWarning": "雲端同步不支援同步以下項目：本機或線上背景圖片、最常造訪網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。 不支援同步的項目會有如右側的標識：",
       "title": "其他設定",

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useTimeoutFn } from '@vueuse/core'
 
 import { ControlOutlined } from '@vicons/antd'
 import {
@@ -8,13 +9,14 @@ import {
   DownloadRound,
   FileUploadRound
 } from '@vicons/material'
+import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-
-import { storage } from '#imports'
+import { storage } from 'wxt/utils/storage'
 
 import { downloadJSON } from '@/shared/json'
 import {
   type CURRENT_CONFIG_INTERFACE,
+  defaultSettings,
   useBingWallpaperStore,
   useDarkWallpaperStore,
   useSettingsStore,
@@ -42,25 +44,80 @@ async function confirmClearExtensionData() {
     return
   }
 
-  await clearExtensionData()
+  clearExtensionData()
 }
 
-async function clearExtensionData() {
-  console.warn(t('newtab:settings.other.confirmPurgeData.purging'))
+async function confirmClearWallpaperData() {
+  try {
+    await ElMessageBox.confirm(
+      t('newtab:settings.other.confirmPurgeWallpaper.message'),
+      t('newtab:settings.other.confirmPurgeWallpaper.title'),
+      {
+        confirmButtonText: t('newtab:settings.other.confirmPurgeData.confirm'),
+        cancelButtonText: t('newtab:settings.other.confirmPurgeData.cancel'),
+        type: 'warning'
+      }
+    )
+  } catch {
+    return
+  }
 
-  localStorage.clear()
-  sessionStorage.clear()
+  clearWallpaperData()
+}
 
-  await Promise.all([
+async function clearWallpaperData() {
+  const resetSettings = () => {
+    settings.background.bgType = defaultSettings.background.bgType
+    settings.localBackground = { ...defaultSettings.localBackground }
+    settings.localDarkBackground = { ...defaultSettings.localDarkBackground }
+    settings.bingBackground = { ...defaultSettings.bingBackground }
+  }
+
+  ElLoading.service({
+    lock: true,
+    text: t('newtab:settings.other.confirmPurgeWallpaper.purging'),
+    body: true,
+    background: 'var(--el-overlay-color-light)'
+  })
+
+  Promise.all([
+    resetSettings(),
+    useWallpaperStore.clear(),
+    useDarkWallpaperStore.clear(),
+    useBingWallpaperStore.clear()
+  ])
+    .catch(console.error)
+    .finally(() => {
+      setTimeout(() => {
+        location.reload()
+      }, 1000)
+    })
+}
+
+function clearExtensionData() {
+  ElLoading.service({
+    lock: true,
+    text: t('newtab:settings.other.confirmPurgeData.purging'),
+    body: true,
+    background: 'var(--el-overlay-color-light)'
+  })
+
+  Promise.all([
+    localStorage.clear(),
+    sessionStorage.clear(),
     useWallpaperStore.clear(),
     useDarkWallpaperStore.clear(),
     useBingWallpaperStore.clear(),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync')
-  ]).catch(console.error)
-
-  location.reload()
+  ])
+    .catch(console.error)
+    .finally(() => {
+      useTimeoutFn(() => {
+        location.reload()
+      }, 1000)
+    })
 }
 
 function sendSyncMessage() {
@@ -165,10 +222,16 @@ function handleFileChange(event: Event) {
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.other.purgeWallpaperData') }}</div>
+      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearWallpaperData">
+        {{ t('newtab:settings.other.purge') }}
+      </el-button>
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.other.purgeData') }}</div>
-      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">{{
-        t('newtab:settings.other.purge')
-      }}</el-button>
+      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">
+        {{ t('newtab:settings.other.purge') }}
+      </el-button>
     </div>
     <div v-if="isGoogleChrome" class="settings__item">
       <div class="settings__label" style="min-height: 32px">

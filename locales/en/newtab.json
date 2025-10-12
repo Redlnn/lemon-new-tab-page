@@ -91,9 +91,14 @@
       "confirmPurgeData": {
         "cancel": "Cancel",
         "confirm": "OK",
-        "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images, etc.",
+        "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
         "purging": "Clearing extension data..",
         "title": "Are you sure you want to purge all data of this extension?"
+      },
+      "confirmPurgeWallpaper": {
+        "message": "This operation will delete the selected background images or videos.",
+        "purging": "Clearing wallpaper cache...",
+        "title": "Are you sure you want to purge all wallpaper cache?"
       },
       "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the ‘Customize Chrome’ sidebar.\n",
       "importExport": {
@@ -108,7 +113,8 @@
         }
       },
       "purge": "Purge",
-      "purgeData": "Purge the data of this extension.",
+      "purgeData": "Purge all data",
+      "purgeWallpaperData": "Purge wallpaper cache",
       "sync": "Cloud sync",
       "syncWarning": "Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status. Items that are not supported for sync will have an icon like this on the right:\n",
       "title": "Other settings",

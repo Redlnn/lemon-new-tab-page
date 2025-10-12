@@ -91,9 +91,14 @@
       "confirmPurgeData": {
         "cancel": "算了",
         "confirm": "好",
-        "message": "该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片等。",
+        "message": "该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片/视频等。",
         "purging": "正在清除扩展数据...",
         "title": "确定要清除所有数据吗?"
+      },
+      "confirmPurgeWallpaper": {
+        "message": "该操作将会删除已选择的背景图片/视频。",
+        "purging": "正在清除壁纸缓存...",
+        "title": "确定要清除壁纸缓存吗?"
       },
       "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。\n",
       "importExport": {
@@ -109,6 +114,7 @@
       },
       "purge": "清除",
       "purgeData": "清除扩展数据",
+      "purgeWallpaperData": "清除壁纸缓存",
       "sync": "云同步",
       "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
       "title": "其他设置",
