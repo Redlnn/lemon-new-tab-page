@@ -27,7 +27,7 @@ function createMigration<From, To>(
     if (settings.version > fromVersion) {
       return settings as unknown as To
     }
-    console.log(`Migrating config from version ${fromVersion} to ${fromVersion + 1}`)
+    console.log(`[Settings] Migrating config from version ${fromVersion} to ${fromVersion + 1}`)
     if (settings.version === fromVersion) {
       return await migrationFn(settings)
     }

@@ -14,11 +14,9 @@ const SYNC_INTERVAL = 2000 // 2 seconds
 const ALARM_NAME = 'sync-queue-tick'
 let localTimer: ReturnType<typeof setTimeout> | null = null
 
-function debugLog(...args: unknown[]) {
-  if (import.meta.env.DEV) {
-    console.log('[sync]', ...args)
-  }
-}
+const debugLog: (...args: unknown[]) => void = import.meta.env.DEV
+  ? (...args) => console.log('[sync]', ...args)
+  : () => {}
 
 // 检查是否可以执行同步
 function canSync(): boolean {

@@ -56,7 +56,10 @@ export async function initSettings() {
     if (oldSettings.settings && !('pluginVersion' in oldSettings.settings)) {
       // 迁移旧版本设置
       const migratedSettings = await migrateSettings(oldSettings.settings)
-      console.log('Initializing settings storage with config version', oldSettings.settings.version)
+      console.log(
+        '[Settings] Initializing settings storage with config version',
+        oldSettings.settings.version
+      )
       if (migratedSettings) {
         settings = migratedSettings
         await saveSettings(settings)
@@ -70,7 +73,7 @@ export async function initSettings() {
     if (wxtSettings.settings$ && settings.version !== wxtSettings.settings$.v) {
       settings.version = wxtSettings.settings$.v
     }
-    console.log('Initializing settings storage with config version', settings.version)
+    console.log('[Settings] Initializing settings storage with config version', settings.version)
   }
 
   useSettingsStore().$patch(settings)
