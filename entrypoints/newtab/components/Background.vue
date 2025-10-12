@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
 import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
 import useTransientWillChange from '@/shared/composables/useTransientWillChange'

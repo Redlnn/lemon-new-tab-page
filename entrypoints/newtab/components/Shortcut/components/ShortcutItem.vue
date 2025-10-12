@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
-
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 

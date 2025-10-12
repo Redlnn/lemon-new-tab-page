@@ -1,5 +1,4 @@
 import type { Store } from 'pinia'
-import { h } from 'vue'
 
 import i18next from 'i18next'
 

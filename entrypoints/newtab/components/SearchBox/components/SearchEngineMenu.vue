@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import type { TooltipInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 

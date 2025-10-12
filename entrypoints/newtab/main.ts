@@ -1,7 +1,6 @@
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'
-import { createApp, toRaw } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { version } from '@/package.json'

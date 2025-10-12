@@ -1,5 +1,3 @@
-import { computed } from 'vue'
-
 import i18next from 'i18next'
 import { browser } from 'wxt/browser'
 

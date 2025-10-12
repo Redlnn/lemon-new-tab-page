@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { toRaw } from 'vue'
 
 import { type Bookmark, bookmarkStorage, defaultBookmark } from './bookmarkStorage'
 

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useDateFormat, useNow } from '@vueuse/core'
 
 import { Chrome, Edge, Firefox, Github } from '@vicons/fa'

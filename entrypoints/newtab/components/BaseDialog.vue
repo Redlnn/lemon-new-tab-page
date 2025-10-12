@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import { CloseRound } from '@vicons/material'

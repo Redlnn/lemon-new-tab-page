@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { toRaw } from 'vue'
 
 import { v4 as uuidv4 } from 'uuid'
 import { browser } from 'wxt/browser'

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
 import { promiseTimeout } from '@vueuse/core'
 
 import { PictureOutlined } from '@vicons/antd'

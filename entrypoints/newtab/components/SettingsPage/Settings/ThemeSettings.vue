@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
 import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 
 import { CloudOffRound, ColorLensOutlined } from '@vicons/material'

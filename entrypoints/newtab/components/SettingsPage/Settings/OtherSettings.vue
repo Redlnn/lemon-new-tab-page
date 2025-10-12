@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import { useTimeoutFn } from '@vueuse/core'
 
 import { ControlOutlined } from '@vicons/antd'

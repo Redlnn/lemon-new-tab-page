@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import type { ComputedRef, Ref } from 'vue'
-import { computed, toRef } from 'vue'
-
 import { ApiRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 

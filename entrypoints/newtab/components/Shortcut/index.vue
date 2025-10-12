@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { Edit16Regular, Pin16Regular, PinOff16Regular } from '@vicons/fluent'

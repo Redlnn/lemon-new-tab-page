@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed, onMounted, ref, watch } from 'vue'
 import {
   onClickOutside,
   useActiveElement,

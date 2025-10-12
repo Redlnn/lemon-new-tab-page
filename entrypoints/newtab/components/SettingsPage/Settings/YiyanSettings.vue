@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
-
 import { FormatQuoteRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 

@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { defineAsyncComponent, onBeforeMount, onMounted, ref, watch } from 'vue'
 import { promiseTimeout, useDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'

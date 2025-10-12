@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { onMounted } from 'vue'
-
 import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
 

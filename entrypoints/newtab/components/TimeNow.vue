@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
 import { useNow } from '@vueuse/core'
 
 import dayjs from 'dayjs/esm'

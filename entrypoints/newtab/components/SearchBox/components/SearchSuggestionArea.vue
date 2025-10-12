@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, onUnmounted, ref } from 'vue'
-
 import { TrashAlt } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 

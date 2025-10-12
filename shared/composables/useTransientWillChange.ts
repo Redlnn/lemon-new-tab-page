@@ -1,4 +1,3 @@
-import { type Ref, unref } from 'vue'
 import { useEventListener, useTimeoutFn } from '@vueuse/core'
 
 export function useTransientWillChange(options?: {

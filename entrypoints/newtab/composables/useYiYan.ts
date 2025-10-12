@@ -1,4 +1,3 @@
-import { ref } from 'vue'
 import { useWindowSize } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'

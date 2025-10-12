@@ -1,5 +1,3 @@
-import type { Ref } from 'vue'
-
 import { useDraggable } from 'vue-draggable-plus'
 
 import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
