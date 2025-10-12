@@ -67,6 +67,35 @@ export async function verifyImageUrl(url: string): Promise<boolean> {
 }
 
 /**
+ * 验证视频URL是否可访问
+ * @param url - 要验证的视频URL
+ * @returns Promise<boolean> - URL是否可访问
+ */
+export async function verifyVideoUrl(url: string): Promise<boolean> {
+  if (!url) {
+    return false
+  }
+
+  return new Promise<boolean>((resolve) => {
+    const video = document.createElement('video')
+    const cleanup = () => {
+      video.onloadeddata = video.onerror = null // 清理事件监听器
+      video.src = '' // 清除视频源，帮助浏览器更快地进行垃圾回收
+    }
+
+    video.onloadeddata = () => {
+      cleanup()
+      resolve(true)
+    }
+    video.onerror = () => {
+      cleanup()
+      resolve(false)
+    }
+    video.src = url
+  })
+}
+
+/**
  * 将Base64编码的SVG转换为SVG标签字符串
  * @param base64String - Base64编码的SVG字符串
  * @returns SVG标签字符串

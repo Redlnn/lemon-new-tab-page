@@ -114,7 +114,7 @@ export async function uploadBackground(imageFile: File, isDarkMode = false) {
   settings[backgroundKey] = { id, url, mediaType }
 }
 
-export async function reloadBackgroundImage(isDarkMode = false) {
+export async function reloadBackground(isDarkMode = false) {
   const settings = useSettingsStore()
 
   // 根据模式选择对应的 store & state
@@ -126,6 +126,7 @@ export async function reloadBackgroundImage(isDarkMode = false) {
     return
   }
 
+  URL.revokeObjectURL(background.url)
   const file = await store.getItem<Blob>(background.id)
 
   // 校验媒体数据是否可用，否则删除该数据

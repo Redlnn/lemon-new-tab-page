@@ -10,8 +10,8 @@ import { version } from '@/package.json'
 
 import SettingsBtn from '@/entrypoints/newtab/components/SettingsBtn.vue'
 import { getLang } from '@/shared/lang'
-import { verifyImageUrl } from '@/shared/media'
-import { BgType, reloadBackgroundImage, useSettingsStore } from '@/shared/settings'
+import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
+import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
 import type AboutCompComponent from '@newtab/components/About.vue'
@@ -107,26 +107,43 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
 
       // 如果没 url，则尝试加载
       if (!localBackground.url) {
-        await reloadBackgroundImage(false)
+        await reloadBackground(false)
         if (!localDarkBackground.id) return true
       }
       if (localDarkBackground.id && !localDarkBackground.url) {
-        await reloadBackgroundImage(true)
+        await reloadBackground(true)
         return true
       }
 
       // 校验 URL 是否有效
-      const [isValid, isValidDark] = await Promise.all([
-        verifyImageUrl(localBackground.url),
-        localDarkBackground.url ? verifyImageUrl(localDarkBackground.url) : Promise.resolve(true) //（此处假设深色模式壁纸存在，不存在也返回true）
-      ])
+      const verifyLight = () => {
+        if (localBackground.mediaType === 'image') {
+          return verifyImageUrl(localBackground.url)
+        }
+        if (localBackground.mediaType === 'video') {
+          // 对于视频，简单判断 URL 可达即可
+          return verifyVideoUrl(localBackground.url)
+        }
+      }
+      const verifyDark = () => {
+        if (!localDarkBackground.id) return Promise.resolve(true)
+        if (localDarkBackground.mediaType === 'image') {
+          return verifyImageUrl(localDarkBackground.url)
+        }
+        if (localDarkBackground.mediaType === 'video') {
+          // 对于视频，简单判断 URL 可达即可
+          return verifyVideoUrl(localDarkBackground.url)
+        }
+      }
+
+      const [isValid, isValidDark] = await Promise.all([verifyLight(), verifyDark()])
 
       // 如无效则重新加载
       if (!isValid) {
-        await reloadBackgroundImage(false)
+        await reloadBackground(false)
       }
       if (!isValidDark && localDarkBackground.id) {
-        await reloadBackgroundImage(true)
+        await reloadBackground(true)
       }
 
       return true

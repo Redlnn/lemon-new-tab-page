@@ -17,7 +17,7 @@ export type {
 } from './types'
 export {
   initSettings,
-  reloadBackgroundImage,
+  reloadBackground,
   saveSettings,
   uploadBackground,
   useSettingsStore

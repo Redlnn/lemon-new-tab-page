@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
+import { promiseTimeout } from '@vueuse/core'
 
 import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
@@ -36,12 +37,6 @@ const metaLight = ref<{ width?: number; height?: number; duration?: number; size
 const metaDark = ref<{ width?: number; height?: number; duration?: number; size?: number } | null>(
   null
 )
-
-onMounted(() => {
-  if (settings.background.onlineUrl) {
-    tmpUrl.value = settings.background.onlineUrl
-  }
-})
 
 function formatBytes(bytes: number) {
   if (bytes === 0) return '0 B'
@@ -161,12 +156,19 @@ function onlineImageWarn() {
 
 async function deleteLocalBg(isDark = false) {
   if (isDark) {
+    const oldUrl = settings.localDarkBackground.url
     settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
     metaDark.value = null
+    await promiseTimeout(1000) // 确保 UI 更新完毕释放占用后再清除
+    URL.revokeObjectURL(oldUrl)
     useDarkWallpaperStore.clear()
   } else {
+    const oldUrl = settings.localBackground.url
     settings.localBackground = { id: '', url: '', mediaType: undefined }
     metaLight.value = null
+    console.log(oldUrl)
+    await promiseTimeout(1000)
+    URL.revokeObjectURL(oldUrl)
     useWallpaperStore.clear()
   }
 }
@@ -212,6 +214,10 @@ function readMediaMeta(
 }
 
 onMounted(async () => {
+  if (settings.background.onlineUrl) {
+    tmpUrl.value = settings.background.onlineUrl
+  }
+
   // 加载已存在的本地壁纸元数据（light & dark）以便在设置页显示
   if (settings.localBackground?.id) {
     try {

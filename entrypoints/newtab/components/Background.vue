@@ -77,8 +77,6 @@ watch(
       if (pauseWhenBlur) {
         stopFocusWatch = watch(isWindowFocused, updateVideoPlayback)
       }
-      // 首次同步延后到下一帧，确保 video 元素已渲染并可操作
-      requestAnimationFrame(() => updateVideoPlayback())
     } else {
       // 切换为非视频壁纸时，确保视频被暂停
       const vid = videoRef.value
