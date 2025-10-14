@@ -200,7 +200,9 @@ onMounted(async () => {
     settings.readChangeLog = false
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
 
-    if (shouldShowChangelog(settings.pluginVersion, version)) {
+    const canAutoShow = shouldShowChangelog(settings.pluginVersion, version)
+
+    if (canAutoShow && !settings.hideMajorChangelog) {
       watch(
         () => ChangelogRef.value,
         (instance) => {

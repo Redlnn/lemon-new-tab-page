@@ -3,6 +3,7 @@
     "yiyanApiProvider": "Chinese poetry API provided by {{provider}}"
   },
   "changelog": {
+    "hideMajorChangelog": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",
     "title": "Changelog"
   },
@@ -212,12 +213,12 @@
       "uploadFaviconAlert": "Available types: ico, svg, png, jpg, webp",
       "url": "URL"
     },
+    "addNewShortcut": "Add Shortcut",
     "edit": "Edit",
     "editDialog": {
       "confirm": "Save",
       "dialogTitle": "Edit Shortcut"
     },
-    "addNewShortcut": "Add Shortcut",
     "pin": "Pin",
     "remove": "Remove",
     "removePinnedMessage": {

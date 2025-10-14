@@ -204,6 +204,10 @@ function handleFileChange(event: Event) {
       <cloud-off-round />
     </p>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:changelog.hideMajorChangelog') }}</div>
+      <el-switch v-model="settings.hideMajorChangelog" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.other.importExport.title') }}</div>
       <span>
         <el-button

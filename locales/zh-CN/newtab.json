@@ -3,6 +3,7 @@
     "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
   },
   "changelog": {
+    "hideMajorChangelog": "不显示大版本更新日志",
     "newVersionMsg": "你的起始页更新啦~",
     "title": "更新日志"
   },
@@ -212,12 +213,12 @@
       "uploadFaviconAlert": "可用的格式：ico、svg、png、jpg、webp",
       "url": "地址"
     },
+    "addNewShortcut": "添加快速访问",
     "edit": "编辑",
     "editDialog": {
       "confirm": "保存",
       "dialogTitle": "编辑快速访问"
     },
-    "addNewShortcut": "添加快速访问",
     "pin": "置顶",
     "remove": "移除",
     "removePinnedMessage": {
