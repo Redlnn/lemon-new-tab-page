@@ -23,7 +23,7 @@ Browser extension (new tab) built with Vue 3 + TypeScript on WXT. Pages live und
 ## Patterns that matter
 
 - Settings
-  - Single source of defaults: `shared/settings/default.ts`; type at `shared/settings/types/v7.d.ts` (or newer versions); current exported via `shared/settings/current.ts`.
+  - Single source of defaults: `shared/settings/default.ts`; type at `shared/settings/types/v{version}.d.ts`; current exported via `shared/settings/current.ts`.
   - Store: `useSettingsStore()` from `shared/settings/settingsStore.ts` persists with `settingsStorage` (localforage). Old versions migrate on init; Chrome/Edge also read legacy `chrome.storage.local`.
   - Background sync intentionally resets non-syncable wallpaper fields (local/online) — see `entrypoints/background/index.ts`.
 - i18n
