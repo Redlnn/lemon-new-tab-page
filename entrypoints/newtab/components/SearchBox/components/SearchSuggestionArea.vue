@@ -6,6 +6,7 @@ import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
+import { searchSuggestCache } from '@newtab/scripts/api/search/suggestCache'
 import { createSuggestRunner } from '@newtab/scripts/api/search/suggestRunner'
 import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
@@ -92,6 +93,10 @@ async function showSearchHistories() {
 const runner = createSuggestRunner({ debounceMs: 300, maxRetries: 2, retryDelay: 100 })
 runner.onResult((list) => {
   searchSuggestions.value = list
+  // 缓存搜索建议结果
+  if (props.searchText && list.length > 0) {
+    searchSuggestCache.set(props.searchText, list)
+  }
 })
 runner.onError((err) => {
   console.error('Failed to fetch search suggestions:', err)
@@ -99,7 +104,15 @@ runner.onError((err) => {
 })
 
 function showSuggestionsDebounced() {
+  // 至少2个字符才触发搜索建议
   if (props.searchText.length < 2) {
+    return
+  }
+
+  // 先检查缓存，命中则直接返回
+  const cached = searchSuggestCache.get(props.searchText)
+  if (cached) {
+    searchSuggestions.value = cached
     return
   }
 
