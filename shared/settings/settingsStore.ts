@@ -45,12 +45,19 @@ async function migrateSettings(
   return null
 }
 
+// 并行化设置初始化，减少冷启动时间
 export async function initSettings() {
   let settings
+
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    const oldSettings: { settings: OldStorageSettings | null } = await chrome.storage.local.get({
-      settings: null
-    })
+    // 并行读取旧设置和新设置
+    const [oldSettings, newSettings, wxtSettingsVer] = await Promise.all([
+      chrome.storage.local.get({ settings: null }) as Promise<{
+        settings: OldStorageSettings | null
+      }>,
+      settingsStorage.getValue(),
+      browser.storage.local.get('settings$')
+    ])
 
     if (oldSettings.settings && !('pluginVersion' in oldSettings.settings)) {
       // 迁移旧版本设置
@@ -61,14 +68,26 @@ export async function initSettings() {
       )
       if (migratedSettings) {
         settings = migratedSettings
-        await saveSettings(settings)
+        // 迁移保存不阻塞初始化，延迟到后台执行
+        saveSettings(settings).catch(console.error)
       }
     }
-  }
 
-  if (!settings) {
-    settings = await settingsStorage.getValue()
-    const wxtSettings = await browser.storage.local.get('settings$')
+    if (!settings) {
+      settings = newSettings
+      if (wxtSettingsVer.settings$ && settings.version !== wxtSettingsVer.settings$.v) {
+        settings.version = wxtSettingsVer.settings$.v
+      }
+      console.log('[Settings] Initializing settings storage with config version', settings.version)
+    }
+  } else {
+    // Firefox: 并行读取设置
+    const [newSettings, wxtSettings] = await Promise.all([
+      settingsStorage.getValue(),
+      browser.storage.local.get('settings$')
+    ])
+
+    settings = newSettings
     if (wxtSettings.settings$ && settings.version !== wxtSettings.settings$.v) {
       settings.version = wxtSettings.settings$.v
     }
