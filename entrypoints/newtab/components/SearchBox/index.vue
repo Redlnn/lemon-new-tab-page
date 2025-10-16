@@ -28,6 +28,7 @@ const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
 const searchText = ref('')
 const originSearchText = ref<string | null>(null)
 const mounted = ref(false)
+const isComposing = ref(false) // 跟踪输入法组合输入状态
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
@@ -93,6 +94,27 @@ function handleFocus() {
   searchForm.value?.classList.add('search-box__form--focus')
   suggedtionArea.value?.showSearchHistories()
   focusStore.focus()
+}
+
+// 处理输入法组合输入开始
+function handleCompositionStart() {
+  isComposing.value = true
+}
+
+// 处理输入法组合输入结束(文字上屏)
+function handleCompositionEnd() {
+  isComposing.value = false
+  // 输入法上屏后,触发搜索建议
+  handleInput()
+}
+
+// 处理输入事件
+function handleInput() {
+  // 如果正在组合输入中(拼音未上屏),不触发搜索
+  if (isComposing.value) {
+    return
+  }
+  suggedtionArea.value?.handleInput()
 }
 
 function navigateSuggestions(direction: number) {
@@ -210,8 +232,10 @@ onMounted(() => {
         v-model="searchText"
         :placeholder="searchPlaceholder"
         class="search-box__input"
-        @input="suggedtionArea!.handleInput"
+        @input="handleInput"
         @focus="handleFocus"
+        @compositionstart="handleCompositionStart"
+        @compositionend="handleCompositionEnd"
         @keydown.up.prevent="handleUp"
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
