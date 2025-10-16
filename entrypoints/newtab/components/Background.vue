@@ -107,6 +107,11 @@ watch(
   },
   { flush: 'pre' }
 )
+
+onUnmounted(() => {
+  stopFocusWatch?.()
+  stopVisWatch?.()
+})
 </script>
 
 <template>
