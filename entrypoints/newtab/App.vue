@@ -161,13 +161,14 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   if (!provider) return
 
   switchStore.start()
-  if (provider.verify) {
-    await provider.verify()
-  }
-  const newUrl = await provider.getURL()
+
+  const [, newUrl] = await Promise.all([
+    provider.verify?.() ?? Promise.resolve(),
+    provider.getURL()
+  ])
 
   // 等待过渡动画
-  await promiseTimeout(200)
+  await promiseTimeout(300)
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
   // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
@@ -250,91 +251,75 @@ onMounted(async () => {
   await updateBackgroundURL(settings.background.bgType)
 })
 
+// 优化: 合并DOM类名切换的watch，使用统一的工具函数
+function toggleDocumentClass(className: string, shouldAdd: boolean) {
+  document.documentElement.classList.toggle(className, shouldAdd)
+}
+
 watch(
   () => settings.colorfulMode,
   (colorful) => {
-    if (colorful) {
-      document.documentElement.classList.add('colorful')
-    } else {
-      document.documentElement.classList.remove('colorful')
-    }
+    toggleDocumentClass('colorful', colorful)
   }
 )
 
 watch(
   () => settings.perf.disableDialogTransparent,
-  () => {
-    if (settings.perf.disableDialogTransparent) {
-      document.documentElement.classList.remove('dialog-transparent')
-    } else {
-      document.documentElement.classList.add('dialog-transparent')
-    }
+  (disabled) => {
+    toggleDocumentClass('dialog-transparent', !disabled)
   }
 )
 
 watch(
   () => settings.perf.disableDialogBlur,
-  () => {
-    if (settings.perf.disableDialogBlur) {
-      document.documentElement.classList.remove('dialog-acrylic')
-    } else {
-      document.documentElement.classList.add('dialog-acrylic')
-    }
+  (disabled) => {
+    toggleDocumentClass('dialog-acrylic', !disabled)
   }
 )
 
 watch(() => settings.background.bgType, updateBackgroundURL)
 
 watch(
-  () => settings.localBackground.url,
+  [() => settings.localBackground.url, () => settings.localDarkBackground.url, isDark],
   async () => {
     if (settings.background.bgType !== BgType.Local) return
-    if (isDark.value && settings.localDarkBackground?.id) return
-    switchStore.start()
-    await promiseTimeout(500)
-    bgURL.value = settings.localBackground.url
-    switchStore.end()
-  }
-)
 
-watch(
-  () => settings.localDarkBackground.url,
-  async () => {
-    if (settings.background.bgType !== BgType.Local) return
-    if (!isDark.value) return
-    switchStore.start()
-    await promiseTimeout(500)
-    bgURL.value = settings.localDarkBackground.id
+    const shouldUseDark = isDark.value && settings.localDarkBackground?.id
+    const currentUrl = shouldUseDark
       ? settings.localDarkBackground.url
       : settings.localBackground.url
+
+    // 只在URL真正变化时才执行切换动画
+    if (bgURL.value === currentUrl) return
+
+    if (settings.localDarkBackground?.id) {
+      await bgTypeProviders[BgType.Local].verify?.()
+    }
+
+    switchStore.start()
+    await promiseTimeout(300)
+    bgURL.value = ''
+    // 不直接赋值是因为避免看到壁纸变形
+    bgURL.value = currentUrl
     switchStore.end()
   }
 )
 
+// 优化: 在线背景URL变化监听
 watch(
   () => settings.background.onlineUrl,
-  async () => {
+  async (newUrl) => {
     if (settings.background.bgType !== BgType.Online) return
+    if (bgURL.value === newUrl) return
+
     switchStore.start()
-    await promiseTimeout(500)
-    bgURL.value = settings.background.onlineUrl
+    await promiseTimeout(300)
+    bgURL.value = ''
+    // 不直接赋值是因为避免看到壁纸变形
+    bgURL.value = newUrl
     switchStore.end()
   }
 )
-
-watch(isDark, async (darked) => {
-  if (settings.background.bgType !== BgType.Local) return
-  if (settings.localDarkBackground?.id == null || settings.localDarkBackground?.id === '') return
-  await bgTypeProviders[BgType.Local].verify?.()
-  switchStore.start()
-  await promiseTimeout(500)
-  if (darked) {
-    bgURL.value = settings.localDarkBackground.url
-  } else {
-    bgURL.value = settings.localBackground.url
-  }
-  switchStore.end()
-})
 </script>
 
 <template>
