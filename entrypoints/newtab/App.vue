@@ -249,9 +249,12 @@ onMounted(async () => {
   })
 
   await updateBackgroundURL(settings.background.bgType)
+
+  // 初始化时激活当前背景类型的watch
+  activateBackgroundWatch(settings.background.bgType)
 })
 
-// 优化: 合并DOM类名切换的watch，使用统一的工具函数
+// 合并DOM类名切换的watch，使用统一的工具函数
 function toggleDocumentClass(className: string, shouldAdd: boolean) {
   document.documentElement.classList.toggle(className, shouldAdd)
 }
@@ -277,49 +280,77 @@ watch(
   }
 )
 
-watch(() => settings.background.bgType, updateBackgroundURL)
+// 动态watch管理 - 根据背景类型激活需要的watch
+let stopLocalBgWatch: (() => void) | null = null
+let stopOnlineBgWatch: (() => void) | null = null
 
+// 本地背景URL变化处理器
+const handleLocalBgChange = async () => {
+  const shouldUseDark = isDark.value && settings.localDarkBackground?.id
+  const currentUrl = shouldUseDark ? settings.localDarkBackground.url : settings.localBackground.url
+
+  // 只在URL真正变化时才执行切换动画
+  if (bgURL.value === currentUrl) return
+
+  if (settings.localDarkBackground?.id) {
+    await bgTypeProviders[BgType.Local].verify?.()
+  }
+
+  switchStore.start()
+  await promiseTimeout(300)
+  bgURL.value = ''
+  // 不直接赋值是因为避免看到壁纸变形
+  bgURL.value = currentUrl
+  switchStore.end()
+}
+
+// 在线背景URL变化处理器
+const handleOnlineBgChange = async (newUrl: string) => {
+  if (bgURL.value === newUrl) return
+
+  switchStore.start()
+  await promiseTimeout(300)
+  bgURL.value = ''
+  bgURL.value = newUrl
+  switchStore.end()
+}
+
+// 根据背景类型激活对应的watch
+function activateBackgroundWatch(type: BgType) {
+  // 清理旧的watch
+  stopLocalBgWatch?.()
+  stopOnlineBgWatch?.()
+  stopLocalBgWatch = null
+  stopOnlineBgWatch = null
+
+  // 根据类型激活对应的watch
+  if (type === BgType.Local) {
+    // 只在使用本地背景时监听本地背景变化
+    stopLocalBgWatch = watch(
+      [() => settings.localBackground.url, () => settings.localDarkBackground.url, isDark],
+      handleLocalBgChange
+    )
+  } else if (type === BgType.Online) {
+    // 只在使用在线背景时监听在线URL变化
+    stopOnlineBgWatch = watch(() => settings.background.onlineUrl, handleOnlineBgChange)
+  }
+  // Bing和None类型不需要watch，因为它们不会动态变化
+}
+
+// 监听背景类型切换，动态激活/停用对应的watch
 watch(
-  [() => settings.localBackground.url, () => settings.localDarkBackground.url, isDark],
-  async () => {
-    if (settings.background.bgType !== BgType.Local) return
-
-    const shouldUseDark = isDark.value && settings.localDarkBackground?.id
-    const currentUrl = shouldUseDark
-      ? settings.localDarkBackground.url
-      : settings.localBackground.url
-
-    // 只在URL真正变化时才执行切换动画
-    if (bgURL.value === currentUrl) return
-
-    if (settings.localDarkBackground?.id) {
-      await bgTypeProviders[BgType.Local].verify?.()
-    }
-
-    switchStore.start()
-    await promiseTimeout(300)
-    bgURL.value = ''
-    // 不直接赋值是因为避免看到壁纸变形
-    bgURL.value = currentUrl
-    switchStore.end()
+  () => settings.background.bgType,
+  async (newType) => {
+    await updateBackgroundURL(newType)
+    activateBackgroundWatch(newType)
   }
 )
 
-// 优化: 在线背景URL变化监听
-watch(
-  () => settings.background.onlineUrl,
-  async (newUrl) => {
-    if (settings.background.bgType !== BgType.Online) return
-    if (bgURL.value === newUrl) return
-
-    switchStore.start()
-    await promiseTimeout(300)
-    bgURL.value = ''
-    // 不直接赋值是因为避免看到壁纸变形
-    bgURL.value = newUrl
-    switchStore.end()
-  }
-)
+// 组件卸载时清理watch
+onUnmounted(() => {
+  stopLocalBgWatch?.()
+  stopOnlineBgWatch?.()
+})
 </script>
 
 <template>
