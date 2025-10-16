@@ -36,7 +36,7 @@ const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcu
 const shortcutContainerRef = ref()
 useShortcutDrag(shortcutContainerRef, bookmarks)
 
-const refreshDebounced = useDebounceFn(refresh, 100)
+const refreshDebounced = useDebounceFn(refresh, 200)
 
 async function refresh() {
   await initBookmark()

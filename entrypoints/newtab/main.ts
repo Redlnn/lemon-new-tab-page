@@ -65,7 +65,7 @@ export const main = async () => {
   // 先初始化设置，再挂载vue，再初始化云同步
   await initSettings()
   const settings = useSettingsStore()
-  const saveSettingsDebounced = useDebounceFn(saveSettings, 100)
+  const saveSettingsDebounced = useDebounceFn(saveSettings, 300)
 
   if (settings.primaryColor.toLowerCase() === '#ffbb00') {
     // 强制替换旧版本对比度过低的主题色

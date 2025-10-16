@@ -89,7 +89,7 @@ async function showSearchHistories() {
 }
 
 // 统一“请求 + 取消 + 防抖 + 重试”（重试统一在运行器层）
-const runner = createSuggestRunner({ debounceMs: 200, maxRetries: 2, retryDelay: 100 })
+const runner = createSuggestRunner({ debounceMs: 300, maxRetries: 2, retryDelay: 100 })
 runner.onResult((list) => {
   searchSuggestions.value = list
 })
@@ -99,7 +99,7 @@ runner.onError((err) => {
 })
 
 function showSuggestionsDebounced() {
-  if (props.searchText.length <= 0) {
+  if (props.searchText.length < 2) {
     return
   }
 
