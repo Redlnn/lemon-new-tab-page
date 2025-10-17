@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { FormatQuoteRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { isChinese } from '@/shared/lang'
@@ -14,10 +13,6 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><format-quote-round /></el-icon>
-    <span>{{ t('newtab:settings.yiyan.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.yiyan.enabled') }}</div>

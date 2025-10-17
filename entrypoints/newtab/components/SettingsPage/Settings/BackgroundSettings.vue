@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { promiseTimeout } from '@vueuse/core'
 
-import { PictureOutlined } from '@vicons/antd'
 import { Plus } from '@vicons/fa'
 import { CloseRound, CloudOffRound } from '@vicons/material'
 import type { ElInput, UploadProps, UploadRequestOptions } from 'element-plus'
@@ -261,10 +260,6 @@ const isVideoBg = computed(
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><picture-outlined /></el-icon>
-    <span>{{ t('newtab:settings.background.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--vertical">
       <div class="settings__label">
