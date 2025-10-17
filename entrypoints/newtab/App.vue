@@ -162,10 +162,10 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 
   switchStore.start()
 
-  const [, newUrl] = await Promise.all([
-    provider.verify?.() ?? Promise.resolve(),
-    provider.getURL()
-  ])
+  if (provider.verify) {
+    await provider.verify()
+  }
+  const newUrl = await provider.getURL()
 
   // 等待过渡动画
   await promiseTimeout(300)
