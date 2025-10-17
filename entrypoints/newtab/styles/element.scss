@@ -64,7 +64,7 @@ body {
   transition: background-color var(--el-transition-duration-fast) ease;
 }
 
-.el-switch {
+.el-switch:not(.el-switch--small, .el-switch--large) {
   .el-switch__core {
     box-shadow: 0 0 6px rgb(0 0 0 / 12%);
   }
