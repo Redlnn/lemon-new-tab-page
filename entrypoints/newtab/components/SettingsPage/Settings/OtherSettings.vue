@@ -244,13 +244,13 @@ function handleFileChange(event: Event) {
         {{ t('newtab:settings.other.customize_chrome_tips') }}
       </p>
     </div>
+    <!-- hidden file input used by 导入按钮 -->
+    <input
+      ref="fileInput"
+      type="file"
+      accept="application/json"
+      style="display: none"
+      @change="handleFileChange"
+    />
   </div>
-  <!-- hidden file input used by 导入按钮 -->
-  <input
-    ref="fileInput"
-    type="file"
-    accept="application/json"
-    style="display: none"
-    @change="handleFileChange"
-  />
 </template>
