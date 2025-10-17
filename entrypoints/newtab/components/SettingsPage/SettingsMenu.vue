@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ArrowForwardIosRound } from '@vicons/material'
+import { type Component } from 'vue'
+
 import {
   AppstoreOutlined,
   ClockCircleOutlined,
@@ -7,9 +8,13 @@ import {
   PictureOutlined,
   SearchOutlined
 } from '@vicons/antd'
-import { ApiRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
+import {
+  ApiRound,
+  ArrowForwardIosRound,
+  ColorLensOutlined,
+  FormatQuoteRound
+} from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
-import { type Component } from 'vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
@@ -109,7 +114,7 @@ function handleSwitchClick(event: Event) {
           v-if="item.hasSwitch && item.switchValue && item.onSwitchChange"
           :model-value="item.switchValue()"
           @click="handleSwitchClick($event)"
-          @change="item.onSwitchChange"
+          @change="(val) => item.onSwitchChange?.(val as boolean)"
         />
         <el-icon class="settings-menu__item-arrow">
           <arrow-forward-ios-round />
@@ -142,9 +147,9 @@ function handleSwitchClick(event: Event) {
 
     &-left {
       display: flex;
+      flex: 1;
       gap: 16px;
       align-items: center;
-      flex: 1;
     }
 
     &-icon {

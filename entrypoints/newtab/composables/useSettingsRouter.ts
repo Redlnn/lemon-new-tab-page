@@ -25,21 +25,21 @@ export function useSettingsRouter() {
   const currentRoute = computed(() => state.value.current)
   const canGoBack = computed(() => state.value.history.length > 0)
 
-  function push(route: SettingsRoute) {
+  const push = (route: SettingsRoute) => {
     if (state.value.current !== route) {
       state.value.history.push(state.value.current)
       state.value.current = route
     }
   }
 
-  function back() {
+  const back = () => {
     const previous = state.value.history.pop()
     if (previous) {
       state.value.current = previous
     }
   }
 
-  function reset() {
+  const reset = () => {
     state.value.current = 'menu'
     state.value.history = []
   }

@@ -70,8 +70,8 @@ function handleBack() {
   }
 
   &__title {
-    margin-bottom: 20px;
     padding: 0 10px;
+    margin-bottom: 20px;
     font-size: 28px;
     font-weight: 600;
     color: var(--el-text-color-primary);
