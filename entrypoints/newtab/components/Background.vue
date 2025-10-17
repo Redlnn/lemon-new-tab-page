@@ -127,7 +127,7 @@ onUnmounted(() => {
   >
     <div class="background-mask"></div>
     <div v-if="settings.background.enableVignetting" class="background__vignette" />
-    <Transition>
+    <Transition name="v-fade">
       <div v-show="!switchStore.isSwitching">
         <video
           v-if="isVideoWallpaper"

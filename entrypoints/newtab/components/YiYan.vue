@@ -13,7 +13,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Transition>
+  <Transition name="v-fade">
     <div v-if="isEnabled()" class="yiyan">
       <div
         class="yiyan__main"

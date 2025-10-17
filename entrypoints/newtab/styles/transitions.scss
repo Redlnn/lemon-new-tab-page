@@ -1,20 +1,9 @@
 /* 集中过渡类：Vue 过渡与对话框过渡 */
 
-/* Vue 默认过渡占位类 */
-.v-enter-active,
-.v-leave-active {
-  transition: all var(--el-transition-duration-fast) ease-in-out;
-}
-
-.v-enter-from,
-.v-leave-to {
-  opacity: 0;
-}
-
-/* 背景淡入淡出可覆盖上面的默认值 */
+/* 背景淡入淡出 */
 .v-fade-enter-active,
 .v-fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: all var(--el-transition-duration-fast) ease-in-out;
 }
 
 .v-fade-enter-from,
