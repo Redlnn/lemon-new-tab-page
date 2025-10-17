@@ -15,9 +15,10 @@ interface Props {
   appendToBody?: boolean
   destroyOnClose?: boolean
   style?: object | string
+  width?: string | number
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
   open: []
@@ -58,7 +59,7 @@ const dialogId = computed(() => {
   <el-dialog
     ref="dialog"
     :model-value="modelValue"
-    :width="windowWidth < 650 ? '93%' : 600"
+    :width="props.width ?? (windowWidth < 650 ? '93%' : 600)"
     :class="[
       containerClass,
       getPerfClasses({ transparentOff: !opacity, blurOff: !acrylic }, 'base-dialog')
