@@ -5,10 +5,9 @@ import {
   ClockCircleOutlined,
   ControlOutlined,
   PictureOutlined,
-  SearchOutlined,
-  ThunderboltOutlined
+  SearchOutlined
 } from '@vicons/antd'
-import { ColorLensOutlined } from '@vicons/material'
+import { ApiRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 import { type Component } from 'vue'
 
@@ -62,7 +61,7 @@ const menuItems: SettingsMenuItem[] = [
   },
   {
     key: 'yiyan',
-    icon: ThunderboltOutlined,
+    icon: FormatQuoteRound,
     titleKey: 'newtab:settings.yiyan.title',
     hasSwitch: true,
     switchValue: () => settings.yiyan.enabled,
@@ -72,7 +71,7 @@ const menuItems: SettingsMenuItem[] = [
   },
   {
     key: 'performance',
-    icon: ThunderboltOutlined,
+    icon: ApiRound,
     titleKey: 'newtab:settings.perf.title'
   },
   {
