@@ -16,6 +16,7 @@ interface Props {
   destroyOnClose?: boolean
   style?: object | string
   width?: string | number
+  headerClass?: string
 }
 
 const props = defineProps<Props>()
@@ -59,7 +60,7 @@ const dialogId = computed(() => {
   <el-dialog
     ref="dialog"
     :model-value="modelValue"
-    :width="props.width ?? (windowWidth < 650 ? '93%' : 600)"
+    :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
     :class="[
       containerClass,
       getPerfClasses({ transparentOff: !opacity, blurOff: !acrylic }, 'base-dialog')
@@ -70,6 +71,7 @@ const dialogId = computed(() => {
     draggable
     :append-to-body="appendToBody"
     :destroy-on-close="destroyOnClose"
+    :header-class="headerClass"
     @update:model-value="(val) => emit('update:modelValue', val)"
     @open="onOpen"
     @close="onClose"
@@ -90,10 +92,9 @@ const dialogId = computed(() => {
     ></div>
     <div class="base-dialog-container">
       <el-scrollbar ref="scrollbar" class="base-dialog-scrollbar">
-        <div v-if="title" ref="header" class="base-dialog-list-title">
+        <div ref="header" class="base-dialog-list-title">
           {{ title }}
         </div>
-        <div v-else ref="header" style="height: 0"></div>
         <slot></slot>
         <div class="base-dialog-bottom-spacing"></div>
         <el-backtop
