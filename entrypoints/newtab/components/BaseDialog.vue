@@ -89,9 +89,10 @@ const dialogId = computed(() => {
     ></div>
     <div class="base-dialog-container">
       <el-scrollbar ref="scrollbar" class="base-dialog-scrollbar">
-        <div ref="header" class="base-dialog-list-title">
+        <div v-if="title" ref="header" class="base-dialog-list-title">
           {{ title }}
         </div>
+        <div v-else ref="header" style="height: 0"></div>
         <slot></slot>
         <div class="base-dialog-bottom-spacing"></div>
         <el-backtop

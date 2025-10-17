@@ -86,7 +86,7 @@ function handleItemClick(item: SettingsMenuItem) {
   router.push(item.key)
 }
 
-function handleSwitchClick(event: Event, item: SettingsMenuItem) {
+function handleSwitchClick(event: Event) {
   event.stopPropagation()
 }
 </script>
@@ -109,7 +109,7 @@ function handleSwitchClick(event: Event, item: SettingsMenuItem) {
         <el-switch
           v-if="item.hasSwitch && item.switchValue && item.onSwitchChange"
           :model-value="item.switchValue()"
-          @click="handleSwitchClick($event, item)"
+          @click="handleSwitchClick($event)"
           @change="item.onSwitchChange"
         />
         <el-icon class="settings-menu__item-arrow">
