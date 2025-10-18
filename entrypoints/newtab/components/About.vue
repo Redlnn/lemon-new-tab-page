@@ -88,7 +88,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       height: 55px;
       margin: 0 auto;
       background-color: var(--el-fill-color-extra-light);
-      background-image: url('/icon.png');
+      background-image: url('@/assets/icon.svg');
       background-repeat: no-repeat;
       background-position: center;
       background-size: 80%;
