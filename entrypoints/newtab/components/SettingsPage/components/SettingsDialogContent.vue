@@ -1,30 +1,3 @@
-<template>
-  <div :ref="composedDialogRef" :class="dialogKls" :style="style" tabindex="-1">
-    <slot name="aside"></slot>
-    <div :id="bodyId" :class="[ns.e('body'), bodyClass]">
-      <header ref="headerRef" :class="[headerClass]">
-        <slot name="header">
-          <span role="heading" :aria-level="ariaLevel" :class="ns.e('title')">
-            {{ title }}
-          </span>
-        </slot>
-        <button
-          v-if="showClose"
-          :aria-label="t_('el.dialog.close')"
-          :class="ns.e('headerbtn')"
-          type="button"
-          @click="$emit('close')"
-        >
-          <el-icon :class="ns.e('close')">
-            <component :is="closeIcon || Close" />
-          </el-icon>
-        </button>
-      </header>
-      <slot></slot>
-    </div>
-  </div>
-</template>
-
 <script lang="ts" setup>
 import { dialogInjectionKey, useDraggable, useLocale } from 'element-plus'
 import {
@@ -70,3 +43,30 @@ defineExpose({
   updatePosition
 })
 </script>
+
+<template>
+  <div :ref="composedDialogRef" :class="dialogKls" :style="style" tabindex="-1">
+    <slot name="aside"></slot>
+    <div :id="bodyId" :class="[ns.e('body'), bodyClass]">
+      <header ref="headerRef" :class="[headerClass]">
+        <slot name="header">
+          <span role="heading" :aria-level="ariaLevel" :class="ns.e('title')">
+            {{ title }}
+          </span>
+        </slot>
+        <button
+          v-if="showClose"
+          :aria-label="t_('el.dialog.close')"
+          :class="ns.e('headerbtn')"
+          type="button"
+          @click="$emit('close')"
+        >
+          <el-icon :class="ns.e('close')">
+            <component :is="closeIcon || Close" />
+          </el-icon>
+        </button>
+      </header>
+      <slot></slot>
+    </div>
+  </div>
+</template>
