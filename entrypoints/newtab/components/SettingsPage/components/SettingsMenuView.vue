@@ -130,45 +130,47 @@ function handleMenuSelect(key: string) {
   height: 100%;
   background-color: #e9e9e9;
 
-  .settings-menu__icon:has(.el-icon) {
-    padding: 16px 20px 25px;
+  &:not(.el-menu--collapse) {
+    width: 230px;
   }
 
-  .settings__dialog.is-mobile & .settings-menu__icon {
-    padding: 31px 20px 10px;
-    font-size: 25px;
-    line-height: 36px;
-    color: var(--el-text-color-primary);
+  .settings-menu__icon {
+    &:has(.el-icon) {
+      padding: 16px 20px 25px;
+    }
+
+    .is-mobile & {
+      padding: 31px 20px 10px;
+      font-size: 25px;
+      line-height: 36px;
+      color: var(--el-text-color-primary);
+    }
   }
 
   &.el-menu--collapse .settings-menu__icon:has(.el-icon) {
     padding: 16px 14px 25px;
   }
 
-  &:not(.el-menu--collapse) {
-    width: 230px;
+  // Mobile override
+  .is-mobile & {
+    width: 100% !important;
+    background-color: initial !important;
+  }
+
+  // Theme variants
+  html.dark & {
+    background-color: var(--el-fill-color-lighter);
   }
 
   html.dialog-transparent & {
     background-color: var(--le-fill-color-dark-opacity-20);
   }
 
-  html.dark & {
-    background-color: var(--el-fill-color-lighter);
-  }
-
-  .settings__dialog.is-mobile & {
-    background-color: initial !important;
-  }
-
   html.dark.dialog-transparent & {
     background-color: var(--le-fill-color-lighter-opacity-20);
   }
 
-  .settings__dialog.is-mobile &:not(.el-menu--collapse) {
-    width: 100%;
-  }
-
+  // Menu item styles
   :deep(.settings-menu-item) {
     --el-menu-item-height: 36px;
     --el-menu-active-color: var(--el-color-primary);

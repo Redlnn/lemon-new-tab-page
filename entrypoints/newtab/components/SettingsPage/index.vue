@@ -12,30 +12,17 @@ import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
 
-const { t } = useTranslation()
-const router = useSettingsRouter()
-const { width: windowWidth } = useWindowSize()
+// Constants
+const MOBILE_BREAKPOINT = 650
+const COLLAPSE_BREAKPOINT = 900
+const DESKTOP_DIALOG_WIDTH = 900
 
-const detailViewRef = ref<InstanceType<typeof SettingsDetailView>>()
-
-const { opened, show, hide, toggle } = useDialog()
-
-// Track if mobile transition animation is in progress
-const isTransitioning = ref(false)
-
-// Responsive breakpoint
-const isMobile = computed(() => windowWidth.value < 650)
-
-// Menu collapse state
-const isCollapse = ref(false)
-
-// Menu items configuration
 interface MenuItem {
   key: SettingsRoute
   titleKey: string
 }
 
-const menuItems: MenuItem[] = [
+const MENU_ITEMS: MenuItem[] = [
   { key: 'theme', titleKey: 'newtab:settings.theme.title' },
   { key: 'clock', titleKey: 'newtab:settings.clock.title' },
   { key: 'search', titleKey: 'newtab:settings.search.title' },
@@ -46,104 +33,69 @@ const menuItems: MenuItem[] = [
   { key: 'other', titleKey: 'newtab:settings.other.title' }
 ]
 
-// Reset router when dialog is closed
-function handleClose() {
-  router.reset(isMobile.value ? 'menu' : 'theme')
-}
+const { t } = useTranslation()
+const router = useSettingsRouter()
+const { width: windowWidth } = useWindowSize()
+const { opened, show, hide, toggle } = useDialog()
 
-// Custom show function that also resets router
-function customShow() {
-  router.reset(isMobile.value ? 'menu' : 'theme')
-  show()
-}
+const detailViewRef = ref<InstanceType<typeof SettingsDetailView>>()
+const isTransitioning = ref(false)
 
-// Custom toggle function that also resets router when opening
-function customToggle() {
-  if (!opened.value) {
-    router.reset(isMobile.value ? 'menu' : 'theme')
-  }
-  toggle()
-}
+// Computed
+const isMobile = computed(() => windowWidth.value < MOBILE_BREAKPOINT)
+const isCollapse = computed(() => windowWidth.value < COLLAPSE_BREAKPOINT && !isMobile.value)
 
-defineExpose({
-  show: customShow,
-  hide,
-  toggle: customToggle
-})
+const dialogWidth = computed(() => (windowWidth.value < 950 ? '93%' : DESKTOP_DIALOG_WIDTH))
 
-// Handle menu item click
-function handleMenuSelect(key: string) {
-  router.push(key as SettingsRoute)
-}
-
-// Handle mobile back button
-function handleMobileBack() {
-  if (isMobile.value) {
-    router.push('menu')
-  }
-}
-
-// Get current page title
 const currentPageTitle = computed(() => {
-  if (router.isAtMenu.value) {
-    return t('newtab:settings.title')
-  }
-  const item = menuItems.find((i) => i.key === router.currentRoute.value)
+  if (router.isAtMenu.value) return t('newtab:settings.title')
+  const item = MENU_ITEMS.find((i) => i.key === router.currentRoute.value)
   return item ? t(item.titleKey) : t('newtab:settings.title')
 })
 
-// Dialog width
-const dialogWidth = computed(() => {
-  if (windowWidth.value < 950) {
-    return '93%'
-  }
-  return 900
-})
-
-// Title visibility for header
 const titleIsVisible = computed(() => detailViewRef.value?.titleIsVisible ?? false)
 
-// Active menu key
 const activeMenuKey = computed(() =>
   router.isAtMenu.value ? 'menu' : (router.currentRoute.value as string)
 )
 
-// Slide transition name based on navigation direction
-const slideTransitionName = computed(() => {
-  if (!isMobile.value) return ''
-  return router.isForward.value ? 'slide-left' : 'slide-right'
-})
+const slideTransitionName = computed(() =>
+  isMobile.value ? (router.isForward.value ? 'slide-left' : 'slide-right') : ''
+)
 
-// Watch for responsive breakpoint changes
+// Methods
+const resetRouter = () => router.reset(isMobile.value ? 'menu' : 'theme')
+
+function customShow() {
+  resetRouter()
+  show()
+}
+
+function customToggle() {
+  if (!opened.value) resetRouter()
+  toggle()
+}
+
+const handleMenuSelect = (key: string) => router.push(key as SettingsRoute)
+const handleMobileBack = () => router.push('menu')
+
+// Transition handlers
+const handleTransitionStart = () => (isTransitioning.value = true)
+const handleTransitionEnd = () => (isTransitioning.value = false)
+
+// Watchers
 watch(windowWidth, (newWidth, oldWidth) => {
-  // Update collapse state
-  isCollapse.value = newWidth < 900 && newWidth >= 650
-
-  // Handle transition between mobile and desktop
   if (oldWidth) {
-    const wasMobile = oldWidth < 650
-    const isNowMobile = newWidth < 650
-
-    if (wasMobile !== isNowMobile) {
-      // Transition between mobile and desktop
-      router.reset(isNowMobile ? 'menu' : 'theme')
-    }
+    const wasMobile = oldWidth < MOBILE_BREAKPOINT
+    const isNowMobile = newWidth < MOBILE_BREAKPOINT
+    if (wasMobile !== isNowMobile) resetRouter()
   }
 })
 
-// Initialize router state based on initial viewport size
-onMounted(() => {
-  router.reset(isMobile.value ? 'menu' : 'theme')
-})
+// Lifecycle
+onMounted(resetRouter)
 
-// Transition animation handlers for mobile
-function handleTransitionStart() {
-  isTransitioning.value = true
-}
-
-function handleTransitionEnd() {
-  isTransitioning.value = false
-}
+defineExpose({ show: customShow, hide, toggle: customToggle })
 </script>
 
 <template>
@@ -159,20 +111,17 @@ function handleTransitionEnd() {
     draggable
     :show-close="false"
     header-class="settings-header noselect"
-    @closed="handleClose"
+    @closed="resetRouter"
   >
     <template #header="{ close, titleId }">
-      <!-- 必须标题在第一个，否则渲染顺序会让按钮按不到 -->
-      <!-- 标题：移动端设置首页不显示 -->
       <div
         v-show="!(isMobile && (router.isAtMenu.value || isTransitioning))"
         :id="titleId"
         class="base-dialog-title"
-        :style="{ opacity: !titleIsVisible ? 1 : 0 }"
+        :style="{ opacity: titleIsVisible ? 0 : 1 }"
       >
         {{ currentPageTitle }}
       </div>
-      <!-- 移动端返回按钮 -->
       <span
         v-show="isMobile && !router.isAtMenu.value"
         class="mobile-back-btn"
@@ -182,14 +131,12 @@ function handleTransitionEnd() {
           <component :is="ArrowBackRound" />
         </el-icon>
       </span>
-      <!-- 关闭按钮 -->
       <span class="base-dialog-close-btn" @click="close">
         <component :is="CloseRound" />
       </span>
     </template>
 
     <template #aside>
-      <!-- 仅在桌面模式展示侧边栏 -->
       <settings-menu-view
         v-if="!isMobile"
         :is-collapse="isCollapse"
@@ -198,41 +145,36 @@ function handleTransitionEnd() {
       />
     </template>
 
-    <!-- 移动端：侧边栏变为满屏使用滑动过渡到二级页面 -->
     <Transition
       v-if="isMobile"
       :name="slideTransitionName"
+      mode="out-in"
       @before-leave="handleTransitionStart"
       @after-enter="handleTransitionEnd"
-      mode="out-in"
     >
-      <!-- 原侧边栏 -->
       <settings-menu-view
         v-if="router.isAtMenu.value"
         key="menu"
-        :is-mobile="true"
+        is-mobile
         :active-key="activeMenuKey"
         @select="handleMenuSelect"
       />
-      <!-- 二级页面 -->
       <settings-detail-view
         v-else
         key="detail"
         ref="detailViewRef"
+        is-mobile
+        disable-transition
         :current-route="router.currentRoute.value"
         :title="currentPageTitle"
-        :is-mobile="true"
-        :disable-transition="true"
       />
     </Transition>
 
-    <!-- 桌面模式下永远展示内容区域 -->
     <settings-detail-view
       v-else
       ref="detailViewRef"
       :current-route="router.currentRoute.value"
       :title="currentPageTitle"
-      :disable-transition="false"
     />
   </SettingsDialog>
 </template>
@@ -241,13 +183,13 @@ function handleTransitionEnd() {
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
 .settings__dialog {
+  display: flex;
   height: 500px;
   padding: 0;
   overflow: hidden;
   background-color: transparent;
   border-radius: 10px;
   box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
-
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
@@ -258,7 +200,7 @@ function handleTransitionEnd() {
 
   .el-dialog__body {
     display: flex;
-    flex-grow: 1;
+    flex: 1;
     flex-direction: column;
     background-color: var(--el-bg-color-overlay);
 
@@ -266,10 +208,6 @@ function handleTransitionEnd() {
       background-color: var(--le-bg-color-overlay-opacity-20);
     }
   }
-}
-
-.settings-container--two-column {
-  display: flex;
 }
 
 .settings-header {
@@ -284,7 +222,7 @@ function handleTransitionEnd() {
 
   .base-dialog-close-btn {
     width: 20px;
-    line-height: 1em;
+    line-height: 1;
   }
 
   .mobile-back-btn {
@@ -293,7 +231,7 @@ function handleTransitionEnd() {
     left: 20px;
     width: 20px;
     height: 20px;
-    line-height: 1em;
+    line-height: 1;
     color: var(--el-text-color-regular);
     cursor: pointer;
     transition: color var(--el-transition-duration-fast);
@@ -304,32 +242,24 @@ function handleTransitionEnd() {
   }
 }
 
-// Slide transitions for mobile navigation
+// Mobile slide transitions
 .slide-left-enter-active,
 .slide-left-leave-active,
 .slide-right-enter-active,
 .slide-right-leave-active {
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--el-transition-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.slide-left-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.slide-left-leave-to {
-  opacity: 0;
-  transform: translateX(-30%);
-}
-
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translateX(-30%);
-}
-
+.slide-left-enter-from,
 .slide-right-leave-to {
   opacity: 0;
   transform: translateX(100%);
+}
+
+.slide-left-leave-to,
+.slide-right-enter-from {
+  opacity: 0;
+  transform: translateX(-30%);
 }
 
 .slide-left-enter-active,
