@@ -49,41 +49,39 @@ const preferredDark = usePreferredDark()
 const isAuto = computed(() => store.value === 'auto')
 const isAutoLocal = ref(isAuto.value)
 
-function changeByPreferred(htmlElement: HTMLHtmlElement) {
+function changeByPreferred() {
   if (preferredDark.value) {
-    htmlElement.classList.add('dark')
-    htmlElement.classList.remove('light')
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
     isDarkLocal.value = true
   } else {
-    htmlElement.classList.add('light')
-    htmlElement.classList.remove('dark')
+    document.documentElement.classList.add('light')
+    document.documentElement.classList.remove('dark')
     isDarkLocal.value = false
   }
 }
 
-function changeByUser(htmlElement: HTMLHtmlElement) {
+function changeByUser() {
   if (isDarkLocal.value) {
-    htmlElement.classList.add('dark')
-    htmlElement.classList.remove('light')
+    document.documentElement.classList.add('dark')
+    document.documentElement.classList.remove('light')
     isAutoLocal.value = false
   } else {
-    htmlElement.classList.add('light')
-    htmlElement.classList.remove('dark')
+    document.documentElement.classList.add('light')
+    document.documentElement.classList.remove('dark')
     isAutoLocal.value = false
   }
 }
 
 function toggleDark() {
-  const htmlElement: HTMLHtmlElement | null = document.querySelector('html')
-  if (!htmlElement) return
   if (isDark.value) {
     // 先切换CSS，等待动画结束后，再切换store
-    changeByUser(htmlElement)
+    changeByUser()
     useTimeoutFn(() => {
       store.value = 'light'
     }, 300)
   } else {
-    changeByUser(htmlElement)
+    changeByUser()
     useTimeoutFn(() => {
       store.value = 'dark'
     }, 300)
@@ -91,8 +89,6 @@ function toggleDark() {
 }
 
 function toggleAuto() {
-  const htmlElement: HTMLHtmlElement | null = document.querySelector('html')
-  if (!htmlElement) return
   if (!isAutoLocal.value) {
     store.value = isDarkLocal.value ? 'dark' : 'light'
     return
@@ -100,7 +96,7 @@ function toggleAuto() {
 
   if (isDarkLocal.value !== preferredDark.value) {
     // 先切换CSS，等待动画结束后，再切换store
-    changeByPreferred(htmlElement)
+    changeByPreferred()
     useTimeoutFn(() => {
       store.value = 'auto'
     }, 300)
@@ -108,17 +104,6 @@ function toggleAuto() {
     store.value = 'auto'
   }
 }
-
-watch(preferredDark, () => {
-  const doc: HTMLHtmlElement | null = document.querySelector('html')
-  if (!doc) return
-
-  if (isAuto.value) {
-    if (isDarkLocal.value !== preferredDark.value) {
-      changeByPreferred(doc)
-    }
-  }
-})
 </script>
 
 <template>

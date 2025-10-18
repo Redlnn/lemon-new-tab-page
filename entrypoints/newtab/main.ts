@@ -1,7 +1,7 @@
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'
-import { useDebounceFn } from '@vueuse/core'
+import { useDark, useDebounceFn } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
@@ -67,13 +67,15 @@ export const main = async () => {
   const settings = useSettingsStore()
   const saveSettingsDebounced = useDebounceFn(saveSettings, 300)
 
+  const isDark = useDark()
+
   if (settings.primaryColor.toLowerCase() === '#ffbb00') {
     // 强制替换旧版本对比度过低的主题色
     settings.primaryColor = defaultSettings.primaryColor
     await saveSettings(toRaw(settings))
   }
 
-  changeTheme(settings.primaryColor)
+  changeTheme(settings.primaryColor, isDark.value)
   color = settings.primaryColor
 
   settings.$subscribe(async (_mutation, state) => {
@@ -83,7 +85,7 @@ export const main = async () => {
         state.primaryColor = defaultSettings.primaryColor
       }
       color = state.primaryColor
-      changeTheme(state.primaryColor)
+      changeTheme(state.primaryColor, isDark.value)
     }
   })
 

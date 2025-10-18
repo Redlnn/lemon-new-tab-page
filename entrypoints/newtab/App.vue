@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { promiseTimeout, useDark } from '@vueuse/core'
+import { promiseTimeout, useColorMode, useDark, usePreferredDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'
 import i18next from 'i18next'
@@ -24,6 +24,8 @@ import TimeNow from '@newtab/components/TimeNow.vue'
 import YiYan from '@newtab/components/YiYan.vue'
 import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
+
+import changeTheme from './scripts/use-element-plus-theme'
 
 const { t } = useTranslation()
 
@@ -345,6 +347,24 @@ watch(
     activateBackgroundWatch(newType)
   }
 )
+
+const preferredDark = usePreferredDark()
+const { store } = useColorMode()
+watch(preferredDark, () => {
+  if (store.value === 'auto') {
+    if (preferredDark.value) {
+      document.documentElement.classList.add('dark')
+      document.documentElement.classList.remove('light')
+    } else {
+      document.documentElement.classList.add('light')
+      document.documentElement.classList.remove('dark')
+    }
+  }
+})
+
+watch(isDark, (dark) => {
+  changeTheme(settings.primaryColor, dark)
+})
 
 // 组件卸载时清理watch
 onUnmounted(() => {
