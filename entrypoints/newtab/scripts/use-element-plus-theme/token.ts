@@ -5,11 +5,9 @@ const PRE_LIGHT = `${PRE}-light`
 /** 深色变量前缀 */
 const PRE_DARK = `${PRE}-dark`
 /** 色阶 */
-const Levels = [3, 5, 7, 8, 9]
+const Levels = [3, 5, 7, 8, 9] as const
 
-/** 白色 */
-const WHITE = '#FFFFFF'
-/** 黑色 */
-const BLACK = '#000000'
+/** Element Plus 深色模式背景色 */
+const EL_BG_COLOR = '#1f1f1f' as const
 
-export { PRE, PRE_LIGHT, PRE_DARK, Levels, WHITE, BLACK }
+export { EL_BG_COLOR, Levels, PRE, PRE_DARK, PRE_LIGHT }
