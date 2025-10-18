@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ClockCircleOutlined } from '@vicons/antd'
 import { useTranslation } from 'i18next-vue'
 
 import { isChinese } from '@/shared/lang'
@@ -11,10 +10,6 @@ const settings = useSettingsStore()
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><clock-circle-outlined /></el-icon>
-    <span>{{ t('newtab:settings.clock.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.use12HourClock') }}</div>

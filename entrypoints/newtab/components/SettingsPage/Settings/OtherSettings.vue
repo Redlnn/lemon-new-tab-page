@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
 
-import { ControlOutlined } from '@vicons/antd'
 import {
   CloudOffRound,
   DeleteForeverOutlined,
@@ -190,10 +189,6 @@ function handleFileChange(event: Event) {
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><control-outlined /></el-icon>
-    <span>{{ t('newtab:settings.other.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.other.sync') }}</div>

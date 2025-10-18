@@ -15,9 +15,11 @@ interface Props {
   appendToBody?: boolean
   destroyOnClose?: boolean
   style?: object | string
+  width?: string | number
+  headerClass?: string
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 const emit = defineEmits<{
   'update:modelValue': [value: boolean]
   open: []
@@ -58,7 +60,7 @@ const dialogId = computed(() => {
   <el-dialog
     ref="dialog"
     :model-value="modelValue"
-    :width="windowWidth < 650 ? '93%' : 600"
+    :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
     :class="[
       containerClass,
       getPerfClasses({ transparentOff: !opacity, blurOff: !acrylic }, 'base-dialog')
@@ -69,6 +71,7 @@ const dialogId = computed(() => {
     draggable
     :append-to-body="appendToBody"
     :destroy-on-close="destroyOnClose"
+    :header-class="headerClass"
     @update:model-value="(val) => emit('update:modelValue', val)"
     @open="onOpen"
     @close="onClose"
@@ -98,7 +101,7 @@ const dialogId = computed(() => {
           v-if="dialogId"
           :target="`#${dialogId} .el-scrollbar__wrap`"
           style="position: absolute"
-          :right="40"
+          :right="15"
           :bottom="20"
         />
       </el-scrollbar>
@@ -146,12 +149,11 @@ const dialogId = computed(() => {
 
   & .el-dialog__header {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 50px;
     padding: 0;
+    line-height: 50px;
+    text-align: center;
   }
 
   & .el-dialog__body {
@@ -167,8 +169,10 @@ const dialogId = computed(() => {
 
   &-close-btn {
     position: absolute;
+    top: 15px;
     right: 20px;
     height: 20px;
+    line-height: 1em;
     color: var(--el-text-color-regular);
     cursor: pointer;
     transition:

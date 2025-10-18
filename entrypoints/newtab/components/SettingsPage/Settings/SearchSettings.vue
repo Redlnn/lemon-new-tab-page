@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { SearchOutlined } from '@vicons/antd'
 import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
@@ -12,10 +11,6 @@ const settings = useSettingsStore()
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><search-outlined /></el-icon>
-    <span>{{ t('newtab:settings.search.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.search.defaultSearchEngine') }}</div>

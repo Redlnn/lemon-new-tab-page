@@ -194,6 +194,9 @@
       "invertColorLight": "【一言】淺色模式下使用深色文字",
       "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
       "title": "一言"
+    },
+    "menu": {
+      "back": "返回"
     }
   },
   "shortcut": {
