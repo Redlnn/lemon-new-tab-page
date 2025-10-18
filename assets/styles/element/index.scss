@@ -7,7 +7,7 @@ $--slider: (
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   // do not use same name, it will override.
   $slider: $--slider,
-  $border-radius: ('base': 8px),
+  $border-radius: ('base': 8px !important),
   $messagebox: ('border-radius': 8px),
   $popper: ('border-radius': 8px),
   $backtop: (
