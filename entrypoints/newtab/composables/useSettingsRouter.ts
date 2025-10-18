@@ -1,7 +1,6 @@
 import { computed, ref } from 'vue'
 
 export type SettingsRoute =
-  | 'menu'
   | 'theme'
   | 'clock'
   | 'search'
@@ -17,7 +16,7 @@ interface RouteState {
 }
 
 const state = ref<RouteState>({
-  current: 'menu',
+  current: 'theme',
   history: []
 })
 
@@ -40,7 +39,7 @@ export function useSettingsRouter() {
   }
 
   const reset = () => {
-    state.value.current = 'menu'
+    state.value.current = 'theme'
     state.value.history = []
   }
 

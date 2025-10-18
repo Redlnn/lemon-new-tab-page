@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core'
+import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import {
   AppstoreOutlined,
@@ -8,11 +8,11 @@ import {
   PictureOutlined,
   SearchOutlined
 } from '@vicons/antd'
-import { ApiRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
+import { ApiRound, CloseRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
+import Icon from '@/assets/icon.svg?component'
 import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
-import { useSettingsStore } from '@/shared/settings'
 
 import { type SettingsRoute, useSettingsRouter } from '@newtab/composables/useSettingsRouter'
 
@@ -28,8 +28,9 @@ import YiyanSettings from './Settings/YiyanSettings.vue'
 
 const { t } = useTranslation()
 const router = useSettingsRouter()
-const settings = useSettingsStore()
 const { width: windowWidth } = useWindowSize()
+const titleRef = ref<HTMLDivElement>()
+const titleIsVisible = useElementVisibility(titleRef)
 
 const { opened, show, hide, toggle } = useDialog()
 
@@ -43,9 +44,6 @@ interface MenuItem {
   key: SettingsRoute
   icon: Component
   titleKey: string
-  hasSwitch?: boolean
-  switchValue?: () => boolean
-  onSwitchChange?: (value: boolean) => void
 }
 
 const menuItems: MenuItem[] = [
@@ -72,22 +70,12 @@ const menuItems: MenuItem[] = [
   {
     key: 'shortcut',
     icon: AppstoreOutlined,
-    titleKey: 'newtab:settings.shortcut.title',
-    hasSwitch: true,
-    switchValue: () => settings.shortcut.enabled,
-    onSwitchChange: (value: boolean) => {
-      settings.shortcut.enabled = value
-    }
+    titleKey: 'newtab:settings.shortcut.title'
   },
   {
     key: 'yiyan',
     icon: FormatQuoteRound,
-    titleKey: 'newtab:settings.yiyan.title',
-    hasSwitch: true,
-    switchValue: () => settings.yiyan.enabled,
-    onSwitchChange: (value: boolean) => {
-      settings.yiyan.enabled = value
-    }
+    titleKey: 'newtab:settings.yiyan.title'
   },
   {
     key: 'performance',
@@ -131,16 +119,8 @@ function handleMenuSelect(key: string) {
   router.push(key as SettingsRoute)
 }
 
-// Handle switch click
-function handleSwitchClick(event: Event) {
-  event.stopPropagation()
-}
-
 // Get current page title
 const currentPageTitle = computed(() => {
-  if (router.currentRoute.value === 'menu') {
-    return t('newtab:settings.title')
-  }
   const item = menuItems.find((i) => i.key === router.currentRoute.value)
   return item ? t(item.titleKey) : t('newtab:settings.title')
 })
@@ -165,16 +145,20 @@ watch(windowWidth, () => {
     class="settings__dialog settings-container--two-column"
     lock-scroll
     draggable
+    :show-close="false"
     header-class="settings-header noselect"
     @closed="handleClose"
   >
+    <template #header="{ close, titleId }">
+      <div :id="titleId" class="base-dialog-title" :style="{ opacity: !titleIsVisible ? 1 : 0 }">
+        {{ currentPageTitle }}
+      </div>
+      <span class="base-dialog-close-btn" @click="close">
+        <component :is="CloseRound" />
+      </span>
+    </template>
     <template #aside>
-      <!-- Sidebar menu - hidden on mobile when not on menu route -->
-      <aside
-        v-show="!isMobile || router.currentRoute.value === 'menu'"
-        class="settings-aside"
-        :class="[{ 'is-mobile': isMobile }]"
-      >
+      <aside class="settings-aside" :class="[{ 'is-mobile': isMobile }]">
         <el-menu
           :default-active="router.currentRoute.value"
           :collapse="isCollapse"
@@ -182,6 +166,12 @@ watch(windowWidth, () => {
           class="settings-menu"
           @select="handleMenuSelect"
         >
+          <div class="settings-menu__icon">
+            <el-icon v-if="!isMobile" :size="36">
+              <Icon />
+            </el-icon>
+            <span v-else>设置</span>
+          </div>
           <el-menu-item
             v-for="item in menuItems"
             :key="item.key"
@@ -191,47 +181,32 @@ watch(windowWidth, () => {
             <el-icon>
               <component :is="item.icon" />
             </el-icon>
-            <template #title>
-              <span class="menu-title">{{ t(item.titleKey) }}</span>
-              <el-switch
-                v-if="item.hasSwitch && item.switchValue && item.onSwitchChange"
-                :model-value="item.switchValue()"
-                size="small"
-                class="menu-switch"
-                @click="handleSwitchClick($event)"
-                @change="(value) => item.onSwitchChange?.(value as boolean)"
-              />
-            </template>
+            <span class="menu-title">{{ t(item.titleKey) }}</span>
           </el-menu-item>
         </el-menu>
       </aside>
     </template>
     <!-- Main content area -->
-    <el-main v-show="!isMobile || router.currentRoute.value !== 'menu'" class="settings-main">
-      <div class="settings-content">
-        <el-scrollbar>
-          <h2 class="settings-content__title">{{ currentPageTitle }}</h2>
-          <Transition name="settings-fade" mode="out-in">
-            <theme-settings v-if="router.currentRoute.value === 'theme'" key="theme" />
-            <clock-settings v-else-if="router.currentRoute.value === 'clock'" key="clock" />
-            <search-settings v-else-if="router.currentRoute.value === 'search'" key="search" />
-            <background-settings
-              v-else-if="router.currentRoute.value === 'background'"
-              key="background"
-            />
-            <shortcut-settings
-              v-else-if="router.currentRoute.value === 'shortcut'"
-              key="shortcut"
-            />
-            <yiyan-settings v-else-if="router.currentRoute.value === 'yiyan'" key="yiyan" />
-            <performance-settings
-              v-else-if="router.currentRoute.value === 'performance'"
-              key="performance"
-            />
-            <other-settings v-else-if="router.currentRoute.value === 'other'" key="other" />
-          </Transition>
-        </el-scrollbar>
-      </div>
+    <el-main v-show="!isMobile" class="settings-main">
+      <el-scrollbar class="settings-content">
+        <h2 ref="titleRef" class="settings-content__title">{{ currentPageTitle }}</h2>
+        <Transition name="settings-fade" mode="out-in">
+          <theme-settings v-if="router.currentRoute.value === 'theme'" key="theme" />
+          <clock-settings v-else-if="router.currentRoute.value === 'clock'" key="clock" />
+          <search-settings v-else-if="router.currentRoute.value === 'search'" key="search" />
+          <background-settings
+            v-else-if="router.currentRoute.value === 'background'"
+            key="background"
+          />
+          <shortcut-settings v-else-if="router.currentRoute.value === 'shortcut'" key="shortcut" />
+          <yiyan-settings v-else-if="router.currentRoute.value === 'yiyan'" key="yiyan" />
+          <performance-settings
+            v-else-if="router.currentRoute.value === 'performance'"
+            key="performance"
+          />
+          <other-settings v-else-if="router.currentRoute.value === 'other'" key="other" />
+        </Transition>
+      </el-scrollbar>
     </el-main>
   </SettingsDialog>
 </template>
@@ -259,7 +234,7 @@ watch(windowWidth, () => {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
-    background-color: var(--le-bg-color-overlay);
+    background-color: var(--el-bg-color-overlay);
 
     html.dialog-transparent & {
       background-color: var(--le-bg-color-overlay-opacity-20);
@@ -272,8 +247,19 @@ watch(windowWidth, () => {
 }
 
 .settings-header {
+  position: relative;
   flex-shrink: 0;
-  height: 40px;
+  height: 50px;
+  font-weight: bold;
+  line-height: 50px;
+  color: var(--el-text-color-primary);
+  text-align: center;
+  cursor: move;
+
+  .base-dialog-close-btn {
+    top: 15px;
+    line-height: 1em;
+  }
 }
 
 .settings-aside {
@@ -290,20 +276,48 @@ watch(windowWidth, () => {
   height: 100%;
   background-color: #e9e9e9;
 
+  .is-mobile & .settings-menu__icon {
+    padding: 31px 20px 10px;
+    font-size: 30px;
+    line-height: 36px;
+  }
+
+  .settings-menu__icon:has(.el-icon) {
+    padding: 16px 20px 25px;
+  }
+
+  &.el-menu--collapse .settings-menu__icon:has(.el-icon) {
+    padding: 16px 14px 25px;
+  }
+
   &:not(.el-menu--collapse) {
     width: 230px;
   }
 
   html.dialog-transparent & {
-    background-color: rgb(233 233 233 / 80%);
+    background-color: var(--le-fill-color-dark-opacity-20);
+  }
+
+  html.dark & {
+    background-color: var(--el-fill-color-lighter);
   }
 
   .is-mobile &:not(.el-menu--collapse) {
     width: 100%;
   }
 
+  html.dark.dialog-transparent & {
+    background-color: var(--le-fill-color-lighter-opacity-20);
+  }
+
   &-item {
-    position: relative;
+    --el-menu-item-height: 36px;
+    --el-menu-active-color: var(--el-color-primary);
+    --el-menu-hover-bg-color: var(--le-fill-color-dark-opacity-20);
+
+    &.is-active {
+      background-color: var(--el-color-primary-light-9);
+    }
   }
 
   .menu-title {
@@ -316,29 +330,28 @@ watch(windowWidth, () => {
 }
 
 .settings-main {
-  padding: 0;
-}
+  padding: 0 20px 0 30px;
 
-.settings-content {
-  height: 100%;
-  padding: 24px;
+  .settings-content {
+    height: 100%;
 
-  .el-scrollbar__wrap {
-    border-radius: 8px;
-  }
+    .el-scrollbar__wrap {
+      padding-right: 10px;
+    }
 
-  &__title {
-    padding: 0 10px;
-    margin: 0 0 20px;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--el-text-color-primary);
+    &__title {
+      padding: 0 10px;
+      margin: 25px 0 20px;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--el-text-color-primary);
+    }
   }
 }
 
 .settings-fade-enter-active,
 .settings-fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 
 .settings-fade-enter-from,

@@ -101,7 +101,7 @@ const dialogId = computed(() => {
           v-if="dialogId"
           :target="`#${dialogId} .el-scrollbar__wrap`"
           style="position: absolute"
-          :right="40"
+          :right="15"
           :bottom="20"
         />
       </el-scrollbar>
@@ -149,12 +149,11 @@ const dialogId = computed(() => {
 
   & .el-dialog__header {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 50px;
     padding: 0;
+    line-height: 50px;
+    text-align: center;
   }
 
   & .el-dialog__body {
@@ -170,8 +169,10 @@ const dialogId = computed(() => {
 
   &-close-btn {
     position: absolute;
+    top: 15px;
     right: 20px;
     height: 20px;
+    line-height: 1em;
     color: var(--el-text-color-regular);
     cursor: pointer;
     transition:
