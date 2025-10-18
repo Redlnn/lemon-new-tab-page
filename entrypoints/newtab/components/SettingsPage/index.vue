@@ -74,7 +74,16 @@ function customToggle() {
 }
 
 const handleMenuSelect = (key: string) => router.push(key as SettingsRoute)
-const handleMobileBack = () => router.push('menu')
+
+const handleMobileBack = () => {
+  // 使用 back() 来触发正确的后退动画（isForward = false）
+  if (router.canGoBack.value) {
+    router.back()
+  } else {
+    // 边缘情况：如果没有历史记录（如从桌面端切换到移动端），直接重置到 menu
+    router.reset('menu')
+  }
+}
 
 const handleTransitionStart = () => (isTransitioning.value = true)
 const handleTransitionEnd = () => (isTransitioning.value = false)
