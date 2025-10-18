@@ -142,7 +142,6 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
     <Transition
       v-if="isMobile"
       :name="slideTransitionName"
-      mode="out-in"
       @before-leave="handleTransitionStart"
       @after-enter="handleTransitionEnd"
     >

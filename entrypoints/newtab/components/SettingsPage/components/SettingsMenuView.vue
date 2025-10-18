@@ -151,13 +151,11 @@ function handleMenuSelect(key: string) {
     padding: 16px 14px 25px;
   }
 
-  // Mobile override
   .is-mobile & {
     width: 100% !important;
     background-color: initial !important;
   }
 
-  // Theme variants
   html.dark & {
     background-color: var(--el-fill-color-lighter);
   }
@@ -170,7 +168,6 @@ function handleMenuSelect(key: string) {
     background-color: var(--le-fill-color-lighter-opacity-20);
   }
 
-  // Menu item styles
   :deep(.settings-menu-item) {
     --el-menu-item-height: 36px;
     --el-menu-active-color: var(--el-color-primary);
