@@ -48,7 +48,7 @@ function handleBack() {
     margin-bottom: 8px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--el-transition-duration-fast) ease;
 
     &:hover {
       background-color: var(--el-fill-color-light);

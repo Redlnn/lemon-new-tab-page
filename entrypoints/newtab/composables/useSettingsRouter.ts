@@ -10,9 +10,12 @@ export type SettingsRoute =
   | 'performance'
   | 'other'
 
+// Special route for mobile menu view
+export type SettingsRouteOrMenu = SettingsRoute | 'menu'
+
 interface RouteState {
-  current: SettingsRoute
-  history: SettingsRoute[]
+  current: SettingsRouteOrMenu
+  history: SettingsRouteOrMenu[]
 }
 
 const state = ref<RouteState>({
@@ -23,8 +26,9 @@ const state = ref<RouteState>({
 export function useSettingsRouter() {
   const currentRoute = computed(() => state.value.current)
   const canGoBack = computed(() => state.value.history.length > 0)
+  const isAtMenu = computed(() => state.value.current === 'menu')
 
-  const push = (route: SettingsRoute) => {
+  const push = (route: SettingsRouteOrMenu) => {
     if (state.value.current !== route) {
       state.value.history.push(state.value.current)
       state.value.current = route
@@ -38,14 +42,15 @@ export function useSettingsRouter() {
     }
   }
 
-  const reset = () => {
-    state.value.current = 'theme'
+  const reset = (initialRoute: SettingsRouteOrMenu = 'theme') => {
+    state.value.current = initialRoute
     state.value.history = []
   }
 
   return {
     currentRoute,
     canGoBack,
+    isAtMenu,
     push,
     back,
     reset

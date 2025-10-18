@@ -135,7 +135,7 @@ function handleSwitchClick(event: Event) {
     height: 56px;
     padding: 0 16px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background-color var(--el-transition-duration-fast) ease;
 
     &:hover {
       background-color: var(--el-fill-color-light);

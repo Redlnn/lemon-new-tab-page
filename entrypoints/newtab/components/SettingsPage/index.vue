@@ -8,7 +8,14 @@ import {
   PictureOutlined,
   SearchOutlined
 } from '@vicons/antd'
-import { ApiRound, CloseRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
+import {
+  ApiRound,
+  ArrowBackRound,
+  ChevronRightRound,
+  CloseRound,
+  ColorLensOutlined,
+  FormatQuoteRound
+} from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import Icon from '@/assets/icon.svg?component'
@@ -91,19 +98,19 @@ const menuItems: MenuItem[] = [
 
 // Reset router when dialog is closed
 function handleClose() {
-  router.reset()
+  router.reset(isMobile.value ? 'menu' : 'theme')
 }
 
 // Custom show function that also resets router
 function customShow() {
-  router.reset()
+  router.reset(isMobile.value ? 'menu' : 'theme')
   show()
 }
 
 // Custom toggle function that also resets router when opening
 function customToggle() {
   if (!opened.value) {
-    router.reset()
+    router.reset(isMobile.value ? 'menu' : 'theme')
   }
   toggle()
 }
@@ -119,8 +126,18 @@ function handleMenuSelect(key: string) {
   router.push(key as SettingsRoute)
 }
 
+// Handle mobile back button
+function handleMobileBack() {
+  if (isMobile.value) {
+    router.push('menu')
+  }
+}
+
 // Get current page title
 const currentPageTitle = computed(() => {
+  if (router.isAtMenu.value) {
+    return t('newtab:settings.title')
+  }
   const item = menuItems.find((i) => i.key === router.currentRoute.value)
   return item ? t(item.titleKey) : t('newtab:settings.title')
 })
@@ -133,8 +150,26 @@ const dialogWidth = computed(() => {
   return 900
 })
 
-watch(windowWidth, () => {
-  isCollapse.value = windowWidth.value < 900 && windowWidth.value >= 650
+// Watch for responsive breakpoint changes
+watch(windowWidth, (newWidth, oldWidth) => {
+  // Update collapse state
+  isCollapse.value = newWidth < 900 && newWidth >= 650
+
+  // Handle transition between mobile and desktop
+  if (oldWidth) {
+    const wasMobile = oldWidth < 650
+    const isNowMobile = newWidth < 650
+
+    if (wasMobile !== isNowMobile) {
+      // Transition between mobile and desktop
+      router.reset(isNowMobile ? 'menu' : 'theme')
+    }
+  }
+})
+
+// Initialize router state based on initial viewport size
+onMounted(() => {
+  router.reset(isMobile.value ? 'menu' : 'theme')
 })
 </script>
 
@@ -150,17 +185,41 @@ watch(windowWidth, () => {
     @closed="handleClose"
   >
     <template #header="{ close, titleId }">
-      <div :id="titleId" class="base-dialog-title" :style="{ opacity: !titleIsVisible ? 1 : 0 }">
+      <div
+        v-if="!(isMobile && router.isAtMenu.value)"
+        :id="titleId"
+        class="base-dialog-title"
+        :style="{ opacity: !titleIsVisible ? 1 : 0 }"
+      >
         {{ currentPageTitle }}
       </div>
-      <span class="base-dialog-close-btn" @click="close">
+      <!-- Mobile back button -->
+      <span
+        v-if="isMobile && !router.isAtMenu.value"
+        class="mobile-back-btn"
+        @click="handleMobileBack"
+      >
+        <el-icon color="currentColor" :size="20">
+          <component :is="ArrowBackRound" />
+        </el-icon>
+      </span>
+      <span
+        class="base-dialog-close-btn"
+        :class="{ 'is-mobile-main-menu': isMobile && router.isAtMenu.value }"
+        @click="close"
+      >
         <component :is="CloseRound" />
       </span>
     </template>
     <template #aside>
-      <aside class="settings-aside" :class="[{ 'is-mobile': isMobile }]">
+      <!-- Desktop: Always show menu; Mobile: Show only when at menu route -->
+      <aside
+        v-show="!isMobile || router.isAtMenu.value"
+        class="settings-aside"
+        :class="[{ 'is-mobile': isMobile }]"
+      >
         <el-menu
-          :default-active="router.currentRoute.value"
+          :default-active="router.isAtMenu.value ? 'theme' : router.currentRoute.value"
           :collapse="isCollapse"
           :collapse-transition="!isMobile"
           class="settings-menu"
@@ -182,12 +241,21 @@ watch(windowWidth, () => {
               <component :is="item.icon" />
             </el-icon>
             <span class="menu-title">{{ t(item.titleKey) }}</span>
+            <!-- Mobile: Show chevron arrow -->
+            <el-icon v-if="isMobile" class="menu-chevron">
+              <component :is="ChevronRightRound" />
+            </el-icon>
           </el-menu-item>
         </el-menu>
       </aside>
     </template>
     <!-- Main content area -->
-    <el-main v-show="!isMobile" class="settings-main">
+    <!-- Desktop: Always show; Mobile: Show only when not at menu route -->
+    <el-main
+      v-show="!isMobile || !router.isAtMenu.value"
+      class="settings-main"
+      :class="{ 'is-mobile': isMobile }"
+    >
       <el-scrollbar class="settings-content">
         <h2 ref="titleRef" class="settings-content__title">{{ currentPageTitle }}</h2>
         <Transition name="settings-fade" mode="out-in">
@@ -257,8 +325,28 @@ watch(windowWidth, () => {
   cursor: move;
 
   .base-dialog-close-btn {
-    top: 15px;
+    width: 20px;
     line-height: 1em;
+
+    &.is-mobile-main-menu {
+      left: -40px;
+    }
+  }
+
+  .mobile-back-btn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 1em;
+    color: var(--el-text-color-regular);
+    cursor: pointer;
+    transition: color var(--el-transition-duration-fast);
+
+    &:hover {
+      color: var(--el-text-color-primary);
+    }
   }
 }
 
@@ -278,7 +366,7 @@ watch(windowWidth, () => {
 
   .is-mobile & .settings-menu__icon {
     padding: 31px 20px 10px;
-    font-size: 30px;
+    font-size: 25px;
     line-height: 36px;
   }
 
@@ -317,6 +405,15 @@ watch(windowWidth, () => {
 
     &.is-active {
       background-color: var(--el-color-primary-light-9);
+    }
+
+    .menu-chevron {
+      color: var(--el-text-color-secondary);
+      transition: color var(--el-transition-duration-fast);
+    }
+
+    &:not(.is-active):hover .menu-chevron {
+      color: var(--el-menu-text-color);
     }
   }
 
