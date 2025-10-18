@@ -72,14 +72,14 @@ export const main = async () => {
   if (settings.primaryColor.toLowerCase() === '#ffbb00') {
     // 强制替换旧版本对比度过低的主题色
     settings.primaryColor = defaultSettings.primaryColor
-    await saveSettings(toRaw(settings))
+    await saveSettings(settings)
   }
 
   changeTheme(settings.primaryColor, isDark.value)
   color = settings.primaryColor
 
   settings.$subscribe(async (_mutation, state) => {
-    await saveSettingsDebounced(toRaw(state))
+    await saveSettingsDebounced(state)
     if (state.primaryColor !== color) {
       if (state.primaryColor === null) {
         state.primaryColor = defaultSettings.primaryColor
