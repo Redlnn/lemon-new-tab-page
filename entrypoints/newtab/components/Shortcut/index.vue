@@ -93,16 +93,19 @@ async function refresh() {
   topSites.value = _bookmarks.length < capacity ? mergedTop : []
 }
 
-onMounted(async () => {
-  await refreshDebounced()
-  mounted.value = true
+onMounted(() => {
+  // useResizeObserver 会在开始观察时立即触发一次
+  useResizeObserver(document.documentElement, async () => {
+    await refreshDebounced()
+    // 首次刷新完成后设置 mounted 标志
+    if (!mounted.value) {
+      mounted.value = true
+    }
+  })
 })
 
 watch(settings.shortcut, refreshDebounced)
 watch(() => columnsNum.value, refreshDebounced)
-
-// 监听窗口大小变化
-useResizeObserver(document.documentElement, refreshDebounced)
 
 // 云同步导致书签变动时刷新
 bookmarkStorage.watch(refreshDebounced)
