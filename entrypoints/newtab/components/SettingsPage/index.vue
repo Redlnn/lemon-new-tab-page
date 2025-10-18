@@ -12,7 +12,6 @@ import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
 
-// Constants
 const MOBILE_BREAKPOINT = 650
 const COLLAPSE_BREAKPOINT = 900
 const DESKTOP_DIALOG_WIDTH = 900
@@ -41,7 +40,6 @@ const { opened, show, hide, toggle } = useDialog()
 const detailViewRef = ref<InstanceType<typeof SettingsDetailView>>()
 const isTransitioning = ref(false)
 
-// Computed
 const isMobile = computed(() => windowWidth.value < MOBILE_BREAKPOINT)
 const isCollapse = computed(() => windowWidth.value < COLLAPSE_BREAKPOINT && !isMobile.value)
 
@@ -63,7 +61,6 @@ const slideTransitionName = computed(() =>
   isMobile.value ? (router.isForward.value ? 'slide-left' : 'slide-right') : ''
 )
 
-// Methods
 const resetRouter = () => router.reset(isMobile.value ? 'menu' : 'theme')
 
 function customShow() {
@@ -79,11 +76,9 @@ function customToggle() {
 const handleMenuSelect = (key: string) => router.push(key as SettingsRoute)
 const handleMobileBack = () => router.push('menu')
 
-// Transition handlers
 const handleTransitionStart = () => (isTransitioning.value = true)
 const handleTransitionEnd = () => (isTransitioning.value = false)
 
-// Watchers
 watch(windowWidth, (newWidth, oldWidth) => {
   if (oldWidth) {
     const wasMobile = oldWidth < MOBILE_BREAKPOINT
@@ -92,7 +87,6 @@ watch(windowWidth, (newWidth, oldWidth) => {
   }
 })
 
-// Lifecycle
 onMounted(resetRouter)
 
 defineExpose({ show: customShow, hide, toggle: customToggle })
@@ -242,7 +236,6 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
   }
 }
 
-// Mobile slide transitions
 .slide-left-enter-active,
 .slide-left-leave-active,
 .slide-right-enter-active,
