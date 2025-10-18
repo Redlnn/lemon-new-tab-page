@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDebounceFn } from '@vueuse/core'
+import { useDebounceFn, useResizeObserver } from '@vueuse/core'
 
 import { Edit16Regular, Pin16Regular, PinOff16Regular } from '@vicons/fluent'
 import { ClearRound } from '@vicons/material'
@@ -100,6 +100,9 @@ onMounted(async () => {
 
 watch(settings.shortcut, refreshDebounced)
 watch(() => columnsNum.value, refreshDebounced)
+
+// 监听窗口大小变化
+useResizeObserver(document.documentElement, refreshDebounced)
 
 // 云同步导致书签变动时刷新
 bookmarkStorage.watch(refreshDebounced)
