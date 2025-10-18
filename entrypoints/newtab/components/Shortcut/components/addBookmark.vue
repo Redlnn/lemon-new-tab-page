@@ -140,7 +140,8 @@ defineExpose({
     :title="dialogTitle"
     class="base-dialog--blur base-dialog--opacity"
     :style="{
-      padding: '30px 50px'
+      padding: '30px 50px',
+      '--el-dialog-border-radius': '10px'
     }"
     width="500px"
     append-to-body
