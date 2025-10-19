@@ -94,7 +94,7 @@ function handleMenuSelect(key: string) {
         <el-icon v-if="!isMobile" :size="36">
           <Icon />
         </el-icon>
-        <span v-else>设置</span>
+        <span v-else>{{ t('newtab:settings.title') }}</span>
       </div>
       <el-menu-item
         v-for="item in menuItems"
