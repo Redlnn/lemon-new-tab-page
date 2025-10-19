@@ -148,6 +148,7 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
         disable-transition
         :current-route="router.currentRoute.value"
         :title="currentPageTitle"
+        :dialog-opened="opened"
       />
     </Transition>
 
@@ -156,6 +157,7 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
       ref="detailViewRef"
       :current-route="router.currentRoute.value"
       :title="currentPageTitle"
+      :dialog-opened="opened"
     />
   </SettingsDialog>
 </template>

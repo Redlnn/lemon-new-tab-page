@@ -9,12 +9,28 @@ interface Props {
   title: string
   isMobile?: boolean
   disableTransition?: boolean
+  dialogOpened?: boolean
 }
 
 const props = defineProps<Props>()
 
 const titleRef = ref<HTMLDivElement>()
 const titleIsVisible = useElementVisibility(titleRef)
+
+// 延迟加载组件，等待对话框动画完成
+const shouldLoadContent = ref(false)
+watch(
+  () => props.dialogOpened,
+  (opened) => {
+    if (opened && !shouldLoadContent.value) {
+      // 延迟到对话框动画结束后再加载
+      setTimeout(() => {
+        shouldLoadContent.value = true
+      }, 100)
+    }
+  },
+  { immediate: true, once: true }
+)
 
 const asyncViewMap: Record<SettingsRoute, Component | null> = {
   [SettingsRoute.MENU]: null,
@@ -33,6 +49,8 @@ const asyncViewMap: Record<SettingsRoute, Component | null> = {
 } as const
 
 const activeView = computed(() => {
+  // 对话框打开动画完成前不加载组件
+  if (!shouldLoadContent.value) return null
   return asyncViewMap[props.currentRoute]
 })
 
