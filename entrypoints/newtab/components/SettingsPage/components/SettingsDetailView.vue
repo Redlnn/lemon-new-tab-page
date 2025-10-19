@@ -1,15 +1,8 @@
 <script setup lang="ts">
+import { defineAsyncComponent } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 
 import type { SettingsRoute } from '../composables/useSettingsRouter'
-import BackgroundSettings from '../Settings/BackgroundSettings.vue'
-import ClockSettings from '../Settings/ClockSettings.vue'
-import OtherSettings from '../Settings/OtherSettings.vue'
-import PerformanceSettings from '../Settings/PerformanceSettings.vue'
-import SearchSettings from '../Settings/SearchSettings.vue'
-import ShortcutSettings from '../Settings/ShortcutSettings.vue'
-import ThemeSettings from '../Settings/ThemeSettings.vue'
-import YiyanSettings from '../Settings/YiyanSettings.vue'
 
 interface Props {
   currentRoute: SettingsRoute | 'menu'
@@ -18,10 +11,26 @@ interface Props {
   disableTransition?: boolean
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 const titleRef = ref<HTMLDivElement>()
 const titleIsVisible = useElementVisibility(titleRef)
+
+const asyncViewMap: Record<SettingsRoute, ReturnType<typeof defineAsyncComponent>> = {
+  theme: defineAsyncComponent(() => import('../Settings/ThemeSettings.vue')),
+  clock: defineAsyncComponent(() => import('../Settings/ClockSettings.vue')),
+  search: defineAsyncComponent(() => import('../Settings/SearchSettings.vue')),
+  background: defineAsyncComponent(() => import('../Settings/BackgroundSettings.vue')),
+  shortcut: defineAsyncComponent(() => import('../Settings/ShortcutSettings.vue')),
+  yiyan: defineAsyncComponent(() => import('../Settings/YiyanSettings.vue')),
+  performance: defineAsyncComponent(() => import('../Settings/PerformanceSettings.vue')),
+  other: defineAsyncComponent(() => import('../Settings/OtherSettings.vue'))
+}
+
+const activeView = computed(() => {
+  if (props.currentRoute === 'menu') return null
+  return asyncViewMap[props.currentRoute]
+})
 
 defineExpose({
   titleRef,
@@ -34,14 +43,9 @@ defineExpose({
     <el-scrollbar class="settings-content">
       <h2 ref="titleRef" class="settings-content__title">{{ title }}</h2>
       <Transition :name="disableTransition ? undefined : 'settings-fade'" mode="out-in">
-        <theme-settings v-if="currentRoute === 'theme'" key="theme" />
-        <clock-settings v-else-if="currentRoute === 'clock'" key="clock" />
-        <search-settings v-else-if="currentRoute === 'search'" key="search" />
-        <background-settings v-else-if="currentRoute === 'background'" key="background" />
-        <shortcut-settings v-else-if="currentRoute === 'shortcut'" key="shortcut" />
-        <yiyan-settings v-else-if="currentRoute === 'yiyan'" key="yiyan" />
-        <performance-settings v-else-if="currentRoute === 'performance'" key="performance" />
-        <other-settings v-else-if="currentRoute === 'other'" key="other" />
+        <KeepAlive>
+          <component v-if="activeView" :is="activeView" :key="currentRoute" />
+        </KeepAlive>
       </Transition>
     </el-scrollbar>
   </el-main>
