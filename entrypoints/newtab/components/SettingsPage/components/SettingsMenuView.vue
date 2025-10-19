@@ -11,8 +11,9 @@ import { useTranslation } from 'i18next-vue'
 
 import Icon from '@/assets/icon.svg?component'
 
-import type { SettingsRoute } from '../composables/useSettingsRouter'
+import { SettingsRoute } from '../composables/useSettingsRouter'
 
+console.log('SettingsMenuView loaded')
 const { t } = useTranslation()
 
 interface MenuItem {
@@ -23,42 +24,42 @@ interface MenuItem {
 
 const menuItems: MenuItem[] = [
   {
-    key: 'theme',
+    key: SettingsRoute.THEME,
     icon: ColorLensOutlined,
     titleKey: 'newtab:settings.theme.title'
   },
   {
-    key: 'clock',
+    key: SettingsRoute.CLOCK,
     icon: ClockCircleOutlined,
     titleKey: 'newtab:settings.clock.title'
   },
   {
-    key: 'search',
+    key: SettingsRoute.SEARCH,
     icon: SearchOutlined,
     titleKey: 'newtab:settings.search.title'
   },
   {
-    key: 'background',
+    key: SettingsRoute.BACKGROUND,
     icon: PictureOutlined,
     titleKey: 'newtab:settings.background.title'
   },
   {
-    key: 'shortcut',
+    key: SettingsRoute.SHORTCUT,
     icon: AppstoreOutlined,
     titleKey: 'newtab:settings.shortcut.title'
   },
   {
-    key: 'yiyan',
+    key: SettingsRoute.YIYAN,
     icon: FormatQuoteRound,
     titleKey: 'newtab:settings.yiyan.title'
   },
   {
-    key: 'performance',
+    key: SettingsRoute.PERFORMANCE,
     icon: ApiRound,
     titleKey: 'newtab:settings.perf.title'
   },
   {
-    key: 'other',
+    key: SettingsRoute.OTHER,
     icon: ControlOutlined,
     titleKey: 'newtab:settings.other.title'
   }

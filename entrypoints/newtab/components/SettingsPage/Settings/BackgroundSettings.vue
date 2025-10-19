@@ -164,7 +164,6 @@ async function deleteLocalBg(isDark = false) {
     const oldUrl = settings.localBackground.url
     settings.localBackground = { id: '', url: '', mediaType: undefined }
     metaLight.value = null
-    console.log(oldUrl)
     await promiseTimeout(1000)
     URL.revokeObjectURL(oldUrl)
     useWallpaperStore.clear()

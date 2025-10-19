@@ -9,27 +9,11 @@ import { useDialog } from '@newtab/composables/useDialog'
 import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
-import { type SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
+import { MENU_ITEMS, SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
 const MOBILE_BREAKPOINT = 650
 const COLLAPSE_BREAKPOINT = 900
 const DESKTOP_DIALOG_WIDTH = 900
-
-interface MenuItem {
-  key: SettingsRoute
-  titleKey: string
-}
-
-const MENU_ITEMS: MenuItem[] = [
-  { key: 'theme', titleKey: 'newtab:settings.theme.title' },
-  { key: 'clock', titleKey: 'newtab:settings.clock.title' },
-  { key: 'search', titleKey: 'newtab:settings.search.title' },
-  { key: 'background', titleKey: 'newtab:settings.background.title' },
-  { key: 'shortcut', titleKey: 'newtab:settings.shortcut.title' },
-  { key: 'yiyan', titleKey: 'newtab:settings.yiyan.title' },
-  { key: 'performance', titleKey: 'newtab:settings.perf.title' },
-  { key: 'other', titleKey: 'newtab:settings.other.title' }
-]
 
 const { t } = useTranslation()
 const router = useSettingsRouter()
@@ -47,20 +31,16 @@ const dialogWidth = computed(() => (windowWidth.value < 950 ? '93%' : DESKTOP_DI
 const currentPageTitle = computed(() => {
   if (router.isAtMenu.value) return t('newtab:settings.title')
   const item = MENU_ITEMS.find((i) => i.key === router.currentRoute.value)
-  return item ? t(item.titleKey) : t('newtab:settings.title')
+  return item?.titleKey ? t(item.titleKey) : t('newtab:settings.title')
 })
 
 const titleIsVisible = computed(() => detailViewRef.value?.titleIsVisible ?? false)
-
-const activeMenuKey = computed(() =>
-  router.isAtMenu.value ? 'menu' : (router.currentRoute.value as string)
-)
 
 const slideTransitionName = computed(() =>
   isMobile.value ? (router.isForward.value ? 'settings-slide-left' : 'settings-slide-right') : ''
 )
 
-const resetRouter = () => router.reset(isMobile.value ? 'menu' : 'theme')
+const resetRouter = () => router.reset(isMobile.value ? SettingsRoute.MENU : SettingsRoute.THEME)
 
 function customShow() {
   resetRouter()
@@ -80,7 +60,7 @@ const handleMobileBack = () => {
     router.back()
   } else {
     // 边缘情况：如果没有历史记录（如从桌面端切换到移动端），直接重置到 menu
-    router.reset('menu')
+    router.reset(SettingsRoute.MENU)
   }
 }
 
@@ -142,7 +122,7 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
       <settings-menu-view
         v-if="!isMobile"
         :is-collapse="isCollapse"
-        :active-key="activeMenuKey"
+        :active-key="router.currentRoute.value"
         @select="handleMenuSelect"
       />
     </template>
@@ -157,7 +137,7 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
         v-if="router.isAtMenu.value"
         key="menu"
         is-mobile
-        :active-key="activeMenuKey"
+        :active-key="router.currentRoute.value"
         @select="handleMenuSelect"
       />
       <settings-detail-view

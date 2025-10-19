@@ -2,10 +2,10 @@
 import { defineAsyncComponent } from 'vue'
 import { useElementVisibility } from '@vueuse/core'
 
-import type { SettingsRoute } from '../composables/useSettingsRouter'
+import { SettingsRoute } from '../composables/useSettingsRouter'
 
 interface Props {
-  currentRoute: SettingsRoute | 'menu'
+  currentRoute: SettingsRoute
   title: string
   isMobile?: boolean
   disableTransition?: boolean
@@ -16,19 +16,23 @@ const props = defineProps<Props>()
 const titleRef = ref<HTMLDivElement>()
 const titleIsVisible = useElementVisibility(titleRef)
 
-const asyncViewMap: Record<SettingsRoute, ReturnType<typeof defineAsyncComponent>> = {
-  theme: defineAsyncComponent(() => import('../Settings/ThemeSettings.vue')),
-  clock: defineAsyncComponent(() => import('../Settings/ClockSettings.vue')),
-  search: defineAsyncComponent(() => import('../Settings/SearchSettings.vue')),
-  background: defineAsyncComponent(() => import('../Settings/BackgroundSettings.vue')),
-  shortcut: defineAsyncComponent(() => import('../Settings/ShortcutSettings.vue')),
-  yiyan: defineAsyncComponent(() => import('../Settings/YiyanSettings.vue')),
-  performance: defineAsyncComponent(() => import('../Settings/PerformanceSettings.vue')),
-  other: defineAsyncComponent(() => import('../Settings/OtherSettings.vue'))
-}
+const asyncViewMap: Record<SettingsRoute, Component | null> = {
+  [SettingsRoute.MENU]: null,
+  [SettingsRoute.THEME]: defineAsyncComponent(() => import('../Settings/ThemeSettings.vue')),
+  [SettingsRoute.CLOCK]: defineAsyncComponent(() => import('../Settings/ClockSettings.vue')),
+  [SettingsRoute.SEARCH]: defineAsyncComponent(() => import('../Settings/SearchSettings.vue')),
+  [SettingsRoute.BACKGROUND]: defineAsyncComponent(
+    () => import('../Settings/BackgroundSettings.vue')
+  ),
+  [SettingsRoute.SHORTCUT]: defineAsyncComponent(() => import('../Settings/ShortcutSettings.vue')),
+  [SettingsRoute.YIYAN]: defineAsyncComponent(() => import('../Settings/YiyanSettings.vue')),
+  [SettingsRoute.PERFORMANCE]: defineAsyncComponent(
+    () => import('../Settings/PerformanceSettings.vue')
+  ),
+  [SettingsRoute.OTHER]: defineAsyncComponent(() => import('../Settings/OtherSettings.vue'))
+} as const
 
 const activeView = computed(() => {
-  if (props.currentRoute === 'menu') return null
   return asyncViewMap[props.currentRoute]
 })
 
