@@ -8,6 +8,7 @@ export interface UseTopSitesMergeOptions {
   bookmarks: { url: string }[]
   columns?: number
   maxRows?: number
+  force?: boolean
 }
 
 export async function useTopSitesMerge(
@@ -21,7 +22,7 @@ export async function useTopSitesMerge(
   }
 
   // 如果 getTopSites() 返回 undefined，则默认空数组
-  const topSites = (await getTopSites()) ?? []
+  const topSites = (await getTopSites(options.force)) ?? []
 
   // 去重：移除与书签重复的 URL
   const bookmarkUrlsSet = new Set(options.bookmarks.map((b) => b.url))

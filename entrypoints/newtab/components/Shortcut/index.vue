@@ -13,12 +13,13 @@ import { useTopSitesMerge } from '@/entrypoints/newtab/components/Shortcut/compo
 import { bookmarkStorage, initBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
 
+import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import { pinBookmark, removeBookmark } from './utils/bookmark'
-import { blockSite } from './utils/topSites'
+import { blockSite, invalidateTopSitesCache } from './utils/topSites'
 
 const { t } = useTranslation()
 
@@ -30,16 +31,38 @@ const bookmarkEditorRef = ref<InstanceType<typeof addBookmark> | null>(null)
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
+const topSitesNeedsReload = ref(true)
+const bookmarksReady = ref(false)
+let bookmarkLoadPromise: Promise<void> | null = null
 
 const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
 const shortcutContainerRef = ref()
 useShortcutDrag(shortcutContainerRef, bookmarks)
 
-const refreshDebounced = useDebounceFn(refresh, 200)
+const refreshDebounced = useDebounceFn(refresh, 100)
+
+async function loadBookmarks(force = false) {
+  if (force) {
+    bookmarksReady.value = false
+  }
+  if (!force && bookmarksReady.value) {
+    return
+  }
+  if (!bookmarkLoadPromise) {
+    bookmarkLoadPromise = initBookmark()
+      .then(() => {
+        bookmarksReady.value = true
+      })
+      .finally(() => {
+        bookmarkLoadPromise = null
+      })
+  }
+  await bookmarkLoadPromise
+}
 
 async function refresh() {
-  await initBookmark()
+  await loadBookmarks()
   // 拆分数据读取与布局计算，避免频繁响应写入
   const _bookmarks = bookmarkStore.items.slice()
 
@@ -58,9 +81,11 @@ async function refresh() {
     const topList = await useTopSitesMerge({
       bookmarks: _bookmarks,
       columns: fitColumns,
-      maxRows: settings.shortcut.rows
+      maxRows: settings.shortcut.rows,
+      force: topSitesNeedsReload.value
     })
     mergedTop = topList
+    topSitesNeedsReload.value = false
     // 合并后的完整项目数（包含添加按钮）
     const totalItems = _bookmarks.length + mergedTop.length + 1
 
@@ -106,9 +131,27 @@ onMounted(() => {
 
 watch(settings.shortcut, refreshDebounced)
 watch(() => columnsNum.value, refreshDebounced)
+watch(
+  () => settings.shortcut.enableTopSites,
+  (enabled) => {
+    if (enabled) {
+      topSitesNeedsReload.value = true
+    }
+  }
+)
 
 // 云同步导致书签变动时刷新
-bookmarkStorage.watch(refreshDebounced)
+bookmarkStorage.watch(() => {
+  void loadBookmarks(true).finally(() => {
+    refreshDebounced()
+  })
+})
+
+blockedTopStitesStorage.watch(() => {
+  topSitesNeedsReload.value = true
+  invalidateTopSitesCache()
+  refreshDebounced()
+})
 </script>
 
 <template>
