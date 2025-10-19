@@ -1,40 +1,181 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
+
+import { ArrowBackRound, CloseRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
+import { useDialog } from '@newtab/composables/useDialog'
 
-import BaseDialog from '@newtab/components/BaseDialog.vue'
+import SettingsDetailView from './components/SettingsDetailView.vue'
+import SettingsDialog from './components/SettingsDialog.vue'
+import SettingsMenuView from './components/SettingsMenuView.vue'
+import { type SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
-import BackgroundSettings from './Settings/BackgroundSettings.vue'
-import ClockSettings from './Settings/ClockSettings.vue'
-import OtherSettings from './Settings/OtherSettings.vue'
-import PerformanceSettings from './Settings/PerformanceSettings.vue'
-import SearchSettings from './Settings/SearchSettings.vue'
-import ShortcutSettings from './Settings/ShortcutSettings.vue'
-import ThemeSettings from './Settings/ThemeSettings.vue'
-import YiyanSettings from './Settings/YiyanSettings.vue'
+const MOBILE_BREAKPOINT = 650
+const COLLAPSE_BREAKPOINT = 900
+const DESKTOP_DIALOG_WIDTH = 900
+
+interface MenuItem {
+  key: SettingsRoute
+  titleKey: string
+}
+
+const MENU_ITEMS: MenuItem[] = [
+  { key: 'theme', titleKey: 'newtab:settings.theme.title' },
+  { key: 'clock', titleKey: 'newtab:settings.clock.title' },
+  { key: 'search', titleKey: 'newtab:settings.search.title' },
+  { key: 'background', titleKey: 'newtab:settings.background.title' },
+  { key: 'shortcut', titleKey: 'newtab:settings.shortcut.title' },
+  { key: 'yiyan', titleKey: 'newtab:settings.yiyan.title' },
+  { key: 'performance', titleKey: 'newtab:settings.perf.title' },
+  { key: 'other', titleKey: 'newtab:settings.other.title' }
+]
 
 const { t } = useTranslation()
-
+const router = useSettingsRouter()
+const { width: windowWidth } = useWindowSize()
 const { opened, show, hide, toggle } = useDialog()
-defineExpose({ show, hide, toggle })
+
+const detailViewRef = ref<InstanceType<typeof SettingsDetailView>>()
+const isTransitioning = ref(false)
+
+const isMobile = computed(() => windowWidth.value < MOBILE_BREAKPOINT)
+const isCollapse = computed(() => windowWidth.value < COLLAPSE_BREAKPOINT && !isMobile.value)
+
+const dialogWidth = computed(() => (windowWidth.value < 950 ? '93%' : DESKTOP_DIALOG_WIDTH))
+
+const currentPageTitle = computed(() => {
+  if (router.isAtMenu.value) return t('newtab:settings.title')
+  const item = MENU_ITEMS.find((i) => i.key === router.currentRoute.value)
+  return item ? t(item.titleKey) : t('newtab:settings.title')
+})
+
+const titleIsVisible = computed(() => detailViewRef.value?.titleIsVisible ?? false)
+
+const activeMenuKey = computed(() =>
+  router.isAtMenu.value ? 'menu' : (router.currentRoute.value as string)
+)
+
+const slideTransitionName = computed(() =>
+  isMobile.value ? (router.isForward.value ? 'settings-slide-left' : 'settings-slide-right') : ''
+)
+
+const resetRouter = () => router.reset(isMobile.value ? 'menu' : 'theme')
+
+function customShow() {
+  resetRouter()
+  show()
+}
+
+function customToggle() {
+  if (!opened.value) resetRouter()
+  toggle()
+}
+
+const handleMenuSelect = (key: string) => router.push(key as SettingsRoute)
+
+const handleMobileBack = () => {
+  // 使用 back() 来触发正确的后退动画（isForward = false）
+  if (router.canGoBack.value) {
+    router.back()
+  } else {
+    // 边缘情况：如果没有历史记录（如从桌面端切换到移动端），直接重置到 menu
+    router.reset('menu')
+  }
+}
+
+const handleTransitionStart = () => (isTransitioning.value = true)
+const handleTransitionEnd = () => (isTransitioning.value = false)
+
+watch(windowWidth, (newWidth, oldWidth) => {
+  if (oldWidth) {
+    const wasMobile = oldWidth < MOBILE_BREAKPOINT
+    const isNowMobile = newWidth < MOBILE_BREAKPOINT
+    if (wasMobile !== isNowMobile) resetRouter()
+  }
+})
+
+onMounted(resetRouter)
+
+defineExpose({ show: customShow, hide, toggle: customToggle })
 </script>
 
 <template>
-  <base-dialog
+  <SettingsDialog
     v-model="opened"
-    :title="t('newtab:settings.title')"
-    container-class="settings__dialog"
-    acrylic
-    opacity
+    :width="dialogWidth"
+    class="settings__dialog settings-container--two-column"
+    :class="[
+      { 'is-mobile': isMobile },
+      { 'is-mobile-main-menu': isMobile && router.isAtMenu.value }
+    ]"
+    lock-scroll
+    draggable
+    :show-close="false"
+    header-class="settings-header noselect"
+    @closed="resetRouter"
   >
-    <theme-settings />
-    <clock-settings />
-    <search-settings />
-    <background-settings />
-    <shortcut-settings />
-    <yiyan-settings />
-    <performance-settings />
-    <other-settings />
-  </base-dialog>
+    <template #header="{ close, titleId }">
+      <div
+        v-show="!(isMobile && (router.isAtMenu.value || isTransitioning))"
+        :id="titleId"
+        class="base-dialog-title"
+        :style="{ opacity: titleIsVisible ? 0 : 1 }"
+      >
+        {{ currentPageTitle }}
+      </div>
+      <span
+        v-show="isMobile && !router.isAtMenu.value"
+        class="mobile-back-btn"
+        @click="handleMobileBack"
+      >
+        <el-icon color="currentColor" :size="20">
+          <component :is="ArrowBackRound" />
+        </el-icon>
+      </span>
+      <span class="base-dialog-close-btn" @click="close">
+        <component :is="CloseRound" />
+      </span>
+    </template>
+
+    <template #aside>
+      <settings-menu-view
+        v-if="!isMobile"
+        :is-collapse="isCollapse"
+        :active-key="activeMenuKey"
+        @select="handleMenuSelect"
+      />
+    </template>
+
+    <Transition
+      v-if="isMobile"
+      :name="slideTransitionName"
+      @before-leave="handleTransitionStart"
+      @after-enter="handleTransitionEnd"
+    >
+      <settings-menu-view
+        v-if="router.isAtMenu.value"
+        key="menu"
+        is-mobile
+        :active-key="activeMenuKey"
+        @select="handleMenuSelect"
+      />
+      <settings-detail-view
+        v-else
+        key="detail"
+        ref="detailViewRef"
+        is-mobile
+        disable-transition
+        :current-route="router.currentRoute.value"
+        :title="currentPageTitle"
+      />
+    </Transition>
+
+    <settings-detail-view
+      v-else
+      ref="detailViewRef"
+      :current-route="router.currentRoute.value"
+      :title="currentPageTitle"
+    />
+  </SettingsDialog>
 </template>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ApiRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
@@ -51,10 +50,6 @@ function disableBlurSettings() {
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><api-round /></el-icon>
-    <span>{{ t('newtab:settings.perf.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.blinkingColon') }}</div>

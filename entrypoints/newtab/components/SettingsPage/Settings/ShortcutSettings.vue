@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { AppstoreOutlined } from '@vicons/antd'
 import { RestoreRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
@@ -19,10 +18,6 @@ async function restoreDefaultTopSites() {
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><appstore-outlined /></el-icon>
-    <span>{{ t('newtab:settings.shortcut.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <p v-if="isChrome" class="settings__item--note" style="margin-top: 1em">
       {{ t('newtab:settings.shortcut.tip') }}
@@ -171,10 +166,3 @@ async function restoreDefaultTopSites() {
     </div>
   </div>
 </template>
-
-<style lang="scss">
-.settings__item--vertical .el-input-number,
-.settings__item--vertical .el-input {
-  width: 60px;
-}
-</style>

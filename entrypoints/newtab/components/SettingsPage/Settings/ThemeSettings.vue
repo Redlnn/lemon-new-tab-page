@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 
-import { CloudOffRound, ColorLensOutlined } from '@vicons/material'
+import { CloudOffRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
@@ -107,10 +107,6 @@ function toggleAuto() {
 </script>
 
 <template>
-  <div class="settings__title">
-    <el-icon><color-lens-outlined /></el-icon>
-    <span>{{ t('newtab:settings.theme.title') }}</span>
-  </div>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
