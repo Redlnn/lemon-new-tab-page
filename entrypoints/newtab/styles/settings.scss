@@ -1,6 +1,6 @@
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
-.settings__dialog {
+.el-dialog.settings__dialog {
   display: flex;
   height: 500px;
   padding: 0;
@@ -60,6 +60,14 @@
   }
 }
 
+.settings__items-container {
+  padding: 14px 25px;
+  margin-bottom: 30px;
+  background-color: var(--el-bg-color);
+  border-radius: 8px;
+  transition: background-color var(--el-transition-duration-fast) ease;
+}
+
 .settings__item {
   width: 100%;
   margin-top: 8px;
@@ -86,14 +94,6 @@
     .el-input {
       width: 60px;
     }
-  }
-
-  &-container {
-    padding: 14px 25px;
-    margin-bottom: 30px;
-    background-color: var(--el-bg-color);
-    border-radius: 8px;
-    transition: background-color var(--el-transition-duration-fast) ease;
   }
 
   &--note {
