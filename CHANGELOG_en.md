@@ -2,13 +2,33 @@
 
 > Translated by ChatGPT from Chinese.
 
-## Important Notice❗
+## 2.5.2 (WIP)
 
-- When upgrading from a version <2.3.0 to ≥2.3.0,
-  the search box appearance and functionality may appear abnormal.
-  However, this issue has not been fully reproduced yet.
-  You can reselect the search engine in the settings page to resolve it.
-  Thank you for your understanding.
+### New Features✨
+
+- Brand new macOS-style settings page (#39)
+- Added "Hide major update changelog" switch (enabled by default)
+- Added `text-autospace: normal` to add spacing between CJK and non-CJK characters
+
+### Improvements⚡️
+
+- Cached search history for smoother input
+- Cached search suggestions for smoother input
+- Cached quick access for smoother resizing or settings adjustments
+- About page now uses SVG icons for improved clarity
+- Optimized performance when saving settings
+- Optimized wallpaper loading and switching performance
+- Optimized page loading speed
+
+### Bug Fixes🐛
+
+- Fixed issue where search suggestions did not appear or were unrelated to input when using CJK input methods
+- Fixed issue where resizing the window did not refresh the quick access area
+- Fixed issue where some styles were not applied
+- Fixed missing rounded corners in the "Add Quick Access" dialog
+- Fixed dark mode not following system changes
+- Fixed issue where color schemes were not reapplied in dark mode (26068c3)
+- Fixed style conflicts
 
 ## 2.5.1 (Oct 12, 2025)
 
@@ -16,18 +36,18 @@
 > might not actually remove the wallpaper cache from the browser.  
 > It is recommended to use the "Clear Wallpaper Cache" feature to clean up past caches.
 
-### New Features ✨
+### New Features✨
 
 - Option to clear wallpaper cache separately
 
-### Improvements ⚡️
+### Improvements⚡️
 
 - Improved extension stability
 - Optimized extension performance
 
 > ~~MIUI couplets update~~ (just kidding)
 
-### Bug Fixes 🐛
+### Bug Fixes🐛
 
 - Fixed issue where changelog window did not pop up during major version updates
 - Adjusted clock CSS styles to fix inconsistent spacing between time and date in different states
@@ -35,7 +55,7 @@
 
 ## 2.5.0 (Oct 11, 2025)
 
-### New Features ✨
+### New Features✨
 
 - Added option to "Apply theme color to more elements"
 - Revised and expanded preset color schemes with added color names
@@ -45,7 +65,7 @@
 - Support editing pinned shortcuts
 - Added automatic favicon fetching on Firefox (mostly defaults due to cross-origin restrictions)
 
-### Improvements ⚡️
+### Improvements⚡️
 
 - Changed default theme color
 - Replaced i18n framework to prevent Windows from treating `zh-HK` as `zh-TW`, ensuring proper display of `zh-HK` translations display correctly
@@ -62,7 +82,7 @@
 - Input field no longer clears when adding a shortcut with an invalid URL
 - Less frequently used pages have been changed to dynamic imports to reduce memory usage and speed up loading times
 
-### Bug Fixes 🐛
+### Bug Fixes🐛
 
 - Fixed issue where dayjs i18n was not working
 - Fixed time alignment issue when "Small Clock Font" is disabled
@@ -75,36 +95,44 @@
 
 ## 2.4.1 (Sep 30, 2025)
 
-### New Features ✨
+### New Features✨
 
 - Added performance options to the settings button at the bottom-right corner
 - Added one-click disable effects, unified button styles on the settings page
 - Added "back to top" buttons for increasingly long settings and changelog pages
 
-### Improvements ⚡️
+### Improvements⚡️
 
 - Added performance tips related to video backgrounds
 - Performance optimizations
 - Unified descriptions of performance options: previously “enable switch to disable xxx,” now “switch to turn off xxx”
 - Standardized blur effects across the app (except for some that affect visuals)
 
-### Bug Fixes 🐛
+### Bug Fixes🐛
 
 - Fixed search bar animations not triggering on click
 - Fixed CSS broken due to upstream updates
 
 ## 2.4.0 (Sep 25, 2025)
 
-### New Features ✨
+### Important Notice❗
+
+- When upgrading from a version <2.3.0 to ≥2.3.0,
+  the search box appearance and functionality may appear abnormal.
+  However, this issue has not been fully reproduced yet.
+  You can reselect the search engine in the settings page to resolve it.
+  Thank you for your understanding.
+
+### New Features✨
 
 - **Support setting video wallpapers**
 - Support disabling dialog popup animations
 
-### Adjustments ⚡️
+### Adjustments⚡️
 
 - Improved CSS readability, fine-tuned details, and removed invalid CSS
 
-### Fixes 🐛
+### Fixes🐛
 
 - Fixed an issue where a pure white or pure black background was unexpectedly
   applied when no background was set
@@ -113,20 +141,20 @@
 
 ## 2.3.4 (Sep 17, 2025)
 
-### New Features ✨
+### New Features✨
 
 - Added performance settings to disable high-performance effects for a better
   experience on low- and mid-range devices
 - Added 2 new candidate search engines
 
-### Fixes 🐛
+### Fixes🐛
 
 - Fix the issue where the clock is not centered when
   "Small Time Font" is turned on
 
 ## 2.3.3 (Sep 13, 2025)
 
-### Fixes 🐛
+### Fixes🐛
 
 - Fix the issue where the clock is not centered when
   "Small Time Font" is turned on
@@ -134,13 +162,13 @@
 
 ## 2.3.2 (Sep 07, 2025)
 
-### New Features ✨
+### New Features✨
 
 - Added support for setting separate wallpapers for light and dark modes
   > If no dark mode wallpaper is set, the light mode wallpaper will be used as a fallback
 - Added the ability to delete selected background images
 
-### Fixes 🐛
+### Fixes🐛
 
 - Fixed an issue where resetting the extension data did not clear all caches
 - Fixed an issue where the "Add Shortcut" button's background blur was not applied
