@@ -100,7 +100,7 @@ function handleMenuSelect(key: string) {
         v-for="item in menuItems"
         :key="item.key"
         :index="item.key"
-        class="settings-menu-item"
+        class="settings-menu-item noselect"
       >
         <el-icon>
           <component :is="item.icon" />
