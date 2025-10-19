@@ -12,8 +12,8 @@ import { Search } from '@vicons/fa'
 import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
+import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { searchEngines } from '@newtab/scripts/api/search'
-import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
@@ -34,6 +34,7 @@ const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
+const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache()
 
 const { width: searchFormWidth } = useElementSize(searchForm)
 
@@ -182,14 +183,7 @@ const saveSearchHistory = async (text: string) => {
   if (!settings.search.recordSearchHistory || !text) {
     return
   }
-  // 判断当前搜索词是否在搜索历史里。如果在，则将其移动到最前面，如果不在，则将其添加到搜索历史
-  const searchHistories = (await searchHistoriesStorage.getValue()).filter((t) => t !== text)
-  searchHistories.unshift(text)
-  // 如果历史搜索词大于15个，则删除最后几个只留下15个
-  if (searchHistories.length > 15) {
-    searchHistories.length = 15
-  }
-  await searchHistoriesStorage.setValue(searchHistories)
+  await addHistory(text)
 }
 
 const doSearchWithText = async (text: string) => {
@@ -214,6 +208,7 @@ function doSearch() {
 
 onMounted(() => {
   useTimeoutFn(() => (mounted.value = true), 100)
+  void ensureHistoryLoaded()
 })
 </script>
 

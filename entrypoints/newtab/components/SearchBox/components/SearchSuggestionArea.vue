@@ -5,10 +5,10 @@ import { useTranslation } from 'i18next-vue'
 import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
+import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
 import { searchSuggestCache } from '@newtab/scripts/api/search/suggestCache'
 import { createSuggestRunner } from '@newtab/scripts/api/search/suggestRunner'
-import { searchHistoriesStorage } from '@newtab/scripts/storages/searchStorages'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import SuggestListItem from './SuggestListItem.vue'
@@ -17,6 +17,11 @@ const { t } = useTranslation()
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
+const {
+  histories: cachedHistories,
+  ensureLoaded: ensureHistoryLoaded,
+  clearHistories: clearHistoryCache
+} = useSearchHistoryCache()
 
 const clearSearchHistory = ref<HTMLDivElement>()
 const isShowSearchHistories = ref(false)
@@ -82,9 +87,10 @@ async function showSearchHistories() {
     return
   }
 
-  const searchHistories = await searchHistoriesStorage.getValue()
+  await ensureHistoryLoaded()
+  const searchHistories = cachedHistories.value
   if (searchHistories.length > 0) {
-    searchSuggestions.value = searchHistories
+    searchSuggestions.value = searchHistories.slice()
     isShowSearchHistories.value = true
   }
 }
@@ -143,9 +149,18 @@ function clearSearchSuggestions() {
 }
 
 async function clearSearchHistories() {
-  await searchHistoriesStorage.setValue([])
+  await clearHistoryCache()
   clearSearchSuggestions()
 }
+
+watch(
+  () => cachedHistories.value,
+  (list) => {
+    if (isShowSearchHistories.value) {
+      searchSuggestions.value = list.slice()
+    }
+  }
+)
 
 defineExpose({
   clearSearchSuggestions,
