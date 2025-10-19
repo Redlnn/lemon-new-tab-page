@@ -166,10 +166,3 @@ async function restoreDefaultTopSites() {
     </div>
   </div>
 </template>
-
-<style lang="scss">
-.settings__item--vertical .el-input-number,
-.settings__item--vertical .el-input {
-  width: 60px;
-}
-</style>

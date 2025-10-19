@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import { useElementVisibility } from '@vueuse/core'
 
-import type { SettingsRoute } from '@newtab/composables/useSettingsRouter'
-
+import type { SettingsRoute } from '../composables/useSettingsRouter'
 import BackgroundSettings from '../Settings/BackgroundSettings.vue'
 import ClockSettings from '../Settings/ClockSettings.vue'
 import OtherSettings from '../Settings/OtherSettings.vue'

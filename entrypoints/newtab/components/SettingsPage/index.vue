@@ -4,13 +4,12 @@ import { useWindowSize } from '@vueuse/core'
 import { ArrowBackRound, CloseRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { useDialog } from '@/entrypoints/newtab/composables/useDialog'
-
-import { type SettingsRoute, useSettingsRouter } from '@newtab/composables/useSettingsRouter'
+import { useDialog } from '@newtab/composables/useDialog'
 
 import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
+import { type SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
 const MOBILE_BREAKPOINT = 650
 const COLLAPSE_BREAKPOINT = 900
@@ -58,7 +57,7 @@ const activeMenuKey = computed(() =>
 )
 
 const slideTransitionName = computed(() =>
-  isMobile.value ? (router.isForward.value ? 'slide-left' : 'slide-right') : ''
+  isMobile.value ? (router.isForward.value ? 'settings-slide-left' : 'settings-slide-right') : ''
 )
 
 const resetRouter = () => router.reset(isMobile.value ? 'menu' : 'theme')
@@ -180,102 +179,3 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
     />
   </SettingsDialog>
 </template>
-
-<style lang="scss">
-@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
-
-.settings__dialog {
-  display: flex;
-  height: 500px;
-  padding: 0;
-  overflow: hidden;
-  background-color: transparent;
-  border-radius: 10px;
-  box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease;
-
-  html.dialog-acrylic & {
-    @include acrylic.acrylic;
-  }
-
-  .el-dialog__body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    background-color: var(--el-bg-color-overlay);
-
-    html.dialog-transparent & {
-      background-color: var(--le-bg-color-overlay-opacity-20);
-    }
-  }
-}
-
-.settings-header {
-  position: relative;
-  flex-shrink: 0;
-  height: 50px;
-  font-weight: bold;
-  line-height: 50px;
-  color: var(--el-text-color-primary);
-  text-align: center;
-  cursor: move;
-
-  .base-dialog-close-btn {
-    width: 20px;
-    line-height: 1;
-  }
-
-  .mobile-back-btn {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    width: 20px;
-    height: 20px;
-    line-height: 1;
-    color: var(--el-text-color-regular);
-    cursor: pointer;
-    transition: color var(--el-transition-duration-fast);
-
-    &:hover {
-      color: var(--el-text-color-primary);
-    }
-  }
-}
-
-.slide-left-enter-active,
-.slide-left-leave-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  transition: all var(--el-transition-duration-fast) cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.slide-left-enter-from,
-.slide-right-leave-to {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
-.slide-left-leave-to,
-.slide-right-enter-from {
-  opacity: 0;
-  transform: translateX(-30%);
-}
-
-.slide-left-enter-active,
-.slide-right-enter-active {
-  position: relative;
-  z-index: 2;
-}
-
-.slide-left-leave-active,
-.slide-right-leave-active {
-  position: absolute;
-  top: 50px;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-}
-</style>

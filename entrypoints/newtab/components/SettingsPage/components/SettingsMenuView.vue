@@ -11,7 +11,7 @@ import { useTranslation } from 'i18next-vue'
 
 import Icon from '@/assets/icon.svg?component'
 
-import type { SettingsRoute } from '@newtab/composables/useSettingsRouter'
+import type { SettingsRoute } from '../composables/useSettingsRouter'
 
 const { t } = useTranslation()
 

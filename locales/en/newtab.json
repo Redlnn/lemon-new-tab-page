@@ -194,9 +194,6 @@
       "invertColorLight": "[Quote] Use dark text in light mode",
       "normalyShowTip": "When disabled, only show when the search box is focused.",
       "title": "Quote"
-    },
-    "menu": {
-      "back": "Back"
     }
   },
   "shortcut": {
