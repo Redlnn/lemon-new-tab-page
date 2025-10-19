@@ -176,12 +176,11 @@
       "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
     },
     "theme": {
-      "chromeTip": "In Chrome, this option is not affected by the ‘Customize Chrome’ sidebar and only related to system settings.",
       "colorfulMode": "Apply the theme color to more elements",
       "darkMode": "Dark mode",
       "lightMode": "Light mode",
       "primaryColor": "Primary color",
-      "systemMode": "Follow system",
+      "systemMode": "Follow system / browser",
       "title": "Theme settings"
     },
     "title": "Settings",

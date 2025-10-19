@@ -8,7 +8,6 @@ import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation()
 
-const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
 const { store } = useColorMode()
 
@@ -122,9 +121,6 @@ function toggleAuto() {
       </div>
       <el-switch v-model="isAutoLocal" @change="toggleAuto" />
     </div>
-    <p v-if="isGoogleChrome" class="settings__item--note">
-      {{ t('newtab:settings.theme.chromeTip') }}
-    </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
       <div class="settings__theme">

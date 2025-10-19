@@ -176,12 +176,11 @@
       "whiteTextTip": "關閉【顯示區塊背景】並將【遮罩不透明度】設為 0，效果會更好喔~"
     },
     "theme": {
-      "chromeTip": "在 Chrome 中，該選項不受到「自訂 Chrome」側邊欄的影響，只與系統設定相關。",
       "colorfulMode": "將主題色套用至更多介面元素",
       "darkMode": "深色模式",
       "lightMode": "淺色模式",
       "primaryColor": "主題色",
-      "systemMode": "跟隨系統",
+      "systemMode": "跟隨系統 / 瀏覽器",
       "title": "主題設定"
     },
     "title": "設定",

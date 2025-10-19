@@ -176,12 +176,11 @@
       "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~"
     },
     "theme": {
-      "chromeTip": "在 Chrome 中，该选项不受到“自定义 Chrome”侧边栏的影响，只与系统设置相关。",
       "colorfulMode": "将主题色应用到更多元素",
       "darkMode": "深色模式",
       "lightMode": "浅色模式",
       "primaryColor": "主题色",
-      "systemMode": "跟随系统",
+      "systemMode": "跟随系统 / 浏览器",
       "title": "主题设置"
     },
     "title": "设置",
