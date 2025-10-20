@@ -1,4 +1,6 @@
 name: Build And Release
+permissions:
+  contents: write
 on:
   push:
     tags:
@@ -42,6 +44,23 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{env.ARTIFACT_NAME}}
           include-hidden-files: true
           path: .output/lemon-tab-page-*.zip
+
+      - name: Release Tag
+        uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          files: .output/lemon-tab-page-*.zip
+          target_commitish: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          name: ${{ github.ref_name }}
+
+      - name: Release Dev
+        uses: softprops/action-gh-release@v2
+        if: github.event_name == 'workflow_dispatch'
+        with:
+          files: .output/lemon-tab-page-*.zip
+          name: dev-release
+          tag_name: dev-release
+          prerelease: true
