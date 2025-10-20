@@ -68,7 +68,6 @@ const resetPosition = () => {
 }
 
 defineExpose({
-  /** @description whether the dialog is visible */
   visible,
   dialogContentRef,
   resetPosition,
@@ -134,13 +133,11 @@ defineExpose({
               </template>
               <template #header>
                 <slot
-                  v-if="!$slots.title"
                   name="header"
                   :close="handleClose"
                   :title-id="titleId"
                   :title-class="ns.e('title')"
                 />
-                <slot v-else name="title" />
               </template>
               <slot />
               <template v-if="$slots.footer" #footer>
