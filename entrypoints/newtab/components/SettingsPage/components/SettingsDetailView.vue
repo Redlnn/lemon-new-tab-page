@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue'
 import { useElementVisibility, useTimeoutFn } from '@vueuse/core'
 
 import { SettingsRoute } from '../composables/useSettingsRouter'
+import { getSettingsView, prefetchSettingsView } from './settingsAsyncViews'
 
 interface Props {
   currentRoute: SettingsRoute
@@ -17,37 +17,72 @@ const props = defineProps<Props>()
 const titleRef = ref<HTMLDivElement>()
 const titleIsVisible = useElementVisibility(titleRef)
 
-// 延迟加载组件，等待对话框动画完成
-const shouldLoadContent = ref(false)
+const shouldRenderActiveView = ref(false)
+
+const ensureActiveViewMounted = () => {
+  // 用于确保需要开始挂载
+  // 通过 shouldRenderActiveView 控制是否渲染
+  if (!shouldRenderActiveView.value) {
+    shouldRenderActiveView.value = true
+  }
+}
+
+let rafId: number | null = null
+
+const schedulePreRender = () => {
+  // 如果已经渲染过，就不用重复安排
+  if (shouldRenderActiveView.value) return
+  // 此时 SettingsDialog 没有被打开
+  // 使用 requestAnimationFrame 延迟渲染
+  // 等页面加载得差不多了再触发预加载
+  rafId = requestAnimationFrame(() => {
+    useTimeoutFn(() => {
+      ensureActiveViewMounted()
+    }, 500)
+    rafId = null
+  })
+}
 
 onMounted(() => {
   if (props.dialogOpened) {
-    useTimeoutFn(() => {
-      shouldLoadContent.value = true
-    }, 150)
+    ensureActiveViewMounted()
+  } else {
+    // 预加载逻辑
+    // 由于 SettingsDialog 设置了 render=true
+    // 因此这里在页面初次加载完后就会被执行
+    schedulePreRender()
   }
 })
 
-const asyncViewMap: Record<SettingsRoute, Component | null> = {
-  [SettingsRoute.MENU]: null,
-  [SettingsRoute.THEME]: defineAsyncComponent(() => import('../Settings/ThemeSettings.vue')),
-  [SettingsRoute.CLOCK]: defineAsyncComponent(() => import('../Settings/ClockSettings.vue')),
-  [SettingsRoute.SEARCH]: defineAsyncComponent(() => import('../Settings/SearchSettings.vue')),
-  [SettingsRoute.BACKGROUND]: defineAsyncComponent(
-    () => import('../Settings/BackgroundSettings.vue')
-  ),
-  [SettingsRoute.SHORTCUT]: defineAsyncComponent(() => import('../Settings/ShortcutSettings.vue')),
-  [SettingsRoute.YIYAN]: defineAsyncComponent(() => import('../Settings/YiyanSettings.vue')),
-  [SettingsRoute.PERFORMANCE]: defineAsyncComponent(
-    () => import('../Settings/PerformanceSettings.vue')
-  ),
-  [SettingsRoute.OTHER]: defineAsyncComponent(() => import('../Settings/OtherSettings.vue'))
-} as const
+onBeforeUnmount(() => {
+  if (rafId !== null) {
+    cancelAnimationFrame(rafId)
+    rafId = null
+  }
+})
+
+watch(
+  () => props.currentRoute,
+  (route) => {
+    prefetchSettingsView(route)
+  },
+  { immediate: true }
+)
+
+watch(
+  () => props.dialogOpened,
+  (opened) => {
+    if (opened) {
+      ensureActiveViewMounted()
+      prefetchSettingsView(props.currentRoute)
+    }
+  },
+  { immediate: true }
+)
 
 const activeView = computed(() => {
-  // 对话框打开动画完成前不加载组件
-  if (!shouldLoadContent.value) return null
-  return asyncViewMap[props.currentRoute]
+  if (!shouldRenderActiveView.value) return null
+  return getSettingsView(props.currentRoute)
 })
 
 defineExpose({

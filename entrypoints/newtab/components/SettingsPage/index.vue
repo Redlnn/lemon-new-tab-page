@@ -6,6 +6,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useDialog } from '@newtab/composables/useDialog'
 
+import { prefetchSettingsView } from './components/settingsAsyncViews'
 import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
@@ -43,12 +44,18 @@ const slideTransitionName = computed(() =>
 const resetRouter = () => router.reset(isMobile.value ? SettingsRoute.MENU : SettingsRoute.THEME)
 
 function customShow() {
+  // 预加载主题设置视图
+  prefetchSettingsView(SettingsRoute.THEME)
   resetRouter()
   show()
 }
 
 function customToggle() {
-  if (!opened.value) resetRouter()
+  if (!opened.value) {
+    // 预加载主题设置视图
+    prefetchSettingsView(SettingsRoute.THEME)
+    resetRouter()
+  }
   toggle()
 }
 
@@ -75,7 +82,11 @@ watch(windowWidth, (newWidth, oldWidth) => {
   }
 })
 
-onMounted(resetRouter)
+onMounted(() => {
+  // 预加载主题设置视图
+  prefetchSettingsView(SettingsRoute.THEME)
+  resetRouter()
+})
 
 defineExpose({ show: customShow, hide, toggle: customToggle })
 </script>
