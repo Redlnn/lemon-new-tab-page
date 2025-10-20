@@ -1,0 +1,47 @@
+name: Build And Release
+on:
+  push:
+    tags:
+      - 'v*' # 匹配以 v 开头的 tag，例如 v1.0.0
+  workflow_dispatch:
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24]
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install and Build
+        run: |
+          pnpm install
+          pnpm wxt zip
+          pnpm wxt zip -b edge
+          pnpm wxt zip -b firefox
+
+      - name: Set artiface name
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "ARTIFACT_NAME=${GITHUB_REF_NAME}" >> $GITHUB_ENV
+          else
+            echo "ARTIFACT_NAME=dev" >> $GITHUB_ENV
+          fi
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{env.ARTIFACT_NAME}}
+          include-hidden-files: true
+          path: .output/lemon-tab-page-*.zip
