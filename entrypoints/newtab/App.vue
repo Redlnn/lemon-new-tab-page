@@ -391,7 +391,7 @@ onUnmounted(() => {
       <time-now />
       <search-box style="margin-top: 10px" />
       <shortcut v-if="settings.shortcut.enabled" />
-      <yi-yan />
+      <yi-yan v-if="settings.yiyan.enabled" />
     </main>
     <background :url="bgURL" />
     <settings-btn
