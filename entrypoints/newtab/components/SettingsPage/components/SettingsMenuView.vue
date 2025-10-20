@@ -106,7 +106,9 @@ function handleMenuSelect(key: string) {
         <el-icon>
           <component :is="item.icon" />
         </el-icon>
-        <span class="menu-title">{{ t(item.titleKey) }}</span>
+        <template #title>
+          <span class="menu-title">{{ t(item.titleKey) }}</span>
+        </template>
         <!-- Mobile: Show chevron arrow -->
         <el-icon v-if="isMobile" class="menu-chevron">
           <component :is="ChevronRightRound" />
