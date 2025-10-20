@@ -23,7 +23,7 @@ async function restoreDefaultTopSites() {
       {{ t('newtab:settings.shortcut.tip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.shortcut.enable') }}</div>
+      <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.shortcut.enabled" />
     </div>
     <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
@@ -151,8 +151,8 @@ async function restoreDefaultTopSites() {
         <div class="settings__label">{{ t('newtab:settings.shortcut.restoreDefault') }}</div>
         <el-popconfirm
           width="220"
-          :confirm-button-text="t('newtab:settings.shortcut.restoreDefaultConfirm.confirm')"
-          :cancel-button-text="t('newtab:settings.shortcut.restoreDefaultConfirm.cancel')"
+          :confirm-button-text="t('newtab:common.confirm')"
+          :cancel-button-text="t('newtab:common.cancel')"
           :icon="RestoreRound"
           icon-color="#626AEF"
           :title="t('newtab:settings.shortcut.restoreDefaultConfirm.title')"

@@ -1,4 +1,9 @@
 {
+  "common": {
+    "enable": "Enable",
+    "confirm": "Yes",
+    "cancel": "No"
+  },
   "about": {
     "yiyanApiProvider": "Chinese poetry API provided by {{provider}}"
   },
@@ -90,8 +95,6 @@
     },
     "other": {
       "confirmPurgeData": {
-        "cancel": "Cancel",
-        "confirm": "OK",
         "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
         "purging": "Clearing extension data..",
         "title": "Are you sure you want to purge all data of this extension?"
@@ -143,7 +146,6 @@
       "alwaysExpandSearchBar": "Always expand search bar",
       "defaultSearchEngine": "Search engine",
       "enableShadow": "Show search box shadow",
-      "enable": "Enable",
       "openInNewTab": "Open in new tab",
       "placeholder": "Search placeholder",
       "recordSearchHistory": "Record search history",
@@ -153,7 +155,6 @@
     "shortcut": {
       "HorizontalIconSpacing": "Horizontal icon spacing",
       "VerticalIconSpacing": "Vertical icon spacing",
-      "enable": "Enable",
       "enableAreaShadow": "Show shortcut area shadow",
       "enableBg": "Shortcut area background",
       "enableShadow": "Show icon shadow",
@@ -164,8 +165,6 @@
       "maxRows": "Maximum rows",
       "restoreDefault": "Restore default shortcuts",
       "restoreDefaultConfirm": {
-        "cancel": "No",
-        "confirm": "Yes",
         "title": "Are you sure you want to restore default shortcuts?"
       },
       "showPinnedIcon": "Show pinned icon",
@@ -189,7 +188,6 @@
       "alwaysShow": "Always show",
       "description": "Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!",
       "enableShadow": "Show shadow",
-      "enable": "Enable",
       "invertColorDark": "[Quote] Use dark text in dark mode",
       "invertColorLight": "[Quote] Use dark text in light mode",
       "normalyShowTip": "When disabled, only show when the search box is focused.",
@@ -199,8 +197,6 @@
   "shortcut": {
     "addDialog": {
       "autoFetchFavicon": "Use automatic favicon",
-      "cancel": "Cancel",
-      "confirm": "OK",
       "confirmSvgCancelBtn": "Oh no",
       "confirmSvgDesc": "Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.",
       "confirmSvgOKBtn": "Right",

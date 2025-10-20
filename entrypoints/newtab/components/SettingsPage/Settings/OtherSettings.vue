@@ -33,8 +33,8 @@ async function confirmClearExtensionData() {
       t('newtab:settings.other.confirmPurgeData.message'),
       t('newtab:settings.other.confirmPurgeData.title'),
       {
-        confirmButtonText: t('newtab:settings.other.confirmPurgeData.confirm'),
-        cancelButtonText: t('newtab:settings.other.confirmPurgeData.cancel'),
+        confirmButtonText: t('newtab:common.confirm'),
+        cancelButtonText: t('newtab:common.cancel'),
         type: 'warning'
       }
     )
@@ -51,8 +51,8 @@ async function confirmClearWallpaperData() {
       t('newtab:settings.other.confirmPurgeWallpaper.message'),
       t('newtab:settings.other.confirmPurgeWallpaper.title'),
       {
-        confirmButtonText: t('newtab:settings.other.confirmPurgeData.confirm'),
-        cancelButtonText: t('newtab:settings.other.confirmPurgeData.cancel'),
+        confirmButtonText: t('newtab:common.confirm'),
+        cancelButtonText: t('newtab:common.cancel'),
         type: 'warning'
       }
     )

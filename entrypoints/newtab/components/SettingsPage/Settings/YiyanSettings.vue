@@ -15,7 +15,7 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.yiyan.enabled') }}</div>
+      <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.yiyan.enabled" />
     </div>
     <p v-if="!isChinese" class="settings__item--note">

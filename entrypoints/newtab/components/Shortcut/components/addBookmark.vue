@@ -42,7 +42,7 @@ const dialogTitle = computed(() =>
   )
 )
 const confirmLabel = computed(() =>
-  t(isEditing.value ? 'newtab:shortcut.editDialog.confirm' : 'newtab:shortcut.addDialog.confirm')
+  t(isEditing.value ? 'newtab:shortcut.editDialog.confirm' : 'newtab:common.confirm')
 )
 
 function resetFields() {
@@ -181,7 +181,7 @@ defineExpose({
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ t('newtab:shortcut.addDialog.cancel') }}</el-button>
+        <el-button @click="cancel">{{ t('newtab:common.cancel') }}</el-button>
         <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>

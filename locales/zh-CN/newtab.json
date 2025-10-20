@@ -1,4 +1,9 @@
 {
+  "common": {
+    "enable": "启用",
+    "confirm": "好",
+    "cancel": "算了"
+  },
   "about": {
     "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
   },
@@ -90,8 +95,6 @@
     },
     "other": {
       "confirmPurgeData": {
-        "cancel": "算了",
-        "confirm": "好",
         "message": "该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片/视频等。",
         "purging": "正在清除扩展数据...",
         "title": "确定要清除所有数据吗?"
@@ -143,7 +146,6 @@
       "alwaysExpandSearchBar": "一直展开搜索框",
       "defaultSearchEngine": "搜索引擎",
       "enableShadow": "显示搜索框阴影",
-      "enable": "启用",
       "openInNewTab": "在新标签页中打开",
       "placeholder": "搜索框占位文字",
       "recordSearchHistory": "记录搜索历史",
@@ -153,7 +155,6 @@
     "shortcut": {
       "HorizontalIconSpacing": "图标左右间距",
       "VerticalIconSpacing": "图标上下间距",
-      "enable": "启用",
       "enableAreaShadow": "显示区域阴影",
       "enableBg": "显示区域背景",
       "enableShadow": "显示图标阴影",
@@ -164,8 +165,6 @@
       "maxRows": "最大行数",
       "restoreDefault": "恢复默认快捷方式",
       "restoreDefaultConfirm": {
-        "cancel": "算了",
-        "confirm": "对",
         "title": "你确定要恢复默认快捷方式吗？"
       },
       "showPinnedIcon": "展示置顶图标",
@@ -189,7 +188,6 @@
       "alwaysShow": "总是显示",
       "description": "/",
       "enableShadow": "显示阴影",
-      "enable": "启用",
       "invertColorDark": "【一言】深色模式下使用深色文字",
       "invertColorLight": "【一言】浅色模式下使用深色文字",
       "normalyShowTip": "关闭时仅在搜索框聚焦时显示",
@@ -199,8 +197,6 @@
   "shortcut": {
     "addDialog": {
       "autoFetchFavicon": "自动获取图标",
-      "cancel": "不好",
-      "confirm": "好了",
       "confirmSvgCancelBtn": "还是不要了",
       "confirmSvgDesc": "你确定要使用 SVG 图片吗？为了避免 XSS 和 XXE 攻击，柠檬起始页将会对该图片进行处理，因此有可能会导致该 SVG 图片不会如期显示。但即使经过处理，你也有可能被你所选择的图片攻击，请确保你所使用的图片来源是安全的。",
       "confirmSvgOKBtn": "是的",
