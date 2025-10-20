@@ -19,6 +19,7 @@ export interface SettingsInterfaceVer7 {
     }
   }
   search: {
+    enabled: boolean
     alwaysExpandSearchBar: boolean
     selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
     selectedSearchEngine: keyof typeof import('@newtab/scripts/api/search').searchEngines

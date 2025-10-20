@@ -389,7 +389,7 @@ onUnmounted(() => {
       class="app"
     >
       <time-now />
-      <search-box style="margin-top: 10px" />
+      <search-box v-if="settings.search.enabled" />
       <shortcut v-if="settings.shortcut.enabled" />
       <yi-yan v-if="settings.yiyan.enabled" />
     </main>

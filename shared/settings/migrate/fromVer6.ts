@@ -19,6 +19,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       }
     },
     search: {
+      enabled: defaultSettings.search.enabled,
       alwaysExpandSearchBar: oldSettings.search.autoFocus,
       selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
       selectedSearchEngine: oldSettings.search.selectedSearchEngine,

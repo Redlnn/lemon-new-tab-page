@@ -20,6 +20,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     }
   },
   search: {
+    enabled: true,
     alwaysExpandSearchBar: false,
     selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 'bing',

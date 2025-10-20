@@ -13,6 +13,10 @@ const settings = useSettingsStore()
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.search.enable') }}</div>
+      <el-switch v-model="settings.search.enabled" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.search.defaultSearchEngine') }}</div>
       <el-select
         v-model="settings.search.selectedSearchEngine"

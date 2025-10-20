@@ -9,6 +9,7 @@
 - Brand new macOS-style settings page (#39)
 - Added "Hide major update changelog" switch (enabled by default)
 - Added `text-autospace: normal` to add spacing between CJK and non-CJK characters
+- Support for closing the search box
 
 ### Improvements⚡️
 
