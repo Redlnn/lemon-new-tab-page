@@ -5,7 +5,6 @@ import {
   dialogEmits,
   dialogInjectionKey,
   dialogProps,
-  useDeprecated,
   useDialog,
   useNamespace,
   useSameTarget
@@ -14,25 +13,8 @@ import {
 import { ElFocusTrap, ElTeleport } from './ElComponents'
 import SettingsDialogContent from './SettingsDialogContent.vue'
 
-defineOptions({
-  name: 'ElDialog',
-  inheritAttrs: false
-})
-
 const props = defineProps(dialogProps)
 defineEmits(dialogEmits)
-const slots = useSlots()
-
-useDeprecated(
-  {
-    scope: 'el-dialog',
-    from: 'the title slot',
-    replacement: 'the header slot',
-    version: '3.0.0',
-    ref: 'https://element-plus.org/en-US/component/dialog.html#slots'
-  },
-  computed(() => !!slots.title)
-)
 
 const ns = useNamespace('dialog')
 const dialogRef = ref<HTMLElement>()

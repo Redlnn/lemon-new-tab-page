@@ -5,13 +5,10 @@ import {
   dialogContentProps
 } from 'element-plus/es/components/dialog/src/dialog-content'
 import { FOCUS_TRAP_INJECTION_KEY } from 'element-plus/es/components/focus-trap/src/tokens'
-import { CloseComponents } from 'element-plus/es/utils/vue/icon'
 import { composeRefs } from 'element-plus/es/utils/vue/refs'
 
 const { t: t_ } = useLocale()
-const { Close } = CloseComponents
 
-defineOptions({ name: 'ElDialogContent' })
 const props = defineProps(dialogContentProps)
 defineEmits(dialogContentEmits)
 
@@ -62,7 +59,7 @@ defineExpose({
           @click="$emit('close')"
         >
           <el-icon :class="ns.e('close')">
-            <component :is="closeIcon || Close" />
+            <component :is="closeIcon" />
           </el-icon>
         </button>
       </header>
