@@ -66,6 +66,10 @@
   background-color: var(--el-bg-color);
   border-radius: 8px;
   transition: background-color var(--el-transition-duration-fast) ease;
+
+  .is-mobile & {
+    margin-bottom: 25px;
+  }
 }
 
 .settings__item {
@@ -156,7 +160,7 @@
     }
 
     .is-mobile & {
-      padding: 31px 20px 10px;
+      padding: 31px 30px 10px;
       font-size: 25px;
       line-height: 36px;
       color: var(--el-text-color-primary);
@@ -188,12 +192,19 @@
     --el-menu-item-height: 36px;
     --el-menu-active-color: var(--el-color-primary);
     --el-menu-hover-bg-color: var(--le-fill-color-dark-opacity-20);
+    position: relative;
 
     &.is-active {
       background-color: var(--el-color-primary-light-9);
     }
 
+    .is-mobile & {
+      --el-menu-base-level-padding: 30px;
+    }
+
     .menu-chevron {
+      position: absolute;
+      right: 20px;
       color: var(--el-text-color-secondary);
       transition: color var(--el-transition-duration-fast) ease;
     }
@@ -212,7 +223,7 @@
   padding: 0 20px 0 30px;
 
   .is-mobile & {
-    padding: 0 10px 0 20px;
+    padding: 0 15px 0 25px;
   }
 
   .settings-content {
