@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { defineAsyncComponent } from 'vue'
-import { useElementVisibility } from '@vueuse/core'
+import { useElementVisibility, useTimeoutFn } from '@vueuse/core'
 
 import { SettingsRoute } from '../composables/useSettingsRouter'
 
@@ -19,18 +19,14 @@ const titleIsVisible = useElementVisibility(titleRef)
 
 // 延迟加载组件，等待对话框动画完成
 const shouldLoadContent = ref(false)
-watch(
-  () => props.dialogOpened,
-  (opened) => {
-    if (opened && !shouldLoadContent.value) {
-      // 延迟到对话框动画结束后再加载
-      setTimeout(() => {
-        shouldLoadContent.value = true
-      }, 100)
-    }
-  },
-  { immediate: true, once: true }
-)
+
+onMounted(() => {
+  if (props.dialogOpened) {
+    useTimeoutFn(() => {
+      shouldLoadContent.value = true
+    }, 150)
+  }
+})
 
 const asyncViewMap: Record<SettingsRoute, Component | null> = {
   [SettingsRoute.MENU]: null,
