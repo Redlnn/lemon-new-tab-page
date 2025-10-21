@@ -6,6 +6,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
     primaryColor: oldSettings.primaryColor,
     colorfulMode: false,
     time: {
+      enabled: defaultSettings.time.enabled,
       isMeridiem: oldSettings.time.isMeridiem,
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,

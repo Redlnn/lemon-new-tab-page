@@ -7,6 +7,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
     primaryColor: oldSettings.primaryColor,
     colorfulMode: false,
     time: {
+      enabled: defaultSettings.time.enabled,
       isMeridiem: oldSettings.isMeridiem,
       showMeridiem: oldSettings.showMeridiem,
       showDate: defaultSettings.time.showDate,

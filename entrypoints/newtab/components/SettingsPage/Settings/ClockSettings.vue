@@ -12,6 +12,10 @@ const settings = useSettingsStore()
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:common.enable') }}</div>
+      <el-switch v-model="settings.time.enabled" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.clock.use12HourClock') }}</div>
       <el-switch v-model="settings.time.isMeridiem" />
     </div>

@@ -6,6 +6,7 @@ export interface SettingsInterfaceVer7 {
   primaryColor: string
   colorfulMode: boolean
   time: {
+    enabled: boolean
     isMeridiem: boolean
     showMeridiem: boolean
     showDate: boolean

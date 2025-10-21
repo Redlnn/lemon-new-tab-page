@@ -388,7 +388,7 @@ onUnmounted(() => {
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
     >
-      <time-now />
+      <time-now v-if="settings.time.enabled" />
       <search-box v-if="settings.search.enabled" />
       <shortcut v-if="settings.shortcut.enabled" />
       <yi-yan v-if="settings.yiyan.enabled" />

@@ -7,6 +7,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   primaryColor: '#F5B800',
   colorfulMode: false,
   time: {
+    enabled: true,
     isMeridiem: false,
     showMeridiem: true,
     showDate: true,
