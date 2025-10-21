@@ -10,7 +10,13 @@
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",
-    "title": "Changelog"
+    "title": "Changelog",
+    "otherVersions": {
+      "title": "Other Versions?",
+      "description": "Only the latest 5 versions are included. Click the links below to view the full changelog:",
+      "linkZhCN": "Chinese (Simplified)",
+      "linkEn": "English"
+    }
   },
   "menu": {
     "about": "About",

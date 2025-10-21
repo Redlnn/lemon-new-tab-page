@@ -41,6 +41,24 @@ function handleClose() {
         <el-switch v-model="settings.hideMajorChangelog" />
       </div>
       <component :is="isChinese ? ChangelogZh : ChangelogEn" />
+      <div class="markdown-body" style="padding-top: 21px">
+        <h2>{{ t('newtab:changelog.otherVersions.title') }}</h2>
+        <blockquote>
+          <p>{{ t('newtab:changelog.otherVersions.description') }}</p>
+          <ul>
+            <li>
+              <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG.md">
+                {{ t('newtab:changelog.otherVersions.linkZhCN') }}
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_en.md">
+                {{ t('newtab:changelog.otherVersions.linkEn') }}
+              </a>
+            </li>
+          </ul>
+        </blockquote>
+      </div>
     </div>
   </base-dialog>
 </template>

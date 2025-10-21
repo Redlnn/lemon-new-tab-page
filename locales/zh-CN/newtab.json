@@ -10,7 +10,13 @@
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",
     "newVersionMsg": "你的起始页更新啦~",
-    "title": "更新日志"
+    "title": "更新日志",
+    "otherVersions": {
+      "title": "其他版本？",
+      "description": "仅包含5个版本的更新日志，剩余内容请点击下方链接跳转查看：",
+      "linkZhCN": "中文（简体）",
+      "linkEn": "English"
+    }
   },
   "menu": {
     "about": "关于",

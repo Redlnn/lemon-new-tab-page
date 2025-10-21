@@ -9,6 +9,7 @@ import i18nextLoader from 'vite-plugin-i18next-loader'
 import svgLoader from 'vite-svg-loader'
 import { defineConfig } from 'wxt'
 
+import { keepFirst5H2Plugin } from './scripts/mdit-keep-first-5-h2'
 import { removeH1Plugin } from './scripts/mdit-remove-h1'
 
 const baseManifest = {
@@ -76,6 +77,7 @@ export default defineConfig({
       Markdown({
         markdownItSetup(md) {
           md.use(removeH1Plugin)
+          md.use(keepFirst5H2Plugin)
         }
       }),
       AutoImport({
