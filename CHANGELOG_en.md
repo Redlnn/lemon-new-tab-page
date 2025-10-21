@@ -26,6 +26,7 @@
 - Fixed issue where search suggestions did not appear or were unrelated to input when using CJK input methods
 - Fixed issue where resizing the window did not refresh the quick access area
 - Fixed issue where some styles were not applied
+- Fixed missing shadow display on settings items
 - Fixed missing rounded corners in the "Add Quick Access" dialog
 - Fixed dark mode not following system changes
 - Fixed issue where color schemes were not reapplied in dark mode (26068c3)
