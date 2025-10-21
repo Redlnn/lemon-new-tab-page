@@ -1,7 +1,7 @@
 {
   "name": "lemon-tab-page",
   "private": true,
-  "version": "2.5.1",
+  "version": "2.5.2",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -47,7 +47,7 @@
     "@types/chrome": "^0.1.24",
     "@types/lodash": "^4.17.20",
     "@types/markdown-it": "^14.1.2",
-    "@types/node": "^24.8.1",
+    "@types/node": "^24.9.1",
     "@types/webextension-polyfill": "^0.12.4",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vue/eslint-config-prettier": "^10.2.0",
