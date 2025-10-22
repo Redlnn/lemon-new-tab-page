@@ -13,7 +13,6 @@ import Icon from '@/assets/icon.svg?component'
 
 import { SettingsRoute } from '../composables/useSettingsRouter'
 
-console.log('SettingsMenuView loaded')
 const { t } = useTranslation()
 
 interface MenuItem {

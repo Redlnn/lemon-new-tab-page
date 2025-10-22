@@ -1,6 +1,10 @@
 import { EL_BG_COLOR, Levels, PRE, PRE_DARK, PRE_LIGHT } from './token'
 
-const html = document.documentElement
+const THEME_STYLE_ELEMENT_ID = 'lemon-element-plus-theme'
+const LIGHT_SELECTOR = 'html:not(.dark)'
+const DARK_SELECTOR = 'html.dark'
+
+const themeEntriesBySelector = new Map<string, Array<[string, string]>>()
 
 interface Color {
   r: number // 0-255
@@ -13,6 +17,31 @@ interface Color {
 const WHITE_COLOR = { r: 255, g: 255, b: 255, a: 1 } as Color
 const BLACK_COLOR = { r: 0, g: 0, b: 0, a: 1 } as Color
 const EL_BG_COLOR_RGBA = hex2rgba(EL_BG_COLOR)
+
+function getThemeStyleElement(): HTMLStyleElement {
+  let style = document.getElementById(THEME_STYLE_ELEMENT_ID) as HTMLStyleElement | null
+
+  if (!style) {
+    style = document.createElement('style')
+    style.id = THEME_STYLE_ELEMENT_ID
+    style.type = 'text/css'
+    // 使用专用 style 标签存放主题变量，避免污染其他内联样式
+    document.head.appendChild(style)
+  }
+
+  return style
+}
+
+function updateThemeStyleElement() {
+  const style = getThemeStyleElement()
+
+  const blocks = Array.from(themeEntriesBySelector.entries()).map(([sel, decls]) => {
+    const declarations = decls.map(([name, value]) => `  ${name}: ${value};`).join('\n')
+    return `${sel} {\n${declarations}\n}`
+  })
+
+  style.textContent = blocks.join('\n')
+}
 
 /**
  * 校验是否为支持的 HEX 颜色格式：#RGB/#RGBA/#RRGGBB/#RRGGBBAA
@@ -129,17 +158,21 @@ function mixLegacy(color1: Color, color2: Color, weight: number = 50): Color {
  * @param darkMixColor 用于混合生成暗色的颜色
  */
 function applyThemeColors(baseColor: Color, lightMixColor: Color, darkMixColor: Color) {
+  const entries: Array<[string, string]> = []
+
   // 循环设置色阶颜色
   // --el-color-primary-light-${level}
   Levels.forEach((level) => {
     const mixed = mixLegacy(baseColor, lightMixColor, 100 - level * 10)
-    html.style.setProperty(`${PRE_LIGHT}-${level}`, rgba2Hex(mixed))
+    entries.push([`${PRE_LIGHT}-${level}`, rgba2Hex(mixed)])
   })
 
   // 设置主要暗色
   // --el-color-primary-dark-2
   const dark = mixLegacy(baseColor, darkMixColor, 80)
-  html.style.setProperty(`${PRE_DARK}-2`, rgba2Hex(dark))
+  entries.push([`${PRE_DARK}-2`, rgba2Hex(dark)])
+
+  return entries
 }
 
 /**
@@ -147,7 +180,7 @@ function applyThemeColors(baseColor: Color, lightMixColor: Color, darkMixColor: 
  * @param color HEX 格式的颜色值
  * @param isDark 是否为深色模式
  */
-function changeTheme(color: string, isDark: boolean = false) {
+function changeTheme(color: string) {
   const trimmedColor = color.trim()
   if (!isValidHexColor(trimmedColor)) {
     console.warn('[主题] 无效的主题色（需为 #RGB/#RGBA/#RRGGBB/#RRGGBBAA）:', color)
@@ -157,18 +190,22 @@ function changeTheme(color: string, isDark: boolean = false) {
   // 规范化为 #RRGGBB，避免后续解析歧义
   const normalized = normalizeTo6Hex(color)
 
-  // 设置主要颜色变量 --el-color-primary
-  html.style.setProperty(PRE, normalized)
-
-  // 将颜色转换为 RGBA 对象并应用
   const baseColor = hex2rgba(normalized)
 
-  // 根据模式调用对应的处理函数
-  if (isDark) {
-    applyThemeColors(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR)
-  } else {
-    applyThemeColors(baseColor, WHITE_COLOR, BLACK_COLOR)
-  }
+  const lightEntries: Array<[string, string]> = [
+    [PRE, normalized],
+    ...applyThemeColors(baseColor, WHITE_COLOR, BLACK_COLOR)
+  ]
+
+  const darkEntries: Array<[string, string]> = [
+    [PRE, normalized],
+    ...applyThemeColors(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR)
+  ]
+
+  themeEntriesBySelector.set(LIGHT_SELECTOR, lightEntries)
+  themeEntriesBySelector.set(DARK_SELECTOR, darkEntries)
+
+  updateThemeStyleElement()
 }
 
 export default changeTheme

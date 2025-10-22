@@ -362,8 +362,8 @@ watch(preferredDark, () => {
   }
 })
 
-watch(isDark, (dark) => {
-  changeTheme(settings.primaryColor, dark)
+watch(isDark, () => {
+  changeTheme(settings.primaryColor)
 })
 
 // 组件卸载时清理watch
