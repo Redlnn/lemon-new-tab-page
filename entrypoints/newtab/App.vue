@@ -25,8 +25,6 @@ import YiYan from '@newtab/components/YiYan.vue'
 import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
 
-import changeTheme from './scripts/use-element-plus-theme'
-
 const { t } = useTranslation()
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
@@ -360,10 +358,6 @@ watch(preferredDark, () => {
       document.documentElement.classList.remove('dark')
     }
   }
-})
-
-watch(isDark, () => {
-  changeTheme(settings.primaryColor)
 })
 
 // 组件卸载时清理watch
