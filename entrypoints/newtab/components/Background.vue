@@ -44,14 +44,17 @@ const backgroundCss = computed(() => ({
   'background--focused__blur': focusStore.isFocused && !settings.perf.disableFocusBlur
 }))
 
-// 仅在“视频壁纸”时才处理播放/暂停
-const isVideoWallpaper = computed(
-  () =>
-    settings.background.bgType === BgType.Local &&
-    (isDark.value
-      ? settings.localDarkBackground.mediaType !== 'image'
-      : settings.localBackground.mediaType === 'video')
-)
+const isVideoWallpaper = computed(() => {
+  if (settings.background.bgType !== BgType.Local) {
+    return false
+  }
+
+  const mediaType = isDark.value
+    ? (settings.localDarkBackground.mediaType ?? settings.localBackground.mediaType)
+    : settings.localBackground.mediaType
+
+  return mediaType === 'video'
+})
 
 let stopFocusWatch: (() => void) | null = null
 let stopVisWatch: (() => void) | null = null
