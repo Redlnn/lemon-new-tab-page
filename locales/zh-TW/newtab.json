@@ -225,12 +225,13 @@
     "remove": "移除",
     "removePinnedMessage": {
       "content": "已移除該釘選連結",
-      "revoke": "復原"
+      "undo": "復原"
     },
     "removeTopMessage": {
       "content": "已移除捷徑",
       "restoreDefault": "還原預設捷徑",
-      "revoke": "復原"
+      "restoreSuccess": "已還原預設捷徑",
+      "undo": "撤銷"
     },
     "unpin": "取消釘選"
   },

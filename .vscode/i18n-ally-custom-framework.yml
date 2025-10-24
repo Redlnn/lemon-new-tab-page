@@ -10,6 +10,7 @@ languageIds:
 # Look for t("...")
 usageMatchRegex:
   - "[^\\w\\d]t\\(['\"`]({key})['\"`]"
+  - "[^\\w\\d]tSync\\(['\"`]({key})['\"`]"
 
 # Disable other built-in i18n ally frameworks
 monopoly: false

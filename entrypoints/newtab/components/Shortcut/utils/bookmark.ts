@@ -34,7 +34,7 @@ export async function removeBookmark(
             await refresh()
           }
         },
-        i18next.t('newtab:shortcut.removePinnedMessage.revoke')
+        i18next.t('newtab:shortcut.removePinnedMessage.undo')
       )
     ])
   })

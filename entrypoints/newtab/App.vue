@@ -26,6 +26,7 @@ import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
 
 const { t } = useTranslation()
+const { t: tSync } = useTranslation('sync')
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
   '/node_modules/element-plus/es/locale/lang/zh*.mjs'
@@ -237,8 +238,8 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification({
-        title: t('sync:failMessage.title'),
-        message: t('sync:failMessage.message', { cloud: p.cloud, local: p.local }),
+        title: tSync('sync:failMessage.title'),
+        message: tSync('sync:failMessage.message', { cloud: p.cloud, local: p.local }),
         type: 'error'
       })
     } else if (type === 'sync-error') {

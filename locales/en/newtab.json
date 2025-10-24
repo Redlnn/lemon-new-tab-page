@@ -225,12 +225,13 @@
     "remove": "Remove",
     "removePinnedMessage": {
       "content": "Removed from pinned links.",
-      "revoke": "Revoke"
+      "undo": "Revoke"
     },
     "removeTopMessage": {
-      "content": "Removed from shortcuts.",
+      "content": "Shortcut removed",
       "restoreDefault": "Restore default shortcuts",
-      "revoke": "Revoke"
+      "restoreSuccess": "Default shortcuts restored",
+      "undo": "Undo"
     },
     "unpin": "Unpin"
   },

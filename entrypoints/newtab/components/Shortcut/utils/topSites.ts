@@ -69,7 +69,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
             await reloadFunc()
           }
         },
-        i18next.t('newtab:shortcut.removeTopMessage.revoke')
+        i18next.t('newtab:shortcut.removeTopMessage.undo')
       ),
       h(
         'span',
@@ -79,6 +79,9 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
             invalidateTopSitesCache()
             await blockedTopStitesStorage.setValue([])
             await reloadFunc()
+            ElMessage.success({
+              message: i18next.t('newtab:shortcut.removeTopMessage.restoreSuccess')
+            })
           }
         },
         i18next.t('newtab:shortcut.removeTopMessage.restoreDefault')

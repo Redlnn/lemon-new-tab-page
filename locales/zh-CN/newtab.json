@@ -225,12 +225,13 @@
     "remove": "移除",
     "removePinnedMessage": {
       "content": "已移除该置顶链接",
-      "revoke": "撤销"
+      "undo": "撤销"
     },
     "removeTopMessage": {
       "content": "已移除快捷方式",
       "restoreDefault": "恢复默认快捷方式",
-      "revoke": "撤销"
+      "restoreSuccess": "已恢复默认快捷方式",
+      "undo": "撤销"
     },
     "unpin": "取消置顶"
   },
