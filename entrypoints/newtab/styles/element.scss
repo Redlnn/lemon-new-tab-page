@@ -6,6 +6,12 @@ body {
   --el-font-weight-primary: 400;
 }
 
+.el-select .el-select__wrapper {
+  transition:
+    background-color var(--el-transition-duration-fast) ease,
+    box-shadow var(--el-transition-duration-fast) ease;
+}
+
 .el-badge .el-badge__content {
   border: initial;
   box-shadow: 0 0 5px rgb(0 0 0 / 10%);

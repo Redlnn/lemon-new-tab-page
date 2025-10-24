@@ -7,6 +7,7 @@
 ### Bug Fixes🐛
 
 - Fixed issue where the dark mode button state did not follow browser or system changes. (#42)
+- Fixed missing color transition animations for some elements on the settings page. (#43)
 
 ## 2.5.2 (Oct 21, 2025)
 

@@ -8,9 +8,7 @@
   background-color: transparent;
   border-radius: 10px;
   box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease;
+  transition: box-shadow var(--el-transition-duration-fast) ease;
 
   html.dialog-acrylic & {
     @include acrylic.acrylic;
@@ -21,6 +19,9 @@
     flex: 1;
     flex-direction: column;
     background-color: var(--el-bg-color-overlay);
+    transition:
+      background-color var(--el-transition-duration-fast) ease,
+      color var(--el-transition-duration-fast) ease;
 
     html.dialog-transparent & {
       background-color: var(--le-bg-color-overlay-opacity-20);
@@ -148,6 +149,9 @@
 .settings-menu.el-menu {
   height: 100%;
   background-color: #e9e9e9;
+  transition:
+    background-color var(--el-transition-duration-fast) ease,
+    border-color var(--el-transition-duration-fast) ease;
 
   &:not(.el-menu--collapse) {
     width: 230px;
@@ -192,6 +196,10 @@
     --el-menu-active-color: var(--el-color-primary);
     --el-menu-hover-bg-color: var(--le-fill-color-dark-opacity-20);
     position: relative;
+    transition:
+      border-color var(--el-transition-duration-fast),
+      background-color var(--el-transition-duration-fast),
+      color var(--el-transition-duration-fast);
 
     &.is-active {
       background-color: var(--el-color-primary-light-9);
@@ -238,6 +246,7 @@
       font-size: 28px;
       font-weight: 600;
       color: var(--el-text-color-primary);
+      transition: color var(--el-transition-duration-fast) ease;
     }
 
     .is-mobile & &__title {
