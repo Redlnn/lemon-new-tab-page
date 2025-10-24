@@ -17,6 +17,7 @@ const emit = defineEmits<{
   (e: 'open-changelog'): void
   (e: 'open-about'): void
   (e: 'open-search-engine-preference'): void
+  (e: 'open-faq'): void
 }>()
 
 const { t } = useTranslation()
@@ -24,10 +25,6 @@ const settings = useSettingsStore()
 
 function sponsorMessage() {
   ElMessageBox.alert(t('newtab:sponsor'), '支持我们')
-}
-
-function needHelp() {
-  window.open('https://github.com/Redlnn/lemon-new-tab-page/issues/new')
 }
 </script>
 
@@ -76,7 +73,7 @@ function needHelp() {
             <span>{{ t('newtab:changelog.title') }}</span>
           </el-dropdown-item>
         </el-badge>
-        <el-dropdown-item @click="needHelp">
+        <el-dropdown-item @click="emit('open-faq')">
           <el-icon :size="17"><help-filled /></el-icon>
           <span>{{ t('newtab:menu.help') }}</span>
         </el-dropdown-item>

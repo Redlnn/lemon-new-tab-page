@@ -1,0 +1,45 @@
+{
+  "helpSection": {
+    "title": "取得協助 · 提供意見回饋與建議",
+    "github": "GitHub",
+    "email": "Email",
+    "emailCopied": "已複製電子郵件地址"
+  },
+  "faqTitle": "常見問題",
+  "faqSubtitle": "希望能幫到你喵~",
+  "items": {
+    "restoreShortcut": {
+      "title": "如何還原已刪除/預設捷徑連結",
+      "content": "移除任何快速存取連結後,可在彈出的通知中進行還原操作。"
+    },
+    "performance": {
+      "title": "介面掉幀或卡頓、CPU/GPU 佔用率高",
+      "content": {
+        "intro": "可以嘗試以下方法:",
+        "item1": "在效能設定介面中停用不必要的效果(使用影片桌布時請勿開啟模糊效果)",
+        "item2": "開啟瀏覽器的硬體加速功能"
+      }
+    },
+    "chromeFooter": {
+      "title": "如何關閉 Chrome 新分頁底部的頁尾?",
+      "content": {
+        "reason": "這是因為 Google 將「自訂 Chrome」相關功能全部放在側邊欄,而側邊欄的入口點只在新分頁上。",
+        "step": "您可以先點選右下角的「自訂 Chrome」按鈕以開啟側邊欄,然後捲動至頁面最下方,在頁尾區塊中關閉「在新分頁頁面上顯示頁尾」即可。",
+        "reference": "圖文參考 👉",
+        "githubIssue": "GitHub Issue"
+      }
+    },
+    "browserFreeze": {
+      "title": "瀏覽器啟動時當機",
+      "content": {
+        "intro": "在部分搭載 Intel 內顯的 Windows 裝置上,Chromium 核心瀏覽器可能會在啟動時當機,可嘗試以下方法解決:",
+        "step1": "更新顯示卡驅動程式:請確保顯示卡驅動程式為最新版本。",
+        "step2": {
+          "text": "在 Experiments (chrome://flags) 頁面中,將 {code1} 變更為 {code2}",
+          "note": "Google 不建議使用 OpenGL API 進行算繪,變更為其他選項可能也有效"
+        },
+        "step3": "(不建議)停用瀏覽器的硬體加速功能(又稱「GPU 加速」或「圖形加速」)。"
+      }
+    }
+  }
+}

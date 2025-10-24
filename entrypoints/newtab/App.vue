@@ -65,6 +65,7 @@ i18next.on('languageChanged', onLngChanged)
 
 const SettingsPage = defineAsyncComponent(() => import('@newtab/components/SettingsPage/index.vue'))
 const Changelog = defineAsyncComponent(() => import('@newtab/components/Changelog.vue'))
+const Faq = defineAsyncComponent(() => import('@/entrypoints/newtab/components/Faq.vue'))
 const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vue'))
 const SearchEnginesSwitcher = defineAsyncComponent(
   () => import('@newtab/components/SearchEnginesSwitcher.vue')
@@ -72,11 +73,13 @@ const SearchEnginesSwitcher = defineAsyncComponent(
 
 type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>
 type ChangelogInstance = InstanceType<typeof ChangelogComponent>
+type FaqInstance = InstanceType<typeof Faq>
 type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
 
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
+const FaqRef = ref<FaqInstance>()
 const AboutRef = ref<AboutCompInstance>()
 const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
 
@@ -393,9 +396,11 @@ onUnmounted(() => {
       @open-changelog="ChangelogRef?.show"
       @open-about="AboutRef?.toggle"
       @open-search-engine-preference="SESwitcherRef?.show"
+      @open-faq="FaqRef?.show"
     />
     <settings-page ref="SettingsPageRef" />
     <Changelog ref="ChangelogRef" />
+    <faq ref="FaqRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />
   </el-config-provider>
