@@ -79,7 +79,7 @@ onMounted(async () => {
 
       &.yiyan--opacity {
         color: var(--el-fill-color-blank);
-        background-color: var(--le-bg-color-overlay-opacity-60);
+        background-color: var(--le-bg-color-overlay-opacity-50);
       }
 
       &.yiyan--blur {

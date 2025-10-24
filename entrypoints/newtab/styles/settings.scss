@@ -18,10 +18,14 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    background-color: var(--el-bg-color-overlay);
+    background-color: var(--el-bg-color-page);
     transition:
       background-color var(--el-transition-duration-fast) ease,
       color var(--el-transition-duration-fast) ease;
+
+    html.colorful & {
+      background-color: var(--el-color-primary-light-9);
+    }
 
     html.dialog-transparent & {
       background-color: var(--le-bg-color-overlay-opacity-20);
@@ -71,6 +75,18 @@
   .is-mobile & {
     margin-bottom: 25px;
   }
+
+  html.colorful & {
+    background-color: var(--el-color-primary-light-8);
+  }
+
+  html.dialog-transparent & {
+    background-color: var(--le-bg-color-overlay-opacity-20);
+  }
+
+  html.colorful.dialog-transparent & {
+    background-color: var(--el-color-primary-light-9);
+  }
 }
 
 .settings__item {
@@ -83,6 +99,7 @@
 
   &--horizontal {
     display: flex;
+    gap: 5px;
     align-items: center;
     justify-content: space-between;
   }
@@ -104,7 +121,7 @@
     margin-top: 0;
     font-size: var(--el-font-size-extra-small);
     line-height: 1.5em;
-    color: var(--el-text-color-regular);
+    color: var(--el-text-color-secondary);
 
     svg {
       width: 1.2em;
@@ -122,6 +139,8 @@
 
 .settings__label {
   display: flex;
+  flex-wrap: wrap;
+  row-gap: 5px;
   align-items: center;
 
   .settings__item--horizontal & {
@@ -150,16 +169,24 @@
     background-color: initial !important;
   }
 
-  html.dark & {
-    background-color: var(--el-fill-color-lighter);
+  html.colorful & {
+    background-color: var(--el-color-primary-light-8);
   }
 
   html.dialog-transparent & {
     background-color: var(--le-fill-color-dark-opacity-20);
   }
 
+  html.dark:not(.colorful) & {
+    background-color: var(--el-fill-color-lighter);
+  }
+
   html.dark.dialog-transparent & {
     background-color: var(--le-fill-color-lighter-opacity-20);
+  }
+
+  html.dialog-transparent.colorful :not(.is-mobile) & {
+    background-color: var(--le-bg-color-overlay-opacity-30);
   }
 }
 
@@ -203,12 +230,13 @@
       background-color var(--el-transition-duration-fast),
       color var(--el-transition-duration-fast);
 
-    &.is-active {
-      background-color: var(--el-color-primary-light-9);
-    }
-
     .is-mobile & {
       --el-menu-base-level-padding: 30px;
+    }
+
+    &.is-active,
+    html.colorful &:hover {
+      background-color: var(--el-color-primary-light-9);
     }
 
     .menu-chevron {

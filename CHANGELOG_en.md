@@ -4,10 +4,22 @@
 
 ## # 2.5.3 (Oct 24, 2025)
 
+### New Features✨
+
+- Added Help and Feedback page (#41)
+
+### Improvements⚡️
+
+- Cleaned up obsolete dark mode theme color switching logic
+
 ### Bug Fixes🐛
 
+- Fixed issue where switching colors did not have a transition effect.
+- Fixed issue where wallpapers did not display in dark mode when only light mode wallpapers were uploaded and the wallpaper type was set to image. (#40)
+- Fixed missing styles.
 - Fixed issue where the dark mode button state did not follow browser or system changes. (#42)
 - Fixed missing color transition animations for some elements on the settings page. (#43)
+- Fixed localization errors/missing translations.
 
 ## 2.5.2 (Oct 21, 2025)
 

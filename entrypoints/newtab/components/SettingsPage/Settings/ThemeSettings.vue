@@ -157,7 +157,9 @@ watch(isDark, (newVal) => {
       </div>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.theme.colorfulMode') }}</div>
+      <div class="settings__label">
+        {{ t('newtab:settings.theme.colorfulMode') }}
+      </div>
       <el-switch v-model="settings.colorfulMode" />
     </div>
     <div class="settings__item settings__item--horizontal">

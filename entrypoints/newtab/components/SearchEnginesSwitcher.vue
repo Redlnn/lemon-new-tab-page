@@ -23,8 +23,7 @@ const settings = useSettingsStore()
         <el-col
           v-for="key in Object.keys(searchEngines) as (keyof typeof searchEngines)[]"
           :key="key"
-          :xs="24"
-          :sm="12"
+          :span="12"
         >
           <div
             class="se-switcher-item"
@@ -66,13 +65,25 @@ const settings = useSettingsStore()
   background-color: var(--el-bg-color);
   border-radius: 8px;
 
+  &:hover {
+    background-color: var(--el-fill-color-dark);
+  }
+
   &.is-active {
     color: var(--el-color-white);
     background-color: var(--el-color-primary);
+
+    html.dark & {
+      background-color: var(--el-color-primary-light-3);
+    }
   }
 
-  &:hover:not(.is-active) {
-    background-color: var(--el-fill-color-dark);
+  html.colorful &:not(.is-active) {
+    background-color: var(--el-color-primary-light-8);
+
+    &:hover {
+      background-color: var(--el-color-primary-light-7);
+    }
   }
 
   &__icon {

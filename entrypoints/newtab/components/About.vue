@@ -94,6 +94,10 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       background-size: 80%;
       border: var(--el-border);
       border-radius: 15px;
+
+      html.colorful & {
+        background-color: var(--el-color-primary-light-8);
+      }
     }
   }
 

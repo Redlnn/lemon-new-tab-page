@@ -19,7 +19,7 @@
 }
 
 :root {
-  @include gen-var-opacity('le-bg-color-overlay', 'el-bg-color-overlay', (20, 30, 35, 50, 60));
+  @include gen-var-opacity('le-bg-color-overlay', 'el-bg-color-overlay', (15, 20, 30, 35, 50, 60));
   @include gen-var-opacity('le-text-color-primary', 'el-text-color-primary', (65));
   @include gen-var-opacity('le-bg-color-page', 'el-bg-color-page', (60));
   @include gen-var-opacity('le-fill-color-lighter', 'el-fill-color-lighter', (20));
@@ -31,6 +31,6 @@ html.colorful {
     'le-bg-color-overlay',
     'el-bg-color-overlay',
     30,
-    (20, 30, 35, 50, 60)
+    (15, 20, 30, 35, 50, 60)
   );
 }

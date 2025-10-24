@@ -189,7 +189,7 @@ defineExpose({
 </template>
 
 <style lang="scss">
-.shortcut__item--add-bookmark {
+.shortcut__item--add-bookmark .shortcut__item-link {
   .shortcut__title,
   .shortcut__icon {
     color: var(--le-text-color-primary-opacity-65);

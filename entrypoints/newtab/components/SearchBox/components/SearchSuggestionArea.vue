@@ -220,6 +220,11 @@ defineExpose({
   z-index: 1000;
   overflow: hidden;
   font-size: var(--el-font-size-small);
+  background-color: var(--el-fill-color-darker);
+
+  html.colorful &:not(.search-suggestion-area--opacity) {
+    background-color: var(--el-color-primary-light-9);
+  }
 
   &.search-suggestion-area--opacity {
     background-color: var(--le-bg-color-overlay-opacity-50);

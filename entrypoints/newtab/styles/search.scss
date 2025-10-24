@@ -54,11 +54,19 @@
         background-color: var(--el-fill-color);
       }
 
+      html.colorful & {
+        background-color: var(--el-color-primary-light-9);
+      }
+
       &:hover:not(.search-box__form--focus) {
         background-color: var(--el-fill-color-dark);
 
         html.dark & {
           background-color: var(--el-fill-color-dark);
+        }
+
+        html.colorful & {
+          background-color: var(--el-color-primary-light-8);
         }
       }
 
@@ -67,6 +75,10 @@
 
         html.dark & {
           background-color: var(--el-fill-color-darker);
+        }
+
+        html.colorful & {
+          background-color: var(--el-color-primary-light-8);
         }
       }
     }

@@ -1,22 +1,22 @@
 {
-  "common": {
-    "enable": "启用",
-    "confirm": "好",
-    "cancel": "算了"
-  },
   "about": {
     "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
   },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",
     "newVersionMsg": "你的起始页更新啦~",
-    "title": "更新日志",
     "otherVersions": {
-      "title": "其他版本？",
       "description": "仅包含5个版本的更新日志，剩余内容请点击下方链接跳转查看：",
+      "linkEn": "English",
       "linkZhCN": "中文（简体）",
-      "linkEn": "English"
-    }
+      "title": "其他版本？"
+    },
+    "title": "更新日志"
+  },
+  "common": {
+    "cancel": "算了",
+    "confirm": "好",
+    "enable": "启用"
   },
   "menu": {
     "about": "关于",

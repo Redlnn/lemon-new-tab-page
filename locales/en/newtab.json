@@ -1,22 +1,22 @@
 {
-  "common": {
-    "enable": "Enable",
-    "confirm": "Yes",
-    "cancel": "No"
-  },
   "about": {
     "yiyanApiProvider": "Chinese poetry API provided by {{provider}}"
   },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",
-    "title": "Changelog",
     "otherVersions": {
-      "title": "Other Versions?",
       "description": "Only the latest 5 versions are included. Click the links below to view the full changelog:",
+      "linkEn": "English",
       "linkZhCN": "Chinese (Simplified)",
-      "linkEn": "English"
-    }
+      "title": "Other Versions?"
+    },
+    "title": "Changelog"
+  },
+  "common": {
+    "cancel": "No",
+    "confirm": "Yes",
+    "enable": "Enable"
   },
   "menu": {
     "about": "About",

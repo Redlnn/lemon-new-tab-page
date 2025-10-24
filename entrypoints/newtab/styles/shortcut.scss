@@ -58,6 +58,7 @@
           width: 20px;
           height: 20px;
           color: var(--el-color-primary);
+          background-color: var(--el-fill-color);
           border-radius: 50%;
           box-shadow: var(--el-box-shadow-light);
 
@@ -67,6 +68,10 @@
 
           &--blur {
             @include acrylic.acrylic;
+          }
+
+          html.colorful &:not(.shortcut__pin-icon--opacity) {
+            background-color: var(--el-color-primary-light-9);
           }
         }
 
@@ -92,18 +97,26 @@
 
           &--opacity {
             background: var(--le-bg-color-overlay-opacity-60);
+          }
 
-            .shortcut__item:hover & {
-              background: var(--le-bg-color-overlay-opacity-30);
-            }
+          .shortcut__item:hover &--opacity {
+            background: var(--le-bg-color-overlay-opacity-30);
           }
 
           html.dark &:not(.shortcut__icon--opacity) {
             background: var(--el-fill-color-extra-light);
+          }
 
-            .shortcut__item:hover & {
-              background: var(--el-fill-color-light);
-            }
+          html.colorful &:not(.shortcut__icon--opacity) {
+            background: var(--el-color-primary-light-9);
+          }
+
+          html.dark .shortcut__item:hover &:not(.shortcut__icon--opacity) {
+            background: var(--el-fill-color-light);
+          }
+
+          html.colorful .shortcut__item:hover &:not(.shortcut__icon--opacity) {
+            background: var(--el-color-primary-light-8);
           }
 
           /* stylelint-disable-next-line no-descending-specificity */

@@ -137,6 +137,11 @@ function handleEmailClick() {
       font-size: 18px;
       background-color: var(--el-fill-color-darker);
       border-radius: 5px;
+      transition: background-color var(--el-transition-duration-fast) ease;
+
+      html.colorful & {
+        background-color: var(--el-color-primary-light-9);
+      }
     }
 
     &:hover {
@@ -145,6 +150,18 @@ function handleEmailClick() {
 
     &:active {
       transform: scale(0.95);
+    }
+
+    html.colorful & {
+      background-color: var(--el-color-primary-light-8);
+
+      &:hover {
+        background-color: var(--el-color-primary-light-7);
+
+        .issue-link-icon {
+          background-color: var(--el-color-primary-light-8);
+        }
+      }
     }
   }
 }
@@ -168,6 +185,10 @@ function handleEmailClick() {
 
     &__title {
       font-weight: bold;
+    }
+
+    html.colorful & {
+      background-color: var(--el-color-primary-light-8);
     }
   }
 }

@@ -1,22 +1,22 @@
 {
-  "common": {
-    "enable": "啟用",
-    "confirm": "好",
-    "cancel": "算了"
-  },
   "about": {
     "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
   },
   "changelog": {
     "hideMajorChangelog": "不顯示大版本更新日誌",
     "newVersionMsg": "你的起始頁更新啦~",
-    "title": "更新日誌",
     "otherVersions": {
-      "title": "其他版本？",
       "description": "僅包含5個版本的更新日誌，剩餘內容請點擊下方連結跳轉檢視：",
+      "linkEn": "English",
       "linkZhCN": "中文（簡體）",
-      "linkEn": "English"
-    }
+      "title": "其他版本？"
+    },
+    "title": "更新日誌"
+  },
+  "common": {
+    "cancel": "算了",
+    "confirm": "好",
+    "enable": "啟用"
   },
   "menu": {
     "about": "關於",
