@@ -75,10 +75,15 @@ export default defineConfig({
       }),
       svgLoader(),
       Markdown({
+        include: [/CHANGELOG.*\.md$/],
         markdownItSetup(md) {
           md.use(removeH1Plugin)
           md.use(keepFirst5H2Plugin)
         }
+      }),
+      Markdown({
+        include: [/\.md$/],
+        exclude: [/CHANGELOG.*\.md$/]
       }),
       AutoImport({
         include: [
