@@ -2,6 +2,12 @@
 
 > Translated by ChatGPT from Chinese.
 
+## # 2.5.3 (Oct 24, 2025)
+
+### Bug Fixes🐛
+
+- Fixed issue where the dark mode button state did not follow browser or system changes. (#42)
+
 ## 2.5.2 (Oct 21, 2025)
 
 ### New Features✨

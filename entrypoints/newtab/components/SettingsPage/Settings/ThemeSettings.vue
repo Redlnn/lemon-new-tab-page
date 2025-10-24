@@ -42,33 +42,33 @@ const predefineColors = predefineColorsMapClassic
   .map((i) => i.value)
 
 const isDark = useDark()
-const isDarkLocal = ref(isDark.value)
+const isDarkUI = ref(isDark.value)
 const preferredDark = usePreferredDark()
 
 const isAuto = computed(() => store.value === 'auto')
-const isAutoLocal = ref(isAuto.value)
+const isAutoUI = ref(isAuto.value)
 
 function changeByPreferred() {
   if (preferredDark.value) {
     document.documentElement.classList.add('dark')
     document.documentElement.classList.remove('light')
-    isDarkLocal.value = true
+    isDarkUI.value = true
   } else {
     document.documentElement.classList.add('light')
     document.documentElement.classList.remove('dark')
-    isDarkLocal.value = false
+    isDarkUI.value = false
   }
 }
 
 function changeByUser() {
-  if (isDarkLocal.value) {
+  if (isDarkUI.value) {
     document.documentElement.classList.add('dark')
     document.documentElement.classList.remove('light')
-    isAutoLocal.value = false
+    isAutoUI.value = false
   } else {
     document.documentElement.classList.add('light')
     document.documentElement.classList.remove('dark')
-    isAutoLocal.value = false
+    isAutoUI.value = false
   }
 }
 
@@ -88,12 +88,12 @@ function toggleDark() {
 }
 
 function toggleAuto() {
-  if (!isAutoLocal.value) {
-    store.value = isDarkLocal.value ? 'dark' : 'light'
+  if (!isAutoUI.value) {
+    store.value = isDarkUI.value ? 'dark' : 'light'
     return
   }
 
-  if (isDarkLocal.value !== preferredDark.value) {
+  if (isDarkUI.value !== preferredDark.value) {
     // 先切换CSS，等待动画结束后，再切换store
     changeByPreferred()
     useTimeoutFn(() => {
@@ -103,6 +103,12 @@ function toggleAuto() {
     store.value = 'auto'
   }
 }
+
+watch(isDark, (newVal) => {
+  if (isAuto.value) {
+    isDarkUI.value = newVal
+  }
+})
 </script>
 
 <template>
@@ -112,14 +118,14 @@ function toggleAuto() {
         {{ t('newtab:settings.theme.darkMode') }}
         <cloud-off-round />
       </div>
-      <el-switch v-model="isDarkLocal" @change="toggleDark" />
+      <el-switch v-model="isDarkUI" @change="toggleDark" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
         {{ t('newtab:settings.theme.systemMode') }}
         <cloud-off-round />
       </div>
-      <el-switch v-model="isAutoLocal" @change="toggleAuto" />
+      <el-switch v-model="isAutoUI" @change="toggleAuto" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
