@@ -140,18 +140,33 @@
   flex-shrink: 0;
   min-width: 64px;
   height: 100%;
+  background-color: #e9e9e9;
+  transition:
+    background-color var(--el-transition-duration-fast) ease,
+    border-color var(--el-transition-duration-fast) ease;
 
   .is-mobile & {
     min-width: 100%;
+    background-color: initial !important;
+  }
+
+  html.dark & {
+    background-color: var(--el-fill-color-lighter);
+  }
+
+  html.dialog-transparent & {
+    background-color: var(--le-fill-color-dark-opacity-20);
+  }
+
+  html.dark.dialog-transparent & {
+    background-color: var(--le-fill-color-lighter-opacity-20);
   }
 }
 
 .settings-menu.el-menu {
   height: 100%;
-  background-color: #e9e9e9;
-  transition:
-    background-color var(--el-transition-duration-fast) ease,
-    border-color var(--el-transition-duration-fast) ease;
+  background-color: transparent;
+  border: initial;
 
   &:not(.el-menu--collapse) {
     width: 230px;
@@ -176,19 +191,6 @@
 
   .is-mobile & {
     width: 100% !important;
-    background-color: initial !important;
-  }
-
-  html.dark & {
-    background-color: var(--el-fill-color-lighter);
-  }
-
-  html.dialog-transparent & {
-    background-color: var(--le-fill-color-dark-opacity-20);
-  }
-
-  html.dark.dialog-transparent & {
-    background-color: var(--le-fill-color-lighter-opacity-20);
   }
 
   .settings-menu-item {
