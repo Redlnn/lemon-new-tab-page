@@ -138,11 +138,7 @@ defineExpose({
   <el-dialog
     v-model="showDialog"
     :title="dialogTitle"
-    class="base-dialog--blur base-dialog--opacity"
-    :style="{
-      padding: '30px 50px',
-      '--el-dialog-border-radius': '10px'
-    }"
+    class="add-bookmark-dialog base-dialog--blur base-dialog--opacity"
     width="500px"
     append-to-body
     destroy-on-close
@@ -189,6 +185,13 @@ defineExpose({
 </template>
 
 <style lang="scss">
+.add-bookmark-dialog {
+  padding: 30px 50px;
+  background-color: var(--el-color-primary-light-9);
+
+  --el-dialog-border-radius: 10px;
+}
+
 .shortcut__item--add-bookmark .shortcut__item-link {
   .shortcut__title,
   .shortcut__icon {

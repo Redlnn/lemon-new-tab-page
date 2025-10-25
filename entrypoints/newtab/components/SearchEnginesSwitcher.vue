@@ -124,6 +124,10 @@ const settings = useSettingsStore()
     color: var(--el-fill-color);
   }
 
+  html.dark &.is-active &__url {
+    color: var(--el-text-color-secondary);
+  }
+
   &__checked {
     display: none;
     flex-grow: 0;

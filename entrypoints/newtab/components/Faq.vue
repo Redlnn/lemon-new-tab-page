@@ -142,6 +142,10 @@ function handleEmailClick() {
       html.colorful & {
         background-color: var(--el-color-primary-light-9);
       }
+
+      html.dialog-transparent.colorful & {
+        background-color: var(--el-color-primary-light-8);
+      }
     }
 
     &:hover {
@@ -160,6 +164,18 @@ function handleEmailClick() {
 
         .issue-link-icon {
           background-color: var(--el-color-primary-light-8);
+        }
+      }
+    }
+
+    html.dialog-transparent.colorful & {
+      background-color: var(--el-color-primary-light-9);
+
+      &:hover {
+        background-color: var(--el-color-primary-light-7);
+
+        .issue-link-icon {
+          background-color: var(--el-color-primary-light-9);
         }
       }
     }
@@ -189,6 +205,10 @@ function handleEmailClick() {
 
     html.colorful & {
       background-color: var(--el-color-primary-light-8);
+    }
+
+    html.dialog-transparent.colorful & {
+      background-color: var(--el-color-primary-light-9);
     }
   }
 }
