@@ -68,8 +68,6 @@ export async function initSettings() {
       )
       if (migratedSettings) {
         settings = migratedSettings
-        // 迁移保存不阻塞初始化，延迟到后台执行
-        saveSettings(settings).catch(console.error)
       }
     }
 
