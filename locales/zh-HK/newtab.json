@@ -134,8 +134,11 @@
       "dialogAnimation": "對話框動畫",
       "dialogBlur": "對話框背景模糊",
       "dialogTransparent": "對話框背景透明",
-      "disableAll": "一鍵禁用所有",
-      "disableAllBlur": "模糊效果",
+      "disableAll": {
+        "blur": "模糊效果",
+        "title": "一鍵禁用所有",
+        "transparent": "透明效果"
+      },
       "focusBlur": "點擊搜尋框時背景模糊",
       "focusScale": "點擊搜尋框時縮放背景",
       "searchBarBlur": "搜尋框模糊",
@@ -145,8 +148,8 @@
       "shortcutBlur": "快速存取圖示模糊",
       "shortcutTransparent": "快速存取圖示透明",
       "title": "效能設定",
-      "transparent": "透明效果",
-      "yiyanBlur": "一言背景模糊"
+      "yiyanBlur": "一言背景模糊",
+      "yiyanTransparent": "一言背景透明"
     },
     "search": {
       "alwaysExpandSearchBar": "一直展開搜尋框",
@@ -193,7 +196,7 @@
     "yiyan": {
       "alwaysShow": "總是顯示",
       "description": "/",
-      "enableShadow": "顯示陰影",
+      "enableShadow": "顯示文字陰影",
       "invertColorDark": "【一言】深色模式下使用深色文字",
       "invertColorLight": "【一言】淺色模式下使用深色文字",
       "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",

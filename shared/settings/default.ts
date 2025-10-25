@@ -94,6 +94,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableShortcutBlur: false,
     disableSearchBarTransparent: false,
     disableSearchBarBlur: false,
+    disableYiyanTransparent: false,
     disableYiyanBlur: false,
     disableSettingsBtnBlur: false,
     disableSettingsBtnTransparent: false

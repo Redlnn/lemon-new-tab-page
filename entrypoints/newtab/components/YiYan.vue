@@ -24,7 +24,10 @@ onMounted(async () => {
             'yiyan--invert yiyan--night': settings.yiyan.invertColor.night
           },
           getPerfClasses(
-            { transparentOff: false, blurOff: settings.perf.disableYiyanBlur },
+            {
+              transparentOff: settings.perf.disableYiyanTransparent,
+              blurOff: settings.perf.disableYiyanBlur
+            },
             'yiyan',
             { withoutPrefix: true }
           )
@@ -71,11 +74,19 @@ onMounted(async () => {
       &:hover {
         text-shadow: 1px 1px 3px rgb(0 0 0 / 60%);
       }
+
+      &:not(.yiyan--opacity):hover {
+        text-shadow: initial;
+      }
     }
 
     &:hover {
       color: var(--el-text-color-regular);
       background-color: var(--el-bg-color-overlay);
+
+      html.colorful &:not(.yiyan--opacity) {
+        background-color: var(--el-color-primary-light-9);
+      }
 
       &.yiyan--opacity {
         color: var(--el-fill-color-blank);
@@ -92,9 +103,11 @@ onMounted(async () => {
     }
 
     &.yiyan--invert.yiyan--light,
+    /* stylelint-disable-next-line no-descending-specificity */
     html.dark & {
       color: var(--el-text-color-regular);
 
+      /* stylelint-disable-next-line no-descending-specificity */
       &:hover {
         color: var(--el-text-color-primary);
       }

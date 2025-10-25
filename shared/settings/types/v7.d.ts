@@ -95,6 +95,7 @@ export interface SettingsInterfaceVer7 {
     disableShortcutBlur: boolean
     disableSearchBarTransparent: boolean
     disableSearchBarBlur: boolean
+    disableYiyanTransparent: boolean
     disableYiyanBlur: boolean
     disableSettingsBtnBlur: boolean
     disableSettingsBtnTransparent: boolean

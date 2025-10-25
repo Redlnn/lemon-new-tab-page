@@ -29,6 +29,7 @@ const shortcutTransparent = useNegate(settings.perf, 'disableShortcutTransparent
 const shortcutBlur = useNegate(settings.perf, 'disableShortcutBlur')
 const searchBarTransparent = useNegate(settings.perf, 'disableSearchBarTransparent')
 const searchBarBlur = useNegate(settings.perf, 'disableSearchBarBlur')
+const yiyanTransparent = useNegate(settings.perf, 'disableYiyanTransparent')
 const yiyanBlur = useNegate(settings.perf, 'disableYiyanBlur')
 const settingsBtnBlur = useNegate(settings.perf, 'disableSettingsBtnBlur')
 const settingsBtnTransparent = useNegate(settings.perf, 'disableSettingsBtnTransparent')
@@ -38,6 +39,7 @@ function disableTransparentSettings() {
   settings.perf.disableSearchBarTransparent = true
   settings.perf.disableSettingsBtnTransparent = true
   settings.perf.disableShortcutTransparent = true
+  settings.perf.disableYiyanTransparent = true
 }
 
 function disableBlurSettings() {
@@ -59,13 +61,13 @@ function disableBlurSettings() {
       {{ t('newtab:settings.clock.blinkingTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.perf.disableAll') }}</div>
+      <div class="settings__label">{{ t('newtab:settings.perf.disableAll.title') }}</div>
       <span>
         <el-button @click="disableTransparentSettings">
-          {{ t('newtab:settings.perf.transparent') }}
+          {{ t('newtab:settings.perf.disableAll.transparent') }}
         </el-button>
         <el-button @click="disableBlurSettings">
-          {{ t('newtab:settings.perf.disableAllBlur') }}
+          {{ t('newtab:settings.perf.disableAll.blur') }}
         </el-button>
       </span>
     </div>
@@ -106,8 +108,12 @@ function disableBlurSettings() {
       <el-switch :disabled="settings.perf.disableShortcutTransparent" v-model="shortcutBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:settings.perf.yiyanTransparent') }}</div>
+      <el-switch v-model="yiyanTransparent" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.yiyanBlur') }}</div>
-      <el-switch v-model="yiyanBlur" />
+      <el-switch :disabled="settings.perf.disableYiyanTransparent" v-model="yiyanBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:settings.perf.settingsBtnTransparent') }}</div>

@@ -7,6 +7,7 @@
 ### New Features✨
 
 - Added Help and Feedback page (#41)
+- Support for disabling the transparency effect of Quote
 
 ### Improvements⚡️
 
