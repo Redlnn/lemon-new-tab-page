@@ -56,38 +56,21 @@ const isVideoWallpaper = computed(() => {
   return mediaType === 'video'
 })
 
-let stopFocusWatch: (() => void) | null = null
-let stopVisWatch: (() => void) | null = null
-
 watch(
-  [isVideoWallpaper, () => settings.background.pauseWhenBlur],
-  ([isVideo, pauseWhenBlur]) => {
-    // 先清理旧的监听，避免重复注册
-    if (stopFocusWatch) {
-      stopFocusWatch()
-      stopFocusWatch = null
-    }
-    if (stopVisWatch) {
-      stopVisWatch()
-      stopVisWatch = null
-    }
-
-    if (isVideo) {
-      // 文档可见性：视频壁纸时始终关注（不可见时一律暂停）
-      stopVisWatch = watch(documentVisibility, updateVideoPlayback)
-      // 窗口焦点：仅在设置开启“失焦暂停”时才关注
-      if (pauseWhenBlur) {
-        stopFocusWatch = watch(isWindowFocused, updateVideoPlayback)
-      }
-    } else {
-      // 切换为非视频壁纸时，确保视频被暂停
+  [isVideoWallpaper, documentVisibility, isWindowFocused, () => settings.background.pauseWhenBlur],
+  ([isVideo]) => {
+    if (!isVideo) {
+      // 非视频壁纸，确保视频被暂停
       const vid = videoRef.value
       if (vid) {
         try {
           vid.pause()
         } catch {}
       }
+      return
     }
+
+    updateVideoPlayback()
   },
   { immediate: true }
 )
@@ -110,11 +93,6 @@ watch(
   },
   { flush: 'pre' }
 )
-
-onUnmounted(() => {
-  stopFocusWatch?.()
-  stopVisWatch?.()
-})
 </script>
 
 <template>
