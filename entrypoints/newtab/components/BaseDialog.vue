@@ -78,7 +78,11 @@ const dialogId = computed(() => {
     @closed="onClosed"
   >
     <template #header="{ titleId }">
-      <div :id="titleId" class="base-dialog-title" :style="{ opacity: !headerIsVisible ? 1 : 0 }">
+      <div
+        :id="titleId"
+        class="base-dialog-title noselect"
+        :style="{ opacity: !headerIsVisible ? 1 : 0 }"
+      >
         {{ title }}
       </div>
       <span class="base-dialog-close-btn" @click="onClose">
@@ -92,7 +96,7 @@ const dialogId = computed(() => {
     ></div>
     <div class="base-dialog-container">
       <el-scrollbar ref="scrollbar" class="base-dialog-scrollbar">
-        <div ref="header" class="base-dialog-list-title">
+        <div ref="header" class="base-dialog-list-title noselect">
           {{ title }}
         </div>
         <slot></slot>

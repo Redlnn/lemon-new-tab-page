@@ -19,7 +19,7 @@ const settings = useSettingsStore()
 <template>
   <base-dialog v-model="opened" :title="t('newtab:menu.searchEnginePreference')" acrylic opacity>
     <div style="width: 100%; overflow: hidden">
-      <el-row :gutter="10" class="se-switcher">
+      <el-row :gutter="10" class="se-switcher noselect">
         <el-col
           v-for="key in Object.keys(searchEngines) as (keyof typeof searchEngines)[]"
           :key="key"

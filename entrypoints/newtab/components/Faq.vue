@@ -43,7 +43,7 @@ function handleEmailClick() {
         </div>
       </div>
     </div>
-    <div class="faq">
+    <div class="faq noselect">
       {{ t('faq:faqTitle') }}
       <span style="margin-left: 5px; color: var(--el-text-color-secondary)">
         {{ t('faq:faqSubtitle') }}

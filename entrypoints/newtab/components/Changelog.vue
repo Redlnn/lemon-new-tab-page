@@ -36,7 +36,7 @@ function handleClose() {
     opacity
   >
     <div class="changelog-wrapper">
-      <div class="changelog-hide-major">
+      <div class="changelog-hide-major noselect">
         <span>{{ t('newtab:changelog.hideMajorChangelog') }}</span>
         <el-switch v-model="settings.hideMajorChangelog" />
       </div>

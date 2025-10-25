@@ -112,7 +112,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="shortcut__item shortcut__item--add-bookmark">
+  <div class="shortcut__item shortcut__item--add-bookmark noselect">
     <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
       <div class="shortcut__icon-container">
         <div
@@ -138,7 +138,7 @@ defineExpose({
   <el-dialog
     v-model="showDialog"
     :title="dialogTitle"
-    class="add-bookmark-dialog base-dialog--blur base-dialog--opacity"
+    class="add-bookmark-dialog base-dialog--blur base-dialog--opacity noselect"
     width="500px"
     append-to-body
     destroy-on-close

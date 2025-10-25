@@ -25,7 +25,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
 </script>
 
 <template>
-  <base-dialog v-model="opened" acrylic opacity container-class="about__dialog">
+  <base-dialog v-model="opened" acrylic opacity container-class="about__dialog noselect">
     <section>
       <div class="ext-icon">
         <div class="ext-icon__container"></div>

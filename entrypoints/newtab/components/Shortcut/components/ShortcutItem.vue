@@ -48,7 +48,7 @@ watch(
 </script>
 
 <template>
-  <div class="shortcut__item" :class="[{ pined: pined }]">
+  <div class="shortcut__item noselect" :class="[{ pined: pined }]">
     <a class="shortcut__item-link" :href="url">
       <div class="shortcut__icon-container">
         <div

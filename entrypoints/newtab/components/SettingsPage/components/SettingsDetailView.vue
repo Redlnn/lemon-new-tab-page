@@ -92,7 +92,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-main class="settings-main">
+  <el-main class="settings-main noselect">
     <el-scrollbar class="settings-content">
       <h2 ref="titleRef" class="settings-content__title">{{ title }}</h2>
       <Transition :name="disableTransition ? undefined : 'settings-fade'" mode="out-in">

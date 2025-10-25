@@ -58,7 +58,7 @@ function sponsorMessage() {
       </el-badge>
     </div>
     <template #dropdown>
-      <el-dropdown-menu>
+      <el-dropdown-menu class="noselect">
         <el-dropdown-item @click="emit('open-settings')">
           <el-icon :size="17"><settings-round /></el-icon>
           <span>{{ t('newtab:settings.title') }}</span>
