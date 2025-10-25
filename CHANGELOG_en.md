@@ -2,7 +2,13 @@
 
 > Translated by ChatGPT from Chinese.
 
-## # 2.5.3 (Oct 25, 2025)
+## 2.5.3.1 (Oct 25, 2025)
+
+### Bug Fixes🐛
+
+- Fixed issue where adjusting chunk settings caused loading order changes, leading to i18n failure.
+
+## 2.5.3 (Oct 25, 2025)
 
 ### New Features✨
 
