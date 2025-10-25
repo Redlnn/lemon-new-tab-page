@@ -36,6 +36,11 @@ const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache()
 
+const props = defineProps<{
+  addBgWillChange: (() => void) | undefined
+  removeBgWillChange: (() => void) | undefined
+}>()
+
 const { width: searchFormWidth } = useElementSize(searchForm)
 
 const formClasses = computed(() => [
@@ -63,6 +68,12 @@ function resetSearch() {
   suggedtionArea.value?.clearSearchSuggestions()
   searchForm.value?.classList.remove('search-box__form--focus')
   focusStore.blur()
+  useTimeoutFn(() => {
+    if (focusStore.isFocused) {
+      return
+    }
+    props.removeBgWillChange?.()
+  }, 300)
 }
 
 watch(isWindowFocused, (isFocused) => {
@@ -92,9 +103,15 @@ onClickOutside(searchBox, (e) => {
 })
 
 function handleFocus() {
-  searchForm.value?.classList.add('search-box__form--focus')
-  suggedtionArea.value?.showSearchHistories()
-  focusStore.focus()
+  props.addBgWillChange?.()
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      searchForm.value?.classList.add('search-box__form--focus')
+      suggedtionArea.value?.showSearchHistories()
+      focusStore.focus()
+    })
+  })
 }
 
 // 处理输入法组合输入开始

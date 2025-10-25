@@ -78,6 +78,7 @@ type FaqInstance = InstanceType<typeof Faq>
 type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
 
+const backgroundRef = ref<InstanceType<typeof Background>>()
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
 const FaqRef = ref<FaqInstance>()
@@ -387,11 +388,15 @@ onUnmounted(() => {
       class="app"
     >
       <clock v-if="settings.time.enabled" />
-      <search-box v-if="settings.search.enabled" />
+      <search-box
+        v-if="settings.search.enabled"
+        :add-bg-will-change="backgroundRef?.addWillChange"
+        :remove-bg-will-change="backgroundRef?.removeWillChange"
+      />
       <shortcut v-if="settings.shortcut.enabled" />
       <yi-yan v-if="settings.yiyan.enabled" />
     </main>
-    <background :url="bgURL" />
+    <background ref="backgroundRef" :url="bgURL" />
     <settings-btn
       @open-settings="SettingsPageRef?.toggle"
       @open-changelog="ChangelogRef?.show"
