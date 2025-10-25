@@ -2,7 +2,7 @@
 
 > Translated by ChatGPT from Chinese.
 
-## # 2.5.3 (Oct 24, 2025)
+## # 2.5.3 (Oct 25, 2025)
 
 ### New Features✨
 
@@ -11,6 +11,9 @@
 ### Improvements⚡️
 
 - Cleaned up obsolete dark mode theme color switching logic
+- Greatly enhanced the "Apply theme color to more elements" feature; now, when enabled, the theme color covers a wider range of elements
+  - Enabling this feature + disabling transparency effect makes it very similar to Material You
+- Adjusted color combinations on some pages to improve visual experience
 
 ### Bug Fixes🐛
 
