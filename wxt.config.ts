@@ -106,24 +106,11 @@ export default defineConfig({
       sourcemap: false, // for HMP (@wxt-dev/module-vue 会自动添加)
       rollupOptions: {
         output: {
-          // 将 SettingsDialog 相关组件及 Element Plus dialog 组件分离到独立 chunk
           advancedChunks: {
             groups: [
               {
                 name: 'element-plus-components',
                 test: /node_modules\/element-plus\/es\/components/
-              },
-              {
-                name: 'settings-page',
-                test: /entrypoints\/newtab\/components\/SettingsPage/
-              },
-              {
-                name: 'search-box',
-                test: /entrypoints\/newtab\/components\/SearchBox/
-              },
-              {
-                name: 'shortcut',
-                test: /entrypoints\/newtab\/components\/Shortcut/
               }
             ]
           }
