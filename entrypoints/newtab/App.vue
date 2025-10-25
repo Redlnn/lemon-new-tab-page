@@ -7,6 +7,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import Clock from '@/entrypoints/newtab/components/Clock.vue'
 import SettingsBtn from '@/entrypoints/newtab/components/SettingsBtn.vue'
 import { getLang } from '@/shared/lang'
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
@@ -20,7 +21,6 @@ import SearchBox from '@newtab/components/SearchBox/index.vue'
 import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher.vue'
 import type SettingsPageComponent from '@newtab/components/SettingsPage/index.vue'
 import Shortcut from '@newtab/components/Shortcut/index.vue'
-import TimeNow from '@newtab/components/TimeNow.vue'
 import YiYan from '@newtab/components/YiYan.vue'
 import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
@@ -386,7 +386,7 @@ onUnmounted(() => {
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
     >
-      <time-now v-if="settings.time.enabled" />
+      <clock v-if="settings.time.enabled" />
       <search-box v-if="settings.search.enabled" />
       <shortcut v-if="settings.shortcut.enabled" />
       <yi-yan v-if="settings.yiyan.enabled" />
@@ -400,7 +400,7 @@ onUnmounted(() => {
       @open-faq="FaqRef?.show"
     />
     <settings-page ref="SettingsPageRef" />
-    <Changelog ref="ChangelogRef" />
+    <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />

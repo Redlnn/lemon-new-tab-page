@@ -48,7 +48,7 @@ const formattedDate = computed(() => {
 <template>
   <div
     ref="time"
-    class="clock"
+    class="clock noselect"
     :class="[
       settings.time.enableShadow ? 'clock--shadow' : undefined,
       settings.time.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
