@@ -54,7 +54,10 @@ async function processSyncQueue() {
   // 清空队列中已被聚合的旧项（因为 syncItem 是全量快照，旧项没有继续保留的必要）
   syncQueue.length = 0
   // 由于本地壁纸不同步且在线壁纸要重新由用户触发权限申请，所以重置回默认设置
-  if ([BgType.Local, BgType.Online].includes(syncItem.settings.background.bgType)) {
+  const { bgType } = syncItem.settings.background
+
+  // 如果使用本地或在线壁纸，需要重置背景类型（这些类型无法跨设备同步）
+  if (bgType === BgType.Local || bgType === BgType.Online) {
     syncItem.settings.background.bgType = BgType.Bing
   }
   // 重置壁纸缓存数据
