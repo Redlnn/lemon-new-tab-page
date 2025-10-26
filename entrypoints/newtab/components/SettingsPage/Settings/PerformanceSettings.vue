@@ -34,25 +34,66 @@ const yiyanBlur = useNegate(settings.perf, 'disableYiyanBlur')
 const settingsBtnBlur = useNegate(settings.perf, 'disableSettingsBtnBlur')
 const settingsBtnTransparent = useNegate(settings.perf, 'disableSettingsBtnTransparent')
 
-function disableTransparentSettings() {
-  settings.perf.disableDialogTransparent = true
-  settings.perf.disableSearchBarTransparent = true
-  settings.perf.disableSettingsBtnTransparent = true
-  settings.perf.disableShortcutTransparent = true
-  settings.perf.disableYiyanTransparent = true
+function toggleTransparentSettings(disable: boolean) {
+  settings.perf.disableDialogTransparent = disable
+  settings.perf.disableSearchBarTransparent = disable
+  settings.perf.disableSettingsBtnTransparent = disable
+  settings.perf.disableShortcutTransparent = disable
+  settings.perf.disableYiyanTransparent = disable
 }
 
-function disableBlurSettings() {
-  settings.perf.disableDialogBlur = true
-  settings.perf.disableSearchBarBlur = true
-  settings.perf.disableSettingsBtnBlur = true
-  settings.perf.disableShortcutBlur = true
-  settings.perf.disableYiyanBlur = true
+function toggleBlurSettings(disable: boolean) {
+  settings.perf.disableDialogBlur = disable
+  settings.perf.disableSearchBarBlur = disable
+  settings.perf.disableSettingsBtnBlur = disable
+  settings.perf.disableShortcutBlur = disable
+  settings.perf.disableYiyanBlur = disable
+  settings.perf.disableFocusBlur = disable
+}
+
+function toggleAnimationSettings(disable: boolean) {
+  settings.time.blinkingColon = !disable
+  settings.perf.disableDialogAnimation = disable
+  settings.perf.disableFocusScale = disable
+  settings.perf.disableFocusBlur = disable
 }
 </script>
 
 <template>
   <div class="settings__items-container">
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label" style="color: var(--el-color-danger-dark-2)">
+        {{ t('perf.toggleAll.disable') }}
+      </div>
+      <span class="perf-button-group">
+        <el-button @click="toggleAnimationSettings(true)">
+          {{ t('perf.toggleAll.animation') }}
+        </el-button>
+        <el-button @click="toggleTransparentSettings(true)">
+          {{ t('perf.toggleAll.transparent') }}
+        </el-button>
+        <el-button @click="toggleBlurSettings(true)">
+          {{ t('perf.toggleAll.blur') }}
+        </el-button>
+      </span>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label" style="color: var(--el-color-success-dark-2)">
+        {{ t('perf.toggleAll.enable') }}
+      </div>
+      <span class="perf-button-group">
+        <el-button @click="toggleAnimationSettings(false)">
+          {{ t('perf.toggleAll.animation') }}
+        </el-button>
+        <el-button @click="toggleTransparentSettings(false)">
+          {{ t('perf.toggleAll.transparent') }}
+        </el-button>
+        <el-button @click="toggleBlurSettings(false)">
+          {{ t('perf.toggleAll.blur') }}
+        </el-button>
+      </span>
+    </div>
+    <el-divider></el-divider>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
       <el-switch v-model="settings.time.blinkingColon" />
@@ -60,17 +101,6 @@ function disableBlurSettings() {
     <p class="settings__item--note">
       {{ t('clock.blinkingTip') }}
     </p>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.disableAll.title') }}</div>
-      <span>
-        <el-button @click="disableTransparentSettings">
-          {{ t('perf.disableAll.transparent') }}
-        </el-button>
-        <el-button @click="disableBlurSettings">
-          {{ t('perf.disableAll.blur') }}
-        </el-button>
-      </span>
-    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogTransparent') }}</div>
       <el-switch v-model="dialogTransparent" />
@@ -128,3 +158,13 @@ function disableBlurSettings() {
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.perf-button-group {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  justify-content: flex-end;
+}
+</style>

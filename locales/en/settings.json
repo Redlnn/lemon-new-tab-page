@@ -86,11 +86,6 @@
     "dialogAnimation": "Dialog animation",
     "dialogBlur": "Dialog blur",
     "dialogTransparent": "Dialog transparency",
-    "disableAll": {
-      "blur": "Blur",
-      "title": "Disable all",
-      "transparent": "Transparency"
-    },
     "focusBlur": "Blur background on search focus",
     "focusScale": "Scale background on search focus",
     "searchBarBlur": "Search bar blur",
@@ -100,6 +95,13 @@
     "shortcutBlur": "Shortcut blur",
     "shortcutTransparent": "Shortcut transparency",
     "title": "Performance Settings",
+    "toggleAll": {
+      "animation": "Animation",
+      "blur": "Blur",
+      "disable": "Disable All",
+      "enable": "Enable All",
+      "transparent": "Transparency"
+    },
     "yiyanBlur": "Quote blur",
     "yiyanTransparent": "Quote transparency"
   },

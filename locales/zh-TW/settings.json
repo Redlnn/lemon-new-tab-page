@@ -86,11 +86,6 @@
     "dialogAnimation": "對話框動畫",
     "dialogBlur": "對話框背景模糊",
     "dialogTransparent": "對話框背景透明",
-    "disableAll": {
-      "blur": "模糊效果",
-      "title": "一鍵禁用所有",
-      "transparent": "透明效果"
-    },
     "focusBlur": "點擊搜尋框時背景模糊",
     "focusScale": "點擊搜尋框時縮放背景",
     "searchBarBlur": "搜尋框模糊",
@@ -100,6 +95,13 @@
     "shortcutBlur": "捷徑不模糊",
     "shortcutTransparent": "捷徑圖示不透明",
     "title": "效能設定",
+    "toggleAll": {
+      "animation": "動畫",
+      "blur": "模糊效果",
+      "disable": "一鍵停用所有",
+      "enable": "一鍵啟用所有",
+      "transparent": "透明效果"
+    },
     "yiyanBlur": "一言背景模糊",
     "yiyanTransparent": "一言背景透明"
   },
@@ -137,28 +139,28 @@
     "whiteTextTip": "關閉【顯示區塊背景】並將【遮罩不透明度】設為 0，效果會更好喔~"
   },
   "theme": {
-    "colorfulMode": "將主題色套用至更多介面元素",
     "colorNames": {
-      "classic": {
-        "crimson": "深緋",
-        "orangeRed": "黄赤",
-        "yamabuki": "山吹",
-        "yellowGreen": "萌黄",
-        "teal": "納戸",
-        "antDesign": "Ant Design",
-        "lapis": "瑠璃",
-        "bellflower": "紺桔梗"
-      },
       "anime": {
-        "miku": "初音ミク",
-        "luo": "洛天依",
-        "mygo": "MyGO!!!!!",
         "aveMujica": "Ave Mujica",
         "bocchi": "後藤ひとり",
         "kessoku": "結束バンド",
+        "luo": "洛天依",
+        "miku": "初音ミク",
+        "mygo": "MyGO!!!!!",
         "togeari": "TOGENASHI TOGEARI"
+      },
+      "classic": {
+        "antDesign": "Ant Design",
+        "bellflower": "紺桔梗",
+        "crimson": "深緋",
+        "lapis": "瑠璃",
+        "orangeRed": "黄赤",
+        "teal": "納戸",
+        "yamabuki": "山吹",
+        "yellowGreen": "萌黄"
       }
     },
+    "colorfulMode": "將主題色套用至更多介面元素",
     "darkMode": "深色模式",
     "lightMode": "淺色模式",
     "primaryColor": "主題色",
@@ -174,12 +176,12 @@
     "invertColorLight": "【一言】淺色模式下使用深色文字",
     "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
     "providers": {
-      "jinrishici": {
-        "name": "今日詩詞"
-      },
       "hitokoto": {
         "name": "一言（Hitokoto）",
         "note": "請注意，Hitokoto.cn 的 QPS（每秒請求數）非常嚴格，本擴充功能已做快取，但短時間內來自不同站點請求仍會導致你的 IP 短時間被 Ban"
+      },
+      "jinrishici": {
+        "name": "今日詩詞"
       }
     },
     "title": "一言"

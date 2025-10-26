@@ -86,11 +86,6 @@
     "dialogAnimation": "弹窗动画",
     "dialogBlur": "弹窗背景模糊",
     "dialogTransparent": "弹窗背景透明",
-    "disableAll": {
-      "blur": "模糊效果",
-      "title": "一键禁用所有",
-      "transparent": "透明效果"
-    },
     "focusBlur": "点击搜索框模糊背景",
     "focusScale": "点击搜索框缩放背景",
     "searchBarBlur": "搜索框模糊",
@@ -100,6 +95,13 @@
     "shortcutBlur": "快捷访问图标模糊",
     "shortcutTransparent": "快捷访问图标透明",
     "title": "性能设置",
+    "toggleAll": {
+      "animation": "动画",
+      "blur": "模糊效果",
+      "disable": "一键禁用所有",
+      "enable": "一键启用所有",
+      "transparent": "透明效果"
+    },
     "yiyanBlur": "一言背景模糊",
     "yiyanTransparent": "一言背景透明"
   },

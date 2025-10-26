@@ -86,11 +86,6 @@
     "dialogAnimation": "對話框動畫",
     "dialogBlur": "對話框背景模糊",
     "dialogTransparent": "對話框背景透明",
-    "disableAll": {
-      "blur": "模糊效果",
-      "title": "一鍵禁用所有",
-      "transparent": "透明效果"
-    },
     "focusBlur": "點擊搜尋框時背景模糊",
     "focusScale": "點擊搜尋框時縮放背景",
     "searchBarBlur": "搜尋框模糊",
@@ -100,6 +95,13 @@
     "shortcutBlur": "快速存取圖示模糊",
     "shortcutTransparent": "快速存取圖示透明",
     "title": "效能設定",
+    "toggleAll": {
+      "animation": "動畫",
+      "blur": "模糊效果",
+      "disable": "一鍵停用所有",
+      "enable": "一鍵啟用所有",
+      "transparent": "透明效果"
+    },
     "yiyanBlur": "一言背景模糊",
     "yiyanTransparent": "一言背景透明"
   },
