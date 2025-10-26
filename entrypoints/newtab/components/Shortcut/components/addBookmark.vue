@@ -189,7 +189,10 @@ defineExpose({
 <style lang="scss">
 .add-bookmark-dialog {
   padding: 30px 50px;
-  background-color: var(--el-color-primary-light-9);
+
+  html.colorful:not(.dialog-transparent) & {
+    background-color: var(--el-color-primary-light-9);
+  }
 
   --el-dialog-border-radius: 10px;
 }
