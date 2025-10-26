@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
-import useTransientWillChange from '@/shared/composables/useTransientWillChange'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
@@ -39,9 +38,9 @@ function updateVideoPlayback() {
 }
 
 const backgroundCss = computed(() => ({
-  'background--deafult-scale': settings.perf.disableFocusScale,
-  'background--focused__scale': focusStore.isFocused && !settings.perf.disableFocusScale,
-  'background--focused__blur': focusStore.isFocused && !settings.perf.disableFocusBlur
+  'background-container--default-scale': settings.perf.disableFocusScale,
+  'background-container--focused__scale': focusStore.isFocused && !settings.perf.disableFocusScale,
+  'background-container--focused__blur': focusStore.isFocused && !settings.perf.disableFocusBlur
 }))
 
 const isVideoWallpaper = computed(() => {
@@ -74,25 +73,6 @@ watch(
   },
   { immediate: true }
 )
-
-// 当 focus 状态变化会触发缩放类的切换，在 DOM 更新（class 变更）之前
-// 先设置 will-change，这样浏览器可以在合成层上做优化。使用 flush: 'pre'。
-const { trigger: triggerWillChange } = useTransientWillChange({
-  property: 'transform',
-  timeout: 1000
-})
-
-watch(
-  () => focusStore.isFocused,
-  async () => {
-    await Promise.all([
-      // 如果视频/图片存在，通过等待下一个 rAF触发确保在 DOM 变更之前应用 will-change。
-      videoRef.value ? triggerWillChange(videoRef) : Promise.resolve(),
-      imageRef.value ? triggerWillChange(imageRef) : Promise.resolve()
-    ])
-  },
-  { flush: 'pre' }
-)
 </script>
 
 <template>
@@ -110,26 +90,26 @@ watch(
     <div v-if="settings.background.enableVignetting" class="background__vignette" />
     <Transition name="v-fade">
       <div v-show="!switchStore.isSwitching">
-        <video
-          v-if="isVideoWallpaper"
-          class="background background--video"
-          :class="backgroundCss"
-          ref="videoRef"
-          :src="url || ''"
-          autoplay
-          muted
-          loop
-          playsinline
-        ></video>
-        <div
-          v-else
-          class="background"
-          ref="imageRef"
-          :class="backgroundCss"
-          :style="{
-            backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
-          }"
-        ></div>
+        <div ref="bgRef" class="background-container" :class="backgroundCss">
+          <video
+            v-if="isVideoWallpaper"
+            class="background background--video"
+            ref="videoRef"
+            :src="url || ''"
+            autoplay
+            muted
+            loop
+            playsinline
+          ></video>
+          <div
+            v-else
+            class="background"
+            ref="imageRef"
+            :style="{
+              backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
+            }"
+          ></div>
+        </div>
       </div>
     </Transition>
   </div>
@@ -158,20 +138,16 @@ watch(
   }
 }
 
-.background {
+.background-container {
   position: absolute;
   inset: calc(var(--blur-intensity) * -2);
   z-index: -2;
-  background-color: var(--el-bg-color-page);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
   filter: blur(var(--blur-intensity));
   transition:
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
-  &--deafult-scale {
+  &--default-scale {
     transform: scale(1.1);
   }
 
@@ -184,6 +160,15 @@ watch(
       filter: blur(calc(var(--blur-intensity) + 10px));
     }
   }
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: var(--el-bg-color-page);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 video.background {
