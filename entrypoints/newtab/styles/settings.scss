@@ -155,6 +155,15 @@
   }
 }
 
+.settings-item-popper {
+  padding: 6px 0;
+  overflow: hidden;
+
+  .el-select-dropdown__list {
+    padding: 2px 0;
+  }
+}
+
 .settings-aside {
   flex-shrink: 0;
   min-width: 64px;

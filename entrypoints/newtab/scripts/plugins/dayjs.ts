@@ -6,7 +6,7 @@ import i18next from 'i18next'
 
 import { getLang } from '@/shared/lang'
 
-const dayjsZhLocales = import.meta.glob('/node_modules/dayjs/esm/locale/zh*.js') as Record<
+const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/{zh*,en}.js') as Record<
   string,
   () => Promise<{ default: ILocale }>
 >
@@ -15,15 +15,17 @@ dayjs.extend(localizedFormat)
 dayjs.extend(PluginLunar as PluginFunc<{ traditional?: boolean }>)
 
 const changeLanguage = async (lng: string) => {
-  if (lng?.startsWith('zh')) {
-    const language = lng.toLowerCase()
-    const loader = dayjsZhLocales[`/node_modules/dayjs/esm/locale/${language}.js`]
-    const fallback = dayjsZhLocales['/node_modules/dayjs/esm/locale/zh-cn.js']!
-    const mod = loader ? await loader() : await fallback()
-    const localeData = mod.default
-    if (localeData?.name) {
-      dayjs.locale(localeData)
-    }
+  const language = lng.toLowerCase()
+  const loader = dayjsLocales[`/node_modules/dayjs/esm/locale/${language}.js`]
+  const fallback = lng?.startsWith('zh')
+    ? dayjsLocales['/node_modules/dayjs/esm/locale/zh-cn.js']
+    : dayjsLocales['/node_modules/dayjs/esm/locale/en.js']
+
+  const mod = await (loader || fallback)?.()
+  const localeData = mod?.default
+  if (localeData?.name) {
+    dayjs.locale(localeData.name, localeData, true)
+    dayjs.locale(localeData.name)
   }
 }
 

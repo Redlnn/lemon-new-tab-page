@@ -194,15 +194,6 @@ watch(isDark, (newVal) => {
   align-items: center;
 }
 
-.settings__theme-popper {
-  padding: 6px 0;
-  overflow: hidden;
-
-  .el-select-dropdown__list {
-    padding: 2px 0;
-  }
-}
-
 .settings__theme-item {
   .el-tag {
     aspect-ratio: 1;

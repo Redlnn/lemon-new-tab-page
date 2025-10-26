@@ -11,6 +11,14 @@ const { t, i18next } = useTranslation('newtab')
 const settings = useSettingsStore()
 const time = ref()
 
+const currentLang = ref(i18next.language)
+
+i18next.on('languageChanged', (lng) => {
+  useTimeoutFn(() => {
+    currentLang.value = lng
+  }, 500)
+})
+
 function customMeridiem(hours: number) {
   if (hours < 2) return t('time.lateNight')
   if (hours < 7) return t('time.dawn')
@@ -26,6 +34,7 @@ const timeNow = useNow({ interval: 1000 })
 const dateNow = useNow({ interval: 60 * 1000 })
 
 const formattedTime = computed(() => {
+  void currentLang.value // 作为响应式依赖，确保语言切换时重新计算
   const now = dayjs(timeNow.value)
   return {
     hour: now.format('HH'),
@@ -37,6 +46,7 @@ const formattedTime = computed(() => {
 })
 
 const formattedDate = computed(() => {
+  void currentLang.value // 作为响应式依赖，确保语言切换时重新计算
   const now = dayjs(dateNow.value)
   return {
     meridiemZH: customMeridiem(now.hour()),

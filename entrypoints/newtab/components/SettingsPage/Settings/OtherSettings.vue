@@ -186,6 +186,27 @@ function handleFileChange(event: Event) {
     console.error('No file selected')
   }
 }
+
+const currentLanguage = ref(i18next.language)
+
+const supportedLanguages = computed(() => {
+  const locale = currentLanguage.value || navigator.language
+  const displayNames = new Intl.DisplayNames([locale], { type: 'language' })
+
+  const languageCodes = ['zh-CN', 'zh-TW', 'zh-HK', 'en']
+  const current = currentLanguage.value
+
+  // 先添加当前语言，再添加其他语言
+  return [current, ...languageCodes.filter((code) => code !== current)].map((code) => ({
+    value: code,
+    label: displayNames.of(code)
+  }))
+})
+
+function changeLanguage(lang: string) {
+  i18next.changeLanguage(lang)
+  currentLanguage.value = lang
+}
 </script>
 
 <template>
@@ -201,6 +222,23 @@ function handleFileChange(event: Event) {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:changelog.hideMajorChangelog') }}</div>
       <el-switch v-model="settings.hideMajorChangelog" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.language') }}</div>
+      <el-select
+        v-model="currentLanguage"
+        style="width: 183px"
+        popper-class="settings-item-popper"
+        @change="changeLanguage"
+      >
+        <el-option
+          v-for="item in supportedLanguages"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        >
+        </el-option>
+      </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.importExport.title') }}</div>

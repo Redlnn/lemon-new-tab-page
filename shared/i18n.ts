@@ -18,7 +18,10 @@ function changeDocument() {
   document.title = i18next.t('newtab:title')
 }
 
-const languageDetector = new LanguageDetector(null, { order: ['navigator'] })
+const languageDetector = new LanguageDetector(null, {
+  order: ['localStorage', 'navigator'],
+  caches: ['localStorage']
+})
 
 export const i18nInitPromise = i18next
   // 检测用户语言
