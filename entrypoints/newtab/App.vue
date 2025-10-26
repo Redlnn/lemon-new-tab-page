@@ -2,7 +2,6 @@
 import { promiseTimeout, useColorMode, useDark, usePreferredDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'
-import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
@@ -25,8 +24,7 @@ import YiYan from '@newtab/components/YiYan.vue'
 import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore } from '@newtab/scripts/store'
 
-const { t } = useTranslation()
-const { t: tSync } = useTranslation('sync')
+const { t, i18next } = useTranslation('sync')
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
   '/node_modules/element-plus/es/locale/lang/zh*.mjs'
@@ -238,14 +236,14 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification({
-        title: tSync('sync:failMessage.title'),
-        message: tSync('sync:failMessage.message', { cloud: p.cloud, local: p.local }),
+        title: t('failMessage.title'),
+        message: t('failMessage.message', { cloud: p.cloud, local: p.local }),
         type: 'error'
       })
     } else if (type === 'sync-error') {
       const err = payload as Error
       ElNotification({
-        title: t('sync.errorMessage.title'),
+        title: t('errorMessage.title'),
         message: err.message || 'Unknown error.',
         type: 'error'
       })

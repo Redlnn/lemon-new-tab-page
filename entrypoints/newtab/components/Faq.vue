@@ -14,15 +14,15 @@ defineExpose({ show, hide, toggle })
 const { t } = useTranslation('faq')
 
 function handleEmailClick() {
-  navigator.clipboard.writeText('faq:redlnn@outlook.com')
-  ElMessage.success(t('faq:helpSection.emailCopied'))
+  navigator.clipboard.writeText('redlnn@outlook.com')
+  ElMessage.success(t('helpSection.emailCopied'))
 }
 </script>
 
 <template>
   <base-dialog v-model="opened" :title="t('newtab:menu.help')" acrylic opacity>
     <div class="issue-container noselect">
-      <div>{{ t('faq:helpSection.title') }}</div>
+      <div>{{ t('helpSection.title') }}</div>
       <div class="issue-links">
         <a
           class="issue-link"
@@ -32,67 +32,67 @@ function handleEmailClick() {
           <span class="issue-link-icon">
             <el-icon><Github /></el-icon>
           </span>
-          <span>{{ t('faq:helpSection.github') }}</span>
+          <span>{{ t('helpSection.github') }}</span>
         </a>
         <div class="issue-link" @click="handleEmailClick">
           <span class="issue-link-icon">
             <el-icon><EmailRound /></el-icon>
           </span>
-          <span>{{ t('faq:helpSection.email') }}</span>
+          <span>{{ t('helpSection.email') }}</span>
         </div>
       </div>
     </div>
     <div class="faq noselect">
-      {{ t('faq:faqTitle') }}
+      {{ t('faqTitle') }}
       <span style="margin-left: 5px; color: var(--el-text-color-secondary)">
-        {{ t('faq:faqSubtitle') }}
+        {{ t('faqSubtitle') }}
       </span>
     </div>
     <div class="faq-container">
       <div class="faq-item">
-        <div class="faq-item__title">{{ t('faq:items.restoreShortcut.title') }}</div>
+        <div class="faq-item__title">{{ t('items.restoreShortcut.title') }}</div>
         <div class="markdown-body">
-          <p>{{ t('faq:items.restoreShortcut.content') }}</p>
+          <p>{{ t('items.restoreShortcut.content') }}</p>
         </div>
       </div>
       <div class="faq-item">
-        <div class="faq-item__title">{{ t('faq:items.performance.title') }}</div>
+        <div class="faq-item__title">{{ t('items.performance.title') }}</div>
         <div class="markdown-body">
           <ul>
-            <li>{{ t('faq:items.performance.content.item1') }}</li>
-            <li>{{ t('faq:items.performance.content.item2') }}</li>
+            <li>{{ t('items.performance.content.item1') }}</li>
+            <li>{{ t('items.performance.content.item2') }}</li>
           </ul>
         </div>
       </div>
       <div class="faq-item">
-        <div class="faq-item__title">{{ t('faq:items.chromeFooter.title') }}</div>
+        <div class="faq-item__title">{{ t('items.chromeFooter.title') }}</div>
         <div class="markdown-body">
-          <p>{{ t('faq:items.chromeFooter.content.reason') }}</p>
-          <p>{{ t('faq:items.chromeFooter.content.step') }}</p>
+          <p>{{ t('items.chromeFooter.content.reason') }}</p>
+          <p>{{ t('items.chromeFooter.content.step') }}</p>
           <p>
-            {{ t('faq:items.chromeFooter.content.reference') }}
+            {{ t('items.chromeFooter.content.reference') }}
             <a href="https://github.com/Redlnn/lemon-new-tab-page/issues/30" target="_blank">
-              {{ t('faq:items.chromeFooter.content.githubIssue') }}
+              {{ t('items.chromeFooter.content.githubIssue') }}
             </a>
           </p>
         </div>
       </div>
       <div class="faq-item">
-        <div class="faq-item__title">{{ t('faq:items.browserFreeze.title') }}</div>
+        <div class="faq-item__title">{{ t('items.browserFreeze.title') }}</div>
         <div class="markdown-body">
-          <p>{{ t('faq:items.browserFreeze.content.intro') }}</p>
+          <p>{{ t('items.browserFreeze.content.intro') }}</p>
           <ol>
-            <li>{{ t('faq:items.browserFreeze.content.step1') }}</li>
+            <li>{{ t('items.browserFreeze.content.step1') }}</li>
             <li>
               <p>
-                <i18next :translation="t('faq:items.browserFreeze.content.step2.text')">
+                <i18next :translation="t('items.browserFreeze.content.step2.text')">
                   <template #code1><code>Choose ANGLE graphics backend</code></template>
                   <template #code2><code>OpenGL</code></template>
                 </i18next>
               </p>
-              <blockquote>{{ t('faq:items.browserFreeze.content.step2.note') }}</blockquote>
+              <blockquote>{{ t('items.browserFreeze.content.step2.note') }}</blockquote>
             </li>
-            <li>{{ t('faq:items.browserFreeze.content.step3') }}</li>
+            <li>{{ t('items.browserFreeze.content.step3') }}</li>
           </ol>
         </div>
       </div>

@@ -16,7 +16,7 @@ const MOBILE_BREAKPOINT = 650
 const COLLAPSE_BREAKPOINT = 900
 const DESKTOP_DIALOG_WIDTH = 900
 
-const { t } = useTranslation()
+const { t } = useTranslation('settings')
 const router = useSettingsRouter()
 const { width: windowWidth } = useWindowSize()
 const { opened, show, hide, toggle } = useDialog()
@@ -30,9 +30,9 @@ const isCollapse = computed(() => windowWidth.value < COLLAPSE_BREAKPOINT && !is
 const dialogWidth = computed(() => (windowWidth.value < 950 ? '93%' : DESKTOP_DIALOG_WIDTH))
 
 const currentPageTitle = computed(() => {
-  if (router.isAtMenu.value) return t('newtab:settings.title')
+  if (router.isAtMenu.value) return t('title')
   const item = MENU_ITEMS.find((i) => i.key === router.currentRoute.value)
-  return item?.titleKey ? t(item.titleKey) : t('newtab:settings.title')
+  return item?.titleKey ? t(item.titleKey) : t('title')
 })
 
 const titleIsVisible = computed(() => detailViewRef.value?.titleIsVisible ?? false)

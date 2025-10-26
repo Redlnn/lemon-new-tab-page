@@ -1,0 +1,187 @@
+{
+  "background": {
+    "blur": "模糊強度",
+    "enableVignetting": "暗角效果",
+    "maskColor": "遮罩顏色",
+    "maskOpacity": "遮罩不透明度",
+    "onlineTips": {
+      "a": "按下 Enter 鍵或當輸入框失去焦點時會提交",
+      "b": "圖片的快取策略取決於瀏覽器，離線時可能無法載入圖片",
+      "c": "載入圖片前可能會短暫出現白畫面，時間長短取決於你的網路速度",
+      "d": "請確認使用的圖片 API 是否允許跨域請求，否則將無法載入圖片"
+    },
+    "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
+    "tip": "如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片/影片噢",
+    "title": "背景設定",
+    "type": {
+      "bing": "Bing 每日圖片",
+      "local": "本機圖片/影片",
+      "none": "無",
+      "online": "線上圖片",
+      "title": "背景類型"
+    },
+    "videoBlurTip": "開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用",
+    "videoWarning": "使用影片作為背景將會大量消耗 GPU 資源，建議避免同時開啟多個新分頁，以免佔滿 GPU。也建議停用時間分隔符閃爍、捷徑模糊、搜尋框模糊，以及點擊搜尋框時的縮放/模糊背景，以降低效能消耗。",
+    "warning": {
+      "fileIsNotImage": "所選檔案不是圖片！",
+      "granted": "已授予訪問權限",
+      "notGranted": "未授權，無法載入背景圖片",
+      "securityPolicy": "由於 Google 的安全策略，需要授予 {{host}}1 的訪問權限才能獲取壁紙，是否允許本擴充功能申請訪問該連結的權限？",
+      "title": "警告",
+      "tooLarge": {
+        "message": "檔案過大（{{size}}），可能會影響效能或佔用較多空間，是否繼續？",
+        "title": "大型檔案"
+      },
+      "unknownSource": "使用來源不明的圖片作為背景可能會使裝置遭到攻擊，是否繼續？"
+    }
+  },
+  "clock": {
+    "blinkingColon": "閃爍時間分隔符",
+    "blinkingTip": "關閉可減輕持續性的 GPU 使用",
+    "enableShadow": "顯示陰影",
+    "invertColorDark": "【時鐘】深色模式下使用深色文字",
+    "invertColorLight": "【時鐘】淺色模式下使用深色文字",
+    "showAMPM": "顯示「上午 / 下午」",
+    "showDate": "顯示日期",
+    "showLunar": "顯示農曆",
+    "smallFont": "時間小號字體",
+    "title": "時鐘設定",
+    "use12HourClock": "使用 12 小時制"
+  },
+  "other": {
+    "confirmPurgeData": {
+      "message": "此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。",
+      "purging": "正在清除擴充功能資料...",
+      "title": "確定要清除所有資料嗎?"
+    },
+    "confirmPurgeWallpaper": {
+      "message": "此操作將會刪除已選擇的背景圖片/影片。",
+      "purging": "正在清除壁紙快取...",
+      "title": "確定要清除壁紙快取？"
+    },
+    "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
+    "importExport": {
+      "export": "匯出",
+      "import": "匯入",
+      "importFailed": "匯入失敗",
+      "importSuccess": "匯入成功",
+      "title": "匯入 / 匯出設定",
+      "warningDialog": {
+        "content": "匯入設定會覆蓋你目前的設定，請謹慎使用此功能，是否繼續？",
+        "no": "不要啊",
+        "title": "匯入設定檔將會覆蓋現有設定，是否繼續？",
+        "yes": "繼續"
+      }
+    },
+    "language": "語言",
+    "purge": "清除",
+    "purgeData": "清除本擴充功能的資料",
+    "purgeWallpaperData": "清除壁紙快取",
+    "sync": "雲端同步",
+    "syncWarning": "雲端同步不支援同步以下項目：本機或線上背景圖片、最常造訪網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。 不支援同步的項目會有如右側的標識：",
+    "title": "其他設定",
+    "want_to_customize_chrome": "要自訂 Chrome 嗎？"
+  },
+  "perf": {
+    "dialogAnimation": "對話框動畫",
+    "dialogBlur": "對話框背景模糊",
+    "dialogTransparent": "對話框背景透明",
+    "disableAll": {
+      "blur": "模糊效果",
+      "title": "一鍵禁用所有",
+      "transparent": "透明效果"
+    },
+    "focusBlur": "點擊搜尋框時背景模糊",
+    "focusScale": "點擊搜尋框時縮放背景",
+    "searchBarBlur": "搜尋框模糊",
+    "searchBarTransparent": "搜尋框透明",
+    "settingsBtnBlur": "設定按鈕模糊",
+    "settingsBtnTransparent": "設定按鈕透明",
+    "shortcutBlur": "捷徑不模糊",
+    "shortcutTransparent": "捷徑圖示不透明",
+    "title": "效能設定",
+    "yiyanBlur": "一言背景模糊",
+    "yiyanTransparent": "一言背景透明"
+  },
+  "search": {
+    "alwaysExpandSearchBar": "一直展開搜尋框",
+    "defaultSearchEngine": "預設搜尋引擎",
+    "enableShadow": "顯示搜尋框陰影",
+    "openInNewTab": "在新分頁中開啟",
+    "placeholder": "搜尋框占位文字",
+    "recordSearchHistory": "記錄搜尋歷史",
+    "searchSuggestionProvider": "搜尋建議 API",
+    "title": "搜尋設定"
+  },
+  "shortcut": {
+    "HorizontalIconSpacing": "圖示左右間距",
+    "VerticalIconSpacing": "圖示上下間距",
+    "enableAreaShadow": "顯示區域陰影",
+    "enableBg": "顯示區塊背景",
+    "enableShadow": "顯示捷徑陰影",
+    "iconSize": "圖示大小",
+    "marginTop": "捷徑區域上邊距",
+    "maxColumns": "最大欄數",
+    "maxItemsTipForChrome": "最常造訪最多只有 10 個喔～",
+    "maxRows": "最大列數",
+    "restoreDefault": "還原預設捷徑",
+    "restoreDefaultConfirm": {
+      "title": "確定要還原為預設捷徑嗎？"
+    },
+    "showPinnedIcon": "顯示釘選圖示",
+    "showTitle": "顯示標題",
+    "showTopSites": "顯示最常造訪",
+    "tip": "小提示：可以拖曳設定視窗以觀察捷徑區域的變化噢~",
+    "title": "捷徑設定",
+    "whiteTextInLightMode": "【捷徑】淺色模式下使用白色文字",
+    "whiteTextTip": "關閉【顯示區塊背景】並將【遮罩不透明度】設為 0，效果會更好喔~"
+  },
+  "theme": {
+    "colorfulMode": "將主題色套用至更多介面元素",
+    "colorNames": {
+      "classic": {
+        "crimson": "深緋",
+        "orangeRed": "黄赤",
+        "yamabuki": "山吹",
+        "yellowGreen": "萌黄",
+        "teal": "納戸",
+        "antDesign": "Ant Design",
+        "lapis": "瑠璃",
+        "bellflower": "紺桔梗"
+      },
+      "anime": {
+        "miku": "初音ミク",
+        "luo": "洛天依",
+        "mygo": "MyGO!!!!!",
+        "aveMujica": "Ave Mujica",
+        "bocchi": "後藤ひとり",
+        "kessoku": "結束バンド",
+        "togeari": "TOGENASHI TOGEARI"
+      }
+    },
+    "darkMode": "深色模式",
+    "lightMode": "淺色模式",
+    "primaryColor": "主題色",
+    "systemMode": "跟隨系統 / 瀏覽器",
+    "title": "主題設定"
+  },
+  "title": "設定",
+  "yiyan": {
+    "alwaysShow": "總是顯示",
+    "description": "",
+    "enableShadow": "顯示文字陰影",
+    "invertColorDark": "【一言】深色模式下使用深色文字",
+    "invertColorLight": "【一言】淺色模式下使用深色文字",
+    "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
+    "providers": {
+      "jinrishici": {
+        "name": "今日詩詞"
+      },
+      "hitokoto": {
+        "name": "一言（Hitokoto）",
+        "note": "請注意，Hitokoto.cn 的 QPS（每秒請求數）非常嚴格，本擴充功能已做快取，但短時間內來自不同站點請求仍會導致你的 IP 短時間被 Ban"
+      }
+    },
+    "title": "一言"
+  }
+}

@@ -51,20 +51,20 @@ defineExpose({ hide })
       >
         <div style="display: flex; align-items: center">
           <el-icon><component :is="searchEngines[key].icon" /></el-icon>
-          <span>{{ searchEngines[key].name }}</span>
+          <span>{{ t(searchEngines[key].nameKey) }}</span>
         </div>
         <div
           v-if="key === settings.search.selectedSearchEngine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
-          {{ t('newtab:search.searchEngineMenu.current') }}
+          {{ t('search.searchEngineMenu.current') }}
         </div>
       </div>
       <el-divider />
       <div class="search-engine-menu__tip">
-        <span>{{ t('newtab:search.searchEngineMenu.tipPrefix') }}</span>
+        <span>{{ t('search.searchEngineMenu.tipPrefix') }}</span>
         <kbd class="search-engine-menu__kbd">Tab</kbd>
-        <span>{{ t('newtab:search.searchEngineMenu.tipSuffix') }}</span>
+        <span>{{ t('search.searchEngineMenu.tipSuffix') }}</span>
       </div>
     </template>
     <el-icon class="search-engine-menu__icon" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">

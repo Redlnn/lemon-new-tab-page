@@ -38,7 +38,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
         target="_blank"
         :href="currentYiyanProvider.website"
       >
-        {{ t('newtab:about.yiyanApiProvider', { provider: currentYiyanProvider.name }) }}
+        {{ t('newtab:about.yiyanApiProvider', { provider: t(currentYiyanProvider.nameKey) }) }}
       </el-link>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;

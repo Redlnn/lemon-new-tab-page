@@ -35,7 +35,7 @@ const settings = useSettingsStore()
             </el-icon>
             <div class="se-switcher-item__content">
               <div class="se-switcher-item__label">
-                {{ searchEngines[key].name }}
+                {{ t(searchEngines[key].nameKey) }}
               </div>
               <el-text truncated class="se-switcher-item__url">
                 {{ searchEngines[key].url }}

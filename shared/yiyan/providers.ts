@@ -1,6 +1,5 @@
 import { load } from 'jinrishici'
 
-import { isChinese } from '@/shared/lang'
 import enhancedFetch from '@/shared/network/fetch'
 
 interface Hitokoto {
@@ -24,10 +23,9 @@ export type YiyanResult = {
 }
 
 export type YiyanProviderKey = keyof typeof yiyanProviders
-
 export const yiyanProviders = {
   jinrishici: {
-    name: isChinese.value ? '今日诗词' : 'Chinese Poetry',
+    nameKey: 'settings:yiyan.providers.jinrishici.name',
     note: undefined,
     website: 'https://www.jinrishici.com',
     load: () =>
@@ -47,11 +45,8 @@ export const yiyanProviders = {
       })
   },
   hitokoto: {
-    name: isChinese.value ? '一言（Hitokoto）' : 'Hitokoto.cn',
-    note: isChinese.value
-      ? '请注意，Hitokoto.cn 的 QPS（每秒请求数）十分严格，本插件已做缓存，但短时间来自不同站点请求仍会导致你的 IP 短时间被 Ban'
-      : 'Please note that Hitokoto.cn has a very strict QPS (queries per second) limit. \
-      This extension uses caching, but multiple requests from different sites in a short period may still cause your IP to be temporarily banned.',
+    nameKey: 'settings:yiyan.providers.hitokoto.name',
+    note: 'settings:yiyan.providers.hitokoto.note',
     website: 'https://hitokoto.cn',
     load: async (): Promise<YiyanResult> => {
       try {

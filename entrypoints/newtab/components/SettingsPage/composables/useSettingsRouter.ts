@@ -18,14 +18,14 @@ interface MenuItem {
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  { key: SettingsRoute.THEME, titleKey: 'newtab:settings.theme.title' },
-  { key: SettingsRoute.CLOCK, titleKey: 'newtab:settings.clock.title' },
-  { key: SettingsRoute.SEARCH, titleKey: 'newtab:settings.search.title' },
-  { key: SettingsRoute.BACKGROUND, titleKey: 'newtab:settings.background.title' },
-  { key: SettingsRoute.SHORTCUT, titleKey: 'newtab:settings.shortcut.title' },
-  { key: SettingsRoute.YIYAN, titleKey: 'newtab:settings.yiyan.title' },
-  { key: SettingsRoute.PERFORMANCE, titleKey: 'newtab:settings.perf.title' },
-  { key: SettingsRoute.OTHER, titleKey: 'newtab:settings.other.title' }
+  { key: SettingsRoute.THEME, titleKey: 'theme.title' },
+  { key: SettingsRoute.CLOCK, titleKey: 'clock.title' },
+  { key: SettingsRoute.SEARCH, titleKey: 'search.title' },
+  { key: SettingsRoute.BACKGROUND, titleKey: 'background.title' },
+  { key: SettingsRoute.SHORTCUT, titleKey: 'shortcut.title' },
+  { key: SettingsRoute.YIYAN, titleKey: 'yiyan.title' },
+  { key: SettingsRoute.PERFORMANCE, titleKey: 'perf.title' },
+  { key: SettingsRoute.OTHER, titleKey: 'other.title' }
 ] as const
 
 interface RouteState {

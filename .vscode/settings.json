@@ -10,6 +10,7 @@
   "i18n-ally.extract.keygenStyle": "camelCase",
   "i18n-ally.pathMatcher": "{locale}/{namespace}.{ext}",
   "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.defaultNamespace": "newtab",
   "markdownlint.config": {
     "MD033": false,
     "MD024": false,

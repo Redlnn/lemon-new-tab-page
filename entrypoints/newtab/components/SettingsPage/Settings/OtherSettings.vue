@@ -22,7 +22,7 @@ import {
 } from '@/shared/settings'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
-const { t } = useTranslation()
+const { t, i18next } = useTranslation('settings')
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
@@ -30,8 +30,8 @@ const settings = useSettingsStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      t('newtab:settings.other.confirmPurgeData.message'),
-      t('newtab:settings.other.confirmPurgeData.title'),
+      t('other.confirmPurgeData.message'),
+      t('other.confirmPurgeData.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.cancel'),
@@ -48,8 +48,8 @@ async function confirmClearExtensionData() {
 async function confirmClearWallpaperData() {
   try {
     await ElMessageBox.confirm(
-      t('newtab:settings.other.confirmPurgeWallpaper.message'),
-      t('newtab:settings.other.confirmPurgeWallpaper.title'),
+      t('other.confirmPurgeWallpaper.message'),
+      t('other.confirmPurgeWallpaper.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.cancel'),
@@ -73,7 +73,7 @@ async function clearWallpaperData() {
 
   ElLoading.service({
     lock: true,
-    text: t('newtab:settings.other.confirmPurgeWallpaper.purging'),
+    text: t('other.confirmPurgeWallpaper.purging'),
     body: true,
     background: 'var(--el-overlay-color-light)'
   })
@@ -95,7 +95,7 @@ async function clearWallpaperData() {
 function clearExtensionData() {
   ElLoading.service({
     lock: true,
-    text: t('newtab:settings.other.confirmPurgeData.purging'),
+    text: t('other.confirmPurgeData.purging'),
     body: true,
     background: 'var(--el-overlay-color-light)'
   })
@@ -131,11 +131,11 @@ const fileInput = ref<HTMLInputElement | null>(null)
 async function openFilePicker() {
   try {
     await ElMessageBox.confirm(
-      t('newtab:settings.other.importExport.warningDialog.title'),
-      t('newtab:settings.other.importExport.warningDialog.content'),
+      t('other.importExport.warningDialog.title'),
+      t('other.importExport.warningDialog.content'),
       {
-        confirmButtonText: t('newtab:settings.other.importExport.warningDialog.yes'),
-        cancelButtonText: t('newtab:settings.other.importExport.warningDialog.no'),
+        confirmButtonText: t('other.importExport.warningDialog.yes'),
+        cancelButtonText: t('other.importExport.warningDialog.no'),
         type: 'warning'
       }
     )
@@ -173,9 +173,9 @@ function handleFileChange(event: Event) {
               deinitSyncSettings()
             }
           }
-          ElMessage.success('导入成功')
+          ElMessage.success(t('other.importExport.importSuccess'))
         } else {
-          ElMessage.error('导入失败')
+          ElMessage.error(t('other.importExport.importFailed'))
         }
         // 重置 file input 以允许导入同一个文件
         if (fileInput.value) fileInput.value.value = ''
@@ -191,11 +191,11 @@ function handleFileChange(event: Event) {
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.other.sync') }}</div>
+      <div class="settings__label">{{ t('other.sync') }}</div>
       <el-switch v-model="settings.sync.enabled" @change="sendSyncMessage" />
     </div>
     <p class="settings__item--note">
-      {{ t('newtab:settings.other.syncWarning') }}
+      {{ t('other.syncWarning') }}
       <cloud-off-round />
     </p>
     <div class="settings__item settings__item--horizontal">
@@ -203,7 +203,7 @@ function handleFileChange(event: Event) {
       <el-switch v-model="settings.hideMajorChangelog" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.other.importExport.title') }}</div>
+      <div class="settings__label">{{ t('other.importExport.title') }}</div>
       <span>
         <el-button
           type="primary"
@@ -212,31 +212,31 @@ function handleFileChange(event: Event) {
             downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
           "
         >
-          {{ t('newtab:settings.other.importExport.export') }}
+          {{ t('other.importExport.export') }}
         </el-button>
         <el-button :icon="FileUploadRound" @click="openFilePicker">
-          {{ t('newtab:settings.other.importExport.import') }}
+          {{ t('other.importExport.import') }}
         </el-button>
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.other.purgeWallpaperData') }}</div>
+      <div class="settings__label">{{ t('other.purgeWallpaperData') }}</div>
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearWallpaperData">
-        {{ t('newtab:settings.other.purge') }}
+        {{ t('other.purge') }}
       </el-button>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.other.purgeData') }}</div>
+      <div class="settings__label">{{ t('other.purgeData') }}</div>
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">
-        {{ t('newtab:settings.other.purge') }}
+        {{ t('other.purge') }}
       </el-button>
     </div>
     <div v-if="isGoogleChrome" class="settings__item">
       <div class="settings__label" style="min-height: 32px">
-        {{ t('newtab:settings.other.want_to_customize_chrome') }}
+        {{ t('other.want_to_customize_chrome') }}
       </div>
       <p class="settings__item--note">
-        {{ t('newtab:settings.other.customize_chrome_tips') }}
+        {{ t('other.customize_chrome_tips') }}
       </p>
     </div>
     <!-- hidden file input used by 导入按钮 -->

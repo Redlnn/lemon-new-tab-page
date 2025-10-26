@@ -133,7 +133,7 @@ defineExpose({
         </div>
       </div>
       <div v-if="settings.shortcut.showShortcutTitle" class="shortcut__title">
-        {{ t('newtab:shortcut.addNewShortcut') }}
+        {{ t('shortcut.addNewShortcut') }}
       </div>
     </div>
   </div>
@@ -146,16 +146,16 @@ defineExpose({
     destroy-on-close
   >
     <el-form ref="modelForm" :model="data">
-      <el-form-item :label="t('newtab:shortcut.addDialog.title')">
+      <el-form-item :label="t('shortcut.addDialog.title')">
         <el-input v-model="data.title" />
       </el-form-item>
-      <el-form-item :label="t('newtab:shortcut.addDialog.url')">
+      <el-form-item :label="t('shortcut.addDialog.url')">
         <el-input v-model="data.url" @keyup.enter="submit" />
       </el-form-item>
-      <el-form-item :label="t('newtab:shortcut.addDialog.autoFetchFavicon')">
+      <el-form-item :label="t('shortcut.addDialog.autoFetchFavicon')">
         <el-switch v-model="getFaviconAuto" />
       </el-form-item>
-      <el-form-item v-if="!getFaviconAuto" :label="t('newtab:shortcut.addDialog.favicon')">
+      <el-form-item v-if="!getFaviconAuto" :label="t('shortcut.addDialog.favicon')">
         <el-upload
           class="shortcut__favicon-uploader"
           :show-file-list="false"

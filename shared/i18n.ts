@@ -32,7 +32,8 @@ export const i18nInitPromise = i18next
       en: ['en'],
       default: ['en']
     },
-    ns: ['newtab', 'sync'],
+    ns: ['newtab', 'settings', 'sync', 'faq'],
+    defaultNS: 'newtab',
     debug: import.meta.env.DEV,
     interpolation: {
       escapeValue: false

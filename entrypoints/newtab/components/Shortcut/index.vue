@@ -193,13 +193,13 @@ blockedTopStitesStorage.watch(() => {
             <el-icon>
               <edit16-regular />
             </el-icon>
-            {{ t('newtab:shortcut.edit') }}
+            {{ t('shortcut.edit') }}
           </el-dropdown-item>
           <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refreshDebounced)">
             <el-icon>
               <pin-off16-regular />
             </el-icon>
-            {{ t('newtab:shortcut.unpin') }}
+            {{ t('shortcut.unpin') }}
           </el-dropdown-item>
         </template>
       </shortcut-item>
@@ -222,7 +222,7 @@ blockedTopStitesStorage.watch(() => {
             <el-icon>
               <clear-round />
             </el-icon>
-            {{ t('newtab:shortcut.remove') }}
+            {{ t('shortcut.remove') }}
           </el-dropdown-item>
           <el-dropdown-item
             @click="pinBookmark(bookmarkStore, refreshDebounced, site.url, site.title || '')"
@@ -230,7 +230,7 @@ blockedTopStitesStorage.watch(() => {
             <el-icon>
               <pin16-regular />
             </el-icon>
-            {{ t('newtab:shortcut.pin') }}
+            {{ t('shortcut.pin') }}
           </el-dropdown-item>
         </template>
       </shortcut-item>

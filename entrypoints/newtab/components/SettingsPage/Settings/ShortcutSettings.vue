@@ -6,7 +6,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
-const { t } = useTranslation()
+const { t } = useTranslation('settings')
 
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const settings = useSettingsStore()
@@ -20,7 +20,7 @@ async function restoreDefaultTopSites() {
 <template>
   <div class="settings__items-container">
     <p v-if="isChrome" class="settings__item--note" style="margin-top: 1em">
-      {{ t('newtab:settings.shortcut.tip') }}
+      {{ t('shortcut.tip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
@@ -28,40 +28,40 @@ async function restoreDefaultTopSites() {
     </div>
     <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.showTopSites') }}</div>
+        <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
         <el-switch v-model="settings.shortcut.enableTopSites" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.enableBg') }}</div>
+        <div class="settings__label">{{ t('shortcut.enableBg') }}</div>
         <el-switch v-model="settings.shortcut.showShortcutContainerBg" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.enableAreaShadow') }}</div>
+        <div class="settings__label">{{ t('shortcut.enableAreaShadow') }}</div>
         <el-switch
           v-model="settings.shortcut.enableAreaShadow"
           :disabled="!settings.shortcut.showShortcutContainerBg"
         />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.enableShadow') }}</div>
+        <div class="settings__label">{{ t('shortcut.enableShadow') }}</div>
         <el-switch v-model="settings.shortcut.enableShadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.showPinnedIcon') }}</div>
+        <div class="settings__label">{{ t('shortcut.showPinnedIcon') }}</div>
         <el-switch
           :disabled="!settings.shortcut.enableTopSites"
           v-model="settings.shortcut.showPinnedIcon"
         />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.showTitle') }}</div>
+        <div class="settings__label">{{ t('shortcut.showTitle') }}</div>
         <el-switch v-model="settings.shortcut.showShortcutTitle" />
       </div>
       <p class="settings__item--note">
-        {{ t('newtab:settings.shortcut.whiteTextTip') }}
+        {{ t('shortcut.whiteTextTip') }}
       </p>
       <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.maxRows') }}</div>
+        <div class="settings__label">{{ t('shortcut.maxRows') }}</div>
         <el-slider
           v-model="settings.shortcut.rows"
           :step="1"
@@ -74,7 +74,7 @@ async function restoreDefaultTopSites() {
         />
       </div>
       <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.maxColumns') }}</div>
+        <div class="settings__label">{{ t('shortcut.maxColumns') }}</div>
         <el-slider
           v-model="settings.shortcut.columns"
           :step="1"
@@ -95,10 +95,10 @@ async function restoreDefaultTopSites() {
           color: var(--el-text-color-regular);
         "
       >
-        {{ t('newtab:settings.shortcut.maxItemsTipForChrome') }}
+        {{ t('shortcut.maxItemsTipForChrome') }}
       </p>
       <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.iconSize') }}</div>
+        <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
         <el-slider
           v-model="settings.shortcut.iconSize"
           :min="10"
@@ -110,7 +110,7 @@ async function restoreDefaultTopSites() {
       </div>
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">
-          {{ t('newtab:settings.shortcut.HorizontalIconSpacing') }}
+          {{ t('shortcut.HorizontalIconSpacing') }}
         </div>
         <el-slider
           v-model="settings.shortcut.itemMarginH"
@@ -123,7 +123,7 @@ async function restoreDefaultTopSites() {
       </div>
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">
-          {{ t('newtab:settings.shortcut.VerticalIconSpacing') }}
+          {{ t('shortcut.VerticalIconSpacing') }}
         </div>
         <el-slider
           v-model="settings.shortcut.itemMarginV"
@@ -136,7 +136,7 @@ async function restoreDefaultTopSites() {
       </div>
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">
-          {{ t('newtab:settings.shortcut.marginTop') }}
+          {{ t('shortcut.marginTop') }}
         </div>
         <el-slider
           v-model="settings.shortcut.marginTop"
@@ -148,14 +148,14 @@ async function restoreDefaultTopSites() {
         />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:settings.shortcut.restoreDefault') }}</div>
+        <div class="settings__label">{{ t('shortcut.restoreDefault') }}</div>
         <el-popconfirm
           width="220"
           :confirm-button-text="t('newtab:common.confirm')"
           :cancel-button-text="t('newtab:common.cancel')"
           :icon="RestoreRound"
           icon-color="#626AEF"
-          :title="t('newtab:settings.shortcut.restoreDefaultConfirm.title')"
+          :title="t('shortcut.restoreDefaultConfirm.title')"
           @confirm="restoreDefaultTopSites()"
         >
           <template #reference>

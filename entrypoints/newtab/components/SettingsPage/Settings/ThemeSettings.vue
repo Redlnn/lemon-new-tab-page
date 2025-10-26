@@ -6,30 +6,30 @@ import { useTranslation } from 'i18next-vue'
 
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
-const { t } = useTranslation()
+const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
 const { store } = useColorMode()
 
 const predefineColorsMapClassic = [
-  { value: '#d75455', label: '深緋' },
-  { value: '#ec6800', label: '黄赤' },
-  { value: defaultSettings.primaryColor, label: '山吹' },
-  { value: '#aacf53', label: '萌黄' },
-  { value: '#008899', label: '納戸' },
-  { value: '#1677ff', label: 'Ant Design' }, // Ant Design Primary
-  { value: '#1e50a2', label: '瑠璃' },
-  { value: '#4d5aaf', label: '紺桔梗' }
+  { value: '#d75455', labelKey: 'theme.colorNames.classic.crimson' },
+  { value: '#ec6800', labelKey: 'theme.colorNames.classic.orangeRed' },
+  { value: defaultSettings.primaryColor, labelKey: 'theme.colorNames.classic.yamabuki' },
+  { value: '#aacf53', labelKey: 'theme.colorNames.classic.yellowGreen' },
+  { value: '#008899', labelKey: 'theme.colorNames.classic.teal' },
+  { value: '#1677ff', labelKey: 'theme.colorNames.classic.antDesign' }, // Ant Design Primary
+  { value: '#1e50a2', labelKey: 'theme.colorNames.classic.lapis' },
+  { value: '#4d5aaf', labelKey: 'theme.colorNames.classic.bellflower' }
 ]
 
 const predefineColorsMapAnime = [
-  { value: '#39C5BB', label: '初音ミク' },
-  { value: '#66CCFF', label: '洛天依' },
-  { value: '#3388bb', label: 'MyGO!!!!!' },
-  { value: '#730f40', label: 'Ave Mujica' },
-  { value: '#f7b3c2', label: '後藤ひとり' },
-  { value: '#ff2291', label: '結束バンド' },
-  { value: '#d90e2c', label: 'TOGENASHI TOGEARI' }
+  { value: '#39C5BB', labelKey: 'theme.colorNames.anime.miku' },
+  { value: '#66CCFF', labelKey: 'theme.colorNames.anime.luo' },
+  { value: '#3388bb', labelKey: 'theme.colorNames.anime.mygo' },
+  { value: '#730f40', labelKey: 'theme.colorNames.anime.aveMujica' },
+  { value: '#f7b3c2', labelKey: 'theme.colorNames.anime.bocchi' },
+  { value: '#ff2291', labelKey: 'theme.colorNames.anime.kessoku' },
+  { value: '#d90e2c', labelKey: 'theme.colorNames.anime.togeari' }
 ]
 
 const predefineColorsMap = [
@@ -115,25 +115,25 @@ watch(isDark, (newVal) => {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab:settings.theme.darkMode') }}
+        {{ t('theme.darkMode') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isDarkUI" @change="toggleDark" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab:settings.theme.systemMode') }}
+        {{ t('theme.systemMode') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isAutoUI" @change="toggleAuto" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.theme.primaryColor') }}</div>
+      <div class="settings__label">{{ t('theme.primaryColor') }}</div>
       <div class="settings__theme">
         <el-select
           v-model="settings.primaryColor"
           style="width: 183px"
-          popper-class="settings__theme-popper"
+          popper-class="settings-item-popper"
         >
           <el-option-group
             v-for="group in predefineColorsMap"
@@ -143,12 +143,12 @@ watch(isDark, (newVal) => {
             <el-option
               v-for="item in group.options"
               :key="item.value"
-              :label="item.label"
+              :label="t(item.labelKey)"
               :value="item.value"
             >
               <div class="settings__theme-item">
                 <el-tag :color="item.value" style="margin-right: 8px" size="small" />
-                <span :style="{ color: item.value }">{{ item.label }}</span>
+                <span :style="{ color: item.value }">{{ t(item.labelKey) }}</span>
               </div>
             </el-option>
           </el-option-group>
@@ -158,30 +158,30 @@ watch(isDark, (newVal) => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab:settings.theme.colorfulMode') }}
+        {{ t('theme.colorfulMode') }}
       </div>
       <el-switch v-model="settings.colorfulMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.clock.invertColorLight') }}</div>
+      <div class="settings__label">{{ t('clock.invertColorLight') }}</div>
       <el-switch v-model="settings.time.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.clock.invertColorDark') }}</div>
+      <div class="settings__label">{{ t('clock.invertColorDark') }}</div>
       <el-switch v-model="settings.time.invertColor.night" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('newtab:settings.shortcut.whiteTextInLightMode') }}
+        {{ t('shortcut.whiteTextInLightMode') }}
       </div>
       <el-switch v-model="settings.shortcut.whiteTextInLightMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorLight') }}</div>
+      <div class="settings__label">{{ t('yiyan.invertColorLight') }}</div>
       <el-switch v-model="settings.yiyan.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.yiyan.invertColorDark') }}</div>
+      <div class="settings__label">{{ t('yiyan.invertColorDark') }}</div>
       <el-switch v-model="settings.yiyan.invertColor.night" />
     </div>
   </div>

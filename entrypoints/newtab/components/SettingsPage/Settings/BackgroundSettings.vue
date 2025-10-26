@@ -16,7 +16,7 @@ import {
   useWallpaperStore
 } from '@/shared/settings'
 
-const { t } = useTranslation()
+const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
@@ -65,7 +65,7 @@ async function handleUpload(option: UploadRequestOptions, isDark = false) {
 
 const beforeBackgroundUpload: UploadProps['beforeUpload'] = async (rawFile) => {
   if (!isMediaFile(rawFile)) {
-    ElMessage.error(t('newtab:settings.background.warning.fileIsNotImage'))
+    ElMessage.error(t('background.warning.fileIsNotImage'))
     return false
   }
 
@@ -74,10 +74,10 @@ const beforeBackgroundUpload: UploadProps['beforeUpload'] = async (rawFile) => {
     // 提示用户文件较大，确认是否继续
     try {
       await ElMessageBox.confirm(
-        t('newtab:settings.background.warning.tooLarge.message', {
+        t('background.warning.tooLarge.message', {
           size: formatBytes(rawFile.size)
         }),
-        t('newtab:settings.background.warning.tooLarge.title'),
+        t('background.warning.tooLarge.title'),
         { type: 'warning' }
       )
     } catch {
@@ -99,16 +99,16 @@ async function handlePermissions(_url: string, hostname: string) {
     }
 
     const confirmed = await ElMessageBox.confirm(
-      t('newtab:settings.background.warning.securityPolicy', { host: hostname })
+      t('background.warning.securityPolicy', { host: hostname })
     )
 
     if (confirmed) {
       const requested = await browser.permissions.request(permissions)
       if (requested) {
-        ElMessage.success(t('newtab:settings.background.warning.granted'))
+        ElMessage.success(t('background.warning.granted'))
         settings.background.onlineUrl = _url
       } else {
-        ElMessage.error(t('newtab:settings.background.warning.notGranted'))
+        ElMessage.error(t('background.warning.notGranted'))
         settings.background.bgType = BgType.None
         tmpUrl.value = ''
       }
@@ -142,8 +142,8 @@ function changeOnlineBg(e: Event) {
 function onlineImageWarn() {
   if (settings.background.onlineUrl) return
   ElMessageBox.confirm(
-    t('newtab:settings.background.warning.unknownSource'),
-    t('newtab:settings.background.warning.title'),
+    t('background.warning.unknownSource'),
+    t('background.warning.title'),
     {
       type: 'warning'
     }
@@ -262,21 +262,21 @@ const isVideoBg = computed(
   <div class="settings__items-container">
     <div class="settings__item settings__item--vertical">
       <div class="settings__label">
-        {{ t('newtab:settings.background.type.title') }}
+        {{ t('background.type.title') }}
         <cloud-off-round />
       </div>
       <el-radio-group v-model="settings.background.bgType">
         <el-radio :value="BgType.None">
-          {{ t('newtab:settings.background.type.none') }}
+          {{ t('background.type.none') }}
         </el-radio>
         <el-radio :value="BgType.Local">
-          {{ t('newtab:settings.background.type.local') }}
+          {{ t('background.type.local') }}
         </el-radio>
         <el-radio :value="BgType.Bing">
-          {{ t('newtab:settings.background.type.bing') }}
+          {{ t('background.type.bing') }}
         </el-radio>
         <el-radio :value="BgType.Online" @change="onlineImageWarn">
-          {{ t('newtab:settings.background.type.online') }}
+          {{ t('background.type.online') }}
         </el-radio>
       </el-radio-group>
     </div>
@@ -289,13 +289,13 @@ const isVideoBg = computed(
       placeholder="https://example.com/image.jpg"
     ></el-input>
     <ul v-if="settings.background.bgType === BgType.Online" class="settings__online-bg-tips">
-      <li>{{ t('newtab:settings.background.onlineTips.a') }}</li>
-      <li>{{ t('newtab:settings.background.onlineTips.b') }}</li>
-      <li>{{ t('newtab:settings.background.onlineTips.c') }}</li>
-      <li>{{ t('newtab:settings.background.onlineTips.d') }}</li>
+      <li>{{ t('background.onlineTips.a') }}</li>
+      <li>{{ t('background.onlineTips.b') }}</li>
+      <li>{{ t('background.onlineTips.c') }}</li>
+      <li>{{ t('background.onlineTips.d') }}</li>
     </ul>
     <p v-if="settings.background.bgType === BgType.Local" class="settings__item--note">
-      {{ t('newtab:settings.background.tip') }}
+      {{ t('background.tip') }}
     </p>
     <div v-if="settings.background.bgType === BgType.Local" class="settings__bg-uploader-container">
       <div class="settings__bg-uploader-wrapper">
@@ -327,7 +327,7 @@ const isVideoBg = computed(
           <el-icon><CloseRound /></el-icon>
         </div>
         <div class="settings__bg-uploader-title">
-          {{ t('newtab:settings.theme.lightMode') }}
+          {{ t('theme.lightMode') }}
         </div>
         <div v-if="metaLight" class="settings__bg-uploader-meta">
           <div>
@@ -366,7 +366,7 @@ const isVideoBg = computed(
           <el-icon><CloseRound /></el-icon>
         </div>
         <div class="settings__bg-uploader-title">
-          {{ t('newtab:settings.theme.darkMode') }}
+          {{ t('theme.darkMode') }}
         </div>
         <div v-if="metaDark" class="settings__bg-uploader-meta">
           <div>
@@ -378,36 +378,36 @@ const isVideoBg = computed(
       </div>
     </div>
     <p v-if="isVideoBg" class="settings__item--note" style="margin-top: 0.5em">
-      {{ t('newtab:settings.background.videoWarning') }}
+      {{ t('background.videoWarning') }}
     </p>
     <div v-if="isVideoBg" class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.background.pauseWhenBlur') }}</div>
+      <div class="settings__label">{{ t('background.pauseWhenBlur') }}</div>
       <el-switch v-model="settings.background.pauseWhenBlur" />
     </div>
     <p v-if="isVideoBg" class="settings__item--note">
-      {{ t('newtab:settings.background.videoBlurTip') }}
+      {{ t('background.videoBlurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.background.enableVignetting') }}</div>
+      <div class="settings__label">{{ t('background.enableVignetting') }}</div>
       <el-switch v-model="settings.background.enableVignetting" />
     </div>
     <div
       v-if="settings.background.bgType !== BgType.None"
       class="settings__item settings__item--vertical"
     >
-      <div class="settings__label">{{ t('newtab:settings.background.blur') }}</div>
+      <div class="settings__label">{{ t('background.blur') }}</div>
       <el-slider v-model="settings.background.blurIntensity" :show-tooltip="false" />
     </div>
     <div class="settings__item">
       <div class="settings__label settings__item--vertical">
-        {{ t('newtab:settings.background.maskOpacity') }}
+        {{ t('background.maskOpacity') }}
       </div>
       <el-slider v-model="settings.background.bgMaskOpacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:settings.background.maskColor') }}</div>
+      <div class="settings__label">{{ t('background.maskColor') }}</div>
       <span>
-        <span>{{ t('newtab:settings.theme.lightMode') }}:&ensp;</span>
+        <span>{{ t('theme.lightMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settings.background.lightMaskColor"
           :predefine="predefineMaskColor"
@@ -419,7 +419,7 @@ const isVideoBg = computed(
             }
           "
         />
-        <span style="margin-left: 1em">{{ t('newtab:settings.theme.darkMode') }}:&ensp;</span>
+        <span style="margin-left: 1em">{{ t('theme.darkMode') }}:&ensp;</span>
         <el-color-picker
           v-model="settings.background.nightMaskColor"
           :predefine="predefineMaskColor"

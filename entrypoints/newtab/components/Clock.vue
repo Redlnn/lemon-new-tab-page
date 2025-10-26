@@ -1,23 +1,25 @@
 <script lang="ts" setup>
-import { useNow } from '@vueuse/core'
+import { useNow, useTimeoutFn } from '@vueuse/core'
 
 import dayjs from 'dayjs/esm'
+import { useTranslation } from 'i18next-vue'
 
 import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 
+const { t, i18next } = useTranslation('newtab')
 const settings = useSettingsStore()
 const time = ref()
 
 function customMeridiem(hours: number) {
-  if (hours < 2) return '深夜'
-  if (hours < 7) return '凌晨'
-  if (hours < 11) return '早上'
-  if (hours < 14) return '中午'
-  if (hours < 17) return '下午'
-  if (hours < 19) return '傍晚'
-  if (hours < 23) return '晚上'
-  return '深夜'
+  if (hours < 2) return t('time.lateNight')
+  if (hours < 7) return t('time.dawn')
+  if (hours < 11) return t('time.morning')
+  if (hours < 14) return t('time.noon')
+  if (hours < 17) return t('time.afternoon')
+  if (hours < 19) return t('time.dusk')
+  if (hours < 23) return t('time.evening')
+  return t('time.lateNight')
 }
 
 const timeNow = useNow({ interval: 1000 })
@@ -63,9 +65,9 @@ const formattedDate = computed(() => {
         {{ formattedDate.meridiemZH }}
       </span>
       <span class="clock__time">
-        <span class="clock__hour">{{
-          settings.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour
-        }}</span>
+        <span class="clock__hour">
+          {{ settings.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour }}
+        </span>
         <span
           class="clock__colon"
           :class="{ 'clock__colon--blinking': settings.time.blinkingColon }"

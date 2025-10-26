@@ -24,6 +24,15 @@
     "searchEnginePreference": "搜索引擎偏好",
     "sponsor": "支持我们"
   },
+  "time": {
+    "lateNight": "深夜",
+    "dawn": "凌晨",
+    "morning": "早上",
+    "noon": "中午",
+    "afternoon": "下午",
+    "dusk": "傍晚",
+    "evening": "晚上"
+  },
   "notification": {
     "bingWallpaper": {
       "error": {
@@ -48,160 +57,6 @@
     "duckduckgo": "DuckDuckGo",
     "google": "Google",
     "yandex": "Yandex"
-  },
-  "settings": {
-    "background": {
-      "blur": "模糊强度",
-      "enableVignetting": "暗角效果",
-      "maskColor": "遮罩颜色",
-      "maskOpacity": "遮罩不透明度",
-      "onlineTips": {
-        "a": "按下回车键或者输入框失去焦点后提交",
-        "b": "壁纸缓存策略却决于浏览器，断网后会获取不到壁纸",
-        "c": "壁纸加载完成前会白屏一段时间，时长取决于你的网速",
-        "d": "请确保你使用的壁纸 API 允许跨域请求，否则会加载失败"
-      },
-      "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
-      "tip": "深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢",
-      "title": "背景设置",
-      "type": {
-        "bing": "Bing 每日一图",
-        "local": "本地图片/视频",
-        "none": "无",
-        "online": "在线图片",
-        "title": "背景类型"
-      },
-      "videoBlurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用",
-      "videoWarning": "使用视频作为背景将会大量消耗 GPU 资源，建议避免同时开多个新标签页以免吃满 GPU，建议禁用时间分隔符闪烁、快捷方式模糊、搜索框模糊、点击搜索框缩放/模糊背景以降低性能消耗",
-      "warning": {
-        "fileIsNotImage": "所选文件不是图片！",
-        "granted": "已授予访问权限",
-        "notGranted": "未授予权限，无法访问该地址",
-        "securityPolicy": "由于 Google 的安全策略，需要授予 {{host}} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限",
-        "title": "警告",
-        "tooLarge": {
-          "message": "文件过大（{{size}}），可能会影响性能或占用较多空间，是否继续？",
-          "title": "文件过大"
-        },
-        "unknownSource": "使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？"
-      }
-    },
-    "clock": {
-      "blinkingColon": "闪烁时间分隔符",
-      "blinkingTip": "关闭可缓解持续性的 GPU 占用",
-      "enableShadow": "显示阴影",
-      "invertColorDark": "【时钟】深色模式下使用深色文字",
-      "invertColorLight": "【时钟】浅色模式下使用深色文字",
-      "showAMPM": "显示「上午 / 下午」",
-      "showDate": "显示日期",
-      "showLunar": "显示农历",
-      "smallFont": "时间小号字体",
-      "title": "时钟设置",
-      "use12HourClock": "使用 12 小时制"
-    },
-    "other": {
-      "confirmPurgeData": {
-        "message": "该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片/视频等。",
-        "purging": "正在清除扩展数据...",
-        "title": "确定要清除所有数据吗?"
-      },
-      "confirmPurgeWallpaper": {
-        "message": "该操作将会删除已选择的背景图片/视频。",
-        "purging": "正在清除壁纸缓存...",
-        "title": "确定要清除壁纸缓存吗?"
-      },
-      "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开“自定义 Chrome”侧边栏。\n",
-      "importExport": {
-        "export": "导出",
-        "import": "导入",
-        "title": "导入 / 导出设置",
-        "warningDialog": {
-          "content": "导入设置会覆盖你当前的设置，请谨慎使用该功能，是否继续？",
-          "no": "不要啊",
-          "title": "你确定要从文件导入设置吗？",
-          "yes": "继续"
-        }
-      },
-      "purge": "清除",
-      "purgeData": "清除扩展数据",
-      "purgeWallpaperData": "清除壁纸缓存",
-      "sync": "云同步",
-      "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
-      "title": "其他设置",
-      "want_to_customize_chrome": "要自定义Chrome？"
-    },
-    "perf": {
-      "dialogAnimation": "弹窗动画",
-      "dialogBlur": "弹窗背景模糊",
-      "dialogTransparent": "弹窗背景透明",
-      "disableAll": {
-        "blur": "模糊效果",
-        "title": "一键禁用所有",
-        "transparent": "透明效果"
-      },
-      "focusBlur": "点击搜索框模糊背景",
-      "focusScale": "点击搜索框缩放背景",
-      "searchBarBlur": "搜索框模糊",
-      "searchBarTransparent": "搜索框透明",
-      "settingsBtnBlur": "设置按钮模糊",
-      "settingsBtnTransparent": "设置按钮透明",
-      "shortcutBlur": "快捷访问图标模糊",
-      "shortcutTransparent": "快捷访问图标透明",
-      "title": "性能设置",
-      "yiyanBlur": "一言背景模糊",
-      "yiyanTransparent": "一言背景透明"
-    },
-    "search": {
-      "alwaysExpandSearchBar": "一直展开搜索框",
-      "defaultSearchEngine": "搜索引擎",
-      "enableShadow": "显示搜索框阴影",
-      "openInNewTab": "在新标签页中打开",
-      "placeholder": "搜索框占位文字",
-      "recordSearchHistory": "记录搜索历史",
-      "searchSuggestionProvider": "搜索建议 API",
-      "title": "搜索设置"
-    },
-    "shortcut": {
-      "HorizontalIconSpacing": "图标左右间距",
-      "VerticalIconSpacing": "图标上下间距",
-      "enableAreaShadow": "显示区域阴影",
-      "enableBg": "显示区域背景",
-      "enableShadow": "显示图标阴影",
-      "iconSize": "图标大小",
-      "marginTop": "快速访问区域上边距",
-      "maxColumns": "最大列数",
-      "maxItemsTipForChrome": "最常访问的上限只有 10 个噢~",
-      "maxRows": "最大行数",
-      "restoreDefault": "恢复默认快捷方式",
-      "restoreDefaultConfirm": {
-        "title": "你确定要恢复默认快捷方式吗？"
-      },
-      "showPinnedIcon": "展示置顶图标",
-      "showTitle": "显示标题",
-      "showTopSites": "展示最常访问",
-      "tip": "Tip：可以拖动设置窗口以观察快速访问区域变化噢~",
-      "title": "快速访问",
-      "whiteTextInLightMode": "【快速访问】浅色模式下使用白色文字",
-      "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~"
-    },
-    "theme": {
-      "colorfulMode": "将主题色应用到更多元素",
-      "darkMode": "深色模式",
-      "lightMode": "浅色模式",
-      "primaryColor": "主题色",
-      "systemMode": "跟随系统 / 浏览器",
-      "title": "主题设置"
-    },
-    "title": "设置",
-    "yiyan": {
-      "alwaysShow": "总是显示",
-      "description": "/",
-      "enableShadow": "显示文字阴影",
-      "invertColorDark": "【一言】深色模式下使用深色文字",
-      "invertColorLight": "【一言】浅色模式下使用深色文字",
-      "normalyShowTip": "关闭时仅在搜索框聚焦时显示",
-      "title": "一言"
-    }
   },
   "shortcut": {
     "addDialog": {

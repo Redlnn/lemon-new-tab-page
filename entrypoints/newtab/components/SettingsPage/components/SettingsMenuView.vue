@@ -13,7 +13,7 @@ import Icon from '@/assets/icon.svg?component'
 
 import { SettingsRoute } from '../composables/useSettingsRouter'
 
-const { t } = useTranslation()
+const { t } = useTranslation('settings')
 
 interface MenuItem {
   key: SettingsRoute
@@ -25,42 +25,42 @@ const menuItems: MenuItem[] = [
   {
     key: SettingsRoute.THEME,
     icon: ColorLensOutlined,
-    titleKey: 'newtab:settings.theme.title'
+    titleKey: 'theme.title'
   },
   {
     key: SettingsRoute.CLOCK,
     icon: ClockCircleOutlined,
-    titleKey: 'newtab:settings.clock.title'
+    titleKey: 'clock.title'
   },
   {
     key: SettingsRoute.SEARCH,
     icon: SearchOutlined,
-    titleKey: 'newtab:settings.search.title'
+    titleKey: 'search.title'
   },
   {
     key: SettingsRoute.BACKGROUND,
     icon: PictureOutlined,
-    titleKey: 'newtab:settings.background.title'
+    titleKey: 'background.title'
   },
   {
     key: SettingsRoute.SHORTCUT,
     icon: AppstoreOutlined,
-    titleKey: 'newtab:settings.shortcut.title'
+    titleKey: 'shortcut.title'
   },
   {
     key: SettingsRoute.YIYAN,
     icon: FormatQuoteRound,
-    titleKey: 'newtab:settings.yiyan.title'
+    titleKey: 'yiyan.title'
   },
   {
     key: SettingsRoute.PERFORMANCE,
     icon: ApiRound,
-    titleKey: 'newtab:settings.perf.title'
+    titleKey: 'perf.title'
   },
   {
     key: SettingsRoute.OTHER,
     icon: ControlOutlined,
-    titleKey: 'newtab:settings.other.title'
+    titleKey: 'other.title'
   }
 ]
 
@@ -94,7 +94,7 @@ function handleMenuSelect(key: string) {
         <el-icon v-if="!isMobile" :size="36">
           <Icon />
         </el-icon>
-        <span v-else>{{ t('newtab:settings.title') }}</span>
+        <span v-else>{{ t('title') }}</span>
       </div>
       <el-menu-item
         v-for="item in menuItems"

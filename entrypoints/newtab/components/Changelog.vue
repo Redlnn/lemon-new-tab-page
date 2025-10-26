@@ -29,7 +29,7 @@ function handleClose() {
 <template>
   <base-dialog
     v-model="opened"
-    :title="t('newtab:changelog.title')"
+    :title="t('changelog.title')"
     container-class="changelog__dialog"
     @closed="handleClose"
     acrylic
@@ -37,23 +37,23 @@ function handleClose() {
   >
     <div class="changelog-wrapper">
       <div class="changelog-hide-major noselect">
-        <span>{{ t('newtab:changelog.hideMajorChangelog') }}</span>
+        <span>{{ t('changelog.hideMajorChangelog') }}</span>
         <el-switch v-model="settings.hideMajorChangelog" />
       </div>
       <component :is="isChinese ? ChangelogZh : ChangelogEn" />
       <div class="markdown-body" style="padding-top: 21px">
-        <h2>{{ t('newtab:changelog.otherVersions.title') }}</h2>
+        <h2>{{ t('changelog.otherVersions.title') }}</h2>
         <blockquote>
-          <p>{{ t('newtab:changelog.otherVersions.description') }}</p>
+          <p>{{ t('changelog.otherVersions.description') }}</p>
           <ul>
             <li>
               <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG.md">
-                {{ t('newtab:changelog.otherVersions.linkZhCN') }}
+                {{ t('changelog.otherVersions.linkZhCN') }}
               </a>
             </li>
             <li>
               <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_en.md">
-                {{ t('newtab:changelog.otherVersions.linkEn') }}
+                {{ t('changelog.otherVersions.linkEn') }}
               </a>
             </li>
           </ul>

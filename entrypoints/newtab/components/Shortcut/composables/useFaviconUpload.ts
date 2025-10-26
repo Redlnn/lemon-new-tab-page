@@ -13,11 +13,11 @@ export function useFaviconUpload(options?: { maxKB?: number }) {
   const confirmSvgUpload = async () => {
     try {
       await ElMessageBox.confirm(
-        t('newtab:shortcut.addDialog.confirmSvgDesc'),
-        t('newtab:shortcut.addDialog.confirmSvgTitle'),
+        t('shortcut.addDialog.confirmSvgDesc'),
+        t('shortcut.addDialog.confirmSvgTitle'),
         {
-          confirmButtonText: t('newtab:shortcut.addDialog.confirmSvgOKBtn'),
-          cancelButtonText: t('newtab:shortcut.addDialog.confirmSvgCancelBtn'),
+          confirmButtonText: t('shortcut.addDialog.confirmSvgOKBtn'),
+          cancelButtonText: t('shortcut.addDialog.confirmSvgCancelBtn'),
           closeOnClickModal: false,
           closeOnPressEscape: false,
           showClose: false,
@@ -32,14 +32,14 @@ export function useFaviconUpload(options?: { maxKB?: number }) {
 
   const beforeFaviconUpload: UploadProps['beforeUpload'] = async (rawFile) => {
     if (!isImageFile(rawFile, ['image/x-icon', 'image/svg+xml'])) {
-      ElMessage.error(t('newtab:settings.background.warning.fileIsNotImage'))
+      ElMessage.error(t('settings:background.warning.fileIsNotImage'))
       return false
     }
     if (isSvg(rawFile)) {
       return await confirmSvgUpload()
     }
     if (rawFile.size / 1024 > maxKB) {
-      ElMessage.error(t('newtab:shortcut.addDialog.tooLargeImageError'))
+      ElMessage.error(t('shortcut.addDialog.tooLargeImageError'))
       return false
     }
     return true
