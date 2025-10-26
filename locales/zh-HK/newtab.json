@@ -6,7 +6,7 @@
     "hideMajorChangelog": "不顯示大版本更新日誌",
     "newVersionMsg": "你嘅起始頁更新着啦~",
     "otherVersions": {
-      "description": "僅包含5個版本嘅更新日誌，剩餘內容請點擊下方鏈接跳轉查看：",
+      "description": "僅包含5個版本的更新日誌，其餘內容請點擊下方連結查看：",
       "linkEn": "English",
       "linkZhCN": "中文（簡體）",
       "title": "其他版本？"
@@ -47,7 +47,7 @@
     "purgeSearchHistory": "清除搜尋歷史",
     "searchEngineMenu": {
       "current": "當前",
-      "tipPrefix": "小提示：按",
+      "tipPrefix": "Tip：按",
       "tipSuffix": "可切換搜尋引擎"
     }
   },
@@ -61,15 +61,15 @@
   "shortcut": {
     "addDialog": {
       "autoFetchFavicon": "自動取得圖示",
-      "confirmSvgCancelBtn": "仲係唔好啦",
+      "confirmSvgCancelBtn": "取消",
       "confirmSvgDesc": "你確定要使用 SVG 圖片嗎？為防範 XSS 和 XXE 攻擊，檸檬起始頁將對圖片進行處理，可能會導致圖片無法正常顯示。即便處理後仍有風險，請確認圖片來源安全。",
       "confirmSvgOKBtn": "確定",
       "confirmSvgTitle": "你選擇了一張 SVG 圖片",
       "dialogTitle": "新增快速存取",
       "favicon": "圖示",
-      "invalidUrlError": "網址無效，請重新輸入~",
+      "invalidUrlError": "網址無效，請重新輸入",
       "title": "標題",
-      "tooLargeImageError": "圖片超過 100KiB，請重新選擇~",
+      "tooLargeImageError": "圖片超過 100KiB，請重新選擇",
       "uploadFaviconAlert": "支援格式：ico、svg、png、jpg、webp",
       "url": "網址"
     },
@@ -82,12 +82,12 @@
     "pin": "釘選",
     "remove": "移除",
     "removePinnedMessage": {
-      "content": "已取消釘選連結",
+      "content": "已取消釘選此快速存取",
       "undo": "撤銷"
     },
     "removeTopMessage": {
       "content": "已移除快速存取",
-      "restoreDefault": "還原預設快速存取",
+      "restoreDefault": "還原預設",
       "restoreSuccess": "已還原預設快速存取",
       "undo": "撤銷"
     },

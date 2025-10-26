@@ -21,7 +21,7 @@
       "title": "背景类型"
     },
     "videoBlurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用",
-    "videoWarning": "使用视频作为背景将会大量消耗 GPU 资源，建议避免同时开多个新标签页以免吃满 GPU，建议禁用时间分隔符闪烁、快捷方式模糊、搜索框模糊、点击搜索框缩放/模糊背景以降低性能消耗",
+    "videoWarning": "使用视频作为背景将会大量消耗 GPU 资源，建议避免同时开多个新标签页以免吃满 GPU，建议禁用时间分隔符闪烁、快速访问图标模糊、搜索框模糊、点击搜索框缩放/模糊背景以降低性能消耗",
     "warning": {
       "fileIsNotImage": "所选文件不是图片！",
       "granted": "已授予访问权限",
@@ -50,14 +50,14 @@
   },
   "other": {
     "confirmPurgeData": {
-      "message": "该操作将会重置扩展设置、已忽略的最常访问站点、收藏/置顶的站点、已选择的背景图片/视频等。",
+      "message": "该操作将会重置扩展设置、已忽略的最常访问网站、收藏/置顶的网站、已选择的背景图片/视频等。",
       "purging": "正在清除扩展数据...",
-      "title": "确定要清除所有数据吗?"
+      "title": "确定要清除所有数据吗？"
     },
     "confirmPurgeWallpaper": {
       "message": "该操作将会删除已选择的背景图片/视频。",
       "purging": "正在清除壁纸缓存...",
-      "title": "确定要清除壁纸缓存吗?"
+      "title": "确定要清除壁纸缓存吗？"
     },
     "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开「自定义 Chrome」侧边栏。\n",
     "importExport": {
@@ -78,7 +78,7 @@
     "purgeData": "清除扩展数据",
     "purgeWallpaperData": "清除壁纸缓存",
     "sync": "云同步",
-    "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问站点（含已忽略的站点）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
+    "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问网站（含已忽略的网站）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
     "title": "其他设置",
     "want_to_customize_chrome": "要自定义Chrome？"
   },
@@ -126,10 +126,8 @@
     "maxColumns": "最大列数",
     "maxItemsTipForChrome": "最常访问的上限只有 10 个噢~",
     "maxRows": "最大行数",
-    "restoreDefault": "恢复默认快捷方式",
-    "restoreDefaultConfirm": {
-      "title": "你确定要恢复默认快捷方式吗？"
-    },
+    "restoreDefault": "恢复默认",
+    "restoreDefaultTitle": "你确定要恢复默认快速访问吗？",
     "showPinnedIcon": "展示置顶图标",
     "showTitle": "显示标题",
     "showTopSites": "展示最常访问",
@@ -140,7 +138,7 @@
   },
   "theme": {
     "colorNames": {
-      "anime": {
+      "acgn": {
         "aveMujica": "Ave Mujica",
         "bocchi": "後藤ひとり",
         "kessoku": "結束バンド",
@@ -178,7 +176,7 @@
     "providers": {
       "hitokoto": {
         "name": "一言（Hitokoto）",
-        "note": "请注意，Hitokoto.cn 的 QPS（每秒请求数）十分严格，本插件已做缓存，但短时间来自不同站点请求仍会导致你的 IP 短时间被 Ban"
+        "note": "请注意，Hitokoto.cn 的 QPS（每秒请求数）十分严格，本扩展已做缓存，但短时间来自不同站点请求仍会导致你的 IP 短时间被 Ban"
       },
       "jinrishici": {
         "name": "今日诗词"

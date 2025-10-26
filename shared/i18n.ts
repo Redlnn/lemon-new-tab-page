@@ -30,11 +30,12 @@ export const i18nInitPromise = i18next
   .use(resourcesToBackend((lng: string, ns: string) => import(`@/locales/${lng}/${ns}.json`)))
   .init({
     fallbackLng: {
-      'zh-MO': ['zh-HK'], // 澳门回退到香港
-      zh: ['zh-CN'], // 其他 zh-* 回退到大陆
-      en: ['en'],
+      'zh-MO': ['zh-HK'],
+      zh: ['zh-CN'],
       default: ['en']
     },
+    load: 'currentOnly',
+    nonExplicitSupportedLngs: true,
     ns: ['newtab', 'settings', 'sync', 'faq'],
     defaultNS: 'newtab',
     debug: import.meta.env.DEV,

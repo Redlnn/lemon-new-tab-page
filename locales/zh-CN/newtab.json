@@ -47,7 +47,7 @@
     "purgeSearchHistory": "清除搜索历史",
     "searchEngineMenu": {
       "current": "当前",
-      "tipPrefix": "Tip: 按下",
+      "tipPrefix": "Tip：按下",
       "tipSuffix": "切换搜索引擎"
     }
   },
@@ -82,13 +82,13 @@
     "pin": "置顶",
     "remove": "移除",
     "removePinnedMessage": {
-      "content": "已移除该置顶链接",
+      "content": "已取消置顶该链接",
       "undo": "撤销"
     },
     "removeTopMessage": {
-      "content": "已移除快捷方式",
-      "restoreDefault": "恢复默认快捷方式",
-      "restoreSuccess": "已恢复默认快捷方式",
+      "content": "已移除快速访问",
+      "restoreDefault": "恢复默认",
+      "restoreSuccess": "已恢复默认快速访问",
       "undo": "撤销"
     },
     "unpin": "取消置顶"

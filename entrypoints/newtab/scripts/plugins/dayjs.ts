@@ -6,10 +6,10 @@ import i18next from 'i18next'
 
 import { getLang } from '@/shared/lang'
 
-const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/{zh*,en}.js') as Record<
-  string,
-  () => Promise<{ default: ILocale }>
->
+// 使用 eager: false 确保完全动态导入,避免与 dayjs 内部的静态导入冲突
+const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/{zh*,en}.js', {
+  eager: false
+}) as Record<string, () => Promise<{ default: ILocale }>>
 
 dayjs.extend(localizedFormat)
 dayjs.extend(PluginLunar as PluginFunc<{ traditional?: boolean }>)

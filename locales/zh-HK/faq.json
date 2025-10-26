@@ -6,39 +6,39 @@
     "emailCopied": "已複製電郵地址"
   },
   "faqTitle": "常見問題解答",
-  "faqSubtitle": "希望能幫到你喵~",
+  "faqSubtitle": "希望能幫到你",
   "items": {
     "restoreShortcut": {
-      "title": "如何恢復已刪除/預設快捷連結",
-      "content": "移除任意快速存取連結後,在彈出的通知中操作即可恢復。"
+      "title": "如何還原已刪除/預設快速存取連結",
+      "content": "移除任意快速存取連結後，在彈出的通知中操作即可還原。"
     },
     "performance": {
       "title": "介面掉幀或卡頓、CPU/GPU 佔用高",
       "content": {
-        "intro": "可以嘗試以下方法:",
-        "item1": "在效能設定介面中停用不必要效果(使用影片桌布時請勿開啟模糊效果)",
-        "item2": "開啟瀏覽器的硬件加速功能"
+        "intro": "可以嘗試以下方法：",
+        "item1": "在效能設定介面中停用不必要效果（使用影片桌布時請勿開啟模糊效果）",
+        "item2": "開啟瀏覽器的硬體加速功能"
       }
     },
     "chromeFooter": {
-      "title": "Chrome 上如何關閉新分頁底部的頁尾?",
+      "title": "Chrome 上如何關閉新分頁底部的頁尾？",
       "content": {
-        "reason": "這是因為 Google 把「自訂 Chrome」相關功能全部放在了側邊欄,而這個側邊欄的入口只在新分頁的原因。",
-        "step": "你可以先點擊右下角的「自訂 Chrome」按鈕打開側邊欄,然後捲動到頁面最下方,在頁尾一欄中關閉「在『新分頁』頁面上顯示頁尾」就可以了。",
+        "reason": "這是因為 Google 把「自訂 Chrome」相關功能全部放在了側邊欄，而這個側邊欄的入口只在新分頁的原因。",
+        "step": "你可以先點擊右下角的「自訂 Chrome」按鈕打開側邊欄，然後捲動到頁面最下方，在頁尾一欄中關閉「在『新分頁』頁面上顯示頁尾」就可以了。",
         "reference": "圖文參考 👉",
         "githubIssue": "GitHub Issue"
       }
     },
     "browserFreeze": {
-      "title": "瀏覽器在啟動時凍結",
+      "title": "瀏覽器在啟動時死機",
       "content": {
-        "intro": "部分 Intel 核顯的 Windows 裝置上,Chromium 核心瀏覽器可能會在啟動時凍結,可以嘗試以下方法解決此問題:",
-        "step1": "更新顯示卡驅動程式:確保你的顯示卡驅動程式是最新的。",
+        "intro": "部分 Intel 核顯的 Windows 裝置上，Chromium 核心瀏覽器可能會在啟動時死機，可以嘗試以下方法解決此問題：",
+        "step1": "更新顯示卡驅動程式：確保你的顯示卡驅動程式是最新的。",
         "step2": {
           "text": "在 Experiments (chrome://flags) 頁面將 {{code1}} 更改為 {{code2}}",
-          "note": "Google 不推薦使用 OpenGL API 渲染,改成其他也可能不會卡"
+          "note": "Google 不推薦使用 OpenGL API 繪製，改成其他也可能不會卡"
         },
-        "step3": "(不推薦)停用瀏覽器的硬件加速(又名「GPU 加速」或「圖形加速」)。"
+        "step3": "（不推薦）停用瀏覽器的硬體加速（又名「GPU 加速」或「圖形加速」）。"
       }
     }
   }

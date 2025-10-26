@@ -126,10 +126,8 @@
     "maxColumns": "Maximum columns",
     "maxItemsTipForChrome": "Tip: You can only have up to 10 most visited links.",
     "maxRows": "Maximum rows",
-    "restoreDefault": "Restore default shortcuts",
-    "restoreDefaultConfirm": {
-      "title": "Are you sure you want to restore default shortcuts?"
-    },
+    "restoreDefault": "Restore default",
+    "restoreDefaultTitle": "Are you sure you want to restore default shortcuts?",
     "showPinnedIcon": "Show pinned icon",
     "showTitle": "Show link title",
     "showTopSites": "Show most visited",
@@ -140,7 +138,7 @@
   },
   "theme": {
     "colorNames": {
-      "anime": {
+      "acgn": {
         "aveMujica": "Ave Mujica",
         "bocchi": "Bocchi the Rock!",
         "kessoku": "Kessoku Band",

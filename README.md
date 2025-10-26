@@ -8,7 +8,7 @@
 
 ## 安装
 
-目前插件已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
+目前扩展已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
 、[Microsoft Edge Add-Ons](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
 和 [Firefox Browser Add-Ons](https://addons.mozilla.org/firefox/addon/lemon-new-tab/)
 上架
@@ -25,11 +25,11 @@
 - 一言💬 —— 每次打开新页面都会为您展示一句古诗词或励志语录
 - 开源⚛️ —— 无需担心隐私泄露或恶意代码
 - 国际化🌐 —— 内置多语言支持（目前包含简体/繁体中文、粵語、英文）
-- 快捷方式🪜 —— 显示/置顶常用网站，并支持新增自定义快捷方式
+- 快速访问🪜 —— 支持显示、置顶常用网站，开箱即用，并支持新增自定义快速访问链接
 - 昼夜变化🌓 —— 支持深色模式，可设为自动跟随系统切换
 
 > [!NOTE]  
-> 本插件模仿了青柠起始页的部分样式，不喜勿喷  
+> 本扩展模仿了青柠起始页的部分样式，不喜勿喷  
 > 更多功能欢迎 PR，提 Issue 不一定会实现噢
 
 ## 更新日志（Changelog）
@@ -79,7 +79,7 @@
 |  个人项目推广  |     ❌     |        ✅        |
 |    账号系统    | 浏览器自带 |       独立       |
 
-## 为什么会有这个插件？
+## 为什么会有这个扩展？
 
 <details>
 <summary>主要有以下几个原因（碎碎念警告）：</summary>
@@ -88,7 +88,7 @@
 1. Chrome 设置默认搜索引擎为非 Google 后新标签页就没有搜索栏和壁纸
 2. Chrome 搜索引擎改成 Bing 后和 Edge 一样新标签页变成了 Bing 首页，多余的按钮、新闻很丑，且搜索栏和快捷方式都很靠上，不好看也不中用
 3. 个人喜欢青柠起始页的外观，然而青柠起始页是一个每次打开都会进行一次 http 请求的网页，准确来讲其实是导航页而不是起始页（非常不能理解为什么要放在服务器上）
-4. 青柠并不是原生浏览器插件，不支持展示经常访问网站（同上，非常不能理解），而我个人更习惯直接打开经常访问的网站
+4. 青柠并不是原生浏览器扩展，不支持展示经常访问网站（同上，非常不能理解），而我个人更习惯直接打开经常访问的网站
 5. 青柠起始页把快速访问放在了二级页面，而我更喜欢在新标签页中直接打开常用网站，虽然可以默认进入二级页面但是就看不到搜索栏了
 6. 青柠起始页不是个开源项目不好魔改，所以我决定根据自己需求模仿一个
 7. 怎么会有新标签页添加个快速访问或者搜索引擎都要注册账号的（继续不能理解）

@@ -155,7 +155,7 @@ async function restoreDefaultTopSites() {
           :cancel-button-text="t('newtab:common.cancel')"
           :icon="RestoreRound"
           icon-color="#626AEF"
-          :title="t('shortcut.restoreDefaultConfirm.title')"
+          :title="t('shortcut.restoreDefaultTitle')"
           @confirm="restoreDefaultTopSites()"
         >
           <template #reference>

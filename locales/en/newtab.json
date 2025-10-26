@@ -87,7 +87,7 @@
     },
     "removeTopMessage": {
       "content": "Shortcut removed",
-      "restoreDefault": "Restore default shortcuts",
+      "restoreDefault": "Restore default",
       "restoreSuccess": "Default shortcuts restored",
       "undo": "Undo"
     },

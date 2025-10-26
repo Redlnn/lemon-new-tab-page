@@ -22,24 +22,22 @@ const predefineColorsMapClassic = [
   { value: '#4d5aaf', labelKey: 'theme.colorNames.classic.bellflower' }
 ]
 
-const predefineColorsMapAnime = [
-  { value: '#39C5BB', labelKey: 'theme.colorNames.anime.miku' },
-  { value: '#66CCFF', labelKey: 'theme.colorNames.anime.luo' },
-  { value: '#3388bb', labelKey: 'theme.colorNames.anime.mygo' },
-  { value: '#730f40', labelKey: 'theme.colorNames.anime.aveMujica' },
-  { value: '#f7b3c2', labelKey: 'theme.colorNames.anime.bocchi' },
-  { value: '#ff2291', labelKey: 'theme.colorNames.anime.kessoku' },
-  { value: '#d90e2c', labelKey: 'theme.colorNames.anime.togeari' }
+const predefineColorsMapacgn = [
+  { value: '#39C5BB', labelKey: 'theme.colorNames.acgn.miku' },
+  { value: '#66CCFF', labelKey: 'theme.colorNames.acgn.luo' },
+  { value: '#3388bb', labelKey: 'theme.colorNames.acgn.mygo' },
+  { value: '#730f40', labelKey: 'theme.colorNames.acgn.aveMujica' },
+  { value: '#f7b3c2', labelKey: 'theme.colorNames.acgn.bocchi' },
+  { value: '#ff2291', labelKey: 'theme.colorNames.acgn.kessoku' },
+  { value: '#d90e2c', labelKey: 'theme.colorNames.acgn.togeari' }
 ]
 
 const predefineColorsMap = [
   { label: 'Classic', options: predefineColorsMapClassic },
-  { label: 'ACGN', options: predefineColorsMapAnime }
+  { label: 'ACGN', options: predefineColorsMapacgn }
 ]
 
-const predefineColors = predefineColorsMapClassic
-  .concat(predefineColorsMapAnime)
-  .map((i) => i.value)
+const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapacgn).map((i) => i.value)
 
 const isDark = useDark()
 const isDarkUI = ref(isDark.value)
