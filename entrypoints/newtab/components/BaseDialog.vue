@@ -4,7 +4,7 @@ import { useElementVisibility, useWindowSize } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { ScrollbarInstance } from 'element-plus'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 
 interface Props {
   title?: string

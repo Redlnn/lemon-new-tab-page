@@ -2,9 +2,9 @@
 import type { TooltipInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
 
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { searchEngines } from '@newtab/scripts/api/search'
 import { useFocusStore } from '@newtab/scripts/store'
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
 
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useYiYan } from '@newtab/composables/useYiYan'
 
 const { yiyan, yiyanOrigin, load, isEnabled } = useYiYan()

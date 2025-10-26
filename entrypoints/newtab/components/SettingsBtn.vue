@@ -9,8 +9,9 @@ import {
 } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { useSettingsStore } from '@/shared/settings'
+
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 
 const emit = defineEmits<{
   (e: 'open-settings'): void

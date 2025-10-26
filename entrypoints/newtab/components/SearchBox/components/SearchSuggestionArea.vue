@@ -2,9 +2,9 @@
 import { TrashAlt } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { searchSuggestAPIs } from '@newtab/scripts/api/search'
 import { searchSuggestCache } from '@newtab/scripts/api/search/suggestCache'

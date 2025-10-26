@@ -2,9 +2,10 @@
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { convertBase64Svg } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
+
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 
 import { getFaviconURLChrome } from '../utils/topSites'
 

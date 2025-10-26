@@ -9,9 +9,9 @@ import {
 
 import { Search } from '@vicons/fa'
 
-import { getPerfClasses } from '@/shared/composables/perfClasses'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { searchEngines } from '@newtab/scripts/api/search'
 import { useFocusStore } from '@newtab/scripts/store'

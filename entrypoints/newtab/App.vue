@@ -7,8 +7,6 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import Clock from '@/entrypoints/newtab/components/Clock.vue'
-import SettingsBtn from '@/entrypoints/newtab/components/SettingsBtn.vue'
 import { getLang } from '@/shared/lang'
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
 import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
@@ -17,8 +15,10 @@ import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 import type AboutCompComponent from '@newtab/components/About.vue'
 import Background from '@newtab/components/Background.vue'
 import type ChangelogComponent from '@newtab/components/Changelog.vue'
+import Clock from '@newtab/components/Clock.vue'
 import SearchBox from '@newtab/components/SearchBox/index.vue'
 import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher.vue'
+import SettingsBtn from '@newtab/components/SettingsBtn.vue'
 import type SettingsPageComponent from '@newtab/components/SettingsPage/index.vue'
 import Shortcut from '@newtab/components/Shortcut/index.vue'
 import YiYan from '@newtab/components/YiYan.vue'
@@ -66,7 +66,7 @@ i18next.on('languageChanged', onLngChanged)
 
 const SettingsPage = defineAsyncComponent(() => import('@newtab/components/SettingsPage/index.vue'))
 const Changelog = defineAsyncComponent(() => import('@newtab/components/Changelog.vue'))
-const Faq = defineAsyncComponent(() => import('@/entrypoints/newtab/components/Faq.vue'))
+const Faq = defineAsyncComponent(() => import('@newtab/components/Faq.vue'))
 const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vue'))
 const SearchEnginesSwitcher = defineAsyncComponent(
   () => import('@newtab/components/SearchEnginesSwitcher.vue')
