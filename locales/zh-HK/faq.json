@@ -38,7 +38,7 @@
           "text": "在 Experiments (chrome://flags) 頁面將 {{code1}} 更改為 {{code2}}",
           "note": "Google 不推薦使用 OpenGL API 繪製，改成其他也可能不會卡"
         },
-        "step3": "（不推薦）停用瀏覽器的硬體加速（又名「GPU 加速」或「圖形加速」）。"
+        "step3": "（不推薦）停用瀏覽器的硬體加速（又叫「GPU 加速」或「圖形加速」）。"
       }
     }
   }

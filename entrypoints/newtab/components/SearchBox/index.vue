@@ -224,6 +224,7 @@ onMounted(() => {
       <search-engine-menu ref="searchEngineMenuRef" />
       <input
         ref="searchInput"
+        name="search-input"
         v-model="searchText"
         :placeholder="searchPlaceholder"
         class="search-box__input"

@@ -22,7 +22,7 @@ const predefineColorsMapClassic = [
   { value: '#4d5aaf', labelKey: 'theme.colorNames.classic.bellflower' }
 ]
 
-const predefineColorsMapacgn = [
+const predefineColorsMapAcgn = [
   { value: '#39C5BB', labelKey: 'theme.colorNames.acgn.miku' },
   { value: '#66CCFF', labelKey: 'theme.colorNames.acgn.luo' },
   { value: '#3388bb', labelKey: 'theme.colorNames.acgn.mygo' },
@@ -34,10 +34,10 @@ const predefineColorsMapacgn = [
 
 const predefineColorsMap = [
   { label: 'Classic', options: predefineColorsMapClassic },
-  { label: 'ACGN', options: predefineColorsMapacgn }
+  { label: 'ACGN', options: predefineColorsMapAcgn }
 ]
 
-const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapacgn).map((i) => i.value)
+const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapAcgn).map((i) => i.value)
 
 const isDark = useDark()
 const isDarkUI = ref(isDark.value)

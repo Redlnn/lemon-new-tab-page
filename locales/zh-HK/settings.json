@@ -21,7 +21,7 @@
       "title": "背景類型"
     },
     "videoBlurTip": "啟用此開關可緩解同時開啟多個新分頁或多個視窗時的效能佔用",
-    "videoWarning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開啟多個新分頁，以免佔滿 GPU。同時建議關閉時間分隔符閃爍、快速存取模糊、搜尋框模糊，以及點擊搜尋框時的縮放/模糊背景，以降低效能消耗",
+    "videoWarning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開啟多個新分頁，以免佔滿 GPU。同時建議關閉時間分隔符閃爍、快速存取圖示模糊、搜尋框模糊，以及點擊搜尋框時的縮放/模糊背景，以降低效能消耗",
     "warning": {
       "fileIsNotImage": "所選檔案並非圖片！",
       "granted": "已授權訪問",
@@ -116,13 +116,13 @@
     "title": "搜尋設定"
   },
   "shortcut": {
-    "HorizontalIconSpacing": "圖示左右間距",
-    "VerticalIconSpacing": "圖示上下間距",
+    "HorizontalIconSpacing": "連結左右間距",
+    "VerticalIconSpacing": "連結上下間距",
     "enableAreaShadow": "顯示區域陰影",
     "enableBg": "顯示區域背景",
-    "enableShadow": "顯示快速存取陰影",
+    "enableShadow": "顯示圖示陰影",
     "iconSize": "圖示大小",
-    "marginTop": "快速存取區上邊距",
+    "marginTop": "區域上邊距",
     "maxColumns": "最大欄數",
     "maxItemsTipForChrome": "僅支援最多 10 個常用網站",
     "maxRows": "最大列數",
@@ -131,7 +131,7 @@
     "showPinnedIcon": "顯示釘選圖示",
     "showTitle": "顯示標題",
     "showTopSites": "顯示最常瀏覽網站",
-    "tip": "提示：可以拖動設定視窗來觀察快速存取區域的變化",
+    "tip": "Tip：可以拖動設定視窗來觀察快速存取區域的變化",
     "title": "快速存取",
     "whiteTextInLightMode": "【快速存取】淺色模式下使用白色文字",
     "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好"
