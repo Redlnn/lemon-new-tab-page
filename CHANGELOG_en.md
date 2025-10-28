@@ -2,6 +2,25 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.5.4 (WIP)
+
+### New Features✨
+
+- Support for switching languages
+- One-click enable all performance settings
+- Support for exporting and importing favorite/pinned websites (#45)
+- Added two new theme colors
+
+### Improvements⚡️
+
+- Adjusted translations for various languages
+- Optimized saving logic; changing theme colors no longer has a delay
+- Optimized code logic to improve performance
+
+### Bug Fixes🐛
+
+- Fixed incorrect background color in the "Add Shortcut" window
+
 ## 2.5.3.1 (Oct 25, 2025)
 
 ### Bug Fixes🐛
