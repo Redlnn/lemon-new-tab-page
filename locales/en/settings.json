@@ -153,14 +153,16 @@
         "togeari": "TOGENASHI TOGEARI"
       },
       "classic": {
-        "antDesign": "Ant Design",
-        "bellflower": "Navy Bellflower",
-        "crimson": "Crimson",
-        "lapis": "Lapis Lazuli",
-        "orangeRed": "Orange Red",
-        "teal": "Teal",
-        "yamabuki": "Golden Yellow",
-        "yellowGreen": "Yellow Green"
+        "antBlue": "Ant Blue",
+        "bellflower": "Deep Bellflower",
+        "crimson": "Kokiake Crimson",
+        "ink": "Chinese ink",
+        "lapisBlue": "Lapis Ruri",
+        "ochre": "Zhe Ochre",
+        "orangeRed": "Ouseki Amber",
+        "teal": "Nando Teal",
+        "yamabuki": "Yamabuki Gold",
+        "yellowGreen": "Moegi Green"
       }
     },
     "colorfulMode": "Apply the theme color to more elements",

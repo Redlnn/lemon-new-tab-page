@@ -12,13 +12,15 @@ const settings = useSettingsStore()
 const { store } = useColorMode()
 
 const predefineColorsMapClassic = [
+  { value: '#3e3e3e', labelKey: 'theme.colorNames.classic.ink' },
+  { value: '#9c5333', labelKey: 'theme.colorNames.classic.ochre' },
   { value: '#d75455', labelKey: 'theme.colorNames.classic.crimson' },
   { value: '#ec6800', labelKey: 'theme.colorNames.classic.orangeRed' },
   { value: defaultSettings.primaryColor, labelKey: 'theme.colorNames.classic.yamabuki' },
   { value: '#aacf53', labelKey: 'theme.colorNames.classic.yellowGreen' },
   { value: '#008899', labelKey: 'theme.colorNames.classic.teal' },
-  { value: '#1677ff', labelKey: 'theme.colorNames.classic.antDesign' }, // Ant Design Primary
-  { value: '#1e50a2', labelKey: 'theme.colorNames.classic.lapis' },
+  { value: '#1677ff', labelKey: 'theme.colorNames.classic.antBlue' }, // Ant Design Primary
+  { value: '#1e50a2', labelKey: 'theme.colorNames.classic.lapisBlue' },
   { value: '#4d5aaf', labelKey: 'theme.colorNames.classic.bellflower' }
 ]
 
