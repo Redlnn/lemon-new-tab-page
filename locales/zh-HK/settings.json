@@ -61,15 +61,20 @@
     },
     "customize_chrome_tips": "如果你想自訂 Chrome（例如更改主題顏色），你必須開啟 Chrome 原生的新分頁 (chrome://new-tab-page)，然後點右下角圖示以開啟「自訂 Chrome」側邊欄。\n",
     "importExport": {
+      "settings": "匯入 / 匯出設定",
+      "bookmarks": "匯入 / 匯出書籤",
       "export": "匯出",
       "import": "匯入",
-      "importFailed": "匯入失敗",
+      "importFailed": "匯入失敗：{{reason}}",
       "importSuccess": "匯入成功",
-      "title": "匯入 / 匯出設定",
+      "invalidFileFormat": "檔案格式不正確",
+      "invalidJSON": "無效的 JSON 格式",
+      "noFileSelected": "未選擇檔案",
+      "unknownError": "未知錯誤",
       "warningDialog": {
-        "content": "匯入設定會覆蓋你目前的設定，請謹慎使用此功能，是否繼續？",
+        "content": "匯入會覆蓋你目前的資料，請謹慎使用此功能，是否繼續？",
         "no": "取消",
-        "title": "你確定要從檔案匯入設定嗎？",
+        "title": "你確定要從檔案匯入嗎？",
         "yes": "繼續"
       }
     },

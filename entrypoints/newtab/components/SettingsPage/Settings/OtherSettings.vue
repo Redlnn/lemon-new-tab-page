@@ -11,6 +11,7 @@ import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { storage } from 'wxt/utils/storage'
 
+import { type Bookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { downloadJSON } from '@/shared/json'
 import {
   type CURRENT_CONFIG_INTERFACE,
@@ -26,6 +27,7 @@ const { t, i18next } = useTranslation('settings')
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
+const bookmarks = useBookmarkStore()
 
 async function confirmClearExtensionData() {
   try {
@@ -126,65 +128,137 @@ function sendSyncMessage() {
   }
 }
 
-const fileInput = ref<HTMLInputElement | null>(null)
+const settingsFileInput = ref<HTMLInputElement | null>(null)
+const bookmarkFileInput = ref<HTMLInputElement | null>(null)
 
-async function openFilePicker() {
+/**
+ * 通用文件选择器打开函数
+ */
+async function openFilePicker(inputRef: Ref<HTMLInputElement | null>) {
   try {
     await ElMessageBox.confirm(
-      t('other.importExport.warningDialog.title'),
       t('other.importExport.warningDialog.content'),
+      t('other.importExport.warningDialog.title'),
       {
         confirmButtonText: t('other.importExport.warningDialog.yes'),
         cancelButtonText: t('other.importExport.warningDialog.no'),
         type: 'warning'
       }
     )
-    fileInput.value?.click()
+    inputRef.value?.click()
   } catch {}
 }
 
-function handleFileChange(event: Event) {
+async function openSettingsFilePicker() {
+  await openFilePicker(settingsFileInput)
+}
+
+async function openBookmarkFilePicker() {
+  await openFilePicker(bookmarkFileInput)
+}
+
+async function exportSettings() {
+  downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
+}
+
+async function exportBookmarks() {
+  downloadJSON<Bookmark>(bookmarks.$state, 'lemon-tab-page-bookmarks.json')
+}
+
+/**
+ * 通用文件导入处理函数
+ */
+function handleFileImport<T>(
+  event: Event,
+  inputRef: Ref<HTMLInputElement | null>,
+  validator: (data: unknown) => data is T,
+  onSuccess: (data: T) => void
+) {
   const input = event.target as HTMLInputElement
   const file = input?.files?.[0]
+  if (!file) {
+    ElMessage.error(
+      t('other.importExport.importFailed', { reason: t('other.importExport.noFileSelected') })
+    )
+    console.error('No file selected')
+    return
+  }
+
   const reader = new FileReader()
-  let fileContent: CURRENT_CONFIG_INTERFACE | null = null
+  let fileContent: T | null = null
+  let parseError: string | null = null
 
   reader.onload = () => {
     try {
-      const json = JSON.parse(reader.result as string) as CURRENT_CONFIG_INTERFACE
-      fileContent = json
-    } catch (error) {
-      console.error('Invalid JSON file:', error)
+      const json = JSON.parse(reader.result as string)
+      if (validator(json)) {
+        fileContent = json
+      } else {
+        parseError = t('other.importExport.invalidFileFormat')
+        ElMessage.error(t('other.importExport.importFailed', { reason: parseError }))
+      }
+    } catch {
+      parseError = t('other.importExport.invalidJSON')
+      ElMessage.error(t('other.importExport.importFailed', { reason: parseError }))
     }
   }
 
-  if (file) {
-    reader.readAsText(file)
-    return new Promise<void>((resolve) => {
-      reader.onloadend = () => {
-        if (fileContent) {
-          const originalSyncState = settings.sync.enabled
-          settings.$patch(fileContent)
-          if (originalSyncState !== settings.sync.enabled) {
-            // 如果同步状态有变化，重新初始化或取消同步
-            if (settings.sync.enabled) {
-              initSyncSettings(settings)
-            } else {
-              deinitSyncSettings()
-            }
-          }
-          ElMessage.success(t('other.importExport.importSuccess'))
-        } else {
-          ElMessage.error(t('other.importExport.importFailed'))
-        }
-        // 重置 file input 以允许导入同一个文件
-        if (fileInput.value) fileInput.value.value = ''
-        resolve()
+  reader.readAsText(file)
+  return new Promise<void>((resolve) => {
+    reader.onloadend = () => {
+      if (fileContent) {
+        onSuccess(fileContent)
+        ElMessage.success(t('other.importExport.importSuccess'))
+      } else {
+        ElMessage.error(
+          t('other.importExport.importFailed', {
+            reason: parseError || t('other.importExport.unknownError')
+          })
+        )
       }
-    })
-  } else {
-    console.error('No file selected')
-  }
+      // 重置 file input 以允许导入同一个文件
+      if (inputRef.value) inputRef.value.value = ''
+      resolve()
+    }
+  })
+}
+
+function handleSettingsFileChange(event: Event) {
+  return handleFileImport<CURRENT_CONFIG_INTERFACE>(
+    event,
+    settingsFileInput,
+    (data): data is CURRENT_CONFIG_INTERFACE => typeof data === 'object' && data !== null,
+    (data) => {
+      const originalSyncState = settings.sync.enabled
+      settings.$patch(data)
+      if (originalSyncState !== settings.sync.enabled) {
+        // 如果同步状态有变化，重新初始化或取消同步
+        if (settings.sync.enabled) {
+          initSyncSettings(settings)
+        } else {
+          deinitSyncSettings()
+        }
+      }
+    }
+  )
+}
+
+function handleBookmarkFileChange(event: Event) {
+  return handleFileImport<Bookmark>(
+    event,
+    bookmarkFileInput,
+    (data): data is Bookmark =>
+      typeof data === 'object' && data !== null && 'items' in data && Array.isArray(data.items),
+    async (data) => {
+      bookmarks.$patch(data)
+      await saveBookmark(data)
+      if (settings.sync.enabled) {
+        initSyncSettings(settings)
+      } else {
+        deinitSyncSettings()
+      }
+    }
+  )
 }
 
 const currentLanguage = ref(i18next.language)
@@ -241,18 +315,23 @@ function changeLanguage(lang: string) {
       </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.importExport.title') }}</div>
+      <div class="settings__label">{{ t('other.importExport.settings') }}</div>
       <span>
-        <el-button
-          type="primary"
-          :icon="DownloadRound"
-          @click="
-            downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
-          "
-        >
+        <el-button type="primary" :icon="DownloadRound" @click="exportSettings">
           {{ t('other.importExport.export') }}
         </el-button>
-        <el-button :icon="FileUploadRound" @click="openFilePicker">
+        <el-button :icon="FileUploadRound" @click="openSettingsFilePicker">
+          {{ t('other.importExport.import') }}
+        </el-button>
+      </span>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.importExport.bookmarks') }}</div>
+      <span>
+        <el-button type="primary" :icon="DownloadRound" @click="exportBookmarks">
+          {{ t('other.importExport.export') }}
+        </el-button>
+        <el-button :icon="FileUploadRound" @click="openBookmarkFilePicker">
           {{ t('other.importExport.import') }}
         </el-button>
       </span>
@@ -277,13 +356,21 @@ function changeLanguage(lang: string) {
         {{ t('other.customize_chrome_tips') }}
       </p>
     </div>
-    <!-- hidden file input used by 导入按钮 -->
+    <!-- 隐藏的设置导入按钮 -->
     <input
-      ref="fileInput"
+      ref="settingsFileInput"
       type="file"
       accept="application/json"
       style="display: none"
-      @change="handleFileChange"
+      @change="handleSettingsFileChange"
+    />
+    <!-- 隐藏的书签导入按钮 -->
+    <input
+      ref="bookmarkFileInput"
+      type="file"
+      accept="application/json"
+      style="display: none"
+      @change="handleBookmarkFileChange"
     />
   </div>
 </template>

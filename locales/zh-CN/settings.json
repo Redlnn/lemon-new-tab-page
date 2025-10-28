@@ -61,15 +61,20 @@
     },
     "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开「自定义 Chrome」侧边栏。\n",
     "importExport": {
+      "settings": "导入 / 导出设置",
+      "bookmarks": "导入 / 导出书签",
       "export": "导出",
       "import": "导入",
-      "importFailed": "导入失败",
+      "importFailed": "导入失败：{{reason}}",
       "importSuccess": "导入成功",
-      "title": "导入 / 导出设置",
+      "invalidFileFormat": "文件格式不正确",
+      "invalidJSON": "无效的 JSON 格式",
+      "noFileSelected": "未选择文件",
+      "unknownError": "未知错误",
       "warningDialog": {
-        "content": "导入设置会覆盖你当前的设置，请谨慎使用该功能，是否继续？",
+        "content": "导入会覆盖你当前的数据，请谨慎使用该功能，是否继续？",
         "no": "不要啊",
-        "title": "你确定要从文件导入设置吗？",
+        "title": "你确定要从文件导入吗？",
         "yes": "继续"
       }
     },

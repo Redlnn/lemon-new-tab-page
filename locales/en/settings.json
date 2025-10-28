@@ -61,15 +61,20 @@
     },
     "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.\n",
     "importExport": {
+      "settings": "Import / Export settings",
+      "bookmarks": "Import / Export bookmarks",
       "export": "Export",
       "import": "Import",
-      "importFailed": "Import failed",
+      "importFailed": "Import failed: {{reason}}",
       "importSuccess": "Import successful",
-      "title": "Import / Export settings",
+      "invalidFileFormat": "Invalid file format",
+      "invalidJSON": "Invalid JSON format",
+      "noFileSelected": "No file selected",
+      "unknownError": "Unknown error",
       "warningDialog": {
-        "content": "Importing settings will overwrite your current settings. Please be cautious when using this feature!",
+        "content": "Importing will overwrite your current data. Please be cautious when using this feature!",
         "no": "No",
-        "title": "Are you sure you want to import settings from the file?",
+        "title": "Are you sure you want to import from the file?",
         "yes": "Yes"
       }
     },
