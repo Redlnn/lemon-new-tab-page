@@ -7,10 +7,10 @@ import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
-import { bookmarkStorage, initBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { bookmarkStorage, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
 
-import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import addBookmark from './components/addBookmark.vue'
@@ -32,8 +32,6 @@ const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
 const topSitesNeedsReload = ref(true)
-const bookmarksReady = ref(false)
-let bookmarkLoadPromise: Promise<void> | null = null
 
 const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
@@ -42,27 +40,7 @@ useShortcutDrag(shortcutContainerRef, bookmarks)
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 
-async function loadBookmarks(force = false) {
-  if (force) {
-    bookmarksReady.value = false
-  }
-  if (!force && bookmarksReady.value) {
-    return
-  }
-  if (!bookmarkLoadPromise) {
-    bookmarkLoadPromise = initBookmark()
-      .then(() => {
-        bookmarksReady.value = true
-      })
-      .finally(() => {
-        bookmarkLoadPromise = null
-      })
-  }
-  await bookmarkLoadPromise
-}
-
 async function refresh() {
-  await loadBookmarks()
   // 拆分数据读取与布局计算，避免频繁响应写入
   const _bookmarks = bookmarkStore.items.slice()
 
@@ -142,12 +120,10 @@ watch(
 
 // 云同步导致书签变动时刷新
 bookmarkStorage.watch(() => {
-  void loadBookmarks(true).finally(() => {
-    refreshDebounced()
-  })
+  refreshDebounced()
 })
 
-blockedTopStitesStorage.watch(() => {
+blockedTopSitesStorage.watch(() => {
   topSitesNeedsReload.value = true
   invalidateTopSitesCache()
   refreshDebounced()

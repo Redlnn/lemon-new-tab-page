@@ -5,6 +5,7 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
+import { initBookmark } from '@/shared/bookmark'
 import { i18n } from '@/shared/i18n'
 import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initSyncSettings } from '@/shared/sync'
@@ -64,6 +65,7 @@ export const main = async () => {
 
   // 先初始化设置，再挂载vue，再初始化云同步
   await initSettings()
+  await initBookmark()
   const settings = useSettingsStore()
 
   // 判断设置变更时再保存，避免无意义的写入
