@@ -63,6 +63,7 @@
     "importExport": {
       "settings": "匯入 / 匯出設定",
       "bookmarks": "匯入 / 匯出書籤",
+      "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
       "export": "匯出",
       "import": "匯入",
       "importFailed": "匯入失敗：{{reason}}",

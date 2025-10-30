@@ -12,6 +12,11 @@ import { useTranslation } from 'i18next-vue'
 import { storage } from 'wxt/utils/storage'
 
 import { type Bookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import {
+  type CustomSearchEngineStorage,
+  saveCustomSearchEngine,
+  useCustomSearchEngineStore
+} from '@/shared/customSearchEngine'
 import { downloadJSON } from '@/shared/json'
 import {
   type CURRENT_CONFIG_INTERFACE,
@@ -28,6 +33,7 @@ const { t, i18next } = useTranslation('settings')
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
 const bookmarks = useBookmarkStore()
+const customSearchEngineStore = useCustomSearchEngineStore()
 
 async function confirmClearExtensionData() {
   try {
@@ -130,6 +136,7 @@ function sendSyncMessage() {
 
 const settingsFileInput = ref<HTMLInputElement | null>(null)
 const bookmarkFileInput = ref<HTMLInputElement | null>(null)
+const customSearchEngineFileInput = ref<HTMLInputElement | null>(null)
 
 /**
  * 通用文件选择器打开函数
@@ -157,12 +164,23 @@ async function openBookmarkFilePicker() {
   await openFilePicker(bookmarkFileInput)
 }
 
+async function openCustomSearchEngineFilePicker() {
+  await openFilePicker(customSearchEngineFileInput)
+}
+
 async function exportSettings() {
   downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
 }
 
 async function exportBookmarks() {
   downloadJSON<Bookmark>(bookmarks.$state, 'lemon-tab-page-bookmarks.json')
+}
+
+async function exportCustomSearchEngines() {
+  downloadJSON<CustomSearchEngineStorage>(
+    customSearchEngineStore.$state,
+    'lemon-tab-page-custom-search-engines.json'
+  )
 }
 
 /**
@@ -243,19 +261,35 @@ function handleSettingsFileChange(event: Event) {
   )
 }
 
+function storageValidator<T>(data: unknown): data is T {
+  return typeof data === 'object' && data !== null && 'items' in data && Array.isArray(data.items)
+}
+
 function handleBookmarkFileChange(event: Event) {
   return handleFileImport<Bookmark>(
     event,
     bookmarkFileInput,
-    (data): data is Bookmark =>
-      typeof data === 'object' && data !== null && 'items' in data && Array.isArray(data.items),
+    storageValidator<Bookmark>,
     async (data) => {
       bookmarks.$patch(data)
       await saveBookmark(data)
       if (settings.sync.enabled) {
         initSyncSettings(settings)
-      } else {
-        deinitSyncSettings()
+      }
+    }
+  )
+}
+
+function handleCustomSearchEngineFileChange(event: Event) {
+  return handleFileImport<CustomSearchEngineStorage>(
+    event,
+    customSearchEngineFileInput,
+    storageValidator<CustomSearchEngineStorage>,
+    async (data) => {
+      customSearchEngineStore.$patch(data)
+      await saveCustomSearchEngine(data)
+      if (settings.sync.enabled) {
+        initSyncSettings(settings)
       }
     }
   )
@@ -337,6 +371,17 @@ function changeLanguage(lang: string) {
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.importExport.customSearchEngines') }}</div>
+      <span>
+        <el-button type="primary" :icon="DownloadRound" @click="exportCustomSearchEngines">
+          {{ t('other.importExport.export') }}
+        </el-button>
+        <el-button :icon="FileUploadRound" @click="openCustomSearchEngineFilePicker">
+          {{ t('other.importExport.import') }}
+        </el-button>
+      </span>
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.purgeWallpaperData') }}</div>
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearWallpaperData">
         {{ t('other.purge') }}
@@ -371,6 +416,14 @@ function changeLanguage(lang: string) {
       accept="application/json"
       style="display: none"
       @change="handleBookmarkFileChange"
+    />
+    <!-- 隐藏的自定义搜索引擎导入按钮 -->
+    <input
+      ref="customSearchEngineFileInput"
+      type="file"
+      accept="application/json"
+      style="display: none"
+      @change="handleCustomSearchEngineFileChange"
     />
   </div>
 </template>

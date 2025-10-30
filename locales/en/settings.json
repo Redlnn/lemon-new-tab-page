@@ -63,6 +63,7 @@
     "importExport": {
       "settings": "Import / Export settings",
       "bookmarks": "Import / Export bookmarks",
+      "customSearchEngines": "Import / Export custom search engines",
       "export": "Export",
       "import": "Import",
       "importFailed": "Import failed: {{reason}}",
