@@ -26,7 +26,7 @@ const { t } = useTranslation()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
-const bookmarkEditorRef = ref<InstanceType<typeof addBookmark> | null>(null)
+const bookmarkEditorRef = ref<InstanceType<typeof AddBookmark> | null>(null)
 
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
