@@ -1,5 +1,4 @@
 import i18next from 'i18next'
-import { v4 as uuidv4 } from 'uuid'
 
 import { isImageFile, verifyImageUrl } from '@/shared/media'
 import enhancedFetch from '@/shared/network/fetch'
@@ -69,7 +68,7 @@ export async function getBingWallpaperURL() {
     const blob = await response.blob()
     const file = new File([blob], 'bing.jpg', { type: blob.type })
 
-    const id = uuidv4()
+    const id = crypto.randomUUID()
     const url = URL.createObjectURL(file)
     const url_old = settings.bingBackground.url
 

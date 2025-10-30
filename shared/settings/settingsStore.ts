@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 
-import { v4 as uuidv4 } from 'uuid'
 import { browser } from 'wxt/browser'
 
 import { isMediaFile, isVideoFile } from '@/shared/media'
@@ -108,7 +107,7 @@ export const useSettingsStore = defineStore('option', {
 export async function uploadBackground(imageFile: File, isDarkMode = false) {
   const settings = useSettingsStore()
 
-  const id = uuidv4()
+  const id = crypto.randomUUID()
   const url = URL.createObjectURL(imageFile)
 
   // 根据模式选择对应的 store & state
