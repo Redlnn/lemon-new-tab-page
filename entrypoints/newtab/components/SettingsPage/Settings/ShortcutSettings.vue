@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
 const { t } = useTranslation('settings')
 
@@ -12,7 +12,7 @@ const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const settings = useSettingsStore()
 
 async function restoreDefaultTopSites() {
-  await blockedTopStitesStorage.setValue([])
+  await blockedTopSitesStorage.setValue([])
   location.reload()
 }
 </script>

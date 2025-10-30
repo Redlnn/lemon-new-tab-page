@@ -3,7 +3,7 @@ import i18next from 'i18next'
 import type { TopSites } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 
-import { blockedTopStitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 
 const TOP_SITES_TTL = 30_000 // 30 秒
 let cachedTopSites: { value: TopSites.MostVisitedURL[]; ts: number } | null = null
@@ -24,7 +24,7 @@ async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
   } else {
     throw new Error('Unsupported browser')
   }
-  const blockedTopStites = new Set(await blockedTopStitesStorage.getValue())
+  const blockedTopStites = new Set(await blockedTopSitesStorage.getValue())
   return topSites.filter((site) => !blockedTopStites.has(site.url))
 }
 
@@ -77,7 +77,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
           style: { marginLeft: '20px', color: 'var(--el-color-primary)', cursor: 'pointer' },
           onClick: async () => {
             invalidateTopSitesCache()
-            await blockedTopStitesStorage.setValue([])
+            await blockedTopSitesStorage.setValue([])
             await reloadFunc()
             ElMessage.success({
               message: i18next.t('newtab:shortcut.removeTopMessage.restoreSuccess')
@@ -91,31 +91,24 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
 }
 
 async function blockSite(url: string, reloadFunc: () => Promise<void>) {
-  const list = await blockedTopStitesStorage.getValue()
+  const list = await blockedTopSitesStorage.getValue()
   if (list.includes(url)) {
     return
   }
-  await blockedTopStitesStorage.setValue([...list, url])
+  await blockedTopSitesStorage.setValue([...list, url])
   invalidateTopSitesCache()
   showBlockedMessage(url, reloadFunc)
 }
 
 async function restoreBlockedSite(url: string) {
-  const list = await blockedTopStitesStorage.getValue()
+  const list = await blockedTopSitesStorage.getValue()
   const index = list.indexOf(url)
   if (index !== -1) {
     const next = list.slice()
     next.splice(index, 1)
-    await blockedTopStitesStorage.setValue(next)
+    await blockedTopSitesStorage.setValue(next)
     invalidateTopSitesCache()
   }
 }
 
-function getFaviconURLChrome(url: string, size = '128') {
-  const _url = new URL(chrome.runtime.getURL('/_favicon/'))
-  _url.searchParams.set('pageUrl', encodeURI(url)) // 同时对 URL 本身进行编码
-  _url.searchParams.set('size', size)
-  return _url.toString()
-}
-
-export { blockSite, getFaviconURLChrome, getTopSites, invalidateTopSitesCache }
+export { blockSite, getTopSites, invalidateTopSitesCache }
