@@ -16,7 +16,7 @@ const currentLang = ref(i18next.language)
 i18next.on('languageChanged', (lng) => {
   useTimeoutFn(() => {
     currentLang.value = lng
-  }, 500)
+  }, 100)
 })
 
 function customMeridiem(hours: number) {
