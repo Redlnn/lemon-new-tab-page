@@ -2,12 +2,10 @@
 import { Pin16Regular } from '@vicons/fluent'
 import { MoreVertRound } from '@vicons/material'
 
-import { convertBase64Svg } from '@/shared/media'
+import { convertBase64Svg, getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
-
-import { getFaviconURLChrome } from '../utils/topSites'
 
 const settings = useSettingsStore()
 
@@ -18,34 +16,8 @@ const props = defineProps<{
   favicon?: string
 }>()
 
-const fallbackIcon = '/favicon.png'
-const iconUrl = ref(fallbackIcon)
-
-watch(
-  () => ({ url: props.url, favicon: props.favicon, title: props.title }),
-  ({ url, favicon }) => {
-    if (import.meta.env.CHROME || import.meta.env.EDGE) {
-      iconUrl.value = favicon || getFaviconURLChrome(url)
-      return
-    }
-
-    const primary = favicon || new URL('/favicon.ico', url).toString()
-    if (!primary) {
-      iconUrl.value = fallbackIcon
-      return
-    }
-
-    const img = new Image()
-    img.onload = () => {
-      iconUrl.value = primary
-    }
-    img.onerror = () => {
-      iconUrl.value = fallbackIcon
-    }
-    img.src = primary
-  },
-  { immediate: true }
-)
+const faviconRef = getFaviconURL(props.url)
+const iconUrl = computed(() => props.favicon || faviconRef.value)
 </script>
 
 <template>
@@ -69,7 +41,6 @@ watch(
             <pin16-regular />
           </el-icon>
         </div>
-        <!-- eslint-disable vue/no-v-html -->
         <div
           class="shortcut__icon"
           :class="

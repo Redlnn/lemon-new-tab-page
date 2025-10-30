@@ -27,3 +27,32 @@ export function convertBase64Svg(base64String: string): string {
     throw error
   }
 }
+
+export function getFaviconURLChrome(url: string, size = '128') {
+  const _url = new URL(chrome.runtime.getURL('/_favicon/'))
+  _url.searchParams.set('pageUrl', encodeURI(url)) // 同时对 URL 本身进行编码
+  _url.searchParams.set('size', size)
+  return _url.toString()
+}
+
+export function getFaviconURL(url: string | null): Ref<string> {
+  const iconUrl = ref('/favicon.png')
+
+  if (!url) {
+    return iconUrl
+  }
+
+  if (import.meta.env.CHROME || import.meta.env.EDGE) {
+    iconUrl.value = getFaviconURLChrome(url)
+    return iconUrl
+  }
+
+  const primary = new URL('/favicon.ico', url).toString()
+
+  const img = new Image()
+  img.onload = () => (iconUrl.value = primary)
+  img.onerror = () => (iconUrl.value = '/favicon.png')
+  img.src = primary
+
+  return iconUrl
+}
