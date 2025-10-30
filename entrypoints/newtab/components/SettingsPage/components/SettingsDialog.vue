@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { PropType } from 'vue'
 import { watchEffect } from 'vue'
 
 import {
@@ -13,13 +14,21 @@ import {
 import { ElFocusTrap, ElTeleport } from './ElComponents'
 import SettingsDialogContent from './SettingsDialogContent.vue'
 
-const props = defineProps(dialogProps)
+const props = defineProps({
+  ...dialogProps,
+  class: {
+    type: [String, Object, Array] as PropType<
+      string | Record<string, boolean> | Array<string | Record<string, boolean>>
+    >,
+    default: ''
+  }
+})
 defineEmits(dialogEmits)
 
 const ns = useNamespace('dialog')
 const dialogRef = ref<HTMLElement>()
 const headerRef = ref<HTMLElement>()
-const dialogContentRef = ref()
+const dialogContentRef = ref<typeof SettingsDialogContent>()
 
 const {
   visible,
@@ -114,6 +123,7 @@ defineExpose({
               v-if="rendered"
               ref="dialogContentRef"
               v-bind="$attrs"
+              :class="props.class"
               :center="center"
               :align-center="_alignCenter"
               :close-icon="closeIcon"
