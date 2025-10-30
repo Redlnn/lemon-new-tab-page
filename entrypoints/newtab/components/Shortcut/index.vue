@@ -13,7 +13,7 @@ import { useSettingsStore } from '@/shared/settings'
 import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/scripts/store'
 
-import addBookmark from './components/addBookmark.vue'
+import AddBookmark from './components/AddBookmark.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import { useShortcutDrag } from './composables/useShortcutDrag'
 import { useShortcutLayout } from './composables/useShortcutLayout'

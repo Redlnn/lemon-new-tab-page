@@ -20,7 +20,6 @@ const modelForm = ref<FormInstance>()
 const props = defineProps<{
   reload: () => Promise<void>
 }>()
-const getFaviconAuto = ref(true)
 const showDialog = ref(false)
 const editingIndex = ref<number | null>(null)
 const data: {
@@ -50,7 +49,6 @@ const confirmLabel = computed(() =>
 function resetFields() {
   modelForm.value?.resetFields()
   Object.assign(data, { url: '', title: '', favicon: '' })
-  getFaviconAuto.value = true
   editingIndex.value = null
 }
 
@@ -69,7 +67,6 @@ function openEditDialog(index: number) {
     title: target.title,
     favicon: target.favicon ?? ''
   })
-  getFaviconAuto.value = !target.favicon
   showDialog.value = true
 }
 
@@ -90,7 +87,7 @@ async function submit() {
   const bookmark = {
     url: data.url.trim(),
     title: data.title.trim(),
-    ...(getFaviconAuto.value || !data.favicon ? {} : { favicon: data.favicon })
+    ...(!data.favicon ? {} : { favicon: data.favicon })
   }
   if (isEditing.value && editingIndex.value !== null) {
     bookmarkStore.items.splice(editingIndex.value, 1, bookmark)
@@ -152,10 +149,7 @@ defineExpose({
       <el-form-item :label="t('shortcut.addDialog.url')">
         <el-input v-model="data.url" @keyup.enter="submit" />
       </el-form-item>
-      <el-form-item :label="t('shortcut.addDialog.autoFetchFavicon')">
-        <el-switch v-model="getFaviconAuto" />
-      </el-form-item>
-      <el-form-item v-if="!getFaviconAuto" :label="t('shortcut.addDialog.favicon')">
+      <el-form-item :label="t('shortcut.addDialog.favicon')">
         <el-upload
           class="shortcut__favicon-uploader"
           :show-file-list="false"
@@ -171,7 +165,6 @@ defineExpose({
       </el-form-item>
     </el-form>
     <el-alert
-      v-if="!getFaviconAuto"
       type="info"
       show-icon
       :closable="false"
