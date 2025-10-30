@@ -30,6 +30,7 @@ const emit = defineEmits<{
 const header = ref<HTMLDivElement>()
 const scrollbar = ref<ScrollbarInstance>()
 const dialog = ref<InstanceType<typeof import('element-plus').ElDialog>>()
+
 const headerIsVisible = useElementVisibility(header)
 const { width: windowWidth } = useWindowSize()
 
@@ -45,6 +46,7 @@ function onClosed() {
 function onOpen() {
   emit('open')
   scrollbar.value?.setScrollTop(0)
+  scrollbar.value?.update()
 }
 
 const dialogId = computed(() => {
