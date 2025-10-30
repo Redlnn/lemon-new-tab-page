@@ -6,8 +6,7 @@ import i18next from 'i18next'
 
 import { getLang } from '@/shared/lang'
 
-// 使用 eager: false 确保完全动态导入,避免与 dayjs 内部的静态导入冲突
-const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/{zh*,en}.js', {
+const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/zh*.js', {
   eager: false
 }) as Record<string, () => Promise<{ default: ILocale }>>
 
@@ -16,16 +15,19 @@ dayjs.extend(PluginLunar as PluginFunc<{ traditional?: boolean }>)
 
 const changeLanguage = async (lng: string) => {
   const language = lng.toLowerCase()
-  const loader = dayjsLocales[`/node_modules/dayjs/esm/locale/${language}.js`]
-  const fallback = lng?.startsWith('zh')
-    ? dayjsLocales['/node_modules/dayjs/esm/locale/zh-cn.js']
-    : dayjsLocales['/node_modules/dayjs/esm/locale/en.js']
-
-  const mod = await (loader || fallback)?.()
+  let mod: { default?: ILocale } | undefined
+  if (lng?.startsWith('zh')) {
+    const loader = dayjsLocales[`/node_modules/dayjs/esm/locale/${language}.js`]
+    const fallback = dayjsLocales['/node_modules/dayjs/esm/locale/zh-cn.js']
+    mod = await (loader || fallback)?.()
+  }
   const localeData = mod?.default
   if (localeData?.name) {
     dayjs.locale(localeData.name, localeData, true)
     dayjs.locale(localeData.name)
+  } else if (!lng?.startsWith('zh')) {
+    // 使用已加载语言时不再需要两次设置 locale
+    dayjs.locale('en')
   }
 }
 

@@ -227,6 +227,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 .se-switcher-item {
   display: flex;
   align-items: center;
+  height: 65px;
   padding: 16px 18px;
   cursor: pointer;
   background-color: var(--el-bg-color);
@@ -254,7 +255,6 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   }
 
   &--add {
-    height: 65px;
     color: var(--el-text-color-secondary);
   }
 
