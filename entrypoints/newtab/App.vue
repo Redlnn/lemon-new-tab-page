@@ -16,7 +16,7 @@ import Background from '@newtab/components/Background.vue'
 import type ChangelogComponent from '@newtab/components/Changelog.vue'
 import Clock from '@newtab/components/Clock.vue'
 import SearchBox from '@newtab/components/SearchBox/index.vue'
-import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher.vue'
+import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher/index.vue'
 import SettingsBtn from '@newtab/components/SettingsBtn.vue'
 import type SettingsPageComponent from '@newtab/components/SettingsPage/index.vue'
 import Shortcut from '@newtab/components/Shortcut/index.vue'
@@ -67,7 +67,7 @@ const Changelog = defineAsyncComponent(() => import('@newtab/components/Changelo
 const Faq = defineAsyncComponent(() => import('@newtab/components/Faq.vue'))
 const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vue'))
 const SearchEnginesSwitcher = defineAsyncComponent(
-  () => import('@newtab/components/SearchEnginesSwitcher.vue')
+  () => import('@newtab/components/SearchEnginesSwitcher/index.vue')
 )
 
 type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>

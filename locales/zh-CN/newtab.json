@@ -16,7 +16,26 @@
   "common": {
     "cancel": "算了",
     "confirm": "好",
-    "enable": "启用"
+    "enable": "启用",
+    "warning": "警告"
+  },
+  "customSearchEngine": {
+    "title": "自定义搜索引擎",
+    "add": "添加自定义搜索引擎",
+    "addDialog": {
+      "title": "添加搜索引擎",
+      "name": "名称",
+      "url": "搜索 URL",
+      "urlHelp": "URL 必须包含 %s 作为搜索关键词占位符",
+      "icon": "图标",
+      "nameRequiredError": "名称不能为空~",
+      "invalidUrlError": "URL 无效或不包含 %s 占位符，请重新输入~"
+    },
+    "editDialog": {
+      "title": "编辑搜索引擎",
+      "confirm": "保存"
+    },
+    "deleteConfirm": "确定要删除搜索引擎「{{name}}」吗？"
   },
   "menu": {
     "about": "关于",
@@ -45,6 +64,7 @@
   "search": {
     "placeholder": "搜索",
     "purgeSearchHistory": "清除搜索历史",
+    "searchEngineNotFound": "未找到搜索引擎",
     "searchEngineMenu": {
       "current": "当前",
       "tipPrefix": "Tip：按下",
@@ -60,7 +80,6 @@
   },
   "shortcut": {
     "addDialog": {
-      "autoFetchFavicon": "自动获取图标",
       "confirmSvgCancelBtn": "还是不要了",
       "confirmSvgDesc": "你确定要使用 SVG 图片吗？为了避免 XSS 和 XXE 攻击，柠檬起始页将会对该图片进行处理，因此有可能会导致该 SVG 图片不会如期显示。但即使经过处理，你也有可能被你所选择的图片攻击，请确保你所使用的图片来源是安全的。",
       "confirmSvgOKBtn": "是的",
@@ -70,7 +89,7 @@
       "invalidUrlError": "无效的网址，请重新输入~",
       "title": "标题",
       "tooLargeImageError": "图片大小超过 100KiB，请重新选择~",
-      "uploadFaviconAlert": "可用的格式：ico、svg、png、jpg、webp",
+      "uploadFaviconAlert": "不上传图标时会尝试自动获取，支持的格式：ICO、SVG、PNG、JPG、WebP",
       "url": "地址"
     },
     "addNewShortcut": "添加快速访问",

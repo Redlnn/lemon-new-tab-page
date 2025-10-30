@@ -18,7 +18,7 @@ The extension is now available on
 ## Features
 
 - Fast⚡ – Purely local, high-performance, fast loading
-- Search 🔍 – Real-time suggestions and search engine selection
+- Search 🔍 – Instant suggestions and customizable search engine.
 - Flexible 🌈 – Customize and combine page layouts to adjust appearance to your preference with rich options
 - Elegant 🎨 – Clean and visually pleasing interface
 - Wallpapers 🖼️ – Support for Bing daily wallpapers, custom online APIs, and local images/videos

@@ -16,7 +16,26 @@
   "common": {
     "cancel": "No",
     "confirm": "Yes",
-    "enable": "Enable"
+    "enable": "Enable",
+    "warning": "Warning"
+  },
+  "customSearchEngine": {
+    "title": "Custom Search Engine",
+    "add": "Add Custom Search Engine",
+    "addDialog": {
+      "title": "Add Search Engine",
+      "name": "Name",
+      "url": "Search URL",
+      "urlHelp": "URL must contain %s as a placeholder for search keywords",
+      "icon": "Icon",
+      "nameRequiredError": "Name cannot be empty",
+      "invalidUrlError": "Invalid URL or missing %s placeholder"
+    },
+    "editDialog": {
+      "title": "Edit Search Engine",
+      "confirm": "Save"
+    },
+    "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?"
   },
   "menu": {
     "about": "About",
@@ -45,6 +64,7 @@
   "search": {
     "placeholder": "Search",
     "purgeSearchHistory": "Clear Search History",
+    "searchEngineNotFound": "Search engine not found",
     "searchEngineMenu": {
       "current": "Current",
       "tipPrefix": "Tip: Press",
@@ -60,7 +80,6 @@
   },
   "shortcut": {
     "addDialog": {
-      "autoFetchFavicon": "Use automatic favicon",
       "confirmSvgCancelBtn": "Oh no",
       "confirmSvgDesc": "Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.",
       "confirmSvgOKBtn": "Right",
@@ -70,7 +89,7 @@
       "invalidUrlError": "Invalid URL. Please input a new one",
       "title": "Title",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "Available types: ico, svg, png, jpg, webp",
+      "uploadFaviconAlert": "If you don’t upload an icon, it’ll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP.",
       "url": "URL"
     },
     "addNewShortcut": "Add Shortcut",

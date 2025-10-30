@@ -8,12 +8,14 @@ import {
 } from '@vueuse/core'
 
 import { Search } from '@vicons/fa'
+import { useTranslation } from 'i18next-vue'
 
+import { useCustomSearchEngineStore } from '@/shared/customSearchEngine'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
-import { searchEngines } from '@newtab/scripts/api/search'
+import { getSearchEngineUrl, searchEngines } from '@newtab/scripts/api/search'
 import { useFocusStore } from '@newtab/scripts/store'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
@@ -25,6 +27,8 @@ const searchInput = ref<HTMLInputElement>()
 const suggedtionArea = ref<InstanceType<typeof SearchSuggestionArea>>()
 const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
 
+const { t } = useTranslation()
+
 const searchText = ref('')
 const originSearchText = ref<string | null>(null)
 const mounted = ref(false)
@@ -32,6 +36,7 @@ const isComposing = ref(false) // 跟踪输入法组合输入状态
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
+const customSearchEngineStore = useCustomSearchEngineStore()
 const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache()
@@ -163,12 +168,28 @@ function activeOneSuggest(index: number) {
 }
 
 function handleTabNavigation(direction: 1 | -1) {
+  // Tab 键在所有搜索引擎（内置+自定义）之间切换
   const currentKey = settings.search.selectedSearchEngine
-  const searchEngineKeys = Object.keys(searchEngines) as (keyof typeof searchEngines)[]
-  const currentIndex = searchEngineKeys.indexOf(currentKey)
 
-  const newIndex = (currentIndex + direction + searchEngineKeys.length) % searchEngineKeys.length
-  settings.search.selectedSearchEngine = searchEngineKeys[newIndex] as keyof typeof searchEngines
+  // 构建完整的搜索引擎列表：内置引擎 + 自定义引擎
+  const builtInKeys = Object.keys(searchEngines)
+  const customKeys = customSearchEngineStore.items.map((e) => e.id)
+  const allEngineKeys = [...builtInKeys, ...customKeys]
+
+  if (allEngineKeys.length === 0) {
+    return
+  }
+
+  const currentIndex = allEngineKeys.indexOf(currentKey)
+
+  // 如果当前引擎不在列表中（可能被删除了），从第一个开始
+  if (currentIndex === -1) {
+    settings.search.selectedSearchEngine = allEngineKeys[0]!
+    return
+  }
+
+  const newIndex = (currentIndex + direction + allEngineKeys.length) % allEngineKeys.length
+  settings.search.selectedSearchEngine = allEngineKeys[newIndex]!
 }
 
 function handlePrevTab() {
@@ -186,7 +207,7 @@ const saveSearchHistory = async (text: string) => {
   await addHistory(text)
 }
 
-const doSearchWithText = async (text: string) => {
+const doSearchWithText = async (text: string, newtab: boolean = false) => {
   if (text.length <= 0) {
     searchInput.value?.focus()
     return
@@ -194,9 +215,16 @@ const doSearchWithText = async (text: string) => {
 
   await saveSearchHistory(text)
 
+  const searchUrl = getSearchEngineUrl(settings.search.selectedSearchEngine)
+  if (!searchUrl) {
+    console.error('Invalid search engine:', settings.search.selectedSearchEngine)
+    ElMessage.error(t('search.searchEngineNotFound'))
+    return
+  }
+
   window.open(
-    searchEngines[settings.search.selectedSearchEngine].url.replace('%s', text),
-    settings.search.searchInNewTab ? '_blank' : '_self'
+    searchUrl.replace('%s', encodeURIComponent(text)),
+    newtab || settings.search.searchInNewTab ? '_blank' : '_self'
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }

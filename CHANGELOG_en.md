@@ -6,16 +6,18 @@
 
 ### New Features✨
 
-- Support for switching languages
 - One-click enable all performance settings
-- Support for exporting and importing favorite/pinned websites (#45)
 - Added two new theme colors
+- Support for switching languages
+- Support for exporting and importing favorite/pinned websites (#45)
+- Support for custom search engines
 
 ### Improvements⚡️
 
 - Adjusted translations for various languages
 - Optimized saving logic; changing theme colors no longer has a delay
 - Optimized code logic to improve performance
+- Improved user experience
 
 ### Bug Fixes🐛
 

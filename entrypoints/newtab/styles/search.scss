@@ -117,6 +117,14 @@
       color: var(--el-text-color-regular);
     }
 
+    .search-engine-menu__icon--custom {
+      img {
+        width: 1em;
+        height: 1em;
+        object-fit: contain;
+      }
+    }
+
     .search-box__btn {
       color: var(--el-color-primary);
     }
