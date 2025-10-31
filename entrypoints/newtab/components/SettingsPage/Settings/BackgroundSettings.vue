@@ -3,7 +3,7 @@ import { promiseTimeout } from '@vueuse/core'
 
 import { Plus } from '@vicons/fa'
 import { CloseRound, CloudOffRound } from '@vicons/material'
-import type { ElInput, UploadProps, UploadRequestOptions } from 'element-plus'
+import type { InputInstance, UploadProps, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { browser } from 'wxt/browser'
 
@@ -21,7 +21,7 @@ const { t } = useTranslation('settings')
 const settings = useSettingsStore()
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 const tmpUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
-const onlineUrlInput = ref<InstanceType<typeof ElInput>>()
+const onlineUrlInput = ref<InputInstance>()
 
 const predefineMaskColor = ['#f2f3f5', '#000']
 
@@ -141,13 +141,9 @@ function changeOnlineBg(e: Event) {
 
 function onlineImageWarn() {
   if (settings.background.onlineUrl) return
-  ElMessageBox.confirm(
-    t('background.warning.unknownSource'),
-    t('background.warning.title'),
-    {
-      type: 'warning'
-    }
-  ).catch(() => {
+  ElMessageBox.confirm(t('background.warning.unknownSource'), t('background.warning.title'), {
+    type: 'warning'
+  }).catch(() => {
     settings.background.bgType = BgType.None
   })
 }
