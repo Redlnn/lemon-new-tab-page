@@ -148,7 +148,7 @@ watch(
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
   &--default-scale {
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
 
   &--focused {
