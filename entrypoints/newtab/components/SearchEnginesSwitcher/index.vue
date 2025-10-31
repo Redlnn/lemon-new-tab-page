@@ -9,6 +9,7 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
 import { searchEngines } from '@newtab/scripts/api/search'
 
@@ -183,12 +184,21 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
         ref="dropdownRef"
         :virtual-ref="triggerRef"
         :show-arrow="false"
-        :popper-options="{
-          modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-        }"
         virtual-triggering
         trigger="contextmenu"
         placement="bottom-start"
+        :popper-options="{
+          modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+        }"
+        :popper-class="
+          getPerfClasses(
+            {
+              transparentOff: settings.perf.disableDialogTransparent,
+              blurOff: settings.perf.disableDialogBlur
+            },
+            'se-switcher-item__menu-popper'
+          )
+        "
       >
         <template #dropdown>
           <el-dropdown-menu>
@@ -211,6 +221,8 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .se-switcher-divider {
   display: flex;
   align-items: center;
@@ -340,6 +352,25 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
     .is-active & {
       display: block;
     }
+  }
+}
+
+.se-switcher-item__menu-popper.el-dropdown__popper.el-popper {
+  .el-dropdown-menu__item {
+    padding: 2px 15px;
+    font-size: var(--el-font-size-small);
+  }
+
+  &.se-switcher-item__menu-popper--opacity {
+    background-color: var(--le-bg-color-overlay-opacity-30);
+  }
+
+  &.se-switcher-item__menu-popper--blur {
+    @include acrylic.acrylic;
+  }
+
+  .el-dropdown-menu {
+    background-color: initial;
   }
 }
 </style>
