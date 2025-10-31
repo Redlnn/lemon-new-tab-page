@@ -163,39 +163,6 @@
         }
       }
     }
-
-    .shortcut__menu {
-      position: absolute;
-      top: -5px;
-      right: -5px;
-      overflow: hidden;
-      color: transparent;
-      cursor: pointer;
-      border-radius: 50%;
-
-      & > span {
-        outline: none;
-      }
-
-      &:hover {
-        color: var(--el-text-color-primary);
-        background-color: var(--el-bg-color-overlay);
-        box-shadow: var(--el-box-shadow-light);
-      }
-
-      .shortcut__menu-icon {
-        width: 26px;
-        height: 26px;
-        padding: 3px;
-        font-size: var(--el-font-size-extra-large);
-      }
-    }
-
-    &:hover {
-      .shortcut__menu {
-        color: var(--el-text-color-regular);
-      }
-    }
   }
 }
 
