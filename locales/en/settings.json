@@ -12,7 +12,7 @@
     },
     "pauseWhenBlur": "Pause video background when the tab loses focus",
     "tip": "If no background is set for dark mode, the light mode background or video will be used.",
-    "title": "Background Settings",
+    "title": "Background",
     "type": {
       "bing": "Bing wallpaper",
       "local": "Local image / video",
@@ -45,7 +45,7 @@
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
     "smallFont": "Small time font",
-    "title": "Clock Settings",
+    "title": "Clock",
     "use12HourClock": "12-hour clock"
   },
   "other": {
@@ -85,7 +85,7 @@
     "purgeWallpaperData": "Purge wallpaper cache",
     "sync": "Cloud sync",
     "syncWarning": "Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status. Items that are not supported for sync will have an icon like this on the right:\n",
-    "title": "Other Settings",
+    "title": "Other",
     "want_to_customize_chrome": "Want to customize Chrome?"
   },
   "perf": {
@@ -100,7 +100,7 @@
     "settingsBtnTransparent": "Settings button transparency",
     "shortcutBlur": "Shortcut blur",
     "shortcutTransparent": "Shortcut transparency",
-    "title": "Performance Settings",
+    "title": "Performance",
     "toggleAll": {
       "animation": "Animation",
       "blur": "Blur",
@@ -119,7 +119,7 @@
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",
     "searchSuggestionProvider": "Search suggestion API",
-    "title": "Search Settings"
+    "title": "Search"
   },
   "shortcut": {
     "HorizontalIconSpacing": "Horizontal icon spacing",
@@ -138,7 +138,7 @@
     "showTitle": "Show link title",
     "showTopSites": "Show most visited",
     "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
-    "title": "Shortcut Settings",
+    "title": "Shortcut",
     "whiteTextInLightMode": "[Shortcut] Use white text in light mode",
     "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
   },
@@ -171,7 +171,7 @@
     "lightMode": "Light mode",
     "primaryColor": "Primary color",
     "systemMode": "Follow system / browser",
-    "title": "Theme Settings"
+    "title": "Theme"
   },
   "title": "Settings",
   "yiyan": {
@@ -190,6 +190,6 @@
         "name": "Chinese Poetry"
       }
     },
-    "title": "Quote Settings"
+    "title": "Quote"
   }
 }

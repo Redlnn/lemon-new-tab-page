@@ -12,7 +12,7 @@
     },
     "pauseWhenBlur": "當分頁失去焦點時暫停影片背景",
     "tip": "如果深色模式背景沒有選擇，會繼續使用淺色模式的圖片/影片",
-    "title": "背景設定",
+    "title": "背景",
     "type": {
       "bing": "Bing 每日圖片",
       "local": "本機圖片/影片",
@@ -45,7 +45,7 @@
     "showDate": "顯示日期",
     "showLunar": "顯示農曆",
     "smallFont": "時間小號字體",
-    "title": "時鐘設定",
+    "title": "時鐘",
     "use12HourClock": "使用 12 小時制"
   },
   "other": {
@@ -85,7 +85,7 @@
     "purgeWallpaperData": "清除壁紙快取",
     "sync": "雲端同步",
     "syncWarning": "雲端同步不支援同步以下項目：本機或線上背景圖片、最常瀏覽網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。 不支援同步的項目會有如右側的標識：\n",
-    "title": "其他設定",
+    "title": "其他",
     "want_to_customize_chrome": "想自訂 Chrome？"
   },
   "perf": {
@@ -100,7 +100,7 @@
     "settingsBtnTransparent": "設定按鈕透明",
     "shortcutBlur": "快速存取圖示模糊",
     "shortcutTransparent": "快速存取圖示透明",
-    "title": "效能設定",
+    "title": "效能",
     "toggleAll": {
       "animation": "動畫",
       "blur": "模糊效果",
@@ -119,7 +119,7 @@
     "placeholder": "搜尋框占位文字",
     "recordSearchHistory": "記錄搜尋歷史",
     "searchSuggestionProvider": "搜尋建議 API",
-    "title": "搜尋設定"
+    "title": "搜尋"
   },
   "shortcut": {
     "HorizontalIconSpacing": "連結左右間距",
@@ -171,7 +171,7 @@
     "lightMode": "淺色模式",
     "primaryColor": "主題顏色",
     "systemMode": "跟隨系統設定 / 瀏覽器",
-    "title": "主題設定"
+    "title": "主題"
   },
   "title": "設定",
   "yiyan": {

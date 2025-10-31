@@ -12,7 +12,7 @@
     },
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
     "tip": "深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢",
-    "title": "背景设置",
+    "title": "背景",
     "type": {
       "bing": "Bing 每日一图",
       "local": "本地图片/视频",
@@ -45,7 +45,7 @@
     "showDate": "显示日期",
     "showLunar": "显示农历",
     "smallFont": "时间小号字体",
-    "title": "时钟设置",
+    "title": "时钟",
     "use12HourClock": "使用 12 小时制"
   },
   "other": {
@@ -85,7 +85,7 @@
     "purgeWallpaperData": "清除壁纸缓存",
     "sync": "云同步",
     "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问网站（含已忽略的网站）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
-    "title": "其他设置",
+    "title": "其他",
     "want_to_customize_chrome": "要自定义Chrome？"
   },
   "perf": {
@@ -100,7 +100,7 @@
     "settingsBtnTransparent": "设置按钮透明",
     "shortcutBlur": "快捷访问图标模糊",
     "shortcutTransparent": "快捷访问图标透明",
-    "title": "性能设置",
+    "title": "性能",
     "toggleAll": {
       "animation": "动画",
       "blur": "模糊效果",
@@ -119,7 +119,7 @@
     "placeholder": "搜索框占位文字",
     "recordSearchHistory": "记录搜索历史",
     "searchSuggestionProvider": "搜索建议 API",
-    "title": "搜索设置"
+    "title": "搜索"
   },
   "shortcut": {
     "HorizontalIconSpacing": "链接左右间距",
@@ -171,7 +171,7 @@
     "lightMode": "浅色模式",
     "primaryColor": "主题色",
     "systemMode": "跟随系统 / 浏览器",
-    "title": "主题设置"
+    "title": "主题"
   },
   "title": "设置",
   "yiyan": {
