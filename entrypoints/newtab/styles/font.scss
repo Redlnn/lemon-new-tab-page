@@ -1,21 +1,4 @@
-@use './shortcut.scss';
-
-$font-apple: -apple-system, BlinkMacSystemFont;
-$font-fallback: system-ui, sans-serif, emoji;
-$font-common:
-  Inter,
-  Segoe UI Variable Display,
-  Segoe UI,
-  Arial,
-  Roboto,
-  DejaVu Sans,
-  Liberation Sans;
-$font-sc:
-  PingFangSC, 'Microsoft YaHei UI', 'Source Han Sans SC', 'Source Han Sans CN', 'Noto Sans CJK SC';
-$font-hk:
-  PingFangHK, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans HK', 'Noto Sans CJK HK';
-$font-tc:
-  PingFangTC, 'LiHei Pro', 'Microsoft JhengHei UI', 'Source Han Sans TC', 'Noto Sans CJK TC';
+@use '@/assets/styles/variables.scss' as *;
 
 html {
   &[lang^='zh-Hans'],
@@ -42,6 +25,6 @@ html {
   }
 }
 
-:root {
-  --el-font-family: #{$font-apple}, #{$font-common}, #{$font-fallback};
-}
+// :root {
+//   --el-font-family: #{$font-apple}, #{$font-common}, #{$font-fallback};
+// }

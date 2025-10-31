@@ -1,5 +1,4 @@
 @use './element.scss';
-@use './font.scss';
 @use './clock.scss';
 @use './settings.scss';
 @use './search.scss';
@@ -7,6 +6,8 @@
 @use './mixins/acrylic.scss' as acrylic;
 @use './transitions.scss';
 @use './settings-btn.scss';
+@use './shortcut.scss';
+@use './font.scss';
 
 * {
   box-sizing: border-box;
