@@ -10,18 +10,23 @@
 - Added two new theme colors
 - Support for switching languages
 - Support for exporting and importing favorite/pinned websites (#45)
-- Support for custom search engines
+- Support for custom search engines (and import/export)
+- Right-click to open shortcut menu, removed the long-term display of the three-dot entry to optimize visual experience
 
 ### Improvements⚡️
 
 - Adjusted translations for various languages
 - Optimized saving logic; changing theme colors no longer has a delay
 - Optimized code logic to improve performance
-- Improved user experience
+- Improved UI and UX
+- Unified the naming of settings
+- "Support Us" popup can now be closed with esc key and by clicking outside
+- In the settings page, changing the search engine now opens the search engine switcher
 
 ### Bug Fixes🐛
 
 - Fixed incorrect background color in the "Add Shortcut" window
+- Fixed issue where global font overrides were not applied
 
 ## 2.5.3.1 (Oct 25, 2025)
 
