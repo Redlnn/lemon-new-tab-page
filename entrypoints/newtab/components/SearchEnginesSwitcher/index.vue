@@ -321,7 +321,8 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
     font-size: var(--el-font-size-small);
   }
 
-  &.se-switcher-item__menu-popper--opacity {
+  &.se-switcher-item__menu-popper--opacity.se-switcher-item__menu-popper--blur {
+    // 只有模糊时才有透明度效果，否则会影响可读性
     background-color: var(--le-bg-color-overlay-opacity-30);
   }
 
