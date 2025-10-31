@@ -38,6 +38,7 @@ function openSearchEngineManager() {
         v-model="settings.search.selectedSearchSuggestionAPI"
         style="width: 150px"
         fit-input-width
+        :show-arrow="false"
       >
         <el-option
           v-for="name in Object.keys(searchSuggestAPIs)"

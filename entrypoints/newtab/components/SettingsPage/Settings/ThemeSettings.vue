@@ -134,6 +134,7 @@ watch(isDark, (newVal) => {
           v-model="settings.primaryColor"
           style="width: 183px"
           popper-class="settings-item-popper"
+          :show-arrow="false"
         >
           <el-option-group
             v-for="group in predefineColorsMap"

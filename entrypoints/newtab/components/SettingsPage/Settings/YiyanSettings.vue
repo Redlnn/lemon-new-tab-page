@@ -30,7 +30,12 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('yiyan.title') }}</div>
-      <el-select v-model="settings.yiyan.provider" style="width: 180px" fit-input-width>
+      <el-select
+        v-model="settings.yiyan.provider"
+        style="width: 180px"
+        fit-input-width
+        :show-arrow="false"
+      >
         <el-option
           v-for="(provider, key) in yiyanProviders"
           :key="key"

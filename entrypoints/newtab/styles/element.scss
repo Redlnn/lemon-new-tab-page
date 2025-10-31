@@ -63,10 +63,6 @@ body {
   }
 }
 
-.el-popper__arrow {
-  display: none;
-}
-
 .el-backtop {
   @include acrylic.acrylic(3px);
   transition: background-color var(--el-transition-duration-fast) ease;

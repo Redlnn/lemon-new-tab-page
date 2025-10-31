@@ -338,6 +338,8 @@ function changeLanguage(lang: string) {
         style="width: 183px"
         popper-class="settings-item-popper"
         @change="changeLanguage"
+        :show-arrow="false"
+        fit-input-width
       >
         <el-option
           v-for="item in supportedLanguages"

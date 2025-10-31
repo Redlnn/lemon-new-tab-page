@@ -44,6 +44,7 @@ function sponsorMessage() {
         'settings-icon__popper'
       )
     "
+    :show-arrow="false"
     placement="top-end"
     trigger="click"
     @contextmenu.prevent.stop
