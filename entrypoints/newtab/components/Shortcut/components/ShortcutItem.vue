@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Pin16Regular } from '@vicons/fluent'
-import { MoreVertRound } from '@vicons/material'
+import type { DropdownInstance } from 'element-plus'
 
 import { convertBase64Svg, getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -18,11 +18,32 @@ const props = defineProps<{
 
 const faviconRef = getFaviconURL(props.url)
 const iconUrl = computed(() => props.favicon || faviconRef.value)
+
+const dropdownRef = ref<DropdownInstance>()
+const position = ref({
+  top: 0,
+  left: 0,
+  bottom: 0,
+  right: 0
+} as DOMRect)
+const triggerRef = ref({
+  getBoundingClientRect: () => position.value
+})
+
+function handleContextmenu(event: MouseEvent): void {
+  const { clientX, clientY } = event
+  position.value = DOMRect.fromRect({
+    x: clientX,
+    y: clientY
+  })
+  event.preventDefault()
+  dropdownRef.value?.handleOpen()
+}
 </script>
 
 <template>
   <div class="shortcut__item noselect" :class="[{ pined: pined }]">
-    <a class="shortcut__item-link" :href="url">
+    <a class="shortcut__item-link" :href="url" @contextmenu="handleContextmenu">
       <div class="shortcut__icon-container">
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
@@ -77,10 +98,16 @@ const iconUrl = computed(() => props.favicon || faviconRef.value)
       </el-text>
     </a>
     <el-dropdown
+      ref="dropdownRef"
+      :virtual-ref="triggerRef"
+      :show-arrow="false"
       class="shortcut__menu"
-      trigger="click"
-      placement="bottom-end"
+      placement="bottom-start"
       size="small"
+      :popper-options="{
+        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+      }"
+      virtual-triggering
       :popper-class="
         getPerfClasses(
           {
@@ -91,11 +118,6 @@ const iconUrl = computed(() => props.favicon || faviconRef.value)
         )
       "
     >
-      <span class="shortcut__menu-icon">
-        <el-icon>
-          <more-vert-round />
-        </el-icon>
-      </span>
       <template #dropdown>
         <el-dropdown-menu>
           <slot name="submenu"></slot>
