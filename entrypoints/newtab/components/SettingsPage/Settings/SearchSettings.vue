@@ -1,13 +1,23 @@
 <script setup lang="ts">
+import { inject } from 'vue'
+
+import { BubbleChartRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
+import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
 import { useSettingsStore } from '@/shared/settings'
 
-import { searchEngines, searchSuggestAPIs } from '@newtab/scripts/api/search'
+import { searchSuggestAPIs } from '@newtab/scripts/api/search'
 
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
+
+const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
+
+function openSearchEngineManager() {
+  openSearchEnginePreference?.()
+}
 </script>
 
 <template>
@@ -18,18 +28,7 @@ const settings = useSettingsStore()
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.defaultSearchEngine') }}</div>
-      <el-select
-        v-model="settings.search.selectedSearchEngine"
-        style="width: 150px"
-        fit-input-width
-      >
-        <el-option
-          v-for="key in Object.keys(searchEngines) as (keyof typeof searchEngines)[]"
-          :key="key"
-          :label="t(searchEngines[key].nameKey)"
-          :value="key"
-        />
-      </el-select>
+      <el-button :icon="BubbleChartRound" @click="openSearchEngineManager">点击更改</el-button>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">

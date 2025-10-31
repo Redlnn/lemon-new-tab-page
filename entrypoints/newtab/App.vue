@@ -6,6 +6,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
 import { getLang } from '@/shared/lang'
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
 import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
@@ -367,6 +368,8 @@ onUnmounted(() => {
   stopLocalBgWatch?.()
   stopOnlineBgWatch?.()
 })
+
+provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 </script>
 
 <template>
