@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { Plus } from '@vicons/fa'
-import { CheckmarkCircle12Filled, Delete16Regular, Edit16Regular } from '@vicons/fluent'
-import type { DropdownInstance } from 'element-plus'
+import { CheckmarkCircle12Filled } from '@vicons/fluent'
 import { useTranslation } from 'i18next-vue'
 
 import { saveCustomSearchEngine, useCustomSearchEngineStore } from '@/shared/customSearchEngine'
@@ -9,11 +8,11 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
-import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
 import { searchEngines } from '@newtab/scripts/api/search'
 
 import AddCustomSearchEngine from './components/AddCustomSearchEngine.vue'
+import CustomEngineItem from './components/CustomEngineItem.vue'
 
 const { t } = useTranslation()
 
@@ -22,11 +21,11 @@ defineExpose({ show, hide, toggle })
 
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
+
 const addCustomSearchEngineRef = ref<InstanceType<typeof AddCustomSearchEngine>>()
 
 function selectCustomEngine(engineId: string) {
-  // TypeScript 会报错但运行时正常，因为 settings 定义需要在 Phase 4 修改
-  ;(settings.search.selectedSearchEngine as string) = engineId
+  settings.search.selectedSearchEngine = engineId
 }
 
 function editCustomEngine(index: number) {
@@ -59,29 +58,29 @@ async function deleteCustomEngine(index: number) {
     // 用户取消删除
   }
 }
-const dropdownRef = ref<DropdownInstance>()
-const position = ref({
-  top: 0,
-  left: 0,
-  bottom: 0,
-  right: 0
-} as DOMRect)
-const triggerRef = ref({
-  getBoundingClientRect: () => position.value
-})
 
-// 记录当前右键点击的引擎索引
-const currentEngineIndex = ref<number>(-1)
+type CustomEngineItemRef = InstanceType<typeof CustomEngineItem> | null
+const openedDropdownIndex = ref<number | null>(null)
+const dropdownRefs = ref<Array<CustomEngineItemRef>>([])
 
-function handleContextmenu(event: MouseEvent, index: number): void {
-  const { clientX, clientY } = event
-  position.value = DOMRect.fromRect({
-    x: clientX,
-    y: clientY
-  })
-  currentEngineIndex.value = index
-  event.preventDefault()
-  dropdownRef.value?.handleOpen()
+function setChildRef(i: number, el: CustomEngineItemRef) {
+  dropdownRefs.value[i] = el
+}
+
+function onChildOpened(index: number) {
+  if (openedDropdownIndex.value !== null && openedDropdownIndex.value !== index) {
+    const prev = dropdownRefs.value[openedDropdownIndex.value]
+    prev && prev.close?.()
+  }
+  openedDropdownIndex.value = index
+}
+
+function handleScroll() {
+  if (openedDropdownIndex.value !== null) {
+    const curr = dropdownRefs.value[openedDropdownIndex.value]
+    curr && curr.close?.()
+    openedDropdownIndex.value = null
+  }
 }
 
 // 缓存自定义搜索引擎的 favicon Ref
@@ -101,7 +100,13 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 </script>
 
 <template>
-  <base-dialog v-model="opened" :title="t('menu.searchEnginePreference')" acrylic opacity>
+  <base-dialog
+    v-model="opened"
+    :title="t('menu.searchEnginePreference')"
+    acrylic
+    opacity
+    @scroll="handleScroll"
+  >
     <div style="width: 100%; margin-top: 20px; overflow: hidden">
       <!-- 内置搜索引擎 -->
       <el-row :gutter="10" class="se-switcher-container noselect">
@@ -142,27 +147,16 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
           :key="engine.id"
           :span="12"
         >
-          <div
-            class="se-switcher-item se-switcher-item--custom"
-            :class="{ 'is-active': settings.search.selectedSearchEngine === engine.id }"
-            @click="selectCustomEngine(engine.id)"
-            @contextmenu="(e) => handleContextmenu(e, index)"
-          >
-            <div class="se-switcher-item__icon">
-              <img :src="getCustomEngineFavicon(engine)" alt="" />
-            </div>
-            <div class="se-switcher-item__content">
-              <div class="se-switcher-item__label">
-                {{ engine.name }}
-              </div>
-              <el-text truncated class="se-switcher-item__url">
-                {{ engine.url }}
-              </el-text>
-            </div>
-            <el-icon size="16" class="se-switcher-item__checked">
-              <CheckmarkCircle12Filled />
-            </el-icon>
-          </div>
+          <CustomEngineItem
+            :engine="engine"
+            :is-active="settings.search.selectedSearchEngine === engine.id"
+            :icon-url="getCustomEngineFavicon(engine)"
+            @select="selectCustomEngine"
+            @edit="() => editCustomEngine(index)"
+            @delete="() => deleteCustomEngine(index)"
+            @opened="() => onChildOpened(index)"
+            :ref="(el) => setChildRef(index, el as InstanceType<typeof CustomEngineItem>)"
+          />
         </el-col>
         <el-col :span="12">
           <div
@@ -180,40 +174,6 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
           </div>
         </el-col>
       </el-row>
-      <el-dropdown
-        ref="dropdownRef"
-        :virtual-ref="triggerRef"
-        :show-arrow="false"
-        virtual-triggering
-        trigger="contextmenu"
-        placement="bottom-start"
-        :popper-options="{
-          modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-        }"
-        :popper-class="
-          getPerfClasses(
-            {
-              transparentOff: settings.perf.disableDialogTransparent,
-              blurOff: settings.perf.disableDialogBlur
-            },
-            'se-switcher-item__menu-popper'
-          )
-        "
-      >
-        <template #dropdown>
-          <el-dropdown-menu>
-            <el-dropdown-item :icon="Edit16Regular" @click="editCustomEngine(currentEngineIndex)">
-              <span>编辑</span>
-            </el-dropdown-item>
-            <el-dropdown-item
-              :icon="Delete16Regular"
-              @click="deleteCustomEngine(currentEngineIndex)"
-            >
-              <span>删除</span>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </template>
-      </el-dropdown>
     </div>
   </base-dialog>
 

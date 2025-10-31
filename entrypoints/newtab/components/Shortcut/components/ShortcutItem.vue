@@ -19,6 +19,10 @@ const props = defineProps<{
 const faviconRef = getFaviconURL(props.url)
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
+const emit = defineEmits<{
+  opened: []
+}>()
+
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({
   top: 0,
@@ -38,7 +42,18 @@ function handleContextmenu(event: MouseEvent): void {
   })
   event.preventDefault()
   dropdownRef.value?.handleOpen()
+  emit('opened')
 }
+
+function open() {
+  dropdownRef.value?.handleOpen()
+}
+
+function close() {
+  dropdownRef.value?.handleClose()
+}
+
+defineExpose({ open, close })
 </script>
 
 <template>

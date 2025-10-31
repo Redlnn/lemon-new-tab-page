@@ -28,6 +28,22 @@ const settings = useSettingsStore()
 const bookmarkStore = useBookmarkStore()
 const bookmarkEditorRef = ref<InstanceType<typeof AddBookmark> | null>(null)
 
+type ShortcutItemRef = InstanceType<typeof ShortcutItem> | null
+const openedBookmarkIndex = ref<number | null>(null)
+const bookmarkItemRefs = ref<Array<ShortcutItemRef>>([])
+
+function setChildRef(i: number, el: ShortcutItemRef) {
+  bookmarkItemRefs.value[i] = el
+}
+
+function onChildOpened(i: number) {
+  if (openedBookmarkIndex.value !== null && openedBookmarkIndex.value !== i) {
+    const prev = bookmarkItemRefs.value[openedBookmarkIndex.value]
+    prev && prev.close?.()
+  }
+  openedBookmarkIndex.value = i
+}
+
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
@@ -157,12 +173,13 @@ blockedTopSitesStorage.watch(() => {
     >
       <shortcut-item
         v-for="(site, index) in bookmarks"
-        ref="bookmarkItemsRef"
         :key="index"
         :url="site.url"
         :title="site.title"
         :favicon="site.favicon"
         pined
+        @opened="() => onChildOpened(index)"
+        :ref="(el) => setChildRef(index, el as InstanceType<typeof ShortcutItem>)"
       >
         <template #submenu>
           <el-dropdown-item @click="bookmarkEditorRef?.openEditDialog(index)">
@@ -185,6 +202,10 @@ blockedTopSitesStorage.watch(() => {
         :url="site.url"
         :title="site.title || ''"
         :favicon="site.favicon"
+        @opened="() => onChildOpened(bookmarks.length + index)"
+        :ref="
+          (el) => setChildRef(bookmarks.length + index, el as InstanceType<typeof ShortcutItem>)
+        "
       >
         <template #submenu>
           <el-dropdown-item
