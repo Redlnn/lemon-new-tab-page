@@ -132,7 +132,9 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
         </el-col>
       </el-row>
 
-      <el-divider class="se-switcher-divider">{{ t('customSearchEngine.title') }}</el-divider>
+      <div class="se-switcher-divider noselect">
+        {{ t('customSearchEngine.title') }}
+      </div>
       <el-row :gutter="10" class="se-switcher-container noselect">
         <el-col
           v-for="(engine, index) in customSearchEngineStore.items"
@@ -142,27 +144,23 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
           <div
             class="se-switcher-item se-switcher-item--custom"
             :class="{ 'is-active': settings.search.selectedSearchEngine === engine.id }"
+            @click="selectCustomEngine(engine.id)"
+            @contextmenu="(e) => handleContextmenu(e, index)"
           >
-            <div
-              class="se-switcher-item__main"
-              @click="selectCustomEngine(engine.id)"
-              @contextmenu="(e) => handleContextmenu(e, index)"
-            >
-              <div class="se-switcher-item__icon">
-                <img :src="getCustomEngineFavicon(engine)" alt="" />
-              </div>
-              <div class="se-switcher-item__content">
-                <div class="se-switcher-item__label">
-                  {{ engine.name }}
-                </div>
-                <el-text truncated class="se-switcher-item__url">
-                  {{ engine.url }}
-                </el-text>
-              </div>
-              <el-icon size="16" class="se-switcher-item__checked">
-                <CheckmarkCircle12Filled />
-              </el-icon>
+            <div class="se-switcher-item__icon">
+              <img :src="getCustomEngineFavicon(engine)" alt="" />
             </div>
+            <div class="se-switcher-item__content">
+              <div class="se-switcher-item__label">
+                {{ engine.name }}
+              </div>
+              <el-text truncated class="se-switcher-item__url">
+                {{ engine.url }}
+              </el-text>
+            </div>
+            <el-icon size="16" class="se-switcher-item__checked">
+              <CheckmarkCircle12Filled />
+            </el-icon>
           </div>
         </el-col>
         <el-col :span="12">
@@ -181,7 +179,6 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
           </div>
         </el-col>
       </el-row>
-
       <el-dropdown
         ref="dropdownRef"
         :virtual-ref="triggerRef"
@@ -214,10 +211,29 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 </template>
 
 <style lang="scss">
-.se-switcher-divider .el-divider__text {
+.se-switcher-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
   font-size: var(--el-font-size-extra-small);
-  color: var(--el-text-color-disabled);
-  background-color: initial;
+  color: var(--el-text-color-placeholder);
+
+  &::before,
+  &::after {
+    flex: 1; /* 平均分配并允许收缩 */
+    min-width: 0; /* 允许缩小到 0，避免被文本撑开 */
+    height: 1px; /* 线的粗细 */
+    content: '';
+    background: currentColor;
+  }
+
+  &::before {
+    margin-right: 0.75em;
+  }
+
+  &::after {
+    margin-left: 0.75em;
+  }
 }
 
 .se-switcher-container .el-col:not(:last-child) {
@@ -256,13 +272,6 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 
   &--add {
     color: var(--el-text-color-secondary);
-  }
-
-  &__main {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    cursor: pointer;
   }
 
   &__icon {
@@ -306,7 +315,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   }
 
   &__label {
-    font-weight: 550;
+    font-weight: 500;
   }
 
   &__url {
