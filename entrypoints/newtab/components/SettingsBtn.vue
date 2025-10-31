@@ -25,7 +25,10 @@ const { t } = useTranslation()
 const settings = useSettingsStore()
 
 function sponsorMessage() {
-  ElMessageBox.alert(t('sponsor'), t('newtab:menu.sponsor'))
+  ElMessageBox.alert(t('sponsor'), t('newtab:menu.sponsor'), {
+    closeOnPressEscape: true,
+    closeOnClickModal: true
+  })
 }
 </script>
 
