@@ -2,7 +2,7 @@
 import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import { CloseRound } from '@vicons/material'
-import type { ScrollbarInstance } from 'element-plus'
+import type { DialogInstance, ScrollbarInstance } from 'element-plus'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 
@@ -25,13 +25,14 @@ const emit = defineEmits<{
   open: []
   close: []
   closed: []
+  scroll: [{ scrollLeft: number; scrollTop: number }]
 }>()
 
-const header = ref<HTMLDivElement>()
-const scrollbar = ref<ScrollbarInstance>()
-const dialog = ref<InstanceType<typeof import('element-plus').ElDialog>>()
+const headerRef = ref<HTMLDivElement>()
+const scrollbarRef = ref<ScrollbarInstance>()
+const dialogRef = ref<DialogInstance>()
 
-const headerIsVisible = useElementVisibility(header)
+const headerIsVisible = useElementVisibility(headerRef)
 const { width: windowWidth } = useWindowSize()
 
 function onClose() {
@@ -45,13 +46,17 @@ function onClosed() {
 
 function onOpen() {
   emit('open')
-  scrollbar.value?.setScrollTop(0)
-  scrollbar.value?.update()
+  scrollbarRef.value?.setScrollTop(0)
+  scrollbarRef.value?.update()
+}
+
+function onScroll(e: { scrollLeft: number; scrollTop: number }) {
+  emit('scroll', e)
 }
 
 const dialogId = computed(() => {
   return (
-    (dialog.value?.$el as HTMLElement)?.nextElementSibling?.firstElementChild?.getAttribute(
+    (dialogRef.value?.$el as HTMLElement)?.nextElementSibling?.firstElementChild?.getAttribute(
       'aria-describedby'
     ) ?? null
   )
@@ -60,7 +65,7 @@ const dialogId = computed(() => {
 
 <template>
   <el-dialog
-    ref="dialog"
+    ref="dialogRef"
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
     :class="[
@@ -97,8 +102,8 @@ const dialogId = computed(() => {
       :style="{ opacity: !headerIsVisible ? 1 : 0 }"
     ></div>
     <div class="base-dialog-container">
-      <el-scrollbar ref="scrollbar" class="base-dialog-scrollbar">
-        <div ref="header" class="base-dialog-list-title noselect">
+      <el-scrollbar ref="scrollbarRef" class="base-dialog-scrollbar" @scroll="onScroll">
+        <div ref="headerRef" class="base-dialog-list-title noselect">
           {{ title }}
         </div>
         <slot></slot>
