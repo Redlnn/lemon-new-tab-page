@@ -39,7 +39,9 @@ function setChildRef(i: number, el: ShortcutItemRef) {
 function onChildOpened(i: number) {
   if (openedBookmarkIndex.value !== null && openedBookmarkIndex.value !== i) {
     const prev = bookmarkItemRefs.value[openedBookmarkIndex.value]
-    prev && prev.close?.()
+    if (prev) {
+      prev.close()
+    }
   }
   openedBookmarkIndex.value = i
 }

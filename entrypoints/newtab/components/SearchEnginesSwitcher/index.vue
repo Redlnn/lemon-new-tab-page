@@ -70,7 +70,9 @@ function setChildRef(i: number, el: CustomEngineItemRef) {
 function onChildOpened(index: number) {
   if (openedDropdownIndex.value !== null && openedDropdownIndex.value !== index) {
     const prev = dropdownRefs.value[openedDropdownIndex.value]
-    prev && prev.close?.()
+    if (prev) {
+      prev.close()
+    }
   }
   openedDropdownIndex.value = index
 }
@@ -78,7 +80,9 @@ function onChildOpened(index: number) {
 function handleScroll() {
   if (openedDropdownIndex.value !== null) {
     const curr = dropdownRefs.value[openedDropdownIndex.value]
-    curr && curr.close?.()
+    if (curr) {
+      curr.close()
+    }
     openedDropdownIndex.value = null
   }
 }
