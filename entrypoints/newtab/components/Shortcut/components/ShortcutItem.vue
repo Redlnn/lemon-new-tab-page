@@ -96,33 +96,33 @@ function handleContextmenu(event: MouseEvent): void {
       >
         {{ title }}
       </el-text>
+      <el-dropdown
+        ref="dropdownRef"
+        :virtual-ref="triggerRef"
+        :show-arrow="false"
+        virtual-triggering
+        trigger="contextmenu"
+        placement="bottom-start"
+        size="small"
+        :popper-options="{
+          modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+        }"
+        :popper-class="
+          getPerfClasses(
+            {
+              transparentOff: settings.perf.disableShortcutTransparent,
+              blurOff: settings.perf.disableShortcutBlur
+            },
+            'shortcut__menu-popper'
+          )
+        "
+      >
+        <template #dropdown>
+          <el-dropdown-menu>
+            <slot name="submenu"></slot>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
     </a>
-    <el-dropdown
-      ref="dropdownRef"
-      :virtual-ref="triggerRef"
-      :show-arrow="false"
-      class="shortcut__menu"
-      placement="bottom-start"
-      size="small"
-      :popper-options="{
-        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-      }"
-      virtual-triggering
-      :popper-class="
-        getPerfClasses(
-          {
-            transparentOff: settings.perf.disableShortcutTransparent,
-            blurOff: settings.perf.disableShortcutBlur
-          },
-          'shortcut__menu-popper'
-        )
-      "
-    >
-      <template #dropdown>
-        <el-dropdown-menu>
-          <slot name="submenu"></slot>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
   </div>
 </template>
