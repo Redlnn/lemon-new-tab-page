@@ -113,6 +113,7 @@
   },
   "search": {
     "alwaysExpandSearchBar": "Always expand search bar",
+    "clickToChange": "Click to change",
     "defaultSearchEngine": "Search engine",
     "enableShadow": "Show search box shadow",
     "openInNewTab": "Open in new tab",

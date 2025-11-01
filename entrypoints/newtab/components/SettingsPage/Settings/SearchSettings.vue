@@ -28,7 +28,9 @@ function openSearchEngineManager() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.defaultSearchEngine') }}</div>
-      <el-button :icon="BubbleChartRound" @click="openSearchEngineManager">点击更改</el-button>
+      <el-button :icon="BubbleChartRound" @click="openSearchEngineManager">
+        {{ t('search.clickToChange') }}
+      </el-button>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">

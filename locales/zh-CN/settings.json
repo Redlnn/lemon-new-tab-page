@@ -113,6 +113,7 @@
   },
   "search": {
     "alwaysExpandSearchBar": "一直展开搜索框",
+    "clickToChange": "点击更改",
     "defaultSearchEngine": "搜索引擎",
     "enableShadow": "显示搜索框阴影",
     "openInNewTab": "在新标签页中打开",
