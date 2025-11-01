@@ -36,15 +36,9 @@ const { beforeFaviconUpload, httpRequest } = useFaviconUpload({ maxKB: 100 })
 
 const isEditing = computed(() => editingIndex.value !== null)
 const dialogTitle = computed(() =>
-  t(
-    isEditing.value
-      ? 'newtab:shortcut.editDialog.dialogTitle'
-      : 'newtab:shortcut.addDialog.dialogTitle'
-  )
+  t(isEditing.value ? 'shortcut.editShortcut' : 'shortcut.addShortcut')
 )
-const confirmLabel = computed(() =>
-  t(isEditing.value ? 'newtab:shortcut.editDialog.confirm' : 'newtab:common.confirm')
-)
+const confirmLabel = computed(() => t(isEditing.value ? 'common.save' : 'common.confirm'))
 
 function resetFields() {
   modelForm.value?.resetFields()
@@ -81,7 +75,7 @@ function isValidUrl(url: string) {
 
 async function submit() {
   if (!isValidUrl(data.url)) {
-    ElMessage.error(t('newtab:shortcut.addDialog.invalidUrlError'))
+    ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
     return
   }
   const bookmark = {
@@ -130,7 +124,7 @@ defineExpose({
         </div>
       </div>
       <div v-if="settings.shortcut.showShortcutTitle" class="shortcut__title">
-        {{ t('shortcut.addNewShortcut') }}
+        {{ t('shortcut.addShortcut') }}
       </div>
     </div>
   </div>
@@ -143,13 +137,13 @@ defineExpose({
     destroy-on-close
   >
     <el-form ref="modelForm" :model="data">
-      <el-form-item :label="t('shortcut.addDialog.title')">
+      <el-form-item :label="t('common.name')">
         <el-input v-model="data.title" />
       </el-form-item>
-      <el-form-item :label="t('shortcut.addDialog.url')">
+      <el-form-item :label="t('common.url')">
         <el-input v-model="data.url" @keyup.enter="submit" />
       </el-form-item>
-      <el-form-item :label="t('shortcut.addDialog.favicon')">
+      <el-form-item :label="t('common.icon')">
         <el-upload
           class="shortcut__favicon-uploader"
           :show-file-list="false"
@@ -168,11 +162,11 @@ defineExpose({
       type="info"
       show-icon
       :closable="false"
-      :title="t('newtab:shortcut.addDialog.uploadFaviconAlert')"
+      :title="t('shortcut.addDialog.uploadFaviconAlert')"
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ t('newtab:common.cancel') }}</el-button>
+        <el-button @click="cancel">{{ t('common.cancel') }}</el-button>
         <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>

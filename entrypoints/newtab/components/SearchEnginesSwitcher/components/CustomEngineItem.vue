@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { CheckmarkCircle12Filled, Delete16Regular, Edit16Regular } from '@vicons/fluent'
 import type { DropdownInstance } from 'element-plus'
+import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+
+const { t } = useTranslation()
 
 const settings = useSettingsStore()
 
@@ -90,15 +93,13 @@ defineExpose({ open, close })
       <template #dropdown>
         <el-dropdown-menu>
           <el-dropdown-item :icon="Edit16Regular" @click="$emit('edit')">
-            <span>编辑</span>
+            <span>{{ t('common.edit') }}</span>
           </el-dropdown-item>
           <el-dropdown-item :icon="Delete16Regular" @click="$emit('delete')">
-            <span>删除</span>
+            <span>{{ t('common.delete') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
   </div>
 </template>
-
-<!-- no local styles; reuse parent styles -->

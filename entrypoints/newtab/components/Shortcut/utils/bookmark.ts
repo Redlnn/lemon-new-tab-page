@@ -18,7 +18,7 @@ export async function removeBookmark(
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18next.t('newtab:shortcut.removePinnedMessage.content')
+        i18next.t('newtab:shortcut.unpinMessage')
       ),
       h(
         'span',
@@ -34,7 +34,7 @@ export async function removeBookmark(
             await refresh()
           }
         },
-        i18next.t('newtab:shortcut.removePinnedMessage.undo')
+        i18next.t('newtab:common.undo')
       )
     ])
   })

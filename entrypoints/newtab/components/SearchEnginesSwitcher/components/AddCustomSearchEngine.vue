@@ -28,15 +28,9 @@ const { beforeFaviconUpload, httpRequest } = useFaviconUpload({ maxKB: 100 })
 
 const isEditing = computed(() => editingIndex.value !== null)
 const dialogTitle = computed(() =>
-  t(
-    isEditing.value
-      ? 'newtab:customSearchEngine.editDialog.title'
-      : 'newtab:customSearchEngine.addDialog.title'
-  )
+  t(isEditing.value ? 'customSearchEngine.edit' : 'customSearchEngine.add')
 )
-const confirmLabel = computed(() =>
-  t(isEditing.value ? 'newtab:customSearchEngine.editDialog.confirm' : 'newtab:common.confirm')
-)
+const confirmLabel = computed(() => t(isEditing.value ? 'common.save' : 'common.confirm'))
 
 function resetFields() {
   modelForm.value?.resetFields()
@@ -73,12 +67,12 @@ function validateUrl(url: string): boolean {
 
 async function submit() {
   if (!data.name.trim()) {
-    ElMessage.error(t('newtab:customSearchEngine.addDialog.nameRequiredError'))
+    ElMessage.error(t('customSearchEngine.addDialog.nameRequiredError'))
     return
   }
 
   if (!validateUrl(data.url)) {
-    ElMessage.error(t('newtab:customSearchEngine.addDialog.invalidUrlError'))
+    ElMessage.error(t('customSearchEngine.addDialog.invalidUrlError'))
     return
   }
 
@@ -123,17 +117,17 @@ defineExpose({
     destroy-on-close
   >
     <el-form ref="modelForm" :model="data">
-      <el-form-item :label="t('customSearchEngine.addDialog.title')">
+      <el-form-item :label="t('common.name')">
         <el-input v-model="data.name" />
       </el-form-item>
-      <el-form-item :label="t('customSearchEngine.addDialog.url')">
+      <el-form-item :label="t('common.url')">
         <el-input
           v-model="data.url"
           placeholder="https://example.com/?q=%s"
           @keyup.enter="submit"
         />
       </el-form-item>
-      <el-form-item :label="t('customSearchEngine.addDialog.icon')">
+      <el-form-item :label="t('common.icon')">
         <el-upload
           class="search-engine-icon-uploader"
           :show-file-list="false"
@@ -152,11 +146,11 @@ defineExpose({
       type="info"
       show-icon
       :closable="false"
-      :title="t('newtab:customSearchEngine.addDialog.urlHelp')"
+      :title="t('customSearchEngine.addDialog.urlHelp')"
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ t('newtab:common.cancel') }}</el-button>
+        <el-button @click="cancel">{{ t('common.cancel') }}</el-button>
         <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>

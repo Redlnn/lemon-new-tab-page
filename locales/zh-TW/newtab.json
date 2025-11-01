@@ -17,24 +17,24 @@
     "cancel": "算了",
     "confirm": "好",
     "enable": "啟用",
-    "warning": "警告"
+    "warning": "警告",
+    "edit": "編輯",
+    "save": "儲存",
+    "delete": "刪除",
+    "undo": "復原",
+    "icon": "圖示",
+    "name": "名稱",
+    "url": "網址"
   },
   "customSearchEngine": {
     "title": "自訂搜尋引擎",
     "add": "新增自訂搜尋引擎",
     "addDialog": {
-      "title": "新增搜尋引擎",
-      "name": "名稱",
-      "url": "搜尋 URL",
       "urlHelp": "URL 必須包含 %s 作為搜尋關鍵字佔位符",
-      "icon": "圖示",
       "nameRequiredError": "名稱不能為空~",
       "invalidUrlError": "URL 無效或不包含 %s 佔位符，請重新輸入~"
     },
-    "editDialog": {
-      "title": "編輯搜尋引擎",
-      "confirm": "儲存"
-    },
+    "edit": "編輯自訂搜尋引擎",
     "deleteConfirm": "確定要刪除搜尋引擎「{{namee}}」嗎？"
   },
   "menu": {
@@ -84,33 +84,21 @@
       "confirmSvgDesc": "你確定要使用 SVG 圖片嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對這個圖片進行處理，因此有可能會導致這個 SVG 圖片不會如期展示。但即使經過處理，你有可能遭受攻擊，請確保你所使用的圖片來源安全。",
       "confirmSvgOKBtn": "是的",
       "confirmSvgTitle": "你選擇了一張 SVG 圖片",
-      "dialogTitle": "新增捷徑",
-      "favicon": "圖示",
       "invalidUrlError": "無效的網址，請重新輸入~",
-      "title": "標題",
       "tooLargeImageError": "圖片檔案大小超過 100KiB，請重新選擇~",
-      "uploadFaviconAlert": "沒上傳圖示時會自動嘗試取得，支援格式：ICO、SVG、PNG、JPG、WebP。",
-      "url": "網址"
+      "uploadFaviconAlert": "沒上傳圖示時會自動嘗試取得，支援格式：ICO、SVG、PNG、JPG、WebP。"
     },
-    "addNewShortcut": "新增捷徑",
-    "edit": "編輯",
-    "editDialog": {
-      "confirm": "儲存",
-      "dialogTitle": "編輯捷徑"
-    },
+    "addShortcut": "新增捷徑",
+    "editShortcut": "編輯捷徑",
     "pin": "釘選",
-    "remove": "移除",
-    "removePinnedMessage": {
-      "content": "已取消釘選該捷徑",
-      "undo": "復原"
-    },
-    "removeTopMessage": {
-      "content": "已移除捷徑",
+    "hide": "隱藏",
+    "hideTopMessage": {
+      "content": "已隱藏該最常訪問網站",
       "restoreDefault": "還原預設",
-      "restoreSuccess": "已還原預設捷徑",
-      "undo": "撤銷"
+      "restoreSuccess": "已還原預設最常訪問網站"
     },
-    "unpin": "取消釘選"
+    "unpin": "取消釘選",
+    "unpinMessage": "已取消釘選該捷徑"
   },
   "sponsor": "這個擴充功能是我當初利用業餘時間為了滿足自己的需求而開始開發的。很高興它也對你有幫助！如果你真的想支持我，可以聯繫我的郵箱：redlnn@outlook.com。感謝你的關注與支持！",
   "title": "新分頁"

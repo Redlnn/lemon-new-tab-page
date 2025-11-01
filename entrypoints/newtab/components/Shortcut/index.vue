@@ -188,7 +188,7 @@ blockedTopSitesStorage.watch(() => {
             <el-icon>
               <edit16-regular />
             </el-icon>
-            {{ t('shortcut.edit') }}
+            {{ t('common.edit') }}
           </el-dropdown-item>
           <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refreshDebounced)">
             <el-icon>
@@ -221,7 +221,7 @@ blockedTopSitesStorage.watch(() => {
             <el-icon>
               <clear-round />
             </el-icon>
-            {{ t('shortcut.remove') }}
+            {{ t('shortcut.hide') }}
           </el-dropdown-item>
           <el-dropdown-item
             @click="pinBookmark(bookmarkStore, refreshDebounced, site.url, site.title || '')"

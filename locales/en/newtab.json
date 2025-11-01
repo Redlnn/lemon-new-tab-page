@@ -17,24 +17,24 @@
     "cancel": "No",
     "confirm": "Yes",
     "enable": "Enable",
-    "warning": "Warning"
+    "warning": "Warning",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete",
+    "undo": "Undo",
+    "icon": "Icon",
+    "name": "Name",
+    "url": "URL"
   },
   "customSearchEngine": {
     "title": "Custom Search Engine",
     "add": "Add Custom Search Engine",
     "addDialog": {
-      "title": "Add Search Engine",
-      "name": "Name",
-      "url": "Search URL",
       "urlHelp": "URL must contain %s as a placeholder for search keywords",
-      "icon": "Icon",
       "nameRequiredError": "Name cannot be empty",
       "invalidUrlError": "Invalid URL or missing %s placeholder"
     },
-    "editDialog": {
-      "title": "Edit Search Engine",
-      "confirm": "Save"
-    },
+    "edit": "Edit Custom Search Engine",
     "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?"
   },
   "menu": {
@@ -84,33 +84,21 @@
       "confirmSvgDesc": "Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.",
       "confirmSvgOKBtn": "Right",
       "confirmSvgTitle": "You selected an SVG image",
-      "dialogTitle": "Add Shortcut",
-      "favicon": "Favicon",
       "invalidUrlError": "Invalid URL. Please input a new one",
-      "title": "Title",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "If you don’t upload an icon, it’ll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP.",
-      "url": "URL"
+      "uploadFaviconAlert": "If you don’t upload an icon, it’ll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP."
     },
-    "addNewShortcut": "Add Shortcut",
-    "edit": "Edit",
-    "editDialog": {
-      "confirm": "Save",
-      "dialogTitle": "Edit Shortcut"
-    },
+    "addShortcut": "Add Shortcut",
+    "editShortcut": "Edit Shortcut",
     "pin": "Pin",
-    "remove": "Remove",
-    "removePinnedMessage": {
-      "content": "Removed from pinned links.",
-      "undo": "Undo"
-    },
-    "removeTopMessage": {
-      "content": "Shortcut removed",
+    "hide": "Hide",
+    "hideTopMessage": {
+      "content": "Most visited site hidden.",
       "restoreDefault": "Restore default",
-      "restoreSuccess": "Default shortcuts restored",
-      "undo": "Undo"
+      "restoreSuccess": "Default most visited site restored"
     },
-    "unpin": "Unpin"
+    "unpin": "Unpin",
+    "unpinMessage": "Shortcut unpinned."
   },
   "sponsor": "I first built this extension in my free time to meet my own needs, and I’m glad it’s useful for you too! If you’d like to support me, you can reach me at: redlnn@outlook.com. Thanks for your support!",
   "title": "New Tab"
