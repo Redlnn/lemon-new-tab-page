@@ -158,7 +158,7 @@ const dialogId = computed(() => {
     height: 35px;
   }
 
-  & .el-dialog__header {
+  .el-dialog__header {
     position: relative;
     width: 100%;
     height: 50px;
@@ -167,7 +167,7 @@ const dialogId = computed(() => {
     text-align: center;
   }
 
-  & .el-dialog__body {
+  .el-dialog__body {
     height: calc(100% - 51px);
     color: var(--el-text-color-primary);
     transition: color var(--el-transition-duration-fast) ease;

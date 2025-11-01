@@ -24,16 +24,22 @@ body {
 .el-message-box {
   padding: 20px 24px !important;
 
-  & .el-message-box__title {
+  .el-message-box__title {
     font-size: var(--el-font-size-medium);
     font-weight: bold;
   }
 }
 
 .el-dialog {
-  & .el-dialog__header {
+  .el-dialog__header {
     font-size: var(--el-font-size-medium);
     font-weight: bold;
+  }
+
+  .el-alert {
+    --el-alert-title-font-size: 13px;
+    --el-alert-title-with-description-font-size: 15px;
+    --el-alert-description-font-size: 13px;
   }
 }
 

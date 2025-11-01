@@ -485,7 +485,7 @@ const isVideoBg = computed(
   flex: 1;
   height: 150px;
 
-  & .settings__bg-uploader-icon {
+  .settings__bg-uploader-icon {
     font-size: 28px;
     color: var(--el-text-color-placeholder);
     text-align: center;

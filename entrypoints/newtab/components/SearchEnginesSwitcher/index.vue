@@ -171,7 +171,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
               <Plus />
             </el-icon>
             <div class="se-switcher-item__content">
-              <div class="se-switcher-item__label">
+              <div class="se-switcher-item__label" style="font-weight: var(--el-font-size-base)">
                 {{ t('customSearchEngine.add') }}
               </div>
             </div>
@@ -196,9 +196,9 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 
   &::before,
   &::after {
-    flex: 1; /* 平均分配并允许收缩 */
+    flex: 1;
     min-width: 0; /* 允许缩小到 0，避免被文本撑开 */
-    height: 1px; /* 线的粗细 */
+    height: 0.5px; /* 粗细 */
     content: '';
     background: currentColor;
   }
@@ -291,7 +291,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   }
 
   &__label {
-    font-weight: 500;
+    font-weight: 600;
   }
 
   &__url {
