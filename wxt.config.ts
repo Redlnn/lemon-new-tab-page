@@ -103,19 +103,7 @@ export default defineConfig({
       })
     ],
     build: {
-      sourcemap: false, // for HMP (@wxt-dev/module-vue 会自动添加)
-      rollupOptions: {
-        output: {
-          advancedChunks: {
-            groups: [
-              {
-                name: 'element-plus-components',
-                test: /node_modules\/element-plus\/es\/components/
-              }
-            ]
-          }
-        }
-      }
+      sourcemap: false // for HMP (@wxt-dev/module-vue 会自动添加)
     },
     resolve: {
       alias: {
