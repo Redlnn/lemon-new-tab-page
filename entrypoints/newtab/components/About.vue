@@ -32,14 +32,13 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       </div>
       <h1 class="ext-name">{{ browser.i18n.getMessage('extension_name') }}</h1>
       <div class="ext-version">{{ version }}</div>
-      <el-link
-        class="yiyan-links"
-        :underline="'never'"
-        target="_blank"
-        :href="currentYiyanProvider.website"
-      >
-        {{ t('newtab:about.yiyanApiProvider', { provider: t(currentYiyanProvider.nameKey) }) }}
-      </el-link>
+      <div class="yiyan-links">
+        {{ t('newtab:about.yiyanApiProviderPrefix') }}
+        <el-link :underline="'never'" target="_blank" :href="currentYiyanProvider.website">
+          {{ t(currentYiyanProvider.nameKey) }}
+        </el-link>
+        {{ t('newtab:about.yiyanApiProviderSuffix') }}
+      </div>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;
         <el-link :underline="'never'" href="https://github.com/Redlnn"> Red_lnn </el-link>

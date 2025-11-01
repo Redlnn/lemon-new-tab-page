@@ -1,6 +1,7 @@
 {
   "about": {
-    "yiyanApiProvider": "一言 API 由 {{provider}} 提供"
+    "yiyanApiProviderPrefix": "一言 API 由",
+    "yiyanApiProviderSuffix": "提供"
   },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",

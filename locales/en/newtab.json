@@ -1,6 +1,7 @@
 {
   "about": {
-    "yiyanApiProvider": "Chinese poetry API provided by {{provider}}"
+    "yiyanApiProviderPrefix": "Chinese poetry API provided by",
+    "yiyanApiProviderSuffix": ""
   },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",
