@@ -118,7 +118,6 @@ defineExpose({ open, close })
         virtual-triggering
         trigger="contextmenu"
         placement="bottom-start"
-        size="small"
         :popper-options="{
           modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
         }"
