@@ -89,27 +89,30 @@ watch(
     <div class="background-mask"></div>
     <div v-if="settings.background.enableVignetting" class="background__vignette" />
     <Transition name="v-fade">
-      <div v-show="!switchStore.isSwitching">
-        <div ref="bgRef" class="background-container" :class="backgroundCss">
-          <video
-            v-if="isVideoWallpaper"
-            class="background background--video"
-            ref="videoRef"
-            :src="url || ''"
-            autoplay
-            muted
-            loop
-            playsinline
-          ></video>
-          <div
-            v-else
-            class="background"
-            ref="imageRef"
-            :style="{
-              backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
-            }"
-          ></div>
-        </div>
+      <div
+        v-show="!switchStore.isSwitching"
+        ref="bgRef"
+        class="background-container"
+        :class="backgroundCss"
+      >
+        <video
+          v-if="isVideoWallpaper"
+          class="background background--video"
+          ref="videoRef"
+          :src="url || ''"
+          autoplay
+          muted
+          loop
+          playsinline
+        ></video>
+        <div
+          v-else
+          class="background"
+          ref="imageRef"
+          :style="{
+            backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
+          }"
+        ></div>
       </div>
     </Transition>
   </div>
@@ -145,7 +148,8 @@ watch(
   filter: blur(var(--blur-intensity));
   transition:
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
-    filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
+    filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
+    opacity var(--el-transition-duration-fast) ease-in-out;
 
   &--default-scale {
     transform: scale(1.05);

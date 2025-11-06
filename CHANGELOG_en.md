@@ -2,6 +2,12 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.5.5 (WIP)
+
+### Bug Fixes🐛
+
+- Fixed the issue where the background mask would flicker on startup (#46)
+
 ## 2.5.4 (Nov 03, 2025)
 
 ### New Features✨
