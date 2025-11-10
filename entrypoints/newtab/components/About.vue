@@ -47,7 +47,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       </div>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;
-        <el-link underline="never" href="https://github.com/Redlnn"> Red_lnn </el-link>
+        <el-link underline="never" href="https://redlnn.top"> Red_lnn </el-link>
       </div>
       <el-space class="ext-links" :size="12">
         <el-link
