@@ -182,6 +182,7 @@
     "invertColorDark": "[Quote] Use dark text in dark mode",
     "invertColorLight": "[Quote] Use dark text in light mode",
     "normalyShowTip": "When disabled, only show when the search box is focused.",
+    "provider": "Provider",
     "providers": {
       "hitokoto": {
         "name": "Hitokoto.cn",

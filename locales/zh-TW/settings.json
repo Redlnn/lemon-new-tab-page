@@ -61,7 +61,6 @@
     },
     "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
     "importExport": {
-      "settings": "匯入 / 匯出設定",
       "bookmarks": "匯入 / 匯出書籤",
       "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
       "export": "匯出",
@@ -71,6 +70,7 @@
       "invalidFileFormat": "檔案格式不正確",
       "invalidJSON": "無效的 JSON 格式",
       "noFileSelected": "未選擇檔案",
+      "settings": "匯入 / 匯出設定",
       "unknownError": "未知錯誤",
       "warningDialog": {
         "content": "匯入會覆蓋你目前的資料，請謹慎使用此功能，是否繼續？",
@@ -182,6 +182,7 @@
     "invertColorDark": "【一言】深色模式下使用深色文字",
     "invertColorLight": "【一言】淺色模式下使用深色文字",
     "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
+    "provider": "一言來源",
     "providers": {
       "hitokoto": {
         "name": "一言（Hitokoto）",

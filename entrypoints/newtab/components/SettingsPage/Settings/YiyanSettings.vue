@@ -29,6 +29,10 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
       {{ t('yiyan.normalyShowTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('yiyan.enableShadow') }}</div>
+      <el-switch v-model="settings.yiyan.enableShadow" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('yiyan.title') }}</div>
       <el-select
         v-model="settings.yiyan.provider"
@@ -43,10 +47,6 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
           :value="key"
         />
       </el-select>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.enableShadow') }}</div>
-      <el-switch v-model="settings.yiyan.enableShadow" />
     </div>
     <p v-if="currentProviderNote" class="settings__item--note">
       {{ t(currentProviderNote) }}

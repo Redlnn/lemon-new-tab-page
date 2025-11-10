@@ -61,7 +61,6 @@
     },
     "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开「自定义 Chrome」侧边栏。\n",
     "importExport": {
-      "settings": "导入 / 导出设置",
       "bookmarks": "导入 / 导出书签",
       "customSearchEngines": "导入 / 导出自定义搜索引擎",
       "export": "导出",
@@ -71,6 +70,7 @@
       "invalidFileFormat": "文件格式不正确",
       "invalidJSON": "无效的 JSON 格式",
       "noFileSelected": "未选择文件",
+      "settings": "导入 / 导出设置",
       "unknownError": "未知错误",
       "warningDialog": {
         "content": "导入会覆盖你当前的数据，请谨慎使用该功能，是否继续？",
@@ -182,6 +182,7 @@
     "invertColorDark": "【一言】深色模式下使用深色文字",
     "invertColorLight": "【一言】浅色模式下使用深色文字",
     "normalyShowTip": "关闭时仅在搜索框聚焦时显示",
+    "provider": "一言来源",
     "providers": {
       "hitokoto": {
         "name": "一言（Hitokoto）",
