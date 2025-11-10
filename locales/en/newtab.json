@@ -17,41 +17,32 @@
   "common": {
     "cancel": "No",
     "confirm": "Yes",
-    "enable": "Enable",
-    "warning": "Warning",
-    "edit": "Edit",
-    "save": "Save",
     "delete": "Delete",
-    "undo": "Undo",
+    "edit": "Edit",
+    "enable": "Enable",
     "icon": "Icon",
     "name": "Name",
-    "url": "URL"
+    "save": "Save",
+    "undo": "Undo",
+    "url": "URL",
+    "warning": "Warning"
   },
   "customSearchEngine": {
-    "title": "Custom Search Engine",
     "add": "Add Custom Search Engine",
     "addDialog": {
-      "urlHelp": "URL must contain %s as a placeholder for search keywords",
+      "invalidUrlError": "Invalid URL or missing %s placeholder",
       "nameRequiredError": "Name cannot be empty",
-      "invalidUrlError": "Invalid URL or missing %s placeholder"
+      "urlHelp": "URL must contain %s as a placeholder for search keywords"
     },
+    "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?",
     "edit": "Edit Custom Search Engine",
-    "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?"
+    "title": "Custom Search Engine"
   },
   "menu": {
     "about": "About",
     "help": "Help / Feedback",
     "searchEnginePreference": "Search Engine Preference",
     "sponsor": "Sponsor"
-  },
-  "time": {
-    "lateNight": "",
-    "dawn": "",
-    "morning": "",
-    "noon": "",
-    "afternoon": "",
-    "dusk": "",
-    "evening": ""
   },
   "notification": {
     "bingWallpaper": {
@@ -65,12 +56,12 @@
   "search": {
     "placeholder": "Search",
     "purgeSearchHistory": "Clear Search History",
-    "searchEngineNotFound": "Search engine not found",
     "searchEngineMenu": {
       "current": "Current",
       "tipPrefix": "Tip: Press",
       "tipSuffix": "to switch search engine."
-    }
+    },
+    "searchEngineNotFound": "Search engine not found"
   },
   "searchEngineMenu": {
     "baidu": "Baidu",
@@ -91,16 +82,25 @@
     },
     "addShortcut": "Add Shortcut",
     "editShortcut": "Edit Shortcut",
-    "pin": "Pin",
     "hide": "Hide",
     "hideTopMessage": {
       "content": "Most visited site hidden.",
       "restoreDefault": "Restore default",
       "restoreSuccess": "Default most visited site restored"
     },
+    "pin": "Pin",
     "unpin": "Unpin",
     "unpinMessage": "Shortcut unpinned."
   },
   "sponsor": "I first built this extension in my free time to meet my own needs, and I’m glad it’s useful for you too! If you’d like to support me, you can reach me at: redlnn@outlook.com. Thanks for your support!",
+  "time": {
+    "afternoon": "",
+    "dawn": "",
+    "dusk": "",
+    "evening": "",
+    "lateNight": "",
+    "morning": "",
+    "noon": ""
+  },
   "title": "New Tab"
 }

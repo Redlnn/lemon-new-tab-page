@@ -1,6 +1,6 @@
 {
   "about": {
-    "yiyanApiProviderPrefix": "一言 API 由",
+    "yiyanApiProviderPrefix": "一言API由",
     "yiyanApiProviderSuffix": "提供"
   },
   "changelog": {
@@ -17,41 +17,32 @@
   "common": {
     "cancel": "算了",
     "confirm": "好",
-    "enable": "啟用",
-    "warning": "警告",
-    "edit": "編輯",
-    "save": "儲存",
     "delete": "刪除",
-    "undo": "復原",
+    "edit": "編輯",
+    "enable": "啟用",
     "icon": "圖示",
     "name": "名稱",
-    "url": "網址"
+    "save": "儲存",
+    "undo": "復原",
+    "url": "網址",
+    "warning": "警告"
   },
   "customSearchEngine": {
-    "title": "自訂搜尋引擎",
     "add": "新增自訂搜尋引擎",
     "addDialog": {
-      "urlHelp": "URL 必須包含 %s 作為搜尋關鍵字佔位符",
+      "invalidUrlError": "URL 無效或不包含 %s 佔位符，請重新輸入~",
       "nameRequiredError": "名稱不能為空~",
-      "invalidUrlError": "URL 無效或不包含 %s 佔位符，請重新輸入~"
+      "urlHelp": "URL 必須包含 %s 作為搜尋關鍵字佔位符"
     },
+    "deleteConfirm": "確定要刪除搜尋引擎「{{namee}}」嗎？",
     "edit": "編輯自訂搜尋引擎",
-    "deleteConfirm": "確定要刪除搜尋引擎「{{namee}}」嗎？"
+    "title": "自訂搜尋引擎"
   },
   "menu": {
     "about": "關於",
     "help": "幫助與回饋",
     "searchEnginePreference": "搜尋引擎偏好",
     "sponsor": "支持我們"
-  },
-  "time": {
-    "lateNight": "深夜",
-    "dawn": "凌晨",
-    "morning": "早上",
-    "noon": "中午",
-    "afternoon": "下午",
-    "dusk": "傍晚",
-    "evening": "晚上"
   },
   "notification": {
     "bingWallpaper": {
@@ -65,12 +56,12 @@
   "search": {
     "placeholder": "搜尋",
     "purgeSearchHistory": "清除搜尋歷史",
-    "searchEngineNotFound": "找不到搜尋引擎",
     "searchEngineMenu": {
       "current": "當前",
       "tipPrefix": "Tip：按下",
       "tipSuffix": "切換搜尋引擎"
-    }
+    },
+    "searchEngineNotFound": "找不到搜尋引擎"
   },
   "searchEngineMenu": {
     "baidu": "百度",
@@ -91,16 +82,25 @@
     },
     "addShortcut": "新增捷徑",
     "editShortcut": "編輯捷徑",
-    "pin": "釘選",
     "hide": "隱藏",
     "hideTopMessage": {
       "content": "已隱藏該最常訪問網站",
       "restoreDefault": "還原預設",
       "restoreSuccess": "已還原預設最常訪問網站"
     },
+    "pin": "釘選",
     "unpin": "取消釘選",
     "unpinMessage": "已取消釘選該捷徑"
   },
   "sponsor": "這個擴充功能是我當初利用業餘時間為了滿足自己的需求而開始開發的。很高興它也對你有幫助！如果你真的想支持我，可以聯繫我的郵箱：redlnn@outlook.com。感謝你的關注與支持！",
+  "time": {
+    "afternoon": "下午",
+    "dawn": "凌晨",
+    "dusk": "傍晚",
+    "evening": "晚上",
+    "lateNight": "深夜",
+    "morning": "早上",
+    "noon": "中午"
+  },
   "title": "新分頁"
 }

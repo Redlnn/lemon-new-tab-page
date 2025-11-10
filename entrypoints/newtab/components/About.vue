@@ -35,7 +35,12 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       <div class="ext-version">{{ version }}</div>
       <div class="yiyan-links">
         {{ t('newtab:about.yiyanApiProviderPrefix') }}
-        <el-link :underline="'never'" target="_blank" :href="currentYiyanProvider.website">
+        <el-link
+          underline="never"
+          target="_blank"
+          type="primary"
+          :href="currentYiyanProvider.website"
+        >
           {{ t(currentYiyanProvider.nameKey) }}
         </el-link>
         {{ t('newtab:about.yiyanApiProviderSuffix') }}
@@ -113,6 +118,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
     width: min-content;
     padding: 3px 8px;
     margin: 0 auto;
+    margin-bottom: 18px;
     font-size: var(--el-font-size-small);
     color: var(--el-color-primary);
     background-color: color-mix(in oklch, var(--el-color-primary-light-8), transparent 10%);
@@ -127,17 +133,25 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
 
   .yiyan-links {
     display: flex;
-    margin: 18px 0 5px;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    font-size: var(--el-font-size-extra-small);
     color: var(--el-text-color-primary);
+
+    .el-link {
+      font-size: var(--el-font-size-extra-small);
+    }
   }
 
   .copyright {
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: var(--el-font-size-small);
     color: var(--el-text-color-secondary);
 
-    .el-link {
+    .el-link:not(:hover) {
       color: inherit;
     }
   }
