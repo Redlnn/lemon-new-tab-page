@@ -10,6 +10,7 @@ import { version } from '@/package.json'
 import { useSettingsStore } from '@/shared/settings'
 import { yiyanProviders } from '@/shared/yiyan'
 
+import BiliBili from '@newtab/assets/bili.svg?component'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 
@@ -41,16 +42,9 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       </div>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;
-        <el-link :underline="'never'" href="https://github.com/Redlnn"> Red_lnn </el-link>
+        <el-link underline="never" href="https://github.com/Redlnn"> Red_lnn </el-link>
       </div>
       <el-space class="ext-links" :size="12">
-        <el-link
-          :underline="'never'"
-          target="_blank"
-          href="https://github.com/Redlnn/lemon-new-tab-page/"
-        >
-          <el-icon :size="20"><Github /></el-icon>
-        </el-link>
         <el-link
           :underline="'never'"
           target="_blank"
@@ -71,6 +65,16 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
           href="https://addons.mozilla.org/firefox/addon/lemon-new-tab/"
         >
           <el-icon :size="20"><Firefox /></el-icon>
+        </el-link>
+        <el-link
+          underline="never"
+          target="_blank"
+          href="https://github.com/Redlnn/lemon-new-tab-page/"
+        >
+          <el-icon :size="20"><Github /></el-icon>
+        </el-link>
+        <el-link :underline="'never'" target="_blank" href="https://space.bilibili.com/20858581">
+          <el-icon :size="20"><bili-bili /></el-icon>
         </el-link>
       </el-space>
     </section>
