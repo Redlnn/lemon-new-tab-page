@@ -1,20 +1,23 @@
 <script lang="ts" setup>
-import { useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
+import { promiseTimeout, useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
 
-import { BgType, useSettingsStore } from '@/shared/settings'
+import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
+import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 
+import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
 
+const isDark = useDark()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLDivElement>()
 const videoRef = ref<HTMLVideoElement>()
+const bgURL = ref<string>('')
 
-defineProps<{ url: string }>()
+// 视频壁纸相关逻辑
 
-const isDark = useDark()
 const isWindowFocused = useWindowFocus()
 const documentVisibility = useDocumentVisibility()
 
@@ -73,6 +76,179 @@ watch(
   },
   { immediate: true }
 )
+
+// 壁纸更新相关逻辑
+
+interface BgURLProvider {
+  getURL: () => Promise<string>
+  verify?: () => Promise<boolean>
+}
+
+const bgTypeProviders: Record<BgType, BgURLProvider> = {
+  [BgType.Bing]: {
+    getURL: async () => await getBingWallpaperURL()
+  },
+  [BgType.Local]: {
+    getURL: async () =>
+      isDark.value
+        ? settings.localDarkBackground.id
+          ? settings.localDarkBackground.url
+          : settings.localBackground.url
+        : settings.localBackground.url,
+    verify: async () => {
+      const { localBackground, localDarkBackground } = useSettingsStore()
+
+      // 如果没 url，则尝试加载
+      if (!localBackground.url) {
+        await reloadBackground(false)
+        if (!localDarkBackground.id) return true
+      }
+      if (localDarkBackground.id && !localDarkBackground.url) {
+        await reloadBackground(true)
+        return true
+      }
+
+      // 校验 URL 是否有效
+      const verifyLight = () => {
+        if (localBackground.mediaType === 'image') {
+          return verifyImageUrl(localBackground.url)
+        }
+        if (localBackground.mediaType === 'video') {
+          // 对于视频，简单判断 URL 可达即可
+          return verifyVideoUrl(localBackground.url)
+        }
+      }
+      const verifyDark = () => {
+        if (!localDarkBackground.id) return Promise.resolve(true)
+        if (localDarkBackground.mediaType === 'image') {
+          return verifyImageUrl(localDarkBackground.url)
+        }
+        if (localDarkBackground.mediaType === 'video') {
+          // 对于视频，简单判断 URL 可达即可
+          return verifyVideoUrl(localDarkBackground.url)
+        }
+      }
+
+      const [isValid, isValidDark] = await Promise.all([verifyLight(), verifyDark()])
+
+      // 如无效则重新加载
+      if (!isValid) {
+        await reloadBackground(false)
+      }
+      if (!isValidDark && localDarkBackground.id) {
+        await reloadBackground(true)
+      }
+
+      return true
+    }
+  },
+  [BgType.Online]: {
+    getURL: () => Promise.resolve(settings.background.onlineUrl)
+  },
+  [BgType.None]: {
+    getURL: () => Promise.resolve('')
+  }
+}
+
+async function updateBackgroundURL(type: BgType): Promise<void> {
+  const provider = bgTypeProviders[type]
+  if (!provider) return
+
+  switchStore.start()
+
+  if (provider.verify) {
+    await provider.verify()
+  }
+  const newUrl = await provider.getURL()
+
+  // 等待过渡动画
+  await promiseTimeout(300)
+  bgURL.value = ''
+  // 不直接赋值是因为避免看到壁纸变形
+  // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
+  bgURL.value = newUrl
+
+  switchStore.end()
+}
+
+// 动态watch管理 - 根据背景类型激活需要的watch
+let stopLocalBgWatch: (() => void) | null = null
+let stopOnlineBgWatch: (() => void) | null = null
+
+// 本地背景URL变化处理器
+async function handleLocalBgChange() {
+  const shouldUseDark = isDark.value && settings.localDarkBackground?.id
+  const currentUrl = shouldUseDark ? settings.localDarkBackground.url : settings.localBackground.url
+
+  // 只在URL真正变化时才执行切换动画
+  if (bgURL.value === currentUrl) return
+
+  if (settings.localDarkBackground?.id) {
+    await bgTypeProviders[BgType.Local].verify?.()
+  }
+
+  switchStore.start()
+  await promiseTimeout(300)
+  bgURL.value = ''
+  // 不直接赋值是因为避免看到壁纸变形
+  bgURL.value = currentUrl
+  switchStore.end()
+}
+
+// 在线背景URL变化处理器
+async function handleOnlineBgChange(newUrl: string) {
+  if (bgURL.value === newUrl) return
+
+  switchStore.start()
+  await promiseTimeout(300)
+  bgURL.value = ''
+  bgURL.value = newUrl
+  switchStore.end()
+}
+
+// 根据背景类型激活对应的watch
+function activateBackgroundWatch(type: BgType) {
+  // 清理旧的watch
+  stopLocalBgWatch?.()
+  stopOnlineBgWatch?.()
+  stopLocalBgWatch = null
+  stopOnlineBgWatch = null
+
+  // 根据类型激活对应的watch
+  if (type === BgType.Local) {
+    // 只在使用本地背景时监听本地背景变化
+    stopLocalBgWatch = watch(
+      [() => settings.localBackground.url, () => settings.localDarkBackground.url, isDark],
+      handleLocalBgChange
+    )
+  } else if (type === BgType.Online) {
+    // 只在使用在线背景时监听在线URL变化
+    stopOnlineBgWatch = watch(() => settings.background.onlineUrl, handleOnlineBgChange)
+  }
+  // Bing和None类型不需要watch，因为它们不会动态变化
+}
+
+// 监听背景类型切换，动态激活/停用对应的watch
+watch(
+  () => settings.background.bgType,
+  async (newType) => {
+    await updateBackgroundURL(newType)
+    activateBackgroundWatch(newType)
+  }
+)
+
+onMounted(async () => {
+  await updateBackgroundURL(settings.background.bgType)
+
+  // 初始化时激活当前背景类型的watch
+  activateBackgroundWatch(settings.background.bgType)
+})
+
+// 组件卸载时清理watch
+onUnmounted(() => {
+  stopLocalBgWatch?.()
+  stopOnlineBgWatch?.()
+})
 </script>
 
 <template>
@@ -99,7 +275,7 @@ watch(
           v-if="isVideoWallpaper"
           class="background background--video"
           ref="videoRef"
-          :src="url || ''"
+          :src="bgURL || ''"
           autoplay
           muted
           loop
@@ -110,7 +286,7 @@ watch(
           class="background"
           ref="imageRef"
           :style="{
-            backgroundImage: url ? (url.startsWith('url') ? url : `url(${url})`) : undefined
+            backgroundImage: bgURL ? (bgURL.startsWith('url') ? bgURL : `url(${bgURL})`) : undefined
           }"
         ></div>
       </div>
