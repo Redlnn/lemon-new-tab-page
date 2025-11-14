@@ -25,7 +25,12 @@
     "undo": "Undo",
     "icon": "Icon",
     "name": "Name",
-    "url": "URL"
+    "url": "URL",
+    "loading": "Loading..."
+  },
+  "bookmarkMenu": {
+    "title": "Bookmarks",
+    "empty": "No bookmarks"
   },
   "customSearchEngine": {
     "title": "Custom Search Engine",

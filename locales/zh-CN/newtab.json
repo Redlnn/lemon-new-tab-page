@@ -25,7 +25,12 @@
     "undo": "撤销",
     "icon": "图标",
     "name": "名称",
-    "url": "地址"
+    "url": "地址",
+    "loading": "加载中..."
+  },
+  "bookmarkMenu": {
+    "title": "书签",
+    "empty": "暂无书签"
   },
   "customSearchEngine": {
     "title": "自定义搜索引擎",

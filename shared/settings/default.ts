@@ -71,6 +71,9 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     whiteTextInLightMode: true,
     marginTop: 50
   },
+  bookmarkMenu: {
+    enable: true
+  },
   sync: {
     enabled: false
   },

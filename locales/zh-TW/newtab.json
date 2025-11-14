@@ -25,7 +25,12 @@
     "undo": "復原",
     "icon": "圖示",
     "name": "名稱",
-    "url": "網址"
+    "url": "網址",
+    "loading": "載入中..."
+  },
+  "bookmarkMenu": {
+    "title": "書籤",
+    "empty": "暫無書籤"
   },
   "customSearchEngine": {
     "title": "自訂搜尋引擎",

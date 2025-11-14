@@ -14,6 +14,7 @@ import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
 import type AboutCompComponent from '@newtab/components/About.vue'
 import Background from '@newtab/components/Background.vue'
+import type BookmarkMenuComponent from '@newtab/components/BookmarkMenu/index.vue'
 import type ChangelogComponent from '@newtab/components/Changelog.vue'
 import Clock from '@newtab/components/Clock.vue'
 import SearchBox from '@newtab/components/SearchBox/index.vue'
@@ -70,18 +71,21 @@ const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vu
 const SearchEnginesSwitcher = defineAsyncComponent(
   () => import('@newtab/components/SearchEnginesSwitcher/index.vue')
 )
+const BookmarkMenu = defineAsyncComponent(() => import('@newtab/components/BookmarkMenu/index.vue'))
 
 type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>
 type ChangelogInstance = InstanceType<typeof ChangelogComponent>
 type FaqInstance = InstanceType<typeof Faq>
 type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
+type BookmarkMenuInstance = InstanceType<typeof BookmarkMenuComponent>
 
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
 const FaqRef = ref<FaqInstance>()
 const AboutRef = ref<AboutCompInstance>()
 const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
+const BookmarkMenuRef = ref<BookmarkMenuInstance>()
 
 const isDark = useDark()
 const settings = useSettingsStore()
@@ -370,6 +374,13 @@ onUnmounted(() => {
 })
 
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
+
+/**
+ * 处理右键菜单事件，显示书签树
+ */
+function handleContextMenu(event: MouseEvent) {
+  BookmarkMenuRef.value?.show(event)
+}
 </script>
 
 <template>
@@ -386,6 +397,7 @@ provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
     <main
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
+      @contextmenu="handleContextMenu"
     >
       <clock v-if="settings.time.enabled" />
       <search-box v-if="settings.search.enabled" />
@@ -405,5 +417,6 @@ provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
     <faq ref="FaqRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />
+    <bookmark-menu ref="BookmarkMenuRef" />
   </el-config-provider>
 </template>

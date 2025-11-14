@@ -9,7 +9,7 @@ import type {
   OldSettingsInterface,
   SettingsInterfaceVer2
 } from '../settings'
-import { defaultSettings, migrateFromVer1 } from '../settings'
+import { defaultSettings, migrateFromVer1, migrateFromVer7To8 } from '../settings'
 import { settingsStorage } from './settingsStorage'
 import { useDarkWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
@@ -38,7 +38,9 @@ async function migrateSettings(
       oldSettings.selectedSearchSuggestionAPI =
         searchSuggestAPIsMap[oldSettings.selectedSearchSuggestionAPI] || 'bing'
     }
-    return migrateFromVer1(oldSettings)
+    // 从 v1 迁移到 v7，然后再迁移到 v8
+    const v7Settings = migrateFromVer1(oldSettings)
+    return migrateFromVer7To8(v7Settings)
   }
 
   return null

@@ -1,8 +1,8 @@
-import type { CURRENT_CONFIG_INTERFACE, OldSettingsInterface } from '..'
-import { defaultSettings } from '..'
+import type { OldSettingsInterface, SettingsInterfaceVer7 } from '../types'
+import { defaultSettings } from '../default'
 import { searchEnginesMap } from './searchEnginesMap'
 
-export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONFIG_INTERFACE {
+export function migrateFromVer1(oldSettings: OldSettingsInterface): SettingsInterfaceVer7 {
   return {
     primaryColor: oldSettings.primaryColor,
     colorfulMode: false,
