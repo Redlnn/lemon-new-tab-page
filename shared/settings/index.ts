@@ -4,7 +4,9 @@ export {
   migrateFromVer2To3,
   migrateFromVer3To4,
   migrateFromVer4To5,
-  migrateFromVer5To6
+  migrateFromVer5To6,
+  migrateFromVer6To7,
+  migrateFromVer7To8
 } from './migrate'
 export type {
   OldSettingsInterface,
@@ -13,7 +15,8 @@ export type {
   SettingsInterfaceVer4,
   SettingsInterfaceVer5,
   SettingsInterfaceVer6,
-  SettingsInterfaceVer7
+  SettingsInterfaceVer7,
+  SettingsInterfaceVer8
 } from './types'
 export {
   initSettings,
