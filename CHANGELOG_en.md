@@ -165,7 +165,7 @@
 - Fixed incorrect style of the custom shortcut icon upload button
 - Fixed a missing translation
 - Fixed an issue where the config version might not update in time
-- Fixed issue where bookmarks could not be saved on Firefox (#37)
+- Fixed issue where shortcuts could not be saved on Firefox (#37)
 - Fixed issue where dragging non-pinned shortcuts caused the shortcut area to disappear
 - Fixed misalignment issue when using SVG for custom shortcut icons
 
@@ -330,7 +330,7 @@ Here’s to another year of making your browsing better!
 
 - Added toggle for switching between day and night mask colors.
 - Added reminder for items that do not support cloud synchronization.
-- Implemented cloud synchronization for settings and bookmarks. The following features
+- Implemented cloud synchronization for settings and shortcuts. The following features
   do not support synchronization:
   - Local or online background images
   - Most visited sites (including ignored sites)
@@ -515,7 +515,7 @@ Here’s to another year of making your browsing better!
 - Fixed the issue where unpinning did not take effect.
 - Fixed the issue where frequently visited sites could not be deleted (#8).
 - Fixed the issue where the "Enable Most Visited" switch did not work.
-- Fixed the issue where duplicate bookmarks appeared after hiding most visited.
+- Fixed the issue where duplicate shortcuts appeared after hiding most visited.
 - Hid Chrome-specific hints in Firefox browser.
 - Fixed the issue where search suggestion API candidates and icons could not be displayed.
 - Remove Herobrine

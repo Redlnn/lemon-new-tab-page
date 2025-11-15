@@ -72,7 +72,7 @@
     },
     "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
     "importExport": {
-      "bookmarks": "匯入 / 匯出書籤",
+      "shortcuts": "匯入 / 匯出捷徑",
       "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
       "export": "匯出",
       "import": "匯入",

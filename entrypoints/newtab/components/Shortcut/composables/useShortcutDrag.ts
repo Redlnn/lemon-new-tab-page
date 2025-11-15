@@ -1,18 +1,18 @@
 import { useDraggable } from 'vue-draggable-plus'
 
-import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
+import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 export function useShortcutDrag(
   containerRef: Ref<HTMLElement | undefined>,
-  bookmarks: Ref<{ url: string; title: string; favicon?: string }[]>
+  shortcuts: Ref<{ url: string; title: string; favicon?: string }[]>
 ) {
-  const bookmarkStore = useBookmarkStore()
-  useDraggable(containerRef, bookmarks, {
+  const shortcutStore = useShortcutStore()
+  useDraggable(containerRef, shortcuts, {
     animation: 150,
     handle: '.shortcut__item.pined',
     onUpdate() {
-      bookmarkStore.items = bookmarks.value
-      saveBookmark(bookmarkStore.$state)
+      shortcutStore.items = shortcuts.value
+      saveShortcut(shortcutStore.$state)
     }
   })
 }

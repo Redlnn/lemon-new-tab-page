@@ -7,66 +7,66 @@ import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
-import { bookmarkStorage, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
+import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 
 import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/scripts/store'
 
-import AddBookmark from './components/AddBookmark.vue'
+import AddShortcut from './components/AddShortcut.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import { useShortcutDrag } from './composables/useShortcutDrag'
 import { useShortcutLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
-import { pinBookmark, removeBookmark } from './utils/bookmark'
+import { pinShortcut, removeShortcut } from './utils/shortcut'
 import { blockSite, invalidateTopSitesCache } from './utils/topSites'
 
 const { t } = useTranslation()
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
-const bookmarkStore = useBookmarkStore()
-const bookmarkEditorRef = ref<InstanceType<typeof AddBookmark> | null>(null)
+const shortcutStore = useShortcutStore()
+const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
 
 type ShortcutItemRef = InstanceType<typeof ShortcutItem> | null
-const openedBookmarkIndex = ref<number | null>(null)
-const bookmarkItemRefs = ref<Array<ShortcutItemRef>>([])
+const openedShortcutIndex = ref<number | null>(null)
+const shortcutItemRefs = ref<Array<ShortcutItemRef>>([])
 
 function setChildRef(i: number, el: ShortcutItemRef) {
-  bookmarkItemRefs.value[i] = el
+  shortcutItemRefs.value[i] = el
 }
 
 function onChildOpened(i: number) {
-  if (openedBookmarkIndex.value !== null && openedBookmarkIndex.value !== i) {
-    const prev = bookmarkItemRefs.value[openedBookmarkIndex.value]
+  if (openedShortcutIndex.value !== null && openedShortcutIndex.value !== i) {
+    const prev = shortcutItemRefs.value[openedShortcutIndex.value]
     if (prev) {
       prev.close()
     }
   }
-  openedBookmarkIndex.value = i
+  openedShortcutIndex.value = i
 }
 
 const topSites = ref<TopSites.MostVisitedURL[]>([])
-const bookmarks = ref<{ url: string; title: string; favicon?: string }[]>([])
+const shortcuts = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
 const topSitesNeedsReload = ref(true)
 
 const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
 const shortcutContainerRef = ref()
-useShortcutDrag(shortcutContainerRef, bookmarks)
+useShortcutDrag(shortcutContainerRef, shortcuts)
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 
 async function refresh() {
   // 拆分数据读取与布局计算，避免频繁响应写入
-  const _bookmarks = bookmarkStore.items.slice()
+  const _shortcuts = shortcutStore.items.slice()
 
   // 1) 纯计算：基于窗口宽度与设置确定列数上限（fitColumns 可能大于实际项目数）
   const fitColumns = computeFitColumns()
 
   // 2) 首先保证“书签 + 添加按钮”可布局（不够就增加行数，已由 computeRowsGivenColumns 约束至上限）
-  const baseItemCount = _bookmarks.length + 1
+  const baseItemCount = _shortcuts.length + 1
   const baseRows = computeNeededRows(baseItemCount, fitColumns)
   // 初始容量（预留添加按钮）
   let capacity = fitColumns * baseRows - 1
@@ -75,7 +75,7 @@ async function refresh() {
   let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.shortcut.enableTopSites) {
     const topList = await useTopSitesMerge({
-      bookmarks: _bookmarks,
+      shortcuts: _shortcuts,
       columns: fitColumns,
       maxRows: settings.shortcut.rows,
       force: topSitesNeedsReload.value
@@ -83,7 +83,7 @@ async function refresh() {
     mergedTop = topList
     topSitesNeedsReload.value = false
     // 合并后的完整项目数（包含添加按钮）
-    const totalItems = _bookmarks.length + mergedTop.length + 1
+    const totalItems = _shortcuts.length + mergedTop.length + 1
 
     // 4) 最终列数不应超过实际项目数
     const finalColumns = Math.min(fitColumns, totalItems)
@@ -94,14 +94,14 @@ async function refresh() {
     // 5) 使用最终列数重新计算行数与容量，并对 TopSites 做最终截断
     const finalRows = computeNeededRows(totalItems, finalColumns)
     capacity = finalColumns * finalRows - 1
-    if (_bookmarks.length < capacity) {
-      mergedTop = mergedTop.slice(0, capacity - _bookmarks.length)
+    if (_shortcuts.length < capacity) {
+      mergedTop = mergedTop.slice(0, capacity - _shortcuts.length)
     } else {
       mergedTop = []
     }
   } else {
     // 6) 未启用 TopSites，同样收敛列数至“书签 + 添加按钮”总数
-    const totalItems = _bookmarks.length + 1
+    const totalItems = _shortcuts.length + 1
     const finalColumns = Math.min(fitColumns, totalItems)
     if (columnsNum.value !== finalColumns) {
       columnsNum.value = finalColumns
@@ -110,8 +110,8 @@ async function refresh() {
     capacity = finalColumns * finalRows - 1
   }
 
-  bookmarks.value = _bookmarks
-  topSites.value = _bookmarks.length < capacity ? mergedTop : []
+  shortcuts.value = _shortcuts
+  topSites.value = _shortcuts.length < capacity ? mergedTop : []
 }
 
 onMounted(() => {
@@ -137,7 +137,7 @@ watch(
 )
 
 // 云同步导致书签变动时刷新
-bookmarkStorage.watch(() => {
+shortcutStorage.watch(() => {
   refreshDebounced()
 })
 
@@ -174,7 +174,7 @@ blockedTopSitesStorage.watch(() => {
       }"
     >
       <shortcut-item
-        v-for="(site, index) in bookmarks"
+        v-for="(site, index) in shortcuts"
         :key="index"
         :url="site.url"
         :title="site.title"
@@ -184,13 +184,13 @@ blockedTopSitesStorage.watch(() => {
         :ref="(el) => setChildRef(index, el as InstanceType<typeof ShortcutItem>)"
       >
         <template #submenu>
-          <el-dropdown-item @click="bookmarkEditorRef?.openEditDialog(index)">
+          <el-dropdown-item @click="shortcutEditorRef?.openEditDialog(index)">
             <el-icon>
               <edit16-regular />
             </el-icon>
             {{ t('common.edit') }}
           </el-dropdown-item>
-          <el-dropdown-item @click="removeBookmark(index, bookmarkStore, refreshDebounced)">
+          <el-dropdown-item @click="removeShortcut(index, shortcutStore, refreshDebounced)">
             <el-icon>
               <pin-off16-regular />
             </el-icon>
@@ -204,9 +204,9 @@ blockedTopSitesStorage.watch(() => {
         :url="site.url"
         :title="site.title || ''"
         :favicon="site.favicon"
-        @opened="() => onChildOpened(bookmarks.length + index)"
+        @opened="() => onChildOpened(shortcuts.length + index)"
         :ref="
-          (el) => setChildRef(bookmarks.length + index, el as InstanceType<typeof ShortcutItem>)
+          (el) => setChildRef(shortcuts.length + index, el as InstanceType<typeof ShortcutItem>)
         "
       >
         <template #submenu>
@@ -224,7 +224,7 @@ blockedTopSitesStorage.watch(() => {
             {{ t('shortcut.hide') }}
           </el-dropdown-item>
           <el-dropdown-item
-            @click="pinBookmark(bookmarkStore, refreshDebounced, site.url, site.title || '')"
+            @click="pinShortcut(shortcutStore, refreshDebounced, site.url, site.title || '')"
           >
             <el-icon>
               <pin16-regular />
@@ -233,7 +233,7 @@ blockedTopSitesStorage.watch(() => {
           </el-dropdown-item>
         </template>
       </shortcut-item>
-      <add-bookmark ref="bookmarkEditorRef" :reload="refreshDebounced" />
+      <add-shortcut ref="shortcutEditorRef" :reload="refreshDebounced" />
     </div>
   </section>
 </template>

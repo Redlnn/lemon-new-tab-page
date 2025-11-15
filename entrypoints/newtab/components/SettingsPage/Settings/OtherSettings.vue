@@ -11,7 +11,6 @@ import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { storage } from 'wxt/utils/storage'
 
-import { type Bookmark, saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import {
   type CustomSearchEngineStorage,
   saveCustomSearchEngine,
@@ -26,13 +25,14 @@ import {
   useSettingsStore,
   useWallpaperStore
 } from '@/shared/settings'
+import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
 const { t, i18next } = useTranslation('settings')
 
 const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
-const bookmarks = useBookmarkStore()
+const shortcuts = useShortcutStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
 
 async function confirmClearExtensionData() {
@@ -135,7 +135,7 @@ function sendSyncMessage() {
 }
 
 const settingsFileInput = ref<HTMLInputElement | null>(null)
-const bookmarkFileInput = ref<HTMLInputElement | null>(null)
+const shortcutFileInput = ref<HTMLInputElement | null>(null)
 const customSearchEngineFileInput = ref<HTMLInputElement | null>(null)
 
 /**
@@ -160,8 +160,8 @@ async function openSettingsFilePicker() {
   await openFilePicker(settingsFileInput)
 }
 
-async function openBookmarkFilePicker() {
-  await openFilePicker(bookmarkFileInput)
+async function openShortcutFilePicker() {
+  await openFilePicker(shortcutFileInput)
 }
 
 async function openCustomSearchEngineFilePicker() {
@@ -172,8 +172,8 @@ async function exportSettings() {
   downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
 }
 
-async function exportBookmarks() {
-  downloadJSON<Bookmark>(bookmarks.$state, 'lemon-tab-page-bookmarks.json')
+async function exportShortcuts() {
+  downloadJSON<Shortcut>(shortcuts.$state, 'lemon-tab-page-shortcuts.json')
 }
 
 async function exportCustomSearchEngines() {
@@ -265,14 +265,14 @@ function storageValidator<T>(data: unknown): data is T {
   return typeof data === 'object' && data !== null && 'items' in data && Array.isArray(data.items)
 }
 
-function handleBookmarkFileChange(event: Event) {
-  return handleFileImport<Bookmark>(
+function handleShortcutFileChange(event: Event) {
+  return handleFileImport<Shortcut>(
     event,
-    bookmarkFileInput,
-    storageValidator<Bookmark>,
+    shortcutFileInput,
+    storageValidator<Shortcut>,
     async (data) => {
-      bookmarks.$patch(data)
-      await saveBookmark(data)
+      shortcuts.$patch(data)
+      await saveShortcut(data)
       if (settings.sync.enabled) {
         initSyncSettings(settings)
       }
@@ -362,12 +362,12 @@ function changeLanguage(lang: string) {
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.importExport.bookmarks') }}</div>
+      <div class="settings__label">{{ t('other.importExport.shortcuts') }}</div>
       <span>
-        <el-button type="primary" :icon="DownloadRound" @click="exportBookmarks">
+        <el-button type="primary" :icon="DownloadRound" @click="exportShortcuts">
           {{ t('other.importExport.export') }}
         </el-button>
-        <el-button :icon="FileUploadRound" @click="openBookmarkFilePicker">
+        <el-button :icon="FileUploadRound" @click="openShortcutFilePicker">
           {{ t('other.importExport.import') }}
         </el-button>
       </span>
@@ -413,11 +413,11 @@ function changeLanguage(lang: string) {
     />
     <!-- 隐藏的书签导入按钮 -->
     <input
-      ref="bookmarkFileInput"
+      ref="shortcutFileInput"
       type="file"
       accept="application/json"
       style="display: none"
-      @change="handleBookmarkFileChange"
+      @change="handleShortcutFileChange"
     />
     <!-- 隐藏的自定义搜索引擎导入按钮 -->
     <input

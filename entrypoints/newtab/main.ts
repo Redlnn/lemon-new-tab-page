@@ -5,10 +5,10 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
-import { initBookmark } from '@/shared/bookmark'
 import { initCustomSearchEngine } from '@/shared/customSearchEngine'
 import { i18n } from '@/shared/i18n'
 import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
+import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
 
 import App from './App.vue'
@@ -67,7 +67,7 @@ export const main = async () => {
   // 先初始化设置，再挂载vue，再初始化云同步
   await initSettings()
   await initCustomSearchEngine()
-  await initBookmark()
+  await initShortcut()
   const settings = useSettingsStore()
 
   // 判断设置变更时再保存，避免无意义的写入

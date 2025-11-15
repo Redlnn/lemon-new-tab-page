@@ -4,8 +4,8 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { getTopSites } from '@newtab/components/Shortcut/utils/topSites'
 
-export interface UseTopSitesMergeOptions {
-  bookmarks: { url: string }[]
+interface UseTopSitesMergeOptions {
+  shortcuts: { url: string }[]
   columns?: number
   maxRows?: number
   force?: boolean
@@ -25,8 +25,8 @@ export async function useTopSitesMerge(
   const topSites = (await getTopSites(options.force)) ?? []
 
   // 去重：移除与书签重复的 URL
-  const bookmarkUrlsSet = new Set(options.bookmarks.map((b) => b.url))
-  const dedup = topSites.filter((site) => !bookmarkUrlsSet.has(site.url))
+  const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
+  const dedup = topSites.filter((site) => !shortcutUrlsSet.has(site.url))
 
   // 计算容量（优先使用 columns + maxRows，上限为列*行 - 1，预留“添加按钮”）
   let capacity: number
@@ -38,6 +38,6 @@ export async function useTopSitesMerge(
   }
 
   // remain < 0 表示书签已占满所有容量，此时不应再追加 TopSites
-  const remain = Math.max(0, capacity - options.bookmarks.length)
+  const remain = Math.max(0, capacity - options.shortcuts.length)
   return remain > 0 ? dedup.slice(0, remain) : []
 }

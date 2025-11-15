@@ -2,16 +2,16 @@ import type { Store } from 'pinia'
 
 import i18next from 'i18next'
 
-import { type Bookmark, saveBookmark } from '@/shared/bookmark'
+import { saveShortcut, type Shortcut } from '@/shared/shortcut'
 
-export async function removeBookmark(
+export async function removeShortcut(
   index: number,
-  store: Store<'bookmark', Bookmark>,
+  store: Store<'shortcut', Shortcut>,
   refresh: () => Promise<void>
 ) {
   const { url, title, favicon } = store.items[index]!
   store.items.splice(index, 1)
-  await saveBookmark(store.$state)
+  await saveShortcut(store.$state)
   await refresh()
   ElMessage.success({
     message: h('p', null, [
@@ -30,7 +30,7 @@ export async function removeBookmark(
               title,
               favicon
             })
-            await saveBookmark(store.$state)
+            await saveShortcut(store.$state)
             await refresh()
           }
         },
@@ -40,8 +40,8 @@ export async function removeBookmark(
   })
 }
 
-export async function pinBookmark(
-  store: Store<'bookmark', Bookmark>,
+export async function pinShortcut(
+  store: Store<'shortcut', Shortcut>,
   refresh: () => Promise<void>,
   url: string,
   title: string,
@@ -52,6 +52,6 @@ export async function pinBookmark(
     title,
     favicon
   })
-  await saveBookmark(store.$state)
+  await saveShortcut(store.$state)
   await refresh()
 }

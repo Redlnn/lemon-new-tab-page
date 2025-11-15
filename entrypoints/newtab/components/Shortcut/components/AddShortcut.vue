@@ -4,8 +4,8 @@ import { AddRound } from '@vicons/material'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { saveBookmark, useBookmarkStore } from '@/shared/bookmark'
 import { useSettingsStore } from '@/shared/settings'
+import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 
@@ -14,7 +14,7 @@ import { useFaviconUpload } from '../composables/useFaviconUpload'
 const { t } = useTranslation()
 
 const settings = useSettingsStore()
-const bookmarkStore = useBookmarkStore()
+const shortcutStore = useShortcutStore()
 const modelForm = ref<FormInstance>()
 
 const props = defineProps<{
@@ -52,7 +52,7 @@ function openAddDialog() {
 }
 
 function openEditDialog(index: number) {
-  const target = bookmarkStore.items[index]
+  const target = shortcutStore.items[index]
   if (!target) return
   modelForm.value?.resetFields()
   editingIndex.value = index
@@ -78,17 +78,17 @@ async function submit() {
     ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
     return
   }
-  const bookmark = {
+  const shortcut = {
     url: data.url.trim(),
     title: data.title.trim(),
     ...(!data.favicon ? {} : { favicon: data.favicon })
   }
   if (isEditing.value && editingIndex.value !== null) {
-    bookmarkStore.items.splice(editingIndex.value, 1, bookmark)
+    shortcutStore.items.splice(editingIndex.value, 1, shortcut)
   } else {
-    bookmarkStore.items.push(bookmark)
+    shortcutStore.items.push(shortcut)
   }
-  await saveBookmark(bookmarkStore.$state)
+  await saveShortcut(shortcutStore.$state)
   await props.reload()
   showDialog.value = false
   resetFields()
@@ -105,7 +105,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="shortcut__item shortcut__item--add-bookmark noselect">
+  <div class="shortcut__item shortcut__item--add-shortcut noselect">
     <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
       <div class="shortcut__icon-container">
         <div
@@ -131,7 +131,7 @@ defineExpose({
   <el-dialog
     v-model="showDialog"
     :title="dialogTitle"
-    class="add-bookmark-dialog base-dialog--blur base-dialog--opacity noselect"
+    class="add-shortcut-dialog base-dialog--blur base-dialog--opacity noselect"
     width="500px"
     append-to-body
     destroy-on-close
@@ -174,7 +174,7 @@ defineExpose({
 </template>
 
 <style lang="scss">
-.add-bookmark-dialog {
+.add-shortcut-dialog {
   padding: 30px 50px;
 
   html.colorful:not(.dialog-transparent) & {
@@ -184,7 +184,7 @@ defineExpose({
   --el-dialog-border-radius: 10px;
 }
 
-.shortcut__item--add-bookmark .shortcut__item-link {
+.shortcut__item--add-shortcut .shortcut__item-link {
   .shortcut__title,
   .shortcut__icon {
     color: var(--le-text-color-primary-opacity-65);

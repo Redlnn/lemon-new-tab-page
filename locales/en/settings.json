@@ -72,7 +72,7 @@
     },
     "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.\n",
     "importExport": {
-      "bookmarks": "Import / Export bookmarks",
+      "shortcuts": "Import / Export shortcuts",
       "customSearchEngines": "Import / Export custom search engines",
       "export": "Export",
       "import": "Import",

@@ -1,12 +1,13 @@
 import type { CURRENT_CONFIG_INTERFACE } from '@/shared/settings'
-import type { Bookmark } from '@/shared/bookmark/bookmarkStorage'
+import type { Shortcut } from '@/shared/shortcut/shortcutStorage'
 
 export interface LocalSyncData {
   lastUpdate: number
 }
+
 export interface SyncData extends LocalSyncData {
   settings: CURRENT_CONFIG_INTERFACE
-  bookmarks: Bookmark
+  bookmarks: Shortcut
 }
 
 export interface SyncMessage {

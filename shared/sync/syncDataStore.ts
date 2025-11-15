@@ -3,8 +3,8 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { browser } from 'wxt/browser'
 
-import { defaultBookmark, saveBookmark, useBookmarkStore } from '../bookmark'
 import { defaultSettings, useSettingsStore } from '../settings'
+import { defaultShortcut, saveShortcut, useShortcutStore } from '../shortcut'
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
 
@@ -91,9 +91,9 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
     }
 
     localSettings.$subscribe(subChange)
-    useBookmarkStore().$subscribe(async (mutation, _state) => {
+    useShortcutStore().$subscribe(async (mutation, _state) => {
       if (mutation.type !== MutationType.direct) {
-        // 防止刚开就认为数据过旧，只有initBookmark会整个替换state
+        // 防止刚开就认为数据过旧，只有initShortcut会整个替换state
         return
       }
       await subChange()
@@ -119,7 +119,7 @@ export async function deinitSyncSettings() {
 export const useSyncDataStore = defineStore('sync', {
   state: (): SyncData => ({
     settings: structuredClone(defaultSettings),
-    bookmarks: structuredClone(defaultBookmark),
+    bookmarks: structuredClone(defaultShortcut),
     lastUpdate: 0
   }),
 
@@ -178,11 +178,11 @@ export const useSyncDataStore = defineStore('sync', {
           return
         }
 
-        const localbookmark = useBookmarkStore()
+        const localShortcut = useShortcutStore()
 
         debouncedSend({
           settings: localSettings.$state,
-          bookmarks: localbookmark.$state,
+          bookmarks: localShortcut.$state,
           lastUpdate: Date.now()
         } as SyncData)
       } catch (err) {
@@ -213,7 +213,7 @@ export const useSyncDataStore = defineStore('sync', {
         cloudData.settings.background.onlineUrl = localSettings.background.onlineUrl // 保持本地在线壁纸URL
 
         localSettings.$patch(cloudData.settings)
-        saveBookmark(cloudData.bookmarks)
+        saveShortcut(cloudData.bookmarks)
 
         await localSyncDataStorage.setValue({
           lastUpdate: cloudData.lastUpdate
