@@ -8,8 +8,19 @@ export async function initBookmark() {
   bookmarkStore.$patch(bookmark)
 }
 
-export async function saveBookmark(bookmark: Bookmark) {
-  const rawItems = bookmark.items.map((item) => toRaw(item))
+export async function saveBookmark(bookmark?: Bookmark | { $state?: Bookmark }) {
+  let toSave: Bookmark | undefined
+
+  if (!bookmark) {
+    toSave = useBookmarkStore().$state
+  } else if ((bookmark as unknown as { $state?: Bookmark }).$state) {
+    toSave = (bookmark as unknown as { $state?: Bookmark }).$state
+  } else {
+    toSave = bookmark as Bookmark
+  }
+
+  const rawItems = (toSave as Bookmark).items.map((item) => toRaw(item))
+
   await bookmarkStorage.setValue({ items: rawItems })
 }
 

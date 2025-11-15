@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { toRaw } from 'vue'
 
 import { browser } from 'wxt/browser'
 
@@ -94,8 +95,20 @@ export async function initSettings() {
   useSettingsStore().$patch(settings)
 }
 
-export async function saveSettings(settings: CURRENT_CONFIG_INTERFACE) {
-  await settingsStorage.setValue(toRaw(settings))
+export async function saveSettings(
+  settings?: CURRENT_CONFIG_INTERFACE | { $state?: CURRENT_CONFIG_INTERFACE }
+) {
+  let toSave: CURRENT_CONFIG_INTERFACE | undefined
+
+  if (!settings) {
+    toSave = useSettingsStore().$state
+  } else if ((settings as unknown as { $state?: CURRENT_CONFIG_INTERFACE }).$state) {
+    toSave = (settings as unknown as { $state?: CURRENT_CONFIG_INTERFACE }).$state
+  } else {
+    toSave = settings as CURRENT_CONFIG_INTERFACE
+  }
+
+  await settingsStorage.setValue(toRaw(toSave as CURRENT_CONFIG_INTERFACE))
 }
 
 export const useSettingsStore = defineStore('option', {

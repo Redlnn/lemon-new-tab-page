@@ -12,8 +12,20 @@ export async function initCustomSearchEngine() {
   customSearchEngineStore.$patch(data)
 }
 
-export async function saveCustomSearchEngine(data: CustomSearchEngineStorage) {
-  const rawItems = data.items.map((item) => toRaw(item))
+export async function saveCustomSearchEngine(
+  data: CustomSearchEngineStorage | { $state?: CustomSearchEngineStorage }
+) {
+  let toSave: CustomSearchEngineStorage | undefined
+
+  if (!data) {
+    toSave = useCustomSearchEngineStore().$state
+  } else if ((data as unknown as { $state?: CustomSearchEngineStorage }).$state) {
+    toSave = (data as unknown as { $state?: CustomSearchEngineStorage }).$state
+  } else {
+    toSave = data as CustomSearchEngineStorage
+  }
+
+  const rawItems = (toSave as CustomSearchEngineStorage).items.map((item) => toRaw(item))
   await customSearchEngineStorage.setValue({ items: rawItems })
 }
 
