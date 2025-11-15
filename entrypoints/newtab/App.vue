@@ -11,17 +11,19 @@ import { getLang } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
-import type AboutCompComponent from '@newtab/components/About.vue'
-import Background from '@newtab/components/Background.vue'
-import type BackgroundSwitcherComponent from '@newtab/components/BackgroundSwitcher/index.vue'
-import type ChangelogComponent from '@newtab/components/Changelog.vue'
-import Clock from '@newtab/components/Clock.vue'
-import SearchBox from '@newtab/components/SearchBox/index.vue'
-import type SearchEnginesSwitcherComponent from '@newtab/components/SearchEnginesSwitcher/index.vue'
-import SettingsBtn from '@newtab/components/SettingsBtn.vue'
-import type SettingsPageComponent from '@newtab/components/SettingsPage/index.vue'
-import Shortcut from '@newtab/components/Shortcut/index.vue'
-import YiYan from '@newtab/components/YiYan.vue'
+import type AboutCompComponent from './components/About.vue'
+import Background from './components/Background.vue'
+import type BackgroundSwitcherComponent from './components/BackgroundSwitcher/index.vue'
+import Bookmark from './components/Bookmark/index.vue'
+import BookmarkBtn from './components/BookmarkBtn.vue'
+import type ChangelogComponent from './components/Changelog.vue'
+import Clock from './components/Clock.vue'
+import SearchBox from './components/SearchBox/index.vue'
+import type SearchEnginesSwitcherComponent from './components/SearchEnginesSwitcher/index.vue'
+import SettingsBtn from './components/SettingsBtn.vue'
+import type SettingsPageComponent from './components/SettingsPage/index.vue'
+import Shortcut from './components/Shortcut/index.vue'
+import YiYan from './components/YiYan.vue'
 
 const { t, i18next } = useTranslation('sync')
 
@@ -78,6 +80,7 @@ type FaqInstance = InstanceType<typeof Faq>
 type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
 type BackgroundSwitcherInstance = InstanceType<typeof BackgroundSwitcherComponent>
+type BookmarkInstance = InstanceType<typeof Bookmark>
 
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
@@ -85,6 +88,7 @@ const FaqRef = ref<FaqInstance>()
 const AboutRef = ref<AboutCompInstance>()
 const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
 const BGSwticherRef = ref<BackgroundSwitcherInstance>()
+const BookmarkRef = ref<BookmarkInstance>()
 
 const settings = useSettingsStore()
 
@@ -218,11 +222,12 @@ provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
     <main
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
+      @contextmenu.prevent="BookmarkRef?.show"
     >
-      <clock v-if="settings.time.enabled" />
-      <search-box v-if="settings.search.enabled" />
-      <shortcut v-if="settings.shortcut.enabled" />
-      <yi-yan v-if="settings.yiyan.enabled" />
+      <clock v-if="settings.time.enabled" @contextmenu.stop />
+      <search-box v-if="settings.search.enabled" @contextmenu.stop />
+      <shortcut v-if="settings.shortcut.enabled" @contextmenu.stop />
+      <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
     </main>
     <background />
     <settings-btn
@@ -233,11 +238,13 @@ provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
       @open-faq="FaqRef?.show"
       @open-background-switcher="BGSwticherRef?.show"
     />
+    <bookmark-btn @open-bookmark-sidebar="BookmarkRef?.show" />
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />
     <background-switcher ref="BGSwticherRef" />
+    <bookmark ref="BookmarkRef" />
   </el-config-provider>
 </template>

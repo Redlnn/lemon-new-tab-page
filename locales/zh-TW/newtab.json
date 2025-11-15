@@ -3,6 +3,7 @@
     "yiyanApiProviderPrefix": "一言API由",
     "yiyanApiProviderSuffix": "提供"
   },
+  "bookmark": "書籤",
   "changelog": {
     "hideMajorChangelog": "不顯示大版本更新日誌",
     "newVersionMsg": "你的起始頁更新啦~",

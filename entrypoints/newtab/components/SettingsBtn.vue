@@ -43,7 +43,7 @@ function sponsorMessage() {
           transparentOff: settings.perf.disableSettingsBtnTransparent,
           blurOff: settings.perf.disableSettingsBtnBlur
         },
-        'settings-icon__popper'
+        'setting-btn__popper'
       )
     "
     :show-arrow="false"
@@ -52,10 +52,10 @@ function sponsorMessage() {
     @contextmenu.prevent.stop
   >
     <div
-      class="settings-icon"
+      class="action-btn setting-btn"
       :class="{
-        'settings-icon--tran': !settings.perf.disableSettingsBtnTransparent,
-        'settings-icon--blur': !(
+        'action-btn--tran': !settings.perf.disableSettingsBtnTransparent,
+        'action-btn--blur': !(
           settings.perf.disableSettingsBtnBlur || settings.perf.disableSettingsBtnTransparent
         )
       }"

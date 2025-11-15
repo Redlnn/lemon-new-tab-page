@@ -1,10 +1,10 @@
 @use './mixins/acrylic.scss' as acrylic;
 
-.settings-icon {
+.action-btn {
   position: fixed;
-  right: 30px;
   bottom: 20px;
-  height: calc(1em + 12px);
+  width: 37px;
+  height: 37px;
   padding: 6px;
   font-size: 25px;
   line-height: 1em;
@@ -22,7 +22,7 @@
 
   &--tran {
     color: var(--le-text-color-primary-opacity-65);
-    background-color: var(--le-bg-color-overlay-opacity-60);
+    background-color: var(--le-bg-color-overlay-opacity-80);
 
     &:hover {
       background-color: var(--el-bg-color-overlay);
@@ -33,14 +33,24 @@
     transition: transform 0.15s ease;
   }
 
+  &:hover {
+    color: var(--el-color-primary);
+    box-shadow: var(--el-box-shadow-lighter);
+  }
+}
+
+.bookmark-btn {
+  right: 72px;
+}
+
+.setting-btn {
+  right: 30px;
+
   .el-badge {
     display: block;
   }
 
   &:hover {
-    color: var(--el-color-primary);
-    box-shadow: var(--el-box-shadow-lighter);
-
     .el-icon {
       transform: rotate(180deg);
     }
@@ -70,11 +80,11 @@
       }
     }
 
-    &.settings-icon__popper--opacity {
+    &.setting-btn__popper--opacity {
       background-color: var(--le-bg-color-overlay-opacity-20);
     }
 
-    &.settings-icon__popper--blur {
+    &.setting-btn__popper--blur {
       @include acrylic.acrylic;
     }
   }

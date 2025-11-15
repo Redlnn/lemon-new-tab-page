@@ -7,6 +7,7 @@
 ### New Features✨
 
 - Brand new wallpaper selection page
+- Support showing browser bookmarks for quick access to favorite websites
 
 ### Improvements⚡️
 

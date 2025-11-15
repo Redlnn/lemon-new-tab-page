@@ -38,7 +38,7 @@ if (import.meta.env.DEV) {
 
 const firefoxManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'alarms'],
+  permissions: ['topSites', 'storage', 'alarms', 'bookmarks'],
   chrome_settings_overrides: {
     homepage: 'newtab.html'
   }
@@ -46,7 +46,7 @@ const firefoxManifest = {
 
 const chromeManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'favicon', 'alarms'],
+  permissions: ['topSites', 'storage', 'favicon', 'alarms', 'bookmarks'],
   optional_host_permissions: ['*://*/*']
 }
 
