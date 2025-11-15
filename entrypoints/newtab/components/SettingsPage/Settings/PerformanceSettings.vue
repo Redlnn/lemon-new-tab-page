@@ -95,6 +95,13 @@ function toggleAnimationSettings(disable: boolean) {
     </div>
     <el-divider></el-divider>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.pauseWhenBlur') }}</div>
+      <el-switch v-model="settings.background.pauseWhenBlur" />
+    </div>
+    <p class="settings__item--note">
+      {{ t('background.videoBlurTip') }}
+    </p>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
       <el-switch v-model="settings.time.blinkingColon" />
     </div>
