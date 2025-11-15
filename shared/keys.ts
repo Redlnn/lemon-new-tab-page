@@ -4,3 +4,7 @@ import type { InjectionKey } from 'vue'
 export const OPEN_SEARCH_ENGINE_PREFERENCE: InjectionKey<() => void> = Symbol(
   'openSearchEnginePreference'
 )
+
+export const OPEN_BACKGROUND_PREFERENCE: InjectionKey<() => void> = Symbol(
+  'openBackgroundPreference'
+)

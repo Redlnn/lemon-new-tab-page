@@ -13,15 +13,26 @@
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
     "tip": "深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢",
     "title": "背景",
+    "preferenceTitle": "壁纸偏好",
+    "today": "今日",
+    "custom": "自定义",
+    "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
+    "sunMoonSaying": "太阳出来我晒太阳，月亮出来我晒月亮",
+    "myZoneMyRule": "我的地带我做主",
+    "alwaysFresh": "永远都有新鲜感",
+    "youLikeFine": "你喜欢就好~",
+    "button": {
+      "bathe": {
+        "sun": "晒太阳",
+        "moon": "晒月亮"
+      }
+    },
     "type": {
-      "bing": "Bing 每日一图",
       "local": "本地图片/视频",
-      "none": "无",
-      "online": "在线图片",
-      "title": "背景类型"
+      "online": "在线图片"
     },
     "videoBlurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用",
-    "videoWarning": "使用视频作为背景将会大量消耗 GPU 资源，建议避免同时开多个新标签页以免吃满 GPU，建议禁用时间分隔符闪烁、快速访问图标模糊、搜索框模糊、点击搜索框缩放/模糊背景以降低性能消耗",
+    "videoWarning": "使用视频作为背景会大量消耗 GPU 资源，建议避免同时开多个新标签页，建议适当关闭动画、模糊、透明效果以降低性能消耗",
     "warning": {
       "fileIsNotImage": "所选文件不是图片！",
       "granted": "已授予访问权限",

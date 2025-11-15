@@ -13,15 +13,26 @@
     "pauseWhenBlur": "Pause video background when the tab loses focus",
     "tip": "If no background is set for dark mode, the light mode background or video will be used.",
     "title": "Background",
+    "preferenceTitle": "Wallpaper preferences",
+    "today": "Today",
+    "custom": "Custom",
+    "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
+    "sunMoonSaying": "When the sun’s out, bathe in sunlight. But when the moon’s out, bathe in moonlight!",
+    "myZoneMyRule": "My turf, my rules",
+    "alwaysFresh": "Always something new",
+    "youLikeFine": "If you like it, that's fine~",
+    "button": {
+      "bathe": {
+        "sun": "Bathe in sunlight",
+        "moon": "Bathe in moonlight"
+      }
+    },
     "type": {
-      "bing": "Bing wallpaper",
-      "local": "Local image / video",
-      "none": "None",
-      "online": "Online image",
-      "title": "Background type"
+      "local": "Local file",
+      "online": "Online URL"
     },
     "videoBlurTip": "Turn on to reduce performance usage when multiple new tabs or windows are open on the screen simultaneously.",
-    "videoWarning": "Using a video as the background will heavily consume GPU resources. To avoid maxing out the GPU, it’s recommended not to open multiple new tabs at the same time. It’s also recommended to disable the blinking time separator, shortcut blur, search bar blur, and background zoom/blur on search bar click to reduce performance overhead.",
+    "videoWarning": "Using a video as a background consumes a lot of GPU resources. It is recommended to avoid opening multiple new tabs at the same time. It is recommended to turn off animation, blur, and transparency effects appropriately to reduce performance consumption.",
     "warning": {
       "fileIsNotImage": "The selected file is not an image!",
       "granted": "Permission granted.",
@@ -61,7 +72,6 @@
     },
     "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.\n",
     "importExport": {
-      "settings": "Import / Export settings",
       "bookmarks": "Import / Export bookmarks",
       "customSearchEngines": "Import / Export custom search engines",
       "export": "Export",
@@ -71,6 +81,7 @@
       "invalidFileFormat": "Invalid file format",
       "invalidJSON": "Invalid JSON format",
       "noFileSelected": "No file selected",
+      "settings": "Import / Export settings",
       "unknownError": "Unknown error",
       "warningDialog": {
         "content": "Importing will overwrite your current data. Please be cautious when using this feature!",

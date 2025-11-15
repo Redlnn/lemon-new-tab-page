@@ -14,10 +14,6 @@ const { t } = useTranslation('settings')
 const settings = useSettingsStore()
 
 const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
-
-function openSearchEngineManager() {
-  openSearchEnginePreference?.()
-}
 </script>
 
 <template>
@@ -28,7 +24,10 @@ function openSearchEngineManager() {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.defaultSearchEngine') }}</div>
-      <el-button :icon="BubbleChartRound" @click="openSearchEngineManager">
+      <el-button
+        :icon="BubbleChartRound"
+        @click="openSearchEnginePreference && openSearchEnginePreference()"
+      >
         {{ t('search.clickToChange') }}
       </el-button>
     </div>

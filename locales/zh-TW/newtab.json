@@ -40,6 +40,7 @@
   },
   "menu": {
     "about": "關於",
+    "backgroundPreference": "背景偏好設定",
     "help": "幫助與回饋",
     "searchEnginePreference": "搜尋引擎偏好",
     "sponsor": "支持我們"

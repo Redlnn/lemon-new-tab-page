@@ -54,7 +54,7 @@ export interface SettingsInterfaceVer7 {
   bingBackground: {
     id: string
     url: string
-    updateDate: string
+    updateDate: string | number
   }
   shortcut: {
     enabled: boolean

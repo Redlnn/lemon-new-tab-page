@@ -6,13 +6,14 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
+import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
 import { getLang } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
 import type AboutCompComponent from '@newtab/components/About.vue'
 import Background from '@newtab/components/Background.vue'
+import type BackgroundSwitcherComponent from '@newtab/components/BackgroundSwitcher/index.vue'
 import type ChangelogComponent from '@newtab/components/Changelog.vue'
 import Clock from '@newtab/components/Clock.vue'
 import SearchBox from '@newtab/components/SearchBox/index.vue'
@@ -67,18 +68,23 @@ const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vu
 const SearchEnginesSwitcher = defineAsyncComponent(
   () => import('@newtab/components/SearchEnginesSwitcher/index.vue')
 )
+const BackgroundSwitcher = defineAsyncComponent(
+  () => import('@newtab/components/BackgroundSwitcher/index.vue')
+)
 
 type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>
 type ChangelogInstance = InstanceType<typeof ChangelogComponent>
 type FaqInstance = InstanceType<typeof Faq>
 type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
+type BackgroundSwitcherInstance = InstanceType<typeof BackgroundSwitcherComponent>
 
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
 const FaqRef = ref<FaqInstance>()
 const AboutRef = ref<AboutCompInstance>()
 const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
+const BGSwticherRef = ref<BackgroundSwitcherInstance>()
 
 const settings = useSettingsStore()
 
@@ -195,6 +201,7 @@ watch(preferredDark, () => {
 })
 
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
+provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 </script>
 
 <template>
@@ -224,11 +231,13 @@ provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
       @open-about="AboutRef?.toggle"
       @open-search-engine-preference="SESwitcherRef?.show"
       @open-faq="FaqRef?.show"
+      @open-background-switcher="BGSwticherRef?.show"
     />
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />
     <about-comp ref="AboutRef" />
     <search-engines-switcher ref="SESwitcherRef" />
+    <background-switcher ref="BGSwticherRef" />
   </el-config-provider>
 </template>

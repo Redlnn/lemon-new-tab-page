@@ -4,7 +4,7 @@ import { promiseTimeout, useDark, useDocumentVisibility, useWindowFocus } from '
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
 import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 
-import { getBingWallpaperURL } from '@newtab/scripts/api/bingWallpaper'
+import { bingWallpaperURLGetter } from '@newtab/scripts/api/bingWallpaper'
 import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
 
 const isDark = useDark()
@@ -80,13 +80,13 @@ watch(
 // 壁纸更新相关逻辑
 
 interface BgURLProvider {
-  getURL: () => Promise<string>
+  getURL: () => Promise<string> | Ref<string>
   verify?: () => Promise<boolean>
 }
 
 const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Bing]: {
-    getURL: async () => await getBingWallpaperURL()
+    getURL: () => bingWallpaperURLGetter.getBgUrl()
   },
   [BgType.Local]: {
     getURL: async () =>
@@ -150,6 +150,31 @@ const bgTypeProviders: Record<BgType, BgURLProvider> = {
   }
 }
 
+async function assignMaybeRef<T>(
+  target: Ref<T>,
+  source: T | Ref<T> | Promise<T> | Promise<Ref<T>>
+) {
+  let stop: (() => void) | undefined
+
+  const process = async () => {
+    const resolved = await source
+    if (isRef(resolved)) {
+      stop?.() // 停止旧的 watch（避免重复）
+      stop = watch(resolved, (v) => (target.value = v), { immediate: true })
+    } else {
+      target.value = resolved
+    }
+  }
+
+  process()
+  return () => stop?.()
+}
+
+// 动态watch管理
+let stopBingBgWatch: (() => void) | undefined
+let stopLocalBgWatch: (() => void) | null = null
+let stopOnlineBgWatch: (() => void) | null = null
+
 async function updateBackgroundURL(type: BgType): Promise<void> {
   const provider = bgTypeProviders[type]
   if (!provider) return
@@ -166,14 +191,11 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
   // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
-  bgURL.value = newUrl
+  stopBingBgWatch?.() // 切换 provider 时清除旧监听
+  stopBingBgWatch = await assignMaybeRef(bgURL, newUrl)
 
   switchStore.end()
 }
-
-// 动态watch管理 - 根据背景类型激活需要的watch
-let stopLocalBgWatch: (() => void) | null = null
-let stopOnlineBgWatch: (() => void) | null = null
 
 // 本地背景URL变化处理器
 async function handleLocalBgChange() {
@@ -238,6 +260,7 @@ watch(
 )
 
 onMounted(async () => {
+  bingWallpaperURLGetter.init()
   await updateBackgroundURL(settings.background.bgType)
 
   // 初始化时激活当前背景类型的watch

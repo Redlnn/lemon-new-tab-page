@@ -40,6 +40,7 @@
   },
   "menu": {
     "about": "About",
+    "backgroundPreference": "Background Preference",
     "help": "Help / Feedback",
     "searchEnginePreference": "Search Engine Preference",
     "sponsor": "Sponsor"

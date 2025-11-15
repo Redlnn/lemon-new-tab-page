@@ -5,7 +5,8 @@ import {
   HelpFilled,
   InfoRound,
   SearchRound,
-  SettingsRound
+  SettingsRound,
+  WallpaperRound
 } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
@@ -19,6 +20,7 @@ const emit = defineEmits<{
   (e: 'open-about'): void
   (e: 'open-search-engine-preference'): void
   (e: 'open-faq'): void
+  (e: 'open-background-switcher'): void
 }>()
 
 const { t } = useTranslation()
@@ -71,6 +73,10 @@ function sponsorMessage() {
         <el-dropdown-item @click="emit('open-search-engine-preference')">
           <el-icon :size="17"><search-round /></el-icon>
           <span>{{ t('menu.searchEnginePreference') }}</span>
+        </el-dropdown-item>
+        <el-dropdown-item @click="emit('open-background-switcher')">
+          <el-icon :size="17"><wallpaper-round /></el-icon>
+          <span>{{ t('menu.backgroundPreference') }}</span>
         </el-dropdown-item>
         <el-badge is-dot :offset="[-3, 17]" :hidden="settings.readChangeLog" style="width: 100%">
           <el-dropdown-item divided @click="emit('open-changelog')">

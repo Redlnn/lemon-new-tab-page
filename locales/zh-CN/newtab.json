@@ -40,6 +40,7 @@
   },
   "menu": {
     "about": "关于",
+    "backgroundPreference": "背景偏好设置",
     "help": "帮助和反馈",
     "searchEnginePreference": "搜索引擎偏好",
     "sponsor": "支持我们"

@@ -13,15 +13,26 @@
     "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
     "tip": "如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片/影片噢",
     "title": "背景",
+    "preferenceTitle": "壁紙偏好",
+    "today": "今日",
+    "custom": "自訂",
+    "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
+    "sunMoonSaying": "太陽出來我曬太陽，月亮出來我曬月亮",
+    "myZoneMyRule": "我的地盤我做主",
+    "alwaysFresh": "永遠都有新鮮感",
+    "youLikeFine": "你喜歡就好~",
+    "button": {
+      "bathe": {
+        "sun": "曬太陽",
+        "moon": "曬月亮"
+      }
+    },
     "type": {
-      "bing": "Bing 每日圖片",
       "local": "本機圖片/影片",
-      "none": "無",
-      "online": "線上圖片",
-      "title": "背景類型"
+      "online": "線上圖片"
     },
     "videoBlurTip": "開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用",
-    "videoWarning": "使用影片作為背景將會大量消耗 GPU 資源，建議避免同時開啟多個新分頁，以免佔滿 GPU。也建議停用時間分隔符閃爍、捷徑模糊、搜尋框模糊，以及點擊搜尋框時的縮放/模糊背景，以降低效能消耗。",
+    "videoWarning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開啟多個新分頁。建議適當停用動畫、模糊、透明效果以降低效能消耗",
     "warning": {
       "fileIsNotImage": "所選檔案不是圖片！",
       "granted": "已授予訪問權限",
