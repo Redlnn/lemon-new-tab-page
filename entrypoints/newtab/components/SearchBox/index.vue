@@ -224,7 +224,8 @@ const doSearchWithText = async (text: string, newtab: boolean = false) => {
 
   window.open(
     searchUrl.replace('%s', encodeURIComponent(text)),
-    newtab || settings.search.searchInNewTab ? '_blank' : '_self'
+    newtab || settings.search.searchInNewTab ? '_blank' : '_self',
+    'noopener noreferrer'
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }
