@@ -42,5 +42,12 @@ const settings = useSettingsStore()
       <div class="settings__label">{{ t('clock.enableShadow') }}</div>
       <el-switch v-model="settings.time.enableShadow" />
     </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
+      <el-switch v-model="settings.time.blinkingColon" />
+    </div>
+    <p class="settings__item--note">
+      {{ t('clock.blinkingTip') }}
+    </p>
   </div>
 </template>
