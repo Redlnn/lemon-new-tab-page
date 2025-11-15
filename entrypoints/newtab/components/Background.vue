@@ -86,7 +86,7 @@ interface BgURLProvider {
 
 const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Bing]: {
-    getURL: () => bingWallpaperURLGetter.getBgUrl()
+    getURL: bingWallpaperURLGetter.getBgUrl
   },
   [BgType.Local]: {
     getURL: async () =>
@@ -260,7 +260,7 @@ watch(
 )
 
 onMounted(async () => {
-  bingWallpaperURLGetter.init()
+  await bingWallpaperURLGetter.init()
   await updateBackgroundURL(settings.background.bgType)
 
   // 初始化时激活当前背景类型的watch

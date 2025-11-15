@@ -49,28 +49,23 @@ class BingWallpaperURLGetter {
   public info: Ref<BingWallpaperImage | null> = ref(null)
   public uhdUrl: Ref<string> = ref('')
 
-  private async resolveLocalBingWallpaperURL(id: string, url: string) {
-    const file = await useBingWallpaperStore.getItem<Blob>(id)
-    if (file && isImageFile(file)) {
-      const objectUrl = URL.createObjectURL(file)
-      if (await verifyImageUrl(objectUrl)) {
-        return objectUrl
-      }
-    }
-
-    URL.revokeObjectURL(url)
-    await useBingWallpaperStore.removeItem(id)
-    await this.revokeSettingsURL()
-    return null
+  public getBgUrl() {
+    return this.url
   }
 
-  private async revokeSettingsURL() {
-    const settings = useSettingsStore()
+  public getInfo() {
+    return this.info
+  }
 
-    URL.revokeObjectURL(settings.bingBackground.url)
-    settings.bingBackground.id = ''
-    settings.bingBackground.url = ''
-    void saveSettings(settings)
+  private setUrlSafe(newUrl: string | null) {
+    // 在替换 this.url.value 前撤销旧的 blob URL
+    const old = this.url.value
+    try {
+      if (old && old.startsWith('blob:') && old !== (newUrl ?? '')) {
+        URL.revokeObjectURL(old)
+      }
+    } catch {}
+    this.url.value = newUrl ?? ''
   }
 
   private toWebp(url: string) {
@@ -84,15 +79,7 @@ class BingWallpaperURLGetter {
     )
   }
 
-  public getBgUrl() {
-    return this.url
-  }
-
-  public getInfo() {
-    return this.info
-  }
-
-  public async refresh() {
+  public async init() {
     const settings = useSettingsStore()
 
     // 兼容旧版逻辑：如果 updateDate 存在，迁移到 startdate
@@ -101,9 +88,71 @@ class BingWallpaperURLGetter {
       const parsedDate = new Date(settings.bingBackground.updateDate)
       if (!isNaN(parsedDate.getTime())) {
         settings.bingBackground.updateDate = formatUTCCompact(parsedDate)
-        await saveSettings(settings)
+        // await saveSettings(settings)
       }
     }
+
+    const localUrl = await this.resolveLocalBingWallpaperURL()
+
+    if (localUrl) {
+      this.setUrlSafe(localUrl)
+    }
+
+    await this.refresh()
+  }
+
+  private async resolveLocalBingWallpaperURL() {
+    const settings = useSettingsStore()
+    const { id, url } = settings.bingBackground
+
+    // 如果 settings 中已有有效的 blob url，优先复用
+    try {
+      if (url && url.startsWith('blob:')) {
+        if (await verifyImageUrl(url)) {
+          return url
+        }
+        // 如果现有 settings blob URL 无效，撤销并继续
+        await this.revokeSettingsURL()
+      }
+    } catch {}
+
+    const file = await useBingWallpaperStore.getItem<Blob>(settings.bingBackground.id)
+    if (file && isImageFile(file)) {
+      const objectUrl = URL.createObjectURL(file)
+      const ok = await verifyImageUrl(objectUrl)
+      if (ok) {
+        settings.bingBackground.url = objectUrl
+        // await saveSettings(settings)
+        return objectUrl
+      } else {
+        // 验证失败时立即撤销临时 objectUrl
+        try {
+          URL.revokeObjectURL(objectUrl)
+        } catch {}
+      }
+    }
+
+    // 如果文件不存在或不是图片，则清除相关设置
+    settings.bingBackground.id = ''
+    settings.bingBackground.updateDate = 0
+    await useBingWallpaperStore.removeItem(id)
+    await this.revokeSettingsURL()
+    return null
+  }
+
+  private async revokeSettingsURL() {
+    const settings = useSettingsStore()
+
+    try {
+      if (settings.bingBackground.url && settings.bingBackground.url.startsWith('blob:')) {
+        URL.revokeObjectURL(settings.bingBackground.url)
+      }
+    } catch {}
+    settings.bingBackground.url = ''
+  }
+
+  public async refresh() {
+    const settings = useSettingsStore()
 
     let data: BingWallpaperResp | null = null
 
@@ -127,31 +176,27 @@ class BingWallpaperURLGetter {
       throw error
     }
 
-    ElMessage.primary(i18next.t('newtab:notification.bingWallpaper.get'))
     const imgUrl = this.toWebp(`https://www.bing.com${data.images[0]!.url}`)
 
+    ElMessage.primary(i18next.t('newtab:notification.bingWallpaper.get'))
     try {
       const response = await fetch(imgUrl)
       if (!response.ok) {
-        this.url.value = imgUrl
         // 兜底：网络请求失败，直接使用在线URL
+        this.setUrlSafe(imgUrl)
         return
       }
 
       const blob = await response.blob()
       const file = new File([blob], 'bing.jpg', { type: blob.type })
 
-      const id = crypto.randomUUID()
-      const url = URL.createObjectURL(file)
-      const url_old = settings.bingBackground.url
-
-      // 清除上次壁纸，ObjectURL可能导致内存溢出
+      // 清除上次壁纸
       await useBingWallpaperStore.clear()
-      if (url_old.startsWith('blob:')) {
-        URL.revokeObjectURL(url_old)
-      }
+      await this.revokeSettingsURL()
 
       // 保存图片到IndexedDB
+      const id = crypto.randomUUID()
+      const url = URL.createObjectURL(file)
       await useBingWallpaperStore.setItem<Blob>(id, file)
       settings.bingBackground = {
         id: id,
@@ -159,7 +204,7 @@ class BingWallpaperURLGetter {
         updateDate: data.images[0]!.fullstartdate
       }
       await saveSettings(settings)
-      this.url.value = url
+      this.setUrlSafe(url)
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)
       ElNotification({
@@ -169,20 +214,6 @@ class BingWallpaperURLGetter {
       })
       throw error
     }
-  }
-
-  public init() {
-    const settings = useSettingsStore()
-
-    this.resolveLocalBingWallpaperURL(settings.bingBackground.id, settings.bingBackground.url).then(
-      (localUrl) => {
-        if (localUrl) {
-          this.url.value = localUrl
-        }
-      }
-    )
-
-    void this.refresh()
   }
 }
 
