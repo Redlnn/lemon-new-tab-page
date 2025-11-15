@@ -183,7 +183,7 @@
   }
 }
 
-@media screen and (width <= 600px) {
+@media (width <= 600px) {
   .search-box__form {
     --height: 40px;
     --width: 75vw;

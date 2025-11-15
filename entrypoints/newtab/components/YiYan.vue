@@ -121,7 +121,7 @@ onMounted(async () => {
       }
     }
 
-    @media screen and (width <= 600px) {
+    @media (width <= 600px) {
       width: 80%;
     }
   }

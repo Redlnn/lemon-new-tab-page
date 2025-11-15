@@ -107,7 +107,7 @@
   }
 }
 
-@media screen and (width <= 600px) {
+@media (width <= 600px) {
   .clock {
     &__time {
       font-size: 50px;

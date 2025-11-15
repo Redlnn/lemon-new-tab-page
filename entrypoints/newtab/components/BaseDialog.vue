@@ -137,7 +137,7 @@ const dialogId = computed(() => {
     height: 100%;
     padding: 0 19px 0 35px;
 
-    @media screen and (width <= 650px) {
+    @media (width <= 650px) {
       padding: 0 10px 0 26px;
     }
   }
