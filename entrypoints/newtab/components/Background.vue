@@ -86,7 +86,7 @@ interface BgURLProvider {
 
 const bgTypeProviders: Record<BgType, BgURLProvider> = {
   [BgType.Bing]: {
-    getURL: bingWallpaperURLGetter.getBgUrl
+    getURL: () => bingWallpaperURLGetter.getBgUrl()
   },
   [BgType.Local]: {
     getURL: async () =>
