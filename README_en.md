@@ -37,14 +37,17 @@ The extension is now available on
 
 ## Browser Compatibility
 
-|              Browser               | Supported |         Notes         |
-| :--------------------------------: | :-------: | :-------------------: |
-|               Chrome               |    ✅     | Chrome 116 and above  |
-|                Edge                |    ✅     |  Edge 116 and above   |
-|              Firefox               |    ✅     | Firefox 128 and above |
-| Chromium-based<br/>Mobile Browsers |    ❓     |       untested        |
-|            Edge Mobile             |    ❓     |       untested        |
-|           Firefox Mobile           |    ❌     |      unsupported      |
+|              Browser               | Supported |                       Notes                        |
+| :--------------------------------: | :-------: | :------------------------------------------------: |
+|               Chrome               |    ✅     |                Chrome 116 and above                |
+|                Edge                |    ✅     |                 Edge 116 and above                 |
+|              Firefox               |    ✅     |               Firefox 128 and above                |
+|           Firefox Mobile           |    ❓     | Not listed<br/>Unable to get the most visted sites |
+| Chromium-based<br/>Mobile Browsers |    ❓     |                      untested                      |
+|            Edge Mobile             |    ❓     |                      untested                      |
+
+> Lemon Start Page adapts to both landscape and portrait modes,
+> but has not been tested or published on mobile browsers, so compatibility is not guaranteed.
 
 ## Preview
 
