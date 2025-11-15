@@ -4,9 +4,22 @@
 
 ## 2.5.5 (WIP)
 
+### New Features✨
+
+- Brand new wallpaper selection page
+
+### Improvements⚡️
+
+- Re-added the "Blinking Time Separator" setting in the clock settings page
+- Added video wallpaper pause option in the performance settings page
+- Added Bilibili link to the About page
+- Adjusted the CopyRight link on the About page to personal homepage
+
 ### Bug Fixes🐛
 
 - Fixed the issue where the background mask would flicker on startup (#46)
+- Fix some misalignment issues in the Quote settings page
+- Fixed style and layout issues of Quote on the About page
 
 ## 2.5.4 (Nov 03, 2025)
 
