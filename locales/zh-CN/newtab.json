@@ -3,6 +3,16 @@
     "yiyanApiProviderPrefix": "一言API由",
     "yiyanApiProviderSuffix": "提供"
   },
+  "bookmarkSidebar": {
+    "title": "书签",
+    "sortMode": {
+      "origin": "原始顺序",
+      "nameAsc": "名称由A到Z",
+      "nameDesc": "名称由Z到A",
+      "createdAsc": "由新到旧",
+      "createdDesc": "由旧到新"
+    }
+  },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",
     "newVersionMsg": "你的起始页更新啦~",
@@ -103,6 +113,5 @@
     "morning": "早上",
     "noon": "中午"
   },
-  "title": "新标签页",
-  "bookmark": "书签"
+  "title": "新标签页"
 }

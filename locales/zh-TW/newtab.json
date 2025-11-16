@@ -3,7 +3,16 @@
     "yiyanApiProviderPrefix": "一言API由",
     "yiyanApiProviderSuffix": "提供"
   },
-  "bookmark": "書籤",
+  "bookmarkSidebar": {
+    "title": "書籤",
+    "sortMode": {
+      "origin": "原始順序",
+      "nameAsc": "名稱由A到Z",
+      "nameDesc": "名稱由Z到A",
+      "createdAsc": "由新到舊",
+      "createdDesc": "由舊到新"
+    }
+  },
   "changelog": {
     "hideMajorChangelog": "不顯示大版本更新日誌",
     "newVersionMsg": "你的起始頁更新啦~",

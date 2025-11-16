@@ -3,7 +3,16 @@
     "yiyanApiProviderPrefix": "Chinese poetry API provided by",
     "yiyanApiProviderSuffix": ""
   },
-  "bookmark": "Bookmark",
+  "bookmarkSidebar": {
+    "title": "Bookmark",
+    "sortMode": {
+      "origin": "Original Order",
+      "nameAsc": "Sort by Name A–Z",
+      "nameDesc": "Sort by Name Z–A",
+      "createdAsc": "Sort by Newest",
+      "createdDesc": "Sort by Oldest"
+    }
+  },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",
