@@ -27,7 +27,7 @@ onMounted(() => {
     v-model="opened"
     :direction="settings.bookmarkSidebar.direction"
     :title="t('bookmark')"
-    class="bookmark"
+    class="bookmark noselect"
     append-to-body
     resizable
     lock-scroll
