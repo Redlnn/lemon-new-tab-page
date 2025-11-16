@@ -1,6 +1,6 @@
 import type { YiyanProviderKey } from '@/shared/yiyan'
 
-import type { BgType } from './enum'
+import type { BgType, DrawerDirection } from './enum'
 
 export interface SettingsInterfaceVer7 {
   primaryColor: string
@@ -99,6 +99,11 @@ export interface SettingsInterfaceVer7 {
     disableYiyanBlur: boolean
     disableSettingsBtnBlur: boolean
     disableSettingsBtnTransparent: boolean
+  }
+  bookmarkSidebar: {
+    direction: DrawerDirection
+    rightClickToOpen: boolean
+    hideBtn: boolean
   }
   hideMajorChangelog: boolean
   readChangeLog: boolean

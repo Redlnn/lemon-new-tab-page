@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
+import { useSettingsStore } from '@/shared/settings'
+
 import { useDialog } from '@newtab/composables/useDialog'
 
 import { useBookmarkStore } from './bookmarks'
@@ -10,6 +12,7 @@ const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
 const { t } = useTranslation()
+const settings = useSettingsStore()
 
 const store = useBookmarkStore()
 onMounted(() => {
@@ -22,7 +25,7 @@ onMounted(() => {
 <template>
   <el-drawer
     v-model="opened"
-    direction="rtl"
+    :direction="settings.bookmarkSidebar.direction"
     :title="t('bookmark')"
     class="bookmark"
     append-to-body

@@ -204,6 +204,13 @@ watch(preferredDark, () => {
   }
 })
 
+function openBookmarkSidebar(e: Event) {
+  if (settings.bookmarkSidebar.rightClickToOpen) {
+    e.preventDefault()
+    BookmarkRef.value?.show()
+  }
+}
+
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 </script>
@@ -222,7 +229,7 @@ provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
     <main
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
-      @contextmenu.prevent="BookmarkRef?.show"
+      @contextmenu="openBookmarkSidebar"
     >
       <clock v-if="settings.time.enabled" @contextmenu.stop />
       <search-box v-if="settings.search.enabled" @contextmenu.stop />

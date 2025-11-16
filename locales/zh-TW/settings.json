@@ -1,9 +1,20 @@
 {
   "background": {
+    "alwaysFresh": "永遠都有新鮮感",
     "blur": "模糊強度",
+    "button": {
+      "bathe": {
+        "moon": "曬月亮",
+        "sun": "曬太陽"
+      }
+    },
+    "change": "更改背景",
+    "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
+    "custom": "自訂",
     "enableVignetting": "暗角效果",
     "maskColor": "遮罩顏色",
     "maskOpacity": "遮罩不透明度",
+    "myZoneMyRule": "我的地盤我做主",
     "onlineTips": {
       "a": "按下 Enter 鍵或當輸入框失去焦點時會提交",
       "b": "圖片的快取策略取決於瀏覽器，離線時可能無法載入圖片",
@@ -11,22 +22,11 @@
       "d": "請確認使用的圖片 API 是否允許跨域請求，否則將無法載入圖片"
     },
     "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
+    "preferenceTitle": "壁紙偏好",
+    "sunMoonSaying": "太陽出來我曬太陽，月亮出來我曬月亮",
     "tip": "如果深色模式背景沒有選擇的話會繼續使用淺色模式的圖片/影片噢",
     "title": "背景",
-    "preferenceTitle": "壁紙偏好",
     "today": "今日",
-    "custom": "自訂",
-    "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
-    "sunMoonSaying": "太陽出來我曬太陽，月亮出來我曬月亮",
-    "myZoneMyRule": "我的地盤我做主",
-    "alwaysFresh": "永遠都有新鮮感",
-    "youLikeFine": "你喜歡就好~",
-    "button": {
-      "bathe": {
-        "sun": "曬太陽",
-        "moon": "曬月亮"
-      }
-    },
     "type": {
       "local": "本機圖片/影片",
       "online": "線上圖片"
@@ -44,7 +44,18 @@
         "title": "大型檔案"
       },
       "unknownSource": "使用來源不明的圖片作為背景可能會使裝置遭到攻擊，是否繼續？"
-    }
+    },
+    "youLikeFine": "你喜歡就好~"
+  },
+  "bookmarkSidebar": {
+    "direction": {
+      "ltr": "從左到右",
+      "rtl": "從右到左",
+      "title": "打開方向"
+    },
+    "hideBtn": "隱藏右下角快捷入口",
+    "rightClickToOpen": "右鍵背景打開",
+    "title": "書籤欄"
   },
   "clock": {
     "blinkingColon": "閃爍時間分隔符",
@@ -72,7 +83,6 @@
     },
     "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
     "importExport": {
-      "shortcuts": "匯入 / 匯出捷徑",
       "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
       "export": "匯出",
       "import": "匯入",
@@ -82,6 +92,7 @@
       "invalidJSON": "無效的 JSON 格式",
       "noFileSelected": "未選擇檔案",
       "settings": "匯入 / 匯出設定",
+      "shortcuts": "匯入 / 匯出捷徑",
       "unknownError": "未知錯誤",
       "warningDialog": {
         "content": "匯入會覆蓋你目前的資料，請謹慎使用此功能，是否繼續？",

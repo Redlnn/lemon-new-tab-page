@@ -101,6 +101,11 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       disableSettingsBtnBlur: defaultSettings.perf.disableSettingsBtnBlur,
       disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent
     },
+    bookmarkSidebar: {
+      direction: defaultSettings.bookmarkSidebar.direction,
+      rightClickToOpen: defaultSettings.bookmarkSidebar.rightClickToOpen,
+      hideBtn: defaultSettings.bookmarkSidebar.hideBtn
+    },
     hideMajorChangelog: defaultSettings.hideMajorChangelog,
     readChangeLog: defaultSettings.readChangeLog,
     pluginVersion: oldSettings.version,

@@ -1,9 +1,20 @@
 {
   "background": {
+    "alwaysFresh": "Always something new",
     "blur": "Blur intensity",
+    "button": {
+      "bathe": {
+        "moon": "Bathe in moonlight",
+        "sun": "Bathe in sunlight"
+      }
+    },
+    "change": "Change background",
+    "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
+    "custom": "Custom",
     "enableVignetting": "Enable vignetting",
     "maskColor": "Mask color",
     "maskOpacity": "Mask opacity",
+    "myZoneMyRule": "My turf, my rules",
     "onlineTips": {
       "a": "Submit after pressing the Enter key or when the input field loses focus.",
       "b": "The wallpaper caching strategy depends on the browser, and wallpapers may not be accessible offline.",
@@ -11,22 +22,11 @@
       "d": "Please ensure the wallpaper API you are using allows cross-origin requests; otherwise, it will fail to load."
     },
     "pauseWhenBlur": "Pause video background when the tab loses focus",
+    "preferenceTitle": "Wallpaper preferences",
+    "sunMoonSaying": "When the sun’s out, bathe in sunlight. But when the moon’s out, bathe in moonlight!",
     "tip": "If no background is set for dark mode, the light mode background or video will be used.",
     "title": "Background",
-    "preferenceTitle": "Wallpaper preferences",
     "today": "Today",
-    "custom": "Custom",
-    "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
-    "sunMoonSaying": "When the sun’s out, bathe in sunlight. But when the moon’s out, bathe in moonlight!",
-    "myZoneMyRule": "My turf, my rules",
-    "alwaysFresh": "Always something new",
-    "youLikeFine": "If you like it, that's fine~",
-    "button": {
-      "bathe": {
-        "sun": "Bathe in sunlight",
-        "moon": "Bathe in moonlight"
-      }
-    },
     "type": {
       "local": "Local file",
       "online": "Online URL"
@@ -44,7 +44,18 @@
         "title": "Large File Warning"
       },
       "unknownSource": "Using images from unknown sources as backgrounds may expose your device to attacks. Do you want to continue?"
-    }
+    },
+    "youLikeFine": "If you like it, that's fine~"
+  },
+  "bookmarkSidebar": {
+    "direction": {
+      "ltr": "Left to right",
+      "rtl": "Right to left",
+      "title": "Open direction"
+    },
+    "hideBtn": "Hide bottom-right button",
+    "rightClickToOpen": "Right click on background to open",
+    "title": "Bookmarks bar"
   },
   "clock": {
     "blinkingColon": "Blinking colon",
@@ -72,7 +83,6 @@
     },
     "customize_chrome_tips": "If you want to customize Chrome (e.g., change the color theme), you can only open the native new tab page of Chrome (chrome://new-tab-page) and click the icon in the bottom right corner to open the 'Customize Chrome' sidebar.\n",
     "importExport": {
-      "shortcuts": "Import / Export shortcuts",
       "customSearchEngines": "Import / Export custom search engines",
       "export": "Export",
       "import": "Import",
@@ -82,6 +92,7 @@
       "invalidJSON": "Invalid JSON format",
       "noFileSelected": "No file selected",
       "settings": "Import / Export settings",
+      "shortcuts": "Import / Export shortcuts",
       "unknownError": "Unknown error",
       "warningDialog": {
         "content": "Importing will overwrite your current data. Please be cautious when using this feature!",

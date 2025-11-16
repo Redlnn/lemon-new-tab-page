@@ -11,6 +11,7 @@ const settingsViewLoaders: Record<SettingsRoute, (() => Promise<{ default: Compo
   [SettingsRoute.SEARCH]: () => import('../Settings/SearchSettings.vue'),
   [SettingsRoute.BACKGROUND]: () => import('../Settings/BackgroundSettings.vue'),
   [SettingsRoute.SHORTCUT]: () => import('../Settings/ShortcutSettings.vue'),
+  [SettingsRoute.BOOKMARK_SIDEBAR]: () => import('../Settings/BookmarkSidebarSettings.vue'),
   [SettingsRoute.YIYAN]: () => import('../Settings/YiyanSettings.vue'),
   [SettingsRoute.PERFORMANCE]: () => import('../Settings/PerformanceSettings.vue'),
   [SettingsRoute.OTHER]: () => import('../Settings/OtherSettings.vue')
@@ -23,6 +24,9 @@ const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = {
   [SettingsRoute.SEARCH]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.SEARCH]!),
   [SettingsRoute.BACKGROUND]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.BACKGROUND]!),
   [SettingsRoute.SHORTCUT]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.SHORTCUT]!),
+  [SettingsRoute.BOOKMARK_SIDEBAR]: defineAsyncComponent(
+    settingsViewLoaders[SettingsRoute.BOOKMARK_SIDEBAR]!
+  ),
   [SettingsRoute.YIYAN]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.YIYAN]!),
   [SettingsRoute.PERFORMANCE]: defineAsyncComponent(
     settingsViewLoaders[SettingsRoute.PERFORMANCE]!

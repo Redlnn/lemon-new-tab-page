@@ -4,3 +4,10 @@ export enum BgType {
   Bing,
   Online
 }
+
+export enum DrawerDirection {
+  ltr = 'ltr',
+  rtl = 'rtl',
+  ttb = 'ttb',
+  btt = 'btt'
+}

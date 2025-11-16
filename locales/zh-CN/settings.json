@@ -1,9 +1,20 @@
 {
   "background": {
+    "alwaysFresh": "永远都有新鲜感",
     "blur": "模糊强度",
+    "button": {
+      "bathe": {
+        "moon": "晒月亮",
+        "sun": "晒太阳"
+      }
+    },
+    "change": "更改背景",
+    "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
+    "custom": "自定义",
     "enableVignetting": "暗角效果",
     "maskColor": "遮罩颜色",
     "maskOpacity": "遮罩不透明度",
+    "myZoneMyRule": "我的地带我做主",
     "onlineTips": {
       "a": "按下回车键或者输入框失去焦点后提交",
       "b": "壁纸缓存策略却决于浏览器，断网后会获取不到壁纸",
@@ -11,22 +22,11 @@
       "d": "请确保你使用的壁纸 API 允许跨域请求，否则会加载失败"
     },
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
+    "preferenceTitle": "壁纸偏好",
+    "sunMoonSaying": "太阳出来我晒太阳，月亮出来我晒月亮",
     "tip": "深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢",
     "title": "背景",
-    "preferenceTitle": "壁纸偏好",
     "today": "今日",
-    "custom": "自定义",
-    "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
-    "sunMoonSaying": "太阳出来我晒太阳，月亮出来我晒月亮",
-    "myZoneMyRule": "我的地带我做主",
-    "alwaysFresh": "永远都有新鲜感",
-    "youLikeFine": "你喜欢就好~",
-    "button": {
-      "bathe": {
-        "sun": "晒太阳",
-        "moon": "晒月亮"
-      }
-    },
     "type": {
       "local": "本地图片/视频",
       "online": "在线图片"
@@ -44,7 +44,18 @@
         "title": "文件过大"
       },
       "unknownSource": "使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？"
-    }
+    },
+    "youLikeFine": "你喜欢就好~"
+  },
+  "bookmarkSidebar": {
+    "direction": {
+      "title": "打开方向",
+      "rtl": "从右到左",
+      "ltr": "从左到右"
+    },
+    "hideBtn": "隐藏右下角入口",
+    "rightClickToOpen": "右键背景打开",
+    "title": "书签栏"
   },
   "clock": {
     "blinkingColon": "闪烁时间分隔符",
@@ -72,7 +83,6 @@
     },
     "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开「自定义 Chrome」侧边栏。\n",
     "importExport": {
-      "shortcuts": "导入 / 导出快捷方式",
       "customSearchEngines": "导入 / 导出自定义搜索引擎",
       "export": "导出",
       "import": "导入",
@@ -82,6 +92,7 @@
       "invalidJSON": "无效的 JSON 格式",
       "noFileSelected": "未选择文件",
       "settings": "导入 / 导出设置",
+      "shortcuts": "导入 / 导出快捷方式",
       "unknownError": "未知错误",
       "warningDialog": {
         "content": "导入会覆盖你当前的数据，请谨慎使用该功能，是否继续？",

@@ -1,5 +1,19 @@
 import { computed, ref } from 'vue'
 
+import {
+  AppstoreOutlined,
+  ClockCircleOutlined,
+  ControlOutlined,
+  PictureOutlined,
+  SearchOutlined
+} from '@vicons/antd'
+import {
+  ApiRound,
+  BookmarkBorderRound,
+  ColorLensOutlined,
+  FormatQuoteRound
+} from '@vicons/material'
+
 export enum SettingsRoute {
   MENU = 'menu',
   THEME = 'theme',
@@ -7,6 +21,7 @@ export enum SettingsRoute {
   SEARCH = 'search',
   BACKGROUND = 'background',
   SHORTCUT = 'shortcut',
+  BOOKMARK_SIDEBAR = 'bookmarkSidebar',
   YIYAN = 'yiyan',
   PERFORMANCE = 'performance',
   OTHER = 'other'
@@ -14,18 +29,56 @@ export enum SettingsRoute {
 
 interface MenuItem {
   key: SettingsRoute
+  icon: Component
   titleKey: string
 }
 
 export const MENU_ITEMS: MenuItem[] = [
-  { key: SettingsRoute.THEME, titleKey: 'theme.title' },
-  { key: SettingsRoute.CLOCK, titleKey: 'clock.title' },
-  { key: SettingsRoute.SEARCH, titleKey: 'search.title' },
-  { key: SettingsRoute.BACKGROUND, titleKey: 'background.title' },
-  { key: SettingsRoute.SHORTCUT, titleKey: 'shortcut.title' },
-  { key: SettingsRoute.YIYAN, titleKey: 'yiyan.title' },
-  { key: SettingsRoute.PERFORMANCE, titleKey: 'perf.title' },
-  { key: SettingsRoute.OTHER, titleKey: 'other.title' }
+  {
+    key: SettingsRoute.THEME,
+    icon: ColorLensOutlined,
+    titleKey: 'theme.title'
+  },
+  {
+    key: SettingsRoute.CLOCK,
+    icon: ClockCircleOutlined,
+    titleKey: 'clock.title'
+  },
+  {
+    key: SettingsRoute.SEARCH,
+    icon: SearchOutlined,
+    titleKey: 'search.title'
+  },
+  {
+    key: SettingsRoute.BACKGROUND,
+    icon: PictureOutlined,
+    titleKey: 'background.title'
+  },
+  {
+    key: SettingsRoute.SHORTCUT,
+    icon: AppstoreOutlined,
+    titleKey: 'shortcut.title'
+  },
+  {
+    key: SettingsRoute.BOOKMARK_SIDEBAR,
+    icon: BookmarkBorderRound,
+    titleKey: 'bookmarkSidebar.title'
+  },
+  {
+    key: SettingsRoute.YIYAN,
+    icon: FormatQuoteRound,
+    titleKey: 'yiyan.title'
+  },
+  {
+    key: SettingsRoute.PERFORMANCE,
+    icon: ApiRound,
+    titleKey: 'perf.title'
+  },
+  {
+    key: SettingsRoute.OTHER,
+    icon: ControlOutlined,
+    titleKey: 'other.title'
+  }
 ] as const
 
 interface RouteState {

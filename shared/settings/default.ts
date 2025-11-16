@@ -1,7 +1,7 @@
 import i18next from 'i18next'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
-import { BgType } from './types'
+import { BgType, DrawerDirection } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   primaryColor: '#F5B800',
@@ -98,6 +98,11 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableYiyanBlur: false,
     disableSettingsBtnBlur: false,
     disableSettingsBtnTransparent: false
+  },
+  bookmarkSidebar: {
+    direction: DrawerDirection.rtl,
+    rightClickToOpen: true,
+    hideBtn: false
   },
   hideMajorChangelog: true,
   readChangeLog: false,

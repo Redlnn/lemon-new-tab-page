@@ -1,68 +1,12 @@
 <script setup lang="ts">
-import {
-  AppstoreOutlined,
-  ClockCircleOutlined,
-  ControlOutlined,
-  PictureOutlined,
-  SearchOutlined
-} from '@vicons/antd'
-import { ApiRound, ChevronRightRound, ColorLensOutlined, FormatQuoteRound } from '@vicons/material'
+import { ChevronRightRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import Icon from '@/assets/icon.svg?component'
 
-import { SettingsRoute } from '../composables/useSettingsRouter'
+import { MENU_ITEMS } from '../composables/useSettingsRouter'
 
 const { t } = useTranslation('settings')
-
-interface MenuItem {
-  key: SettingsRoute
-  icon: Component
-  titleKey: string
-}
-
-const menuItems: MenuItem[] = [
-  {
-    key: SettingsRoute.THEME,
-    icon: ColorLensOutlined,
-    titleKey: 'theme.title'
-  },
-  {
-    key: SettingsRoute.CLOCK,
-    icon: ClockCircleOutlined,
-    titleKey: 'clock.title'
-  },
-  {
-    key: SettingsRoute.SEARCH,
-    icon: SearchOutlined,
-    titleKey: 'search.title'
-  },
-  {
-    key: SettingsRoute.BACKGROUND,
-    icon: PictureOutlined,
-    titleKey: 'background.title'
-  },
-  {
-    key: SettingsRoute.SHORTCUT,
-    icon: AppstoreOutlined,
-    titleKey: 'shortcut.title'
-  },
-  {
-    key: SettingsRoute.YIYAN,
-    icon: FormatQuoteRound,
-    titleKey: 'yiyan.title'
-  },
-  {
-    key: SettingsRoute.PERFORMANCE,
-    icon: ApiRound,
-    titleKey: 'perf.title'
-  },
-  {
-    key: SettingsRoute.OTHER,
-    icon: ControlOutlined,
-    titleKey: 'other.title'
-  }
-]
 
 interface Props {
   isMobile?: boolean
@@ -97,7 +41,7 @@ function handleMenuSelect(key: string) {
         <span v-else>{{ t('title') }}</span>
       </div>
       <el-menu-item
-        v-for="item in menuItems"
+        v-for="item in MENU_ITEMS"
         :key="item.key"
         :index="item.key"
         class="settings-menu-item noselect"
@@ -108,7 +52,7 @@ function handleMenuSelect(key: string) {
         <template #title>
           <span class="menu-title">{{ t(item.titleKey) }}</span>
         </template>
-        <!-- Mobile: Show chevron arrow -->
+        <!-- 移动端右箭头 -->
         <el-icon v-if="isMobile" class="menu-chevron">
           <component :is="ChevronRightRound" />
         </el-icon>
