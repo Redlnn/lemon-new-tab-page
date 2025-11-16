@@ -4,14 +4,16 @@
     "yiyanApiProviderSuffix": ""
   },
   "bookmarkSidebar": {
-    "title": "Bookmark",
+    "404": "Nothing found",
+    "sortBy": "Sort by",
     "sortMode": {
-      "origin": "Original Order",
-      "nameAsc": "Sort by Name A–Z",
-      "nameDesc": "Sort by Name Z–A",
-      "createdAsc": "Sort by Newest",
-      "createdDesc": "Sort by Oldest"
-    }
+      "createdAsc": "Newest",
+      "createdDesc": "Oldest",
+      "nameAsc": "Name A–Z",
+      "nameDesc": "Name Z–A",
+      "origin": "Original Order"
+    },
+    "title": "Bookmark"
   },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",

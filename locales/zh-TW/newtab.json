@@ -4,14 +4,16 @@
     "yiyanApiProviderSuffix": "提供"
   },
   "bookmarkSidebar": {
-    "title": "書籤",
+    "404": "什麼都沒找到",
+    "sortBy": "排序方式",
     "sortMode": {
-      "origin": "原始順序",
+      "createdAsc": "由新到舊",
+      "createdDesc": "由舊到新",
       "nameAsc": "名稱由A到Z",
       "nameDesc": "名稱由Z到A",
-      "createdAsc": "由新到舊",
-      "createdDesc": "由舊到新"
-    }
+      "origin": "原始順序"
+    },
+    "title": "書籤"
   },
   "changelog": {
     "hideMajorChangelog": "不顯示大版本更新日誌",

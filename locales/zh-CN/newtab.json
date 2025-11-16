@@ -4,14 +4,16 @@
     "yiyanApiProviderSuffix": "提供"
   },
   "bookmarkSidebar": {
-    "title": "书签",
+    "404": "什么都没找到",
+    "sortBy": "排序方式",
     "sortMode": {
-      "origin": "原始顺序",
+      "createdAsc": "由新到旧",
+      "createdDesc": "由旧到新",
       "nameAsc": "名称由A到Z",
       "nameDesc": "名称由Z到A",
-      "createdAsc": "由新到旧",
-      "createdDesc": "由旧到新"
-    }
+      "origin": "原始顺序"
+    },
+    "title": "书签"
   },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",

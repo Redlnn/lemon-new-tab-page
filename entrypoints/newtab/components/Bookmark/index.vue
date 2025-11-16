@@ -133,7 +133,7 @@ watch(
         @compositionend="handleCompositionEnd"
         @input="handleInput"
       />
-      <el-select v-model="sortMode" placeholder="排序方式">
+      <el-select v-model="sortMode" :placeholder="t('bookmarkSidebar.sortBy')">
         <el-option
           v-for="(item, index) in sortOptions"
           :key="index"
@@ -154,7 +154,7 @@ watch(
       <div class="bookmark-404">
         <div class="bookmark-404--icon">🧐</div>
         <code class="bookmark-404--title">404</code>
-        <div class="bookmark-404--desc">什么都没找到</div>
+        <div class="bookmark-404--desc">{{ t('bookmarkSidebar.404') }}</div>
       </div>
     </template>
   </el-drawer>
