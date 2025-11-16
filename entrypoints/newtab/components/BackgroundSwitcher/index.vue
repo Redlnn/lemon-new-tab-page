@@ -112,7 +112,7 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
               :icon="LaunchRound"
               @click="open(bingWallpaperInfo.copyrightlink)"
             ></el-button>
-            <div class="bg-switcher-bing">图片来原：必应</div>
+            <div class="bg-switcher-bing">{{ t('background.bingFrom') }}</div>
           </el-space>
         </div>
       </div>
