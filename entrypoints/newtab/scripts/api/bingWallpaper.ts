@@ -168,12 +168,8 @@ class BingWallpaperURLGetter {
         return
       }
     } catch (error) {
-      ElNotification({
-        title: i18next.t('newtab:notification.bingWallpaper.error.title'),
-        message: i18next.t('newtab:notification.bingWallpaper.error.message'),
-        type: 'error'
-      })
-      throw error
+      console.error(error)
+      return
     }
 
     const imgUrl = this.toWebp(`https://www.bing.com${data.images[0]!.url}`)
