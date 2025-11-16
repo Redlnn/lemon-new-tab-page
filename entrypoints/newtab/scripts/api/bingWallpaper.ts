@@ -4,6 +4,8 @@ import { isImageFile, verifyImageUrl } from '@/shared/media'
 import enhancedFetch from '@/shared/network/fetch'
 import { saveSettings, useBingWallpaperStore, useSettingsStore } from '@/shared/settings'
 
+import { bingInfoCache } from '../storages/bingInfoCache'
+
 interface BingWallpaperImage {
   startdate: number
   fullstartdate: number
@@ -46,7 +48,23 @@ function formatUTCCompact(date: Date): number {
 
 class BingWallpaperURLGetter {
   public url: Ref<string> = ref('')
-  public info: Ref<BingWallpaperImage | null> = ref(null)
+  public info: Ref<BingWallpaperImage> = ref({
+    startdate: 0,
+    fullstartdate: 0,
+    enddate: 0,
+    url: '',
+    urlbase: '',
+    copyright: '',
+    copyrightlink: '',
+    title: '',
+    quiz: '',
+    wp: false,
+    hsh: '',
+    drk: 0,
+    top: 0,
+    bot: 0,
+    hs: []
+  })
   public uhdUrl: Ref<string> = ref('')
 
   public getBgUrl() {
@@ -122,7 +140,12 @@ class BingWallpaperURLGetter {
       const ok = await verifyImageUrl(objectUrl)
       if (ok) {
         settings.bingBackground.url = objectUrl
-        // await saveSettings(settings)
+        const cache = await bingInfoCache.getValue()
+        this.info.value.url = cache.url
+        this.info.value.copyright = cache.copyright
+        this.info.value.copyrightlink = cache.copyrightlink
+        this.info.value.title = cache.title
+        this.updateUHDUrl(cache.url)
         return objectUrl
       } else {
         // 验证失败时立即撤销临时 objectUrl
@@ -132,9 +155,15 @@ class BingWallpaperURLGetter {
       }
     }
 
-    // 如果文件不存在或不是图片，则清除相关设置
+    // 如果文件不存在或不是图片，则清除相关数据和缓存
     settings.bingBackground.id = ''
     settings.bingBackground.updateDate = 0
+    await bingInfoCache.setValue({
+      url: '',
+      copyright: '',
+      copyrightlink: '',
+      title: ''
+    })
     await useBingWallpaperStore.removeItem(id)
     await this.revokeSettingsURL()
     return null
@@ -165,10 +194,24 @@ class BingWallpaperURLGetter {
       this.info.value = data.images[0]!
       this.updateUHDUrl(data.images[0]!.url)
       if (data.images[0]!.fullstartdate === settings.bingBackground.updateDate) {
+        // 最新更新日期等于上次更新日期
         return
       }
+      // 不等于则重新获取（跳出try）并更新info
+      await bingInfoCache.setValue({
+        url: data.images[0]!.url,
+        copyright: data.images[0]!.copyright,
+        copyrightlink: data.images[0]!.copyrightlink,
+        title: data.images[0]!.title
+      })
     } catch (error) {
       console.error(error)
+      const cache = await bingInfoCache.getValue()
+      if (cache.url.length === 0) {
+        // 如果没有缓存
+        this.info.value.copyright = i18next.t('newtab:notification.bingWallpaper.error.message')
+        this.info.value.title = i18next.t('newtab:notification.bingWallpaper.error.title')
+      }
       return
     }
 

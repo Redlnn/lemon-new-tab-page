@@ -11,6 +11,7 @@ import {
   DarkModeTwotone,
   DownloadRound,
   FolderCopyRound,
+  HideImageTwotone,
   InsertLinkRound,
   LaunchRound,
   LightModeTwotone,
@@ -41,6 +42,7 @@ const customLocalContentRef = ref<HTMLDivElement>()
 const { height: customLocalContentHeight } = useElementSize(customLocalContentRef)
 
 function open(url: string) {
+  if (url.length === 0) return
   window.open(url, '_blank', 'noopener noreferrer')
 }
 
@@ -83,26 +85,32 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
         style="cursor: pointer"
         @click="settings.background.bgType = BgType.Bing"
       >
-        <img :src="bingWallpaperSrc" />
+        <el-image :src="bingWallpaperSrc">
+          <template #error>
+            <div class="bg-switcher-preview__error">
+              <el-icon><hide-image-twotone /></el-icon>
+            </div>
+          </template>
+        </el-image>
       </div>
       <div class="bg-switcher-content-wrapper">
         <div class="bg-switcher-content">
-          <div class="bg-switcher-content-title">{{ bingWallpaperInfo?.title }}</div>
+          <div class="bg-switcher-content-title">{{ bingWallpaperInfo.title }}</div>
           <el-text line-clamp="2" class="bg-switcher-content-description">
-            {{ bingWallpaperInfo?.copyright }}
+            {{ bingWallpaperInfo.copyright }}
           </el-text>
           <el-space class="bg-switcher-content-actions">
             <el-button
               bg
               text
               :icon="DownloadRound"
-              @click="bingWallpaperInfo && open(bingWallpaperURLGetter.uhdUrl.value)"
+              @click="open(bingWallpaperURLGetter.uhdUrl.value)"
             ></el-button>
             <el-button
               bg
               text
               :icon="LaunchRound"
-              @click="bingWallpaperInfo && open(bingWallpaperInfo?.copyrightlink)"
+              @click="open(bingWallpaperInfo.copyrightlink)"
             ></el-button>
             <div class="bg-switcher-bing">图片来原：必应</div>
           </el-space>
