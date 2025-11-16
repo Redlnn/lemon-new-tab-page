@@ -25,6 +25,7 @@ The extension is now available on
 - Quotes 💬 – A classical Chinese poem or motivational quote each time you open a new tab
 - Open Source ⚛️ – No worries about privacy leaks or malicious code
 - Internationalization 🌐 – Built-in multi-language support (Include Simplified / Traditional Chinese, Cantonese)
+- Bookmark 🔖 – Search and open the bookmark from the browser
 - Shortcuts 🪜 – Display/pin frequently visited sites and add your own custom shortcuts
 - Dark Mode 🌓 – Support for dark mode, with an option to follow the system setting
 
