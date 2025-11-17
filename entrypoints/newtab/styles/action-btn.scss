@@ -72,7 +72,7 @@
       }
     }
 
-    html.colorful & {
+    html.colorful &:not(.setting-btn__popper--opacity) {
       background-color: var(--el-color-primary-light-9);
 
       .el-dropdown-menu__item:hover {
