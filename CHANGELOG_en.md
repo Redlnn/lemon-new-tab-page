@@ -19,8 +19,10 @@
 ### Bug Fixes🐛
 
 - Fixed the issue where the background mask would flicker on startup (#46)
-- Fix some misalignment issues in the Quote settings page
+- Fixed some misalignment issues in the Quote settings page
 - Fixed style and layout issues of Quote on the About page
+- Fixed settings button pop-up menu not transparent
+- Fixed missing translations
 
 ## 2.5.4 (Nov 03, 2025)
 
