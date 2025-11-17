@@ -86,6 +86,8 @@ export interface SettingsInterfaceVer7 {
     }
   }
   perf: {
+    disableBookmarkTransparent: boolean
+    disableBookmarkBlur: boolean
     disableDialogTransparent: boolean
     disableDialogBlur: boolean
     disableDialogAnimation: boolean

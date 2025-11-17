@@ -82,6 +82,8 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       }
     },
     perf: {
+      disableBookmarkTransparent: defaultSettings.perf.disableBookmarkTransparent,
+      disableBookmarkBlur: defaultSettings.perf.disableBookmarkBlur,
       disableDialogTransparent: defaultSettings.perf.disableDialogTransparent,
       disableDialogBlur: defaultSettings.perf.disableDialogBlur,
       disableDialogAnimation: defaultSettings.perf.disableDialogAnimation,

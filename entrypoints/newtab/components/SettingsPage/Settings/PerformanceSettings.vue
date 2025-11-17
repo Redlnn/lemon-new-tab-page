@@ -20,6 +20,8 @@ function useNegate(arg1: Ref<boolean> | object, arg2?: string) {
   })
 }
 
+const bookmarkTransparent = useNegate(settings.perf, 'disableBookmarkTransparent')
+const bookmarkBlur = useNegate(settings.perf, 'disableBookmarkBlur')
 const dialogTransparent = useNegate(settings.perf, 'disableDialogTransparent')
 const dialogBlur = useNegate(settings.perf, 'disableDialogBlur')
 const dialogAnimation = useNegate(settings.perf, 'disableDialogAnimation')
@@ -35,6 +37,7 @@ const settingsBtnBlur = useNegate(settings.perf, 'disableSettingsBtnBlur')
 const settingsBtnTransparent = useNegate(settings.perf, 'disableSettingsBtnTransparent')
 
 function toggleTransparentSettings(disable: boolean) {
+  settings.perf.disableBookmarkTransparent = disable
   settings.perf.disableDialogTransparent = disable
   settings.perf.disableSearchBarTransparent = disable
   settings.perf.disableSettingsBtnTransparent = disable
@@ -43,6 +46,7 @@ function toggleTransparentSettings(disable: boolean) {
 }
 
 function toggleBlurSettings(disable: boolean) {
+  settings.perf.disableBookmarkBlur = disable
   settings.perf.disableDialogBlur = disable
   settings.perf.disableSearchBarBlur = disable
   settings.perf.disableSettingsBtnBlur = disable
@@ -108,6 +112,14 @@ function toggleAnimationSettings(disable: boolean) {
     <p class="settings__item--note">
       {{ t('clock.blinkingTip') }}
     </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('perf.bookmarkTransparent') }}</div>
+      <el-switch v-model="bookmarkTransparent" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('perf.bookmarkBlur') }}</div>
+      <el-switch :disabled="settings.perf.disableBookmarkTransparent" v-model="bookmarkBlur" />
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogTransparent') }}</div>
       <el-switch v-model="dialogTransparent" />

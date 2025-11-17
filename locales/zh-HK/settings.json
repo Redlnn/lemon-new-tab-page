@@ -112,6 +112,8 @@
     "want_to_customize_chrome": "想自訂 Chrome？"
   },
   "perf": {
+    "bookmarkBlur": "書籤欄背景模糊",
+    "bookmarkTransparent": "書籤欄背景透明",
     "dialogAnimation": "對話框動畫",
     "dialogBlur": "對話框背景模糊",
     "dialogTransparent": "對話框背景透明",

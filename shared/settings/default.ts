@@ -85,6 +85,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     }
   },
   perf: {
+    disableBookmarkTransparent: false,
+    disableBookmarkBlur: false,
     disableDialogTransparent: false,
     disableDialogBlur: false,
     disableDialogAnimation: false,

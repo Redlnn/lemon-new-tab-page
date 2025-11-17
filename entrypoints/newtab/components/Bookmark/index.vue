@@ -7,6 +7,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
+import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
 
 import { SortMode, useBookmarkStore } from './bookmarks'
@@ -116,7 +117,16 @@ watch(
     v-model="opened"
     :direction="settings.bookmarkSidebar.direction"
     :title="t('bookmarkSidebar.title')"
-    class="bookmark noselect"
+    class="noselect"
+    :class="[
+      getPerfClasses(
+        {
+          transparentOff: settings.perf.disableBookmarkTransparent,
+          blurOff: settings.perf.disableBookmarkBlur
+        },
+        'bookmark'
+      )
+    ]"
     append-to-body
     resizable
     lock-scroll
@@ -161,8 +171,22 @@ watch(
 </template>
 
 <style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
 .bookmark {
   min-width: 400px;
+
+  &--opacity.el-drawer {
+    background-color: var(--le-bg-color-overlay-opacity-15);
+  }
+
+  html.colorful &:not(.bookmark--opacity) {
+    background-color: var(--el-color-primary-light-9);
+  }
+
+  &--blur.el-drawer {
+    @include acrylic.acrylic;
+  }
 
   .el-drawer__body {
     padding: 0;
@@ -213,6 +237,8 @@ watch(
 
 .bookmark .el-collapse {
   --el-collapse-border-color: transparent;
+  --el-collapse-header-bg-color: transparent;
+  --el-collapse-content-bg-color: transparent;
   --el-collapse-header-height: 40px;
 
   .el-collapse-item__header {

@@ -87,6 +87,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       }
     },
     perf: {
+      disableBookmarkTransparent: defaultSettings.perf.disableBookmarkTransparent,
+      disableBookmarkBlur: defaultSettings.perf.disableBookmarkBlur,
       disableDialogTransparent: defaultSettings.perf.disableDialogTransparent,
       disableDialogBlur: defaultSettings.perf.disableDialogBlur,
       disableDialogAnimation: defaultSettings.perf.disableDialogAnimation,
