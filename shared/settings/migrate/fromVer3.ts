@@ -1,4 +1,4 @@
-import type { SettingsInterfaceVer3, SettingsInterfaceVer4 } from '../types'
+import type { SettingsInterfaceVer3, SettingsInterfaceVer4 } from '..'
 
 export function migrateFromVer3To4(oldSettings: SettingsInterfaceVer3): SettingsInterfaceVer4 {
   return {

@@ -1,5 +1,5 @@
+import type { SettingsInterfaceVer2, SettingsInterfaceVer3 } from '..'
 import { defaultSettings } from '..'
-import type { SettingsInterfaceVer2, SettingsInterfaceVer3 } from '../types'
 
 export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer3 {
   return {

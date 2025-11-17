@@ -1,5 +1,6 @@
+import type { YiyanProviderKey } from '@newtab/shared/yiyan'
+
 import type { BgType } from './enum'
-import type { YiyanProviderKey } from '@/shared/yiyan'
 
 export interface SettingsInterfaceVer6 {
   primaryColor: string
@@ -18,8 +19,8 @@ export interface SettingsInterfaceVer6 {
   }
   search: {
     autoFocus: boolean
-    selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
-    selectedSearchEngine: keyof typeof import('@newtab/scripts/api/search').searchEngines
+    selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/api/search').searchSuggestAPIs
+    selectedSearchEngine: keyof typeof import('@newtab/shared/api/search').searchEngines
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean

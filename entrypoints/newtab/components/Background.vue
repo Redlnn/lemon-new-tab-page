@@ -4,8 +4,8 @@ import { promiseTimeout, useDark, useDocumentVisibility, useWindowFocus } from '
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
 import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 
-import { bingWallpaperURLGetter } from '@newtab/scripts/api/bingWallpaper'
-import { useBgSwtichStore, useFocusStore } from '@newtab/scripts/store'
+import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
+import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 
 const isDark = useDark()
 const focusStore = useFocusStore()

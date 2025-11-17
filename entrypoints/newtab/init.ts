@@ -1,6 +1,6 @@
-import { i18nInitPromise } from '@/shared/i18n'
+import { i18nInitPromise } from '@newtab/shared/i18n'
 
-import { initDayjs } from './scripts/plugins/dayjs'
+import { initDayjs } from './shared/dayjs'
 
 i18nInitPromise.then(async () => {
   await initDayjs()

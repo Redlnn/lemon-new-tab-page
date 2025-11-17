@@ -1,4 +1,4 @@
-import type { YiyanProviderKey } from '@/shared/yiyan'
+import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 import type { BgType, DrawerDirection } from './enum'
 
@@ -22,7 +22,7 @@ export interface SettingsInterfaceVer7 {
   search: {
     enabled: boolean
     alwaysExpandSearchBar: boolean
-    selectedSearchSuggestionAPI: keyof typeof import('@newtab/scripts/api/search').searchSuggestAPIs
+    selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/api/search').searchSuggestAPIs
     selectedSearchEngine: string
     searchInNewTab: boolean
     recordSearchHistory: boolean

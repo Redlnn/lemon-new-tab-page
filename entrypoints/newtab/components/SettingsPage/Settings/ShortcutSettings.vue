@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const { t } = useTranslation('settings')
 

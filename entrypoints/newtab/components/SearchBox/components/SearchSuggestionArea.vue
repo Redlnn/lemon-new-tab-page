@@ -6,10 +6,10 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
-import { searchSuggestAPIs } from '@newtab/scripts/api/search'
-import { searchSuggestCache } from '@newtab/scripts/api/search/suggestCache'
-import { createSuggestRunner } from '@newtab/scripts/api/search/suggestRunner'
-import { useFocusStore } from '@newtab/scripts/store'
+import { searchSuggestAPIs } from '@newtab/shared/api/search'
+import { searchSuggestCache } from '@newtab/shared/api/search/suggestCache'
+import { createSuggestRunner } from '@newtab/shared/api/search/suggestRunner'
+import { useFocusStore } from '@newtab/shared/store'
 
 import SuggestListItem from './SuggestListItem.vue'
 

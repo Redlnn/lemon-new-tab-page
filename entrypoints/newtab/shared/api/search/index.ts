@@ -1,10 +1,9 @@
-import { useCustomSearchEngineStore } from '@/shared/customSearchEngine'
-
 import Baidu from '@newtab/assets/baidu.svg?skipsvgo'
 import Bing from '@newtab/assets/bing.svg?skipsvgo'
 import DuckDuckGo from '@newtab/assets/duckduckgo.svg?skipsvgo'
 import Google from '@newtab/assets/google.svg?skipsvgo'
 import Yandex from '@newtab/assets/yandex.svg?skipsvgo'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'
 

@@ -4,6 +4,10 @@ import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import resourcesToBackend from 'i18next-resources-to-backend'
 import I18NextVue from 'i18next-vue'
+import { browser } from 'wxt/browser'
+
+export const getLang = () => i18next.language || browser.i18n.getUILanguage()
+export const isChinese = ref(getLang().startsWith('zh'))
 
 function isHKorMO() {
   const { timeZone } = Intl.DateTimeFormat().resolvedOptions()
@@ -51,8 +55,11 @@ export const i18nInitPromise = i18next
   })
   .then(() => {
     changeDocument()
-    // 同步 UI：当语言变化时，更新 <html lang> 与标题
-    i18next.on('languageChanged', changeDocument)
+    i18next.on('languageChanged', (lng: string) => {
+      // 同步 UI：当语言变化时，更新 <html lang> 与标题
+      changeDocument()
+      isChinese.value = lng.startsWith('zh')
+    })
   })
 
 export const i18n = <T extends App>(app: T) => {

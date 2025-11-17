@@ -1,5 +1,5 @@
-import { defaultSettings } from '../default'
-import type { SettingsInterfaceVer4, SettingsInterfaceVer5 } from '../types'
+import type { SettingsInterfaceVer4, SettingsInterfaceVer5 } from '..'
+import { defaultSettings } from '..'
 
 export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): SettingsInterfaceVer5 {
   return {

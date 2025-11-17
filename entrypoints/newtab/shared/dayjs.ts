@@ -4,7 +4,7 @@ import dayjs from 'dayjs/esm'
 import localizedFormat from 'dayjs/esm/plugin/localizedFormat'
 import i18next from 'i18next'
 
-import { getLang } from '@/shared/lang'
+import { getLang } from '@newtab/shared/i18n'
 
 const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/zh*.js', {
   eager: false

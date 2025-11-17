@@ -1,5 +1,5 @@
-import { defaultSettings } from '../default'
-import type { SettingsInterfaceVer5, SettingsInterfaceVer6 } from '../types'
+import type { SettingsInterfaceVer5, SettingsInterfaceVer6 } from '..'
+import { defaultSettings } from '..'
 import { searchEnginesMap } from './searchEnginesMap'
 
 export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): SettingsInterfaceVer6 {

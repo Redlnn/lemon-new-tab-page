@@ -12,12 +12,6 @@ import { useTranslation } from 'i18next-vue'
 import { storage } from 'wxt/utils/storage'
 
 import {
-  type CustomSearchEngineStorage,
-  saveCustomSearchEngine,
-  useCustomSearchEngineStore
-} from '@/shared/customSearchEngine'
-import { downloadJSON } from '@/shared/json'
-import {
   type CURRENT_CONFIG_INTERFACE,
   defaultSettings,
   useBingWallpaperStore,
@@ -27,6 +21,13 @@ import {
 } from '@/shared/settings'
 import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
+
+import {
+  type CustomSearchEngineStorage,
+  saveCustomSearchEngine,
+  useCustomSearchEngineStore
+} from '@newtab/shared/customSearchEngine'
+import { downloadJSON } from '@newtab/shared/getJson'
 
 const { t, i18next } = useTranslation('settings')
 

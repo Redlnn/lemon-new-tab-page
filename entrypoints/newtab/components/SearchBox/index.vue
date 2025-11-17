@@ -10,13 +10,13 @@ import {
 import { Search } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 
-import { useCustomSearchEngineStore } from '@/shared/customSearchEngine'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
-import { getSearchEngineUrl, searchEngines } from '@newtab/scripts/api/search'
-import { useFocusStore } from '@newtab/scripts/store'
+import { getSearchEngineUrl, searchEngines } from '@newtab/shared/api/search'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import { useFocusStore } from '@newtab/shared/store'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'

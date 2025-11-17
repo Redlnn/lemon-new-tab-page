@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
-import { isChinese } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
+
+import { isChinese } from '@newtab/shared/i18n'
 
 const { t } = useTranslation('settings')
 

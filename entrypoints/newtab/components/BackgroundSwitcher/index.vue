@@ -25,7 +25,7 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 import Bing from '@newtab/assets/bing_gray.svg'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { bingWallpaperURLGetter } from '@newtab/scripts/api/bingWallpaper'
+import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
 
 import useBackgroundSwitcher from './useBackgroundSwitcher'
 

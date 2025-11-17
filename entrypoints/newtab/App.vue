@@ -6,10 +6,11 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
-import { getLang } from '@/shared/lang'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
+
+import { getLang } from '@newtab/shared/i18n'
+import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
 import type AboutCompComponent from './components/About.vue'
 import Background from './components/Background.vue'

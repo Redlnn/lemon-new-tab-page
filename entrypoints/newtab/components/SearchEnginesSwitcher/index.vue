@@ -3,13 +3,16 @@ import { Plus } from '@vicons/fa'
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 import { useTranslation } from 'i18next-vue'
 
-import { saveCustomSearchEngine, useCustomSearchEngineStore } from '@/shared/customSearchEngine'
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { searchEngines } from '@newtab/scripts/api/search'
+import { searchEngines } from '@newtab/shared/api/search'
+import {
+  saveCustomSearchEngine,
+  useCustomSearchEngineStore
+} from '@newtab/shared/customSearchEngine'
 
 import AddCustomSearchEngine from './components/AddCustomSearchEngine.vue'
 import CustomEngineItem from './components/CustomEngineItem.vue'

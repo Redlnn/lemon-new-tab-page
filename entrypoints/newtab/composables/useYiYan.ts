@@ -1,10 +1,9 @@
 import { useWindowSize } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
-import { getYiyanCache, isCacheFresh, setYiyanCache } from '@/shared/yiyan'
-import { yiyanProviders } from '@/shared/yiyan/providers'
 
-import { useFocusStore } from '@newtab/scripts/store'
+import { useFocusStore } from '@newtab/shared/store'
+import { getYiyanCache, isCacheFresh, setYiyanCache, yiyanProviders } from '@newtab/shared/yiyan'
 
 export function useYiYan() {
   const focusStore = useFocusStore()

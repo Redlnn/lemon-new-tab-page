@@ -2,8 +2,9 @@
 import { BubbleChartRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { OPEN_BACKGROUND_PREFERENCE } from '@/shared/keys'
 import { BgType, useSettingsStore } from '@/shared/settings'
+
+import { OPEN_BACKGROUND_PREFERENCE } from '@newtab/shared/keys'
 
 const { t } = useTranslation('settings')
 

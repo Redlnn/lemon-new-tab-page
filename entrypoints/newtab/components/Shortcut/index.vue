@@ -10,8 +10,8 @@ import type { TopSites } from 'webextension-polyfill'
 import { useSettingsStore } from '@/shared/settings'
 import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 
-import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
-import { useFocusStore } from '@newtab/scripts/store'
+import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
+import { useFocusStore } from '@newtab/shared/store'
 
 import AddShortcut from './components/AddShortcut.vue'
 import ShortcutItem from './components/ShortcutItem.vue'

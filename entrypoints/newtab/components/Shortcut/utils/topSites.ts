@@ -3,7 +3,7 @@ import i18next from 'i18next'
 import type { TopSites } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 
-import { blockedTopSitesStorage } from '@newtab/scripts/storages/topSitesStorage'
+import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const TOP_SITES_TTL = 30_000 // 30 秒
 let cachedTopSites: { value: TopSites.MostVisitedURL[]; ts: number } | null = null

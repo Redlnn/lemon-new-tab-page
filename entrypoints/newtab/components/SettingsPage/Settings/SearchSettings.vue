@@ -4,10 +4,10 @@ import { inject } from 'vue'
 import { BubbleChartRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@/shared/keys'
 import { useSettingsStore } from '@/shared/settings'
 
-import { searchSuggestAPIs } from '@newtab/scripts/api/search'
+import { searchSuggestAPIs } from '@newtab/shared/api/search'
+import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
 const { t } = useTranslation('settings')
 

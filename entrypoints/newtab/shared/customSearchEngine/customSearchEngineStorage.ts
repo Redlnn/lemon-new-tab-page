@@ -1,6 +1,6 @@
 import { storage } from '#imports'
 
-export interface CustomSearchEngine {
+interface CustomSearchEngine {
   id: string
   name: string
   url: string

@@ -3,9 +3,11 @@ import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { saveCustomSearchEngine, useCustomSearchEngineStore } from '@/shared/customSearchEngine'
-
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
+import {
+  saveCustomSearchEngine,
+  useCustomSearchEngineStore
+} from '@newtab/shared/customSearchEngine'
 
 const { t } = useTranslation()
 
