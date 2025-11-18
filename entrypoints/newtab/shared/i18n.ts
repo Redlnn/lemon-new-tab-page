@@ -52,9 +52,8 @@ export const i18nInitPromise = i18next
     if (i18next.language === 'zh-TW' && isHKorMO()) {
       i18next.changeLanguage('zh-HK')
     }
-  })
-  .then(() => {
     changeDocument()
+    isChinese.value = i18next.language.startsWith('zh')
     i18next.on('languageChanged', (lng: string) => {
       // 同步 UI：当语言变化时，更新 <html lang> 与标题
       changeDocument()
