@@ -121,10 +121,12 @@ function createRebuild(
       if (matchedIds.has(node.id) && (!copy.children || copy.children.length === 0)) {
         onFirstPath([...parents, node.id])
       }
-    } else {
-      if (matchedIds.has(node.id) && isFolder && (!node.children || node.children.length === 0)) {
-        onFirstPath([...parents, node.id])
-      }
+    } else if (
+      matchedIds.has(node.id) &&
+      isFolder &&
+      (!node.children || node.children.length === 0)
+    ) {
+      onFirstPath([...parents, node.id])
     }
 
     return copy as chrome.bookmarks.BookmarkTreeNode

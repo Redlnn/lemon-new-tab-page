@@ -1,4 +1,4 @@
-import { onMounted, ref } from 'vue'
+import { nextTick, onMounted, ref } from 'vue'
 import { promiseTimeout, useDark } from '@vueuse/core'
 
 import type { InputInstance, UploadProps, UploadRequestOptions } from 'element-plus'
@@ -134,15 +134,21 @@ function useBackgroundSwitcher() {
       const oldUrl = settings.localDarkBackground.url
       settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
       metaDark.value = null
-      await promiseTimeout(1000) // 确保 UI 更新完毕释放占用后再清除
-      URL.revokeObjectURL(oldUrl)
+      await nextTick()
+      await promiseTimeout(200)
+      try {
+        URL.revokeObjectURL(oldUrl)
+      } catch {}
       useDarkWallpaperStore.clear()
     } else {
       const oldUrl = settings.localBackground.url
       settings.localBackground = { id: '', url: '', mediaType: undefined }
       metaLight.value = null
-      await promiseTimeout(1000)
-      URL.revokeObjectURL(oldUrl)
+      await nextTick()
+      await promiseTimeout(200)
+      try {
+        URL.revokeObjectURL(oldUrl)
+      } catch {}
       useWallpaperStore.clear()
     }
   }
@@ -225,37 +231,51 @@ function useBackgroundSwitcher() {
   onMounted(async () => {
     isDarkBg.value = settings.localDarkBackground.id ? isDark.value : false
 
+    const tasks: Array<Promise<void>> = []
+
     if (settings.localBackground?.id) {
-      try {
-        const file = await useWallpaperStore.getItem<Blob>(settings.localBackground.id)
-        if (file) {
-          metaLight.value = { size: (file as File).size }
-          readMediaMeta(file as File, (m) => {
-            metaLight.value = { ...metaLight.value, ...m }
-          })
-          if (!settings.localBackground.mediaType) {
-            settings.localBackground.mediaType = file.type.startsWith('video/') ? 'video' : 'image'
-          }
-        }
-      } catch {}
+      tasks.push(
+        (async () => {
+          try {
+            const file = await useWallpaperStore.getItem<Blob>(settings.localBackground.id)
+            if (file) {
+              metaLight.value = { size: (file as File).size }
+              readMediaMeta(file as File, (m) => {
+                metaLight.value = { ...metaLight.value, ...m }
+              })
+              if (!settings.localBackground.mediaType) {
+                settings.localBackground.mediaType = file.type.startsWith('video/')
+                  ? 'video'
+                  : 'image'
+              }
+            }
+          } catch {}
+        })()
+      )
     }
 
     if (settings.localDarkBackground?.id) {
-      try {
-        const file = await useDarkWallpaperStore.getItem<Blob>(settings.localDarkBackground.id)
-        if (file) {
-          metaDark.value = { size: (file as File).size }
-          readMediaMeta(file as File, (m) => {
-            metaDark.value = { ...metaDark.value, ...m }
-          })
-          if (!settings.localDarkBackground.mediaType) {
-            settings.localDarkBackground.mediaType = file.type.startsWith('video/')
-              ? 'video'
-              : 'image'
-          }
-        }
-      } catch {}
+      tasks.push(
+        (async () => {
+          try {
+            const file = await useDarkWallpaperStore.getItem<Blob>(settings.localDarkBackground.id)
+            if (file) {
+              metaDark.value = { size: (file as File).size }
+              readMediaMeta(file as File, (m) => {
+                metaDark.value = { ...metaDark.value, ...m }
+              })
+              if (!settings.localDarkBackground.mediaType) {
+                settings.localDarkBackground.mediaType = file.type.startsWith('video/')
+                  ? 'video'
+                  : 'image'
+              }
+            }
+          } catch {}
+        })()
+      )
     }
+
+    await Promise.all(tasks)
 
     if (settings.background.onlineUrl) {
       localUrl.value = settings.background.onlineUrl

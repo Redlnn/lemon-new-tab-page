@@ -69,7 +69,7 @@ const {
 } = useBackgroundSwitcher()
 
 const isShowDeleteIcon = computed(() =>
-  isDarkBg.value ? settings.localDarkBackground.id : settings.localBackground.id.length
+  Boolean(isDarkBg.value ? settings.localDarkBackground.id : settings.localBackground.id)
 )
 const bingWallpaperSrc = computed(() => bingWallpaperURLGetter.getBgUrl().value)
 const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
