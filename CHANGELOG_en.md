@@ -2,7 +2,7 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.5.5 (WIP)
+## 2.6.0 (Nov 23, 2025)
 
 ### New Features✨
 
