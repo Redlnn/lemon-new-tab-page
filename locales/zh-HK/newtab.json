@@ -62,8 +62,7 @@
       "error": {
         "message": "請查看開發者工具中的主控台提示。",
         "title": "無法取得 Bing 壁紙"
-      },
-      "get": "正在取得 Bing 壁紙..."
+      }
     }
   },
   "search": {

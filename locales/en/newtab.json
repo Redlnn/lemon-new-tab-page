@@ -62,8 +62,7 @@
       "error": {
         "message": "Please check the console output in developer tools.",
         "title": "Failed to get Bing wallpaper"
-      },
-      "get": "Fetching Bing wallpaper..."
+      }
     }
   },
   "search": {

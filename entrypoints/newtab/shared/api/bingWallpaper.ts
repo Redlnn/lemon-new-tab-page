@@ -217,7 +217,6 @@ class BingWallpaperURLGetter {
 
     const imgUrl = this.toWebp(`https://www.bing.com${data.images[0]!.url}`)
 
-    ElMessage.primary(i18next.t('newtab:notification.bingWallpaper.get'))
     try {
       const response = await fetch(imgUrl)
       if (!response.ok) {
