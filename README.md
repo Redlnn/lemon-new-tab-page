@@ -65,7 +65,7 @@
 
 ### 与青柠起始页对比
 
-> 根据个人需求开发所以很多功能都没有，但欢迎 PR（提 issue 不一定会实现）
+> 根据个人需求开发所以很多功能都没有，但欢迎 PR（提 Issue 不一定会实现）
 
 |    主要功能    | 柠檬起始页 |    青柠起始页    |
 | :------------: | :--------: | :--------------: |
@@ -106,8 +106,12 @@
 
 本项目使用 Vue 3 (TypeScript) + Element Plus 开发。
 
-> [!NOTE]  
-> 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高，欢迎提 Issue 和 PR
+> [!WARNING]
+>
+> 1. 本人没系统学习过 HTML / CSS / JS / TS / Vue，代码质量可能不高
+> 2. 本项目包含大量 AI 生成代码，仅经过简单 Review
+>    确保功能正常，不包含恶意代码，其质量/性能或多或少可能存在问题，望各位谅解
+> 3. 欢迎 PR
 
 ### 构建
 
@@ -123,7 +127,7 @@ pnpm build  # 构建为（未压缩的）Chrome 扩展
 pnpm zip  # 打包 Chrome 扩展
 ```
 
-#### 如果你使用 Firefox 浏览器（For Firefox）
+#### 如果你使用 Firefox 浏览器
 
 ```sh
 git clone https://github.com/Redlnn/lemon-new-tab-page.git

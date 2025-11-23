@@ -67,9 +67,16 @@ The extension is now available on
 
 This project is built with Vue 3 (TypeScript) + Element Plus.
 
-> [!NOTE]  
-> I haven’t systematically studied HTML / CSS / JS / TS / Vue,
-> so code quality may not be high. Issues and PRs are welcome.
+> [!WARNING]
+>
+> 1. I have not systematically studied HTML / CSS / JS / TS / Vue,
+>    so the code quality may not be very high.
+> 2. This project contains a large amount of AI-generated code.
+>    Only basic reviews were performed to ensure the functionality works
+>    and that no malicious code is included.
+>    The overall quality/performance may still have issues to some extent —
+>    thank you for your understanding.
+> 3. PRs are welcome.
 
 ### Build
 
