@@ -1,15 +1,10 @@
-import { hex2rgba } from '.'
+import type { Rgba } from '@material/material-color-utilities'
 
-export interface Color {
-  r: number // 0-255
-  g: number // 0-255
-  b: number // 0-255
-  a: number // 0-1
-}
+import { hex2rgba } from './utils'
 
 // 缓存常用颜色的 RGBA 对象，避免重复解析
-export const WHITE_COLOR = { r: 255, g: 255, b: 255, a: 1 } as Color
-export const BLACK_COLOR = { r: 0, g: 0, b: 0, a: 1 } as Color
+export const WHITE_COLOR = { r: 255, g: 255, b: 255, a: 255 } as Rgba
+export const BLACK_COLOR = { r: 0, g: 0, b: 0, a: 255 } as Rgba
 
 export const THEME_STYLE_ELEMENT_ID = 'lemon-element-plus-theme'
 export const LIGHT_SELECTOR = 'html.light'

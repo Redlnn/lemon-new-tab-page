@@ -1,25 +1,25 @@
-import { hexFromArgb, Scheme, themeFromImage } from '@material/material-color-utilities'
+import {
+  hexFromArgb,
+  type Rgba,
+  rgbaFromArgb,
+  Scheme,
+  themeFromImage
+} from '@material/material-color-utilities'
 
-import { hex2rgba, mixLegacy, rgba2Hex } from '.'
-import { BLACK_COLOR, type Color, EL_BG_COLOR_RGBA, WHITE_COLOR } from './token'
+import { mixLegacy } from './mix'
+import { BLACK_COLOR, EL_BG_COLOR_RGBA, WHITE_COLOR } from './token'
+import { rgba2Hex } from './utils'
 
-export async function applyMonet(image: HTMLImageElement | undefined) {
-  if (!image) return
+const shadeCache = new WeakMap<Rgba, ReturnType<typeof buildColorShades>>()
 
-  const STYLE_ID = 'monet'
-  let styleTag = document.getElementById(STYLE_ID) as HTMLStyleElement | null
+function getColorShades(base: Rgba) {
+  if (!shadeCache.has(base)) shadeCache.set(base, buildColorShades(base))
+  return shadeCache.get(base)!
+}
 
-  if (!styleTag) {
-    styleTag = document.createElement('style')
-    styleTag.id = STYLE_ID
-    styleTag.type = 'text/css'
-    document.head.appendChild(styleTag)
-  }
-
-  const theme = await themeFromImage(image)
-
-  /** 工具：生成明/暗色调 */
-  const buildColorShades = (base: Color) => ({
+/** 生成明/暗色调 */
+function buildColorShades(base: Rgba) {
+  return {
     light: {
       3: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70)),
       5: rgba2Hex(mixLegacy(base, WHITE_COLOR, 50)),
@@ -36,89 +36,108 @@ export async function applyMonet(image: HTMLImageElement | undefined) {
       9: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 10)),
       dark2: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70))
     }
-  })
-
-  /** 生成变量表（减少重复） */
-  const buildCssVars = (scheme: Scheme, mode: 'light' | 'dark') => {
-    const textMix = mode === 'light' ? WHITE_COLOR : EL_BG_COLOR_RGBA
-
-    const pHex = hexFromArgb(scheme.primary)
-    const sHex = hexFromArgb(scheme.tertiary)
-    const eHex = hexFromArgb(scheme.error)
-    const iHex = hexFromArgb(scheme.secondary)
-
-    const primary = hex2rgba(pHex)
-    const success = hex2rgba(sHex)
-    const error = hex2rgba(eHex)
-    const info = hex2rgba(iHex)
-
-    const pShades = buildColorShades(primary)[mode]
-    const sShades = buildColorShades(success)[mode]
-    const eShades = buildColorShades(error)[mode]
-    const iShades = buildColorShades(info)[mode]
-
-    return {
-      '--el-color-primary': pHex,
-      '--el-color-primary-light-3': pShades[3],
-      '--el-color-primary-light-5': pShades[5],
-      '--el-color-primary-light-7': pShades[7],
-      '--el-color-primary-light-8': pShades[8],
-      '--el-color-primary-light-9': pShades[9],
-      '--el-color-primary-dark-2': pShades.dark2,
-
-      '--el-color-success': sHex,
-      '--el-color-success-light-3': sShades[3],
-      '--el-color-success-light-5': sShades[5],
-      '--el-color-success-light-7': sShades[7],
-      '--el-color-success-light-8': sShades[8],
-      '--el-color-success-light-9': sShades[9],
-      '--el-color-success-dark-2': sShades.dark2,
-
-      '--el-color-warning': mode === 'light' ? '#835500' : '#ffb955',
-      '--el-color-warning-light-3': mode === 'light' ? '#a8884d' : '#bc8b45',
-      '--el-color-warning-light-5': mode === 'light' ? '#c1aa80' : '#8f6c3a',
-      '--el-color-warning-light-7': mode === 'light' ? '#daccb3' : '#624d2f',
-      '--el-color-warning-light-8': mode === 'light' ? '#e6ddcc' : '#4c3e2a',
-      '--el-color-warning-light-9': mode === 'light' ? '#f3eee6' : '#352e24',
-      '--el-color-warning-dark-2': mode === 'light' ? '#5c3b00' : '#ffce88',
-
-      '--el-color-danger': eHex,
-      '--el-color-danger-light-3': eShades[3],
-      '--el-color-danger-light-5': eShades[5],
-      '--el-color-danger-light-7': eShades[7],
-      '--el-color-danger-light-8': eShades[8],
-      '--el-color-danger-light-9': eShades[9],
-      '--el-color-danger-dark-2': eShades.dark2,
-
-      '--el-color-error': eHex,
-      '--el-color-error-light-3': eShades[3],
-      '--el-color-error-light-5': eShades[5],
-      '--el-color-error-light-7': eShades[7],
-      '--el-color-error-light-8': eShades[8],
-      '--el-color-error-light-9': eShades[9],
-      '--el-color-error-dark-2': eShades.dark2,
-
-      '--el-color-info': iHex,
-      '--el-color-info-light-3': iShades[3],
-      '--el-color-info-light-5': iShades[5],
-      '--el-color-info-light-7': iShades[7],
-      '--el-color-info-light-8': iShades[8],
-      '--el-color-info-light-9': iShades[9],
-      '--el-color-info-dark-2': iShades.dark2,
-
-      '--el-bg-color': hexFromArgb(scheme.surface),
-      '--el-bg-color-page': hexFromArgb(scheme.background),
-      '--el-bg-color-overlay': hexFromArgb(scheme.surface),
-
-      '--el-text-color-primary': hexFromArgb(scheme.onSurface),
-      '--el-text-color-regular': hexFromArgb(scheme.onSurfaceVariant),
-      '--el-text-color-secondary': rgba2Hex(
-        mixLegacy(hex2rgba(hexFromArgb(scheme.onSurfaceVariant)), textMix, 70)
-      ),
-      '--el-text-color-placeholder': hexFromArgb(scheme.outline),
-      '--el-text-color-disabled': hexFromArgb(scheme.outlineVariant)
-    }
   }
+}
+
+/** 生成变量表（减少重复） */
+function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
+  const textMix = mode === 'light' ? WHITE_COLOR : EL_BG_COLOR_RGBA
+
+  const pHex = hexFromArgb(scheme.primary)
+  const sHex = hexFromArgb(scheme.tertiary)
+  const eHex = hexFromArgb(scheme.error)
+  const iHex = hexFromArgb(scheme.secondary)
+
+  const primary = rgbaFromArgb(scheme.primary)
+  const success = rgbaFromArgb(scheme.tertiary)
+  const error = rgbaFromArgb(scheme.error)
+  const info = rgbaFromArgb(scheme.secondary)
+  console.log(primary)
+  console.log(mixLegacy(primary, WHITE_COLOR, 70))
+  console.log(rgba2Hex(mixLegacy(primary, WHITE_COLOR, 70)))
+
+  const pShades = getColorShades(primary)[mode]
+  const sShades = getColorShades(success)[mode]
+  const eShades = getColorShades(error)[mode]
+  const iShades = getColorShades(info)[mode]
+
+  return {
+    '--el-color-primary': pHex,
+    '--el-color-primary-light-3': pShades[3],
+    '--el-color-primary-light-5': pShades[5],
+    '--el-color-primary-light-7': pShades[7],
+    '--el-color-primary-light-8': pShades[8],
+    '--el-color-primary-light-9': pShades[9],
+    '--el-color-primary-dark-2': pShades.dark2,
+
+    '--el-color-success': sHex,
+    '--el-color-success-light-3': sShades[3],
+    '--el-color-success-light-5': sShades[5],
+    '--el-color-success-light-7': sShades[7],
+    '--el-color-success-light-8': sShades[8],
+    '--el-color-success-light-9': sShades[9],
+    '--el-color-success-dark-2': sShades.dark2,
+
+    '--el-color-warning': mode === 'light' ? '#835500' : '#ffb955',
+    '--el-color-warning-light-3': mode === 'light' ? '#a8884d' : '#bc8b45',
+    '--el-color-warning-light-5': mode === 'light' ? '#c1aa80' : '#8f6c3a',
+    '--el-color-warning-light-7': mode === 'light' ? '#daccb3' : '#624d2f',
+    '--el-color-warning-light-8': mode === 'light' ? '#e6ddcc' : '#4c3e2a',
+    '--el-color-warning-light-9': mode === 'light' ? '#f3eee6' : '#352e24',
+    '--el-color-warning-dark-2': mode === 'light' ? '#5c3b00' : '#ffce88',
+
+    '--el-color-danger': eHex,
+    '--el-color-danger-light-3': eShades[3],
+    '--el-color-danger-light-5': eShades[5],
+    '--el-color-danger-light-7': eShades[7],
+    '--el-color-danger-light-8': eShades[8],
+    '--el-color-danger-light-9': eShades[9],
+    '--el-color-danger-dark-2': eShades.dark2,
+
+    '--el-color-error': eHex,
+    '--el-color-error-light-3': eShades[3],
+    '--el-color-error-light-5': eShades[5],
+    '--el-color-error-light-7': eShades[7],
+    '--el-color-error-light-8': eShades[8],
+    '--el-color-error-light-9': eShades[9],
+    '--el-color-error-dark-2': eShades.dark2,
+
+    '--el-color-info': iHex,
+    '--el-color-info-light-3': iShades[3],
+    '--el-color-info-light-5': iShades[5],
+    '--el-color-info-light-7': iShades[7],
+    '--el-color-info-light-8': iShades[8],
+    '--el-color-info-light-9': iShades[9],
+    '--el-color-info-dark-2': iShades.dark2,
+
+    '--el-bg-color': hexFromArgb(scheme.surface),
+    '--el-bg-color-page': hexFromArgb(scheme.background),
+    '--el-bg-color-overlay': hexFromArgb(scheme.surface),
+
+    '--el-text-color-primary': hexFromArgb(scheme.onSurface),
+    '--el-text-color-regular': hexFromArgb(scheme.onSurfaceVariant),
+    '--el-text-color-secondary': rgba2Hex(
+      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 70)
+    ),
+    '--el-text-color-placeholder': hexFromArgb(scheme.outline),
+    '--el-text-color-disabled': hexFromArgb(scheme.outlineVariant)
+  }
+}
+
+export async function applyMonet(image: HTMLImageElement | undefined) {
+  if (!image) return
+
+  const STYLE_ID = 'monet'
+  let styleTag = document.getElementById(STYLE_ID) as HTMLStyleElement | null
+
+  if (!styleTag) {
+    styleTag = document.createElement('style')
+    styleTag.id = STYLE_ID
+    styleTag.type = 'text/css'
+    document.head.appendChild(styleTag)
+  }
+
+  const theme = await themeFromImage(image)
 
   const cssLight = buildCssVars(theme.schemes.light, 'light')
   const cssDark = buildCssVars(theme.schemes.dark, 'dark')

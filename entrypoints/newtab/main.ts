@@ -13,7 +13,7 @@ import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
 import { i18n } from '@newtab/shared/i18n'
 
 import App from './App.vue'
-import changeTheme from './shared/useElementPlusTheme'
+import { changeTheme } from './shared/useElementPlusTheme'
 
 export const main = async () => {
   const banner = `
