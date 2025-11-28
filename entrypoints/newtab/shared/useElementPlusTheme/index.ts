@@ -1,22 +1,15 @@
-import { EL_BG_COLOR, Levels, PRE, PRE_DARK, PRE_LIGHT } from './token'
-
-const THEME_STYLE_ELEMENT_ID = 'lemon-element-plus-theme'
-const LIGHT_SELECTOR = 'html:not(.dark)'
-const DARK_SELECTOR = 'html.dark'
+import {
+  BLACK_COLOR,
+  type Color,
+  DARK_SELECTOR,
+  EL_BG_COLOR_RGBA,
+  Levels,
+  LIGHT_SELECTOR,
+  THEME_STYLE_ELEMENT_ID,
+  WHITE_COLOR
+} from './token'
 
 const themeEntriesBySelector = new Map<string, Array<[string, string]>>()
-
-interface Color {
-  r: number // 0-255
-  g: number // 0-255
-  b: number // 0-255
-  a: number // 0-1
-}
-
-// 缓存常用颜色的 RGBA 对象，避免重复解析
-const WHITE_COLOR = { r: 255, g: 255, b: 255, a: 1 } as Color
-const BLACK_COLOR = { r: 0, g: 0, b: 0, a: 1 } as Color
-const EL_BG_COLOR_RGBA = hex2rgba(EL_BG_COLOR)
 
 function getThemeStyleElement(): HTMLStyleElement {
   let style = document.getElementById(THEME_STYLE_ELEMENT_ID) as HTMLStyleElement | null
@@ -54,7 +47,7 @@ function isValidHexColor(input: string): boolean {
 /**
  * 将 #RGB/#RGBA 规范化为 #RRGGBB/#RRGGBBAA
  */
-function normalizeTo6Hex(color: string): string {
+export function normalizeTo6Hex(color: string): string {
   const hex = color.slice(1) // 去掉 #
   const len = hex.length
 
@@ -78,7 +71,7 @@ function normalizeTo6Hex(color: string): string {
   return color
 }
 
-function hex2rgba(color: string): Color {
+export function hex2rgba(color: string): Color {
   // 先规范化
   const normalized = normalizeTo6Hex(color)
   const hex = normalized.slice(1) // 去掉 #
@@ -103,7 +96,7 @@ function toHex(n: number): string {
   return Math.round(n).toString(16).padStart(2, '0')
 }
 
-function rgba2Hex({ r, g, b, a }: Color): string {
+export function rgba2Hex({ r, g, b, a }: Color): string {
   const hex = `#${toHex(r)}${toHex(g)}${toHex(b)}`
 
   // 如果 alpha 不是 1,添加 alpha 通道
@@ -116,9 +109,9 @@ function rgba2Hex({ r, g, b, a }: Color): string {
  * @param color1 第一个颜色（legacy）
  * @param color2 第二个颜色（legacy）
  * @param weight 权重 0-100，默认 50
- * @returns 混合后的颜色
+ * @returns 混合后的颜色 { r, g, b, a }
  */
-function mixLegacy(color1: Color, color2: Color, weight: number = 50): Color {
+export function mixLegacy(color1: Color, color2: Color, weight: number = 50): Color {
   // 1. 限制权重在 0-100
   const w = Math.min(Math.max(weight, 0), 100) / 100
 
@@ -157,20 +150,25 @@ function mixLegacy(color1: Color, color2: Color, weight: number = 50): Color {
  * @param lightMixColor 用于混合生成浅色色阶的颜色
  * @param darkMixColor 用于混合生成暗色的颜色
  */
-function applyThemeColors(baseColor: Color, lightMixColor: Color, darkMixColor: Color) {
+export function generateThemeEntries(
+  baseColor: Color,
+  lightMixColor: Color,
+  darkMixColor: Color,
+  pre: string
+) {
   const entries: Array<[string, string]> = []
 
   // 循环设置色阶颜色
   // --el-color-primary-light-${level}
   Levels.forEach((level) => {
     const mixed = mixLegacy(baseColor, lightMixColor, 100 - level * 10)
-    entries.push([`${PRE_LIGHT}-${level}`, rgba2Hex(mixed)])
+    entries.push([`${pre}-light-${level}`, rgba2Hex(mixed)])
   })
 
   // 设置主要暗色
   // --el-color-primary-dark-2
   const dark = mixLegacy(baseColor, darkMixColor, 80)
-  entries.push([`${PRE_DARK}-2`, rgba2Hex(dark)])
+  entries.push([`${pre}-dark-2`, rgba2Hex(dark)])
 
   return entries
 }
@@ -193,13 +191,13 @@ function changeTheme(color: string) {
   const baseColor = hex2rgba(normalized)
 
   const lightEntries: Array<[string, string]> = [
-    [PRE, normalized],
-    ...applyThemeColors(baseColor, WHITE_COLOR, BLACK_COLOR)
+    ['--el-color-primary', normalized],
+    ...generateThemeEntries(baseColor, WHITE_COLOR, BLACK_COLOR, '--el-color-primary')
   ]
 
   const darkEntries: Array<[string, string]> = [
-    [PRE, normalized],
-    ...applyThemeColors(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR)
+    ['--el-color-primary', normalized],
+    ...generateThemeEntries(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR, '--el-color-primary')
   ]
 
   themeEntriesBySelector.set(LIGHT_SELECTOR, lightEntries)
