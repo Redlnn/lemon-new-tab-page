@@ -133,7 +133,12 @@ watch(isDark, (newVal) => {
     </div>
     <p class="settings__item--note">{{ t('theme.monet.desc') }}</p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('theme.primaryColor') }}</div>
+      <div
+        class="settings__label"
+        :style="{ color: settings.monetColor ? 'var(--el-text-color-disabled)' : undefined }"
+      >
+        {{ t('theme.primaryColor') }}
+      </div>
       <div class="settings__theme">
         <el-select
           v-model="settings.primaryColor"
