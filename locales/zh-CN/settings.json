@@ -195,6 +195,10 @@
     "colorfulMode": "将主题色应用到更多元素",
     "darkMode": "深色模式",
     "lightMode": "浅色模式",
+    "monet": {
+      "label": "动态主题色（莫奈取色）",
+      "desc": "源自 Material Design 3，从壁纸中提取主题色。仅支持图片背景，搭配「将主题色应用到更多元素」选项可获得最佳视觉效果。"
+    },
     "primaryColor": "主题色",
     "systemMode": "跟随系统 / 浏览器",
     "title": "主题"

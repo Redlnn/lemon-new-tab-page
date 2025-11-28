@@ -43,6 +43,7 @@
     "vue-draggable-plus": "^0.6.0"
   },
   "devDependencies": {
+    "@material/material-color-utilities": "^0.3.0",
     "@prettier/plugin-oxc": "^0.0.5",
     "@tsconfig/node24": "^24.0.3",
     "@types/chrome": "^0.1.31",

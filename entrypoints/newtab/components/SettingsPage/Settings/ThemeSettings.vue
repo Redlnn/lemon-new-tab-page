@@ -128,6 +128,11 @@ watch(isDark, (newVal) => {
       <el-switch v-model="isAutoUI" @change="toggleAuto" />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('theme.monet.label') }}</div>
+      <el-switch v-model="settings.monetColor" />
+    </div>
+    <p class="settings__item--note">{{ t('theme.monet.desc') }}</p>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('theme.primaryColor') }}</div>
       <div class="settings__theme">
         <el-select
@@ -135,6 +140,7 @@ watch(isDark, (newVal) => {
           style="width: 183px"
           popper-class="settings-item-popper"
           :show-arrow="false"
+          :disabled="settings.monetColor"
         >
           <el-option-group
             v-for="group in predefineColorsMap"
@@ -154,7 +160,11 @@ watch(isDark, (newVal) => {
             </el-option>
           </el-option-group>
         </el-select>
-        <el-color-picker v-model="settings.primaryColor" :predefine="predefineColors" />
+        <el-color-picker
+          v-model="settings.primaryColor"
+          :predefine="predefineColors"
+          :disabled="settings.monetColor"
+        />
       </div>
     </div>
     <div class="settings__item settings__item--horizontal">

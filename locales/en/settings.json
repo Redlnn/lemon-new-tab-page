@@ -195,6 +195,10 @@
     "colorfulMode": "Apply the theme color to more elements",
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
+    "monet": {
+      "label": "Dynamic Theme Colors (Monet Extraction)",
+      "desc": "Inspired by Material Design 3, extracts theme colors from your wallpaper. Only supports image backgrounds. For the best visual effect, use it together with the “Apply theme colors to more elements” option."
+    },
     "primaryColor": "Primary color",
     "systemMode": "Follow system / browser",
     "title": "Theme"

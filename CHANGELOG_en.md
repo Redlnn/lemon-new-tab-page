@@ -2,6 +2,12 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.6.1 (WIP)
+
+### Now Available!🎉
+
+Introducing Monet Extraction from Material Design 3—add softer, scenic colors to your new tab page!
+
 ## 2.6.0 (Nov 23, 2025)
 
 ### New Features✨

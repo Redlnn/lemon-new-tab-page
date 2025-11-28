@@ -1,5 +1,11 @@
 <script lang="ts" setup>
-import { promiseTimeout, useDark, useDocumentVisibility, useWindowFocus } from '@vueuse/core'
+import {
+  promiseTimeout,
+  useDark,
+  useDocumentVisibility,
+  useTimeoutFn,
+  useWindowFocus
+} from '@vueuse/core'
 
 import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
 import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
@@ -7,14 +13,18 @@ import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 
+import { applyMonet } from '../shared/useElementPlusTheme/monet'
+
 const isDark = useDark()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
-const imageRef = ref<HTMLDivElement>()
+const imageRef = ref<HTMLImageElement>()
 const videoRef = ref<HTMLVideoElement>()
 const bgURL = ref<string>('')
+
+const bgURLreg = new RegExp('url\\((["\']?)(.*?)\\1\\)', 'i')
 
 // 视频壁纸相关逻辑
 
@@ -259,6 +269,23 @@ watch(
   }
 )
 
+watch(
+  () => settings.monetColor,
+  (statu) => {
+    if (statu) {
+      document.documentElement.classList.add('monet')
+    } else {
+      document.documentElement.classList.remove('monet')
+    }
+  }
+)
+
+onBeforeMount(() => {
+  if (settings.monetColor) {
+    document.documentElement.classList.add('monet')
+  }
+})
+
 onMounted(async () => {
   await bingWallpaperURLGetter.init()
   await updateBackgroundURL(settings.background.bgType)
@@ -272,6 +299,15 @@ onUnmounted(() => {
   stopLocalBgWatch?.()
   stopOnlineBgWatch?.()
 })
+
+function onImgLoaded() {
+  requestAnimationFrame(() => {
+    // 再让出一帧避免卡顿
+    requestAnimationFrame(() => {
+      useTimeoutFn(() => applyMonet(imageRef.value), 0)
+    })
+  })
+}
 </script>
 
 <template>
@@ -304,14 +340,15 @@ onUnmounted(() => {
           loop
           playsinline
         ></video>
-        <div
+        <img
           v-else
           class="background"
           ref="imageRef"
-          :style="{
-            backgroundImage: bgURL ? (bgURL.startsWith('url') ? bgURL : `url(${bgURL})`) : undefined
-          }"
-        ></div>
+          :src="
+            bgURL ? (bgURL.startsWith('url') ? bgURL.replace(bgURLreg, '$2') : bgURL) : undefined
+          "
+          @load="onImgLoaded"
+        />
       </div>
     </Transition>
   </div>
@@ -368,16 +405,17 @@ onUnmounted(() => {
 .background {
   width: 100%;
   height: 100%;
-  background-color: var(--el-bg-color-page);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
+  object-fit: cover;
+
+  // background-color: var(--el-bg-color-page);
+  // background-repeat: no-repeat;
+  // background-position: center;
+  // background-size: cover;
 }
 
 video.background {
   width: calc(100% + 4 * var(--blur-intensity));
   height: calc(100% + 4 * var(--blur-intensity));
-  object-fit: cover;
 }
 
 .background__vignette {

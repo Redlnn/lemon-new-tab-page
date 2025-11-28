@@ -4,7 +4,8 @@ import { defaultSettings } from '..'
 export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): SettingsInterfaceVer7 {
   return {
     primaryColor: oldSettings.primaryColor,
-    colorfulMode: false,
+    colorfulMode: defaultSettings.colorfulMode,
+    monetColor: defaultSettings.monetColor,
     time: {
       enabled: defaultSettings.time.enabled,
       isMeridiem: oldSettings.time.isMeridiem,

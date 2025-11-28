@@ -5,6 +5,7 @@ import type { BgType, DrawerDirection } from './enum'
 export interface SettingsInterfaceVer7 {
   primaryColor: string
   colorfulMode: boolean
+  monetColor: boolean
   time: {
     enabled: boolean
     isMeridiem: boolean

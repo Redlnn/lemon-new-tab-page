@@ -208,7 +208,7 @@ defineExpose({
   }
 
   // 白色文本容器特化
-  html:not(.dark) .shortcut__container--white-text-light & {
+  html.light .shortcut__container--white-text-light & {
     .shortcut__title,
     .shortcut__icon {
       color: rgb(255 255 255 / 70%);

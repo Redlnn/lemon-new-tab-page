@@ -195,6 +195,10 @@
     "colorfulMode": "將主題色應用到更多介面元素",
     "darkMode": "深色模式",
     "lightMode": "淺色模式",
+    "monet": {
+      "label": "動態主題色（莫奈取色）",
+      "desc": "源自 Material Design 3，從背景提取主題色。只支援圖片背景，配合「將主題色應用到更多元素」選項可獲得最佳視覺效果。"
+    },
     "primaryColor": "主題顏色",
     "systemMode": "跟隨系統設定 / 瀏覽器",
     "title": "主題"

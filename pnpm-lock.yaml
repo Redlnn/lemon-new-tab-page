@@ -70,6 +70,9 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0(@types/sortablejs@1.15.8)
     devDependencies:
+      '@material/material-color-utilities':
+        specifier: ^0.3.0
+        version: 0.3.0
       '@prettier/plugin-oxc':
         specifier: ^0.0.5
         version: 0.0.5
@@ -551,6 +554,9 @@ packages:
 
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
+
+  '@material/material-color-utilities@0.3.0':
+    resolution: {integrity: sha512-ztmtTd6xwnuh2/xu+Vb01btgV8SQWYCaK56CkRK8gEkWe5TuDyBcYJ0wgkMRn+2VcE9KUmhvkz+N9GHrqw/C0g==}
 
   '@mdit-vue/plugin-component@3.0.2':
     resolution: {integrity: sha512-Fu53MajrZMOAjOIPGMTdTXgHLgGU9KwTqKtYc6WNYtFZNKw04euSfJ/zFg8eBY/2MlciVngkF7Gyc2IL7e8Bsw==}
@@ -4091,6 +4097,8 @@ snapshots:
       keyv: 5.5.4
 
   '@keyv/serialize@1.1.1': {}
+
+  '@material/material-color-utilities@0.3.0': {}
 
   '@mdit-vue/plugin-component@3.0.2':
     dependencies:
