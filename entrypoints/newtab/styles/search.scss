@@ -108,7 +108,7 @@
       --width: 500px;
     }
 
-    html:not(.dark, .colorful) &.search-box__form--dark {
+    html.light:not(.colorful) &.search-box__form--dark {
       background-color: var(--el-fill-color-blank);
       border: solid 1px var(--el-border-color-light);
     }

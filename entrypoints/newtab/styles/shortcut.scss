@@ -158,7 +158,7 @@
             0 0 6px rgb(0 0 0 / 10%);
         }
 
-        html:not(.dark) .shortcut__container--white-text-light & {
+        html.light .shortcut__container--white-text-light & {
           color: var(--el-color-white);
         }
       }
