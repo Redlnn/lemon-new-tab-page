@@ -8,6 +8,10 @@
 
 Introducing Monet Extraction from Material Design 3—add softer, scenic colors to your new tab page!
 
+### Bug Fixes🐛
+
+- Fixed button background issues in global color mode.
+
 ## 2.6.0 (Nov 23, 2025)
 
 ### New Features✨
