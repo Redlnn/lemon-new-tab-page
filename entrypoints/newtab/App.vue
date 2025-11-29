@@ -133,18 +133,6 @@ onMounted(async () => {
     }
   }
 
-  if (!settings.perf.disableDialogTransparent) {
-    document.documentElement.classList.add('dialog-transparent')
-  }
-
-  if (!settings.perf.disableDialogTransparent && !settings.perf.disableDialogBlur) {
-    document.documentElement.classList.add('dialog-acrylic')
-  }
-
-  if (settings.colorfulMode) {
-    document.documentElement.classList.add('colorful')
-  }
-
   // 注册同步事件回调
   setSyncEventCallback((type, payload) => {
     if (type === 'version-mismatch') {
@@ -174,21 +162,24 @@ watch(
   () => settings.colorfulMode,
   (colorful) => {
     toggleDocumentClass('colorful', colorful)
-  }
+  },
+  { immediate: true }
 )
 
 watch(
   () => settings.perf.disableDialogTransparent,
   (disabled) => {
     toggleDocumentClass('dialog-transparent', !disabled)
-  }
+  },
+  { immediate: true }
 )
 
 watch(
   () => settings.perf.disableDialogBlur,
   (disabled) => {
     toggleDocumentClass('dialog-acrylic', !disabled)
-  }
+  },
+  { immediate: true }
 )
 
 const preferredDark = usePreferredDark()

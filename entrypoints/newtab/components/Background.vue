@@ -273,17 +273,13 @@ watch(
   (statu) => {
     if (statu) {
       document.documentElement.classList.add('monet')
+      useTimeoutFn(async () => await applyMonet(imageRef.value), bgURL.value ? 250 : 0) // 设置界面切换开关时才添加延时
     } else {
       document.documentElement.classList.remove('monet')
     }
-  }
+  },
+  { immediate: true }
 )
-
-onBeforeMount(() => {
-  if (settings.monetColor) {
-    document.documentElement.classList.add('monet')
-  }
-})
 
 onMounted(async () => {
   await bingWallpaperURLGetter.init()
@@ -299,11 +295,13 @@ onUnmounted(() => {
   stopOnlineBgWatch?.()
 })
 
-function onImgLoaded() {
+async function onImgLoaded() {
+  if (!settings.monetColor) return
+  // 不加延迟会导致刷新开屏卡住切换动画
+  // TODO: 重写 @material/material-color-utilities 把创建 Canvas 和计算放到 Worker 可能会更好
   requestAnimationFrame(() => {
-    // 再让出一帧避免卡顿
     requestAnimationFrame(() => {
-      useTimeoutFn(() => applyMonet(imageRef.value), 0)
+      useTimeoutFn(async () => await applyMonet(imageRef.value), 0)
     })
   })
 }
