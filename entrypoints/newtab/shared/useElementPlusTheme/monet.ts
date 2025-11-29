@@ -52,9 +52,6 @@ function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
   const success = rgbaFromArgb(scheme.tertiary)
   const error = rgbaFromArgb(scheme.error)
   const info = rgbaFromArgb(scheme.secondary)
-  console.log(primary)
-  console.log(mixLegacy(primary, WHITE_COLOR, 70))
-  console.log(rgba2Hex(mixLegacy(primary, WHITE_COLOR, 70)))
 
   const pShades = getColorShades(primary)[mode]
   const sShades = getColorShades(success)[mode]
