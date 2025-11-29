@@ -12,7 +12,7 @@ import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
 
 import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
-import { applyMonet } from '@newtab/shared/useElementPlusTheme'
+import { applyMonet } from '@newtab/shared/theme'
 
 const isDark = useDark()
 const focusStore = useFocusStore()
