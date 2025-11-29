@@ -192,12 +192,15 @@
         "yellowGreen": "Moegi Green"
       }
     },
-    "colorfulMode": "Apply the theme color to more elements",
+    "colorful": {
+      "desc": "Apply the theme color to more elements",
+      "label": "Global Color Mode"
+    },
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "monet": {
-      "label": "Dynamic Theme Colors (Monet Extraction)",
-      "desc": "Inspired by Material Design 3, extracts theme colors from your wallpaper. Only supports image backgrounds. For the best visual effect, use it together with the “Apply theme colors to more elements” option."
+      "desc": "Inspired by Material Design 3, extracts theme colors from your wallpaper. Only supports image backgrounds. For the best visual effect, use it together with the “Global Color Mode” option.",
+      "label": "Dynamic Theme Colors (Monet Extraction)"
     },
     "primaryColor": "Primary color",
     "systemMode": "Follow system / browser",

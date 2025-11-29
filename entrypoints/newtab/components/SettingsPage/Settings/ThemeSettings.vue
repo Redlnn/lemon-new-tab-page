@@ -174,10 +174,11 @@ watch(isDark, (newVal) => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('theme.colorfulMode') }}
+        {{ t('theme.colorful.label') }}
       </div>
       <el-switch v-model="settings.colorfulMode" />
     </div>
+    <p class="settings__item--note">{{ t('theme.colorful.desc') }}</p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.invertColorLight') }}</div>
       <el-switch v-model="settings.time.invertColor.light" />
