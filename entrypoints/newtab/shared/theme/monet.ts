@@ -114,10 +114,8 @@ function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
     '--el-text-color-primary': hexFromArgb(scheme.onSurface),
     '--el-text-color-regular': hexFromArgb(scheme.onSurfaceVariant),
     '--el-text-color-secondary': rgba2Hex(
-      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 70)
-    ),
-    '--el-text-color-placeholder': hexFromArgb(scheme.outline),
-    '--el-text-color-disabled': hexFromArgb(scheme.outlineVariant)
+      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 60)
+    )
   }
 }
 
