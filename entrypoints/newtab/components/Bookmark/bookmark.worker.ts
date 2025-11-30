@@ -27,7 +27,7 @@ let lastQuery = ''
 let lastResultIds: string[] = []
 
 // --------------------------------------------------------------------------
-// Helper Functions
+// 辅助函数
 // --------------------------------------------------------------------------
 
 function createComparator(mode: SortMode, origIndexMap: Map<string, number>, language: string) {
@@ -168,7 +168,7 @@ function countNodes(nodes: BookmarkTreeNode[] | undefined): number {
 }
 
 // --------------------------------------------------------------------------
-// Main Logic
+// 主逻辑
 // --------------------------------------------------------------------------
 
 function buildIndex() {
@@ -204,12 +204,12 @@ function buildIndex() {
 
 // 只读获取排序树。优先返回已缓存版本（如果存在并匹配 sortMode），
 function getSortedTree(mode: SortMode): BookmarkTreeNode[] {
-  // Check cache
+  // 检查缓存
   if (cachedSortedTree && cachedSortedTreeKey === mode) {
     return cachedSortedTree
   }
 
-  // Check threshold for caching
+  // 检查缓存阈值
   const idxCount = Object.keys(indexMap || {}).length
   const nodeCount = idxCount || countNodes(tree)
 
@@ -293,7 +293,7 @@ function filter(query: string, mode: SortMode) {
 }
 
 // --------------------------------------------------------------------------
-// Message Handler
+// 消息处理
 // --------------------------------------------------------------------------
 
 self.onmessage = (e: MessageEvent) => {
@@ -306,15 +306,15 @@ self.onmessage = (e: MessageEvent) => {
         if (payload.language) currentLanguage = payload.language
         // 构建扁平索引，供后续搜索使用
         buildIndex()
-        // Initial filter (empty query)
+        // 初始过滤（空查询）
         const initRes = filter('', payload.sortMode || SortMode.NameAsc)
         self.postMessage({ type: 'INIT_DONE', ...initRes })
         break
 
       case 'UPDATE_SETTINGS':
         if (payload.language) currentLanguage = payload.language
-        // Invalidate cache if language changed?
-        // For now, just clearing cache is safest if language affects sort
+        // 语言改变使缓存失效
+        // 目前，如果语言影响排序，清空缓存是最安全的做法
         cachedSortedTree = null
         cachedSortedTreeKey = null
         break

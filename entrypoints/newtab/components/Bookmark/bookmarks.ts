@@ -25,6 +25,17 @@ export const useBookmarkStore = defineStore('bookmark', {
     initWorker() {
       if (worker) return
       worker = new Worker(new URL('./bookmark.worker.ts', import.meta.url), { type: 'module' })
+
+      i18next.on('languageChanged', (lang) => {
+        worker?.postMessage({
+          type: 'UPDATE_SETTINGS',
+          payload: {
+            language: lang
+          }
+        })
+        this.triggerFilter()
+      })
+
       worker.onmessage = (e) => {
         const { type, filteredResult, firstMatchPath } = e.data
         if (type === 'INIT_DONE' || type === 'FILTER_DONE') {
