@@ -1,9 +1,12 @@
 import {
+  argbFromRgb,
   hexFromArgb,
+  QuantizerCelebi,
   type Rgba,
   rgbaFromArgb,
   Scheme,
-  themeFromImage
+  Score,
+  themeFromSourceColor
 } from '@material/material-color-utilities'
 
 import { mixLegacy } from './mix'
@@ -119,7 +122,90 @@ function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
   }
 }
 
-export async function applyMonet(image: HTMLImageElement | undefined) {
+/**
+ * 重写了 @material/material-color-utilities 中基于图片提取主题色的逻辑
+ * 将图片缩放至128x128以内，并可选择只裁剪中心区域
+ * 以便给 QuantizerCelebi.quantize 传入裁剪和缩放后的像素数据，控制性能和效果
+ *
+ * @param image HTMLImageElement
+ * @param cropCenter 是否裁剪只要中心区域
+ */
+async function getSourceColorFromImage(
+  image: HTMLImageElement,
+  cropCenter = false
+): Promise<number> {
+  if (!image.complete) {
+    await new Promise<void>((resolve, reject) => {
+      image.onload = () => resolve()
+      image.onerror = () => reject(new Error('Image load failed'))
+    })
+  }
+
+  const MAX_SIZE = 128
+  const { naturalWidth, naturalHeight } = image
+
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+
+  if (!ctx) {
+    throw new Error('Could not get canvas context')
+  }
+
+  let sx = 0
+  let sy = 0
+  let sw = naturalWidth
+  let sh = naturalHeight
+
+  if (cropCenter) {
+    sx = Math.floor(naturalWidth * 0.25)
+    sy = Math.floor(naturalHeight * 0.25)
+    sw = Math.floor(naturalWidth * 0.5)
+    sh = Math.floor(naturalHeight * 0.5)
+  }
+
+  let width = sw
+  let height = sh
+
+  if (sw > MAX_SIZE || sh > MAX_SIZE) {
+    const ratio = Math.min(MAX_SIZE / sw, MAX_SIZE / sh)
+    width = Math.round(sw * ratio)
+    height = Math.round(sh * ratio)
+  }
+
+  canvas.width = width
+  canvas.height = height
+  ctx.drawImage(image, sx, sy, sw, sh, 0, 0, width, height)
+
+  // 获取像素数据
+  const imageData = ctx.getImageData(0, 0, width, height).data
+  const pixels: number[] = []
+
+  for (let i = 0; i < imageData.length; i += 4) {
+    const r = imageData[i]
+    const g = imageData[i + 1]
+    const b = imageData[i + 2]
+    const a = imageData[i + 3]
+
+    if (a === undefined || r === undefined || g === undefined || b === undefined || a < 255) {
+      continue
+    }
+
+    pixels.push(argbFromRgb(r, g, b))
+  }
+
+  // 量化和评分
+  const result = QuantizerCelebi.quantize(pixels, 128)
+  const ranked = Score.score(result)
+  const top = ranked[0]
+
+  if (top === undefined) {
+    throw new Error('No suitable color found')
+  }
+
+  return top
+}
+
+export async function applyMonet(image: HTMLImageElement | undefined, cropCenter = false) {
   if (!image) return
 
   const STYLE_ID = 'monet'
@@ -132,7 +218,15 @@ export async function applyMonet(image: HTMLImageElement | undefined) {
     document.head.appendChild(styleTag)
   }
 
-  const theme = await themeFromImage(image)
+  let sourceColor: number
+  try {
+    sourceColor = await getSourceColorFromImage(image, cropCenter)
+  } catch (e) {
+    console.error('Failed to extract source color for Monet theme:', e)
+    return
+  }
+
+  const theme = themeFromSourceColor(sourceColor)
 
   const cssLight = buildCssVars(theme.schemes.light, 'light')
   const cssDark = buildCssVars(theme.schemes.dark, 'dark')

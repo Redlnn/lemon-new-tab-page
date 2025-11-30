@@ -301,10 +301,9 @@ onUnmounted(() => {
 async function onImgLoaded() {
   if (!settings.monetColor) return
   // 不加延迟会导致刷新开屏卡住切换动画
-  // TODO: 重写 @material/material-color-utilities 把创建 Canvas 和计算放到 Worker 可能会更好
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      useTimeoutFn(async () => await applyMonet(imageRef.value), 0)
+      useTimeoutFn(() => applyMonet(imageRef.value), 0)
     })
   })
 }
