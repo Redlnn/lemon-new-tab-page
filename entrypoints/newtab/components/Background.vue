@@ -273,10 +273,13 @@ watch(
 
 watch(
   () => settings.monetColor,
-  (statu) => {
+  async (statu) => {
     if (statu) {
       document.documentElement.classList.add('monet')
-      useTimeoutFn(async () => await applyMonet(imageRef.value), bgURL.value ? 250 : 0) // 设置界面切换开关时才添加延时
+      if (bgURL.value !== '') {
+        // 设置界面切换开关时才触发计算（此时有背景）
+        await applyMonet(imageRef.value)
+      }
     } else {
       document.documentElement.classList.remove('monet')
     }
