@@ -67,25 +67,6 @@ const isVideoWallpaper = computed(() => {
   return mediaType === 'video'
 })
 
-watch(
-  [isVideoWallpaper, documentVisibility, isWindowFocused, () => settings.background.pauseWhenBlur],
-  ([isVideo]) => {
-    if (!isVideo) {
-      // 非视频壁纸，确保视频被暂停
-      const vid = videoRef.value
-      if (vid) {
-        try {
-          vid.pause()
-        } catch {}
-      }
-      return
-    }
-
-    updateVideoPlayback()
-  },
-  { immediate: true }
-)
-
 // 壁纸更新相关逻辑
 
 interface BgURLProvider {
@@ -179,6 +160,25 @@ async function assignMaybeRef<T>(
   return () => stop?.()
 }
 
+watch(
+  [isVideoWallpaper, documentVisibility, isWindowFocused, () => settings.background.pauseWhenBlur],
+  ([isVideo]) => {
+    if (!isVideo) {
+      // 非视频壁纸，确保视频被暂停
+      const vid = videoRef.value
+      if (vid) {
+        try {
+          vid.pause()
+        } catch {}
+      }
+      return
+    }
+
+    updateVideoPlayback()
+  },
+  { immediate: true }
+)
+
 // 动态watch管理
 let stopBingBgWatch: (() => void) | undefined
 let stopLocalBgWatch: (() => void) | null = null
@@ -196,8 +196,11 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   const newUrl = await provider.getURL()
 
   // 等待过渡动画
-  await promiseTimeout(300)
-  bgURL.value = ''
+  if (bgURL.value !== '') {
+    // 首次打开默认白屏，不需要等待白屏动画
+    await promiseTimeout(300)
+    bgURL.value = ''
+  }
   // 不直接赋值是因为避免看到壁纸变形
   // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
   stopBingBgWatch?.() // 切换 provider 时清除旧监听
