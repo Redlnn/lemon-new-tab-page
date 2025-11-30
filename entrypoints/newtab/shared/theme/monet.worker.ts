@@ -1,0 +1,171 @@
+/// <reference lib="webworker" />
+
+import {
+  argbFromRgb,
+  hexFromArgb,
+  QuantizerCelebi,
+  type Rgba,
+  rgbaFromArgb,
+  Scheme,
+  Score,
+  themeFromSourceColor
+} from '@material/material-color-utilities'
+
+import { mixLegacy } from './mix'
+import { BLACK_COLOR, EL_BG_COLOR_RGBA, WHITE_COLOR } from './token'
+import { rgba2Hex } from './utils'
+
+const shadeCache = new WeakMap<Rgba, ReturnType<typeof buildColorShades>>()
+
+function getColorShades(base: Rgba) {
+  if (!shadeCache.has(base)) shadeCache.set(base, buildColorShades(base))
+  return shadeCache.get(base)!
+}
+
+/** 生成明/暗色调 */
+function buildColorShades(base: Rgba) {
+  return {
+    light: {
+      3: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70)),
+      5: rgba2Hex(mixLegacy(base, WHITE_COLOR, 50)),
+      7: rgba2Hex(mixLegacy(base, WHITE_COLOR, 30)),
+      8: rgba2Hex(mixLegacy(base, WHITE_COLOR, 20)),
+      9: rgba2Hex(mixLegacy(base, WHITE_COLOR, 10)),
+      dark2: rgba2Hex(mixLegacy(base, BLACK_COLOR, 70))
+    },
+    dark: {
+      3: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 70)),
+      5: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 50)),
+      7: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 30)),
+      8: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 20)),
+      9: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 10)),
+      dark2: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70))
+    }
+  }
+}
+
+/** 生成变量表 */
+function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
+  const textMix = mode === 'light' ? WHITE_COLOR : EL_BG_COLOR_RGBA
+
+  const pHex = hexFromArgb(scheme.primary)
+  const sHex = hexFromArgb(scheme.tertiary)
+  const eHex = hexFromArgb(scheme.error)
+  const iHex = hexFromArgb(scheme.secondary)
+
+  const primary = rgbaFromArgb(scheme.primary)
+  const success = rgbaFromArgb(scheme.tertiary)
+  const error = rgbaFromArgb(scheme.error)
+  const info = rgbaFromArgb(scheme.secondary)
+
+  const pShades = getColorShades(primary)[mode]
+  const sShades = getColorShades(success)[mode]
+  const eShades = getColorShades(error)[mode]
+  const iShades = getColorShades(info)[mode]
+
+  return {
+    '--el-color-primary': pHex,
+    '--el-color-primary-light-3': pShades[3],
+    '--el-color-primary-light-5': pShades[5],
+    '--el-color-primary-light-7': pShades[7],
+    '--el-color-primary-light-8': pShades[8],
+    '--el-color-primary-light-9': pShades[9],
+    '--el-color-primary-dark-2': pShades.dark2,
+
+    '--el-color-success': sHex,
+    '--el-color-success-light-3': sShades[3],
+    '--el-color-success-light-5': sShades[5],
+    '--el-color-success-light-7': sShades[7],
+    '--el-color-success-light-8': sShades[8],
+    '--el-color-success-light-9': sShades[9],
+    '--el-color-success-dark-2': sShades.dark2,
+
+    '--el-color-warning': mode === 'light' ? '#835500' : '#ffb955',
+    '--el-color-warning-light-3': mode === 'light' ? '#a8884d' : '#bc8b45',
+    '--el-color-warning-light-5': mode === 'light' ? '#c1aa80' : '#8f6c3a',
+    '--el-color-warning-light-7': mode === 'light' ? '#daccb3' : '#624d2f',
+    '--el-color-warning-light-8': mode === 'light' ? '#e6ddcc' : '#4c3e2a',
+    '--el-color-warning-light-9': mode === 'light' ? '#f3eee6' : '#352e24',
+    '--el-color-warning-dark-2': mode === 'light' ? '#5c3b00' : '#ffce88',
+
+    '--el-color-danger': eHex,
+    '--el-color-danger-light-3': eShades[3],
+    '--el-color-danger-light-5': eShades[5],
+    '--el-color-danger-light-7': eShades[7],
+    '--el-color-danger-light-8': eShades[8],
+    '--el-color-danger-light-9': eShades[9],
+    '--el-color-danger-dark-2': eShades.dark2,
+
+    '--el-color-error': eHex,
+    '--el-color-error-light-3': eShades[3],
+    '--el-color-error-light-5': eShades[5],
+    '--el-color-error-light-7': eShades[7],
+    '--el-color-error-light-8': eShades[8],
+    '--el-color-error-light-9': eShades[9],
+    '--el-color-error-dark-2': eShades.dark2,
+
+    '--el-color-info': iHex,
+    '--el-color-info-light-3': iShades[3],
+    '--el-color-info-light-5': iShades[5],
+    '--el-color-info-light-7': iShades[7],
+    '--el-color-info-light-8': iShades[8],
+    '--el-color-info-light-9': iShades[9],
+    '--el-color-info-dark-2': iShades.dark2,
+
+    '--el-bg-color': hexFromArgb(scheme.surface),
+    '--el-bg-color-page': hexFromArgb(scheme.background),
+    '--el-bg-color-overlay': hexFromArgb(scheme.surface),
+
+    '--el-text-color-primary': hexFromArgb(scheme.onSurface),
+    '--el-text-color-regular': hexFromArgb(scheme.onSurfaceVariant),
+    '--el-text-color-secondary': rgba2Hex(
+      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 60)
+    )
+  }
+}
+
+self.onmessage = (
+  e: MessageEvent<{ id: number; imageBitmap: ImageBitmap; width: number; height: number }>
+) => {
+  const { id, imageBitmap, width, height } = e.data
+
+  const canvas = new OffscreenCanvas(width, height)
+  const ctx = canvas.getContext('2d')
+  if (!ctx) {
+    self.postMessage({ id, error: new Error('Could not get OffscreenCanvas context') })
+    return
+  }
+
+  ctx.drawImage(imageBitmap, 0, 0)
+  const imageData = ctx.getImageData(0, 0, width, height).data
+
+  const pixels: number[] = []
+
+  for (let i = 0; i < imageData.length; i += 4) {
+    const r = imageData[i]
+    const g = imageData[i + 1]
+    const b = imageData[i + 2]
+    const a = imageData[i + 3]
+
+    if (a === undefined || r === undefined || g === undefined || b === undefined || a < 255) {
+      continue
+    }
+
+    pixels.push(argbFromRgb(r, g, b))
+  }
+
+  const result = QuantizerCelebi.quantize(pixels, 128)
+  const ranked = Score.score(result)
+  const top = ranked[0]
+
+  if (top === undefined) {
+    self.postMessage({ id, error: new Error('No suitable color found') })
+    return
+  }
+
+  const theme = themeFromSourceColor(top)
+  const cssLight = buildCssVars(theme.schemes.light, 'light')
+  const cssDark = buildCssVars(theme.schemes.dark, 'dark')
+
+  self.postMessage({ id, cssLight, cssDark })
+}
