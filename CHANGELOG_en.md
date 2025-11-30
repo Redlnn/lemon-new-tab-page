@@ -12,10 +12,14 @@ Introducing Monet colors from Material Design 3 — bring softer, more dynamic h
 
 - Option to disable the search bar expansion animation on startup
 
-### Improvements
+### Improvements⚡️
 
-- Faster load performance
+- Optimized launch speed
   > Speeds up the appearance of the background image, search bar, and time components on each launch
+- Improved bookmark loading speed
+  > - Uses Worker for background sorting of bookmarks to avoid blocking
+  > - Lazy loads subfolders to prevent rendering too many nodes at once
+- Resets bookmark sorting when switching languages
 
 ### Bug Fixes🐛
 
