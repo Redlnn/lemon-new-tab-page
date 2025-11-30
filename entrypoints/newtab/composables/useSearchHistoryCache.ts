@@ -1,5 +1,3 @@
-import { computed, ref, type Ref } from 'vue'
-
 import { searchHistoriesStorage } from '@newtab/shared/storages/searchStorages'
 
 const historiesRef: Ref<string[]> = ref([])

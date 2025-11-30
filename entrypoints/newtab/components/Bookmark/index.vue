@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed, provide, ref } from 'vue'
 import { useDebounceFn } from '@vueuse/core'
 
 import { SearchRound } from '@vicons/material'

@@ -1,7 +1,4 @@
 <script lang="ts" setup>
-import type { PropType } from 'vue'
-import { watchEffect } from 'vue'
-
 import {
   dialogEmits,
   dialogInjectionKey,

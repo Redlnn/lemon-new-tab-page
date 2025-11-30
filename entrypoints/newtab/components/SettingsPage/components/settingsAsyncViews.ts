@@ -1,6 +1,3 @@
-import type { Component } from 'vue'
-import { defineAsyncComponent } from 'vue'
-
 import { SettingsRoute } from '../composables/useSettingsRouter'
 
 // 维护所有设置子页面的异步加载器，便于集中预取与复用
@@ -48,7 +45,3 @@ export const prefetchSettingsView = async (route: SettingsRoute) => {
     console.warn('[settings] failed to prefetch settings view', route, error)
   }
 }
-
-// export const prefetchSettingsViews = async (routes: SettingsRoute[]) => {
-//   await Promise.all(routes.map((route) => prefetchSettingsView(route)))
-// }

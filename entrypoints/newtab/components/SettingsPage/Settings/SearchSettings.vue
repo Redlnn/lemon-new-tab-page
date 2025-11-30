@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { inject } from 'vue'
-
 import { BubbleChartRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
