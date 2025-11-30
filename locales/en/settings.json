@@ -141,6 +141,7 @@
     "clickToChange": "Click to change",
     "defaultSearchEngine": "Search engine",
     "enableShadow": "Show search box shadow",
+    "launchAnim": "Search box expand animation on startup",
     "openInNewTab": "Open in new tab",
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",

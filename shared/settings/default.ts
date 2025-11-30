@@ -29,7 +29,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     searchInNewTab: false,
     recordSearchHistory: true,
     enableShadow: true,
-    placeholder: i18next.t('newtab:search.placeholder')
+    placeholder: i18next.t('newtab:search.placeholder'),
+    launchAnim: true
   },
   background: {
     bgType: BgType.Bing,

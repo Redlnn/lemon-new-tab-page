@@ -133,6 +133,10 @@ function toggleAnimationSettings(disable: boolean) {
       <el-switch v-model="dialogAnimation" />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('search.launchAnim') }}</div>
+      <el-switch v-model="settings.search.launchAnim" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.focusScale') }}</div>
       <el-switch v-model="focusScale" />
     </div>

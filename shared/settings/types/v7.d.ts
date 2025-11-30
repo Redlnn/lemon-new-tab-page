@@ -29,6 +29,7 @@ export interface SettingsInterfaceVer7 {
     recordSearchHistory: boolean
     enableShadow: boolean
     placeholder: string
+    launchAnim: boolean
   }
   background: {
     bgType: BgType

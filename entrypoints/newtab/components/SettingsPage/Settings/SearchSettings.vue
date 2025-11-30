@@ -69,5 +69,9 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
       <div class="settings__label">{{ t('search.placeholder') }}</div>
       <el-input v-model="settings.search.placeholder" style="width: 240px" />
     </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('search.launchAnim') }}</div>
+      <el-switch v-model="settings.search.launchAnim" />
+    </div>
   </div>
 </template>

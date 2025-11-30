@@ -29,7 +29,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       searchInNewTab: oldSettings.searchInNewTab,
       recordSearchHistory: oldSettings.recordSearchHistory,
       enableShadow: defaultSettings.search.enableShadow,
-      placeholder: defaultSettings.search.placeholder
+      placeholder: defaultSettings.search.placeholder,
+      launchAnim: defaultSettings.search.launchAnim
     },
     background: {
       bgType: oldSettings.bgType,

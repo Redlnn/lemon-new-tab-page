@@ -236,7 +236,9 @@ function doSearch() {
 }
 
 onMounted(() => {
-  useTimeoutFn(() => (mounted.value = true), 100)
+  if (settings.search.launchAnim) {
+    useTimeoutFn(() => (mounted.value = true), 100)
+  }
   void ensureHistoryLoaded()
 })
 </script>
@@ -247,7 +249,7 @@ onMounted(() => {
       ref="searchForm"
       class="search-box__form"
       :class="formClasses"
-      :style="{ '--width': mounted ? undefined : '0' }"
+      :style="{ '--width': settings.search.launchAnim ? (mounted ? undefined : '0') : undefined }"
       @submit.prevent="doSearch"
     >
       <search-engine-menu ref="searchEngineMenuRef" />

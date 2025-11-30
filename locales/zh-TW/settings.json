@@ -141,6 +141,7 @@
     "clickToChange": "點擊更改",
     "defaultSearchEngine": "預設搜尋引擎",
     "enableShadow": "顯示搜尋框陰影",
+    "launchAnim": "啟動時搜尋框展開動畫",
     "openInNewTab": "在新分頁中開啟",
     "placeholder": "搜尋框占位文字",
     "recordSearchHistory": "記錄搜尋歷史",
@@ -199,8 +200,8 @@
     "darkMode": "深色模式",
     "lightMode": "淺色模式",
     "monet": {
-      "label": "動態主題色（莫奈取色）",
-      "desc": "源自 Material Design 3，從背景中提取主題色。僅支援圖片背景，搭配「全域色彩」可獲得最佳視覺效果。"
+      "desc": "源自 Material Design 3，從背景中提取主題色。僅支援圖片背景，搭配「全域色彩」可獲得最佳視覺效果。",
+      "label": "動態主題色（莫奈取色）"
     },
     "primaryColor": "主題色",
     "systemMode": "跟隨系統 / 瀏覽器",

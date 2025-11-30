@@ -9,17 +9,6 @@
   }
 }
 
-@keyframes delayedFadeIn {
-  0%,
-  50% {
-    opacity: 0;
-  }
-
-  100% {
-    opacity: 1;
-  }
-}
-
 .clock {
   color: var(--el-fill-color-blank);
   text-align: center;
@@ -28,7 +17,7 @@
     transform 0.25s cubic-bezier(0.5, 0, 0.5, 2),
     text-shadow var(--el-transition-duration-fast) ease,
     color var(--el-transition-duration-fast) ease;
-  animation: delayedFadeIn 0.5s;
+  animation: delayedFadeIn 0.25s;
 
   &:hover {
     transform: scale(1.1);

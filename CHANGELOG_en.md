@@ -4,13 +4,18 @@
 
 ## 2.6.1 (WIP)
 
-### Now Available!🎉
+### Major Update🎉
 
-Introducing Monet Extraction from Material Design 3—add softer, scenic colors to your new tab page!
+Introducing Monet colors from Material Design 3 — bring softer, more dynamic hues to your new tab page!
 
-### Improvements⚡️
+### New Features✨
 
-- Made the background image appear faster on each launch.
+- Option to disable the search bar expansion animation on startup
+
+### Improvements
+
+- Faster load performance
+  > Speeds up the appearance of the background image, search bar, and time components on each launch
 
 ### Bug Fixes🐛
 

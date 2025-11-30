@@ -67,3 +67,14 @@ html.dialog-acrylic {
   -khtml-user-select: none;
   user-select: none;
 }
+
+@keyframes delayedFadeIn {
+  0%,
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}

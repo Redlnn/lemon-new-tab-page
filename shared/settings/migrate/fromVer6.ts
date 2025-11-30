@@ -28,7 +28,8 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       searchInNewTab: oldSettings.search.searchInNewTab,
       recordSearchHistory: oldSettings.search.recordSearchHistory,
       enableShadow: oldSettings.search.enableShadow,
-      placeholder: oldSettings.search.placeholder
+      placeholder: oldSettings.search.placeholder,
+      launchAnim: defaultSettings.search.launchAnim
     },
     background: {
       bgType: oldSettings.background.bgType,
