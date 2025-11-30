@@ -1,3 +1,4 @@
+/// <reference lib="webworker" />
 import type { Browser } from 'wxt/browser'
 
 import { SortMode } from './types'
