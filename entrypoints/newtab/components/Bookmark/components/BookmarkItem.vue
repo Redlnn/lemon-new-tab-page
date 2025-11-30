@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed, inject } from 'vue'
-
 import { FolderOpenRound } from '@vicons/material'
 import type { Browser } from 'wxt/browser'
 
@@ -35,6 +33,29 @@ const model = computed({
     }
   }
 })
+
+// 懒加载优化：判断当前节点是否展开
+const isExpanded = computed(() => {
+  const active = activeMap?.value?.[props.depth]
+  if (Array.isArray(active)) {
+    return active.includes(props.node.id)
+  }
+  return active === props.node.id
+})
+
+const hasBeenExpanded = ref(false)
+
+watch(
+  isExpanded,
+  (val) => {
+    if (val) {
+      hasBeenExpanded.value = true
+    }
+  },
+  { immediate: true }
+)
+
+const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.value)
 </script>
 
 <template>
@@ -43,14 +64,16 @@ const model = computed({
       <el-icon color="var(--el-color-primary)"><folder-open-round /></el-icon>
       <span>{{ node.title || '(未命名)' }}</span>
     </template>
-    <el-collapse v-model="model" expand-icon-position="left" accordion v-if="node.children">
-      <bookmark-item
-        v-for="child in node.children"
-        :key="child.id"
-        :node="child"
-        :depth="depth + 1"
-      />
-    </el-collapse>
+    <template v-if="shouldRenderChildren">
+      <el-collapse v-model="model" expand-icon-position="left" accordion v-if="node.children">
+        <bookmark-item
+          v-for="child in node.children"
+          :key="child.id"
+          :node="child"
+          :depth="depth + 1"
+        />
+      </el-collapse>
+    </template>
   </el-collapse-item>
   <a
     v-else
