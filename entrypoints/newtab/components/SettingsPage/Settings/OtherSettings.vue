@@ -29,7 +29,6 @@ import {
 
 const { t, i18next } = useTranslation('settings')
 
-const isGoogleChrome = import.meta.env.CHROME && !import.meta.env.EDGE
 const settings = useSettingsStore()
 const shortcuts = useShortcutStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
@@ -393,14 +392,6 @@ function changeLanguage(lang: string) {
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">
         {{ t('other.purge') }}
       </el-button>
-    </div>
-    <div v-if="isGoogleChrome" class="settings__item">
-      <div class="settings__label" style="min-height: 32px">
-        {{ t('other.want_to_customize_chrome') }}
-      </div>
-      <p class="settings__item--note">
-        {{ t('other.customize_chrome_tips') }}
-      </p>
     </div>
     <!-- 隐藏的设置导入按钮 -->
     <input

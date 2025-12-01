@@ -82,7 +82,6 @@
       "purging": "正在清除壁纸缓存...",
       "title": "确定要清除壁纸缓存吗？"
     },
-    "customize_chrome_tips": "假如你要自定义 Chrome（例如更改颜色主题）的话，你只能打开 Chrome 的原生新标签页 (chrome://new-tab-page) 并点击右下角的图标来打开「自定义 Chrome」侧边栏。\n",
     "importExport": {
       "customSearchEngines": "导入 / 导出自定义搜索引擎",
       "export": "导出",
@@ -108,8 +107,7 @@
     "purgeWallpaperData": "清除壁纸缓存",
     "sync": "云同步",
     "syncWarning": "云同步不能同步以下内容：本地或在线背景图片、最常访问网站（含已忽略的网站）、深色模式及跟随系统状态等。 不支持同步的项目后面会有如右侧的标识：\n",
-    "title": "其他",
-    "want_to_customize_chrome": "要自定义Chrome？"
+    "title": "其他"
   },
   "perf": {
     "bookmarkBlur": "书签栏背景模糊",

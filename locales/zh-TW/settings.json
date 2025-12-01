@@ -82,7 +82,6 @@
       "purging": "正在清除壁紙快取...",
       "title": "確定要清除壁紙快取？"
     },
-    "customize_chrome_tips": "假如你要自訂 Chrome（例如變更主題色彩）的話，請開啟 Chrome 的原生新分頁 (chrome://new-tab-page) 並點擊右下角圖示來打開「自訂 Chrome」側邊欄。",
     "importExport": {
       "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
       "export": "匯出",
@@ -108,8 +107,7 @@
     "purgeWallpaperData": "清除壁紙快取",
     "sync": "雲端同步",
     "syncWarning": "雲端同步不支援同步以下項目：本機或線上背景圖片、最常造訪網站（包括已忽略的網站）、深色模式及跟隨系統狀態等。 不支援同步的項目會有如右側的標識：",
-    "title": "其他",
-    "want_to_customize_chrome": "要自訂 Chrome 嗎？"
+    "title": "其他"
   },
   "perf": {
     "bookmarkBlur": "書籤欄背景模糊",

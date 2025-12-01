@@ -15,10 +15,9 @@ Introducing Monet colors from Material Design 3 — bring softer, more dynamic h
 ### Improvements⚡️
 
 - Optimized launch speed
-  > Speeds up the appearance of the background image, search bar, and time components on each launch
-- Improved bookmark loading speed
-  > - Uses Worker for background sorting of bookmarks to avoid blocking
-  > - Lazy loads subfolders to prevent rendering too many nodes at once
+  - Optimized the appearance animations of the search bar and clock components
+  - Optimized background image loading logic
+  - Optimized bookmark loading logic
 - Resets bookmark sorting when switching languages
 
 ### Bug Fixes🐛
