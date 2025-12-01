@@ -232,7 +232,15 @@ function useBackgroundSwitcher() {
   }
 
   onMounted(async () => {
-    isDarkBg.value = settings.localDarkBackground.id ? isDark.value : false
+    watch(
+      isDark,
+      (newVal) => {
+        if (settings.localDarkBackground.id) {
+          isDarkBg.value = newVal
+        }
+      },
+      { immediate: true }
+    )
 
     const tasks: Array<Promise<void>> = []
 
