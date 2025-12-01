@@ -8,6 +8,8 @@ import {
   useWindowFocus
 } from '@vueuse/core'
 
+import { browser } from '#imports'
+
 import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
@@ -15,17 +17,20 @@ import { applyMonet } from '@newtab/shared/theme'
 import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
 const isDark = useDark()
+
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
+
 const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLImageElement>()
 const videoRef = ref<HTMLVideoElement>()
 const bgURL = ref<string>('')
 
 const bgURLreg = new RegExp('url\\((["\']?)(.*?)\\1\\)', 'i')
+const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
 // 视频壁纸相关逻辑
 
@@ -84,7 +89,27 @@ const bgTypeProviders: Record<
 > = {
   [BgType.Bing]: () => bingWallpaperURLGetter.getBgUrl(),
   [BgType.Local]: () => currentLocalUrl.value,
-  [BgType.Online]: () => Promise.resolve(settings.background.onlineUrl),
+  [BgType.Online]: async () => {
+    if (!settings.monetColor) {
+      return settings.background.onlineUrl
+    }
+    if (isChrome) {
+      const allGranted = await browser.permissions.contains({ origins: [`*://*/*`] })
+      if (!allGranted) {
+        return settings.background.onlineUrl
+      }
+    }
+    console.log('Fetching online background for Monet color extraction...')
+    try {
+      const response = await fetch(settings.background.onlineUrl)
+      if (!response.ok) throw new Error(response.statusText)
+      const blob = await response.blob()
+      const blobUrl = URL.createObjectURL(blob)
+      return blobUrl
+    } catch {
+      return settings.background.onlineUrl
+    }
+  },
   [BgType.None]: () => Promise.resolve('')
 }
 
@@ -128,7 +153,7 @@ watch(
 )
 
 // 动态watch管理
-let stopBingBgWatch: (() => void) | undefined
+let stopBgWatch: (() => void) | undefined
 let stopLocalBgWatch: (() => void) | null = null
 let stopOnlineBgWatch: (() => void) | null = null
 
@@ -147,8 +172,8 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   }
   // 不直接赋值是因为避免看到壁纸变形
   // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
-  stopBingBgWatch?.() // 切换 provider 时清除旧监听
-  stopBingBgWatch = await assignMaybeRef(bgURL, newUrl)
+  stopBgWatch?.() // 切换 provider 时清除旧监听
+  stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
   switchStore.end()
 }
@@ -169,13 +194,13 @@ async function handleLocalBgChange() {
 }
 
 // 在线背景URL变化处理器
-async function handleOnlineBgChange(newUrl: string) {
-  if (bgURL.value === newUrl) return
-
+async function handleOnlineBgChange() {
   switchStore.start()
   await promiseTimeout(300)
   bgURL.value = ''
-  bgURL.value = newUrl
+  const provider = bgTypeProviders[BgType.Online]
+  const newUrl = await provider()
+  await assignMaybeRef(bgURL, newUrl)
   switchStore.end()
 }
 
@@ -239,6 +264,7 @@ onUnmounted(() => {
 
 async function onImgLoaded() {
   if (!(settings.monetColor || isVideoWallpaper.value)) return
+  if (bgURL.value.startsWith('http')) return
   // 不加延迟会导致刷新开屏卡住切换动画
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {

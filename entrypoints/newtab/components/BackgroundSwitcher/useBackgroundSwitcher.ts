@@ -182,34 +182,43 @@ function useBackgroundSwitcher() {
   }
 
   const handlePermissions = async (_url: string, hostname: string) => {
-    const permissions = { origins: [`*://${hostname}/*`] }
-    try {
-      const granted = await browser.permissions.contains(permissions)
-      if (granted) {
-        settings.background.onlineUrl = _url
-        return
-      }
+    const allPermissions = { origins: [`*://*/*`] }
 
-      const confirmed = await ElMessageBox.confirm(
-        i18next.t('settings:background.warning.securityPolicy', { host: hostname })
+    let allGranted = await browser.permissions.contains(allPermissions)
+    if (!allGranted) {
+      const allConfirmed = await ElMessageBox.confirm(
+        i18next.t('settings:background.warning.securityPolicy')
       )
-
-      if (confirmed) {
-        const requested = await browser.permissions.request(permissions)
-        if (requested) {
-          ElMessage.success(i18next.t('settings:background.warning.granted'))
-          settings.background.onlineUrl = _url
-        } else {
+      if (allConfirmed) {
+        const allRequested = await browser.permissions.request(allPermissions)
+        if (!allRequested) {
           ElMessage.error(i18next.t('settings:background.warning.notGranted'))
           settings.background.bgType = BgType.None
           tempOnlineUrl.value = ''
+          return false
+        }
+        allGranted = true
+      } else {
+        const confirmed = await ElMessageBox.confirm(
+          '你选择不授予所有网站权限，是否允许扩展仅申请该网址权限？'
+        )
+        if (confirmed) {
+          const permissions = { origins: [`*://${hostname}/*`] }
+          const requested = await browser.permissions.request(permissions)
+          if (!requested) {
+            ElMessage.error(i18next.t('settings:background.warning.notGranted'))
+            settings.background.bgType = BgType.None
+            tempOnlineUrl.value = ''
+            return false
+          }
+        } else {
+          settings.background.bgType = BgType.None
+          tempOnlineUrl.value = ''
+          return false
         }
       }
-    } catch {
-      // 用户取消或报错
-      settings.background.bgType = BgType.None
-      tempOnlineUrl.value = ''
     }
+    return allGranted
   }
 
   const changeOnlineBg = (e: Event) => {
