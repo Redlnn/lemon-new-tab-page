@@ -205,7 +205,7 @@ watch(
   async (statu) => {
     if (statu) {
       document.documentElement.classList.add('monet')
-      if (bgURL.value !== '') {
+      if (bgURL.value !== '' && !isVideoWallpaper.value) {
         // 设置界面切换开关时才触发计算（此时有背景）
         await applyMonet(imageRef.value)
       }
@@ -231,7 +231,7 @@ onUnmounted(() => {
 })
 
 async function onImgLoaded() {
-  if (!settings.monetColor) return
+  if (!(settings.monetColor || isVideoWallpaper.value)) return
   // 不加延迟会导致刷新开屏卡住切换动画
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
