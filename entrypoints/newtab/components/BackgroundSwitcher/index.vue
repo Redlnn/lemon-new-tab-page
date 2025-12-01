@@ -25,7 +25,7 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 import Bing from '@newtab/assets/bing_gray.svg'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
+import { bingWallpaperURLGetter } from '@newtab/shared/wallpaper'
 
 import useBackgroundSwitcher from './useBackgroundSwitcher'
 
@@ -63,7 +63,7 @@ const {
   handleUpload,
   deleteLocalBg,
   onlineUrlInput,
-  localUrl,
+  tempOnlineUrl,
   changeOnlineBg,
   onlineImageWarn
 } = useBackgroundSwitcher()
@@ -269,7 +269,7 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
         <el-input
           v-if="settings.background.bgType === BgType.Online"
           ref="onlineUrlInput"
-          v-model="localUrl"
+          v-model="tempOnlineUrl"
           @blur="changeOnlineBg"
           @keydown.enter="changeOnlineBg"
           placeholder="https://example.com/image.jpg"

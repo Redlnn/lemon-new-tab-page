@@ -1,4 +1,4 @@
-import { searchHistoriesStorage } from '@newtab/shared/storages/searchStorages'
+import { searchHistoriesStorage } from '@newtab/shared/storages/searchHistoriesStorage'
 
 const historiesRef: Ref<string[]> = ref([])
 let loaded = false

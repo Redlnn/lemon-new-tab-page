@@ -14,8 +14,8 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
-import { getSearchEngineUrl, searchEngines } from '@newtab/shared/api/search'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import { getSearchEngineUrl, searchEngines } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'

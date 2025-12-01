@@ -19,8 +19,8 @@ export interface SettingsInterfaceVer6 {
   }
   search: {
     autoFocus: boolean
-    selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/api/search').searchSuggestAPIs
-    selectedSearchEngine: keyof typeof import('@newtab/shared/api/search').searchEngines
+    selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/search').searchSuggestAPIs
+    selectedSearchEngine: keyof typeof import('@newtab/shared/search').searchEngines
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean

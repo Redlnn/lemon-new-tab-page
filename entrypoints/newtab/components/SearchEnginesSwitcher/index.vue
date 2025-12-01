@@ -8,11 +8,11 @@ import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { searchEngines } from '@newtab/shared/api/search'
 import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore
 } from '@newtab/shared/customSearchEngine'
+import { searchEngines } from '@newtab/shared/search'
 
 import AddCustomSearchEngine from './components/AddCustomSearchEngine.vue'
 import CustomEngineItem from './components/CustomEngineItem.vue'

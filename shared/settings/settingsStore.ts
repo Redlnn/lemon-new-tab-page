@@ -15,7 +15,7 @@ import { useDarkWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 const searchSuggestAPIsMap: Record<
   string,
-  keyof typeof import('@newtab/shared/api/search').searchSuggestAPIs
+  keyof typeof import('@newtab/shared/search').searchSuggestAPIs
 > = {
   百度: 'baidu',
   必应: 'bing',

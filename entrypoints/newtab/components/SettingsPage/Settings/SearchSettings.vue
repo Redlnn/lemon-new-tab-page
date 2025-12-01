@@ -4,8 +4,8 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { searchSuggestAPIs } from '@newtab/shared/api/search'
 import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
+import { searchSuggestAPIs } from '@newtab/shared/search'
 
 const { t } = useTranslation('settings')
 

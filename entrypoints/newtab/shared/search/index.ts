@@ -7,6 +7,10 @@ import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 
 import { baiduSuggestParser, bingSuggestParser, googleSuggestParser } from './suggestParser'
 
+export * from './suggestCache'
+export * from './suggestParser'
+export * from './suggestRunner'
+
 export const searchEngines = {
   google: {
     nameKey: 'newtab:searchEngineMenu.google',

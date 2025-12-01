@@ -1,10 +1,10 @@
 import i18next from 'i18next'
 
-import { isImageFile, verifyImageUrl } from '@/shared/media'
 import enhancedFetch from '@/shared/network/fetch'
-import { saveSettings, useBingWallpaperStore, useSettingsStore } from '@/shared/settings'
+import { saveSettings, useSettingsStore } from '@/shared/settings'
 
-import { bingInfoCache } from '../storages/bingInfoCache'
+import { useBingWallpaperStorge, useWallpaperUrlStore } from '.'
+import { bingInfoCache } from './bingInfoCache'
 
 interface BingWallpaperImage {
   startdate: number
@@ -121,41 +121,23 @@ class BingWallpaperURLGetter {
 
   private async resolveLocalBingWallpaperURL() {
     const settings = useSettingsStore()
-    const { id, url } = settings.bingBackground
+    const { id } = settings.bingBackground
+    const wallpaperUrlStore = useWallpaperUrlStore()
 
-    // 如果 settings 中已有有效的 blob url，优先复用
-    try {
-      if (url && url.startsWith('blob:')) {
-        if (await verifyImageUrl(url)) {
-          return url
-        }
-        // 如果现有 settings blob URL 无效，撤销并继续
-        await this.revokeSettingsURL()
-      }
-    } catch {}
+    // 尝试从 store 获取 URL (会自动处理缓存和从 DB 加载)
+    const url = await wallpaperUrlStore.getUrl('bing')
 
-    const file = await useBingWallpaperStore.getItem<Blob>(settings.bingBackground.id)
-    if (file && isImageFile(file)) {
-      const objectUrl = URL.createObjectURL(file)
-      const ok = await verifyImageUrl(objectUrl)
-      if (ok) {
-        settings.bingBackground.url = objectUrl
-        const cache = await bingInfoCache.getValue()
-        this.info.value.url = cache.url
-        this.info.value.copyright = cache.copyright
-        this.info.value.copyrightlink = cache.copyrightlink
-        this.info.value.title = cache.title
-        this.updateUHDUrl(cache.url)
-        return objectUrl
-      } else {
-        // 验证失败时立即撤销临时 objectUrl
-        try {
-          URL.revokeObjectURL(objectUrl)
-        } catch {}
-      }
+    if (url) {
+      const cache = await bingInfoCache.getValue()
+      this.info.value.url = cache.url
+      this.info.value.copyright = cache.copyright
+      this.info.value.copyrightlink = cache.copyrightlink
+      this.info.value.title = cache.title
+      this.updateUHDUrl(cache.url)
+      return url
     }
 
-    // 如果文件不存在或不是图片，则清除相关数据和缓存
+    // 如果获取失败（文件不存在或不是图片），则清除相关数据和缓存
     settings.bingBackground.id = ''
     settings.bingBackground.updateDate = 0
     await bingInfoCache.setValue({
@@ -164,7 +146,7 @@ class BingWallpaperURLGetter {
       copyrightlink: '',
       title: ''
     })
-    await useBingWallpaperStore.removeItem(id)
+    await useBingWallpaperStorge.removeItem(id)
     await this.revokeSettingsURL()
     return null
   }
@@ -229,19 +211,20 @@ class BingWallpaperURLGetter {
       const file = new File([blob], 'bing.jpg', { type: blob.type })
 
       // 清除上次壁纸
-      await useBingWallpaperStore.clear()
+      await useBingWallpaperStorge.clear()
       await this.revokeSettingsURL()
 
       // 保存图片到IndexedDB
       const id = crypto.randomUUID()
       const url = URL.createObjectURL(file)
-      await useBingWallpaperStore.setItem<Blob>(id, file)
+      await useBingWallpaperStorge.setItem<Blob>(id, file)
       settings.bingBackground = {
         id: id,
         url: url,
         updateDate: data.images[0]!.fullstartdate
       }
       await saveSettings(settings)
+      await useWallpaperUrlStore().setUrl('bing', url)
       this.setUrlSafe(url)
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)

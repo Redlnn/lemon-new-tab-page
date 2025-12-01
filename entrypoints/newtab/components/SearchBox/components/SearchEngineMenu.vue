@@ -6,8 +6,8 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
-import { searchEngines } from '@newtab/shared/api/search'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import { searchEngines } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
 
 const { t } = useTranslation()

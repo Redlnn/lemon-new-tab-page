@@ -4,7 +4,7 @@ export interface OldSettingsInterface {
   primaryColor: string
   isMeridiem: boolean
   showMeridiem: boolean
-  selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/api/search').searchSuggestAPIs
+  selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/search').searchSuggestAPIs
   selectedSearchEngine: keyof typeof import('../migrate/searchEnginesMap').searchEnginesMap
   searchInNewTab: boolean
   recordSearchHistory: boolean

@@ -6,9 +6,7 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
-import { searchSuggestAPIs } from '@newtab/shared/api/search'
-import { searchSuggestCache } from '@newtab/shared/api/search/suggestCache'
-import { createSuggestRunner } from '@newtab/shared/api/search/suggestRunner'
+import { createSuggestRunner, searchSuggestAPIs, searchSuggestCache } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
 
 import SuggestListItem from './SuggestListItem.vue'
