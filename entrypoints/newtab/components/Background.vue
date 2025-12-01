@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { storeToRefs } from 'pinia'
 import {
   promiseTimeout,
   useDark,
@@ -17,6 +18,7 @@ const isDark = useDark()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const wallpaperUrlStore = useWallpaperUrlStore()
+const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLImageElement>()
@@ -69,9 +71,19 @@ const isVideoWallpaper = computed(() => {
 
 // 壁纸更新相关逻辑
 
-const bgTypeProviders: Record<BgType, () => Promise<string> | Ref<string>> = {
+const currentLocalUrl = computed(() => {
+  if (isDark.value && settings.localDarkBackground.id) {
+    return darkUrl
+  }
+  return lightUrl
+})
+
+const bgTypeProviders: Record<
+  BgType,
+  () => string | Promise<string> | Ref<string> | Promise<Ref<string>>
+> = {
   [BgType.Bing]: () => bingWallpaperURLGetter.getBgUrl(),
-  [BgType.Local]: async () => wallpaperUrlStore.getUrl(isDark.value ? 'dark' : 'light'),
+  [BgType.Local]: () => currentLocalUrl.value,
   [BgType.Online]: () => Promise.resolve(settings.background.onlineUrl),
   [BgType.None]: () => Promise.resolve('')
 }
@@ -143,18 +155,16 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 
 // 本地背景URL变化处理器
 async function handleLocalBgChange() {
-  const shouldUseDark = isDark.value && settings.localDarkBackground?.id
-  // const currentUrl = shouldUseDark ? settings.localDarkBackground.url : settings.localBackground.url
-  const currentUrl = await wallpaperUrlStore.getUrl(shouldUseDark ? 'dark' : 'light')
+  const newUrl = currentLocalUrl.value
 
   // 只在URL真正变化时才执行切换动画
-  if (bgURL.value === currentUrl) return
+  if (bgURL.value === newUrl.value) return
 
   switchStore.start()
   await promiseTimeout(300)
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
-  bgURL.value = currentUrl
+  bgURL.value = newUrl.value
   switchStore.end()
 }
 
@@ -180,10 +190,7 @@ function activateBackgroundWatch(type: BgType) {
   // 根据类型激活对应的watch
   if (type === BgType.Local) {
     // 只在使用本地背景时监听本地背景变化
-    stopLocalBgWatch = watch(
-      [() => settings.localBackground.url, () => settings.localDarkBackground.url, isDark],
-      handleLocalBgChange
-    )
+    stopLocalBgWatch = watch(currentLocalUrl, handleLocalBgChange)
   } else if (type === BgType.Online) {
     // 只在使用在线背景时监听在线URL变化
     stopOnlineBgWatch = watch(() => settings.background.onlineUrl, handleOnlineBgChange)

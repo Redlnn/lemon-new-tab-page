@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import './bg-switcher.scss'
 
+import { storeToRefs } from 'pinia'
 import { useDark, useElementSize } from '@vueuse/core'
 
 import { Plus } from '@vicons/fa'
@@ -25,7 +26,7 @@ import { BgType, useSettingsStore } from '@/shared/settings'
 import Bing from '@newtab/assets/bing_gray.svg'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { bingWallpaperURLGetter } from '@newtab/shared/wallpaper'
+import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
 import useBackgroundSwitcher from './useBackgroundSwitcher'
 
@@ -35,6 +36,8 @@ const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
 const settings = useSettingsStore()
+const wallpaperUrlStore = useWallpaperUrlStore()
+const { lightUrl: localBgUrl, darkUrl: localDarkBgUrl } = storeToRefs(wallpaperUrlStore)
 
 const isDark = useDark()
 const customLocalContentRef = ref<HTMLDivElement>()
@@ -71,7 +74,7 @@ const {
 const isShowDeleteIcon = computed(() =>
   Boolean(isDarkBg.value ? settings.localDarkBackground.id : settings.localBackground.id)
 )
-const bingWallpaperSrc = computed(() => bingWallpaperURLGetter.getBgUrl().value)
+const bingWallpaperSrc = bingWallpaperURLGetter.getBgUrl()
 const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
 </script>
 
@@ -140,11 +143,11 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
             <div class="bg-switcher-preview">
               <video
                 v-if="settings.localBackground.mediaType === 'video'"
-                :src="settings.localBackground.url"
+                :src="localBgUrl"
                 muted
                 playsinline
               ></video>
-              <img v-else :src="settings.localBackground.url" />
+              <img v-else :src="localBgUrl" />
             </div>
           </template>
           <el-icon v-else class="bg-switcher-preview__placeholder"><plus /></el-icon>
@@ -161,11 +164,11 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
             <div class="bg-switcher-preview">
               <video
                 v-if="settings.localDarkBackground.mediaType === 'video'"
-                :src="settings.localDarkBackground.url"
+                :src="localDarkBgUrl"
                 muted
                 playsinline
               ></video>
-              <img v-else :src="settings.localDarkBackground.url" />
+              <img v-else :src="localDarkBgUrl" />
             </div>
           </template>
           <el-icon v-else class="bg-switcher-preview__placeholder"><plus /></el-icon>

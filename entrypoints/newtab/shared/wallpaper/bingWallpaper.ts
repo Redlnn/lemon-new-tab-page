@@ -1,3 +1,5 @@
+import { storeToRefs } from 'pinia'
+
 import i18next from 'i18next'
 
 import enhancedFetch from '@/shared/network/fetch'
@@ -47,7 +49,6 @@ function formatUTCCompact(date: Date): number {
 }
 
 class BingWallpaperURLGetter {
-  public url: Ref<string> = ref('')
   public info: Ref<BingWallpaperImage> = ref({
     startdate: 0,
     fullstartdate: 0,
@@ -68,22 +69,11 @@ class BingWallpaperURLGetter {
   public uhdUrl: Ref<string> = ref('')
 
   public getBgUrl() {
-    return this.url
+    return storeToRefs(useWallpaperUrlStore()).bingUrl
   }
 
   public getInfo() {
     return this.info
-  }
-
-  private setUrlSafe(newUrl: string | null) {
-    // 在替换 this.url.value 前撤销旧的 blob URL
-    const old = this.url.value
-    try {
-      if (old && old.startsWith('blob:') && old !== (newUrl ?? '')) {
-        URL.revokeObjectURL(old)
-      }
-    } catch {}
-    this.url.value = newUrl ?? ''
   }
 
   private toWebp(url: string) {
@@ -110,11 +100,7 @@ class BingWallpaperURLGetter {
       }
     }
 
-    const localUrl = await this.resolveLocalBingWallpaperURL()
-
-    if (localUrl) {
-      this.setUrlSafe(localUrl)
-    }
+    await this.resolveLocalBingWallpaperURL()
 
     await this.refresh()
   }
@@ -203,7 +189,7 @@ class BingWallpaperURLGetter {
       const response = await fetch(imgUrl)
       if (!response.ok) {
         // 兜底：网络请求失败，直接使用在线URL
-        this.setUrlSafe(imgUrl)
+        useWallpaperUrlStore().setUrl('bing', imgUrl)
         return
       }
 
@@ -225,7 +211,6 @@ class BingWallpaperURLGetter {
       }
       await saveSettings(settings)
       await useWallpaperUrlStore().setUrl('bing', url)
-      this.setUrlSafe(url)
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)
       ElNotification({
