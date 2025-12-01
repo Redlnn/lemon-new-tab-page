@@ -2,8 +2,6 @@ import { defineStore } from 'pinia'
 
 import { browser } from 'wxt/browser'
 
-import { isMediaFile, isVideoFile } from '@/shared/media'
-
 import type {
   CURRENT_CONFIG_INTERFACE,
   OldSettingsInterface,
@@ -11,7 +9,6 @@ import type {
 } from '../settings'
 import { defaultSettings, migrateFromVer1 } from '../settings'
 import { settingsStorage } from './settingsStorage'
-import { useDarkWallpaperStore, useWallpaperStore } from './wallpaperStore'
 
 const searchSuggestAPIsMap: Record<
   string,
@@ -91,6 +88,11 @@ export async function initSettings() {
     console.log('[Settings] Initializing settings storage with config version', settings.version)
   }
 
+  // 清除过期的 blob url，避免使用失效的 URL
+  settings.localBackground.url = ''
+  settings.localDarkBackground.url = ''
+  settings.bingBackground.url = ''
+
   useSettingsStore().$patch(settings)
 }
 
@@ -115,70 +117,3 @@ export const useSettingsStore = defineStore('option', {
     return structuredClone(defaultSettings)
   }
 })
-
-export async function uploadBackground(imageFile: File, isDarkMode = false) {
-  const settings = useSettingsStore()
-
-  const id = crypto.randomUUID()
-  const url = URL.createObjectURL(imageFile)
-
-  // 根据模式选择对应的 store & state
-  const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
-  const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
-  const prevUrl = settings[backgroundKey]?.url || ''
-
-  // 清除当前模式上次壁纸（IndexedDB）以节省空间。如果之前的 URL 是 blob:，撤销它
-  await store.clear()
-  if (prevUrl?.startsWith('blob:')) {
-    try {
-      URL.revokeObjectURL(prevUrl)
-    } catch {}
-  }
-
-  // 保存媒体文件到 IndexedDB 并更新状态，记录 mediaType
-  const mediaType: 'image' | 'video' = isVideoFile(imageFile) ? 'video' : 'image'
-  await store.setItem<Blob>(id, imageFile)
-  settings[backgroundKey] = { id, url, mediaType }
-}
-
-export async function reloadBackground(isDarkMode = false) {
-  const settings = useSettingsStore()
-
-  // 根据模式选择对应的 store & state
-  const store = isDarkMode ? useDarkWallpaperStore : useWallpaperStore
-  const backgroundKey = isDarkMode ? 'localDarkBackground' : 'localBackground'
-  const background = settings[backgroundKey]
-
-  if (!background?.id) {
-    return
-  }
-
-  URL.revokeObjectURL(background.url)
-  const file = await store.getItem<Blob>(background.id)
-
-  // 校验媒体数据是否可用，否则删除该数据
-  if (file && isMediaFile(file)) {
-    const url = URL.createObjectURL(file)
-    // 根据文件类型更新 mediaType（兼容旧数据）
-    background.url = url
-    if (isVideoFile(file)) {
-      Object.assign(background, { mediaType: 'video' })
-    } else {
-      Object.assign(background, { mediaType: 'image' })
-    }
-  } else {
-    if (background.url?.startsWith('blob:')) {
-      try {
-        URL.revokeObjectURL(background.url)
-      } catch {}
-    }
-
-    try {
-      await store.removeItem(background.id)
-    } finally {
-      background.id = ''
-      background.url = ''
-      background.mediaType = undefined
-    }
-  }
-}

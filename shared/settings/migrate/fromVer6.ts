@@ -43,15 +43,15 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: oldSettings.localBackground.url
+      url: ''
     },
     localDarkBackground: {
       id: oldSettings.localDarkBackground.id,
-      url: oldSettings.localDarkBackground.url
+      url: ''
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: oldSettings.bingBackground.url,
+      url: '',
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {

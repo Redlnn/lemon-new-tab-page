@@ -44,7 +44,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
     },
     localBackground: {
       id: oldSettings.bgId,
-      url: oldSettings.bgUrl
+      url: defaultSettings.localBackground.url
     },
     localDarkBackground: {
       id: defaultSettings.localDarkBackground.id,

@@ -7,16 +7,16 @@ import {
   useWindowFocus
 } from '@vueuse/core'
 
-import { verifyImageUrl, verifyVideoUrl } from '@/shared/media'
-import { BgType, reloadBackground, useSettingsStore } from '@/shared/settings'
+import { BgType, useSettingsStore } from '@/shared/settings'
 
-import { bingWallpaperURLGetter } from '@newtab/shared/api/bingWallpaper'
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
+import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
 const isDark = useDark()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
+const wallpaperUrlStore = useWallpaperUrlStore()
 const switchStore = useBgSwtichStore()
 const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLImageElement>()
@@ -69,75 +69,11 @@ const isVideoWallpaper = computed(() => {
 
 // 壁纸更新相关逻辑
 
-interface BgURLProvider {
-  getURL: () => Promise<string> | Ref<string>
-  verify?: () => Promise<boolean>
-}
-
-const bgTypeProviders: Record<BgType, BgURLProvider> = {
-  [BgType.Bing]: {
-    getURL: () => bingWallpaperURLGetter.getBgUrl()
-  },
-  [BgType.Local]: {
-    getURL: async () =>
-      isDark.value
-        ? settings.localDarkBackground.id
-          ? settings.localDarkBackground.url
-          : settings.localBackground.url
-        : settings.localBackground.url,
-    verify: async () => {
-      const { localBackground, localDarkBackground } = useSettingsStore()
-
-      // 如果没 url，则尝试加载
-      if (!localBackground.url) {
-        await reloadBackground(false)
-        if (!localDarkBackground.id) return true
-      }
-      if (localDarkBackground.id && !localDarkBackground.url) {
-        await reloadBackground(true)
-        return true
-      }
-
-      // 校验 URL 是否有效
-      const verifyLight = () => {
-        if (localBackground.mediaType === 'image') {
-          return verifyImageUrl(localBackground.url)
-        }
-        if (localBackground.mediaType === 'video') {
-          // 对于视频，简单判断 URL 可达即可
-          return verifyVideoUrl(localBackground.url)
-        }
-      }
-      const verifyDark = () => {
-        if (!localDarkBackground.id) return Promise.resolve(true)
-        if (localDarkBackground.mediaType === 'image') {
-          return verifyImageUrl(localDarkBackground.url)
-        }
-        if (localDarkBackground.mediaType === 'video') {
-          // 对于视频，简单判断 URL 可达即可
-          return verifyVideoUrl(localDarkBackground.url)
-        }
-      }
-
-      const [isValid, isValidDark] = await Promise.all([verifyLight(), verifyDark()])
-
-      // 如无效则重新加载
-      if (!isValid) {
-        await reloadBackground(false)
-      }
-      if (!isValidDark && localDarkBackground.id) {
-        await reloadBackground(true)
-      }
-
-      return true
-    }
-  },
-  [BgType.Online]: {
-    getURL: () => Promise.resolve(settings.background.onlineUrl)
-  },
-  [BgType.None]: {
-    getURL: () => Promise.resolve('')
-  }
+const bgTypeProviders: Record<BgType, () => Promise<string> | Ref<string>> = {
+  [BgType.Bing]: () => bingWallpaperURLGetter.getBgUrl(),
+  [BgType.Local]: async () => wallpaperUrlStore.getUrl(isDark.value ? 'dark' : 'light'),
+  [BgType.Online]: () => Promise.resolve(settings.background.onlineUrl),
+  [BgType.None]: () => Promise.resolve('')
 }
 
 async function assignMaybeRef<T>(
@@ -189,11 +125,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   if (!provider) return
 
   switchStore.start()
-
-  if (provider.verify) {
-    await provider.verify()
-  }
-  const newUrl = await provider.getURL()
+  const newUrl = await provider()
 
   // 等待过渡动画
   if (bgURL.value !== '') {
@@ -212,14 +144,11 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 // 本地背景URL变化处理器
 async function handleLocalBgChange() {
   const shouldUseDark = isDark.value && settings.localDarkBackground?.id
-  const currentUrl = shouldUseDark ? settings.localDarkBackground.url : settings.localBackground.url
+  // const currentUrl = shouldUseDark ? settings.localDarkBackground.url : settings.localBackground.url
+  const currentUrl = await wallpaperUrlStore.getUrl(shouldUseDark ? 'dark' : 'light')
 
   // 只在URL真正变化时才执行切换动画
   if (bgURL.value === currentUrl) return
-
-  if (settings.localDarkBackground?.id) {
-    await bgTypeProviders[BgType.Local].verify?.()
-  }
 
   switchStore.start()
   await promiseTimeout(300)
@@ -408,11 +337,6 @@ async function onImgLoaded() {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  // background-color: var(--el-bg-color-page);
-  // background-repeat: no-repeat;
-  // background-position: center;
-  // background-size: cover;
 }
 
 video.background {

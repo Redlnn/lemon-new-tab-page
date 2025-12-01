@@ -5,18 +5,20 @@ import i18next from 'i18next'
 import { browser } from 'wxt/browser'
 
 import { isMediaFile } from '@/shared/media'
+import { BgType, useSettingsStore } from '@/shared/settings'
+
 import {
-  BgType,
   uploadBackground,
-  useDarkWallpaperStore,
-  useSettingsStore,
-  useWallpaperStore
-} from '@/shared/settings'
+  useDarkWallpaperStorge,
+  useWallpaperStorge,
+  useWallpaperUrlStore
+} from '@newtab/shared/wallpaper'
 
 // 大小阈值 (字节)，超过会提示。这里设置为 50MB
 const WARN_SIZE_BYTES = 50 * 1024 * 1024
 
 const settings = useSettingsStore()
+const wallpaperUrlStore = useWallpaperUrlStore()
 
 const isDark = useDark()
 
@@ -138,7 +140,8 @@ function useBackgroundSwitcher() {
       try {
         URL.revokeObjectURL(oldUrl)
       } catch {}
-      useDarkWallpaperStore.clear()
+      useDarkWallpaperStorge.clear()
+      await wallpaperUrlStore.clearUrl('dark')
     } else {
       const oldUrl = settings.localBackground.url
       settings.localBackground = { id: '', url: '', mediaType: undefined }
@@ -148,13 +151,14 @@ function useBackgroundSwitcher() {
       try {
         URL.revokeObjectURL(oldUrl)
       } catch {}
-      useWallpaperStore.clear()
+      useWallpaperStorge.clear()
+      await wallpaperUrlStore.clearUrl('light')
     }
   }
 
   // 在线壁纸相关
   const onlineUrlInput = ref<InputInstance>()
-  const localUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
+  const tempOnlineUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
   const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
   const onlineImageWarn = async () => {
@@ -198,13 +202,13 @@ function useBackgroundSwitcher() {
         } else {
           ElMessage.error(i18next.t('settings:background.warning.notGranted'))
           settings.background.bgType = BgType.None
-          localUrl.value = ''
+          tempOnlineUrl.value = ''
         }
       }
     } catch {
       // 用户取消或报错
       settings.background.bgType = BgType.None
-      localUrl.value = ''
+      tempOnlineUrl.value = ''
     }
   }
 
@@ -214,7 +218,7 @@ function useBackgroundSwitcher() {
     if (!_url) {
       settings.background.bgType = BgType.None
       settings.background.onlineUrl = ''
-      localUrl.value = ''
+      tempOnlineUrl.value = ''
       return
     }
     const { hostname } = new URL(_url)
@@ -236,7 +240,8 @@ function useBackgroundSwitcher() {
       tasks.push(
         (async () => {
           try {
-            const file = await useWallpaperStore.getItem<Blob>(settings.localBackground.id)
+            await wallpaperUrlStore.getUrl('light')
+            const file = await useWallpaperStorge.getItem<Blob>(settings.localBackground.id)
             if (file) {
               metaLight.value = { size: (file as File).size }
               readMediaMeta(file as File, (m) => {
@@ -257,7 +262,8 @@ function useBackgroundSwitcher() {
       tasks.push(
         (async () => {
           try {
-            const file = await useDarkWallpaperStore.getItem<Blob>(settings.localDarkBackground.id)
+            await wallpaperUrlStore.getUrl('dark')
+            const file = await useDarkWallpaperStorge.getItem<Blob>(settings.localDarkBackground.id)
             if (file) {
               metaDark.value = { size: (file as File).size }
               readMediaMeta(file as File, (m) => {
@@ -277,7 +283,7 @@ function useBackgroundSwitcher() {
     await Promise.all(tasks)
 
     if (settings.background.onlineUrl) {
-      localUrl.value = settings.background.onlineUrl
+      tempOnlineUrl.value = settings.background.onlineUrl
     }
   })
 
@@ -290,7 +296,7 @@ function useBackgroundSwitcher() {
     handleUpload,
     deleteLocalBg,
     onlineUrlInput,
-    localUrl,
+    tempOnlineUrl,
     changeOnlineBg,
     onlineImageWarn
   }

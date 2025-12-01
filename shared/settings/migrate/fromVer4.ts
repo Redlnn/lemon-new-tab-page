@@ -35,11 +35,11 @@ export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: oldSettings.localBackground.url
+      url: defaultSettings.localBackground.url
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: oldSettings.bingBackground.url,
+      url: defaultSettings.bingBackground.url,
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {

@@ -11,14 +11,7 @@ import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { storage } from 'wxt/utils/storage'
 
-import {
-  type CURRENT_CONFIG_INTERFACE,
-  defaultSettings,
-  useBingWallpaperStore,
-  useDarkWallpaperStore,
-  useSettingsStore,
-  useWallpaperStore
-} from '@/shared/settings'
+import { type CURRENT_CONFIG_INTERFACE, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
@@ -28,6 +21,11 @@ import {
   useCustomSearchEngineStore
 } from '@newtab/shared/customSearchEngine'
 import { downloadJSON } from '@newtab/shared/getJson'
+import {
+  useBingWallpaperStorge,
+  useDarkWallpaperStorge,
+  useWallpaperStorge
+} from '@newtab/shared/wallpaper'
 
 const { t, i18next } = useTranslation('settings')
 
@@ -89,9 +87,9 @@ async function clearWallpaperData() {
 
   Promise.all([
     resetSettings(),
-    useWallpaperStore.clear(),
-    useDarkWallpaperStore.clear(),
-    useBingWallpaperStore.clear()
+    useWallpaperStorge.clear(),
+    useDarkWallpaperStorge.clear(),
+    useBingWallpaperStorge.clear()
   ])
     .catch(console.error)
     .finally(() => {
@@ -112,9 +110,9 @@ function clearExtensionData() {
   Promise.all([
     localStorage.clear(),
     sessionStorage.clear(),
-    useWallpaperStore.clear(),
-    useDarkWallpaperStore.clear(),
-    useBingWallpaperStore.clear(),
+    useWallpaperStorge.clear(),
+    useDarkWallpaperStorge.clear(),
+    useBingWallpaperStorge.clear(),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync')

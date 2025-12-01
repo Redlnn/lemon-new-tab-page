@@ -1,4 +1,4 @@
-import type { SettingsInterfaceVer3, SettingsInterfaceVer4 } from '..'
+import { defaultSettings, type SettingsInterfaceVer3, type SettingsInterfaceVer4 } from '..'
 
 export function migrateFromVer3To4(oldSettings: SettingsInterfaceVer3): SettingsInterfaceVer4 {
   return {
@@ -33,11 +33,11 @@ export function migrateFromVer3To4(oldSettings: SettingsInterfaceVer3): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: oldSettings.localBackground.url
+      url: defaultSettings.localBackground.url
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: oldSettings.bingBackground.url,
+      url: defaultSettings.bingBackground.url,
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {

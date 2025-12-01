@@ -38,7 +38,7 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: oldSettings.localBackground.url
+      url: defaultSettings.localBackground.url
     },
     localDarkBackground: {
       id: defaultSettings.localDarkBackground.id,
@@ -46,7 +46,7 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: oldSettings.bingBackground.url,
+      url: defaultSettings.bingBackground.url,
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {

@@ -34,11 +34,11 @@ export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.bgId,
-      url: oldSettings.localBackground.bgUrl
+      url: defaultSettings.localBackground.url
     },
     bingBackground: {
       id: oldSettings.bingBackground.bgId,
-      url: oldSettings.bingBackground.bgUrl,
+      url: defaultSettings.bingBackground.url,
       updateDate: oldSettings.bingBackground.updateDate
     },
     quickStart: {

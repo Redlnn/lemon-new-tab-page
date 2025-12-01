@@ -43,18 +43,19 @@ export interface SettingsInterfaceVer7 {
   }
   localBackground: {
     id: string
+    /** @deprecated */
     url: string
-    // 可选的媒体类型: 'image' | 'video'，用于在渲染时选择 <img> 或 <video>
-    mediaType?: 'image' | 'video'
+    mediaType?: 'image' | 'video' // 可选的媒体类型: 'image' | 'video'，用于在渲染时选择 <img> 或 <video>
   }
   localDarkBackground: {
     id: string
+    /** @deprecated */
     url: string
-    // 可选的媒体类型: 'image' | 'video'
     mediaType?: 'image' | 'video'
   }
   bingBackground: {
     id: string
+    /** @deprecated */
     url: string
     updateDate: string | number
   }
