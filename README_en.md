@@ -20,7 +20,7 @@ The extension is now available on
 - Fast⚡ – Purely local, high-performance, fast loading
 - Search 🔍 – Instant suggestions and customizable search engine.
 - Flexible 🌈 – Customize and combine page layouts to adjust appearance to your preference with rich options
-- Elegant 🎨 – Clean and visually pleasing interface
+- Elegant 🎨 – With rich custom color options and Monet-based color extraction, the interface becomes cleaner and more visually appealing.
 - Wallpapers 🖼️ – Support for Bing daily wallpapers, custom online APIs, and local images/videos
 - Quotes 💬 – A classical Chinese poem or motivational quote each time you open a new tab
 - Open Source ⚛️ – No worries about privacy leaks or malicious code
