@@ -2,11 +2,11 @@ import { promiseTimeout, useDark } from '@vueuse/core'
 
 import type { InputInstance, UploadProps, UploadRequestOptions } from 'element-plus'
 import i18next from 'i18next'
-import { browser } from 'wxt/browser'
 
 import { isMediaFile } from '@/shared/media'
 import { BgType, useSettingsStore } from '@/shared/settings'
 
+import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {
   uploadBackground,
   useDarkWallpaperStorge,
@@ -21,6 +21,8 @@ const settings = useSettingsStore()
 const wallpaperUrlStore = useWallpaperUrlStore()
 
 const isDark = useDark()
+
+let isShowingPermissionDialog = false
 
 function useBackgroundSwitcher() {
   const isDarkBg = ref(false)
@@ -178,51 +180,34 @@ function useBackgroundSwitcher() {
       })
       .catch(() => {
         settings.background.bgType = BgType.None
+        settings.background.onlineUrl = ''
       })
   }
 
-  const handlePermissions = async (_url: string, hostname: string) => {
-    const allPermissions = { origins: [`*://*/*`] }
+  const { checkAndRequestPermission } = usePermission()
 
-    let allGranted = await browser.permissions.contains(allPermissions)
-    if (!allGranted) {
-      const allConfirmed = await ElMessageBox.confirm(
-        i18next.t('settings:background.warning.securityPolicy')
-      )
-      if (allConfirmed) {
-        const allRequested = await browser.permissions.request(allPermissions)
-        if (!allRequested) {
-          ElMessage.error(i18next.t('settings:background.warning.notGranted'))
-          settings.background.bgType = BgType.None
-          tempOnlineUrl.value = ''
-          return false
-        }
-        allGranted = true
-      } else {
-        const confirmed = await ElMessageBox.confirm(
-          '你选择不授予所有网站权限，是否允许扩展仅申请该网址权限？'
-        )
-        if (confirmed) {
-          const permissions = { origins: [`*://${hostname}/*`] }
-          const requested = await browser.permissions.request(permissions)
-          if (!requested) {
-            ElMessage.error(i18next.t('settings:background.warning.notGranted'))
-            settings.background.bgType = BgType.None
-            tempOnlineUrl.value = ''
-            return false
-          }
-        } else {
-          settings.background.bgType = BgType.None
-          tempOnlineUrl.value = ''
-          return false
-        }
+  const handlePermissions = async (_url: string, hostname: string) => {
+    const result = await checkAndRequestPermission(hostname)
+
+    if (result === PermissionResult.GrantedAll) return true
+
+    if (result === PermissionResult.GrantedCurrent) {
+      if (settings.monetColor) {
+        // TODO: 提示用户莫奈取色被关闭
+        settings.monetColor = false
       }
+      return true
     }
-    return allGranted
+
+    if (result === PermissionResult.DeniedByBrowser || result === PermissionResult.DeniedByUser) {
+      ElMessage.error(i18next.t('settings:background.warning.notGranted'))
+    }
+
+    return false
   }
 
-  const changeOnlineBg = (e: Event) => {
-    onlineUrlInput.value?.blur()
+  const changeOnlineBg = async (e: Event) => {
+    if (isShowingPermissionDialog) return
     const _url = (e.target as HTMLInputElement).value
     if (!_url) {
       settings.background.bgType = BgType.None
@@ -237,7 +222,14 @@ function useBackgroundSwitcher() {
       return
     }
 
-    handlePermissions(_url, hostname)
+    isShowingPermissionDialog = true
+    if (await handlePermissions(_url, hostname)) {
+      settings.background.onlineUrl = _url
+    } else {
+      settings.background.bgType = BgType.None
+      tempOnlineUrl.value = ''
+    }
+    isShowingPermissionDialog = false
   }
 
   onMounted(async () => {

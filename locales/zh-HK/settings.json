@@ -23,6 +23,17 @@
       "d": "請確認你使用的圖片 API 支援跨域請求，否則可能載入失敗"
     },
     "pauseWhenBlur": "當分頁失去焦點時暫停影片背景",
+    "permission": {
+      "allowAll": "允許所有網址",
+      "allowCurrent": "僅允許當前網址",
+      "deny": "拒絕",
+      "request": {
+        "title": "權限請求",
+        "message": "為了取得線上圖片，擴充功能需要請求相應的訪問權限：",
+        "subA": { "label": "普通模式：", "content": "需要「訪問當前網站」" },
+        "subB": { "label": "動態主題色（莫奈取色）：", "content": "需要「訪問所有網站」" }
+      }
+    },
     "preferenceTitle": "壁紙偏好",
     "sunMoonSaying": "太陽出來我曬太陽，月亮出來我曬月亮",
     "tip": "如果深色模式背景沒有選擇，會繼續使用淺色模式的圖片/影片",
@@ -37,8 +48,7 @@
     "warning": {
       "fileIsNotImage": "所選檔案並非圖片！",
       "granted": "已授權訪問",
-      "notGranted": "尚未授權，無法讀取此網址",
-      "securityPolicy": "因應 Google 安全政策，需授權 {{host}} 的訪問權限才能取得背景圖片，是否允許本擴充功能訪問此網址？",
+      "notGranted": "尚未授權，無法載入背景圖片",
       "title": "警告",
       "tooLarge": {
         "message": "檔案過大（{{size}}），可能會影響效能或佔用較多空間，是否繼續？",

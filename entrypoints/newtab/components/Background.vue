@@ -99,7 +99,6 @@ const bgTypeProviders: Record<
         return settings.background.onlineUrl
       }
     }
-    console.log('Fetching online background for Monet color extraction...')
     try {
       const response = await fetch(settings.background.onlineUrl)
       if (!response.ok) throw new Error(response.statusText)
@@ -237,8 +236,11 @@ watch(
   async (statu) => {
     if (statu) {
       document.documentElement.classList.add('monet')
+      // 设置界面切换开关时才触发计算（此时有背景）
       if (bgURL.value !== '' && !isVideoWallpaper.value) {
-        // 设置界面切换开关时才触发计算（此时有背景）
+        if (settings.background.bgType === BgType.Online) {
+          await updateBackgroundURL(BgType.Online)
+        }
         await applyMonet(imageRef.value)
       }
     } else {

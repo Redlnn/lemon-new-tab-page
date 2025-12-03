@@ -23,6 +23,23 @@
       "d": "Please ensure the wallpaper API you are using allows cross-origin requests; otherwise, it will fail to load."
     },
     "pauseWhenBlur": "Pause video background when the tab loses focus",
+    "permission": {
+      "allowAll": "Allow all sites",
+      "allowCurrent": "Only allow this site",
+      "deny": "Reject",
+      "request": {
+        "title": "Permission Request",
+        "message": "To access online wallpapers, the extension needs to request the appropriate permissions:",
+        "subA": {
+          "label": "Normal mode: ",
+          "content": "Requires “Access current site”."
+        },
+        "subB": {
+          "label": "Dynamic Theme Colors (Monet Extraction): ",
+          "content": "Requires “Access all sites”."
+        }
+      }
+    },
     "preferenceTitle": "Wallpaper preferences",
     "sunMoonSaying": "When the sun’s out, bathe in sunlight. But when the moon’s out, bathe in moonlight!",
     "tip": "If no background is set for dark mode, the light mode background or video will be used.",
@@ -38,7 +55,6 @@
       "fileIsNotImage": "The selected file is not an image!",
       "granted": "Permission granted.",
       "notGranted": "Permission not granted, cannot access this host.",
-      "securityPolicy": "Due to Google’s security policy, the extension needs permission to access {{host}} to get the background. Do you allow this extension to request access to this host?",
       "title": "Warning",
       "tooLarge": {
         "message": "The file is too large ({{size}}) and may affect performance or occupy significant storage. Do you want to continue?",
@@ -46,7 +62,7 @@
       },
       "unknownSource": "Using images from unknown sources as backgrounds may expose your device to attacks. Do you want to continue?"
     },
-    "youLikeFine": "If you like it, that's fine~"
+    "youLikeFine": "If you like it, that’s fine~"
   },
   "bookmarkSidebar": {
     "direction": {

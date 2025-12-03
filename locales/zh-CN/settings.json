@@ -23,6 +23,17 @@
       "d": "请确保你使用的壁纸 API 允许跨域请求，否则会加载失败"
     },
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
+    "permission": {
+      "allowAll": "允许所有网站",
+      "allowCurrent": "仅允许当前网站",
+      "deny": "拒绝",
+      "request": {
+        "title": "权限请求",
+        "message": "为了获取在线壁纸，扩展需要请求相应的访问权限：",
+        "subA": { "label": "普通模式：", "content": "需要「访问当前网站」" },
+        "subB": { "label": "动态主题色（莫奈取色）：", "content": "需要「访问所有网站」" }
+      }
+    },
     "preferenceTitle": "壁纸偏好",
     "sunMoonSaying": "太阳出来我晒太阳，月亮出来我晒月亮",
     "tip": "深色模式背景没有选择的话会继续使用浅色模式的图片/视频噢",
@@ -38,7 +49,6 @@
       "fileIsNotImage": "所选文件不是图片！",
       "granted": "已授予访问权限",
       "notGranted": "未授予权限，无法访问该地址",
-      "securityPolicy": "由于 Google 的安全策略，需要授予 {{host}} 的访问权限才能获取背景，是否允许扩展申请访问该地址的权限",
       "title": "警告",
       "tooLarge": {
         "message": "文件过大（{{size}}），可能会影响性能或占用较多空间，是否继续？",

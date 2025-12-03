@@ -4,7 +4,9 @@ import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/c
 import { CloudOffRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { defaultSettings, useSettingsStore } from '@/shared/settings'
+import { BgType, defaultSettings, useSettingsStore } from '@/shared/settings'
+
+import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 
 const { t } = useTranslation('settings')
 
@@ -104,6 +106,22 @@ function toggleAuto() {
   }
 }
 
+const { checkAndRequestPermission } = usePermission()
+
+const beforeMonetChange = async () => {
+  if (settings.monetColor) return true
+
+  if (settings.background.bgType !== BgType.Online) return true
+  if (settings.background.onlineUrl === '') return true
+
+  const { hostname } = new URL(settings.background.onlineUrl)
+  const result = await checkAndRequestPermission(hostname, true)
+  if (result === PermissionResult.GrantedAll) {
+    return true
+  }
+  return false
+}
+
 watch(isDark, (newVal) => {
   if (isAuto.value) {
     isDarkUI.value = newVal
@@ -129,7 +147,7 @@ watch(isDark, (newVal) => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('theme.monet.label') }}</div>
-      <el-switch v-model="settings.monetColor" />
+      <el-switch v-model="settings.monetColor" :before-change="beforeMonetChange" />
     </div>
     <p class="settings__item--note">{{ t('theme.monet.desc') }}</p>
     <div class="settings__item settings__item--horizontal">

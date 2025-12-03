@@ -19,12 +19,14 @@ import Bookmark from './components/Bookmark/index.vue'
 import BookmarkBtn from './components/BookmarkBtn.vue'
 import type ChangelogComponent from './components/Changelog.vue'
 import Clock from './components/Clock.vue'
+import PermissionDialog from './components/PermissionDialog.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import type SearchEnginesSwitcherComponent from './components/SearchEnginesSwitcher/index.vue'
 import SettingsBtn from './components/SettingsBtn.vue'
 import type SettingsPageComponent from './components/SettingsPage/index.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
+import { usePermission } from './composables/usePermission'
 
 const { t, i18next } = useTranslation('sync')
 
@@ -205,6 +207,8 @@ function openBookmarkSidebar(e: Event) {
 
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
+
+const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = usePermission()
 </script>
 
 <template>
@@ -245,5 +249,10 @@ provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
     <search-engines-switcher ref="SESwitcherRef" />
     <background-switcher ref="BGSwticherRef" />
     <bookmark ref="BookmarkRef" />
+    <PermissionDialog
+      v-model="permissionDialogVisible"
+      :hostname="currentHostname"
+      @result="onPermissionDialogResult"
+    />
   </el-config-provider>
 </template>
