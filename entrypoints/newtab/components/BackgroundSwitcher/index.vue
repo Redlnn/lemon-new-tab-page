@@ -65,7 +65,6 @@ const {
   beforeBackgroundUpload,
   handleUpload,
   deleteLocalBg,
-  onlineUrlInput,
   tempOnlineUrl,
   changeOnlineBg,
   onlineImageWarn
@@ -271,7 +270,6 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
       <div class="bg-switcher-extra">
         <el-input
           v-if="settings.background.bgType === BgType.Online"
-          ref="onlineUrlInput"
           v-model="tempOnlineUrl"
           @blur="changeOnlineBg"
           @keydown.enter="changeOnlineBg"

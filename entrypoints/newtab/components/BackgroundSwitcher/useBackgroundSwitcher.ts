@@ -1,6 +1,6 @@
 import { promiseTimeout, useDark } from '@vueuse/core'
 
-import type { InputInstance, UploadProps, UploadRequestOptions } from 'element-plus'
+import type { UploadProps, UploadRequestOptions } from 'element-plus'
 import i18next from 'i18next'
 
 import { isMediaFile } from '@/shared/media'
@@ -159,7 +159,6 @@ function useBackgroundSwitcher() {
   }
 
   // 在线壁纸相关
-  const onlineUrlInput = ref<InputInstance>()
   const tempOnlineUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
   const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
@@ -304,7 +303,6 @@ function useBackgroundSwitcher() {
     beforeBackgroundUpload,
     handleUpload,
     deleteLocalBg,
-    onlineUrlInput,
     tempOnlineUrl,
     changeOnlineBg,
     onlineImageWarn
