@@ -175,6 +175,7 @@ defineExpose({
 
 <style lang="scss">
 .add-shortcut-dialog {
+  max-width: 93%;
   padding: 30px 50px;
 
   html.colorful:not(.dialog-transparent) & {
