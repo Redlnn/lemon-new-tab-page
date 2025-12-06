@@ -6,7 +6,7 @@
 
 ### Major Update🎉
 
-Introducing Monet colors from Material Design 3 — bring softer, more dynamic hues to your new tab page!
+Monet colors from Material Design 3 — bring softer, more dynamic hues to your new tab page!
 
 ### New Features✨
 
