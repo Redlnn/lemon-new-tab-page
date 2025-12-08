@@ -60,6 +60,7 @@ function toggleAnimationSettings(disable: boolean) {
   settings.perf.disableDialogAnimation = disable
   settings.perf.disableFocusScale = disable
   settings.perf.disableFocusBlur = disable
+  settings.search.launchAnim = !disable
 }
 </script>
 
