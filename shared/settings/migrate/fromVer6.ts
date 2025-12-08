@@ -12,6 +12,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
+      showSeconds: defaultSettings.time.showSeconds,
       small: oldSettings.time.small,
       enableShadow: oldSettings.time.enableShadow,
       blinkingColon: oldSettings.time.blinkingColon,

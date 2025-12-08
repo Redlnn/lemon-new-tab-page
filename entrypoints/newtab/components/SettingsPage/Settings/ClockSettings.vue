@@ -36,6 +36,13 @@ const settings = useSettingsStore()
       <el-switch v-model="settings.time.showLunar" />
     </div>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('clock.showSeconds') }}</div>
+      <el-switch v-model="settings.time.showSeconds" />
+    </div>
+    <p class="settings__item--note">
+      {{ t('clock.secondsTip') }}
+    </p>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.smallFont') }}</div>
       <el-switch v-model="settings.time.small" />
     </div>

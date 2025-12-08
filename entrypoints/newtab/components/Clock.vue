@@ -31,7 +31,24 @@ function customMeridiem(hours: number) {
   return t('time.lateNight')
 }
 
-const timeNow = useNow({ interval: 1000 })
+// 显示秒时使用较短间隔以保证秒数更新及时，否则使用 1000ms 节省资源
+const timeNow = ref(new Date())
+let timeTimer: ReturnType<typeof setInterval> | null = null
+
+function setupTimeTimer() {
+  if (timeTimer) clearInterval(timeTimer)
+  const interval = settings.time.showSeconds ? 200 : 1000
+  timeTimer = setInterval(() => {
+    timeNow.value = new Date()
+  }, interval)
+}
+
+watch(() => settings.time.showSeconds, setupTimeTimer, { immediate: true })
+
+onUnmounted(() => {
+  if (timeTimer) clearInterval(timeTimer)
+})
+
 const dateNow = useNow({ interval: 60 * 1000 })
 
 const formattedTime = computed(() => {
@@ -41,8 +58,8 @@ const formattedTime = computed(() => {
     hour: now.format('HH'),
     hourMeridiem: now.format('h'),
     minute: now.format('mm'),
-    meridiem: now.format('A'),
-    lunar: now.format('LhLK')
+    second: now.format('ss'),
+    meridiem: now.format('A')
   }
 })
 
@@ -85,6 +102,14 @@ const formattedDate = computed(() => {
           >:</span
         >
         <span class="clock__minute">{{ formattedTime.minute }}</span>
+        <template v-if="settings.time.showSeconds">
+          <span
+            class="clock__colon"
+            :class="{ 'clock__colon--blinking': settings.time.blinkingColon }"
+            >:</span
+          >
+          <span class="clock__second">{{ formattedTime.second }}</span>
+        </template>
       </span>
       <span
         v-if="settings.time.showMeridiem && !isChinese"

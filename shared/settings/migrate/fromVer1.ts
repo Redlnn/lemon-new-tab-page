@@ -13,6 +13,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       showMeridiem: oldSettings.showMeridiem,
       showDate: defaultSettings.time.showDate,
       showLunar: defaultSettings.time.showLunar,
+      showSeconds: defaultSettings.time.showSeconds,
       small: defaultSettings.time.small,
       enableShadow: defaultSettings.time.enableShadow,
       blinkingColon: defaultSettings.time.blinkingColon,

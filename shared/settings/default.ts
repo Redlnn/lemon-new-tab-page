@@ -13,6 +13,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showMeridiem: true,
     showDate: true,
     showLunar: true,
+    showSeconds: false,
     small: false,
     enableShadow: true,
     blinkingColon: true,

@@ -78,7 +78,9 @@
     "showAMPM": "顯示「上午 / 下午」",
     "showDate": "顯示日期",
     "showLunar": "顯示農曆",
-    "smallFont": "時間小號字體",
+    "showSeconds": "顯示秒鐘",
+    "secondsTip": "開啟會增加效能消耗，建議同時開啟「時間小字」以獲得更佳效果",
+    "smallFont": "時間小字",
     "title": "時鐘",
     "use12HourClock": "使用 12 小時制"
   },
@@ -210,7 +212,7 @@
     "lightMode": "淺色模式",
     "monet": {
       "desc": "源自 Material Design 3，從背景中提取主題色。僅支援圖片背景，搭配「全域色彩」可獲得最佳視覺效果。",
-      "label": "動態主題色（莫奈取色）"
+      "label": "動態主題色（莫內取色）"
     },
     "primaryColor": "主題色",
     "systemMode": "跟隨系統 / 瀏覽器",

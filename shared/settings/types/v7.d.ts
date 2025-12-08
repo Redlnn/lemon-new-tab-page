@@ -12,6 +12,7 @@ export interface SettingsInterfaceVer7 {
     showMeridiem: boolean
     showDate: boolean
     showLunar: boolean
+    showSeconds: boolean
     small: boolean
     enableShadow: boolean
     blinkingColon: boolean

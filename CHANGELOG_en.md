@@ -10,7 +10,10 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 
 ### New Features✨
 
+- Brand new dynamic theme color (Monet color extraction)
 - Option to disable the search bar expansion animation on startup
+- Support for displaying seconds in the clock
+  > Enabling this feature increases performance usage
 
 ### Improvements⚡️
 

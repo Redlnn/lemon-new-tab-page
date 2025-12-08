@@ -78,7 +78,9 @@
     "showAMPM": "显示「上午 / 下午」",
     "showDate": "显示日期",
     "showLunar": "显示农历",
-    "smallFont": "时间小号字体",
+    "showSeconds": "显示秒钟",
+    "secondsTip": "开启会增加性能消耗，建议同时开启「小号时间」以获得更佳效果",
+    "smallFont": "小号时间",
     "title": "时钟",
     "use12HourClock": "使用 12 小时制"
   },

@@ -84,7 +84,9 @@
     "showAMPM": "Show AM/PM",
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
-    "smallFont": "Small time font",
+    "showSeconds": "Show seconds",
+    "secondsTip": "This increases performance usage. Consider enabling “Smaller time” for a better look.",
+    "smallFont": "Smaller time",
     "title": "Clock",
     "use12HourClock": "12-hour clock"
   },
