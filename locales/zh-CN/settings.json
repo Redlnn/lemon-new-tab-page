@@ -25,12 +25,12 @@
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
     "permission": {
       "allowAll": "允许所有网站",
-      "allowCurrent": "仅允许当前网站",
+      "allowCurrent": "仅允许该API网址",
       "deny": "拒绝",
       "request": {
         "title": "权限请求",
         "message": "为了获取在线壁纸，扩展需要请求相应的访问权限：",
-        "subA": { "label": "普通模式：", "content": "需要「访问当前网站」" },
+        "subA": { "label": "普通模式：", "content": "需要「访问该API网址」" },
         "subB": { "label": "动态主题色（莫奈取色）：", "content": "需要「访问所有网站」" }
       }
     },

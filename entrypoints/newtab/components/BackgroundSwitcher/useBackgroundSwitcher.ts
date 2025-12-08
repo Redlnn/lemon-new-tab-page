@@ -160,7 +160,6 @@ function useBackgroundSwitcher() {
 
   // 在线壁纸相关
   const tempOnlineUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
-  const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
   const onlineImageWarn = async () => {
     if (settings.background.onlineUrl) {
@@ -216,7 +215,7 @@ function useBackgroundSwitcher() {
     }
     const { hostname } = new URL(_url)
 
-    if (!isChrome) {
+    if (import.meta.env.FIREFOX && !settings.monetColor) {
       settings.background.onlineUrl = _url
       return
     }

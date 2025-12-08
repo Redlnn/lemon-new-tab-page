@@ -25,14 +25,14 @@
     "pauseWhenBlur": "Pause video background when the tab loses focus",
     "permission": {
       "allowAll": "Allow all sites",
-      "allowCurrent": "Only allow this site",
+      "allowCurrent": "Only allow this API URL",
       "deny": "Reject",
       "request": {
         "title": "Permission Request",
         "message": "To access online wallpapers, the extension needs to request the appropriate permissions:",
         "subA": {
           "label": "Normal mode: ",
-          "content": "Requires “Access current site”."
+          "content": "Requires “Access this API URL”."
         },
         "subB": {
           "label": "Dynamic Theme Colors (Monet Extraction): ",

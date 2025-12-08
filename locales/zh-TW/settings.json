@@ -25,12 +25,12 @@
     "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
     "permission": {
       "allowAll": "允許所有網址",
-      "allowCurrent": "僅允許这个網址",
+      "allowCurrent": "僅允許這個API網址",
       "deny": "拒絕",
       "request": {
         "title": "權限請求",
         "message": "為了獲取線上圖片，擴充功能需要請求相應的訪問權限：",
-        "subA": { "label": "普通模式：", "content": "需要「訪問當前網站」" },
+        "subA": { "label": "普通模式：", "content": "需要「訪問這個API網址」" },
         "subB": { "label": "動態主題色（莫內取色）：", "content": "需要「訪問所有網站」" }
       }
     },

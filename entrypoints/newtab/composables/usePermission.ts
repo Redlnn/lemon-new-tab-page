@@ -6,8 +6,7 @@ export enum PermissionResult {
   GrantedAll = 'granted-all',
   GrantedCurrent = 'granted-current',
   DeniedByUser = 'denied-by-user',
-  DeniedByBrowser = 'denied-by-browser',
-  AlreadyOpen = 'already-open'
+  DeniedByBrowser = 'denied-by-browser'
 }
 
 const permissionDialogVisible = ref(false)
@@ -34,8 +33,6 @@ export function usePermission() {
 
     if (allGranted) return PermissionResult.GrantedAll
     if (!onlyAll && granted) return PermissionResult.GrantedCurrent
-
-    if (permissionDialogVisible.value) return PermissionResult.AlreadyOpen
 
     currentHostname.value = hostname
     permissionDialogVisible.value = true
