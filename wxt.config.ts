@@ -18,7 +18,15 @@ const baseManifest = {
   description: '__MSG_extension_description__',
   default_locale: 'en',
   icons: {
-    512: '/icon.png'
+    16: '/icon-16.png',
+    24: '/icon-24.png',
+    32: '/icon-32.png',
+    48: '/icon-48.png',
+    64: '/icon-64.png',
+    96: '/icon-96.png',
+    128: '/icon-128.png',
+    256: '/icon-16.png',
+    512: '/icon-512.png'
   },
   host_permissions: [
     'https://www.bing.com/',
