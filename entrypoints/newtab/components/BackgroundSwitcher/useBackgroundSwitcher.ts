@@ -192,8 +192,8 @@ function useBackgroundSwitcher() {
 
     if (result === PermissionResult.GrantedCurrent) {
       if (settings.monetColor) {
-        // TODO: 提示用户莫奈取色被关闭
         settings.monetColor = false
+        ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
       }
       return true
     }

@@ -54,6 +54,7 @@
     "warning": {
       "fileIsNotImage": "The selected file is not an image!",
       "granted": "Permission granted.",
+      "monetDisabled": "Dynamic Theme Colors (Monet Extraction) has been disabled because \"Access all sites\" permission was not granted.",
       "notGranted": "Permission not granted, cannot access this host.",
       "title": "Warning",
       "tooLarge": {

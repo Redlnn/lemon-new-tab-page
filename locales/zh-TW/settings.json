@@ -48,6 +48,7 @@
     "warning": {
       "fileIsNotImage": "所選檔案不是圖片！",
       "granted": "已授予訪問權限",
+      "monetDisabled": "由於未授予「訪問所有網站」權限，動態主題色（莫內取色）已被關閉",
       "notGranted": "未授權，無法載入背景圖片",
       "title": "警告",
       "tooLarge": {
