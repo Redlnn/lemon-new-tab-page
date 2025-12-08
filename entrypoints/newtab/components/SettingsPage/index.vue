@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core'
+import { useTimeoutFn, useWindowSize } from '@vueuse/core'
 
 import { ArrowBackRound, CloseRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
@@ -83,9 +83,11 @@ watch(windowWidth, (newWidth, oldWidth) => {
 })
 
 onMounted(() => {
-  // 预加载主题设置视图
-  prefetchSettingsView(SettingsRoute.THEME)
-  resetRouter()
+  useTimeoutFn(() => {
+    // 预加载主题设置视图，等待3秒以避免影响初始加载性能和壁纸进入动画
+    prefetchSettingsView(SettingsRoute.THEME)
+    resetRouter()
+  }, 3000)
 })
 
 defineExpose({ show: customShow, hide, toggle: customToggle })

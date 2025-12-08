@@ -86,7 +86,8 @@ interface RouteState {
 }
 
 const state = ref<RouteState>({
-  current: SettingsRoute.THEME,
+  // 默认空视图以避免影响初始加载性能和壁纸进入动画
+  current: SettingsRoute.MENU,
   history: [],
   isForward: true
 })
