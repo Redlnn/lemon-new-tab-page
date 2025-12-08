@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useColorMode, useDark, usePreferredDark, useTimeoutFn } from '@vueuse/core'
+import { useColorMode, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 
 import { CloudOffRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
@@ -11,7 +11,13 @@ import { PermissionResult, usePermission } from '@newtab/composables/usePermissi
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
-const { store } = useColorMode()
+const mode = useColorMode({
+  modes: {
+    dark: 'dark',
+    light: 'light',
+    auto: ''
+  }
+})
 
 const predefineColorsMapClassic = [
   { value: '#3e3e3e', labelKey: 'theme.colorNames.classic.ink' },
@@ -43,11 +49,10 @@ const predefineColorsMap = [
 
 const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapAcgn).map((i) => i.value)
 
-const isDark = useDark()
-const isDarkUI = ref(isDark.value)
+const isDarkUI = ref(mode.value === 'dark')
 const preferredDark = usePreferredDark()
 
-const isAuto = computed(() => store.value === 'auto')
+const isAuto = computed(() => mode.store.value === 'auto')
 const isAutoUI = ref(isAuto.value)
 
 function changeByPreferred() {
@@ -75,23 +80,23 @@ function changeByUser() {
 }
 
 function toggleDark() {
-  if (isDark.value) {
-    // 先切换CSS，等待动画结束后，再切换store
+  if (mode.value === 'dark') {
+    // 先切换CSS，等待动画结束后，再切换mode
     changeByUser()
     useTimeoutFn(() => {
-      store.value = 'light'
+      mode.store.value = 'light'
     }, 300)
   } else {
     changeByUser()
     useTimeoutFn(() => {
-      store.value = 'dark'
+      mode.store.value = 'dark'
     }, 300)
   }
 }
 
 function toggleAuto() {
   if (!isAutoUI.value) {
-    store.value = isDarkUI.value ? 'dark' : 'light'
+    mode.store.value = isDarkUI.value ? 'dark' : 'light'
     return
   }
 
@@ -99,10 +104,10 @@ function toggleAuto() {
     // 先切换CSS，等待动画结束后，再切换store
     changeByPreferred()
     useTimeoutFn(() => {
-      store.value = 'auto'
+      mode.store.value = 'auto'
     }, 300)
   } else {
-    store.value = 'auto'
+    mode.store.value = 'auto'
   }
 }
 
@@ -122,9 +127,9 @@ const beforeMonetChange = async () => {
   return false
 }
 
-watch(isDark, (newVal) => {
-  if (isAuto.value) {
-    isDarkUI.value = newVal
+watch(mode, () => {
+  if (mode.value === 'auto') {
+    isDarkUI.value = preferredDark.value
   }
 })
 </script>
