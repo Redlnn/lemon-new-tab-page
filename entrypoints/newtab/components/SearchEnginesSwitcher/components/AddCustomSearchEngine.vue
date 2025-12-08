@@ -192,6 +192,7 @@ defineExpose({
   position: relative;
   overflow: hidden;
   cursor: pointer;
+  background-color: var(--el-fill-color-blank);
   border: 1px dashed var(--el-text-color-placeholder);
   border-radius: 6px;
   transition: var(--el-transition-duration-fast);
