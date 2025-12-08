@@ -16,6 +16,8 @@ import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
 import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
+const ANIMATION_DURATION = 1300
+
 const isDark = useDark()
 
 const focusStore = useFocusStore()
@@ -24,7 +26,6 @@ const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
 
-const backgroundWrapper = ref<HTMLDivElement>()
 const imageRef = ref<HTMLImageElement>()
 const videoRef = ref<HTMLVideoElement>()
 const bgURL = ref<string>('')
@@ -164,9 +165,9 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   const newUrl = await provider()
 
   // 等待过渡动画
+  // 首次打开默认白屏，不需要等待白屏动画
   if (bgURL.value !== '') {
-    // 首次打开默认白屏，不需要等待白屏动画
-    await promiseTimeout(300)
+    await promiseTimeout(ANIMATION_DURATION)
     bgURL.value = ''
   }
   // 不直接赋值是因为避免看到壁纸变形
@@ -185,7 +186,7 @@ async function handleLocalBgChange() {
   if (bgURL.value === newUrl.value) return
 
   switchStore.start()
-  await promiseTimeout(300)
+  await promiseTimeout(ANIMATION_DURATION)
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
   bgURL.value = newUrl.value
@@ -195,7 +196,7 @@ async function handleLocalBgChange() {
 // 在线背景URL变化处理器
 async function handleOnlineBgChange() {
   switchStore.start()
-  await promiseTimeout(300)
+  await promiseTimeout(ANIMATION_DURATION)
   bgURL.value = ''
   const provider = bgTypeProviders[BgType.Online]
   const newUrl = await provider()
@@ -351,7 +352,7 @@ async function onImgLoaded() {
   transition:
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
-    opacity var(--el-transition-duration-fast) ease-in-out;
+    opacity 1.25s;
 
   &--default-scale {
     transform: scale(1.05);
