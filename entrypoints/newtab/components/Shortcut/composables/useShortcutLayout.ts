@@ -21,55 +21,50 @@ export function useShortcutLayout(): UseShortcutLayout {
   const columnsNum = ref(0)
   const rowsNum = ref(settings.shortcut.rows)
 
-  const getContainerWidth = (num: number) => {
-    const width =
-      num * (15 + settings.shortcut.iconSize + 15) + (num - 1) * settings.shortcut.itemMarginH
-    if (settings.shortcut.showShortcutContainerBg) {
-      return width + 40
-    }
-    return width
-  }
+  // 单个项目宽度（图标 + 左右内边距各15px）
+  const getItemWidth = () => settings.shortcut.iconSize + 30
 
-  const getAvailableContainerWidth = () => windowWidth.value * 0.85
+  const getContainerWidth = (num: number) => {
+    const itemWidth = getItemWidth()
+    const width = num * itemWidth + (num - 1) * settings.shortcut.itemMarginH
+    return settings.shortcut.showShortcutContainerBg ? width + 40 : width
+  }
 
   // 以公式计算在当前窗口宽度下可容纳的最大列数（不考虑 itemCount 上限）
   const computeColumnsFitByWidth = () => {
-    const containerWidth = getAvailableContainerWidth()
+    const containerWidth = windowWidth.value * 0.85
     const marginH = settings.shortcut.itemMarginH
-    const unitWidth = settings.shortcut.iconSize + 30 + marginH // 每列占用的宽度（图标+两侧内边距+列间距）
+    const unitWidth = getItemWidth() + marginH
     const extra = settings.shortcut.showShortcutContainerBg ? 40 : 0
 
     // 假设有 n 列，则总宽度为 n * unitWidth - marginH + extra
     // 其中 - marginH 是因为最后一列不需要右侧间距
     // 要求这个总宽度小于等于 containerWidth
     // 因此有不等式
-    // n * unitWidth - marginH + extra < containerWidth
+    // n * unitWidth - marginH + extra <= containerWidth
     // n < (containerWidth + marginH - extra) / unitWidth
     const raw = Math.floor((containerWidth + marginH - extra) / unitWidth)
     return Math.max(1, Math.min(settings.shortcut.columns, raw))
   }
 
-  // 暴露纯方法：不产生副作用
-  const computeFitColumns = () => computeColumnsFitByWidth()
+  // 计算所需行数（纯函数）
+  // 行数：元素不足一行则为1，否则在需要行数与上限中取较小值
   const computeNeededRows = (itemCount: number, columns: number) => {
-    const neededRows = itemCount <= columns ? 1 : Math.ceil(itemCount / columns)
+    const neededRows = Math.ceil(itemCount / columns) || 1
     return Math.min(settings.shortcut.rows, neededRows)
   }
+
+  // 暴露纯方法：不产生副作用
+  const computeFitColumns = () => computeColumnsFitByWidth()
 
   const computeLayout = (itemCount: number) => {
     // 基于窗口宽度的最大列数，再受 itemCount 限制
     const fitColumns = computeColumnsFitByWidth()
     const _columnsCount = Math.min(fitColumns, Math.max(1, itemCount))
-    if (columnsNum.value !== _columnsCount) {
-      columnsNum.value = _columnsCount
-    }
+    const _rowsCount = computeNeededRows(itemCount, _columnsCount)
 
-    // 行数：元素不足一行则为1，否则在需要行数与上限中取较小值
-    const neededRows = itemCount <= _columnsCount ? 1 : Math.ceil(itemCount / _columnsCount)
-    const _rowsCount = Math.min(settings.shortcut.rows, Math.max(1, neededRows))
-    if (rowsNum.value !== _rowsCount) {
-      rowsNum.value = _rowsCount
-    }
+    if (columnsNum.value !== _columnsCount) columnsNum.value = _columnsCount
+    if (rowsNum.value !== _rowsCount) rowsNum.value = _rowsCount
 
     return { columns: _columnsCount, rows: _rowsCount }
   }
@@ -77,19 +72,14 @@ export function useShortcutLayout(): UseShortcutLayout {
   // 仅基于窗口宽度与设置求最大可用列数（不受 itemCount 限制）
   const computeColumnsByWidth = () => {
     const _columnsCount = computeColumnsFitByWidth()
-    if (columnsNum.value !== _columnsCount) {
-      columnsNum.value = _columnsCount
-    }
+    if (columnsNum.value !== _columnsCount) columnsNum.value = _columnsCount
     return _columnsCount
   }
 
   // 在已知列数的条件下，根据元素个数计算行数
   const computeRowsGivenColumns = (itemCount: number, columns: number) => {
-    const neededRows = itemCount <= columns ? 1 : Math.ceil(itemCount / columns)
-    const _rowsCount = Math.min(settings.shortcut.rows, Math.max(1, neededRows))
-    if (rowsNum.value !== _rowsCount) {
-      rowsNum.value = _rowsCount
-    }
+    const _rowsCount = computeNeededRows(itemCount, columns)
+    if (rowsNum.value !== _rowsCount) rowsNum.value = _rowsCount
     return _rowsCount
   }
 
