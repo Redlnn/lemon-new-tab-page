@@ -105,15 +105,17 @@ function cloneAndSortTree(
   if (!nodes || nodes.length === 0) return []
 
   const origIndexMap = new Map<string, number>()
-  nodes.forEach((n, idx) => origIndexMap.set(n.id, idx))
+  for (let i = 0; i < nodes.length; i++) origIndexMap.set(nodes[i]!.id, i)
 
-  const copied = nodes.map((n) => {
-    const c = { ...n }
-    if (Array.isArray(n.children)) {
+  const copied: BookmarkTreeNode[] = Array.from({ length: nodes.length })
+  for (let i = 0; i < nodes.length; i++) {
+    const n = nodes[i]!
+    const c: BookmarkTreeNode = { ...n }
+    if (n.children !== undefined) {
       c.children = cloneAndSortTree(n.children, depth + 1, mode, language)
     }
-    return c as BookmarkTreeNode
-  })
+    copied[i] = c
+  }
 
   // 仅对子层进行排序（保留根的原始顺序以便稳定性）
   if (depth > 0) {
@@ -131,28 +133,31 @@ function createRebuild(
   keepIds: Set<string>,
   onFirstPath: (p: string[]) => void
 ) {
-  return function rebuild(node: BookmarkTreeNode, parents: string[] = []): BookmarkTreeNode | null {
+  let foundFirst = false
+  return function rebuild(node: BookmarkTreeNode, parents: string[]): BookmarkTreeNode | null {
     if (!keepIds.has(node.id)) return null
 
-    const isFolder = Array.isArray(node.children)
+    const isFolder = node.children !== undefined
 
-    if (matchedIds.has(node.id)) {
-      const path = isFolder ? [...parents, node.id] : parents.slice()
-      onFirstPath(path)
+    if (!foundFirst && matchedIds.has(node.id)) {
+      foundFirst = true
+      onFirstPath(isFolder ? [...parents, node.id] : parents)
     }
 
-    const copy = { ...node }
-    if (isFolder && node.children && node.children.length) {
+    const copy: BookmarkTreeNode = { ...node }
+    if (isFolder && node.children!.length) {
+      const nextParents = [...parents, node.id]
+      const nodeChildren = node.children!
       const children: BookmarkTreeNode[] = []
-      for (const ch of node.children) {
-        const c = rebuild(ch, [...parents, node.id])
+      for (let i = 0; i < nodeChildren.length; i++) {
+        const c = rebuild(nodeChildren[i]!, nextParents)
         if (c) children.push(c)
       }
       if (children.length) copy.children = children
       else delete copy.children
     }
 
-    return copy as BookmarkTreeNode
+    return copy
   }
 }
 
@@ -162,11 +167,14 @@ const CACHE_NODE_COUNT_THRESHOLD = 2000
 function countNodes(nodes: BookmarkTreeNode[] | undefined): number {
   if (!nodes || nodes.length === 0) return 0
   let cnt = 0
-  const stack: BookmarkTreeNode[] = [...nodes]
+  const stack: BookmarkTreeNode[][] = [nodes]
   while (stack.length) {
-    const n = stack.pop()!
-    cnt += 1
-    if (Array.isArray(n.children) && n.children.length) stack.push(...n.children)
+    const arr = stack.pop()!
+    cnt += arr.length
+    for (let i = 0; i < arr.length; i++) {
+      const n = arr[i]!
+      if (n.children?.length) stack.push(n.children)
+    }
   }
   return cnt
 }
@@ -178,24 +186,29 @@ function countNodes(nodes: BookmarkTreeNode[] | undefined): number {
 function buildIndex() {
   const map: typeof indexMap = {}
 
-  const walk = (nodes: BookmarkTreeNode[] = [], parents: string[] = []) => {
-    for (const node of nodes) {
-      const isFolder = Array.isArray(node.children)
+  const stack: Array<{ nodes: BookmarkTreeNode[]; parents: string[] }> = [
+    { nodes: tree || [], parents: [] }
+  ]
+
+  while (stack.length) {
+    const { nodes, parents } = stack.pop()!
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i]!
+      const isFolder = node.children !== undefined
       map[node.id] = {
         node,
-        parents: [...parents],
+        parents,
         titleLower: (node.title || '').toLowerCase(),
-        urlLower: node.url ? (node.url || '').toLowerCase() : '',
+        urlLower: node.url ? node.url.toLowerCase() : '',
         isFolder
       }
 
-      if (isFolder) {
-        walk(node.children!, [...parents, node.id])
+      if (isFolder && node.children!.length) {
+        stack.push({ nodes: node.children!, parents: [...parents, node.id] })
       }
     }
   }
 
-  walk(tree || [])
   indexMap = map
   cachedAllIds = Object.keys(map)
   cachedNodeCount = cachedAllIds.length
@@ -268,28 +281,29 @@ function filter(query: string, mode: SortMode) {
   }
 
   // 3) 扩展结果集以包含匹配节点的所有祖先（以便能在树结构中展示匹配路径）
-  const keepIds = new Set<string>()
-  const addDescendantsToKeep = (node?: BookmarkTreeNode) => {
-    if (!node || !Array.isArray(node.children) || node.children.length === 0) return
-    const stack = [...node.children]
+  const keepIds = new Set<string>(matchedIds)
+
+  // 先收集所有祖先
+  for (const id of matchedIds) {
+    const parents = indexMap[id]?.parents
+    if (parents) {
+      for (let i = 0; i < parents.length; i++) keepIds.add(parents[i]!)
+    }
+  }
+
+  // 再为匹配到的文件夹添加所有后代
+  for (const id of matchedIds) {
+    const entry = indexMap[id]
+    if (!entry?.isFolder || !entry.node.children?.length) continue
+
+    const stack = entry.node.children.slice()
     while (stack.length) {
       const current = stack.pop()!
       if (keepIds.has(current.id)) continue
       keepIds.add(current.id)
-      if (Array.isArray(current.children) && current.children.length) {
-        stack.push(...current.children)
+      if (current.children?.length) {
+        for (let i = 0; i < current.children.length; i++) stack.push(current.children[i]!)
       }
-    }
-  }
-
-  for (const id of matchedIds) {
-    keepIds.add(id)
-    const parents = indexMap[id]?.parents || []
-    for (const p of parents) keepIds.add(p)
-
-    const entry = indexMap[id]
-    if (entry?.isFolder) {
-      addDescendantsToKeep(entry.node)
     }
   }
 
@@ -302,7 +316,11 @@ function filter(query: string, mode: SortMode) {
 
   const rebuild = createRebuild(matchedIds, keepIds, onFirstPath)
 
-  const result = source.map((n) => rebuild(n, [])).filter((n): n is BookmarkTreeNode => n !== null)
+  const result: BookmarkTreeNode[] = []
+  for (let i = 0; i < source.length; i++) {
+    const n = rebuild(source[i]!, [])
+    if (n) result.push(n)
+  }
 
   // 5) 更新缓存（用于前缀查询加速）以及首个匹配路径
   lastQuery = q
