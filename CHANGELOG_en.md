@@ -23,6 +23,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
   - Optimized bookmark loading logic
 - Resets bookmark sorting when switching languages
 - Optimized the style of the "Add New Shortcut" window on narrow screens
+- Adjusted wallpaper fade-in animation duration for a more elegant experience
 
 ### Bug Fixes🐛
 

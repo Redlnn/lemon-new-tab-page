@@ -16,7 +16,8 @@ import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
 import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
-const ANIMATION_DURATION = 1300
+let animationDuration = 1250
+let hasShortenedFade = false
 
 const isDark = useDark()
 
@@ -29,6 +30,14 @@ const switchStore = useBgSwtichStore()
 const imageRef = ref<HTMLImageElement>()
 const videoRef = ref<HTMLVideoElement>()
 const bgURL = ref<string>('')
+const bgOpacityDuration = ref('1.25s')
+
+function shortenBgFadeDuration() {
+  if (hasShortenedFade) return
+  hasShortenedFade = true
+  animationDuration = 300
+  bgOpacityDuration.value = '0.3s'
+}
 
 const bgURLreg = new RegExp('url\\((["\']?)(.*?)\\1\\)', 'i')
 const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
@@ -167,7 +176,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   // 等待过渡动画
   // 首次打开默认白屏，不需要等待白屏动画
   if (bgURL.value !== '') {
-    await promiseTimeout(ANIMATION_DURATION)
+    await promiseTimeout(animationDuration)
     bgURL.value = ''
   }
   // 不直接赋值是因为避免看到壁纸变形
@@ -176,6 +185,8 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
   switchStore.end()
+  await promiseTimeout(animationDuration)
+  shortenBgFadeDuration()
 }
 
 // 本地背景URL变化处理器
@@ -186,7 +197,7 @@ async function handleLocalBgChange() {
   if (bgURL.value === newUrl.value) return
 
   switchStore.start()
-  await promiseTimeout(ANIMATION_DURATION)
+  await promiseTimeout(animationDuration)
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
   bgURL.value = newUrl.value
@@ -196,7 +207,7 @@ async function handleLocalBgChange() {
 // 在线背景URL变化处理器
 async function handleOnlineBgChange() {
   switchStore.start()
-  await promiseTimeout(ANIMATION_DURATION)
+  await promiseTimeout(animationDuration)
   bgURL.value = ''
   const provider = bgTypeProviders[BgType.Online]
   const newUrl = await provider()
@@ -285,7 +296,8 @@ async function onImgLoaded() {
       '--mask-opacity': settings.background.bgMaskOpacity / 100,
       '--mask-color__light': settings.background.lightMaskColor,
       '--mask-color__night': settings.background.nightMaskColor,
-      '--blur-intensity': `${settings.background.blurIntensity}px`
+      '--blur-intensity': `${settings.background.blurIntensity}px`,
+      '--bg-opacity-duration': bgOpacityDuration
     }"
   >
     <div class="background-mask"></div>
@@ -352,7 +364,7 @@ async function onImgLoaded() {
   transition:
     transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
-    opacity 1.25s;
+    opacity var(--bg-opacity-duration);
 
   &--default-scale {
     transform: scale(1.05);
