@@ -21,6 +21,18 @@ export async function useTopSitesMerge(
     return []
   }
 
+  // 计算容量（优先使用 columns + maxRows，上限为列*行 - 1，预留“添加按钮”）
+  let remain = Infinity
+  const { columns, maxRows } = options
+  const hasCapacityInfo = typeof columns === 'number' && typeof maxRows === 'number'
+  if (hasCapacityInfo) {
+    const capacity = Math.max(0, columns * maxRows - 1)
+    remain = Math.max(0, capacity - options.shortcuts.length)
+    if (remain === 0) {
+      return []
+    }
+  }
+
   // 如果 getTopSites() 返回 undefined，则默认空数组
   const topSites = (await getTopSites(options.force)) ?? []
 
@@ -28,16 +40,9 @@ export async function useTopSitesMerge(
   const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
   const dedup = topSites.filter((site) => !shortcutUrlsSet.has(site.url))
 
-  // 计算容量（优先使用 columns + maxRows，上限为列*行 - 1，预留“添加按钮”）
-  let capacity: number
-  if (typeof options.columns === 'number' && typeof options.maxRows === 'number') {
-    capacity = options.columns * options.maxRows - 1
-  } else {
-    // 无容量信息：退化为“全部可用”，由调用方决定是否二次截断
-    capacity = Infinity
+  if (remain === Infinity) {
+    return dedup
   }
 
-  // remain < 0 表示书签已占满所有容量，此时不应再追加 TopSites
-  const remain = Math.max(0, capacity - options.shortcuts.length)
-  return remain > 0 ? dedup.slice(0, remain) : []
+  return dedup.slice(0, remain)
 }

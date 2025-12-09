@@ -100,23 +100,26 @@ const bgTypeProviders: Record<
   [BgType.Bing]: () => bingWallpaperURLGetter.getBgUrl(),
   [BgType.Local]: () => currentLocalUrl.value,
   [BgType.Online]: async () => {
+    const rawUrl = settings.background.onlineUrl
+    if (!rawUrl) return ''
     if (!settings.monetColor) {
-      return settings.background.onlineUrl
+      return rawUrl
     }
     if (isChrome) {
       const allGranted = await browser.permissions.contains({ origins: [`*://*/*`] })
       if (!allGranted) {
-        return settings.background.onlineUrl
+        return rawUrl
       }
     }
+
     try {
-      const response = await fetch(settings.background.onlineUrl)
+      const response = await fetch(rawUrl)
       if (!response.ok) throw new Error(response.statusText)
       const blob = await response.blob()
       const blobUrl = URL.createObjectURL(blob)
       return blobUrl
     } catch {
-      return settings.background.onlineUrl
+      return rawUrl
     }
   },
   [BgType.None]: () => Promise.resolve('')
@@ -237,7 +240,8 @@ function activateBackgroundWatch(type: BgType) {
 // 监听背景类型切换，动态激活/停用对应的watch
 watch(
   () => settings.background.bgType,
-  async (newType) => {
+  async (newType, oldType) => {
+    if (newType === oldType) return
     await updateBackgroundURL(newType)
     activateBackgroundWatch(newType)
   }

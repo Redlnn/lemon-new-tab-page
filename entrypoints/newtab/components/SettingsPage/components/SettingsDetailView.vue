@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useElementVisibility, useTimeoutFn } from '@vueuse/core'
 
+import { getSettingsView, prefetchSettingsView } from '../composables/SettingsAsyncViews'
 import { SettingsRoute } from '../composables/useSettingsRouter'
-import { getSettingsView, prefetchSettingsView } from './settingsAsyncViews'
 
 interface Props {
   currentRoute: SettingsRoute

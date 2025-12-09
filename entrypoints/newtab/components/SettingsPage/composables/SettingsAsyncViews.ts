@@ -14,22 +14,17 @@ const settingsViewLoaders: Record<SettingsRoute, (() => Promise<{ default: Compo
   [SettingsRoute.OTHER]: () => import('../Settings/OtherSettings.vue')
 } as const
 
-const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = {
-  [SettingsRoute.MENU]: null,
-  [SettingsRoute.THEME]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.THEME]!),
-  [SettingsRoute.CLOCK]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.CLOCK]!),
-  [SettingsRoute.SEARCH]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.SEARCH]!),
-  [SettingsRoute.BACKGROUND]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.BACKGROUND]!),
-  [SettingsRoute.SHORTCUT]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.SHORTCUT]!),
-  [SettingsRoute.BOOKMARK_SIDEBAR]: defineAsyncComponent(
-    settingsViewLoaders[SettingsRoute.BOOKMARK_SIDEBAR]!
-  ),
-  [SettingsRoute.YIYAN]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.YIYAN]!),
-  [SettingsRoute.PERFORMANCE]: defineAsyncComponent(
-    settingsViewLoaders[SettingsRoute.PERFORMANCE]!
-  ),
-  [SettingsRoute.OTHER]: defineAsyncComponent(settingsViewLoaders[SettingsRoute.OTHER]!)
-} as const
+const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = Object.keys(
+  settingsViewLoaders
+).reduce(
+  (map, route) => {
+    const typedRoute = route as SettingsRoute
+    const loader = settingsViewLoaders[typedRoute]
+    map[typedRoute] = loader ? defineAsyncComponent(loader) : null
+    return map
+  },
+  {} as Record<SettingsRoute, Component | null>
+)
 
 export const getSettingsView = (route: SettingsRoute): Component | null =>
   settingsAsyncViewMap[route]

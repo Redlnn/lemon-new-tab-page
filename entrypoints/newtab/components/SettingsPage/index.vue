@@ -6,10 +6,10 @@ import { useTranslation } from 'i18next-vue'
 
 import { useDialog } from '@newtab/composables/useDialog'
 
-import { prefetchSettingsView } from './components/settingsAsyncViews'
 import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
+import { prefetchSettingsView } from './composables/SettingsAsyncViews'
 import { MENU_ITEMS, SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
 const MOBILE_BREAKPOINT = 650

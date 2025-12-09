@@ -18,6 +18,17 @@ let indexMap: Record<
   }
 > = {}
 
+let cachedAllIds: string[] = []
+let cachedNodeCount = 0
+const collatorCache = new Map<string, Intl.Collator>()
+
+function getCollator(language: string) {
+  if (!collatorCache.has(language)) {
+    collatorCache.set(language, new Intl.Collator(language))
+  }
+  return collatorCache.get(language)!
+}
+
 //缓存排序树及其 sortMode 以避免重新计算
 let cachedSortedTree: BookmarkTreeNode[] | null = null
 let cachedSortedTreeKey: SortMode | null = null
@@ -32,6 +43,7 @@ let lastResultIds: string[] = []
 // --------------------------------------------------------------------------
 
 function createComparator(mode: SortMode, origIndexMap: Map<string, number>, language: string) {
+  const collator = getCollator(language)
   return (a: BookmarkTreeNode, b: BookmarkTreeNode) => {
     const aIsFolder = Array.isArray(a.children)
     const bIsFolder = Array.isArray(b.children)
@@ -45,7 +57,7 @@ function createComparator(mode: SortMode, origIndexMap: Map<string, number>, lan
     const titleB = b.title || ''
 
     // 按本地化名称排序
-    const compareName = () => titleA.localeCompare(titleB, language)
+    const compareName = () => collator.compare(titleA, titleB)
 
     // 按创建时间排序
     const compareCreated = () =>
@@ -194,6 +206,8 @@ function buildIndex() {
 
   walk(tree || [])
   indexMap = map
+  cachedAllIds = Object.keys(map)
+  cachedNodeCount = cachedAllIds.length
 
   // 重置缓存
   lastQuery = ''
@@ -211,8 +225,7 @@ function getSortedTree(mode: SortMode): BookmarkTreeNode[] {
   }
 
   // 检查缓存阈值
-  const idxCount = Object.keys(indexMap || {}).length
-  const nodeCount = idxCount || countNodes(tree)
+  const nodeCount = cachedNodeCount || countNodes(tree)
 
   const sorted = cloneAndSortTree(tree, 0, mode, currentLanguage)
 
@@ -239,8 +252,7 @@ function filter(query: string, mode: SortMode) {
   }
 
   // 1) 确定候选 id 集（若为前缀查询则使用上次缓存减少扫描）
-  const allIds = Object.keys(indexMap || {})
-  let candidateIds: string[] = allIds
+  let candidateIds: string[] = cachedAllIds
   if (lastQuery && q.startsWith(lastQuery) && lastResultIds?.length) {
     candidateIds = lastResultIds
   }
