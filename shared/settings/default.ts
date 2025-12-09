@@ -14,7 +14,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showDate: true,
     showLunar: true,
     showSeconds: false,
-    small: false,
+    small: true,
     enableShadow: true,
     blinkingColon: true,
     invertColor: {
