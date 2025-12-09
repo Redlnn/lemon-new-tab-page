@@ -116,15 +116,13 @@ const { checkAndRequestPermission } = usePermission()
 const beforeMonetChange = async () => {
   if (settings.monetColor) return true
 
+  if (settings.background.bgType === BgType.None) return false
   if (settings.background.bgType !== BgType.Online) return true
-  if (settings.background.onlineUrl === '') return true
+  if (!settings.background.onlineUrl) return false
 
   const { hostname } = new URL(settings.background.onlineUrl)
   const result = await checkAndRequestPermission(hostname, true)
-  if (result === PermissionResult.GrantedAll) {
-    return true
-  }
-  return false
+  return result === PermissionResult.GrantedAll
 }
 
 watch(mode, () => {
@@ -152,7 +150,11 @@ watch(mode, () => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('theme.monet.label') }}</div>
-      <el-switch v-model="settings.monetColor" :before-change="beforeMonetChange" />
+      <el-switch
+        v-model="settings.monetColor"
+        :disabled="settings.background.bgType === BgType.None"
+        :before-change="beforeMonetChange"
+      />
     </div>
     <p class="settings__item--note">{{ t('theme.monet.desc') }}</p>
     <div class="settings__item settings__item--horizontal">

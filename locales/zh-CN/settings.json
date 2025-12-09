@@ -48,6 +48,7 @@
     "warning": {
       "fileIsNotImage": "所选文件不是图片！",
       "granted": "已授予访问权限",
+      "monetColorDisabled": "莫奈取色已关闭",
       "monetDisabled": "由于未授予「访问所有网站」权限，动态主题色（莫奈取色）已被关闭",
       "notGranted": "未授予权限，无法访问该地址",
       "title": "警告",

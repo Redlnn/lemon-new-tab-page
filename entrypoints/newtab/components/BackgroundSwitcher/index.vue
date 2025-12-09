@@ -70,6 +70,14 @@ const {
   onlineImageWarn
 } = useBackgroundSwitcher()
 
+function handleNoneBg() {
+  settings.background.bgType = BgType.None
+  if (settings.monetColor) {
+    ElMessage.info(t('background.warning.monetColorDisabled'))
+    settings.monetColor = false
+  }
+}
+
 const isShowDeleteIcon = computed(() =>
   Boolean(isDarkBg.value ? settings.localDarkBackground.id : settings.localBackground.id)
 )
@@ -242,7 +250,7 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
               text
               :icon="TripOriginRound"
               :class="{ active: settings.background.bgType === BgType.None }"
-              @click="settings.background.bgType = BgType.None"
+              @click="handleNoneBg"
             >
               {{ isDark ? t('background.button.bathe.moon') : t('background.button.bathe.sun') }}
             </el-button>
