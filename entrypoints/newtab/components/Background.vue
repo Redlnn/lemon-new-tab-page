@@ -324,12 +324,10 @@ async function onImgLoaded() {
           playsinline
         ></video>
         <img
-          v-else
+          v-else-if="bgURL"
           class="background"
           ref="imageRef"
-          :src="
-            bgURL ? (bgURL.startsWith('url') ? bgURL.replace(bgURLreg, '$2') : bgURL) : undefined
-          "
+          :src="bgURL.startsWith('url') ? bgURL.replace(bgURLreg, '$2') : bgURL"
           @load="onImgLoaded"
         />
       </div>
