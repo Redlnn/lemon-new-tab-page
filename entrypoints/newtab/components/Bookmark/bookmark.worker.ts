@@ -136,8 +136,9 @@ function createRebuild(
 
     const isFolder = Array.isArray(node.children)
 
-    if (matchedIds.has(node.id) && !isFolder) {
-      onFirstPath(parents.slice())
+    if (matchedIds.has(node.id)) {
+      const path = isFolder ? [...parents, node.id] : parents.slice()
+      onFirstPath(path)
     }
 
     const copy = { ...node }
@@ -149,16 +150,6 @@ function createRebuild(
       }
       if (children.length) copy.children = children
       else delete copy.children
-
-      if (matchedIds.has(node.id) && (!copy.children || copy.children.length === 0)) {
-        onFirstPath([...parents, node.id])
-      }
-    } else if (
-      matchedIds.has(node.id) &&
-      isFolder &&
-      (!node.children || node.children.length === 0)
-    ) {
-      onFirstPath([...parents, node.id])
     }
 
     return copy as BookmarkTreeNode
@@ -278,10 +269,28 @@ function filter(query: string, mode: SortMode) {
 
   // 3) 扩展结果集以包含匹配节点的所有祖先（以便能在树结构中展示匹配路径）
   const keepIds = new Set<string>()
+  const addDescendantsToKeep = (node?: BookmarkTreeNode) => {
+    if (!node || !Array.isArray(node.children) || node.children.length === 0) return
+    const stack = [...node.children]
+    while (stack.length) {
+      const current = stack.pop()!
+      if (keepIds.has(current.id)) continue
+      keepIds.add(current.id)
+      if (Array.isArray(current.children) && current.children.length) {
+        stack.push(...current.children)
+      }
+    }
+  }
+
   for (const id of matchedIds) {
     keepIds.add(id)
     const parents = indexMap[id]?.parents || []
     for (const p of parents) keepIds.add(p)
+
+    const entry = indexMap[id]
+    if (entry?.isFolder) {
+      addDescendantsToKeep(entry.node)
+    }
   }
 
   // 4) 基于 keepIds 从排序树中重建仅保留需要的分支（只遍历保留分支）
