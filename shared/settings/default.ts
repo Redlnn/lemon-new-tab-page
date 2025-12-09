@@ -4,7 +4,7 @@ import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current
 import { BgType, DrawerDirection } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
-  primaryColor: '#F5B800',
+  primaryColor: '#f5b800',
   colorfulMode: false,
   monetColor: false,
   time: {

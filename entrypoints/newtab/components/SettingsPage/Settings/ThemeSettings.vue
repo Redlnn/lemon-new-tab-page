@@ -33,8 +33,8 @@ const predefineColorsMapClassic = [
 ]
 
 const predefineColorsMapAcgn = [
-  { value: '#39C5BB', labelKey: 'theme.colorNames.acgn.miku' },
-  { value: '#66CCFF', labelKey: 'theme.colorNames.acgn.luo' },
+  { value: '#39c5bb', labelKey: 'theme.colorNames.acgn.miku' },
+  { value: '#66ccff', labelKey: 'theme.colorNames.acgn.luo' },
   { value: '#3388bb', labelKey: 'theme.colorNames.acgn.mygo' },
   { value: '#730f40', labelKey: 'theme.colorNames.acgn.aveMujica' },
   { value: '#f7b3c2', labelKey: 'theme.colorNames.acgn.bocchi' },
