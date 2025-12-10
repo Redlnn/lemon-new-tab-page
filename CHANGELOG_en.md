@@ -2,7 +2,7 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.6.1 (WIP)
+## 2.7.0 (Dec 10, 2025)
 
 ### Major Update🎉
 
@@ -24,6 +24,8 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 - Resets bookmark sorting when switching languages
 - Optimized the style of the "Add New Shortcut" window on narrow screens
 - Adjusted wallpaper fade-in animation duration for a more elegant experience
+- When searching bookmarks, if a folder name matches, all its children are displayed to avoid empty folders
+- Optimized bookmark search performance
 
 ### Bug Fixes🐛
 
