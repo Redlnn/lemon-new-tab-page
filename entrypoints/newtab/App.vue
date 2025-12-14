@@ -241,7 +241,7 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
       @open-faq="FaqRef?.show"
       @open-background-switcher="BGSwticherRef?.show"
     />
-    <bookmark-btn @open-bookmark-sidebar="BookmarkRef?.show" />
+    <bookmark-btn v-if="!settings.bookmarkSidebar.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />
