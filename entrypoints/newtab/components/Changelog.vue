@@ -5,11 +5,11 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import { isChinese } from '@newtab/shared/i18n'
 
 const { t } = useTranslation()
 const settings = useSettingsStore()

@@ -4,9 +4,8 @@ import { useNow, useTimeoutFn } from '@vueuse/core'
 import dayjs from 'dayjs/esm'
 import { useTranslation } from 'i18next-vue'
 
+import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
-
-import { isChinese } from '@newtab/shared/i18n'
 
 const { t, i18next } = useTranslation('newtab')
 const settings = useSettingsStore()

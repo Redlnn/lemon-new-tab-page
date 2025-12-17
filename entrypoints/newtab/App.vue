@@ -6,10 +6,10 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import { getLang } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
-import { getLang } from '@newtab/shared/i18n'
 import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
 import type AboutCompComponent from './components/About.vue'
@@ -241,7 +241,10 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
       @open-faq="FaqRef?.show"
       @open-background-switcher="BGSwticherRef?.show"
     />
-    <bookmark-btn v-if="!settings.bookmarkSidebar.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
+    <bookmark-btn
+      v-if="!settings.bookmarkSidebar.hideBtn"
+      @open-bookmark-sidebar="BookmarkRef?.show"
+    />
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />

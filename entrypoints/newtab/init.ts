@@ -1,4 +1,4 @@
-import { i18nInitPromise } from '@newtab/shared/i18n'
+import { i18nInitPromise } from '@/shared/i18n'
 
 import { initDayjs } from './shared/dayjs'
 

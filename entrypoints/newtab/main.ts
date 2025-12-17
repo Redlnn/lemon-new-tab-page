@@ -5,12 +5,12 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
+import { i18n } from '@/shared/i18n'
 import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
 
 import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
-import { i18n } from '@newtab/shared/i18n'
 
 import App from './App.vue'
 import { changeTheme } from './shared/theme'
