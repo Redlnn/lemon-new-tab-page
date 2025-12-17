@@ -4,7 +4,8 @@ import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 export function useShortcutDrag(
   containerRef: Ref<HTMLElement | undefined>,
-  shortcuts: Ref<{ url: string; title: string; favicon?: string }[]>
+  shortcuts: Ref<{ url: string; title: string; favicon?: string }[]>,
+  refresh: () => void
 ) {
   const shortcutStore = useShortcutStore()
   useDraggable(containerRef, shortcuts, {
@@ -13,6 +14,7 @@ export function useShortcutDrag(
     onUpdate() {
       shortcutStore.items = shortcuts.value
       saveShortcut(shortcutStore.$state)
+      refresh()
     }
   })
 }

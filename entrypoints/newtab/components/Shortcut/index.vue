@@ -54,9 +54,9 @@ const topSitesNeedsReload = ref(true)
 const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
 const shortcutContainerRef = ref()
-useShortcutDrag(shortcutContainerRef, shortcuts)
 
 const refreshDebounced = useDebounceFn(refresh, 100)
+useShortcutDrag(shortcutContainerRef, shortcuts, refreshDebounced)
 
 async function refresh() {
   // 拆分数据读取与布局计算，避免频繁响应写入
@@ -175,7 +175,7 @@ blockedTopSitesStorage.watch(() => {
     >
       <shortcut-item
         v-for="(site, index) in shortcuts"
-        :key="index"
+        :key="site.url"
         :url="site.url"
         :title="site.title"
         :favicon="site.favicon"
