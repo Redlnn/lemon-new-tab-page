@@ -75,6 +75,7 @@ export interface SettingsInterfaceVer7 {
     iconSize: number
     whiteTextInLightMode: boolean
     marginTop: number
+    openInNewTab: boolean
   }
   sync: {
     enabled: boolean

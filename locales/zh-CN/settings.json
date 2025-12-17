@@ -1,4 +1,7 @@
 {
+  "common": {
+    "openInNewTab": "在新标签页中打开"
+  },
   "background": {
     "alwaysFresh": "永远都有新鲜感",
     "bingFrom": "图片来源：必应",
@@ -154,7 +157,6 @@
     "defaultSearchEngine": "搜索引擎",
     "enableShadow": "显示搜索框阴影",
     "launchAnim": "启动时搜索框展开动画",
-    "openInNewTab": "在新标签页中打开",
     "placeholder": "搜索框占位文字",
     "recordSearchHistory": "记录搜索历史",
     "searchSuggestionProvider": "搜索建议 API",

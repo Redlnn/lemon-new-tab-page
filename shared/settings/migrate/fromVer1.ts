@@ -74,7 +74,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       showShortcutContainerBg: defaultSettings.shortcut.showShortcutContainerBg,
       iconSize: defaultSettings.shortcut.iconSize,
       whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
-      marginTop: defaultSettings.shortcut.marginTop
+      marginTop: defaultSettings.shortcut.marginTop,
+      openInNewTab: defaultSettings.shortcut.openInNewTab
     },
     sync: {
       enabled: false

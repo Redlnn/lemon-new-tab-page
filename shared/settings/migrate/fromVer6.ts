@@ -69,7 +69,8 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       showShortcutContainerBg: oldSettings.shortcut.showShortcutContainerBg,
       iconSize: oldSettings.shortcut.iconSize,
       whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
-      marginTop: oldSettings.shortcut.marginTop
+      marginTop: oldSettings.shortcut.marginTop,
+      openInNewTab: defaultSettings.shortcut.openInNewTab
     },
     sync: {
       enabled: oldSettings.sync.enabled

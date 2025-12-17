@@ -1,4 +1,7 @@
 {
+  "common": {
+    "openInNewTab": "在新分頁中開啟"
+  },
   "background": {
     "alwaysFresh": "永遠都有新鮮感",
     "bingFrom": "圖片來源：Bing",
@@ -154,7 +157,6 @@
     "defaultSearchEngine": "預設搜尋引擎",
     "enableShadow": "顯示搜尋框陰影",
     "launchAnim": "啟動時搜索框展開動效",
-    "openInNewTab": "在新分頁中開啟",
     "placeholder": "搜尋框占位文字",
     "recordSearchHistory": "記錄搜尋歷史",
     "searchSuggestionProvider": "搜尋建議 API",

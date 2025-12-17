@@ -57,6 +57,10 @@ async function restoreDefaultTopSites() {
         <div class="settings__label">{{ t('shortcut.showTitle') }}</div>
         <el-switch v-model="settings.shortcut.showShortcutTitle" />
       </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('common.openInNewTab') }}</div>
+        <el-switch v-model="settings.shortcut.openInNewTab" />
+      </div>
       <p class="settings__item--note">
         {{ t('shortcut.whiteTextTip') }}
       </p>

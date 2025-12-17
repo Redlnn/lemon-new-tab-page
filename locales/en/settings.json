@@ -1,4 +1,7 @@
 {
+  "common": {
+    "openInNewTab": "Open in new tab"
+  },
   "background": {
     "alwaysFresh": "Always something new",
     "bingFrom": "Image source: Bing",
@@ -160,7 +163,6 @@
     "defaultSearchEngine": "Search engine",
     "enableShadow": "Show search box shadow",
     "launchAnim": "Search box expand animation on startup",
-    "openInNewTab": "Open in new tab",
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",
     "searchSuggestionProvider": "Search suggestion API",

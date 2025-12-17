@@ -2,6 +2,17 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 2.7.1 (WIP)
+
+### New Features✨
+
+- Support setting shortcuts to open in a new tab by default
+
+### Bug Fixes🐛
+
+- Fixed issue where shortcut drag-and-drop sorting UI did not update
+  ([#53](https://github.com/Redlnn/lemon-new-tab-page/issues/53))
+
 ## 2.7.0 (Dec 10, 2025)
 
 ### Major Update🎉
@@ -47,7 +58,8 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 
 ### Bug Fixes🐛
 
-- Fixed the issue where the background mask would flicker on startup (#46)
+- Fixed the issue where the background mask would flicker on startup
+  ([#46](https://github.com/Redlnn/lemon-new-tab-page/issues/46))
 - Fixed some misalignment issues in the Quote settings page
 - Fixed style and layout issues of Quote on the About page
 - Fixed settings button pop-up menu not transparent
@@ -60,7 +72,8 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 - One-click enable all performance settings
 - Added two new theme colors
 - Support for switching languages
-- Support for exporting and importing favorite/pinned websites (#45)
+- Support for exporting and importing favorite/pinned websites
+  ([#45](https://github.com/Redlnn/lemon-new-tab-page/issues/45))
 - Support for custom search engines (and import/export)
 - Right-click to open shortcut menu, removed the long-term display of the three-dot entry to optimize visual experience
 
@@ -89,7 +102,8 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 
 ### New Features✨
 
-- Added Help and Feedback page (#41)
+- Added Help and Feedback page
+  ([#41](https://github.com/Redlnn/lemon-new-tab-page/issues/41))
 - Support for disabling the transparency effect of Quote
 
 ### Improvements⚡️
@@ -102,17 +116,21 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 ### Bug Fixes🐛
 
 - Fixed issue where switching colors did not have a transition effect.
-- Fixed issue where wallpapers did not display in dark mode when only light mode wallpapers were uploaded and the wallpaper type was set to image. (#40)
+- Fixed issue where wallpapers did not display in dark mode when only light mode wallpapers were uploaded and the wallpaper type was set to image.
+  ([#40](https://github.com/Redlnn/lemon-new-tab-page/issues/40))
 - Fixed missing styles.
-- Fixed issue where the dark mode button state did not follow browser or system changes. (#42)
-- Fixed missing color transition animations for some elements on the settings page. (#43)
+- Fixed issue where the dark mode button state did not follow browser or system changes.
+  ([#42](https://github.com/Redlnn/lemon-new-tab-page/issues/42))
+- Fixed missing color transition animations for some elements on the settings page.
+  ([#43](https://github.com/Redlnn/lemon-new-tab-page/issues/43))
 - Fixed localization errors/missing translations.
 
 ## 2.5.2 (Oct 21, 2025)
 
 ### New Features✨
 
-- Brand new macOS-style settings page (#39)
+- Brand new macOS-style settings page
+  ([#39](https://github.com/Redlnn/lemon-new-tab-page/pull/39))
 - Added "Hide major update changelog" switch (enabled by default)
 - Added `text-autospace: normal` to add spacing between CJK and non-CJK characters
 - Support for hiding the search box and clock
@@ -197,7 +215,8 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 - Fixed incorrect style of the custom shortcut icon upload button
 - Fixed a missing translation
 - Fixed an issue where the config version might not update in time
-- Fixed issue where shortcuts could not be saved on Firefox (#37)
+- Fixed issue where shortcuts could not be saved on Firefox
+  ([#37](https://github.com/Redlnn/lemon-new-tab-page/issues/37))
 - Fixed issue where dragging non-pinned shortcuts caused the shortcut area to disappear
 - Fixed misalignment issue when using SVG for custom shortcut icons
 
@@ -446,7 +465,8 @@ Here’s to another year of making your browsing better!
 ### Fixes🐛
 
 - Fixed the issue that background color does not follow system (or browser)
-  when JS is not loaded (#19)
+  when JS is not loaded
+  ([#19](https://github.com/Redlnn/lemon-new-tab-page/issues/19))
 - Fixed the logic and animation issues of "Dark mode" and "Follow system" switch
 
 ## 1.8.0 (Jan 05, 2025)
@@ -522,7 +542,8 @@ Here’s to another year of making your browsing better!
 - Now you can change the background mask color.
 - Now you can disable the background of the quick access area.
 - Optimized the position of the search bar after closing the quick access area.
-- **Firefox**: Now supports setting it as the homepage (#12).
+- **Firefox**: Now supports setting it as the homepage
+  ([#12](https://github.com/Redlnn/lemon-new-tab-page/issues/12)).
 
 ### Fixes🐛
 
@@ -545,7 +566,8 @@ Here’s to another year of making your browsing better!
 ### Fixes🐛
 
 - Fixed the issue where unpinning did not take effect.
-- Fixed the issue where frequently visited sites could not be deleted (#8).
+- Fixed the issue where frequently visited sites could not be deleted
+  ([#8](https://github.com/Redlnn/lemon-new-tab-page/issues/8)).
 - Fixed the issue where the "Enable Most Visited" switch did not work.
 - Fixed the issue where duplicate shortcuts appeared after hiding most visited.
 - Hid Chrome-specific hints in Firefox browser.

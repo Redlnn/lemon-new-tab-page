@@ -58,7 +58,12 @@ defineExpose({ open, close })
 
 <template>
   <div class="shortcut__item noselect" :class="[{ pined: pined }]">
-    <a class="shortcut__item-link" :href="url" @contextmenu="handleContextmenu">
+    <a
+      class="shortcut__item-link"
+      :href="url"
+      :target="settings.shortcut.openInNewTab ? '_blank' : '_self'"
+      @contextmenu="handleContextmenu"
+    >
       <div class="shortcut__icon-container">
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"

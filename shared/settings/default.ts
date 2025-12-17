@@ -72,7 +72,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showShortcutContainerBg: false,
     iconSize: 50,
     whiteTextInLightMode: true,
-    marginTop: 50
+    marginTop: 50,
+    openInNewTab: false
   },
   sync: {
     enabled: false
