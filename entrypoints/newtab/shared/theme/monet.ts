@@ -1,3 +1,5 @@
+import { applyStoredMonetColors, saveMonetColors } from '@/shared/theme/monetStorage'
+
 import MonetWorker from './monet.worker?worker'
 
 let worker: Worker | null = null
@@ -97,16 +99,6 @@ async function getThemeFromImage(
 export async function applyMonet(image: HTMLImageElement | undefined, cropCenter = false) {
   if (!image) return
 
-  const STYLE_ID = 'monet'
-  let styleTag = document.getElementById(STYLE_ID) as HTMLStyleElement | null
-
-  if (!styleTag) {
-    styleTag = document.createElement('style')
-    styleTag.id = STYLE_ID
-    styleTag.type = 'text/css'
-    document.head.appendChild(styleTag)
-  }
-
   let cssLight: Record<string, string>
   let cssDark: Record<string, string>
   try {
@@ -118,10 +110,9 @@ export async function applyMonet(image: HTMLImageElement | undefined, cropCenter
     return
   }
 
-  const toCssText = (vars: Record<string, string>) =>
-    Object.entries(vars)
-      .map(([k, v]) => `${k}: ${v};`)
-      .join('')
+  // 保存莫奈颜色到 storage，供 popup 等其他页面使用
+  saveMonetColors(cssLight, cssDark)
 
-  styleTag.textContent = `html.monet{${toCssText(cssLight)}}html.dark.monet{${toCssText(cssDark)}}`
+  // 应用莫奈颜色到当前页面
+  applyStoredMonetColors({ cssLight, cssDark, timestamp: Date.now() })
 }

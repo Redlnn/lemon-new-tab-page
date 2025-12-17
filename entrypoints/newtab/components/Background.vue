@@ -11,6 +11,7 @@ import {
 import { browser } from '#imports'
 
 import { BgType, useSettingsStore } from '@/shared/settings'
+import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
@@ -267,6 +268,14 @@ watch(
 )
 
 onMounted(async () => {
+  // 如果开启了莫奈模式，先应用之前存储的莫奈配色，避免加载壁纸期间的视觉跳变
+  if (settings.monetColor) {
+    const storedColors = await getMonetColors()
+    if (storedColors) {
+      applyStoredMonetColors(storedColors)
+    }
+  }
+
   await bingWallpaperURLGetter.init()
   await updateBackgroundURL(settings.background.bgType)
 

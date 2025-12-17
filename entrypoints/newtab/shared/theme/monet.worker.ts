@@ -11,9 +11,9 @@ import {
   themeFromSourceColor
 } from '@material/material-color-utilities'
 
-import { mixLegacy } from './mix'
-import { BLACK_COLOR, EL_BG_COLOR_RGBA, WHITE_COLOR } from './token'
-import { rgba2Hex } from './utils'
+import { mixLegacy } from '@/shared/theme/mix'
+import { BLACK_COLOR, EL_BG_COLOR_RGBA, WHITE_COLOR } from '@/shared/theme/token'
+import { rgba2Hex } from '@/shared/theme/utils'
 
 const shadeCache = new WeakMap<Rgba, ReturnType<typeof buildColorShades>>()
 

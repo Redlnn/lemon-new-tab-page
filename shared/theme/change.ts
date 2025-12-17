@@ -71,7 +71,6 @@ function generateThemeEntries(
 /**
  * 更换主题色
  * @param color HEX 格式的颜色值
- * @param isDark 是否为深色模式
  */
 export function changeTheme(color: string) {
   const trimmedColor = color.trim()
