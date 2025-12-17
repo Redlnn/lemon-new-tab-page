@@ -136,9 +136,13 @@ watch(
   }
 )
 
-// 云同步导致书签变动时刷新
-shortcutStorage.watch(() => {
-  refreshDebounced()
+// 云同步或 popup 添加书签导致 storage 变动时刷新
+shortcutStorage.watch(async (newValue) => {
+  // 先同步 store 数据，再刷新 UI
+  if (newValue) {
+    shortcutStore.$patch(newValue)
+  }
+  await refreshDebounced()
 })
 
 blockedTopSitesStorage.watch(() => {
