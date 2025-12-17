@@ -1,0 +1,9 @@
+{
+  "popup": {
+    "title": "添加快捷方式",
+    "addToShortcut": "添加",
+    "addSuccess": "已添加到快捷方式",
+    "alreadyExists": "该页面已在快捷方式中",
+    "cannotAdd": "无法添加此页面"
+  }
+}

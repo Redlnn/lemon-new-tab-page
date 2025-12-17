@@ -7,11 +7,18 @@
 ### New Features✨
 
 - Support setting shortcuts to open in a new tab by default
+- Support adding the current page to shortcuts from the browser toolbar button
+- Support adding pages to shortcuts from the bookmarks sidebar
+
+### Improvements⚡️
+
+- Cache Monet color extraction results for use on next startup to avoid abrupt changes
 
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut drag-and-drop sorting UI did not update
   ([#53](https://github.com/Redlnn/lemon-new-tab-page/issues/53))
+- Fixed issue where changes to shortcuts on the new tab page were not promptly synced from cloud sync, popup menu, and other sources
 
 ## 2.7.0 (Dec 10, 2025)
 

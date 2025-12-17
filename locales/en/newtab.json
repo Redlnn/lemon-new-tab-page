@@ -5,6 +5,8 @@
   },
   "bookmarkSidebar": {
     "404": "Nothing found",
+    "addToShortcut": "Add to Shortcuts",
+    "addedToShortcut": "Added to shortcuts",
     "sortBy": "Sort by",
     "sortMode": {
       "createdAsc": "Newest",
@@ -91,7 +93,8 @@
       "confirmSvgTitle": "You selected an SVG image",
       "invalidUrlError": "Invalid URL. Please input a new one",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "If you don’t upload an icon, it’ll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP."
+      "uploadFaviconAlert": "If you don't upload an icon, it'll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP.",
+      "extensionIconTip": "You can also click the extension icon in the extension menu to add the current page to shortcuts."
     },
     "addShortcut": "Add Shortcut",
     "editShortcut": "Edit Shortcut",

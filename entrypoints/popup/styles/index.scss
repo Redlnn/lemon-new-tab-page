@@ -1,0 +1,46 @@
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+@use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
+@use 'element-plus/theme-chalk/src/loading.scss' as *;
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  padding: 8px;
+  background: var(--el-bg-color-page);
+}
+
+body {
+  --el-font-weight-primary: 400;
+}
+
+// Colorful 模式：背景和元素添加主题色调
+html.colorful {
+  .popup {
+    background: var(--el-color-primary-light-9);
+  }
+
+  .popup__site-info {
+    background: var(--el-color-primary-light-8);
+  }
+
+  .popup__header .el-icon {
+    color: var(--el-color-primary);
+  }
+}
+
+// 深色模式下的 colorful 样式
+html.dark.colorful {
+  .popup {
+    // 深色模式下使用更深的主题色背景
+    background: color-mix(in oklch, var(--el-color-primary) 15%, var(--el-bg-color));
+  }
+
+  .popup__site-info {
+    background: color-mix(in oklch, var(--el-color-primary) 20%, var(--el-fill-color-light));
+  }
+}

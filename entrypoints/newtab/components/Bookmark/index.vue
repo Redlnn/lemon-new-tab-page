@@ -287,4 +287,23 @@ watch(
     color: inherit;
   }
 }
+
+.bookmark__menu-popper.el-dropdown__popper.el-popper {
+  .el-dropdown-menu__item {
+    padding: 2px 15px;
+    font-size: var(--el-font-size-small);
+  }
+
+  &.bookmark__menu-popper--opacity.bookmark__menu-popper--blur {
+    background-color: var(--le-bg-color-overlay-opacity-30);
+  }
+
+  &.bookmark__menu-popper--blur {
+    @include acrylic.acrylic;
+  }
+
+  .el-dropdown-menu {
+    background-color: initial;
+  }
+}
 </style>

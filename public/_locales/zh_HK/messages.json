@@ -1,4 +1,7 @@
 {
+  "action_title": {
+    "message": "新增當前頁面至捷徑"
+  },
   "extension_description": {
     "message": "一個開源、簡潔、美觀又易用的瀏覽器起始頁。頁面上可直接開始搜尋，支援 Bing 每日圖片，可新增快速存取網站並顯示最常瀏覽網站。\n"
   },

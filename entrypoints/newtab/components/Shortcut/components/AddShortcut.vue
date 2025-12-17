@@ -164,6 +164,13 @@ defineExpose({
       :closable="false"
       :title="t('shortcut.addDialog.uploadFaviconAlert')"
     />
+    <el-alert
+      type="info"
+      show-icon
+      :closable="false"
+      :title="t('shortcut.addDialog.extensionIconTip')"
+      style="margin-top: 10px"
+    />
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="cancel">{{ t('common.no') }}</el-button>
