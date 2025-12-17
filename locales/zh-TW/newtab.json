@@ -27,8 +27,9 @@
     "title": "更新日誌"
   },
   "common": {
-    "cancel": "算了",
+    "cancel": "取消",
     "confirm": "好",
+    "no": "算了",
     "delete": "刪除",
     "edit": "編輯",
     "enable": "啟用",

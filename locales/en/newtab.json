@@ -27,8 +27,9 @@
     "title": "Changelog"
   },
   "common": {
-    "cancel": "No",
+    "cancel": "Cancel",
     "confirm": "Yes",
+    "no": "No",
     "delete": "Delete",
     "edit": "Edit",
     "enable": "Enable",

@@ -156,7 +156,7 @@ async function restoreDefaultTopSites() {
         <el-popconfirm
           width="220"
           :confirm-button-text="t('newtab:common.confirm')"
-          :cancel-button-text="t('newtab:common.cancel')"
+          :cancel-button-text="t('newtab:common.no')"
           :icon="RestoreRound"
           icon-color="#626AEF"
           :title="t('shortcut.restoreDefaultTitle')"

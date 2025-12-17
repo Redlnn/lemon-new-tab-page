@@ -40,7 +40,7 @@ async function confirmClearExtensionData() {
       t('other.confirmPurgeData.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
-        cancelButtonText: t('newtab:common.cancel'),
+        cancelButtonText: t('newtab:common.no'),
         type: 'warning'
       }
     )
@@ -58,7 +58,7 @@ async function confirmClearWallpaperData() {
       t('other.confirmPurgeWallpaper.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
-        cancelButtonText: t('newtab:common.cancel'),
+        cancelButtonText: t('newtab:common.no'),
         type: 'warning'
       }
     )

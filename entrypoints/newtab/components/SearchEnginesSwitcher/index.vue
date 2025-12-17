@@ -45,7 +45,7 @@ async function deleteCustomEngine(index: number) {
       t('common.warning'),
       {
         confirmButtonText: t('common.confirm'),
-        cancelButtonText: t('common.cancel'),
+        cancelButtonText: t('common.no'),
         type: 'warning'
       }
     )

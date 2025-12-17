@@ -166,7 +166,7 @@ defineExpose({
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ t('common.cancel') }}</el-button>
+        <el-button @click="cancel">{{ t('common.no') }}</el-button>
         <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>
