@@ -68,6 +68,7 @@ async function refresh() {
   // 2) 首先保证“书签 + 添加按钮”可布局（不够就增加行数，已由 computeRowsGivenColumns 约束至上限）
   const baseItemCount = _shortcuts.length + 1
   const baseRows = computeNeededRows(baseItemCount, fitColumns)
+  rowsNum.value = baseRows
   // 初始容量（预留添加按钮）
   let capacity = fitColumns * baseRows - 1
 
