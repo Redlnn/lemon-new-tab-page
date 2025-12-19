@@ -1,3 +1,6 @@
+import type { Ref } from 'vue'
+import { unref, watch } from 'vue'
+
 export * from './verify'
 
 /**
@@ -35,24 +38,37 @@ export function getFaviconURLChrome(url: string, size = '128') {
   return _url.toString()
 }
 
-export function getFaviconURL(url: string | null): Ref<string> {
+export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
   const iconUrl = ref('/favicon.png')
 
-  if (!url) {
-    return iconUrl
+  const resolve = (u: string | null | undefined) => {
+    if (!u) {
+      iconUrl.value = '/favicon.png'
+      return
+    }
+
+    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+      iconUrl.value = getFaviconURLChrome(u)
+      return
+    }
+
+    const primary = new URL('/favicon.ico', u).toString()
+
+    const img = new Image()
+    img.onload = () => (iconUrl.value = primary)
+    img.onerror = () => (iconUrl.value = '/favicon.png')
+    img.src = primary
   }
 
-  if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    iconUrl.value = getFaviconURLChrome(url)
-    return iconUrl
+  // 支持传入普通字符串或 Ref
+  const initial = unref(url)
+  resolve(initial)
+
+  if (typeof url === 'object' && 'value' in url) {
+    watch(url as Ref<string | null>, (v) => {
+      resolve(v)
+    })
   }
-
-  const primary = new URL('/favicon.ico', url).toString()
-
-  const img = new Image()
-  img.onload = () => (iconUrl.value = primary)
-  img.onerror = () => (iconUrl.value = '/favicon.png')
-  img.src = primary
 
   return iconUrl
 }

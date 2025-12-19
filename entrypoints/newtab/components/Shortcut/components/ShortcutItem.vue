@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { toRef } from 'vue'
+
 import { Pin16Regular } from '@vicons/fluent'
 import type { DropdownInstance } from 'element-plus'
 
@@ -16,7 +18,7 @@ const props = defineProps<{
   favicon?: string
 }>()
 
-const faviconRef = getFaviconURL(props.url)
+const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
 const emit = defineEmits<{
