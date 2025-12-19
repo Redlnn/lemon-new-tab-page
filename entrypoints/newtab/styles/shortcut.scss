@@ -1,23 +1,277 @@
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
 .shortcut {
+  width: 100%;
   max-width: 85%;
+  overflow: hidden;
   transition: opacity 0.1s ease;
 
+  &__wrapper {
+    position: relative;
+  }
+
+  &__wrapper-inner {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+
+    @media (width >= 769px) {
+      gap: 20px;
+    }
+  }
+
+  // 滑动视口（可见区域）
+  // 默认不裁切，以便前后页面的阴影可见；翻页时再开启裁切以实现分页效果
+  &__slide-viewport {
+    position: relative;
+    overflow: visible;
+    border-radius: 10px;
+
+    // 切换动画期间添加此 modifier（由 JS 在翻页前添加，动画结束后移除）
+    &--switching {
+      overflow: hidden;
+    }
+
+    // 只允许垂直滚动和缩放，水平滑动由 JS 处理
+    @media (pointer: coarse) {
+      touch-action: pan-y pinch-zoom;
+    }
+
+    &--bg {
+      @include acrylic.acrylic;
+      padding: 20px;
+      background-color: var(--le-bg-color-overlay-opacity-60);
+
+      &.shortcut__slide-viewport--shadow {
+        box-shadow: var(--el-box-shadow);
+
+        html.dark & {
+          box-shadow: var(--el-box-shadow-light);
+        }
+      }
+    }
+  }
+
+  // 滑动轨道（定位容器）
+  &__slide-track {
+    position: relative;
+  }
+
+  &__nav-btn {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    color: var(--el-text-color-regular);
+    cursor: pointer;
+    background-color: var(--el-fill-color-darker);
+    border: none;
+    border-radius: 50%;
+    opacity: 0;
+    transition:
+      background-color 0.2s ease,
+      opacity 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+
+    &--next {
+      transform: translateX(5px);
+    }
+
+    &--prev {
+      transform: translateX(-5px);
+    }
+
+    .shortcut:hover & {
+      opacity: 0.3;
+
+      &--next,
+      &--prev {
+        transform: translateX(0);
+      }
+    }
+
+    &--blur {
+      @include acrylic.acrylic;
+    }
+
+    &:not(&--disabled):hover {
+      background-color: var(--el-fill-color-extra-light);
+      opacity: 1;
+    }
+
+    &--opacity {
+      background-color: var(--le-bg-color-overlay-opacity-60);
+
+      .shortcut:hover & {
+        opacity: 0.5;
+      }
+    }
+
+    &:not(&--disabled):hover &--opacity {
+      background-color: var(--le-bg-color-overlay-opacity-30);
+    }
+
+    html.dark &:not(&--opacity) {
+      background-color: var(--el-fill-color-extra-light);
+    }
+
+    html.colorful &:not(&--opacity) {
+      background-color: var(--el-color-primary-light-9);
+    }
+
+    html.dark &:not(&--opacity):hover {
+      background-color: var(--el-fill-color-light);
+    }
+
+    html.colorful &:not(&--opacity):hover {
+      background-color: var(--el-color-primary-light-8);
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  &__pagination {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  &__pagination-dot {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    cursor: pointer;
+    background-color: var(--el-fill-color-darker);
+    border: none;
+    border-radius: 50%;
+    opacity: 0.5;
+    transition:
+      opacity 0.2s ease,
+      background-color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+      transform: scale(1.2);
+    }
+
+    &--active {
+      background-color: var(--el-color-primary);
+      opacity: 1;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
+    html.dark & {
+      background-color: var(--el-fill-color-light);
+
+      &--active {
+        background-color: var(--el-color-primary);
+      }
+    }
+  }
+
   &__container {
-    z-index: 10;
     display: grid;
     place-items: center center;
     transition:
       background-color var(--el-transition-duration-fast) ease,
-      box-shadow var(--el-transition-duration-fast) ease;
+      box-shadow var(--el-transition-duration-fast) ease,
+      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     a {
       color: inherit;
       text-decoration: inherit;
     }
 
-    // 区域阴影
+    // 分页模式下的页面容器
+    &--page {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    // 前一页
+    &--prev {
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(-100%);
+    }
+
+    // 当前页（保持文档流以撑开容器高度）
+    &--current {
+      position: relative;
+      transform: translateX(0);
+    }
+
+    // 后一页
+    &--next {
+      pointer-events: none;
+      opacity: 0;
+      transform: translateX(100%);
+    }
+
+    // 向左滑动动画
+    &--slide-left {
+      &.shortcut__container--prev {
+        opacity: 1;
+        transform: translateX(-200%);
+      }
+
+      &.shortcut__container--current {
+        opacity: 1;
+        transform: translateX(-100%);
+      }
+
+      &.shortcut__container--next {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    // 向右滑动动画
+    &--slide-right {
+      &.shortcut__container--prev {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      &.shortcut__container--current {
+        opacity: 1;
+        transform: translateX(100%);
+      }
+
+      &.shortcut__container--next {
+        opacity: 1;
+        transform: translateX(200%);
+      }
+    }
+
+    // 禁用 transition（用于页面切换时防止二次动画）
+    &--no-transition {
+      transition: none !important;
+    }
+
+    // 占位页（当没有前一页或后一页时）
+    &--placeholder {
+      visibility: hidden;
+    }
+
+    // 区域阴影（移到 viewport 上处理）
     &--bg {
       @include acrylic.acrylic;
       padding: 20px;

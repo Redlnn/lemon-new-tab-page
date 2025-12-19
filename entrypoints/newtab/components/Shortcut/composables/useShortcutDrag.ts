@@ -8,13 +8,25 @@ export function useShortcutDrag(
   refresh: () => void
 ) {
   const shortcutStore = useShortcutStore()
+  const isDragging = ref(false)
+
   useDraggable(containerRef, shortcuts, {
     animation: 150,
     handle: '.shortcut__item.pined',
+    onStart() {
+      isDragging.value = true
+    },
+    onEnd() {
+      isDragging.value = false
+    },
     onUpdate() {
       shortcutStore.items = shortcuts.value
       saveShortcut(shortcutStore.$state)
       refresh()
     }
   })
+
+  return {
+    isDragging
+  }
 }

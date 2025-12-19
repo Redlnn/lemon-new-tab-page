@@ -17,9 +17,15 @@ const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
 const modelForm = ref<FormInstance>()
 
-const props = defineProps<{
-  reload: () => Promise<void>
-}>()
+const props = withDefaults(
+  defineProps<{
+    reload: () => Promise<void>
+    showButton?: boolean
+  }>(),
+  {
+    showButton: true
+  }
+)
 const showDialog = ref(false)
 const editingIndex = ref<number | null>(null)
 const data: {
@@ -105,7 +111,7 @@ defineExpose({
 </script>
 
 <template>
-  <div class="shortcut__item shortcut__item--add-shortcut noselect">
+  <div v-if="props.showButton" class="shortcut__item shortcut__item--add-shortcut noselect">
     <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
       <div class="shortcut__icon-container">
         <div

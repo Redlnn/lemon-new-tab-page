@@ -19,7 +19,6 @@ export const main = async () => {
   // 初始化设置
   await initSettings()
   const settings = useSettingsStore()
-  console.log(settings.$state)
 
   // 应用主题色
   changeTheme(settings.primaryColor)

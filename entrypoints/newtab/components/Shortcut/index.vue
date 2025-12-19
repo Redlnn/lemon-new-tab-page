@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import { useDebounceFn, useResizeObserver } from '@vueuse/core'
 
-import { Edit16Regular, Pin16Regular, PinOff16Regular } from '@vicons/fluent'
+import {
+  ChevronLeft20Filled,
+  ChevronRight20Filled,
+  Edit16Regular,
+  Pin16Regular,
+  PinOff16Regular
+} from '@vicons/fluent'
 import { ClearRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
@@ -13,10 +19,13 @@ import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/shared/store'
 
+import getPerfClasses from '../../composables/perfClasses'
 import AddShortcut from './components/AddShortcut.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
+import ShortcutPaginationDots from './components/ShortcutPaginationDots.vue'
 import { useShortcutDrag } from './composables/useShortcutDrag'
 import { useShortcutLayout } from './composables/useShortcutLayout'
+import { useShortcutPagination } from './composables/useShortcutPagination'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 import { pinShortcut, removeShortcut } from './utils/shortcut'
 import { blockSite, invalidateTopSitesCache } from './utils/topSites'
@@ -53,69 +62,192 @@ const topSitesNeedsReload = ref(true)
 
 const { columnsNum, rowsNum, computeFitColumns, computeNeededRows } = useShortcutLayout()
 
-const shortcutContainerRef = ref()
+// 每页格子数（用于分页计算）
+const slotsPerPage = computed(() => columnsNum.value * rowsNum.value)
+
+// 合并后的完整项目列表（shortcuts + topSites）
+const allItems = computed(() => {
+  const shortcutItems = shortcuts.value.map((site, index) => ({
+    ...site,
+    isPinned: true,
+    originalIndex: index
+  }))
+  const topSiteItems = topSites.value.map((site, index) => ({
+    url: site.url,
+    title: site.title || '',
+    favicon: site.favicon,
+    isPinned: false,
+    originalIndex: index
+  }))
+  return [...shortcutItems, ...topSiteItems]
+})
+
+// 总项目数（用于分页计算，包含添加按钮）
+const totalItemsCount = computed(() => allItems.value.length)
+
+// 分页逻辑
+const {
+  currentPage,
+  totalPages,
+  showPagination,
+  isTouchDevice,
+  isAnimating,
+  slideDirection,
+  noTransition,
+  preloadTargetPage,
+  prevPage,
+  nextPage,
+  goToPage,
+  setupSwipe
+} = useShortcutPagination(totalItemsCount, slotsPerPage)
+
+// 获取指定页的项目
+function getPageItems(pageIndex: number) {
+  if (pageIndex < 0 || pageIndex >= totalPages.value) {
+    return []
+  }
+
+  const slots = slotsPerPage.value
+  const isLastPage = pageIndex === totalPages.value - 1
+
+  if (totalPages.value === 1) {
+    return allItems.value.slice(0, slots - 1)
+  }
+
+  if (isLastPage) {
+    const startIndex = pageIndex * slots
+    const maxItems = slots - 1
+    return allItems.value.slice(startIndex, startIndex + maxItems)
+  } else {
+    const startIndex = pageIndex * slots
+    return allItems.value.slice(startIndex, startIndex + slots)
+  }
+}
+
+// 动画期间显示的页码（用于渲染3页）
+const displayPage = computed(() => {
+  // 动画期间保持原页码，动画结束后 currentPage 会更新
+  return currentPage.value
+})
+
+// 当前页显示的项目
+const currentPageItems = computed(() => getPageItems(displayPage.value))
+
+// 前一页的项目（用于预加载）
+const prevPageItems = computed(() => {
+  // 如果有预加载目标页且向右跳（目标页 < 当前页），将目标页内容加载到 prev 位置
+  if (preloadTargetPage.value !== null && preloadTargetPage.value < displayPage.value) {
+    return getPageItems(preloadTargetPage.value)
+  }
+  return getPageItems(displayPage.value - 1)
+})
+
+// 后一页的项目（用于预加载）
+const nextPageItems = computed(() => {
+  // 如果有预加载目标页且向左跳（目标页 > 当前页），将目标页内容加载到 next 位置
+  if (preloadTargetPage.value !== null && preloadTargetPage.value > displayPage.value) {
+    return getPageItems(preloadTargetPage.value)
+  }
+  return getPageItems(displayPage.value + 1)
+})
+
+// 前一页是否显示添加按钮（避免模板中重复计算）
+const showPrevPageAddButton = computed(() => {
+  const pageIndex =
+    preloadTargetPage.value !== null && preloadTargetPage.value < displayPage.value
+      ? preloadTargetPage.value
+      : displayPage.value - 1
+  return showAddButtonForPage(pageIndex)
+})
+
+// 后一页是否显示添加按钮（避免模板中重复计算）
+const showNextPageAddButton = computed(() => {
+  const pageIndex =
+    preloadTargetPage.value !== null && preloadTargetPage.value > displayPage.value
+      ? preloadTargetPage.value
+      : displayPage.value + 1
+  return showAddButtonForPage(pageIndex)
+})
+
+// 是否在指定页显示添加按钮
+function showAddButtonForPage(pageIndex: number) {
+  return pageIndex === totalPages.value - 1
+}
+
+// 是否在当前页显示添加按钮（始终在最后一页的最后一格）
+const showAddButton = computed(() => showAddButtonForPage(displayPage.value))
+
+// 当前页实际显示的项目数（包含添加按钮）
+const currentPageTotalItems = computed(() => {
+  return currentPageItems.value.length + (showAddButton.value ? 1 : 0)
+})
+
+// 动态计算当前页实际需要的列数
+const displayColumns = computed(() => {
+  // 超出一页时，保持最大列数
+  if (totalPages.value > 1) {
+    return columnsNum.value
+  }
+  // 只有一页时，根据项目数动态调整
+  const itemCount = currentPageTotalItems.value
+  return Math.max(1, Math.min(columnsNum.value, itemCount))
+})
+
+// 动态计算当前页实际需要的行数
+const displayRows = computed(() => {
+  // 超出一页时，保持最大行数
+  if (totalPages.value > 1) {
+    return rowsNum.value
+  }
+  // 只有一页时，根据项目数动态调整
+  const itemCount = currentPageTotalItems.value
+  const cols = displayColumns.value
+  if (cols <= 0) return 1
+  return computeNeededRows(itemCount, cols)
+})
+
+const shortcutContainerRef = ref<HTMLElement>()
+const currentPageContainerRef = ref<HTMLElement>()
 
 const refreshDebounced = useDebounceFn(refresh, 100)
-useShortcutDrag(shortcutContainerRef, shortcuts, refreshDebounced)
+const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refreshDebounced)
+
+// 清理 refs 防止内存泄漏
+onBeforeUpdate(() => {
+  shortcutItemRefs.value = []
+})
 
 async function refresh() {
-  // 拆分数据读取与布局计算，避免频繁响应写入
+  // 拆分数据读取与布局计算
   const _shortcuts = shortcutStore.items.slice()
 
-  // 1) 纯计算：基于窗口宽度与设置确定列数上限（fitColumns 可能大于实际项目数）
-  const fitColumns = computeFitColumns()
+  // 1) 纯计算：基于窗口宽度与设置确定列数上限
+  const fitColumns = computeFitColumns(true)
+  columnsNum.value = fitColumns
+  rowsNum.value = settings.shortcut.rows
 
-  // 2) 首先保证“书签 + 添加按钮”可布局（不够就增加行数，已由 computeRowsGivenColumns 约束至上限）
-  const baseItemCount = _shortcuts.length + 1
-  const baseRows = computeNeededRows(baseItemCount, fitColumns)
-  rowsNum.value = baseRows
-  // 初始容量（预留添加按钮）
-  let capacity = fitColumns * baseRows - 1
-
-  // 3) 合并最常访问：一次性基于“列*最大行 - 1”的容量进行去重与截断
+  // 2) 合并最常访问
   let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.shortcut.enableTopSites) {
     const topList = await useTopSitesMerge({
       shortcuts: _shortcuts,
       columns: fitColumns,
       maxRows: settings.shortcut.rows,
-      force: topSitesNeedsReload.value
+      force: topSitesNeedsReload.value,
+      noCap: true // 不截断，获取所有可用的 top sites
     })
     mergedTop = topList
     topSitesNeedsReload.value = false
-    // 合并后的完整项目数（包含添加按钮）
-    const totalItems = _shortcuts.length + mergedTop.length + 1
-
-    // 4) 最终列数不应超过实际项目数
-    const finalColumns = Math.min(fitColumns, totalItems)
-    if (columnsNum.value !== finalColumns) {
-      columnsNum.value = finalColumns
-    }
-
-    // 5) 使用最终列数重新计算行数与容量，并对 TopSites 做最终截断
-    const finalRows = computeNeededRows(totalItems, finalColumns)
-    capacity = finalColumns * finalRows - 1
-    if (_shortcuts.length < capacity) {
-      mergedTop = mergedTop.slice(0, capacity - _shortcuts.length)
-    } else {
-      mergedTop = []
-    }
-  } else {
-    // 6) 未启用 TopSites，同样收敛列数至“书签 + 添加按钮”总数
-    const totalItems = _shortcuts.length + 1
-    const finalColumns = Math.min(fitColumns, totalItems)
-    if (columnsNum.value !== finalColumns) {
-      columnsNum.value = finalColumns
-    }
-    const finalRows = computeNeededRows(totalItems, finalColumns)
-    capacity = finalColumns * finalRows - 1
   }
 
   shortcuts.value = _shortcuts
-  topSites.value = _shortcuts.length < capacity ? mergedTop : []
+  topSites.value = mergedTop
 }
 
 onMounted(() => {
+  // 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
+  setupSwipe(shortcutContainerRef, isDragging)
+
   // useResizeObserver 会在开始观察时立即触发一次
   useResizeObserver(document.documentElement, async () => {
     await refreshDebounced()
@@ -127,7 +259,6 @@ onMounted(() => {
 })
 
 watch(settings.shortcut, refreshDebounced)
-watch(() => columnsNum.value, refreshDebounced)
 watch(
   () => settings.shortcut.enableTopSites,
   (enabled) => {
@@ -151,6 +282,14 @@ blockedTopSitesStorage.watch(() => {
   invalidateTopSitesCache()
   refreshDebounced()
 })
+
+// 根据原始索引获取快捷方式的实际索引（用于编辑）
+function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): number {
+  if (item.isPinned) {
+    return item.originalIndex
+  }
+  return -1
+}
 </script>
 
 <template>
@@ -158,87 +297,242 @@ blockedTopSitesStorage.watch(() => {
     class="shortcut"
     :style="{
       opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
-      marginTop: `${settings.shortcut.marginTop}px`
+      paddingTop: `${settings.shortcut.marginTop}px`
     }"
   >
-    <div
-      ref="shortcutContainerRef"
-      class="shortcut__container"
-      :class="[
-        settings.shortcut.showShortcutContainerBg ? 'shortcut__container--bg' : undefined,
-        settings.shortcut.enableAreaShadow ? 'shortcut__container--shadow' : undefined,
-        settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-        settings.shortcut.whiteTextInLightMode ? 'shortcut__container--white-text-light' : undefined
-      ]"
-      :style="{
-        pointerEvents: focusStore.isFocused ? 'none' : 'auto',
-        gridTemplateColumns: `repeat(${columnsNum}, 1fr)`,
-        gridTemplateRows: `repeat(${rowsNum}, 1fr)`,
-        gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-        '--icon_size': `${settings.shortcut.iconSize}px`
-      }"
-    >
-      <shortcut-item
-        v-for="(site, index) in shortcuts"
-        :key="site.url"
-        :url="site.url"
-        :title="site.title"
-        :favicon="site.favicon"
-        pined
-        @opened="() => onChildOpened(index)"
-        :ref="(el) => setChildRef(index, el as InstanceType<typeof ShortcutItem>)"
-      >
-        <template #submenu>
-          <el-dropdown-item @click="shortcutEditorRef?.openEditDialog(index)">
-            <el-icon>
-              <edit16-regular />
-            </el-icon>
-            {{ t('common.edit') }}
-          </el-dropdown-item>
-          <el-dropdown-item @click="removeShortcut(index, shortcutStore, refreshDebounced)">
-            <el-icon>
-              <pin-off16-regular />
-            </el-icon>
-            {{ t('shortcut.unpin') }}
-          </el-dropdown-item>
-        </template>
-      </shortcut-item>
-      <shortcut-item
-        v-for="(site, index) in topSites"
-        :key="index"
-        :url="site.url"
-        :title="site.title || ''"
-        :favicon="site.favicon"
-        @opened="() => onChildOpened(shortcuts.length + index)"
-        :ref="
-          (el) => setChildRef(shortcuts.length + index, el as InstanceType<typeof ShortcutItem>)
-        "
-      >
-        <template #submenu>
-          <el-dropdown-item
-            @click="
-              async () => {
-                await blockSite(site.url, refreshDebounced)
-                await refreshDebounced()
-              }
-            "
-          >
-            <el-icon>
-              <clear-round />
-            </el-icon>
-            {{ t('shortcut.hide') }}
-          </el-dropdown-item>
-          <el-dropdown-item
-            @click="pinShortcut(shortcutStore, refreshDebounced, site.url, site.title || '')"
-          >
-            <el-icon>
-              <pin16-regular />
-            </el-icon>
-            {{ t('shortcut.pin') }}
-          </el-dropdown-item>
-        </template>
-      </shortcut-item>
-      <add-shortcut ref="shortcutEditorRef" :reload="refreshDebounced" />
+    <div ref="shortcutWrapperRef" class="shortcut__wrapper">
+      <div class="shortcut__wrapper-inner">
+        <!-- 左翻页按钮 -->
+        <button
+          v-if="showPagination && !isTouchDevice"
+          class="shortcut__nav-btn--prev"
+          :class="[
+            { 'shortcut__nav-btn--disabled': currentPage === 0 || isAnimating },
+            getPerfClasses(
+              {
+                transparentOff: settings.perf.disableShortcutTransparent,
+                blurOff: settings.perf.disableShortcutBlur
+              },
+              'shortcut__nav-btn'
+            )
+          ]"
+          :disabled="currentPage === 0 || isAnimating"
+          @click="prevPage"
+        >
+          <el-icon :size="20">
+            <chevron-left20-filled />
+          </el-icon>
+        </button>
+
+        <!-- 滑动轨道容器 -->
+        <div
+          ref="shortcutContainerRef"
+          class="shortcut__slide-viewport"
+          :class="[
+            settings.shortcut.showShortcutContainerBg ? 'shortcut__slide-viewport--bg' : undefined,
+            settings.shortcut.enableAreaShadow ? 'shortcut__slide-viewport--shadow' : undefined
+          ]"
+        >
+          <div class="shortcut__slide-track">
+            <!-- 前一页 -->
+            <div
+              v-if="displayPage > 0"
+              class="shortcut__container shortcut__container--page shortcut__container--prev"
+              :class="[
+                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
+                settings.shortcut.whiteTextInLightMode
+                  ? 'shortcut__container--white-text-light'
+                  : undefined,
+                { 'shortcut__container--slide-left': slideDirection === 'left' },
+                { 'shortcut__container--slide-right': slideDirection === 'right' },
+                { 'shortcut__container--no-transition': noTransition }
+              ]"
+              :style="{
+                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
+                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
+                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+                '--icon_size': `${settings.shortcut.iconSize}px`
+              }"
+            >
+              <shortcut-item
+                v-for="item in prevPageItems"
+                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                :url="item.url"
+                :title="item.title"
+                :favicon="item.favicon"
+                :pined="item.isPinned"
+              />
+              <add-shortcut
+                v-if="showPrevPageAddButton"
+                :reload="refreshDebounced"
+                :show-button="true"
+              />
+            </div>
+            <!-- 前一页占位（当没有前一页时） -->
+            <div
+              v-else
+              class="shortcut__container shortcut__container--page shortcut__container--prev shortcut__container--placeholder"
+            />
+
+            <!-- 当前页 -->
+            <div
+              ref="currentPageContainerRef"
+              class="shortcut__container shortcut__container--page shortcut__container--current"
+              :class="[
+                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
+                settings.shortcut.whiteTextInLightMode
+                  ? 'shortcut__container--white-text-light'
+                  : undefined,
+                { 'shortcut__container--slide-left': slideDirection === 'left' },
+                { 'shortcut__container--slide-right': slideDirection === 'right' },
+                { 'shortcut__container--no-transition': noTransition }
+              ]"
+              :style="{
+                pointerEvents: focusStore.isFocused ? 'none' : 'auto',
+                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
+                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
+                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+                '--icon_size': `${settings.shortcut.iconSize}px`
+              }"
+            >
+              <shortcut-item
+                v-for="(item, index) in currentPageItems"
+                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                :url="item.url"
+                :title="item.title"
+                :favicon="item.favicon"
+                :pined="item.isPinned"
+                @opened="() => onChildOpened(index)"
+                :ref="(el) => setChildRef(index, el as InstanceType<typeof ShortcutItem>)"
+              >
+                <template #submenu>
+                  <template v-if="item.isPinned">
+                    <el-dropdown-item
+                      @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
+                    >
+                      <el-icon>
+                        <edit16-regular />
+                      </el-icon>
+                      {{ t('common.edit') }}
+                    </el-dropdown-item>
+                    <el-dropdown-item
+                      @click="removeShortcut(item.originalIndex, shortcutStore, refreshDebounced)"
+                    >
+                      <el-icon>
+                        <pin-off16-regular />
+                      </el-icon>
+                      {{ t('shortcut.unpin') }}
+                    </el-dropdown-item>
+                  </template>
+                  <template v-else>
+                    <el-dropdown-item
+                      @click="
+                        async () => {
+                          await blockSite(item.url, refreshDebounced)
+                          await refreshDebounced()
+                        }
+                      "
+                    >
+                      <el-icon>
+                        <clear-round />
+                      </el-icon>
+                      {{ t('shortcut.hide') }}
+                    </el-dropdown-item>
+                    <el-dropdown-item
+                      @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
+                    >
+                      <el-icon>
+                        <pin16-regular />
+                      </el-icon>
+                      {{ t('shortcut.pin') }}
+                    </el-dropdown-item>
+                  </template>
+                </template>
+              </shortcut-item>
+
+              <!-- 添加快捷方式按钮（始终在最后一页最后一格） -->
+              <add-shortcut
+                ref="shortcutEditorRef"
+                :reload="refreshDebounced"
+                :show-button="showAddButton"
+              />
+            </div>
+
+            <!-- 后一页 -->
+            <div
+              v-if="displayPage < totalPages - 1"
+              class="shortcut__container shortcut__container--page shortcut__container--next"
+              :class="[
+                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
+                settings.shortcut.whiteTextInLightMode
+                  ? 'shortcut__container--white-text-light'
+                  : undefined,
+                { 'shortcut__container--slide-left': slideDirection === 'left' },
+                { 'shortcut__container--slide-right': slideDirection === 'right' },
+                { 'shortcut__container--no-transition': noTransition }
+              ]"
+              :style="{
+                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
+                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
+                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+                '--icon_size': `${settings.shortcut.iconSize}px`
+              }"
+            >
+              <shortcut-item
+                v-for="item in nextPageItems"
+                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                :url="item.url"
+                :title="item.title"
+                :favicon="item.favicon"
+                :pined="item.isPinned"
+              />
+              <add-shortcut
+                v-if="showNextPageAddButton"
+                :reload="refreshDebounced"
+                :show-button="true"
+              />
+            </div>
+            <!-- 后一页占位（当没有后一页时） -->
+            <div
+              v-else
+              class="shortcut__container shortcut__container--page shortcut__container--next shortcut__container--placeholder"
+            />
+          </div>
+        </div>
+
+        <!-- 右翻页按钮 -->
+        <button
+          v-if="showPagination && !isTouchDevice"
+          class="shortcut__nav-btn--next"
+          :class="[
+            { 'shortcut__nav-btn--disabled': currentPage === totalPages - 1 || isAnimating },
+            getPerfClasses(
+              {
+                transparentOff: settings.perf.disableShortcutTransparent,
+                blurOff: settings.perf.disableShortcutBlur
+              },
+              'shortcut__nav-btn'
+            )
+          ]"
+          :disabled="currentPage === totalPages - 1 || isAnimating"
+          @click="nextPage"
+        >
+          <el-icon :size="20">
+            <chevron-right20-filled />
+          </el-icon>
+        </button>
+      </div>
+
+      <!-- 页数指示器 -->
+      <shortcut-pagination-dots
+        v-if="showPagination"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @goto="goToPage"
+      />
     </div>
   </section>
 </template>

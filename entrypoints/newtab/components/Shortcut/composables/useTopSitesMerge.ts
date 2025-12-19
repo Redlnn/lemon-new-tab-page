@@ -9,6 +9,8 @@ interface UseTopSitesMergeOptions {
   columns?: number
   maxRows?: number
   force?: boolean
+  /** 不截断结果，返回所有去重后的 top sites */
+  noCap?: boolean
 }
 
 export async function useTopSitesMerge(
@@ -21,7 +23,19 @@ export async function useTopSitesMerge(
     return []
   }
 
-  // 计算容量（优先使用 columns + maxRows，上限为列*行 - 1，预留“添加按钮”）
+  // 如果 getTopSites() 返回 undefined，则默认空数组
+  const topSites = (await getTopSites(options.force)) ?? []
+
+  // 去重：移除与书签重复的 URL
+  const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
+  const dedup = topSites.filter((site) => !shortcutUrlsSet.has(site.url))
+
+  // 如果启用 noCap，直接返回所有去重后的结果
+  if (options.noCap) {
+    return dedup
+  }
+
+  // 计算容量（优先使用 columns + maxRows，上限为列*行 - 1，预留"添加按钮"）
   let remain = Infinity
   const { columns, maxRows } = options
   const hasCapacityInfo = typeof columns === 'number' && typeof maxRows === 'number'
@@ -32,13 +46,6 @@ export async function useTopSitesMerge(
       return []
     }
   }
-
-  // 如果 getTopSites() 返回 undefined，则默认空数组
-  const topSites = (await getTopSites(options.force)) ?? []
-
-  // 去重：移除与书签重复的 URL
-  const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
-  const dedup = topSites.filter((site) => !shortcutUrlsSet.has(site.url))
 
   if (remain === Infinity) {
     return dedup

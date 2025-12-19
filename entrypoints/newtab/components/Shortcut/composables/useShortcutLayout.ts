@@ -6,7 +6,7 @@ export interface UseShortcutLayout {
   columnsNum: Ref<number>
   rowsNum: Ref<number>
   // 纯计算：不写入 ref，仅返回数值
-  computeFitColumns: () => number
+  computeFitColumns: (allocateSpaces: boolean) => number
   computeNeededRows: (itemCount: number, columns: number) => number
 }
 
@@ -21,11 +21,15 @@ export function useShortcutLayout(): UseShortcutLayout {
   const getItemWidth = () => settings.shortcut.iconSize + 30
 
   // 计算在当前窗口宽度下可容纳的最大列数
-  const computeFitColumns = () => {
+  const computeFitColumns = (allocateSpaces: boolean) => {
     const containerWidth = windowWidth.value * 0.85
     const marginH = settings.shortcut.itemMarginH
     const unitWidth = getItemWidth() + marginH
-    const extra = settings.shortcut.showShortcutContainerBg ? 40 : 0
+    let extra = settings.shortcut.showShortcutContainerBg ? 40 : 0
+    if (allocateSpaces) {
+      // 多页模式下预留分页按钮和间距空间
+      extra += 88
+    }
 
     // 假设有 n 列，则总宽度为 n * unitWidth - marginH + extra
     // 其中 - marginH 是因为最后一列不需要右侧间距
