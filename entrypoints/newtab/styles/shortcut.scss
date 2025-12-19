@@ -148,7 +148,9 @@
 
       .shortcut__title {
         position: relative;
-        width: calc(var(--icon_size) + 30px);
+        width: calc(var(--icon_size) + 38px);
+        padding: 4px;
+        margin: -4px;
         font-size: var(--el-font-size-small);
         text-align: center;
 
