@@ -303,21 +303,21 @@
 
         .shortcut__pin-icon {
           position: absolute;
-          right: -3px;
-          bottom: -3px;
+          right: 0;
+          bottom: 0;
           z-index: 1;
           display: flex;
           align-items: center;
           justify-content: center;
-          width: 20px;
-          height: 20px;
+          width: 17px;
+          height: 17px;
           color: var(--el-color-primary);
           background-color: var(--el-fill-color);
           border-radius: 50%;
           box-shadow: var(--el-box-shadow-light);
 
           &--opacity {
-            background-color: var(--le-bg-color-overlay-opacity-50);
+            background-color: var(--le-bg-color-overlay-opacity-80);
           }
 
           &--blur {
@@ -325,7 +325,7 @@
           }
 
           html.colorful &:not(.shortcut__pin-icon--opacity) {
-            background-color: var(--el-color-primary-light-9);
+            background-color: var(--el-color-primary-light-8);
           }
         }
 

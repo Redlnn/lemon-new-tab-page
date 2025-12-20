@@ -80,7 +80,7 @@ defineExpose({ open, close })
             )
           ]"
         >
-          <el-icon size="15">
+          <el-icon size="11">
             <pin16-regular />
           </el-icon>
         </div>
