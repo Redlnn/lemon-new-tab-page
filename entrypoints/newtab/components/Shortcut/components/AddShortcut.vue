@@ -72,7 +72,8 @@ function openEditDialog(index: number) {
 
 function isValidUrl(url: string) {
   try {
-    new URL(url)
+    const urlToCheck = url.includes('://') ? url : `http://${url}`
+    new URL(urlToCheck)
     return true
   } catch {
     return false
@@ -84,8 +85,15 @@ async function submit() {
     ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
     return
   }
+
+  // 如果没有协议,自动添加https://
+  let finalUrl = data.url.trim()
+  if (!finalUrl.includes('://')) {
+    finalUrl = `https://${finalUrl}`
+  }
+
   const shortcut = {
-    url: data.url.trim(),
+    url: finalUrl,
     title: data.title.trim(),
     ...(!data.favicon ? {} : { favicon: data.favicon })
   }
