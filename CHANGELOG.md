@@ -2,21 +2,42 @@
 
 ## 2.8.0 (WIP)
 
+### 重磅推出🎉
+
+1. 现在你可以点击浏览器扩展工具栏的图标来快速添加当前页面到快捷方式了！
+2. 快捷方式可以翻页啦！
+
 ### 新特性✨
 
 - 支持设置快捷方式默认新标签页打开
 - 支持在浏览器工具栏按钮添加当前页面到快捷方式
 - 支持在书签侧边栏添加页面到快捷方式
+  ([#55](https://github.com/Redlnn/lemon-new-tab-page/issues/55))
+- 快捷方式支持分页显示
+  ([#57](https://github.com/Redlnn/lemon-new-tab-page/issues/57))
+- 可自定义快捷方式图标相对其容器的比例
+  ([#58](https://github.com/Redlnn/lemon-new-tab-page/issues/58))
+- 一直展开搜索框时支持默认显示搜索引擎图标和搜索按钮
+  ([#60](https://github.com/Redlnn/lemon-new-tab-page/issues/60))
+- 支持加快启动时背景显示速度及禁用背景切换动画
+  ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
 
 ### 调整⚡️
 
 - 缓存莫奈取色结果供下次启动时使用，避免切换的割裂感
+- 添加快捷方式时允许不输入协议前缀（http:// 或 https://）
+- 优化添加快捷方式和搜索引擎对话框的样式
+- 缩小置顶链接的pin图标
+  ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
 
 ### 修复🐛
 
 - 修复快捷方式拖动排序UI不更新
   ([#53](https://github.com/Redlnn/lemon-new-tab-page/issues/53))
 - 修复新标签页的快捷方式变动状态不能及时从云同步、弹出菜单等途径同步
+- 修复快捷方式标题文字阴影被裁切
+- 修复使用拖动排序置顶链接后其图标错误的问题
+- 修复搜索引擎选择器的样式错误
 
 ## 2.7.0 (2025-12-10)
 

@@ -4,21 +4,45 @@
 
 ## 2.7.1 (WIP)
 
+### Major Update🎉
+
+1. Now you can click the browser extension toolbar icon to quickly add the current page to shortcuts!
+2. Shortcuts can now be paginated!
+
 ### New Features✨
 
 - Support setting shortcuts to open in a new tab by default
 - Support adding the current page to shortcuts from the browser toolbar button
 - Support adding pages to shortcuts from the bookmarks sidebar
+  ([#55](https://github.com/Redlnn/lemon-new-tab-page/issues/55))
+- Shortcuts support pagination
+  ([#57](https://github.com/Redlnn/lemon-new-tab-page/issues/57))
+- Support customizing the relative size of shortcut icons to their containers
+  ([#58](https://github.com/Redlnn/lemon-new-tab-page/issues/58))
+- When the search box is always expanded,
+  support displaying the search engine icon and search button by default
+  ([#60](https://github.com/Redlnn/lemon-new-tab-page/issues/60))
+- Support speeding up the display of the background at startup
+  and disabling background transition animations
+  ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
 
 ### Improvements⚡️
 
 - Cache Monet color extraction results for use on next startup to avoid abrupt changes
+- When adding shortcuts, allow omitting the protocol prefix (http:// or https://)
+- Optimize the styles of the "Add Shortcut" and "Add Search Engine" dialogs
+- Reduce the size of the pin icon for pinned links
+  ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
 
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut drag-and-drop sorting UI did not update
   ([#53](https://github.com/Redlnn/lemon-new-tab-page/issues/53))
-- Fixed issue where changes to shortcuts on the new tab page were not promptly synced from cloud sync, popup menu, and other sources
+- Fixed issue where changes to shortcuts on the new tab page
+  were not promptly synced from cloud sync, popup menu, and other sources
+- Fixed shortcut title text shadow being cut off
+- Fixed issue where pinned link icons were incorrect after using drag-and-drop sorting
+- Fixed style issues in the search engine selector
 
 ## 2.7.0 (Dec 10, 2025)
 
