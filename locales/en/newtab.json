@@ -31,12 +31,12 @@
   "common": {
     "cancel": "Cancel",
     "confirm": "Yes",
-    "no": "No",
     "delete": "Delete",
     "edit": "Edit",
     "enable": "Enable",
-    "icon": "Icon",
+    "icon": "Icon (Optional)",
     "name": "Name",
+    "no": "No",
     "save": "Save",
     "undo": "Undo",
     "url": "URL",
@@ -91,10 +91,10 @@
       "confirmSvgDesc": "Are you sure you want to use SVG images? To avoid XSS and XXE attacks, Lemon New Tab will process the image, so it may cause the SVG image not to be displayed as expected. But even after processing, you may still be attacked by the image you choose, so make sure the image source you use is safe.",
       "confirmSvgOKBtn": "Right",
       "confirmSvgTitle": "You selected an SVG image",
+      "extensionIconTip": "You can also add the current page you are browsing by clicking the icon in the browser extensions menu.",
       "invalidUrlError": "Invalid URL. Please input a new one",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "If you don't upload an icon, it'll try to get one automatically. Supported formats: ICO, SVG, PNG, JPG, WebP.",
-      "extensionIconTip": "You can also click the extension icon in the extension menu to add the current page to shortcuts."
+      "uploadFaviconAlert": "Auto-detect if not provided.\nICO, SVG, PNG, JPG, WebP"
     },
     "addShortcut": "Add Shortcut",
     "editShortcut": "Edit Shortcut",

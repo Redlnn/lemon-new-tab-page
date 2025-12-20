@@ -146,40 +146,38 @@ defineExpose({
     v-model="showDialog"
     :title="dialogTitle"
     class="add-shortcut-dialog base-dialog--blur base-dialog--opacity noselect"
-    width="500px"
+    width="450"
     append-to-body
     destroy-on-close
   >
     <el-form ref="modelForm" :model="data">
-      <el-form-item :label="t('common.name')">
-        <el-input v-model="data.title" />
+      <el-form-item :label="t('common.name')" label-position="top">
+        <el-input v-model="data.title" size="large" />
       </el-form-item>
-      <el-form-item :label="t('common.url')">
-        <el-input v-model="data.url" @keyup.enter="submit" />
+      <el-form-item :label="t('common.url')" label-position="top">
+        <el-input v-model="data.url" size="large" @keyup.enter="submit" />
       </el-form-item>
-      <el-form-item :label="t('common.icon')">
-        <el-upload
-          class="shortcut__favicon-uploader"
-          :show-file-list="false"
-          :http-request="
-            (option: UploadRequestOptions) => httpRequest(option, (b64) => (data.favicon = b64))
-          "
-          :before-upload="beforeFaviconUpload"
-          accept="image/*"
-        >
-          <img v-if="data.favicon" :src="data.favicon" class="shortcut__favicon-uploader-img" />
-          <el-icon v-else class="shortcut__favicon-uploader-icon"><plus /></el-icon>
-        </el-upload>
+      <el-form-item :label="t('common.icon')" label-position="top">
+        <div class="shortcut__favicon-uploader-container">
+          <el-upload
+            class="shortcut__favicon-uploader"
+            :show-file-list="false"
+            :http-request="
+              (option: UploadRequestOptions) => httpRequest(option, (b64) => (data.favicon = b64))
+            "
+            :before-upload="beforeFaviconUpload"
+            accept="image/*"
+          >
+            <img v-if="data.favicon" :src="data.favicon" class="shortcut__favicon-uploader-img" />
+            <el-icon v-else class="shortcut__favicon-uploader-icon"><plus /></el-icon>
+          </el-upload>
+          <div style="white-space: pre-line">
+            {{ t('shortcut.addDialog.uploadFaviconAlert') }}
+          </div>
+        </div>
       </el-form-item>
     </el-form>
     <el-alert
-      type="info"
-      show-icon
-      :closable="false"
-      :title="t('shortcut.addDialog.uploadFaviconAlert')"
-    />
-    <el-alert
-      type="info"
       show-icon
       :closable="false"
       :title="t('shortcut.addDialog.extensionIconTip')"
@@ -187,8 +185,8 @@ defineExpose({
     />
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="cancel">{{ t('common.no') }}</el-button>
-        <el-button type="primary" @click="submit">{{ confirmLabel }}</el-button>
+        <el-button round size="large" @click="cancel">{{ t('common.no') }}</el-button>
+        <el-button type="primary" round size="large" @click="submit">{{ confirmLabel }}</el-button>
       </span>
     </template>
   </el-dialog>
@@ -197,13 +195,37 @@ defineExpose({
 <style lang="scss">
 .add-shortcut-dialog {
   max-width: 93%;
-  padding: 30px 50px;
+  padding: 30px;
+
+  --el-dialog-border-radius: 20px;
+  --el-dialog-padding-primary: 25px;
 
   html.colorful:not(.dialog-transparent) & {
     background-color: var(--el-color-primary-light-9);
   }
 
-  --el-dialog-border-radius: 10px;
+  .el-form-item--label-top .el-form-item__label {
+    margin-bottom: 6px;
+    line-height: 1;
+  }
+
+  .el-form-item {
+    --el-form-label-font-size: var(--el-font-size-small);
+  }
+
+  .el-input {
+    --el-input-border-radius: 12px;
+  }
+
+  .el-alert--info {
+    --el-alert-bg-color: transparent;
+    --el-alert-title-font-size: var(--el-font-size-extra-small);
+    --el-alert-padding: 0;
+
+    .el-alert__title {
+      line-height: 1.4;
+    }
+  }
 }
 
 .shortcut__item--add-shortcut .shortcut__item-link {
@@ -257,38 +279,49 @@ defineExpose({
   }
 }
 
-// 上传图标和图片
-.shortcut__favicon-uploader-img,
-.shortcut__favicon-uploader-icon {
-  width: 50px;
-  height: 50px;
-}
+.shortcut__favicon-uploader {
+  &-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    font-size: var(--el-font-size-extra-small);
+    line-height: 1.4;
+    color: var(--el-text-color-secondary);
+  }
 
-.shortcut__favicon-uploader-img {
-  object-fit: cover;
-}
+  // 上传图标和图片
+  &-img,
+  &-icon {
+    width: 50px;
+    height: 50px;
+  }
 
-.shortcut__favicon-uploader-icon {
-  font-size: 20px;
-  color: var(--el-text-color-placeholder);
-  text-align: center;
-  transition: var(--el-transition-duration-fast);
-}
+  &-img {
+    object-fit: cover;
+  }
 
-.shortcut__favicon-uploader .el-upload {
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  background-color: var(--el-fill-color-blank);
-  border: 1px dashed var(--el-text-color-placeholder);
-  border-radius: 6px;
-  transition: var(--el-transition-duration-fast);
+  &-icon {
+    font-size: 20px;
+    color: var(--el-text-color-placeholder);
+    text-align: center;
+    transition: var(--el-transition-duration-fast);
+  }
 
-  &:hover {
-    border-color: var(--el-color-primary);
+  & .el-upload {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--el-fill-color-blank);
+    border: 1px dashed var(--el-border-color);
+    border-radius: 12px;
+    transition: var(--el-transition-duration-fast);
 
-    .shortcut__favicon-uploader-icon {
-      color: var(--el-color-primary);
+    &:hover {
+      border-color: var(--el-color-primary);
+
+      .shortcut__favicon-uploader-icon {
+        color: var(--el-color-primary);
+      }
     }
   }
 }

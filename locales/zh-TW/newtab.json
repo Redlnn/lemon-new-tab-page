@@ -31,12 +31,12 @@
   "common": {
     "cancel": "取消",
     "confirm": "好",
-    "no": "算了",
     "delete": "刪除",
     "edit": "編輯",
     "enable": "啟用",
-    "icon": "圖示",
+    "icon": "圖示（可選）",
     "name": "名稱",
+    "no": "算了",
     "save": "儲存",
     "undo": "復原",
     "url": "網址",
@@ -91,10 +91,10 @@
       "confirmSvgDesc": "你確定要使用 SVG 圖片嗎？為了避免 XSS 和 XXE 攻擊，檸檬起始頁將會對這個圖片進行處理，因此有可能會導致這個 SVG 圖片不會如期展示。但即使經過處理，你有可能遭受攻擊，請確保你所使用的圖片來源安全。",
       "confirmSvgOKBtn": "是的",
       "confirmSvgTitle": "你選擇了一張 SVG 圖片",
+      "extensionIconTip": "你也可以通過點擊瀏覽器擴充功能選單中的圖示來將目前查看頁面加入快速存取。",
       "invalidUrlError": "無效的網址，請重新輸入~",
       "tooLargeImageError": "圖片檔案大小超過 100KiB，請重新選擇~",
-      "uploadFaviconAlert": "沒上傳圖示時會自動嘗試取得，支援格式：ICO、SVG、PNG、JPG、WebP。",
-      "extensionIconTip": "你也可以點擊擴充功能選單中的擴充功能圖示來將目前頁面加入快速存取"
+      "uploadFaviconAlert": "沒上傳圖示時會自動嘗試取得。\nICO、SVG、PNG、JPG、WebP"
     },
     "addShortcut": "新增捷徑",
     "editShortcut": "編輯捷徑",
