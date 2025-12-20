@@ -351,7 +351,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
                 gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
                 gridTemplateRows: `repeat(${displayRows}, 1fr)`,
                 gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`
+                '--icon_size': `${settings.shortcut.iconSize}px`,
+                '--icon_ratio': `${settings.shortcut.iconRatio}`
               }"
             >
               <shortcut-item
@@ -393,7 +394,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
                 gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
                 gridTemplateRows: `repeat(${displayRows}, 1fr)`,
                 gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`
+                '--icon_size': `${settings.shortcut.iconSize}px`,
+                '--icon_ratio': `${settings.shortcut.iconRatio}`
               }"
             >
               <shortcut-item
@@ -477,7 +479,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
                 gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
                 gridTemplateRows: `repeat(${displayRows}, 1fr)`,
                 gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`
+                '--icon_size': `${settings.shortcut.iconSize}px`,
+                '--icon_ratio': `${settings.shortcut.iconRatio}`
               }"
             >
               <shortcut-item

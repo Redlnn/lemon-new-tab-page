@@ -113,6 +113,18 @@ async function restoreDefaultTopSites() {
         />
       </div>
       <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('shortcut.iconRatio') }}</div>
+        <el-slider
+          v-model="settings.shortcut.iconRatio"
+          :min="0.1"
+          :max="1"
+          :step="0.1"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings__item settings__item--vertical">
         <div class="settings__label">
           {{ t('shortcut.HorizontalIconSpacing') }}
         </div>

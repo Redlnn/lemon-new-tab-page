@@ -385,16 +385,16 @@
 
           .span {
             display: block;
-            width: calc(var(--icon_size) / 2);
-            height: calc(var(--icon_size) / 2);
+            width: calc(var(--icon_size) * var(--icon_ratio));
+            height: calc(var(--icon_size) * var(--icon_ratio));
             background-repeat: no-repeat;
             background-position: center center;
             background-size: cover;
             border-radius: 3px;
 
             svg {
-              width: calc(var(--icon_size) / 2);
-              height: calc(var(--icon_size) / 2);
+              width: calc(var(--icon_size) * var(--icon_ratio));
+              height: calc(var(--icon_size) * var(--icon_ratio));
             }
           }
         }

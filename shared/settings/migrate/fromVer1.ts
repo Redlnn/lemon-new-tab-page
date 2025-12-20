@@ -73,6 +73,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       showPinnedIcon: oldSettings.showPinnedIcon,
       showShortcutContainerBg: defaultSettings.shortcut.showShortcutContainerBg,
       iconSize: defaultSettings.shortcut.iconSize,
+      iconRatio: defaultSettings.shortcut.iconRatio,
       whiteTextInLightMode: defaultSettings.shortcut.whiteTextInLightMode,
       marginTop: defaultSettings.shortcut.marginTop,
       openInNewTab: defaultSettings.shortcut.openInNewTab

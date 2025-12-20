@@ -73,6 +73,7 @@ export interface SettingsInterfaceVer7 {
     showPinnedIcon: boolean
     showShortcutContainerBg: boolean
     iconSize: number
+    iconRatio: number
     whiteTextInLightMode: boolean
     marginTop: number
     openInNewTab: boolean

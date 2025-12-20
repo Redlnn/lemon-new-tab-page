@@ -68,6 +68,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       showPinnedIcon: oldSettings.shortcut.showPinnedIcon,
       showShortcutContainerBg: oldSettings.shortcut.showShortcutContainerBg,
       iconSize: oldSettings.shortcut.iconSize,
+      iconRatio: defaultSettings.shortcut.iconRatio,
       whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
       marginTop: oldSettings.shortcut.marginTop,
       openInNewTab: defaultSettings.shortcut.openInNewTab

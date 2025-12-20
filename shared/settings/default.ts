@@ -71,6 +71,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showPinnedIcon: true,
     showShortcutContainerBg: false,
     iconSize: 50,
+    iconRatio: 0.5,
     whiteTextInLightMode: true,
     marginTop: 50,
     openInNewTab: false

@@ -168,6 +168,7 @@
     "enableAreaShadow": "显示区域阴影",
     "enableBg": "显示区域背景",
     "enableShadow": "显示图标阴影",
+    "iconRatio": "图标填充比例",
     "iconSize": "图标大小",
     "marginTop": "区域上边距",
     "maxColumns": "最大列数",
