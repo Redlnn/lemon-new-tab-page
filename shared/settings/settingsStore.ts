@@ -19,6 +19,10 @@ const searchSuggestAPIsMap: Record<
   谷歌: 'google'
 }
 
+interface WxtSettingsVersion {
+  settings$?: { v: number }
+}
+
 type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
 
 async function migrateSettings(
@@ -52,7 +56,7 @@ export async function initSettings() {
         settings: OldStorageSettings | null
       }>,
       settingsStorage.getValue(),
-      browser.storage.local.get('settings$')
+      browser.storage.local.get('settings$') as Promise<WxtSettingsVersion>
     ])
 
     if (oldSettings.settings && !('pluginVersion' in oldSettings.settings)) {
@@ -70,7 +74,7 @@ export async function initSettings() {
     if (!settings) {
       settings = newSettings
       if (wxtSettingsVer.settings$ && settings.version !== wxtSettingsVer.settings$.v) {
-        settings.version = wxtSettingsVer.settings$.v
+        settings.version = wxtSettingsVer.settings$.v as CURRENT_CONFIG_INTERFACE['version']
       }
       console.log('[Settings] Initializing settings storage with config version', settings.version)
     }
@@ -78,12 +82,12 @@ export async function initSettings() {
     // Firefox: 并行读取设置
     const [newSettings, wxtSettings] = await Promise.all([
       settingsStorage.getValue(),
-      browser.storage.local.get('settings$')
+      browser.storage.local.get('settings$') as Promise<WxtSettingsVersion>
     ])
 
     settings = newSettings
     if (wxtSettings.settings$ && settings.version !== wxtSettings.settings$.v) {
-      settings.version = wxtSettings.settings$.v
+      settings.version = wxtSettings.settings$.v as CURRENT_CONFIG_INTERFACE['version']
     }
     console.log('[Settings] Initializing settings storage with config version', settings.version)
   }

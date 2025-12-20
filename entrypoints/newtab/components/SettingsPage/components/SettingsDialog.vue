@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { TransitionProps } from 'vue'
+
 import {
   dialogEmits,
   dialogInjectionKey,
@@ -44,7 +46,8 @@ const {
   onOpenAutoFocus,
   onCloseAutoFocus,
   onCloseRequested,
-  onFocusoutPrevented
+  onFocusoutPrevented,
+  closing
 } = useDialog(props, dialogRef)
 
 watchEffect(() => {
@@ -83,7 +86,7 @@ defineExpose({
 
 <template>
   <el-teleport :to="appendTo" :disabled="appendTo !== 'body' ? false : !appendToBody">
-    <transition v-bind="transitionConfig">
+    <transition v-bind="transitionConfig as TransitionProps">
       <el-overlay
         v-show="visible"
         custom-mask-event
@@ -101,7 +104,7 @@ defineExpose({
           :aria-label="title || undefined"
           :aria-labelledby="!title ? titleId : undefined"
           :aria-describedby="bodyId"
-          :class="`${ns.namespace.value}-overlay-dialog`"
+          :class="[`${ns.namespace.value}-overlay-dialog`, ns.is('closing', closing)]"
           :style="overlayDialogStyle"
           @click="overlayEvent.onClick"
           @mousedown="overlayEvent.onMousedown"
