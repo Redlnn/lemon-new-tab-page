@@ -86,6 +86,13 @@ const allItems = computed(() => {
 const totalItemsCount = computed(() => allItems.value.length)
 
 // 分页逻辑
+// 如果用户禁用翻页，则将用于分页计算的总项目数限制为每页格子数，确保只有一页
+const paginationTotalItems = computed(() =>
+  settings.shortcut.disablePaging
+    ? Math.min(totalItemsCount.value, slotsPerPage.value)
+    : totalItemsCount.value
+)
+
 const {
   currentPage,
   totalPages,
@@ -99,7 +106,7 @@ const {
   nextPage,
   goToPage,
   setupSwipe
-} = useShortcutPagination(totalItemsCount, slotsPerPage)
+} = useShortcutPagination(paginationTotalItems, slotsPerPage)
 
 // 获取指定页的项目
 function getPageItems(pageIndex: number) {

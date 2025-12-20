@@ -191,6 +191,7 @@
     "showTopSites": "Show most visited",
     "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
     "title": "Shortcut",
+    "disablePaging": "Disable paging",
     "whiteTextInLightMode": "[Shortcut] Use white text in light mode",
     "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
   },

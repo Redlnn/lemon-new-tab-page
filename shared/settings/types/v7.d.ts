@@ -67,6 +67,7 @@ export interface SettingsInterfaceVer7 {
     enableTopSites: boolean
     enableAreaShadow: boolean
     enableShadow: boolean
+    disablePaging: boolean
     rows: number
     columns: number
     itemMarginH: number

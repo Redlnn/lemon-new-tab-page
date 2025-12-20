@@ -62,6 +62,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       enableTopSites: oldSettings.shortcut.enableTopSites,
       enableAreaShadow: oldSettings.shortcut.enableShadow,
       enableShadow: oldSettings.shortcut.enableShadow,
+      disablePaging: defaultSettings.shortcut.disablePaging,
       rows: oldSettings.shortcut.rows,
       columns: oldSettings.shortcut.columns,
       itemMarginH: oldSettings.shortcut.itemMarginH,

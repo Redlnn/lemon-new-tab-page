@@ -65,6 +65,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     enableTopSites: true,
     enableAreaShadow: true,
     enableShadow: true,
+    disablePaging: false,
     rows: 2,
     columns: 5,
     itemMarginH: 10,

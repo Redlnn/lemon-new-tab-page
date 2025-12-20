@@ -63,6 +63,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       enableTopSites: oldSettings.enableTopSites,
       enableAreaShadow: defaultSettings.shortcut.enableAreaShadow,
       enableShadow: defaultSettings.shortcut.enableShadow,
+      disablePaging: defaultSettings.shortcut.disablePaging,
       rows: oldSettings.quickStartRows,
       columns: oldSettings.quickStartColumns,
       itemMarginH: Math.round(

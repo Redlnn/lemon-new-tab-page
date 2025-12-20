@@ -184,6 +184,7 @@
     "showTopSites": "顯示最常瀏覽網站",
     "tip": "Tip：可以拖動設定視窗來觀察快速存取區域的變化",
     "title": "快速存取",
+    "disablePaging": "停用翻頁",
     "whiteTextInLightMode": "【快速存取】淺色模式下使用白色文字",
     "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好"
   },

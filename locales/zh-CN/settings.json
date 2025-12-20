@@ -185,6 +185,7 @@
     "showTopSites": "展示最常访问",
     "tip": "Tip：可以拖动设置窗口以观察快速访问区域变化噢~",
     "title": "快速访问",
+    "disablePaging": "禁用翻页",
     "whiteTextInLightMode": "【快速访问】浅色模式下使用白色文字",
     "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~"
   },

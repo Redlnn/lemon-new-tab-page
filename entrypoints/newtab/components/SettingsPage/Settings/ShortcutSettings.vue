@@ -54,6 +54,10 @@ async function restoreDefaultTopSites() {
         />
       </div>
       <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('shortcut.disablePaging') }}</div>
+        <el-switch v-model="settings.shortcut.disablePaging" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('shortcut.showTitle') }}</div>
         <el-switch v-model="settings.shortcut.showShortcutTitle" />
       </div>
