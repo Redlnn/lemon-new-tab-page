@@ -182,6 +182,39 @@ const currentPageTotalItems = computed(() => {
   return currentPageItems.value.length + (showAddButton.value ? 1 : 0)
 })
 
+// 提取容器通用class（避免模板中重复）
+const containerBaseClasses = computed(() => [
+  settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
+  settings.shortcut.whiteTextInLightMode ? 'shortcut__container--white-text-light' : undefined
+])
+
+// 容器动画class
+const containerAnimationClasses = computed(() => ({
+  'shortcut__container--slide-left': slideDirection.value === 'left',
+  'shortcut__container--slide-right': slideDirection.value === 'right',
+  'shortcut__container--no-transition': noTransition.value
+}))
+
+// 容器通用style
+const containerGridStyle = computed(() => ({
+  gridTemplateColumns: `repeat(${displayColumns.value}, 1fr)`,
+  gridTemplateRows: `repeat(${displayRows.value}, 1fr)`,
+  gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+  '--icon_size': `${settings.shortcut.iconSize}px`,
+  '--icon_ratio': `${settings.shortcut.iconRatio}`
+}))
+
+// 导航按钮通用class
+const navBtnBaseClasses = computed(() =>
+  getPerfClasses(
+    {
+      transparentOff: settings.perf.disableShortcutTransparent,
+      blurOff: settings.perf.disableShortcutBlur
+    },
+    'shortcut__nav-btn'
+  )
+)
+
 // 动态计算当前页实际需要的列数
 const displayColumns = computed(() => {
   // 超出一页时，保持最大列数
@@ -308,13 +341,7 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
           class="shortcut__nav-btn--prev"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === 0 || isAnimating },
-            getPerfClasses(
-              {
-                transparentOff: settings.perf.disableShortcutTransparent,
-                blurOff: settings.perf.disableShortcutBlur
-              },
-              'shortcut__nav-btn'
-            )
+            navBtnBaseClasses
           ]"
           :disabled="currentPage === 0 || isAnimating"
           @click="prevPage"
@@ -338,22 +365,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
             <div
               v-if="displayPage > 0"
               class="shortcut__container shortcut__container--page shortcut__container--prev"
-              :class="[
-                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-                settings.shortcut.whiteTextInLightMode
-                  ? 'shortcut__container--white-text-light'
-                  : undefined,
-                { 'shortcut__container--slide-left': slideDirection === 'left' },
-                { 'shortcut__container--slide-right': slideDirection === 'right' },
-                { 'shortcut__container--no-transition': noTransition }
-              ]"
-              :style="{
-                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
-                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
-                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`,
-                '--icon_ratio': `${settings.shortcut.iconRatio}`
-              }"
+              :class="[...containerBaseClasses, containerAnimationClasses]"
+              :style="containerGridStyle"
             >
               <shortcut-item
                 v-for="item in prevPageItems"
@@ -380,22 +393,10 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
             <div
               ref="currentPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--current"
-              :class="[
-                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-                settings.shortcut.whiteTextInLightMode
-                  ? 'shortcut__container--white-text-light'
-                  : undefined,
-                { 'shortcut__container--slide-left': slideDirection === 'left' },
-                { 'shortcut__container--slide-right': slideDirection === 'right' },
-                { 'shortcut__container--no-transition': noTransition }
-              ]"
+              :class="[...containerBaseClasses, containerAnimationClasses]"
               :style="{
                 pointerEvents: focusStore.isFocused ? 'none' : 'auto',
-                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
-                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
-                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`,
-                '--icon_ratio': `${settings.shortcut.iconRatio}`
+                ...containerGridStyle
               }"
             >
               <shortcut-item
@@ -466,22 +467,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
             <div
               v-if="displayPage < totalPages - 1"
               class="shortcut__container shortcut__container--page shortcut__container--next"
-              :class="[
-                settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-                settings.shortcut.whiteTextInLightMode
-                  ? 'shortcut__container--white-text-light'
-                  : undefined,
-                { 'shortcut__container--slide-left': slideDirection === 'left' },
-                { 'shortcut__container--slide-right': slideDirection === 'right' },
-                { 'shortcut__container--no-transition': noTransition }
-              ]"
-              :style="{
-                gridTemplateColumns: `repeat(${displayColumns}, 1fr)`,
-                gridTemplateRows: `repeat(${displayRows}, 1fr)`,
-                gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
-                '--icon_size': `${settings.shortcut.iconSize}px`,
-                '--icon_ratio': `${settings.shortcut.iconRatio}`
-              }"
+              :class="[...containerBaseClasses, containerAnimationClasses]"
+              :style="containerGridStyle"
             >
               <shortcut-item
                 v-for="item in nextPageItems"
@@ -512,13 +499,7 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
           class="shortcut__nav-btn--next"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === totalPages - 1 || isAnimating },
-            getPerfClasses(
-              {
-                transparentOff: settings.perf.disableShortcutTransparent,
-                blurOff: settings.perf.disableShortcutBlur
-              },
-              'shortcut__nav-btn'
-            )
+            navBtnBaseClasses
           ]"
           :disabled="currentPage === totalPages - 1 || isAnimating"
           @click="nextPage"
