@@ -242,10 +242,10 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   }
 
   html.colorful &:not(.is-active) {
-    background-color: var(--el-color-primary-light-7);
+    background-color: var(--el-color-primary-light-8);
 
     &:hover {
-      background-color: var(--el-color-primary-light-6);
+      background-color: var(--el-color-primary-light-7);
     }
   }
 
