@@ -42,7 +42,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     lightMaskColor: '#f2f3f5',
     nightMaskColor: '#000',
     onlineUrl: '',
-    pauseWhenBlur: false
+    pauseWhenBlur: false,
+    fasterBgAnim: false
   },
   localBackground: {
     id: '',
@@ -105,7 +106,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableYiyanTransparent: false,
     disableYiyanBlur: false,
     disableSettingsBtnBlur: false,
-    disableSettingsBtnTransparent: false
+    disableSettingsBtnTransparent: false,
+    disableBgSwitchAnim: false
   },
   bookmarkSidebar: {
     direction: DrawerDirection.rtl,

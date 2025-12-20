@@ -42,6 +42,7 @@ export interface SettingsInterfaceVer7 {
     nightMaskColor: string
     onlineUrl: string
     pauseWhenBlur: boolean // 视频壁纸
+    fasterBgAnim: boolean
   }
   localBackground: {
     id: string
@@ -108,6 +109,7 @@ export interface SettingsInterfaceVer7 {
     disableYiyanBlur: boolean
     disableSettingsBtnBlur: boolean
     disableSettingsBtnTransparent: boolean
+    disableBgSwitchAnim: boolean
   }
   bookmarkSidebar: {
     direction: DrawerDirection

@@ -42,7 +42,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       lightMaskColor: defaultSettings.background.lightMaskColor,
       nightMaskColor: defaultSettings.background.nightMaskColor,
       onlineUrl: defaultSettings.background.onlineUrl,
-      pauseWhenBlur: defaultSettings.background.pauseWhenBlur
+      pauseWhenBlur: defaultSettings.background.pauseWhenBlur,
+      fasterBgAnim: defaultSettings.background.fasterBgAnim
     },
     localBackground: {
       id: oldSettings.bgId,
@@ -107,7 +108,8 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       disableYiyanTransparent: defaultSettings.perf.disableYiyanTransparent,
       disableYiyanBlur: defaultSettings.perf.disableYiyanBlur,
       disableSettingsBtnBlur: defaultSettings.perf.disableSettingsBtnBlur,
-      disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent
+      disableSettingsBtnTransparent: defaultSettings.perf.disableSettingsBtnTransparent,
+      disableBgSwitchAnim: defaultSettings.perf.disableBgSwitchAnim
     },
     bookmarkSidebar: {
       direction: defaultSettings.bookmarkSidebar.direction,

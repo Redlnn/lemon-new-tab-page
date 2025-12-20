@@ -16,6 +16,7 @@
     "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
     "custom": "自訂",
     "enableVignetting": "暗角效果",
+    "fasterBgAnim": "啟動時更快地顯示背景",
     "maskColor": "遮罩顏色",
     "maskOpacity": "遮罩不透明度",
     "myZoneMyRule": "做出你的樣子",
@@ -127,6 +128,8 @@
     "title": "其他"
   },
   "perf": {
+    "bgSwitchAnim": "壁紙切換動畫",
+    "bgSwitchAnimTip": "關閉後切換壁紙時將不再有淡入淡出動畫，能微弱提升切換速度。同時啟動時的壁紙動畫也會被停用",
     "bookmarkBlur": "書籤欄背景模糊",
     "bookmarkTransparent": "書籤欄背景透明",
     "dialogAnimation": "對話框動畫",

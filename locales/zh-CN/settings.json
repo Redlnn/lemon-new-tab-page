@@ -16,6 +16,7 @@
     "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
     "custom": "自定义",
     "enableVignetting": "暗角效果",
+    "fasterBgAnim": "启动时更快地显示背景",
     "maskColor": "遮罩颜色",
     "maskOpacity": "遮罩不透明度",
     "myZoneMyRule": "我的地盘我做主",
@@ -127,6 +128,8 @@
     "title": "其他"
   },
   "perf": {
+    "bgSwitchAnim": "背景切换动画",
+    "bgSwitchAnimTip": "关闭后切换背景时将不再有淡入淡出动画，能微弱提升切换速度。同时启动时的背景动画也会被禁用",
     "bookmarkBlur": "书签栏背景模糊",
     "bookmarkTransparent": "书签栏背景透明",
     "dialogAnimation": "弹窗动画",

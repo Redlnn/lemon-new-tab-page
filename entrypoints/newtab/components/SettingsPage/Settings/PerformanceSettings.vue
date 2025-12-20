@@ -61,6 +61,7 @@ function toggleAnimationSettings(disable: boolean) {
   settings.perf.disableFocusScale = disable
   settings.perf.disableFocusBlur = disable
   settings.search.launchAnim = !disable
+  settings.perf.disableBgSwitchAnim = disable
 }
 </script>
 
@@ -112,6 +113,13 @@ function toggleAnimationSettings(disable: boolean) {
     </div>
     <p class="settings__item--note">
       {{ t('clock.blinkingTip') }}
+    </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('perf.bgSwitchAnim') }}</div>
+      <el-switch v-model="useNegate(settings.perf, 'disableBgSwitchAnim').value" />
+    </div>
+    <p class="settings__item--note">
+      {{ t('perf.bgSwitchAnimTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.bookmarkTransparent') }}</div>

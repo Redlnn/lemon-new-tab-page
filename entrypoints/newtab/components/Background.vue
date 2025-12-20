@@ -24,6 +24,12 @@ const isDark = useDark()
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
+
+// 如果设置了快速初始动画，则直接使用短时间
+if (settings.background.fasterBgAnim) {
+  animationDuration = 300
+}
+
 const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
@@ -31,7 +37,7 @@ const switchStore = useBgSwtichStore()
 const imageRef = ref<HTMLImageElement>()
 const videoRef = ref<HTMLVideoElement>()
 const bgURL = ref<string>('')
-const bgOpacityDuration = ref('1.25s')
+const bgOpacityDuration = ref(settings.background.fasterBgAnim ? '0.3s' : '1.25s')
 
 function shortenBgFadeDuration() {
   if (hasShortenedFade) return
@@ -180,7 +186,9 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   // 等待过渡动画
   // 首次打开默认白屏，不需要等待白屏动画
   if (bgURL.value !== '') {
-    await promiseTimeout(animationDuration)
+    if (!settings.perf.disableBgSwitchAnim) {
+      await promiseTimeout(animationDuration)
+    }
     bgURL.value = ''
   }
   // 不直接赋值是因为避免看到壁纸变形
@@ -189,7 +197,9 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
   switchStore.end()
-  await promiseTimeout(animationDuration)
+  if (!settings.perf.disableBgSwitchAnim) {
+    await promiseTimeout(animationDuration)
+  }
   shortenBgFadeDuration()
 }
 
@@ -201,7 +211,9 @@ async function handleLocalBgChange() {
   if (bgURL.value === newUrl.value) return
 
   switchStore.start()
-  await promiseTimeout(animationDuration)
+  if (!settings.perf.disableBgSwitchAnim) {
+    await promiseTimeout(animationDuration)
+  }
   bgURL.value = ''
   // 不直接赋值是因为避免看到壁纸变形
   bgURL.value = newUrl.value
@@ -211,7 +223,9 @@ async function handleLocalBgChange() {
 // 在线背景URL变化处理器
 async function handleOnlineBgChange() {
   switchStore.start()
-  await promiseTimeout(animationDuration)
+  if (!settings.perf.disableBgSwitchAnim) {
+    await promiseTimeout(animationDuration)
+  }
   bgURL.value = ''
   const provider = bgTypeProviders[BgType.Online]
   const newUrl = await provider()

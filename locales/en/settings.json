@@ -16,6 +16,7 @@
     "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
     "custom": "Custom",
     "enableVignetting": "Enable vignetting",
+    "fasterBgAnim": "Faster background display on startup",
     "maskColor": "Mask color",
     "maskOpacity": "Mask opacity",
     "myZoneMyRule": "Your space. Your rules.",
@@ -133,6 +134,8 @@
     "title": "Other"
   },
   "perf": {
+    "bgSwitchAnim": "Background switch animation",
+    "bgSwitchAnimTip": "When disabled, there will be no fade-in/fade-out animation when switching backgrounds, which can slightly improve switching speed. Background animation on startup will also be disabled",
     "bookmarkBlur": "Bookmarks sidebar blur",
     "bookmarkTransparent": "Bookmarks sidebar transparency",
     "dialogAnimation": "Dialog animation",

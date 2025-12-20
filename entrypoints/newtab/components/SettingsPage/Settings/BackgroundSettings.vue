@@ -34,6 +34,10 @@ const openBackgroundPreference = inject(OPEN_BACKGROUND_PREFERENCE)
       {{ t('background.videoBlurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.fasterBgAnim') }}</div>
+      <el-switch v-model="settings.background.fasterBgAnim" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('background.enableVignetting') }}</div>
       <el-switch v-model="settings.background.enableVignetting" />
     </div>
