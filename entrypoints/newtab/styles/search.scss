@@ -105,6 +105,7 @@
       }
     }
 
+    &--focus,
     &--expand {
       --width: 500px;
     }
@@ -146,9 +147,8 @@
         opacity var(--el-transition-duration-fast) ease;
     }
 
-    &--focus {
-      --width: 500px;
-
+    &--focus,
+    &--always-icon {
       .search-engine-menu__icon,
       .search-box__btn {
         cursor: pointer;

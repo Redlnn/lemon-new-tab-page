@@ -57,7 +57,7 @@ defineExpose({ hide })
   <el-tooltip
     ref="searchEngineMenu"
     trigger="click"
-    :disabled="!focusStore.isFocused"
+    :disabled="!focusStore.isFocused && !settings.search.alwaysShowIcon"
     :show-arrow="false"
     :popper-class="
       getPerfClasses(
@@ -134,7 +134,7 @@ defineExpose({ hide })
     <el-icon
       v-if="isBuiltInEngine"
       class="search-engine-menu__icon"
-      :style="{ opacity: focusStore.isFocused ? 1 : 0 }"
+      :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
     >
       <component
         :is="searchEngines[settings.search.selectedSearchEngine as keyof typeof searchEngines].icon"
@@ -143,7 +143,7 @@ defineExpose({ hide })
     <div
       v-else
       class="search-engine-menu__icon search-engine-menu__icon--custom"
-      :style="{ opacity: focusStore.isFocused ? 1 : 0 }"
+      :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
     >
       <img :src="getCustomEngineFavicon(currentCustomEngine!)" />
     </div>
@@ -160,7 +160,9 @@ defineExpose({ hide })
     min-width: 210px;
     padding: 5px;
     background-color: var(--el-bg-color-overlay);
-    transition: background-color var(--el-transition-duration-fast) ease;
+    transition:
+      background-color var(--el-transition-duration-fast) ease,
+      opacity var(--el-transition-duration-fast) ease;
 
     &.search-engine-menu--opacity {
       background-color: var(--le-bg-color-overlay-opacity-30);

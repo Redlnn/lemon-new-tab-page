@@ -153,6 +153,7 @@
   },
   "search": {
     "alwaysExpandSearchBar": "一直展開搜尋框",
+    "alwaysShowIcon": "始終顯示搜尋引擎圖示",
     "clickToChange": "點擊更改",
     "defaultSearchEngine": "預設搜尋引擎",
     "enableShadow": "顯示搜尋框陰影",

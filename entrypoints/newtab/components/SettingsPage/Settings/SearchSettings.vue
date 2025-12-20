@@ -53,7 +53,17 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.alwaysExpandSearchBar') }}</div>
-      <el-switch v-model="settings.search.alwaysExpandSearchBar" />
+      <el-switch
+        v-model="settings.search.alwaysExpandSearchBar"
+        @change="!settings.search.alwaysExpandSearchBar && (settings.search.alwaysShowIcon = false)"
+      />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('search.alwaysShowIcon') }}</div>
+      <el-switch
+        :disabled="!settings.search.alwaysExpandSearchBar"
+        v-model="settings.search.alwaysShowIcon"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.enableShadow') }}</div>

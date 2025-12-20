@@ -25,6 +25,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   search: {
     enabled: true,
     alwaysExpandSearchBar: false,
+    alwaysShowIcon: false,
     selectedSearchSuggestionAPI: 'bing',
     selectedSearchEngine: 'bing',
     searchInNewTab: false,

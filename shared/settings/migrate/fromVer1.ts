@@ -25,6 +25,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
     search: {
       enabled: defaultSettings.search.enabled,
       alwaysExpandSearchBar: defaultSettings.search.alwaysExpandSearchBar,
+      alwaysShowIcon: defaultSettings.search.alwaysShowIcon,
       selectedSearchSuggestionAPI: oldSettings.selectedSearchSuggestionAPI,
       selectedSearchEngine: searchEnginesMap[oldSettings.selectedSearchEngine],
       searchInNewTab: oldSettings.searchInNewTab,

@@ -24,6 +24,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
     search: {
       enabled: defaultSettings.search.enabled,
       alwaysExpandSearchBar: oldSettings.search.autoFocus,
+      alwaysShowIcon: defaultSettings.search.alwaysShowIcon,
       selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
       selectedSearchEngine: oldSettings.search.selectedSearchEngine,
       searchInNewTab: oldSettings.search.searchInNewTab,

@@ -153,6 +153,7 @@
   },
   "search": {
     "alwaysExpandSearchBar": "一直展开搜索框",
+    "alwaysShowIcon": "始终显示搜索引擎图标",
     "clickToChange": "点击更改",
     "defaultSearchEngine": "搜索引擎",
     "enableShadow": "显示搜索框阴影",

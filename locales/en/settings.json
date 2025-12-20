@@ -159,6 +159,7 @@
   },
   "search": {
     "alwaysExpandSearchBar": "Always expand search bar",
+    "alwaysShowIcon": "Always show search engine icon",
     "clickToChange": "Click to change",
     "defaultSearchEngine": "Search engine",
     "enableShadow": "Show search box shadow",

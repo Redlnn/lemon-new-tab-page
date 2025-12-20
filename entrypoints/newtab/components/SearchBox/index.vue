@@ -47,7 +47,8 @@ const formClasses = computed(() => [
   {
     'search-box__form--shadow': settings.search.enableShadow,
     'search-box__form--dark': settings.background.bgType === BgType.None,
-    'search-box__form--expand': settings.search.alwaysExpandSearchBar
+    'search-box__form--expand': settings.search.alwaysExpandSearchBar,
+    'search-box__form--always-icon': settings.search.alwaysShowIcon
   },
   getPerfClasses(
     {
@@ -268,7 +269,10 @@ onMounted(() => {
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
       />
-      <div class="search-box__btn" :style="{ opacity: focusStore.isFocused ? 1 : 0 }">
+      <div
+        class="search-box__btn"
+        :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
+      >
         <el-icon @click="doSearch"><search /></el-icon>
       </div>
     </form>
