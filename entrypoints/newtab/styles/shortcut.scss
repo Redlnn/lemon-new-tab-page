@@ -1,7 +1,6 @@
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
 .shortcut {
-  width: 100%;
   max-width: 85%;
   overflow: hidden;
   transition: opacity 0.1s ease;
@@ -79,20 +78,15 @@
       box-shadow 0.2s ease,
       transform 0.2s ease;
 
-    &--next {
-      transform: translateX(5px);
-    }
-
-    &--prev {
-      transform: translateX(-5px);
-    }
-
     .shortcut:hover & {
       opacity: 0.3;
 
-      &--next,
+      &--next {
+        transform: translateX(-5px);
+      }
+
       &--prev {
-        transform: translateX(0);
+        transform: translateX(5px);
       }
     }
 
