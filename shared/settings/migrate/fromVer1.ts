@@ -64,6 +64,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       enableAreaShadow: defaultSettings.shortcut.enableAreaShadow,
       enableShadow: defaultSettings.shortcut.enableShadow,
       disablePaging: defaultSettings.shortcut.disablePaging,
+      showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
       rows: oldSettings.quickStartRows,
       columns: oldSettings.quickStartColumns,
       itemMarginH: Math.round(

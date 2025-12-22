@@ -26,6 +26,10 @@ async function restoreDefaultTopSites() {
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.shortcut.enabled" />
     </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('shortcut.showOnSearchFocus') }}</div>
+      <el-switch v-model="settings.shortcut.showOnSearchFocus" />
+    </div>
     <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>

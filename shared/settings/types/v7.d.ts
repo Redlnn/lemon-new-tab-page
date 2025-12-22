@@ -68,6 +68,7 @@ export interface SettingsInterfaceVer7 {
     enableAreaShadow: boolean
     enableShadow: boolean
     disablePaging: boolean
+    showOnSearchFocus: boolean
     rows: number
     columns: number
     itemMarginH: number

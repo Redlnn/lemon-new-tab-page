@@ -66,6 +66,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     enableAreaShadow: true,
     enableShadow: true,
     disablePaging: false,
+    showOnSearchFocus: false,
     rows: 2,
     columns: 5,
     itemMarginH: 10,

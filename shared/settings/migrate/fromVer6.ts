@@ -63,6 +63,7 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       enableAreaShadow: oldSettings.shortcut.enableShadow,
       enableShadow: oldSettings.shortcut.enableShadow,
       disablePaging: defaultSettings.shortcut.disablePaging,
+      showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
       rows: oldSettings.shortcut.rows,
       columns: oldSettings.shortcut.columns,
       itemMarginH: oldSettings.shortcut.itemMarginH,

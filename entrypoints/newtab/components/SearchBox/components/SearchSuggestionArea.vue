@@ -215,7 +215,7 @@ defineExpose({
 
   position: absolute;
   top: 60px;
-  z-index: 1000;
+  z-index: 1;
   overflow: hidden;
   font-size: var(--el-font-size-small);
   background-color: var(--el-fill-color-darker);
@@ -239,7 +239,7 @@ defineExpose({
     box-shadow var(--el-transition-duration-fast) ease;
 
   &--shadow {
-    box-shadow: var(--el-box-shadow-light);
+    box-shadow: var(--el-box-shadow);
   }
 
   html:not(.colorful) &--dark {

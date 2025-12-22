@@ -2,7 +2,6 @@
 
 .search-box {
   position: relative;
-  z-index: 10;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +15,6 @@
     --search-form-placeholder-color: var(--el-text-color-regular);
 
     position: relative;
-    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;

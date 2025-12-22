@@ -330,13 +330,17 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
   }
   return -1
 }
+
+const isHideShortcut = computed(() => {
+  return mounted && focusStore.isFocused ? (settings.shortcut.showOnSearchFocus ? '1' : '0') : '1'
+})
 </script>
 
 <template>
   <section
     class="shortcut"
     :style="{
-      opacity: mounted ? (focusStore.isFocused ? '0' : '1') : '0',
+      opacity: isHideShortcut,
       paddingTop: `${settings.shortcut.marginTop}px`
     }"
   >
@@ -402,7 +406,8 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
               class="shortcut__container shortcut__container--page shortcut__container--current"
               :class="[...containerBaseClasses, containerAnimationClasses]"
               :style="{
-                pointerEvents: focusStore.isFocused ? 'none' : 'auto',
+                pointerEvents:
+                  settings.shortcut.showOnSearchFocus || !focusStore.isFocused ? 'auto' : 'none',
                 ...containerGridStyle
               }"
             >
