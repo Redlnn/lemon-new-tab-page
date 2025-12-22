@@ -187,7 +187,8 @@
     "title": "快速访问",
     "disablePaging": "禁用翻页",
     "whiteTextInLightMode": "【快速访问】浅色模式下使用白色文字",
-    "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~"
+    "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~",
+    "showOnSearchFocus": "搜索框聚焦时显示"
   },
   "theme": {
     "colorNames": {

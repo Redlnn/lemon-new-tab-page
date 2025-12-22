@@ -187,7 +187,8 @@
     "title": "捷徑",
     "disablePaging": "停用翻頁",
     "whiteTextInLightMode": "【捷徑】淺色模式下使用白色文字",
-    "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好喔~"
+    "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好喔~",
+    "showOnSearchFocus": "搜尋框聚焦時顯示"
   },
   "theme": {
     "colorNames": {

@@ -193,7 +193,8 @@
     "title": "Shortcut",
     "disablePaging": "Disable paging",
     "whiteTextInLightMode": "[Shortcut] Use white text in light mode",
-    "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
+    "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance.",
+    "showOnSearchFocus": "Show on search focus"
   },
   "theme": {
     "colorNames": {
