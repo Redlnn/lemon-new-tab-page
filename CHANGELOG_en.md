@@ -25,6 +25,8 @@
 - Support speeding up the display of the background at startup
   and disabling background transition animations
   ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
+- Support not hiding quick access when the search box is focused
+  ([#63](https://github.com/Redlnn/lemon-new-tab-page/issues/63))
 
 ### Improvements⚡️
 

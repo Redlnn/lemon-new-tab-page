@@ -21,6 +21,8 @@
   ([#60](https://github.com/Redlnn/lemon-new-tab-page/issues/60))
 - 支持加快启动时背景显示速度及禁用背景切换动画
   ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
+- 支持搜索框聚焦时不隐藏快速访问
+  ([#63](https://github.com/Redlnn/lemon-new-tab-page/issues/63))
 
 ### 调整⚡️
 
