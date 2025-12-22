@@ -21,9 +21,9 @@ import { useFocusStore } from '@newtab/shared/store'
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'
 
-const searchBox = ref<HTMLDivElement>()
-const searchForm = ref<HTMLFormElement>()
-const searchInput = ref<HTMLInputElement>()
+const searchBox = useTemplateRef<HTMLDivElement>('searchBox')
+const searchForm = useTemplateRef<HTMLFormElement>('searchForm')
+const searchInput = useTemplateRef<HTMLInputElement>('searchInput')
 const suggedtionArea = ref<InstanceType<typeof SearchSuggestionArea>>()
 const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
 

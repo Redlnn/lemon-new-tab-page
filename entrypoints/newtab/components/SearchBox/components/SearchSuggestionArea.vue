@@ -21,10 +21,10 @@ const {
   clearHistories: clearHistoryCache
 } = useSearchHistoryCache()
 
-const clearSearchHistory = ref<HTMLDivElement>()
+const clearSearchHistory = useTemplateRef<HTMLDivElement>('clearSearchHistory')
 const isShowSearchHistories = ref(false)
 const currentActiveSuggest = ref<null | number>(null)
-const searchSuggestionArea = ref<HTMLDivElement>()
+const searchSuggestionArea = useTemplateRef<HTMLDivElement>('searchSuggestionArea')
 const searchSuggestions = ref<string[]>([])
 
 const props = defineProps<{

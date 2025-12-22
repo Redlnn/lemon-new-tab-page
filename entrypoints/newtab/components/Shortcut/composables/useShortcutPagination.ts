@@ -12,7 +12,7 @@ export interface UseShortcutPagination {
   prevPage: () => void
   nextPage: () => void
   goToPage: (page: number) => void
-  setupSwipe: (containerRef: Ref<HTMLElement | undefined>, isDragging?: Ref<boolean>) => void
+  setupSwipe: (containerRef: Ref<HTMLElement | undefined | null>, isDragging?: Ref<boolean>) => void
 }
 
 const ANIMATION_DURATION = 300 // ms
@@ -27,7 +27,7 @@ export function useShortcutPagination(
   const noTransition = ref(false)
   const preloadTargetPage = ref<number | null>(null)
   // 存储传入的 viewport 容器引用（用于在翻页时切换 overflow）
-  let storedContainerRef: Ref<HTMLElement | undefined> | null = null
+  let storedContainerRef: Ref<HTMLElement | undefined | null> | null = null
 
   const totalPages = computed(() => {
     // 防止除以 0 导致 Infinity
@@ -129,7 +129,10 @@ export function useShortcutPagination(
   }
 
   // 设置滑动手势并保存容器引用
-  const setupSwipe = (containerRef: Ref<HTMLElement | undefined>, isDragging?: Ref<boolean>) => {
+  const setupSwipe = (
+    containerRef: Ref<HTMLElement | undefined | null>,
+    isDragging?: Ref<boolean>
+  ) => {
     storedContainerRef = containerRef
 
     const { direction } = useSwipe(containerRef, {

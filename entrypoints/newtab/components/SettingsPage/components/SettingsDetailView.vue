@@ -14,7 +14,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const titleRef = ref<HTMLDivElement>()
+const titleRef = useTemplateRef<HTMLDivElement>('titleRef')
 const titleIsVisible = useElementVisibility(titleRef)
 
 const shouldRenderActiveView = ref(false)

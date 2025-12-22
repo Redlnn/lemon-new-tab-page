@@ -40,7 +40,7 @@ const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl: localBgUrl, darkUrl: localDarkBgUrl } = storeToRefs(wallpaperUrlStore)
 
 const isDark = useDark()
-const customLocalContentRef = ref<HTMLDivElement>()
+const customLocalContentRef = useTemplateRef<HTMLDivElement>('customLocalContentRef')
 
 const { height: customLocalContentHeight } = useElementSize(customLocalContentRef)
 

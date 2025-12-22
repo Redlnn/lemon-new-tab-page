@@ -3,7 +3,7 @@ import { useDraggable } from 'vue-draggable-plus'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 export function useShortcutDrag(
-  containerRef: Ref<HTMLElement | undefined>,
+  containerRef: Ref<HTMLElement | undefined | null>,
   shortcuts: Ref<{ url: string; title: string; favicon?: string }[]>,
   refresh: () => void
 ) {

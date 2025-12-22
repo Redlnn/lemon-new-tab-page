@@ -246,8 +246,8 @@ const displayRows = computed(() => {
   return computeNeededRows(itemCount, cols)
 })
 
-const shortcutContainerRef = ref<HTMLElement>()
-const currentPageContainerRef = ref<HTMLElement>()
+const shortcutContainerRef = useTemplateRef<HTMLElement>('shortcutContainerRef')
+const currentPageContainerRef = useTemplateRef<HTMLElement>('currentPageContainerRef')
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refreshDebounced)

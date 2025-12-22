@@ -34,8 +34,8 @@ const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
 
-const imageRef = ref<HTMLImageElement>()
-const videoRef = ref<HTMLVideoElement>()
+const imageRef = useTemplateRef<HTMLImageElement>('imageRef')
+const videoRef = useTemplateRef<HTMLVideoElement>('videoRef')
 const bgURL = ref<string>('')
 const bgOpacityDuration = ref(settings.background.fasterBgAnim ? '0.3s' : '1.25s')
 
@@ -272,7 +272,7 @@ watch(
         if (settings.background.bgType === BgType.Online) {
           await updateBackgroundURL(BgType.Online)
         }
-        await applyMonet(imageRef.value)
+        await applyMonet(imageRef.value!)
       }
     } else {
       document.documentElement.classList.remove('monet')
@@ -309,7 +309,7 @@ async function onImgLoaded() {
   // 不加延迟会导致刷新开屏卡住切换动画
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      useTimeoutFn(() => applyMonet(imageRef.value), 0)
+      useTimeoutFn(() => applyMonet(imageRef.value!), 0)
     })
   })
 }
