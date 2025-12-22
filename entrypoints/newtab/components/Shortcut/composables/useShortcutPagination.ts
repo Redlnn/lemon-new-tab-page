@@ -1,4 +1,4 @@
-import { useMediaQuery, useSwipe } from '@vueuse/core'
+import { useMediaQuery, useSwipe, useTimeoutFn } from '@vueuse/core'
 
 export interface UseShortcutPagination {
   currentPage: Ref<number>
@@ -12,7 +12,13 @@ export interface UseShortcutPagination {
   prevPage: () => void
   nextPage: () => void
   goToPage: (page: number) => void
-  setupSwipe: (containerRef: Ref<HTMLElement | undefined | null>, isDragging?: Ref<boolean>) => void
+  setupSwipe: (
+    containerRef: Ref<HTMLElement | undefined | null>,
+    prevPageRef: Ref<HTMLElement | undefined | null>,
+    currentPageRef: Ref<HTMLElement | undefined | null>,
+    nextPageRef: Ref<HTMLElement | undefined | null>,
+    isDragging?: Ref<boolean>
+  ) => void
 }
 
 const ANIMATION_DURATION = 300 // ms
@@ -26,8 +32,6 @@ export function useShortcutPagination(
   const slideDirection = ref<'left' | 'right' | null>(null)
   const noTransition = ref(false)
   const preloadTargetPage = ref<number | null>(null)
-  // 存储传入的 viewport 容器引用（用于在翻页时切换 overflow）
-  let storedContainerRef: Ref<HTMLElement | undefined | null> | null = null
 
   const totalPages = computed(() => {
     // 防止除以 0 导致 Infinity
@@ -55,19 +59,11 @@ export function useShortcutPagination(
     if (targetPage < 0 || targetPage >= totalPages.value) return
     if (targetPage === currentPage.value) return
 
-    // 在翻页开始前将 viewport 设为裁切状态
-    try {
-      const el = storedContainerRef?.value
-      if (el) {
-        el.classList.add('shortcut__slide-viewport--switching')
-      }
-    } catch {}
-
     isAnimating.value = true
     slideDirection.value = direction
 
     // 动画结束后更新页码
-    setTimeout(() => {
+    useTimeoutFn(() => {
       // 禁用 transition，防止内容更新时触发二次动画
       noTransition.value = true
       slideDirection.value = null
@@ -79,13 +75,6 @@ export function useShortcutPagination(
       requestAnimationFrame(() => {
         noTransition.value = false
         isAnimating.value = false
-        // 动画结束后移除裁切状态
-        try {
-          const el = storedContainerRef?.value
-          if (el) {
-            el.classList.remove('shortcut__slide-viewport--switching')
-          }
-        } catch {}
       })
     }, ANIMATION_DURATION)
   }
@@ -131,22 +120,56 @@ export function useShortcutPagination(
   // 设置滑动手势并保存容器引用
   const setupSwipe = (
     containerRef: Ref<HTMLElement | undefined | null>,
+    prevPageRef: Ref<HTMLElement | undefined | null>,
+    currentPageRef: Ref<HTMLElement | undefined | null>,
+    nextPageRef: Ref<HTMLElement | undefined | null>,
     isDragging?: Ref<boolean>
   ) => {
-    storedContainerRef = containerRef
+    const SWIPE_PAGE_THRESHOLD = 50 // px
+    const transX = ref(0)
 
-    const { direction } = useSwipe(containerRef, {
-      threshold: 50,
+    const { isSwiping, lengthX } = useSwipe(containerRef, {
+      threshold: 10,
+      onSwipeStart() {
+        noTransition.value = true
+      },
       onSwipeEnd() {
-        // 如果正在拖拽排序，则不触发翻页
-        if (isDragging?.value) return
-        if (isAnimating.value) return
-        if (direction.value === 'left') {
-          nextPage()
-        } else if (direction.value === 'right') {
-          prevPage()
-        }
+        transX.value = 0
+        noTransition.value = false
       }
+    })
+
+    watch([lengthX, isSwiping], () => {
+      if (isDragging?.value) {
+        transX.value = 0
+        return
+      }
+      if (lengthX.value === 0 || isAnimating.value) return
+
+      if (isSwiping.value) {
+        transX.value = -lengthX.value
+      } else if (lengthX.value > SWIPE_PAGE_THRESHOLD) {
+        nextPage()
+      } else if (lengthX.value < -SWIPE_PAGE_THRESHOLD) {
+        prevPage()
+      }
+    })
+
+    const updateTransform = (ref: Ref<HTMLElement | undefined | null>, value: string) => {
+      if (ref.value) {
+        ref.value.style.transform = value
+      }
+    }
+
+    watch(transX, () => {
+      if (transX.value === undefined) return
+
+      updateTransform(
+        prevPageRef,
+        transX.value ? `translateX(calc(-100% + ${transX.value}px))` : ''
+      )
+      updateTransform(currentPageRef, transX.value ? `translateX(${transX.value}px)` : '')
+      updateTransform(nextPageRef, transX.value ? `translateX(calc(100% + ${transX.value}px))` : '')
     })
   }
 

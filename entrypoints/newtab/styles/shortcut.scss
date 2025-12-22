@@ -2,7 +2,6 @@
 
 .shortcut {
   max-width: 85%;
-  overflow: hidden;
   transition: opacity 0.1s ease;
 
   &__wrapper {
@@ -25,13 +24,9 @@
   // 默认不裁切，以便前后页面的阴影可见；翻页时再开启裁切以实现分页效果
   &__slide-viewport {
     position: relative;
-    overflow: visible;
+    padding: 10px;
+    overflow: hidden;
     border-radius: 10px;
-
-    // 切换动画期间添加此 modifier（由 JS 在翻页前添加，动画结束后移除）
-    &--switching {
-      overflow: hidden;
-    }
 
     // 只允许垂直滚动和缩放，水平滑动由 JS 处理
     @media (pointer: coarse) {
@@ -201,8 +196,8 @@
 
     // 前一页
     &--prev {
+      margin-right: 10px;
       pointer-events: none;
-      opacity: 0;
       transform: translateX(-100%);
     }
 
@@ -214,25 +209,22 @@
 
     // 后一页
     &--next {
+      margin-left: 10px;
       pointer-events: none;
-      opacity: 0;
       transform: translateX(100%);
     }
 
     // 向左滑动动画
     &--slide-left {
       &.shortcut__container--prev {
-        opacity: 1;
         transform: translateX(-200%);
       }
 
       &.shortcut__container--current {
-        opacity: 1;
         transform: translateX(-100%);
       }
 
       &.shortcut__container--next {
-        opacity: 1;
         transform: translateX(0);
       }
     }

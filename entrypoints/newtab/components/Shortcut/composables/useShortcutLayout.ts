@@ -25,7 +25,7 @@ export function useShortcutLayout(): UseShortcutLayout {
     const containerWidth = windowWidth.value * 0.85
     const marginH = settings.shortcut.itemMarginH
     const unitWidth = getItemWidth() + marginH
-    let extra = settings.shortcut.showShortcutContainerBg ? 40 : 0
+    let extra = settings.shortcut.showShortcutContainerBg ? 40 : 20 // 预留padding空间
     if (allocateSpaces) {
       // 多页模式下预留分页按钮和间距空间
       extra += 88

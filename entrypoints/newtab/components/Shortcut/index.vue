@@ -35,10 +35,11 @@ const { t } = useTranslation()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
+
 const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
+const openedShortcutIndex = ref<number | null>(null)
 
 type ShortcutItemRef = InstanceType<typeof ShortcutItem> | null
-const openedShortcutIndex = ref<number | null>(null)
 const shortcutItemRefs = ref<Array<ShortcutItemRef>>([])
 
 function setChildRef(i: number, el: ShortcutItemRef) {
@@ -115,20 +116,12 @@ function getPageItems(pageIndex: number) {
   }
 
   const slots = slotsPerPage.value
+  const startIndex = pageIndex * slots
   const isLastPage = pageIndex === totalPages.value - 1
 
-  if (totalPages.value === 1) {
-    return allItems.value.slice(0, slots - 1)
-  }
-
-  if (isLastPage) {
-    const startIndex = pageIndex * slots
-    const maxItems = slots - 1
-    return allItems.value.slice(startIndex, startIndex + maxItems)
-  } else {
-    const startIndex = pageIndex * slots
-    return allItems.value.slice(startIndex, startIndex + slots)
-  }
+  // 计算最大项目数，最后一页限制为 slots - 1
+  const maxItems = isLastPage ? slots - 1 : slots
+  return allItems.value.slice(startIndex, startIndex + maxItems)
 }
 
 // 动画期间显示的页码（用于渲染3页）
@@ -247,7 +240,9 @@ const displayRows = computed(() => {
 })
 
 const shortcutContainerRef = useTemplateRef<HTMLElement>('shortcutContainerRef')
+const prevPageContainerRef = useTemplateRef<HTMLElement>('prevPageContainerRef')
 const currentPageContainerRef = useTemplateRef<HTMLElement>('currentPageContainerRef')
+const nextPageContainerRef = useTemplateRef<HTMLElement>('nextPageContainerRef')
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refreshDebounced)
@@ -286,7 +281,13 @@ async function refresh() {
 
 onMounted(() => {
   // 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
-  setupSwipe(shortcutContainerRef, isDragging)
+  setupSwipe(
+    shortcutContainerRef,
+    prevPageContainerRef,
+    currentPageContainerRef,
+    nextPageContainerRef,
+    isDragging
+  )
 
   // useResizeObserver 会在开始观察时立即触发一次
   useResizeObserver(document.documentElement, async () => {
@@ -375,6 +376,7 @@ const isHideShortcut = computed(() => {
             <!-- 前一页 -->
             <div
               v-if="displayPage > 0"
+              ref="prevPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--prev"
               :class="[...containerBaseClasses, containerAnimationClasses]"
               :style="containerGridStyle"
@@ -398,7 +400,7 @@ const isHideShortcut = computed(() => {
             <div
               v-else
               class="shortcut__container shortcut__container--page shortcut__container--prev shortcut__container--placeholder"
-            />
+            ></div>
 
             <!-- 当前页 -->
             <div
@@ -478,6 +480,7 @@ const isHideShortcut = computed(() => {
             <!-- 后一页 -->
             <div
               v-if="displayPage < totalPages - 1"
+              ref="nextPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--next"
               :class="[...containerBaseClasses, containerAnimationClasses]"
               :style="containerGridStyle"
