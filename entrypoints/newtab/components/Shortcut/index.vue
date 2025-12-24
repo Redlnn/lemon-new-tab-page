@@ -348,7 +348,8 @@ const isHideShortcut = computed(() => {
     class="shortcut"
     :style="{
       opacity: isHideShortcut,
-      paddingTop: `${settings.shortcut.marginTop}px`
+      paddingTop: `${settings.shortcut.marginTop / 2}px`,
+      marginTop: `${settings.shortcut.marginTop / 2}px`
     }"
   >
     <div ref="shortcutWrapperRef" class="shortcut__wrapper">
