@@ -24,6 +24,7 @@ const emit = defineEmits<{
   (e: 'opened'): void
 }>()
 
+const openedMenuCloseFn = inject<Ref<(() => void) | null>>('customEngineOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance | null>(null)
 const position = ref<DOMRect | null>(null)
 
@@ -36,11 +37,20 @@ function handleClick() {
 }
 
 function handleContextmenu(e: MouseEvent) {
+  // 打开新菜单前关闭旧菜单
+  if (openedMenuCloseFn?.value) {
+    openedMenuCloseFn.value()
+  }
+
   e.preventDefault()
   const rect = DOMRect.fromRect({ x: e.clientX, y: e.clientY })
   position.value = rect
   dropdownRef.value?.handleOpen()
-  emit('opened')
+
+  // 记录当前菜单的关闭函数
+  if (openedMenuCloseFn) {
+    openedMenuCloseFn.value = () => dropdownRef.value?.handleClose()
+  }
 }
 
 function open() {

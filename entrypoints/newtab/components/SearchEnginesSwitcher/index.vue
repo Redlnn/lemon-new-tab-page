@@ -62,31 +62,12 @@ async function deleteCustomEngine(index: number) {
   }
 }
 
-type CustomEngineItemRef = InstanceType<typeof CustomEngineItem> | null
-const openedDropdownIndex = ref<number | null>(null)
-const dropdownRefs = ref<Array<CustomEngineItemRef>>([])
-
-function setChildRef(i: number, el: CustomEngineItemRef) {
-  dropdownRefs.value[i] = el
-}
-
-function onChildOpened(index: number) {
-  if (openedDropdownIndex.value !== null && openedDropdownIndex.value !== index) {
-    const prev = dropdownRefs.value[openedDropdownIndex.value]
-    if (prev) {
-      prev.close()
-    }
-  }
-  openedDropdownIndex.value = index
-}
+const openedMenuCloseFn = ref<(() => void) | null>(null)
+provide('customEngineOpenedMenuCloseFn', openedMenuCloseFn)
 
 function handleScroll() {
-  if (openedDropdownIndex.value !== null) {
-    const curr = dropdownRefs.value[openedDropdownIndex.value]
-    if (curr) {
-      curr.close()
-    }
-    openedDropdownIndex.value = null
+  if (openedMenuCloseFn.value) {
+    openedMenuCloseFn.value()
   }
 }
 
@@ -161,8 +142,6 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
             @select="selectCustomEngine"
             @edit="() => editCustomEngine(index)"
             @delete="() => deleteCustomEngine(index)"
-            @opened="() => onChildOpened(index)"
-            :ref="(el) => setChildRef(index, el as InstanceType<typeof CustomEngineItem>)"
           />
         </el-col>
         <el-col :span="12">
