@@ -180,8 +180,11 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   const provider = bgTypeProviders[type]
   if (!provider) return
 
-  switchStore.start()
   const newUrl = await provider()
+  // 只在URL真正变化时才执行切换动画
+  if (type !== BgType.Online && newUrl === bgURL.value) return
+
+  switchStore.start()
 
   // 等待过渡动画
   // 首次打开默认白屏，不需要等待白屏动画
@@ -189,10 +192,10 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
     if (!settings.perf.disableBgSwitchAnim) {
       await promiseTimeout(animationDuration)
     }
+    // 不直接赋值是因为避免看到壁纸变形
+    // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
     bgURL.value = ''
   }
-  // 不直接赋值是因为避免看到壁纸变形
-  // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
   stopBgWatch?.() // 切换 provider 时清除旧监听
   stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
@@ -205,32 +208,12 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
 
 // 本地背景URL变化处理器
 async function handleLocalBgChange() {
-  const newUrl = currentLocalUrl.value
-
-  // 只在URL真正变化时才执行切换动画
-  if (bgURL.value === newUrl.value) return
-
-  switchStore.start()
-  if (!settings.perf.disableBgSwitchAnim) {
-    await promiseTimeout(animationDuration)
-  }
-  bgURL.value = ''
-  // 不直接赋值是因为避免看到壁纸变形
-  bgURL.value = newUrl.value
-  switchStore.end()
+  await updateBackgroundURL(BgType.Local)
 }
 
 // 在线背景URL变化处理器
 async function handleOnlineBgChange() {
-  switchStore.start()
-  if (!settings.perf.disableBgSwitchAnim) {
-    await promiseTimeout(animationDuration)
-  }
-  bgURL.value = ''
-  const provider = bgTypeProviders[BgType.Online]
-  const newUrl = await provider()
-  await assignMaybeRef(bgURL, newUrl)
-  switchStore.end()
+  await updateBackgroundURL(BgType.Online)
 }
 
 // 根据背景类型激活对应的watch
