@@ -30,10 +30,6 @@
       width var(--el-transition-duration-fast) var(--cubic-bezier);
     animation: delayedFadeIn 0.25s;
 
-    html.dark & {
-      --search-form-placeholder-color: var(--el-text-color-secondary);
-    }
-
     &--blur {
       @include acrylic.acrylic;
     }
@@ -79,6 +75,15 @@
         html.colorful & {
           background-color: var(--el-color-primary-light-8);
         }
+      }
+    }
+
+    /* stylelint-disable-next-line no-descending-specificity */
+    html.dark:not(.monet) & {
+      --search-form-placeholder-color: var(--el-text-color-secondary);
+
+      &:hover:not(.search-box__form--focus) {
+        --search-form-placeholder-color: var(--el-text-color-regular);
       }
     }
 
