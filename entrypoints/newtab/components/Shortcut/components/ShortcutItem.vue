@@ -21,10 +21,7 @@ const props = defineProps<{
 const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
-const emit = defineEmits<{
-  opened: []
-}>()
-
+const openedMenuCloseFn = inject<Ref<(() => void) | null>>('shortcutOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({
   top: 0,
@@ -37,6 +34,11 @@ const triggerRef = ref({
 })
 
 function handleContextmenu(event: MouseEvent): void {
+  // 打开新菜单前关闭旧菜单
+  if (openedMenuCloseFn?.value) {
+    openedMenuCloseFn.value()
+  }
+
   const { clientX, clientY } = event
   position.value = DOMRect.fromRect({
     x: clientX,
@@ -44,7 +46,11 @@ function handleContextmenu(event: MouseEvent): void {
   })
   event.preventDefault()
   dropdownRef.value?.handleOpen()
-  emit('opened')
+
+  // 记录当前菜单的关闭函数
+  if (openedMenuCloseFn) {
+    openedMenuCloseFn.value = () => dropdownRef.value?.handleClose()
+  }
 }
 
 function open() {

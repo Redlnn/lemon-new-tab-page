@@ -37,35 +37,18 @@ const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
 
 const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
-const openedShortcutIndex = ref<number | null>(null)
 
-type ShortcutItemRef = InstanceType<typeof ShortcutItem> | null
-const shortcutItemRefs = ref<Array<ShortcutItemRef>>([])
-
-function setChildRef(i: number, el: ShortcutItemRef) {
-  shortcutItemRefs.value[i] = el
-}
-
-function onChildOpened(i: number) {
-  if (openedShortcutIndex.value !== null && openedShortcutIndex.value !== i) {
-    const prev = shortcutItemRefs.value[openedShortcutIndex.value]
-    if (prev) {
-      prev.close()
-    }
-  }
-  openedShortcutIndex.value = i
-}
+// 记录当前打开的右键菜单关闭函数，实现全局唯一
+const openedMenuCloseFn = ref<(() => void) | null>(null)
+provide('shortcutOpenedMenuCloseFn', openedMenuCloseFn)
 
 // 切换页面时重置并关闭已打开的菜单
 watch(
   () => currentPage.value,
   () => {
-    if (openedShortcutIndex.value !== null) {
-      const prev = shortcutItemRefs.value[openedShortcutIndex.value]
-      if (prev) {
-        prev.close()
-      }
-      openedShortcutIndex.value = null
+    if (openedMenuCloseFn.value) {
+      openedMenuCloseFn.value()
+      openedMenuCloseFn.value = null
     }
   }
 )
@@ -263,23 +246,17 @@ const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refre
 
 // 开始拖拽时关闭已打开的菜单
 watch(isDragging, (dragging) => {
-  if (dragging && openedShortcutIndex.value !== null) {
-    const prev = shortcutItemRefs.value[openedShortcutIndex.value]
-    if (prev) {
-      prev.close()
-    }
-    openedShortcutIndex.value = null
+  if (dragging && openedMenuCloseFn.value) {
+    openedMenuCloseFn.value()
+    openedMenuCloseFn.value = null
   }
 })
 
 async function refresh() {
   // 刷新时重置打开的菜单，防止布局或数据变化导致索引失效
-  if (openedShortcutIndex.value !== null) {
-    const prev = shortcutItemRefs.value[openedShortcutIndex.value]
-    if (prev) {
-      prev.close()
-    }
-    openedShortcutIndex.value = null
+  if (openedMenuCloseFn.value) {
+    openedMenuCloseFn.value()
+    openedMenuCloseFn.value = null
   }
 
   // 拆分数据读取与布局计算
@@ -443,15 +420,13 @@ const isHideShortcut = computed(() => {
               }"
             >
               <shortcut-item
-                v-for="(item, index) in currentPageItems"
+                v-for="item in currentPageItems"
                 :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
                 v-memo="[item.url, item.title, item.favicon, item.isPinned]"
                 :url="item.url"
                 :title="item.title"
                 :favicon="item.favicon"
                 :pined="item.isPinned"
-                @opened="() => onChildOpened(index)"
-                :ref="(el) => setChildRef(index, el as InstanceType<typeof ShortcutItem>)"
               >
                 <template #submenu>
                   <template v-if="item.isPinned">
