@@ -34,8 +34,8 @@ const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
 const switchStore = useBgSwtichStore()
 
-const imageRef = useTemplateRef<HTMLImageElement>('imageRef')
-const videoRef = useTemplateRef<HTMLVideoElement>('videoRef')
+const imageRef = useTemplateRef('imageRef')
+const videoRef = useTemplateRef('videoRef')
 const bgURL = ref<string>('')
 const bgOpacityDuration = ref(settings.background.fasterBgAnim ? '0.3s' : '1.25s')
 
@@ -272,7 +272,7 @@ watch(
         if (settings.background.bgType === BgType.Online) {
           await updateBackgroundURL(BgType.Online)
         }
-        await applyMonet(imageRef.value!)
+        await applyMonet(imageRef.value)
       }
     } else {
       document.documentElement.classList.remove('monet')

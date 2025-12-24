@@ -96,7 +96,7 @@ async function getThemeFromImage(
   })
 }
 
-export async function applyMonet(image: HTMLImageElement | undefined, cropCenter = false) {
+export async function applyMonet(image: HTMLImageElement | undefined | null, cropCenter = false) {
   if (!image) return
 
   let cssLight: Record<string, string>

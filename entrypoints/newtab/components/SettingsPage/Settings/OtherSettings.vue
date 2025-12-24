@@ -132,9 +132,9 @@ function sendSyncMessage() {
   }
 }
 
-const settingsFileInput = useTemplateRef<HTMLInputElement>('settingsFileInput')
-const shortcutFileInput = useTemplateRef<HTMLInputElement>('shortcutFileInput')
-const customSearchEngineFileInput = useTemplateRef<HTMLInputElement>('customSearchEngineFileInput')
+const settingsFileInput = useTemplateRef('settingsFileInput')
+const shortcutFileInput = useTemplateRef('shortcutFileInput')
+const customSearchEngineFileInput = useTemplateRef('customSearchEngineFileInput')
 
 /**
  * 通用文件选择器打开函数

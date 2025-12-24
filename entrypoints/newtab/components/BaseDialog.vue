@@ -28,7 +28,7 @@ const emit = defineEmits<{
   scroll: [{ scrollLeft: number; scrollTop: number }]
 }>()
 
-const headerRef = useTemplateRef<HTMLDivElement>('headerRef')
+const headerRef = useTemplateRef('headerRef')
 const scrollbarRef = ref<ScrollbarInstance>()
 const dialogRef = ref<DialogInstance>()
 
