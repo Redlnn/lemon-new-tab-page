@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { toRef } from 'vue'
+import { onLongPress } from '@vueuse/core'
 
 import { Pin16Regular } from '@vicons/fluent'
 import type { DropdownInstance } from 'element-plus'
@@ -33,13 +34,25 @@ const triggerRef = ref({
   getBoundingClientRect: () => position.value
 })
 
-function handleContextmenu(event: MouseEvent): void {
+const itemRef = useTemplateRef('itemRef')
+
+function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
   }
 
-  const { clientX, clientY } = event
+  let clientX = 0
+  let clientY = 0
+
+  if ('clientX' in event) {
+    clientX = event.clientX
+    clientY = event.clientY
+  } else if ('touches' in event && event.touches[0]) {
+    clientX = event.touches[0].clientX
+    clientY = event.touches[0].clientY
+  }
+
   position.value = DOMRect.fromRect({
     x: clientX,
     y: clientY
@@ -52,6 +65,8 @@ function handleContextmenu(event: MouseEvent): void {
     openedMenuCloseFn.value = () => dropdownRef.value?.handleClose()
   }
 }
+
+onLongPress(itemRef, handleContextmenu)
 
 function open() {
   dropdownRef.value?.handleOpen()
@@ -67,6 +82,7 @@ defineExpose({ open, close })
 <template>
   <div class="shortcut__item noselect" :class="[{ pined: pined }]">
     <a
+      ref="itemRef"
       class="shortcut__item-link"
       :href="url"
       :target="settings.shortcut.openInNewTab ? '_blank' : '_self'"

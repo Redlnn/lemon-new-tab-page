@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { onLongPress } from '@vueuse/core'
+
 import { CheckmarkCircle12Filled, Delete16Regular, Edit16Regular } from '@vicons/fluent'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -21,12 +23,12 @@ const emit = defineEmits<{
   (e: 'select', id: string): void
   (e: 'edit'): void
   (e: 'delete'): void
-  (e: 'opened'): void
 }>()
 
 const openedMenuCloseFn = inject<Ref<(() => void) | null>>('customEngineOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance | null>(null)
 const position = ref<DOMRect | null>(null)
+const itemRef = useTemplateRef('itemRef')
 
 const triggerRef = {
   getBoundingClientRect: () => position.value ?? new DOMRect()
@@ -36,14 +38,26 @@ function handleClick() {
   emit('select', props.engine.id)
 }
 
-function handleContextmenu(e: MouseEvent) {
+function handleContextmenu(e: MouseEvent | TouchEvent | PointerEvent) {
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
   }
 
   e.preventDefault()
-  const rect = DOMRect.fromRect({ x: e.clientX, y: e.clientY })
+
+  let clientX = 0
+  let clientY = 0
+
+  if ('clientX' in e) {
+    clientX = e.clientX
+    clientY = e.clientY
+  } else if ('touches' in e && e.touches[0]) {
+    clientX = e.touches[0].clientX
+    clientY = e.touches[0].clientY
+  }
+
+  const rect = DOMRect.fromRect({ x: clientX, y: clientY })
   position.value = rect
   dropdownRef.value?.handleOpen()
 
@@ -52,6 +66,8 @@ function handleContextmenu(e: MouseEvent) {
     openedMenuCloseFn.value = () => dropdownRef.value?.handleClose()
   }
 }
+
+onLongPress(itemRef, handleContextmenu)
 
 function open() {
   dropdownRef.value?.handleOpen()
@@ -66,6 +82,7 @@ defineExpose({ open, close })
 
 <template>
   <div
+    ref="itemRef"
     class="se-switcher-item se-switcher-item--custom"
     :class="{ 'is-active': isActive }"
     @click="handleClick"
