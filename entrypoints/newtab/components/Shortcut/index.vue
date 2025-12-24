@@ -263,7 +263,7 @@ async function refresh() {
   const _shortcuts = shortcutStore.items.slice()
 
   // 1) 纯计算：基于窗口宽度与设置确定列数上限
-  const fitColumns = computeFitColumns(true)
+  const fitColumns = computeFitColumns(!isTouchDevice.value)
   columnsNum.value = fitColumns
   rowsNum.value = settings.shortcut.rows
 
