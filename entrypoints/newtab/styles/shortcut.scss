@@ -61,7 +61,7 @@
     width: 32px;
     height: 32px;
     padding: 0;
-    color: var(--el-text-color-regular);
+    color: var(--el-text-color-primary);
     cursor: pointer;
     background-color: var(--el-fill-color-darker);
     border: none;
@@ -74,7 +74,7 @@
       transform 0.2s ease;
 
     .shortcut:hover & {
-      opacity: 0.3;
+      opacity: 1;
 
       &--next {
         transform: translateX(-5px);
@@ -91,14 +91,13 @@
 
     &:not(&--disabled):hover {
       background-color: var(--el-fill-color-extra-light);
-      opacity: 1;
     }
 
     &--opacity {
       background-color: var(--le-bg-color-overlay-opacity-60);
 
-      .shortcut:hover & {
-        opacity: 0.5;
+      &:not(.shortcut__nav-btn--disabled):hover {
+        background-color: var(--le-bg-color-overlay-opacity-30);
       }
     }
 
@@ -114,15 +113,16 @@
       background-color: var(--el-color-primary-light-9);
     }
 
-    html.dark &:not(&--opacity):hover {
+    html.dark &:not(&--opacity, &--disabled):hover {
       background-color: var(--el-fill-color-light);
     }
 
-    html.colorful &:not(&--opacity):hover {
+    html.colorful &:not(&--opacity, &--disabled):hover {
       background-color: var(--el-color-primary-light-8);
     }
 
     &--disabled {
+      color: color-mix(in oklch, var(--el-text-color-primary), transparent 60%);
       cursor: not-allowed;
     }
   }
