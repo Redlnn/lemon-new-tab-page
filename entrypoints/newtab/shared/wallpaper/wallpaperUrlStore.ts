@@ -46,7 +46,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
 
     if (!background.id) {
       if (type === 'dark') {
-        type = 'light'
+        return getUrl('light')
       }
       updateRef(type, '')
       return targetRef
