@@ -38,21 +38,6 @@ const shortcutStore = useShortcutStore()
 
 const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
 
-// 记录当前打开的右键菜单关闭函数，实现全局唯一
-const openedMenuCloseFn = ref<(() => void) | null>(null)
-provide('shortcutOpenedMenuCloseFn', openedMenuCloseFn)
-
-// 切换页面时重置并关闭已打开的菜单
-watch(
-  () => currentPage.value,
-  () => {
-    if (openedMenuCloseFn.value) {
-      openedMenuCloseFn.value()
-      openedMenuCloseFn.value = null
-    }
-  }
-)
-
 const topSites = ref<TopSites.MostVisitedURL[]>([])
 const shortcuts = ref<{ url: string; title: string; favicon?: string }[]>([])
 const mounted = ref(false)
@@ -235,6 +220,21 @@ const displayRows = computed(() => {
   if (cols <= 0) return 1
   return computeNeededRows(itemCount, cols)
 })
+
+// 记录当前打开的右键菜单关闭函数，实现全局唯一
+const openedMenuCloseFn = ref<(() => void) | null>(null)
+provide('shortcutOpenedMenuCloseFn', openedMenuCloseFn)
+
+// 切换页面时重置并关闭已打开的菜单
+watch(
+  () => currentPage.value,
+  () => {
+    if (openedMenuCloseFn.value) {
+      openedMenuCloseFn.value()
+      openedMenuCloseFn.value = null
+    }
+  }
+)
 
 const shortcutContainerRef = useTemplateRef('shortcutContainerRef')
 const prevPageContainerRef = useTemplateRef('prevPageContainerRef')
