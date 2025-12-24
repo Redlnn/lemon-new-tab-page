@@ -28,6 +28,7 @@ const props = withDefaults(
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
 // 右键菜单相关
+const openedMenuCloseFn = inject<Ref<(() => void) | null>>('bookmarkOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({
   top: 0,
@@ -40,6 +41,11 @@ const triggerRef = ref({
 })
 
 function handleContextmenu(event: MouseEvent): void {
+  // 打开新菜单前关闭旧菜单
+  if (openedMenuCloseFn?.value) {
+    openedMenuCloseFn.value()
+  }
+
   const { clientX, clientY } = event
   position.value = DOMRect.fromRect({
     x: clientX,
@@ -47,6 +53,11 @@ function handleContextmenu(event: MouseEvent): void {
   })
   event.preventDefault()
   dropdownRef.value?.handleOpen()
+
+  // 记录当前菜单的关闭函数
+  if (openedMenuCloseFn) {
+    openedMenuCloseFn.value = () => dropdownRef.value?.handleClose()
+  }
 }
 
 async function addToShortcut() {

@@ -39,6 +39,11 @@ function handleCompositionEnd() {
 }
 
 const updateStoreDebounced = useDebounceFn(() => {
+  // 搜索时关闭已打开的菜单
+  if (openedMenuCloseFn.value) {
+    openedMenuCloseFn.value()
+    openedMenuCloseFn.value = null
+  }
   store.searchQuery = searchQuery.value
   store.updateFilteredResult()
 }, 200)
@@ -82,6 +87,10 @@ const sortOptions = [
 // 控制不同深度层级的激活值（按深度索引），避免父子 collapse 共享同一数组导致冲突
 const activeMap = ref<Record<number, string | string[]>>({})
 provide('bookmarkActiveMap', activeMap)
+
+// 记录当前打开的右键菜单关闭函数，实现全局唯一
+const openedMenuCloseFn = ref<(() => void) | null>(null)
+provide('bookmarkOpenedMenuCloseFn', openedMenuCloseFn)
 
 // 顶层 collapse 对应深度为 1，暴露一个 computed 以绑定到 v-model
 const topModel = computed({
