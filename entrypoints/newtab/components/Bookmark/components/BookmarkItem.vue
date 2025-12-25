@@ -2,7 +2,7 @@
 import { onLongPress } from '@vueuse/core'
 
 import { Dismiss16Regular, Pin16Regular } from '@vicons/fluent'
-import { FolderOpenRound } from '@vicons/material'
+import { FolderOpenRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import type { Browser } from 'wxt/browser'
@@ -75,6 +75,10 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
 }
 
 onLongPress(itemRef, handleContextmenu)
+
+function openInNewTab() {
+  open(props.node.url, '_blank')
+}
 
 async function addToShortcut() {
   if (!props.node.url) return
@@ -180,6 +184,12 @@ const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.
     >
       <template #dropdown>
         <el-dropdown-menu>
+          <el-dropdown-item @click="openInNewTab">
+            <el-icon>
+              <open-in-new-round />
+            </el-icon>
+            <span>{{ t('settings:common.openInNewTab') }}</span>
+          </el-dropdown-item>
           <el-dropdown-item @click="addToShortcut">
             <el-icon>
               <pin16-regular />

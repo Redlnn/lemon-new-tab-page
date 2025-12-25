@@ -3,13 +3,16 @@ import { toRef } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
 import { Pin16Regular } from '@vicons/fluent'
+import { OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
+import { useTranslation } from 'i18next-vue'
 
 import { convertBase64Svg, getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 
+const { t } = useTranslation()
 const settings = useSettingsStore()
 
 const props = defineProps<{
@@ -74,6 +77,10 @@ function open() {
 
 function close() {
   dropdownRef.value?.handleClose()
+}
+
+function openInNewTab() {
+  window.open(props.url, '_blank')
 }
 
 defineExpose({ open, close })
@@ -162,6 +169,12 @@ defineExpose({ open, close })
       >
         <template #dropdown>
           <el-dropdown-menu>
+            <el-dropdown-item @click="openInNewTab">
+              <el-icon>
+                <open-in-new-round />
+              </el-icon>
+              <span>{{ t('settings:common.openInNewTab') }}</span>
+            </el-dropdown-item>
             <slot name="submenu"></slot>
           </el-dropdown-menu>
         </template>
