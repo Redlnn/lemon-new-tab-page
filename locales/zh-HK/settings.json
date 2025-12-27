@@ -1,6 +1,8 @@
 {
   "common": {
-    "openInNewTab": "在新分頁中開啟"
+    "openInNewTab": "在新分頁中開啟",
+    "openInNewWindow": "在新視窗中開啟",
+    "copyLink": "複製連結網址"
   },
   "background": {
     "alwaysFresh": "永遠都有新鮮感",

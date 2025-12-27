@@ -1,6 +1,8 @@
 {
   "common": {
-    "openInNewTab": "在新标签页中打开"
+    "openInNewTab": "在新标签页中打开",
+    "openInNewWindow": "在新窗口中打开",
+    "copyLink": "复制链接地址"
   },
   "background": {
     "alwaysFresh": "永远都有新鲜感",

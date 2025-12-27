@@ -25,7 +25,7 @@ const baseManifest = {
     64: '/icon-64.png',
     96: '/icon-96.png',
     128: '/icon-128.png',
-    256: '/icon-16.png',
+    256: '/icon-256.png',
     512: '/icon-512.png'
   },
   host_permissions: [
@@ -46,7 +46,7 @@ if (import.meta.env.DEV) {
 
 const firefoxManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'alarms', 'bookmarks', 'activeTab'],
+  permissions: ['topSites', 'storage', 'alarms', 'bookmarks', 'activeTab', 'tabs'],
   optional_permissions: ['*://*/*'],
   chrome_settings_overrides: {
     homepage: 'newtab.html'
@@ -55,7 +55,7 @@ const firefoxManifest = {
 
 const chromeManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'favicon', 'alarms', 'bookmarks', 'activeTab'],
+  permissions: ['topSites', 'storage', 'favicon', 'alarms', 'bookmarks', 'activeTab', 'tabs'],
   optional_host_permissions: ['*://*/*']
 }
 

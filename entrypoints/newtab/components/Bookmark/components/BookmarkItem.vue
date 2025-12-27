@@ -2,10 +2,10 @@
 import { onLongPress } from '@vueuse/core'
 
 import { Dismiss16Regular, Pin16Regular } from '@vicons/fluent'
-import { FolderOpenRound, OpenInNewRound } from '@vicons/material'
+import { ContentCopyRound, FolderOpenRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-import type { Browser } from 'wxt/browser'
+import { browser, type Browser } from 'wxt/browser'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -82,7 +82,18 @@ onLongPress(itemRef, (event) => {
 })
 
 function openInNewTab() {
+  if (!props.node.url) return
   open(props.node.url, '_blank')
+}
+
+function openInNewWindow() {
+  if (!props.node.url) return
+  browser.windows.create({ url: props.node.url })
+}
+
+function copyLink() {
+  if (!props.node.url) return
+  navigator.clipboard.writeText(props.node.url)
 }
 
 async function addToShortcut() {
@@ -195,7 +206,19 @@ const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.
             </el-icon>
             <span>{{ t('settings:common.openInNewTab') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item @click="addToShortcut">
+          <el-dropdown-item @click="openInNewWindow">
+            <el-icon>
+              <open-in-new-round />
+            </el-icon>
+            <span>{{ t('settings:common.openInNewWindow') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item @click="copyLink">
+            <el-icon>
+              <content-copy-round />
+            </el-icon>
+            <span>{{ t('settings:common.copyLink') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item divided @click="addToShortcut">
             <el-icon>
               <pin16-regular />
             </el-icon>

@@ -27,6 +27,7 @@
   ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
 - Support not hiding quick access when the search box is focused
   ([#63](https://github.com/Redlnn/lemon-new-tab-page/issues/63))
+- Right-click menu supports copying link address and opening in a new window
 
 ### Improvements⚡️
 
@@ -36,6 +37,7 @@
 - Reduce the size of the pin icon for pinned links
   ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
 - Comprehensive adjustment of all corner radii to enhance aesthetics
+- Optimize right-click menu styles
 
 ### Bug Fixes🐛
 

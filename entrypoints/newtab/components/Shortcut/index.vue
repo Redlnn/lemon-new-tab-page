@@ -432,6 +432,7 @@ const isHideShortcut = computed(() => {
                 <template #submenu>
                   <template v-if="item.isPinned">
                     <el-dropdown-item
+                      divided
                       @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
                     >
                       <el-icon>
@@ -450,6 +451,7 @@ const isHideShortcut = computed(() => {
                   </template>
                   <template v-else>
                     <el-dropdown-item
+                      divided
                       @click="
                         async () => {
                           await blockSite(item.url, refreshDebounced)

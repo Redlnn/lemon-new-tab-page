@@ -1,6 +1,8 @@
 {
   "common": {
-    "openInNewTab": "Open in new tab"
+    "openInNewTab": "Open in new tab",
+    "openInNewWindow": "Open in new window",
+    "copyLink": "Copy link address"
   },
   "background": {
     "alwaysFresh": "Always something new",

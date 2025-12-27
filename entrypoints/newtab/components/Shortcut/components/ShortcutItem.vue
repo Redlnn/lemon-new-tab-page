@@ -3,9 +3,11 @@ import { toRef } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
 import { Pin16Regular } from '@vicons/fluent'
-import { OpenInNewRound } from '@vicons/material'
+import { ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
+
+import { browser } from '#imports'
 
 import { convertBase64Svg, getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -41,6 +43,8 @@ const triggerRef = ref({
 const itemRef = useTemplateRef('itemRef')
 
 function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
+  event.preventDefault()
+
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
@@ -61,7 +65,6 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
     x: clientX,
     y: clientY
   })
-  event.preventDefault()
   dropdownRef.value?.handleOpen()
 
   // 记录当前菜单的关闭函数
@@ -86,6 +89,14 @@ function close() {
 
 function openInNewTab() {
   window.open(props.url, '_blank')
+}
+
+function openInNewWindow() {
+  browser.windows.create({ url: props.url })
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(props.url)
 }
 
 defineExpose({ open, close })
@@ -179,6 +190,18 @@ defineExpose({ open, close })
                 <open-in-new-round />
               </el-icon>
               <span>{{ t('settings:common.openInNewTab') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item @click="openInNewWindow">
+              <el-icon>
+                <open-in-new-round />
+              </el-icon>
+              <span>{{ t('settings:common.openInNewWindow') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item @click="copyLink">
+              <el-icon>
+                <content-copy-round />
+              </el-icon>
+              <span>{{ t('settings:common.copyLink') }}</span>
             </el-dropdown-item>
             <slot name="submenu"></slot>
           </el-dropdown-menu>
