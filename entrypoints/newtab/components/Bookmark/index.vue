@@ -298,10 +298,7 @@ watch(
 }
 
 .bookmark__menu-popper.el-dropdown__popper.el-popper {
-  .el-dropdown-menu__item {
-    padding: 2px 15px;
-    font-size: var(--el-font-size-small);
-  }
+  border-radius: 15px;
 
   &.bookmark__menu-popper--opacity.bookmark__menu-popper--blur {
     background-color: var(--le-bg-color-overlay-opacity-30);
@@ -312,7 +309,14 @@ watch(
   }
 
   .el-dropdown-menu {
+    padding: 4px;
     background-color: initial;
+  }
+
+  .el-dropdown-menu__item {
+    padding: 2px 30px 2px 10px;
+    font-size: var(--el-font-size-extra-small);
+    border-radius: 11px;
   }
 }
 </style>

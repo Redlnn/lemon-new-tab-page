@@ -192,7 +192,7 @@ async function addCurrentPage() {
   padding: 12px 17px;
   margin-bottom: 12px;
   background: var(--el-fill-color-light);
-  border-radius: 12px;
+  border-radius: 15px;
 }
 
 .popup__favicon {

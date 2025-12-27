@@ -197,7 +197,6 @@ defineExpose({
   max-width: 93%;
   padding: 30px;
 
-  --el-dialog-border-radius: 20px;
   --el-dialog-padding-primary: 25px;
 
   html.colorful:not(.dialog-transparent) & {

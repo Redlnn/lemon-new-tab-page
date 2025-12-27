@@ -58,14 +58,14 @@
 
   &__popper.el-popper {
     .el-dropdown-menu {
-      padding: 8px 10px;
+      padding: 8px;
       background-color: transparent;
     }
 
     .el-dropdown-menu__item {
-      padding: 5px 18px 5px 10px;
+      padding: 5px 30px 5px 10px;
       font-size: var(--el-font-size-extra-small);
-      border-radius: 6px;
+      border-radius: 12px;
 
       .el-icon {
         margin-right: 10px;

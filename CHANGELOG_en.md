@@ -35,6 +35,7 @@
 - Optimize the styles of the "Add Shortcut" and "Add Search Engine" dialogs
 - Reduce the size of the pin icon for pinned links
   ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
+- Comprehensive adjustment of all corner radii to enhance aesthetics
 
 ### Bug Fixes🐛
 

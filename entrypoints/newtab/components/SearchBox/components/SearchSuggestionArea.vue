@@ -219,9 +219,15 @@ defineExpose({
   overflow: hidden;
   font-size: var(--el-font-size-small);
   background-color: var(--el-fill-color-darker);
+  border-radius: 20px;
+  transition:
+    height 0.1s var(--cubic-bezier),
+    background-color var(--el-transition-duration-fast) ease,
+    border var(--el-transition-duration-fast) ease,
+    box-shadow var(--el-transition-duration-fast) ease;
 
-  html.colorful &:not(.search-suggestion-area--opacity) {
-    background-color: var(--el-color-primary-light-9);
+  &--shadow {
+    box-shadow: var(--el-box-shadow);
   }
 
   &.search-suggestion-area--opacity {
@@ -231,15 +237,9 @@ defineExpose({
   &.search-suggestion-area--blur {
     @include acrylic.acrylic(30px);
   }
-  border-radius: 15px;
-  transition:
-    height 0.1s var(--cubic-bezier),
-    background-color var(--el-transition-duration-fast) ease,
-    border var(--el-transition-duration-fast) ease,
-    box-shadow var(--el-transition-duration-fast) ease;
 
-  &--shadow {
-    box-shadow: var(--el-box-shadow);
+  html.colorful &:not(.search-suggestion-area--opacity) {
+    background-color: var(--el-color-primary-light-9);
   }
 
   html:not(.colorful) &--dark {
@@ -251,7 +251,7 @@ defineExpose({
     display: -webkit-box;
     align-items: center;
     height: 33px;
-    padding: 0 20px;
+    padding: 0 30px;
     overflow: hidden;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -265,7 +265,7 @@ defineExpose({
       color var(--el-transition-duration-fast) ease;
 
     &--active {
-      padding-left: 30px;
+      padding-left: 40px;
       background-color: var(--le-bg-color-overlay-opacity-60);
     }
   }

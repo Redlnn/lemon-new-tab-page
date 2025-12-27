@@ -4,13 +4,13 @@ $--slider: (
   'button-size': 15px
 );
 $--border-radius: (
-  'base': 8px
+  'base': 20px
 );
 $--messagebox: (
-  'border-radius': 8px
+  'border-radius': 20px
 );
 $--popper: (
-  'border-radius': 8px
+  'border-radius': 20px
 );
 $--backtop: (
   'bg-color': color-mix(in oklch, var(--el-color-primary), transparent 90%),

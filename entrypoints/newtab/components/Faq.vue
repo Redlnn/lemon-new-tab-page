@@ -122,7 +122,7 @@ function handleEmailClick() {
     text-decoration: none;
     cursor: pointer;
     background-color: var(--el-bg-color);
-    border-radius: 10px;
+    border-radius: 15px;
     transition:
       background-color var(--el-transition-duration-fast) ease,
       transform var(--el-transition-duration-fast) ease;
@@ -135,7 +135,7 @@ function handleEmailClick() {
       height: 28px;
       font-size: 18px;
       background-color: var(--el-fill-color-darker);
-      border-radius: 5px;
+      border-radius: 8px;
       transition: background-color var(--el-transition-duration-fast) ease;
 
       html.colorful & {
@@ -192,7 +192,7 @@ function handleEmailClick() {
     padding: 20px 22px;
     margin-bottom: 10px;
     background-color: var(--el-bg-color);
-    border-radius: 10px;
+    border-radius: 15px;
 
     &:last-child {
       margin-bottom: 0;

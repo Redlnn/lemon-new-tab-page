@@ -31,6 +31,7 @@
 - 优化添加快捷方式和搜索引擎对话框的样式
 - 缩小置顶链接的pin图标
   ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
+- 全面调整所有圆角大小以统一观感（进入“大圆角时代”！）
 
 ### 修复🐛
 

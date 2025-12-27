@@ -205,7 +205,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   padding: 16px 18px;
   cursor: pointer;
   background-color: var(--el-bg-color);
-  border-radius: 8px;
+  border-radius: 15px;
 
   &:hover {
     background-color: var(--el-fill-color-dark);
@@ -302,10 +302,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
 }
 
 .se-switcher-item__menu-popper.el-dropdown__popper.el-popper {
-  .el-dropdown-menu__item {
-    padding: 2px 15px;
-    font-size: var(--el-font-size-small);
-  }
+  border-radius: 15px;
 
   &.se-switcher-item__menu-popper--opacity.se-switcher-item__menu-popper--blur {
     // 只有模糊时才有透明度效果，否则会影响可读性
@@ -317,7 +314,14 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
   }
 
   .el-dropdown-menu {
+    padding: 4px;
     background-color: initial;
+  }
+
+  .el-dropdown-menu__item {
+    padding: 2px 30px 2px 10px;
+    font-size: var(--el-font-size-extra-small);
+    border-radius: 11px;
   }
 }
 </style>

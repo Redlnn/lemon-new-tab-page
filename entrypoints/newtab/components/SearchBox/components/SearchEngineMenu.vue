@@ -155,7 +155,7 @@ defineExpose({ hide })
 
 .search-engine-menu {
   &.is-customized {
-    --el-popper-border-radius: 10px;
+    --el-popper-border-radius: 15px;
 
     min-width: 210px;
     padding: 5px;
@@ -182,7 +182,7 @@ defineExpose({ hide })
     font-size: var(--el-font-size-extra-small);
     color: var(--el-text-color-primary);
     cursor: pointer;
-    border-radius: 7px;
+    border-radius: 10px;
 
     &:hover {
       background: var(--le-bg-color-overlay-opacity-30);

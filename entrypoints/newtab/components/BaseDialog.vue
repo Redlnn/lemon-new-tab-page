@@ -127,7 +127,7 @@ const dialogId = computed(() => {
   padding: 0;
   overflow: hidden;
   background-color: var(--el-bg-color-page);
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
   transition:
     background-color var(--el-transition-duration-fast) ease,

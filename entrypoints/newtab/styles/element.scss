@@ -12,13 +12,23 @@ body {
     box-shadow var(--el-transition-duration-fast) ease;
 }
 
+.el-select-dropdown {
+  overflow: hidden;
+}
+
+.el-select:not(.el-select--small, .el-select--large) {
+  & .el-select__selected-item {
+    font-size: var(--el-font-size-small);
+  }
+}
+
+.el-input:not(.el-input--small, .el-input--large) {
+  font-size: var(--el-font-size-small);
+}
+
 .el-badge .el-badge__content {
   border: initial;
   box-shadow: 0 0 5px rgb(0 0 0 / 10%);
-}
-
-.el-message {
-  border-radius: 20px !important;
 }
 
 .el-message-box {
@@ -51,7 +61,6 @@ body {
 
 .el-popper.el-color-picker__panel {
   overflow: hidden;
-  border-radius: 15px;
 
   .el-color-picker-panel {
     padding: 15px;
@@ -61,7 +70,7 @@ body {
 .el-color-picker .el-color-picker__trigger {
   padding: 0;
   overflow: hidden;
-  border-radius: 8px;
+  border-radius: 10px;
 
   .el-color-picker__color {
     border: none;
