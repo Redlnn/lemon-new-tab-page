@@ -12,6 +12,7 @@ import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
@@ -74,7 +75,11 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
   }
 }
 
-onLongPress(itemRef, handleContextmenu)
+onLongPress(itemRef, (event) => {
+  if (isOnlyTouchDevice.value) {
+    handleContextmenu(event)
+  }
+})
 
 function openInNewTab() {
   open(props.node.url, '_blank')

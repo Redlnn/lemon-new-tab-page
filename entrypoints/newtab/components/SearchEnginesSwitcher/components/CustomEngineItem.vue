@@ -8,6 +8,7 @@ import { useTranslation } from 'i18next-vue'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 const { t } = useTranslation()
 
@@ -67,7 +68,11 @@ function handleContextmenu(e: MouseEvent | TouchEvent | PointerEvent) {
   }
 }
 
-onLongPress(itemRef, handleContextmenu)
+onLongPress(itemRef, (event) => {
+  if (isOnlyTouchDevice.value) {
+    handleContextmenu(event)
+  }
+})
 
 function open() {
   dropdownRef.value?.handleOpen()

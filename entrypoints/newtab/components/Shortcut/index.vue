@@ -18,6 +18,7 @@ import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/shared/store'
+import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import getPerfClasses from '../../composables/perfClasses'
 import AddShortcut from './components/AddShortcut.vue'
@@ -80,7 +81,6 @@ const {
   currentPage,
   totalPages,
   showPagination,
-  isTouchDevice,
   isAnimating,
   slideDirection,
   noTransition,
@@ -263,7 +263,7 @@ async function refresh() {
   const _shortcuts = shortcutStore.items.slice()
 
   // 1) 纯计算：基于窗口宽度与设置确定列数上限
-  const fitColumns = computeFitColumns(!isTouchDevice.value)
+  const fitColumns = computeFitColumns(!isOnlyTouchDevice.value)
   columnsNum.value = fitColumns
   rowsNum.value = settings.shortcut.rows
 
@@ -356,7 +356,7 @@ const isHideShortcut = computed(() => {
       <div class="shortcut__wrapper-inner">
         <!-- 左翻页按钮 -->
         <button
-          v-if="showPagination && !isTouchDevice"
+          v-if="showPagination && !isOnlyTouchDevice"
           class="shortcut__nav-btn--prev"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === 0 || isAnimating },
@@ -515,7 +515,7 @@ const isHideShortcut = computed(() => {
 
         <!-- 右翻页按钮 -->
         <button
-          v-if="showPagination && !isTouchDevice"
+          v-if="showPagination && !isOnlyTouchDevice"
           class="shortcut__nav-btn--next"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === totalPages - 1 || isAnimating },

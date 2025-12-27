@@ -1,10 +1,9 @@
-import { useMediaQuery, useSwipe, useTimeoutFn } from '@vueuse/core'
+import { useSwipe, useTimeoutFn } from '@vueuse/core'
 
 export interface UseShortcutPagination {
   currentPage: Ref<number>
   totalPages: Ref<number>
   showPagination: ComputedRef<boolean>
-  isTouchDevice: ComputedRef<boolean>
   isAnimating: Ref<boolean>
   slideDirection: Ref<'left' | 'right' | null>
   noTransition: Ref<boolean>
@@ -40,9 +39,6 @@ export function useShortcutPagination(
     }
     return Math.max(1, Math.ceil(totalItems.value / itemsPerPage.value))
   })
-
-  // 触摸设备检测
-  const isTouchDevice = useMediaQuery('(pointer: coarse)')
 
   // 是否显示分页组件
   const showPagination = computed(() => totalPages.value > 1)
@@ -177,7 +173,6 @@ export function useShortcutPagination(
     currentPage,
     totalPages,
     showPagination,
-    isTouchDevice,
     isAnimating,
     slideDirection,
     noTransition,
