@@ -5,6 +5,21 @@
   opacity: 0;
 }
 
+.opacity-fade-enter-active,
+.opacity-fade-leave-active {
+  transition: opacity 0.15s;
+}
+
+.opacity-fade-enter-from,
+.opacity-fade-leave-to {
+  opacity: 0;
+}
+
+.opacity-fade-enter-to,
+.opacity-fade-leave-from {
+  opacity: 1;
+}
+
 /* 对话框进入/离开 */
 .dialog-enter-active,
 .dialog-enter-active .el-dialog {

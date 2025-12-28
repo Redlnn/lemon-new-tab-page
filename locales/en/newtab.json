@@ -15,7 +15,9 @@
       "nameDesc": "Name Z–A",
       "origin": "Original Order"
     },
-    "title": "Bookmark"
+    "title": "Bookmark",
+    "tooSmall": "Sidebar is too narrow",
+    "expandHint": "Please expand the sidebar to view bookmarks"
   },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",

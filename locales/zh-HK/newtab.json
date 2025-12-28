@@ -15,7 +15,9 @@
       "nameDesc": "名稱由Z到A",
       "origin": "原始順序"
     },
-    "title": "書籤"
+    "title": "書籤",
+    "tooSmall": "側欄寬度過細",
+    "expandHint": "請展開側欄以查看書籤"
   },
   "changelog": {
     "hideMajorChangelog": "不顯示大版本更新日誌",

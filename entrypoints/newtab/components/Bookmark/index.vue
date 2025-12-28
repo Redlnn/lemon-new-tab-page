@@ -19,6 +19,13 @@ const { t } = useTranslation()
 const settings = useSettingsStore()
 
 const store = useBookmarkStore()
+
+const drawerWidth = ref(400)
+
+function onDrawerResize(evt: MouseEvent, size: number): void {
+  drawerWidth.value = size
+}
+
 onMounted(() => {
   if (!store.loaded) {
     store.loadBookmarks()
@@ -122,9 +129,11 @@ watch(
 
 <template>
   <el-drawer
+    ref="drawerRef"
     v-model="opened"
     :direction="settings.bookmarkSidebar.direction"
     :title="t('bookmarkSidebar.title')"
+    size="400"
     class="noselect"
     :class="[
       getPerfClasses(
@@ -137,44 +146,58 @@ watch(
     ]"
     append-to-body
     resizable
+    @resize="onDrawerResize"
     lock-scroll
     close-on-click-modal
     close-on-press-escape
     destroy-on-close
   >
-    <div class="bookmark-search" style="padding: 0 20px 10px">
-      <el-input
-        v-model="searchQuery"
-        :prefix-icon="SearchRound"
-        :empty-values="[null, undefined]"
-        @compositionstart="handleCompositionStart"
-        @compositionend="handleCompositionEnd"
-        @input="handleInput"
-      />
-      <el-select v-model="sortMode" :placeholder="t('bookmarkSidebar.sortBy')">
-        <el-option
-          v-for="(item, index) in sortOptions"
-          :key="index"
-          :label="t(item.labelKey)"
-          :value="item.value"
-          @click="item.click"
-        />
-      </el-select>
-    </div>
-    <template v-if="store.filteredResult.length > 0">
-      <el-scrollbar style="height: calc(100% - 42px)">
-        <el-collapse v-model="topModel" expand-icon-position="left" accordion>
-          <bookmark-item v-for="item in store.filteredResult" :key="item.id" :node="item" />
-        </el-collapse>
-      </el-scrollbar>
-    </template>
-    <template v-else>
-      <div class="bookmark-404">
-        <div class="bookmark-404--icon">🧐</div>
-        <code class="bookmark-404--title">404</code>
-        <div class="bookmark-404--desc">{{ t('bookmarkSidebar.404') }}</div>
-      </div>
-    </template>
+    <Transition name="opacity-fade" mode="out-in">
+      <section style="height: 100%" v-if="drawerWidth >= 360">
+        <div class="bookmark-search">
+          <el-input
+            v-model="searchQuery"
+            :prefix-icon="SearchRound"
+            :empty-values="[null, undefined]"
+            @compositionstart="handleCompositionStart"
+            @compositionend="handleCompositionEnd"
+            @input="handleInput"
+          />
+          <el-select v-model="sortMode" :placeholder="t('bookmarkSidebar.sortBy')">
+            <el-option
+              v-for="(item, index) in sortOptions"
+              :key="index"
+              :label="t(item.labelKey)"
+              :value="item.value"
+              @click="item.click"
+            />
+          </el-select>
+        </div>
+        <template v-if="store.filteredResult.length > 0">
+          <el-scrollbar style="height: calc(100% - 42px)">
+            <el-collapse v-model="topModel" expand-icon-position="left" accordion>
+              <bookmark-item v-for="item in store.filteredResult" :key="item.id" :node="item" />
+            </el-collapse>
+          </el-scrollbar>
+        </template>
+        <template v-else>
+          <div class="bookmark-404">
+            <div class="bookmark-404--icon">🧐</div>
+            <code class="bookmark-404--title">404</code>
+            <div class="bookmark-404--desc">{{ t('bookmarkSidebar.404') }}</div>
+          </div>
+        </template>
+      </section>
+      <section v-else class="bookmark-small">
+        <div class="bookmark-small__icon">🙈</div>
+        <div class="bookmark-small__title">
+          {{ t('bookmarkSidebar.tooSmall') }}
+        </div>
+        <div class="bookmark-small__desc">
+          {{ t('bookmarkSidebar.expandHint') }}
+        </div>
+      </section>
+    </Transition>
   </el-drawer>
 </template>
 
@@ -182,7 +205,32 @@ watch(
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 
 .bookmark {
-  min-width: 400px;
+  max-width: calc(100% - 20px);
+  margin: 10px;
+  overflow: hidden;
+  border-radius: 20px;
+
+  &.el-drawer.ltr,
+  &.el-drawer.rtl {
+    height: calc(100% - 20px);
+
+    .el-drawer__dragger {
+      top: 20px;
+      height: calc(100% - 40px);
+
+      &::before {
+        border-radius: 4px;
+      }
+    }
+  }
+
+  &.el-drawer.rtl .el-drawer__dragger {
+    left: 2px;
+  }
+
+  &.el-drawer.ltr .el-drawer__dragger {
+    right: 2px;
+  }
 
   &--opacity.el-drawer {
     background-color: var(--le-bg-color-overlay-opacity-15);
@@ -203,17 +251,33 @@ watch(
   .el-drawer__title {
     font-weight: bold;
   }
+
+  .el-scrollbar__view {
+    padding-bottom: 20px;
+  }
 }
 
 @media (width <= 600px) {
   .bookmark {
     min-width: 100%;
+    margin: 0;
+    border-radius: 0;
+
+    &.el-drawer.ltr,
+    &.el-drawer.rtl {
+      height: 100%;
+    }
+
+    .el-drawer__dragger {
+      display: none;
+    }
   }
 }
 
 .bookmark-search {
   display: flex;
   gap: 5px;
+  padding: 0 20px 10px;
 
   .el-select {
     flex-shrink: 0;
@@ -224,22 +288,48 @@ watch(
 .bookmark-404 {
   display: flex;
   flex-direction: column;
+  gap: 8px;
   align-items: center;
   justify-content: center;
-  height: max(50%, 134px);
+  height: calc(100% - 42px);
 
   &--icon {
-    font-size: 80px;
-    line-height: 1em;
+    font-size: 50px;
   }
 
   &--title {
-    font-size: 40px;
-    line-height: 1em;
+    font-size: var(--el-font-size-large);
+    font-weight: bold;
   }
 
   &--desc {
-    line-height: 1em;
+    padding-bottom: 116px;
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-secondary);
+  }
+}
+
+.bookmark-small {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  &__icon {
+    font-size: 50px;
+  }
+
+  &__title {
+    font-size: var(--el-font-size-medium);
+    font-weight: bold;
+  }
+
+  &__desc {
+    padding-bottom: 74px;
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-secondary);
   }
 }
 

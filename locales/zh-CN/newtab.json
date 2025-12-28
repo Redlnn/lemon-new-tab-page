@@ -15,7 +15,9 @@
       "nameDesc": "名称由Z到A",
       "origin": "原始顺序"
     },
-    "title": "书签"
+    "title": "书签",
+    "tooSmall": "侧边栏宽度过小",
+    "expandHint": "请展开侧边栏以查看书签"
   },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",
