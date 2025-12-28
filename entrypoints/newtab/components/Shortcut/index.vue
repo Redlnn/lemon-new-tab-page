@@ -283,6 +283,11 @@ async function refresh() {
 
   shortcuts.value = _shortcuts
   topSites.value = mergedTop
+
+  // 首次刷新完成后设置 mounted 标志
+  if (!mounted.value) {
+    mounted.value = true
+  }
 }
 
 onMounted(() => {
@@ -298,10 +303,6 @@ onMounted(() => {
   // useResizeObserver 会在开始观察时立即触发一次
   useResizeObserver(document.documentElement, async () => {
     await refreshDebounced()
-    // 首次刷新完成后设置 mounted 标志
-    if (!mounted.value) {
-      mounted.value = true
-    }
   })
 })
 
@@ -339,7 +340,15 @@ function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): nu
 }
 
 const isHideShortcut = computed(() => {
-  return mounted && focusStore.isFocused ? (settings.shortcut.showOnSearchFocus ? '1' : '0') : '1'
+  if (!mounted.value) {
+    return '0'
+  }
+
+  if (!focusStore.isFocused) {
+    return '1'
+  }
+
+  return settings.shortcut.showOnSearchFocus ? '1' : '0'
 })
 </script>
 

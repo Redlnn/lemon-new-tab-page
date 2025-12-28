@@ -48,7 +48,9 @@
 - Fixed shortcut title text shadow being cut off
 - Fixed issue where pinned link icons were incorrect after using drag-and-drop sorting
 - Fixed style issues in the search engine selector
-- Fixed issue where the dark mode wallpaper would not immediately switch to the light mode wallpaper after deleting the dark mode wallpaper
+- Fixed issue where the dark mode wallpaper would not immediately switch to the light mode wallpaper
+  after deleting the dark mode wallpaper
+- Fixed issue where shortcuts were displayed before they were fully loaded at startup
 
 ## 2.7.0 (Dec 10, 2025)
 
