@@ -301,7 +301,7 @@ async function onImgLoaded() {
 <template>
   <div
     ref="backgroundWrapper"
-    class="background-wrapper"
+    class="background-wrapper noselect"
     :style="{
       '--mask-opacity': settings.background.bgMaskOpacity / 100,
       '--mask-color__light': settings.background.lightMaskColor,
