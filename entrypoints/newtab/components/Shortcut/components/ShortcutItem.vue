@@ -13,7 +13,7 @@ import { convertBase64Svg, getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
-import { isOnlyTouchDevice } from '@newtab/shared/touch'
+import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
@@ -74,7 +74,7 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
 }
 
 onLongPress(itemRef, (event) => {
-  if (isOnlyTouchDevice.value) {
+  if (isHasTouchDevice.value && isTouchEvent(event)) {
     handleContextmenu(event)
   }
 })
