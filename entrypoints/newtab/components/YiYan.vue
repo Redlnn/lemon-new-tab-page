@@ -48,7 +48,6 @@ onMounted(async () => {
   bottom: 100px;
   display: flex;
   justify-content: center;
-  width: 100%;
 
   &__main {
     width: 530px;
@@ -120,10 +119,10 @@ onMounted(async () => {
         color: var(--el-fill-color);
       }
     }
+  }
 
-    @media (width <= 600px) {
-      width: 80%;
-    }
+  @media (width <= 600px) {
+    width: 80%;
   }
 }
 </style>
