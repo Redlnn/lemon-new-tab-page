@@ -184,7 +184,7 @@ defineExpose({ open, close })
         "
       >
         <template #dropdown>
-          <el-dropdown-menu>
+          <el-dropdown-menu class="noselect">
             <el-dropdown-item @click="openInNewTab">
               <el-icon>
                 <open-in-new-round />

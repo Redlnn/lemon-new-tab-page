@@ -123,7 +123,7 @@ defineExpose({ open, close })
       "
     >
       <template #dropdown>
-        <el-dropdown-menu>
+        <el-dropdown-menu class="noselect">
           <el-dropdown-item :icon="Edit16Regular" @click="$emit('edit')">
             <span>{{ t('common.edit') }}</span>
           </el-dropdown-item>
