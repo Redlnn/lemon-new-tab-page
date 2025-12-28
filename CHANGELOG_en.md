@@ -17,6 +17,12 @@
   ([#55](https://github.com/Redlnn/lemon-new-tab-page/issues/55))
 - Shortcuts support pagination
   ([#57](https://github.com/Redlnn/lemon-new-tab-page/issues/57))
+  > Pagination methods:
+  >
+  > 1. Click the pagination buttons to switch pages (for devices with a mouse only)
+  > 2. Scroll the mouse wheel in the shortcuts area to switch pages (for devices with a mouse only)
+  > 3. Support touch swipe gestures to switch pages (for touch-enabled devices only)
+  > 4. Click the page indicators below the shortcuts area to switch pages
 - Support customizing the relative size of shortcut icons to their containers
   ([#58](https://github.com/Redlnn/lemon-new-tab-page/issues/58))
 - When the search box is always expanded,

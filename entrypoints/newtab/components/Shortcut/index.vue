@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDebounceFn, useResizeObserver } from '@vueuse/core'
+import { useDebounceFn, useEventListener, useResizeObserver } from '@vueuse/core'
 
 import {
   ChevronLeft20Filled,
@@ -243,6 +243,17 @@ const nextPageContainerRef = useTemplateRef('nextPageContainerRef')
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refreshDebounced)
+
+useEventListener(currentPageContainerRef, 'wheel', (evt: WheelEvent) => {
+  if (isDragging.value) return
+  if (evt.deltaY < 0) {
+    // 向上滚动，上一页
+    prevPage()
+  } else if (evt.deltaY > 0) {
+    // 向下滚动，下一页
+    nextPage()
+  }
+})
 
 // 开始拖拽时关闭已打开的菜单
 watch(isDragging, (dragging) => {

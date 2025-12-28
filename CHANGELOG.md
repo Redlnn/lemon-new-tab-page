@@ -15,6 +15,12 @@
   ([#55](https://github.com/Redlnn/lemon-new-tab-page/issues/55))
 - 快捷方式支持分页显示
   ([#57](https://github.com/Redlnn/lemon-new-tab-page/issues/57))
+  > 翻页方式：
+  >
+  > 1. 点击翻页按钮翻页（仅限有鼠标的设备）
+  > 2. 在快捷方式区域滚动鼠标滚轮时翻页（仅限有鼠标的设备）
+  > 3. 支持触摸划动手势翻页（仅限支持触屏的设备）
+  > 4. 点击快捷方式区域下方的页面指示器翻页
 - 可自定义快捷方式图标相对其容器的比例
   ([#58](https://github.com/Redlnn/lemon-new-tab-page/issues/58))
 - 一直展开搜索框时支持默认显示搜索引擎图标和搜索按钮
