@@ -192,11 +192,12 @@
       top: 0;
       left: 0;
       width: 100%;
+      padding: 0 10px;
+      margin: 0 -5px;
     }
 
     // 前一页
     &--prev {
-      margin-right: 10px;
       pointer-events: none;
       transform: translateX(-100%);
     }
@@ -209,7 +210,6 @@
 
     // 后一页
     &--next {
-      margin-left: 10px;
       pointer-events: none;
       transform: translateX(100%);
     }
