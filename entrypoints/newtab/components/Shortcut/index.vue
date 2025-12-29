@@ -246,10 +246,10 @@ const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refre
 
 useEventListener(currentPageContainerRef, 'wheel', (evt: WheelEvent) => {
   if (isDragging.value) return
-  if (evt.deltaY < 0) {
+  if (evt.deltaY < 0 || evt.deltaX < 0) {
     // 向上滚动，上一页
     prevPage()
-  } else if (evt.deltaY > 0) {
+  } else if (evt.deltaY > 0 || evt.deltaX > 0) {
     // 向下滚动，下一页
     nextPage()
   }
