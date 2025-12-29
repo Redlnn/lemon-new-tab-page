@@ -171,8 +171,9 @@ defineExpose({
             <img v-if="data.favicon" :src="data.favicon" class="shortcut__favicon-uploader-img" />
             <el-icon v-else class="shortcut__favicon-uploader-icon"><plus /></el-icon>
           </el-upload>
-          <div style="white-space: pre-line">
-            {{ t('shortcut.addDialog.uploadFaviconAlert') }}
+          <div>
+            {{ t('shortcut.addDialog.uploadFaviconAlert') }}<br />
+            ICO、SVG、PNG、JPG、WebP
           </div>
         </div>
       </el-form-item>

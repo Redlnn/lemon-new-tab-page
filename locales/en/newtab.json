@@ -7,6 +7,7 @@
     "404": "Nothing found",
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",
+    "expandHint": "Please expand the sidebar to view bookmarks",
     "sortBy": "Sort by",
     "sortMode": {
       "createdAsc": "Newest",
@@ -16,8 +17,7 @@
       "origin": "Original Order"
     },
     "title": "Bookmark",
-    "tooSmall": "Sidebar is too narrow",
-    "expandHint": "Please expand the sidebar to view bookmarks"
+    "tooSmall": "Sidebar is too narrow"
   },
   "changelog": {
     "hideMajorChangelog": "Hide major update changelog",
@@ -96,7 +96,7 @@
       "extensionIconTip": "You can also add the current page you are browsing by clicking the icon in the browser extensions menu.",
       "invalidUrlError": "Invalid URL. Please input a new one",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "Auto-detect if not provided.\nICO, SVG, PNG, JPG, WebP"
+      "uploadFaviconAlert": "Auto-detect if not provided."
     },
     "addShortcut": "Add Shortcut",
     "editShortcut": "Edit Shortcut",
