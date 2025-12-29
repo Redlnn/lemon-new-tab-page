@@ -406,7 +406,7 @@ const isHideShortcut = computed(() => {
               ref="prevPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--prev"
               :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="containerGridStyle"
+              :style="{ ...containerGridStyle, opacity: isAnimating ? 1 : 0 }"
             >
               <shortcut-item
                 v-for="item in prevPageItems"
@@ -510,7 +510,7 @@ const isHideShortcut = computed(() => {
               ref="nextPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--next"
               :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="containerGridStyle"
+              :style="{ ...containerGridStyle, opacity: isAnimating ? 1 : 0 }"
             >
               <shortcut-item
                 v-for="item in nextPageItems"
