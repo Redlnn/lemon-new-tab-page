@@ -146,6 +146,7 @@ async function addCurrentPage() {
 .popup {
   width: 360px;
   padding: 20px;
+  margin: 20px;
   background: var(--el-bg-color);
   border-radius: var(--el-border-radius-round);
   box-shadow: var(--el-box-shadow-light);
