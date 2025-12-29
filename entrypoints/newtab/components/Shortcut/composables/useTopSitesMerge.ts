@@ -13,6 +13,19 @@ interface UseTopSitesMergeOptions {
   noCap?: boolean
 }
 
+const WWW_RE = /^www\./
+
+function getFallbackTitle(url: string) {
+  // 手工解析 hostname，避免频繁创建 URL 对象与 try/catch 的开销
+  const m = url.match(/^[a-zA-Z]+:\/\/([^/?#:]+)(?::\d+)?/)
+  let host = m && m[1] ? m[1] : url
+  host = host.replace(WWW_RE, '')
+  if (host.split('.').length <= 2) {
+    host = host.charAt(0).toUpperCase() + host.slice(1)
+  }
+  return host
+}
+
 export async function useTopSitesMerge(
   options: UseTopSitesMergeOptions
 ): Promise<TopSites.MostVisitedURL[]> {
@@ -26,9 +39,19 @@ export async function useTopSitesMerge(
   // 如果 getTopSites() 返回 undefined，则默认空数组
   const topSites = (await getTopSites(options.force)) ?? []
 
-  // 去重：移除与书签重复的 URL
   const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
-  const dedup = topSites.filter((site) => !shortcutUrlsSet.has(site.url))
+  const dedup: TopSites.MostVisitedURL[] = []
+  for (let i = 0; i < topSites.length; i++) {
+    const site = topSites[i]
+    if (!site || !site.url) continue
+    if (shortcutUrlsSet.has(site.url)) continue
+    const rawTitle = site.title ?? ''
+    const trimmed = rawTitle.trim()
+    const title = trimmed.length ? rawTitle : getFallbackTitle(site.url)
+    // 使用浅拷贝避免修改原始数组中的对象；断言为 MostVisitedURL 以满足类型
+    const safeSite = site as TopSites.MostVisitedURL
+    dedup.push({ ...safeSite, title })
+  }
 
   // 如果启用 noCap，直接返回所有去重后的结果
   if (options.noCap) {
