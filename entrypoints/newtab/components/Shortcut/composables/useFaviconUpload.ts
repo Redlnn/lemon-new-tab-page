@@ -53,14 +53,21 @@ export function useFaviconUpload(options?: { maxKB?: number }) {
         try {
           let res = reader.result as string
           if (res.startsWith('data:image/svg+xml')) {
-            res = DOMPurify.sanitize(convertBase64Svg(res), {
+            const clean = DOMPurify.sanitize(convertBase64Svg(res), {
               USE_PROFILES: { svg: true, svgFilters: true }
             })
-            // 处理非 ASCII 字符，确保 UTF-8 安全
-            const utf8 = encodeURIComponent(res).replace(/%([0-9A-F]{2})/g, (_, p1) =>
-              String.fromCharCode(parseInt(p1, 16))
-            )
-            res = `data:image/svg+xml;base64,${btoa(utf8)}`
+            // 使用 TextEncoder 将 UTF-8 字符串转为字节，再进行 base64 编码
+            const encoder = new TextEncoder()
+            const bytes = encoder.encode(clean)
+            const CHUNK = 0x8000
+            let binary = ''
+            for (let i = 0; i < bytes.length; i += CHUNK) {
+              const slice = bytes.subarray(i, i + CHUNK)
+              // Array.prototype.slice.call 转为普通数组以兼容 apply
+              const nums = Array.prototype.slice.call(slice) as number[]
+              binary += String.fromCharCode.apply(null, nums)
+            }
+            res = `data:image/svg+xml;base64,${btoa(binary)}`
           }
           resolve(res)
         } catch (e) {
