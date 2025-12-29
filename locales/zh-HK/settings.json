@@ -1,9 +1,4 @@
 {
-  "common": {
-    "openInNewTab": "在新分頁中開啟",
-    "openInNewWindow": "在新視窗中開啟",
-    "copyLink": "複製連結網址"
-  },
   "background": {
     "alwaysFresh": "永遠都有新鮮感",
     "bingFrom": "圖片來源：Bing",
@@ -19,6 +14,7 @@
     "custom": "自訂",
     "enableVignetting": "暗角效果",
     "fasterBgAnim": "啟動時更快地顯示背景",
+    "maskColor": "",
     "maskOpacity": "遮罩不透明度",
     "myZoneMyRule": "你嘅地盤你話事",
     "onlineTips": {
@@ -33,10 +29,16 @@
       "allowCurrent": "僅允許這個API網址",
       "deny": "拒絕",
       "request": {
-        "title": "權限請求",
         "message": "為了取得線上圖片，擴充功能需要請求相應的訪問權限：",
-        "subA": { "label": "普通模式：", "content": "需要「訪問這個API網址」" },
-        "subB": { "label": "動態主題色（莫奈取色）：", "content": "需要「訪問所有網站」" }
+        "subA": {
+          "content": "需要「訪問這個API網址」",
+          "label": "普通模式："
+        },
+        "subB": {
+          "content": "需要「訪問所有網站」",
+          "label": "動態主題色（莫奈取色）："
+        },
+        "title": "權限請求"
       }
     },
     "preferenceTitle": "壁紙偏好",
@@ -81,14 +83,19 @@
     "enableShadow": "顯示陰影",
     "invertColorDark": "【時鐘】深色模式下使用深色文字",
     "invertColorLight": "【時鐘】淺色模式下使用深色文字",
+    "secondsTip": "開啟會增加性能消耗，建議同時開啟「時間小字」以取得更佳效果",
     "showAMPM": "顯示「上午／下午」",
     "showDate": "顯示日期",
     "showLunar": "顯示農曆",
     "showSeconds": "顯示秒數",
-    "secondsTip": "開啟會增加性能消耗，建議同時開啟「時間小字」以取得更佳效果",
     "smallFont": "時間小字",
     "title": "時鐘",
     "use12HourClock": "使用 12 小時制"
+  },
+  "common": {
+    "copyLink": "複製連結網址",
+    "openInNewTab": "在新分頁中開啟",
+    "openInNewWindow": "在新視窗中開啟"
   },
   "other": {
     "confirmPurgeData": {
@@ -170,6 +177,7 @@
   "shortcut": {
     "HorizontalIconSpacing": "連結左右間距",
     "VerticalIconSpacing": "連結上下間距",
+    "disablePaging": "停用翻頁",
     "enableAreaShadow": "顯示區域陰影",
     "enableBg": "顯示區域背景",
     "enableShadow": "顯示圖示陰影",
@@ -181,15 +189,14 @@
     "maxRows": "最大列數",
     "restoreDefault": "還原預設",
     "restoreDefaultTitle": "確定還原預設快速存取？",
+    "showOnSearchFocus": "搜尋框聚焦時顯示",
     "showPinnedIcon": "顯示釘選圖示",
     "showTitle": "顯示標題",
     "showTopSites": "顯示最常瀏覽網站",
     "tip": "Tip：可以拖動設定視窗來觀察快速存取區域的變化",
     "title": "快速存取",
-    "disablePaging": "停用翻頁",
     "whiteTextInLightMode": "【快速存取】淺色模式下使用白色文字",
-    "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好",
-    "showOnSearchFocus": "搜尋框聚焦時顯示"
+    "whiteTextTip": "關閉「顯示區域背景」並將「遮罩不透明度」設為 0，效果會更好"
   },
   "theme": {
     "colorNames": {
