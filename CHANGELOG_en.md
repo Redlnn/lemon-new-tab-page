@@ -8,6 +8,7 @@
 
 1. Now you can click the browser extension toolbar icon to quickly add the current page to shortcuts!
 2. Shortcuts can now be paginated!
+3. Adjusted and unified corner radii across the board, ushering in the "Age of Big Corners"!
 
 ### New Features✨
 
@@ -42,8 +43,9 @@
 - Optimize the styles of the "Add Shortcut" and "Add Search Engine" dialogs
 - Reduce the size of the pin icon for pinned links
   ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
-- Comprehensive adjustment of all corner radii to enhance aesthetics
+- Comprehensively adjusted all corner radii for a better visual experience
 - Optimize right-click menu styles
+- Optimized performance
 
 ### Bug Fixes🐛
 
@@ -58,6 +60,8 @@
   after deleting the dark mode wallpaper
 - Fixed issue where shortcuts were displayed before they were fully loaded at startup
 - Fixed issue where the left and right areas of quote could not trigger the bookmark bar with right-click
+- Fixed issue where the most visited page titles could not be obtained on Firefox
+- Fixed several other minor issues
 
 ## 2.7.0 (Dec 10, 2025)
 
