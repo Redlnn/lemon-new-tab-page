@@ -144,7 +144,7 @@ defineExpose({
             <img v-if="data.icon" :src="data.icon" class="search-engine-icon-uploader-img" />
             <el-icon v-else class="search-engine-icon-uploader-icon"><plus /></el-icon>
           </el-upload>
-          <div style="white-space: pre-line"></div>
+          <div>ICO、SVG、PNG、JPG、WebP</div>
         </div>
       </el-form-item>
     </el-form>
