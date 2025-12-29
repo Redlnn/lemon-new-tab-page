@@ -9,7 +9,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser } from '#imports'
 
-import { convertBase64Svg, getFaviconURL } from '@/shared/media'
+import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
@@ -142,12 +142,6 @@ defineExpose({ open, close })
           "
         >
           <span
-            v-if="favicon && favicon.startsWith('data:image/svg+xml')"
-            v-html="convertBase64Svg(favicon as string)"
-            class="span"
-          ></span>
-          <span
-            v-else
             class="span"
             :style="{
               backgroundImage: `url(${iconUrl})`
