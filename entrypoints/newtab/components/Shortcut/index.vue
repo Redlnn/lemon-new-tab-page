@@ -301,20 +301,18 @@ async function refresh() {
   }
 }
 
-onMounted(() => {
-  // 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
-  setupSwipe(
-    shortcutContainerRef,
-    prevPageContainerRef,
-    currentPageContainerRef,
-    nextPageContainerRef,
-    isDragging
-  )
+// 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
+const { isSwiping } = setupSwipe(
+  shortcutContainerRef,
+  prevPageContainerRef,
+  currentPageContainerRef,
+  nextPageContainerRef,
+  isDragging
+)
 
-  // useResizeObserver 会在开始观察时立即触发一次
-  useResizeObserver(document.documentElement, async () => {
-    await refreshDebounced()
-  })
+// useResizeObserver 会在开始观察时立即触发一次
+useResizeObserver(document.documentElement, async () => {
+  await refreshDebounced()
 })
 
 watch(settings.shortcut, refreshDebounced)
@@ -406,7 +404,7 @@ const isHideShortcut = computed(() => {
               ref="prevPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--prev"
               :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="{ ...containerGridStyle, opacity: isAnimating ? 1 : 0 }"
+              :style="{ ...containerGridStyle, opacity: isAnimating || isSwiping ? 1 : 0 }"
             >
               <shortcut-item
                 v-for="item in prevPageItems"
@@ -510,7 +508,7 @@ const isHideShortcut = computed(() => {
               ref="nextPageContainerRef"
               class="shortcut__container shortcut__container--page shortcut__container--next"
               :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="{ ...containerGridStyle, opacity: isAnimating ? 1 : 0 }"
+              :style="{ ...containerGridStyle, opacity: isAnimating || isSwiping ? 1 : 0 }"
             >
               <shortcut-item
                 v-for="item in nextPageItems"
