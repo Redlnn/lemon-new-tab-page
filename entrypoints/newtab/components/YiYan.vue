@@ -13,8 +13,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <Transition name="v-fade">
-    <div v-if="isEnabled()" class="yiyan">
+  <Transition name="opacity-fade">
+    <div v-if="isEnabled" class="yiyan">
       <div
         class="yiyan__main"
         :class="[

@@ -61,6 +61,7 @@
 - Fixed issue where shortcuts were displayed before they were fully loaded at startup
 - Fixed issue where the left and right areas of quote could not trigger the bookmark bar with right-click
 - Fixed issue where the most visited page titles could not be obtained on Firefox
+- Fixed issue with quote appearance and disappearance animations
 - Fixed several other minor issues
 
 ## 2.7.0 (Dec 10, 2025)

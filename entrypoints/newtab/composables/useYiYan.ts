@@ -31,10 +31,11 @@ export function useYiYan() {
     }
   }
 
-  const isEnabled = () =>
+  const isEnabled = computed(() =>
     Boolean(
       yiyan.value && height.value >= 800 && (focusStore.isFocused || settings.yiyan.alwaysShow)
     )
+  )
 
   return { yiyan, yiyanOrigin, load, isEnabled }
 }
