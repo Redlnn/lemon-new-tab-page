@@ -2,9 +2,9 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 2.7.1 (WIP)
+## 3.0.0 (Jan 01, 2026)
 
-### Major Update🎉
+### Happy New Year
 
 1. Now you can click the browser extension toolbar icon to quickly add the current page to shortcuts!
 2. Shortcuts can now be paginated!
