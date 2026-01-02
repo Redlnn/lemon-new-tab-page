@@ -2,6 +2,12 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 3.0.1 (Jan 02, 2026)
+
+### Bug Fixes🐛
+
+- Fixed issue where shortcut icon background blur did not work on Firefox
+
 ## 3.0.0 (Jan 01, 2026)
 
 ### Happy New Year🎇

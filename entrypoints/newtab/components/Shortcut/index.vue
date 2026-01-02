@@ -396,6 +396,7 @@ const isHideShortcut = computed(() => {
             settings.shortcut.showShortcutContainerBg ? 'shortcut__slide-viewport--bg' : undefined,
             settings.shortcut.enableAreaShadow ? 'shortcut__slide-viewport--shadow' : undefined
           ]"
+          :style="{ overflow: isAnimating || isSwiping ? 'hidden' : undefined }"
         >
           <div class="shortcut__slide-track">
             <!-- 前一页 -->

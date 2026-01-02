@@ -25,7 +25,6 @@
   &__slide-viewport {
     position: relative;
     padding: 10px;
-    overflow: hidden;
     border-radius: 25px;
 
     // 只允许垂直滚动和缩放，水平滑动由 JS 处理
