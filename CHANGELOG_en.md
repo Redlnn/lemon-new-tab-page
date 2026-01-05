@@ -2,11 +2,26 @@
 
 > Translated by ChatGPT from Chinese.
 
+## 3.0.2 (WIP)
+
+### Improvements⚡️
+
+- Improve pagination logic and performance
+- Optimize the trigger priority of swipe pagination and
+  drag sorting for quick access when touching
+  > Now pagination is less likely to trigger drag sorting
+
+### Bug Fixes🐛
+
+- Fixed issue where shortcut pagination flickered on Firefox
+  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
+
 ## 3.0.1 (Jan 02, 2026)
 
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut icon background blur did not work on Firefox
+  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
 
 ## 3.0.0 (Jan 01, 2026)
 
