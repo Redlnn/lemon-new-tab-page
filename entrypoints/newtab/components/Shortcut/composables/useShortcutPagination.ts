@@ -17,7 +17,7 @@ export interface UseShortcutPagination {
     currentPageRef: Ref<HTMLElement | undefined | null>,
     nextPageRef: Ref<HTMLElement | undefined | null>,
     isDragging?: Ref<boolean>
-  ) => { isSwiping: Ref<boolean> }
+  ) => void
 }
 
 const ANIMATION_DURATION = 300 // ms
@@ -167,8 +167,6 @@ export function useShortcutPagination(
       updateTransform(currentPageRef, transX.value ? `translateX(${transX.value}px)` : '')
       updateTransform(nextPageRef, transX.value ? `translateX(calc(100% + ${transX.value}px))` : '')
     })
-
-    return { isSwiping }
   }
 
   return {

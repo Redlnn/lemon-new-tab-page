@@ -302,7 +302,7 @@ async function refresh() {
 }
 
 // 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
-const { isSwiping } = setupSwipe(
+setupSwipe(
   shortcutContainerRef,
   prevPageContainerRef,
   currentPageContainerRef,
@@ -387,153 +387,154 @@ const isHideShortcut = computed(() => {
             <chevron-left20-filled />
           </el-icon>
         </button>
-
-        <!-- 滑动轨道容器 -->
-        <div
-          ref="shortcutContainerRef"
-          class="shortcut__slide-viewport"
-          :class="[
-            settings.shortcut.showShortcutContainerBg ? 'shortcut__slide-viewport--bg' : undefined,
-            settings.shortcut.enableAreaShadow ? 'shortcut__slide-viewport--shadow' : undefined
-          ]"
-          :style="{ overflow: isAnimating || isSwiping ? 'hidden' : undefined }"
-        >
-          <div class="shortcut__slide-track">
-            <!-- 前一页 -->
-            <div
-              v-if="displayPage > 0"
-              ref="prevPageContainerRef"
-              class="shortcut__container shortcut__container--page shortcut__container--prev"
-              :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="{ ...containerGridStyle, opacity: isAnimating || isSwiping ? 1 : 0 }"
-            >
-              <shortcut-item
-                v-for="item in prevPageItems"
-                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
-                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
-                :url="item.url"
-                :title="item.title"
-                :favicon="item.favicon"
-                :pined="item.isPinned"
-              />
-              <add-shortcut
-                v-if="showPrevPageAddButton"
-                :reload="refreshDebounced"
-                :show-button="true"
-              />
-            </div>
-            <!-- 前一页占位（当没有前一页时） -->
-            <div
-              v-else
-              class="shortcut__container shortcut__container--page shortcut__container--prev shortcut__container--placeholder"
-            ></div>
-
-            <!-- 当前页 -->
-            <div
-              ref="currentPageContainerRef"
-              class="shortcut__container shortcut__container--page shortcut__container--current"
-              :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="{
-                pointerEvents:
-                  settings.shortcut.showOnSearchFocus || !focusStore.isFocused ? 'auto' : 'none',
-                ...containerGridStyle
-              }"
-            >
-              <shortcut-item
-                v-for="item in currentPageItems"
-                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
-                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
-                :url="item.url"
-                :title="item.title"
-                :favicon="item.favicon"
-                :pined="item.isPinned"
+        <div style="overflow: hidden">
+          <!-- 滑动轨道容器 -->
+          <div
+            ref="shortcutContainerRef"
+            class="shortcut__slide-viewport"
+            :class="[
+              settings.shortcut.showShortcutContainerBg
+                ? 'shortcut__slide-viewport--bg'
+                : undefined,
+              settings.shortcut.enableAreaShadow ? 'shortcut__slide-viewport--shadow' : undefined
+            ]"
+          >
+            <div class="shortcut__slide-track">
+              <!-- 前一页 -->
+              <div
+                v-if="displayPage > 0"
+                ref="prevPageContainerRef"
+                class="shortcut__container shortcut__container--page shortcut__container--prev"
+                :class="[...containerBaseClasses, containerAnimationClasses]"
+                :style="containerGridStyle"
               >
-                <template #submenu>
-                  <template v-if="item.isPinned">
-                    <el-dropdown-item
-                      divided
-                      @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
-                    >
-                      <el-icon>
-                        <edit16-regular />
-                      </el-icon>
-                      {{ t('common.edit') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      @click="removeShortcut(item.originalIndex, shortcutStore, refreshDebounced)"
-                    >
-                      <el-icon>
-                        <pin-off16-regular />
-                      </el-icon>
-                      {{ t('shortcut.unpin') }}
-                    </el-dropdown-item>
-                  </template>
-                  <template v-else>
-                    <el-dropdown-item
-                      divided
-                      @click="
-                        async () => {
-                          await blockSite(item.url, refreshDebounced)
-                          await refreshDebounced()
-                        }
-                      "
-                    >
-                      <el-icon>
-                        <clear-round />
-                      </el-icon>
-                      {{ t('shortcut.hide') }}
-                    </el-dropdown-item>
-                    <el-dropdown-item
-                      @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
-                    >
-                      <el-icon>
-                        <pin16-regular />
-                      </el-icon>
-                      {{ t('shortcut.pin') }}
-                    </el-dropdown-item>
-                  </template>
-                </template>
-              </shortcut-item>
+                <shortcut-item
+                  v-for="item in prevPageItems"
+                  :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                  v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                  :url="item.url"
+                  :title="item.title"
+                  :favicon="item.favicon"
+                  :pined="item.isPinned"
+                />
+                <add-shortcut
+                  v-if="showPrevPageAddButton"
+                  :reload="refreshDebounced"
+                  :show-button="true"
+                />
+              </div>
+              <!-- 前一页占位（当没有前一页时） -->
+              <div
+                v-else
+                class="shortcut__container shortcut__container--page shortcut__container--prev shortcut__container--placeholder"
+              ></div>
 
-              <!-- 添加快捷方式按钮（始终在最后一页最后一格） -->
-              <add-shortcut
-                ref="shortcutEditorRef"
-                :reload="refreshDebounced"
-                :show-button="showAddButton"
+              <!-- 当前页 -->
+              <div
+                ref="currentPageContainerRef"
+                class="shortcut__container shortcut__container--page shortcut__container--current"
+                :class="[...containerBaseClasses, containerAnimationClasses]"
+                :style="{
+                  pointerEvents:
+                    settings.shortcut.showOnSearchFocus || !focusStore.isFocused ? 'auto' : 'none',
+                  ...containerGridStyle
+                }"
+              >
+                <shortcut-item
+                  v-for="item in currentPageItems"
+                  :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                  v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                  :url="item.url"
+                  :title="item.title"
+                  :favicon="item.favicon"
+                  :pined="item.isPinned"
+                >
+                  <template #submenu>
+                    <template v-if="item.isPinned">
+                      <el-dropdown-item
+                        divided
+                        @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
+                      >
+                        <el-icon>
+                          <edit16-regular />
+                        </el-icon>
+                        {{ t('common.edit') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item
+                        @click="removeShortcut(item.originalIndex, shortcutStore, refreshDebounced)"
+                      >
+                        <el-icon>
+                          <pin-off16-regular />
+                        </el-icon>
+                        {{ t('shortcut.unpin') }}
+                      </el-dropdown-item>
+                    </template>
+                    <template v-else>
+                      <el-dropdown-item
+                        divided
+                        @click="
+                          async () => {
+                            await blockSite(item.url, refreshDebounced)
+                            await refreshDebounced()
+                          }
+                        "
+                      >
+                        <el-icon>
+                          <clear-round />
+                        </el-icon>
+                        {{ t('shortcut.hide') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item
+                        @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
+                      >
+                        <el-icon>
+                          <pin16-regular />
+                        </el-icon>
+                        {{ t('shortcut.pin') }}
+                      </el-dropdown-item>
+                    </template>
+                  </template>
+                </shortcut-item>
+
+                <!-- 添加快捷方式按钮（始终在最后一页最后一格） -->
+                <add-shortcut
+                  ref="shortcutEditorRef"
+                  :reload="refreshDebounced"
+                  :show-button="showAddButton"
+                />
+              </div>
+
+              <!-- 后一页 -->
+              <div
+                v-if="displayPage < totalPages - 1"
+                ref="nextPageContainerRef"
+                class="shortcut__container shortcut__container--page shortcut__container--next"
+                :class="[...containerBaseClasses, containerAnimationClasses]"
+                :style="containerGridStyle"
+              >
+                <shortcut-item
+                  v-for="item in nextPageItems"
+                  :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
+                  v-memo="[item.url, item.title, item.favicon, item.isPinned]"
+                  :url="item.url"
+                  :title="item.title"
+                  :favicon="item.favicon"
+                  :pined="item.isPinned"
+                />
+                <add-shortcut
+                  v-if="showNextPageAddButton"
+                  :reload="refreshDebounced"
+                  :show-button="true"
+                />
+              </div>
+              <!-- 后一页占位（当没有后一页时） -->
+              <div
+                v-else
+                class="shortcut__container shortcut__container--page shortcut__container--next shortcut__container--placeholder"
               />
             </div>
-
-            <!-- 后一页 -->
-            <div
-              v-if="displayPage < totalPages - 1"
-              ref="nextPageContainerRef"
-              class="shortcut__container shortcut__container--page shortcut__container--next"
-              :class="[...containerBaseClasses, containerAnimationClasses]"
-              :style="{ ...containerGridStyle, opacity: isAnimating || isSwiping ? 1 : 0 }"
-            >
-              <shortcut-item
-                v-for="item in nextPageItems"
-                :key="`${item.isPinned ? 'pin' : 'top'}-${item.originalIndex}`"
-                v-memo="[item.url, item.title, item.favicon, item.isPinned]"
-                :url="item.url"
-                :title="item.title"
-                :favicon="item.favicon"
-                :pined="item.isPinned"
-              />
-              <add-shortcut
-                v-if="showNextPageAddButton"
-                :reload="refreshDebounced"
-                :show-button="true"
-              />
-            </div>
-            <!-- 后一页占位（当没有后一页时） -->
-            <div
-              v-else
-              class="shortcut__container shortcut__container--page shortcut__container--next shortcut__container--placeholder"
-            />
           </div>
         </div>
-
         <!-- 右翻页按钮 -->
         <button
           v-if="showPagination && !isOnlyTouchDevice"
