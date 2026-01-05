@@ -12,6 +12,9 @@ export function useShortcutDrag(
 
   useDraggable(containerRef, shortcuts, {
     animation: 150,
+    delayOnTouchOnly: true,
+    touchStartThreshold: 10,
+    delay: 100,
     handle: '.shortcut__item.pined',
     onStart() {
       isDragging.value = true
