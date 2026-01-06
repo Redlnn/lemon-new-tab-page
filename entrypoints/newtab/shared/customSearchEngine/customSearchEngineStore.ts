@@ -25,7 +25,7 @@ export async function saveCustomSearchEngine(
     toSave = data as CustomSearchEngineStorage
   }
 
-  const rawItems = (toSave as CustomSearchEngineStorage).items.map((item) => toRaw(item))
+  const rawItems = toRaw(toSave as CustomSearchEngineStorage).items
   await customSearchEngineStorage.setValue({ items: rawItems })
 }
 

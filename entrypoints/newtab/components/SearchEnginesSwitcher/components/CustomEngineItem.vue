@@ -26,6 +26,17 @@ const emit = defineEmits<{
   (e: 'delete'): void
 }>()
 
+// 缓存 getPerfClasses 结果
+const perfClassesPopper = computed(() =>
+  getPerfClasses(
+    {
+      transparentOff: settings.perf.disableDialogTransparent,
+      blurOff: settings.perf.disableDialogBlur
+    },
+    'se-switcher-item__menu-popper'
+  )
+)
+
 const openedMenuCloseFn = inject<Ref<(() => void) | null>>('customEngineOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance | null>(null)
 const position = ref<DOMRect | null>(null)
@@ -112,15 +123,7 @@ defineExpose({ open, close })
       trigger="contextmenu"
       placement="bottom-start"
       :popper-options="{ modifiers: [{ name: 'offset', options: { offset: [0, 0] } }] }"
-      :popper-class="
-        getPerfClasses(
-          {
-            transparentOff: settings.perf.disableDialogTransparent,
-            blurOff: settings.perf.disableDialogBlur
-          },
-          'se-switcher-item__menu-popper'
-        )
-      "
+      :popper-class="perfClassesPopper"
     >
       <template #dropdown>
         <el-dropdown-menu class="noselect">

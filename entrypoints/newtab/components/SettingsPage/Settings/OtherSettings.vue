@@ -303,10 +303,16 @@ const supportedLanguages = computed(() => {
   const current = currentLanguage.value
 
   // 先添加当前语言，再添加其他语言
-  return [current, ...languageCodes.filter((code) => code !== current)].map((code) => ({
+  const options = languageCodes.map((code) => ({
     value: code,
     label: displayNames.of(code)
   }))
+  // 将当前语言移到首位
+  const currentIndex = options.findIndex((opt) => opt.value === current)
+  if (currentIndex > 0) {
+    options.unshift(options.splice(currentIndex, 1)[0]!)
+  }
+  return options
 })
 
 function changeLanguage(lang: string) {

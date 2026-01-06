@@ -116,30 +116,26 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   )
 
   const setUrl = async (type: 'light' | 'dark' | 'bing', url: string) => {
+    const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
-    const cachedUrl = (await wallpaperUrlCache.getValue())[type]
+    const cachedUrl = cache[type]
     if (cachedUrl && cachedUrl.startsWith('blob:') && cachedUrl !== url) {
       URL.revokeObjectURL(cachedUrl)
     }
 
-    await wallpaperUrlCache.setValue({
-      ...(await wallpaperUrlCache.getValue()),
-      [type]: url
-    })
+    await wallpaperUrlCache.setValue({ ...cache, [type]: url })
     updateRef(type, url)
   }
 
   const clearUrl = async (type: 'light' | 'dark' | 'bing') => {
+    const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
-    const cachedUrl = (await wallpaperUrlCache.getValue())[type]
+    const cachedUrl = cache[type]
     if (cachedUrl && cachedUrl.startsWith('blob:')) {
       URL.revokeObjectURL(cachedUrl)
     }
 
-    await wallpaperUrlCache.setValue({
-      ...(await wallpaperUrlCache.getValue()),
-      [type]: ''
-    })
+    await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
     updateRef(type, '')
   }
 

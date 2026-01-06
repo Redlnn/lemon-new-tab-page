@@ -19,7 +19,6 @@ let indexMap: Record<
 > = {}
 
 let cachedAllIds: string[] = []
-let cachedNodeCount = 0
 const collatorCache = new Map<string, Intl.Collator>()
 
 function getCollator(language: string) {
@@ -161,24 +160,6 @@ function createRebuild(
   }
 }
 
-// 当节点数超过阈值时启用完整树缓存以节省重复计算的开销
-const CACHE_NODE_COUNT_THRESHOLD = 2000
-
-function countNodes(nodes: BookmarkTreeNode[] | undefined): number {
-  if (!nodes || nodes.length === 0) return 0
-  let cnt = 0
-  const stack: BookmarkTreeNode[][] = [nodes]
-  while (stack.length) {
-    const arr = stack.pop()!
-    cnt += arr.length
-    for (let i = 0; i < arr.length; i++) {
-      const n = arr[i]!
-      if (n.children?.length) stack.push(n.children)
-    }
-  }
-  return cnt
-}
-
 // --------------------------------------------------------------------------
 // 主逻辑
 // --------------------------------------------------------------------------
@@ -211,7 +192,6 @@ function buildIndex() {
 
   indexMap = map
   cachedAllIds = Object.keys(map)
-  cachedNodeCount = cachedAllIds.length
 
   // 重置缓存
   lastQuery = ''
@@ -228,18 +208,11 @@ function getSortedTree(mode: SortMode): BookmarkTreeNode[] {
     return cachedSortedTree
   }
 
-  // 检查缓存阈值
-  const nodeCount = cachedNodeCount || countNodes(tree)
-
   const sorted = cloneAndSortTree(tree, 0, mode, currentLanguage)
 
-  if (nodeCount >= CACHE_NODE_COUNT_THRESHOLD) {
-    cachedSortedTree = sorted
-    cachedSortedTreeKey = mode
-  } else {
-    cachedSortedTree = null
-    cachedSortedTreeKey = null
-  }
+  // 缓存按当前排序/语言生成的结果
+  cachedSortedTree = sorted
+  cachedSortedTreeKey = mode
 
   return sorted
 }

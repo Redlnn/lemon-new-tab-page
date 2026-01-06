@@ -28,15 +28,21 @@ const RETRY_DELAY = 100
  * 带重试的API调用
  */
 export async function retryableRequest<T>(fn: () => Promise<T>, retries = MAX_RETRIES): Promise<T> {
-  try {
-    return await fn()
-  } catch (error) {
-    if (retries > 0) {
+  let lastError: unknown
+
+  for (let remaining = retries; remaining >= 0; remaining -= 1) {
+    try {
+      return await fn()
+    } catch (error) {
+      lastError = error
+      if (remaining === 0) {
+        throw error
+      }
       await new Promise((resolve) => setTimeout(resolve, RETRY_DELAY))
-      return retryableRequest(fn, retries - 1)
     }
-    throw error
   }
+
+  throw lastError
 }
 
 async function bingSuggestParser(text: string): Promise<string[]> {

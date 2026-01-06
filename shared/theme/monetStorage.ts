@@ -62,10 +62,13 @@ export function applyStoredMonetColors(colors: MonetColors | null) {
     document.head.appendChild(styleTag)
   }
 
-  const toCssText = (vars: Record<string, string>) =>
-    Object.entries(vars)
-      .map(([k, v]) => `${k}: ${v};`)
-      .join('')
+  const toCssText = (vars: Record<string, string>) => {
+    let result = ''
+    for (const k in vars) {
+      result += `${k}: ${vars[k]};`
+    }
+    return result
+  }
 
   styleTag.textContent = `html.monet{${toCssText(colors.cssLight)}}html.dark.monet{${toCssText(colors.cssDark)}}`
 }

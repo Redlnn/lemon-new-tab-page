@@ -10,16 +10,25 @@ export function getPerfClasses(
   prefix: string,
   options?: { blurIndependent?: boolean; withoutPrefix?: boolean }
 ): string {
-  const parts: string[] = options?.withoutPrefix ? [] : [prefix]
   const transparentOn = !opts.transparentOff
   const blurOn = !opts.blurOff && (transparentOn || options?.blurIndependent === true)
-  if (transparentOn) {
-    parts.push(`${prefix}--opacity`)
+
+  if (!transparentOn && !blurOn) {
+    return options?.withoutPrefix ? '' : prefix
   }
-  if (blurOn) {
-    parts.push(`${prefix}--blur`)
+
+  const base = options?.withoutPrefix ? '' : prefix
+  const opacity = transparentOn ? `${prefix}--opacity` : ''
+  const blur = blurOn ? `${prefix}--blur` : ''
+
+  // 根据实际情况拼接，避免数组操作
+  if (base) {
+    if (opacity && blur) return `${base} ${opacity} ${blur}`
+    if (opacity) return `${base} ${opacity}`
+    return `${base} ${blur}`
   }
-  return parts.join(' ')
+  if (opacity && blur) return `${opacity} ${blur}`
+  return opacity || blur
 }
 
 export default getPerfClasses

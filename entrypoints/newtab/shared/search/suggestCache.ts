@@ -117,8 +117,16 @@ export class LRUCache {
    * 将节点移到头部
    */
   private moveToHead(node: CacheNode): void {
-    this.removeNode(node)
-    this.addToHead(node)
+    // 内联 removeNode
+    const { prev, next } = node
+    if (prev) prev.next = next
+    if (next) next.prev = prev
+
+    // 内联 addToHead
+    node.prev = this.head
+    node.next = this.head.next
+    this.head.next!.prev = node
+    this.head.next = node
   }
 
   /**

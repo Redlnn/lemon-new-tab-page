@@ -51,19 +51,43 @@ const slotsPerPage = computed(() => columnsNum.value * rowsNum.value)
 
 // 合并后的完整项目列表（shortcuts + topSites）
 const allItems = computed(() => {
-  const shortcutItems = shortcuts.value.map((site, index) => ({
-    ...site,
-    isPinned: true,
-    originalIndex: index
-  }))
-  const topSiteItems = topSites.value.map((site, index) => ({
-    url: site.url,
-    title: site.title || '',
-    favicon: site.favicon,
-    isPinned: false,
-    originalIndex: index
-  }))
-  return [...shortcutItems, ...topSiteItems]
+  const shortcutsArr = shortcuts.value
+  const topSitesArr = topSites.value
+  const shortcutsLen = shortcutsArr.length
+  const topSitesLen = topSitesArr.length
+
+  // 预分配数组大小，避免动态扩容
+  const result: {
+    url: string
+    title: string
+    favicon?: string
+    isPinned: boolean
+    originalIndex: number
+  }[] = Array.from({ length: shortcutsLen + topSitesLen })
+
+  for (let i = 0; i < shortcutsLen; i++) {
+    const site = shortcutsArr[i]!
+    result[i] = {
+      url: site.url,
+      title: site.title,
+      favicon: site.favicon,
+      isPinned: true,
+      originalIndex: i
+    }
+  }
+
+  for (let i = 0; i < topSitesLen; i++) {
+    const site = topSitesArr[i]!
+    result[shortcutsLen + i] = {
+      url: site.url,
+      title: site.title || '',
+      favicon: site.favicon,
+      isPinned: false,
+      originalIndex: i
+    }
+  }
+
+  return result
 })
 
 // 总项目数（用于分页计算，包含添加按钮）
@@ -315,13 +339,25 @@ useResizeObserver(document.documentElement, async () => {
   await refreshDebounced()
 })
 
-watch(settings.shortcut, refreshDebounced)
+watch(
+  () => [
+    settings.shortcut.columns,
+    settings.shortcut.rows,
+    settings.shortcut.iconSize,
+    settings.shortcut.itemMarginH,
+    settings.shortcut.itemMarginV,
+    settings.shortcut.showShortcutContainerBg,
+    settings.shortcut.disablePaging
+  ],
+  refreshDebounced
+)
 watch(
   () => settings.shortcut.enableTopSites,
   (enabled) => {
     if (enabled) {
       topSitesNeedsReload.value = true
     }
+    refreshDebounced()
   }
 )
 

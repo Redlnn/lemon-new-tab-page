@@ -39,18 +39,21 @@ export async function useTopSitesMerge(
   // 如果 getTopSites() 返回 undefined，则默认空数组
   const topSites = (await getTopSites(options.force)) ?? []
 
-  const shortcutUrlsSet = new Set(options.shortcuts.map((b) => b.url))
+  // 构建 URL Set 用于快速去重
+  const { shortcuts } = options
+  const shortcutUrlsSet = new Set<string>()
+  for (let i = 0, len = shortcuts.length; i < len; i++) {
+    shortcutUrlsSet.add(shortcuts[i]!.url)
+  }
+
   const dedup: TopSites.MostVisitedURL[] = []
-  for (let i = 0; i < topSites.length; i++) {
+  for (let i = 0, len = topSites.length; i < len; i++) {
     const site = topSites[i]
-    if (!site || !site.url) continue
-    if (shortcutUrlsSet.has(site.url)) continue
-    const rawTitle = site.title ?? ''
-    const trimmed = rawTitle.trim()
-    const title = trimmed.length ? rawTitle : getFallbackTitle(site.url)
-    // 使用浅拷贝避免修改原始数组中的对象；断言为 MostVisitedURL 以满足类型
-    const safeSite = site as TopSites.MostVisitedURL
-    dedup.push({ ...safeSite, title })
+    if (!site?.url || shortcutUrlsSet.has(site.url)) continue
+    const rawTitle = site.title
+    // 仅当 title 为空或全空白时才计算 fallback
+    const title = rawTitle?.trim() ? rawTitle : getFallbackTitle(site.url)
+    dedup.push({ ...site, title })
   }
 
   // 如果启用 noCap，直接返回所有去重后的结果

@@ -117,10 +117,10 @@ watch(
 
     activeMap.value = {}
     if (path && path.length > 0) {
-      path.forEach((id, i) => {
+      for (let i = 0, len = path.length; i < len; i++) {
         // 深度索引从 1 开始
-        activeMap.value[i + 1] = id
-      })
+        activeMap.value[i + 1] = path[i]!
+      }
     }
   },
   { immediate: true }

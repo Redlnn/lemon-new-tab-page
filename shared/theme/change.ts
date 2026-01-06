@@ -55,10 +55,11 @@ function generateThemeEntries(
 
   // 循环设置色阶颜色
   // --el-color-primary-light-${level}
-  Levels.forEach((level) => {
+  for (let i = 0; i < Levels.length; i++) {
+    const level = Levels[i]!
     const mixed = mixLegacy(baseColor, lightMixColor, 100 - level * 10)
     entries.push([`${pre}-light-${level}`, rgba2Hex(mixed)])
-  })
+  }
 
   // 设置主要暗色
   // --el-color-primary-dark-2

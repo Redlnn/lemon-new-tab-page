@@ -19,7 +19,7 @@ export async function saveShortcut(shortcut?: Shortcut | { $state?: Shortcut }) 
     toSave = shortcut as Shortcut
   }
 
-  const rawItems = (toSave as Shortcut).items.map((item) => toRaw(item))
+  const rawItems = toRaw(toSave as Shortcut).items
 
   await shortcutStorage.setValue({ items: rawItems })
 }

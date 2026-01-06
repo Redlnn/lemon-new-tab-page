@@ -22,14 +22,18 @@ export function normalizeTo6Hex(color: string): string {
 
   // 如果是 3 位或 4 位,展开每一位
   // #RGB -> #RRGGBB, #RGBA -> #RRGGBBAA
-  if (len === 3 || len === 4) {
-    return (
-      '#' +
-      hex
-        .split('')
-        .map((c) => c + c)
-        .join('')
-    )
+  if (len === 3) {
+    const r = hex[0],
+      g = hex[1],
+      b = hex[2]
+    return `#${r}${r}${g}${g}${b}${b}`
+  }
+  if (len === 4) {
+    const r = hex[0],
+      g = hex[1],
+      b = hex[2],
+      a = hex[3]
+    return `#${r}${r}${g}${g}${b}${b}${a}${a}`
   }
 
   return color

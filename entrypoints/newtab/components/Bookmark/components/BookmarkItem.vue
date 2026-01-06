@@ -30,6 +30,16 @@ const props = withDefaults(
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
+const menuPopperClass = computed(() =>
+  getPerfClasses(
+    {
+      transparentOff: settings.perf.disableBookmarkTransparent,
+      blurOff: settings.perf.disableBookmarkBlur
+    },
+    'bookmark__menu-popper'
+  )
+)
+
 // 右键菜单相关
 const openedMenuCloseFn = inject<Ref<(() => void) | null>>('bookmarkOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance>()
@@ -128,9 +138,6 @@ const model = computed({
 // 懒加载优化：判断当前节点是否展开
 const isExpanded = computed(() => {
   const active = activeMap?.value?.[props.depth]
-  if (Array.isArray(active)) {
-    return active.includes(props.node.id)
-  }
   return active === props.node.id
 })
 
@@ -188,15 +195,7 @@ const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.
       :popper-options="{
         modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
       }"
-      :popper-class="
-        getPerfClasses(
-          {
-            transparentOff: settings.perf.disableBookmarkTransparent,
-            blurOff: settings.perf.disableBookmarkBlur
-          },
-          'bookmark__menu-popper'
-        )
-      "
+      :popper-class="menuPopperClass"
     >
       <template #dropdown>
         <el-dropdown-menu class="noselect">

@@ -54,10 +54,13 @@ async function addHistory(text: string, limit = 15) {
     return
   }
   await ensureLoaded()
-  const next = historiesRef.value.filter((item) => item !== text)
-  next.unshift(text)
-  if (next.length > limit) {
-    next.splice(limit)
+
+  const current = historiesRef.value
+  const next: string[] = [text]
+  for (let i = 0, len = current.length; i < len && next.length < limit; i++) {
+    if (current[i] !== text) {
+      next.push(current[i]!)
+    }
   }
   await updateStorage(next)
 }
@@ -74,7 +77,7 @@ export function useSearchHistoryCache() {
   ensureWatching()
 
   return {
-    histories: computed(() => historiesRef.value.slice()),
+    histories: readonly(historiesRef),
     ensureLoaded,
     addHistory,
     clearHistories

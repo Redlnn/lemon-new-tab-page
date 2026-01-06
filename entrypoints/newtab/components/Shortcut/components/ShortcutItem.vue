@@ -25,8 +25,22 @@ const props = defineProps<{
   favicon?: string
 }>()
 
+// 使用 Ref 传递 url，让 getFaviconURL 内部监听变化
 const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
+
+// 合并多个 getPerfClasses 调用，共享相同的输入参数，只计算一次
+const perfClasses = computed(() => {
+  const opts = {
+    transparentOff: settings.perf.disableShortcutTransparent,
+    blurOff: settings.perf.disableShortcutBlur
+  }
+  return {
+    icon: getPerfClasses(opts, 'shortcut__icon'),
+    pinIcon: getPerfClasses(opts, 'shortcut__pin-icon'),
+    popper: getPerfClasses(opts, 'shortcut__menu-popper')
+  }
+})
 
 const openedMenuCloseFn = inject<Ref<(() => void) | null>>('shortcutOpenedMenuCloseFn')
 const dropdownRef = ref<DropdownInstance>()
@@ -114,33 +128,13 @@ defineExpose({ open, close })
       <div class="shortcut__icon-container">
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
-          :class="[
-            'shortcut__pin-icon',
-            getPerfClasses(
-              {
-                transparentOff: settings.perf.disableShortcutTransparent,
-                blurOff: settings.perf.disableShortcutBlur
-              },
-              'shortcut__pin-icon'
-            )
-          ]"
+          :class="['shortcut__pin-icon', perfClasses.pinIcon]"
         >
           <el-icon size="11">
             <pin16-regular />
           </el-icon>
         </div>
-        <div
-          class="shortcut__icon"
-          :class="
-            getPerfClasses(
-              {
-                transparentOff: settings.perf.disableShortcutTransparent,
-                blurOff: settings.perf.disableShortcutBlur
-              },
-              'shortcut__icon'
-            )
-          "
-        >
+        <div class="shortcut__icon" :class="perfClasses.icon">
           <span
             class="span"
             :style="{
@@ -167,15 +161,7 @@ defineExpose({ open, close })
         :popper-options="{
           modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
         }"
-        :popper-class="
-          getPerfClasses(
-            {
-              transparentOff: settings.perf.disableShortcutTransparent,
-              blurOff: settings.perf.disableShortcutBlur
-            },
-            'shortcut__menu-popper'
-          )
-        "
+        :popper-class="perfClasses.popper"
       >
         <template #dropdown>
           <el-dropdown-menu class="noselect">
