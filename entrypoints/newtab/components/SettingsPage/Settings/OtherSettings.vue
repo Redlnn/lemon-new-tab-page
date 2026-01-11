@@ -245,16 +245,35 @@ function handleSettingsFileChange(event: Event) {
     settingsFileInput,
     (data): data is CURRENT_CONFIG_INTERFACE => typeof data === 'object' && data !== null,
     (data) => {
-      const originalSyncState = settings.sync.enabled
-      settings.$patch(data)
-      if (originalSyncState !== settings.sync.enabled) {
+      if (settings.version !== data.version) {
+        ElMessage.error(
+          t('other.importExport.importFailed', { reason: t('other.importExport.versionMismatch') })
+        )
+        return
+      }
+
+      const originalSyncState = settings.$state.sync.enabled
+
+      data.background.local = settings.$state.background.local // 保持本地壁纸数据
+      data.background.localDark = settings.$state.background.localDark || {
+        id: '',
+        url: '',
+        mediaType: undefined
+      } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
+      data.background.bing = settings.$state.background.bing // 保持本地必应壁纸数据
+      data.background.online.url = settings.$state.background.online.url // 保持本地在线壁纸URL
+
+      if (originalSyncState !== data.sync.enabled) {
         // 如果同步状态有变化，重新初始化或取消同步
-        if (settings.sync.enabled) {
+        if (data.sync.enabled) {
+          settings.$patch(data)
           initSyncSettings(settings)
+          return
         } else {
           deinitSyncSettings()
         }
       }
+      settings.$patch(data)
     }
   )
 }

@@ -120,6 +120,7 @@
       "settings": "导入 / 导出设置",
       "shortcuts": "导入 / 导出快捷方式",
       "unknownError": "未知错误",
+      "versionMismatch": "文件内配置版本与当前扩展配置版本不符",
       "warningDialog": {
         "content": "导入会覆盖你当前的数据，请谨慎使用该功能，是否继续？",
         "no": "不要啊",

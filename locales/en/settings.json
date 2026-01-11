@@ -120,6 +120,7 @@
       "settings": "Import / Export settings",
       "shortcuts": "Import / Export shortcuts",
       "unknownError": "Unknown error",
+      "versionMismatch": "The configuration version in the file does not match the current extension configuration version.",
       "warningDialog": {
         "content": "Importing will overwrite your current data. Please be cautious when using this feature!",
         "no": "No",

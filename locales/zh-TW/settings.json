@@ -120,6 +120,7 @@
       "settings": "匯入 / 匯出設定",
       "shortcuts": "匯入 / 匯出捷徑",
       "unknownError": "未知錯誤",
+      "versionMismatch": "檔案內設定版本與目前擴充功能設定版本不符",
       "warningDialog": {
         "content": "匯入會覆蓋你目前的資料，請謹慎使用此功能，是否繼續？",
         "no": "不要啊",
