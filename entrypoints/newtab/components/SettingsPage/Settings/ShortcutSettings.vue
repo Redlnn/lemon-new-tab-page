@@ -113,7 +113,7 @@ async function restoreDefaultTopSites() {
         <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
         <el-slider
           v-model="settings.shortcut.iconSize"
-          :min="10"
+          :min="30"
           :max="200"
           show-input
           :show-input-controls="false"
@@ -127,6 +127,30 @@ async function restoreDefaultTopSites() {
           :min="0.1"
           :max="1"
           :step="0.1"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('shortcut.iconMarginBottom') }}</div>
+        <el-slider
+          v-model="settings.shortcut.iconMarginBottom"
+          :min="0"
+          :max="50"
+          :step="1"
+          show-input
+          :show-input-controls="false"
+          :show-tooltip="false"
+        />
+      </div>
+      <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('shortcut.titleExtraWidth') }}</div>
+        <el-slider
+          v-model="settings.shortcut.titleExtraWidth"
+          :min="0"
+          :max="100"
+          :step="0.5"
           show-input
           :show-input-controls="false"
           :show-tooltip="false"
@@ -151,7 +175,7 @@ async function restoreDefaultTopSites() {
         </div>
         <el-slider
           v-model="settings.shortcut.itemMarginV"
-          :min="5"
+          :min="0"
           :max="30"
           show-input
           :show-input-controls="false"

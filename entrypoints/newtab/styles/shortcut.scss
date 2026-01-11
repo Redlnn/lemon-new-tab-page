@@ -267,7 +267,6 @@
 
       .shortcut__icon-container {
         position: relative;
-        margin-bottom: 8px;
 
         .shortcut__pin-icon {
           position: absolute;
@@ -370,9 +369,6 @@
 
       .shortcut__title {
         position: relative;
-        width: calc(var(--icon_size) + 38px);
-        padding: 4px;
-        margin: -4px;
         font-size: var(--el-font-size-small);
         text-align: center;
 

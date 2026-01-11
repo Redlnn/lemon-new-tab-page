@@ -125,7 +125,10 @@ defineExpose({ open, close })
       :target="settings.shortcut.openInNewTab ? '_blank' : '_self'"
       @contextmenu="handleContextmenu"
     >
-      <div class="shortcut__icon-container">
+      <div
+        class="shortcut__icon-container"
+        :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
+      >
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
           :class="['shortcut__pin-icon', perfClasses.pinIcon]"
@@ -147,6 +150,7 @@ defineExpose({ open, close })
         :data-content="title"
         v-if="settings.shortcut.showShortcutTitle"
         class="shortcut__title"
+        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.titleExtraWidth}px)` }"
         truncated
       >
         {{ title }}

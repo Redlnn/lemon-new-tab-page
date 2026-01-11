@@ -121,7 +121,10 @@ defineExpose({
 <template>
   <div v-if="props.showButton" class="shortcut__item shortcut__item--add-shortcut noselect">
     <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
-      <div class="shortcut__icon-container">
+      <div
+        class="shortcut__icon-container"
+        :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
+      >
         <div
           class="shortcut__icon"
           :class="
@@ -137,9 +140,14 @@ defineExpose({
           <add-round />
         </div>
       </div>
-      <div v-if="settings.shortcut.showShortcutTitle" class="shortcut__title">
+      <el-text
+        v-if="settings.shortcut.showShortcutTitle"
+        class="shortcut__title"
+        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.titleExtraWidth}px)` }"
+        truncated
+      >
         {{ t('shortcut.addShortcut') }}
-      </div>
+      </el-text>
     </div>
   </div>
   <el-dialog

@@ -1,9 +1,4 @@
 {
-  "common": {
-    "openInNewTab": "Open in new tab",
-    "openInNewWindow": "Open in new window",
-    "copyLink": "Copy link address"
-  },
   "background": {
     "alwaysFresh": "Always something new",
     "bingFrom": "Image source: Bing",
@@ -34,16 +29,16 @@
       "allowCurrent": "Only allow this API URL",
       "deny": "Reject",
       "request": {
-        "title": "Permission Request",
         "message": "To access online wallpapers, the extension needs to request the appropriate permissions:",
         "subA": {
-          "label": "Normal mode: ",
-          "content": "Requires “Access this API URL”."
+          "content": "Requires “Access this API URL”.",
+          "label": "Normal mode: "
         },
         "subB": {
-          "label": "Dynamic Theme Colors (Monet Extraction): ",
-          "content": "Requires “Access all sites”."
-        }
+          "content": "Requires “Access all sites”.",
+          "label": "Dynamic Theme Colors (Monet Extraction): "
+        },
+        "title": "Permission Request"
       }
     },
     "preferenceTitle": "Wallpaper preferences",
@@ -88,14 +83,19 @@
     "enableShadow": "Show shadow",
     "invertColorDark": "[Clock] Use dark text in dark mode",
     "invertColorLight": "[Clock] Use dark text in light mode",
+    "secondsTip": "This increases performance usage. Consider enabling “Smaller time” for a better look.",
     "showAMPM": "Show AM/PM",
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
     "showSeconds": "Show seconds",
-    "secondsTip": "This increases performance usage. Consider enabling “Smaller time” for a better look.",
     "smallFont": "Smaller time",
     "title": "Clock",
     "use12HourClock": "12-hour clock"
+  },
+  "common": {
+    "copyLink": "Copy link address",
+    "openInNewTab": "Open in new tab",
+    "openInNewWindow": "Open in new window"
   },
   "other": {
     "confirmPurgeData": {
@@ -177,26 +177,28 @@
   "shortcut": {
     "HorizontalIconSpacing": "Horizontal icon spacing",
     "VerticalIconSpacing": "Vertical icon spacing",
+    "disablePaging": "Disable paging",
     "enableAreaShadow": "Show area shadow",
     "enableBg": "Show area background",
     "enableShadow": "Show icon shadow",
+    "iconMarginBottom": "Icon–Title Spacing",
     "iconRatio": "Icon ratio",
     "iconSize": "Icon size",
     "marginTop": "Area top margin",
     "maxColumns": "Maximum columns",
     "maxItemsTipForChrome": "Tip: You can only have up to 10 most visited links.",
     "maxRows": "Maximum rows",
-    "restoreDefault": "Restore default",
+    "restoreDefault": "Recover hidden links",
     "restoreDefaultTitle": "Are you sure you want to restore default shortcuts?",
+    "showOnSearchFocus": "Show on search focus",
     "showPinnedIcon": "Show pinned icon",
     "showTitle": "Show link title",
     "showTopSites": "Show most visited",
     "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
     "title": "Shortcut",
-    "disablePaging": "Disable paging",
+    "titleExtraWidth": "Title expand width",
     "whiteTextInLightMode": "[Shortcut] Use white text in light mode",
-    "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance.",
-    "showOnSearchFocus": "Show on search focus"
+    "whiteTextTip": "Disable the “Shortcut area background” and set “Mask opacity” to 0 for a better appearance."
   },
   "theme": {
     "colorNames": {

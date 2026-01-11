@@ -1,9 +1,4 @@
 {
-  "common": {
-    "openInNewTab": "在新标签页中打开",
-    "openInNewWindow": "在新窗口中打开",
-    "copyLink": "复制链接地址"
-  },
   "background": {
     "alwaysFresh": "永远都有新鲜感",
     "bingFrom": "图片来源：必应",
@@ -34,10 +29,16 @@
       "allowCurrent": "仅允许该API网址",
       "deny": "拒绝",
       "request": {
-        "title": "权限请求",
         "message": "为了获取在线壁纸，扩展需要请求相应的访问权限：",
-        "subA": { "label": "普通模式：", "content": "需要「访问该API网址」" },
-        "subB": { "label": "动态主题色（莫奈取色）：", "content": "需要「访问所有网站」" }
+        "subA": {
+          "content": "需要「访问该API网址」",
+          "label": "普通模式："
+        },
+        "subB": {
+          "content": "需要「访问所有网站」",
+          "label": "动态主题色（莫奈取色）："
+        },
+        "title": "权限请求"
       }
     },
     "preferenceTitle": "壁纸偏好",
@@ -82,14 +83,19 @@
     "enableShadow": "显示阴影",
     "invertColorDark": "【时钟】深色模式下使用深色文字",
     "invertColorLight": "【时钟】浅色模式下使用深色文字",
+    "secondsTip": "开启会增加性能消耗，建议同时开启「小号时间」以获得更佳效果",
     "showAMPM": "显示「上午 / 下午」",
     "showDate": "显示日期",
     "showLunar": "显示农历",
     "showSeconds": "显示秒钟",
-    "secondsTip": "开启会增加性能消耗，建议同时开启「小号时间」以获得更佳效果",
     "smallFont": "小号时间",
     "title": "时钟",
     "use12HourClock": "使用 12 小时制"
+  },
+  "common": {
+    "copyLink": "复制链接地址",
+    "openInNewTab": "在新标签页中打开",
+    "openInNewWindow": "在新窗口中打开"
   },
   "other": {
     "confirmPurgeData": {
@@ -171,26 +177,28 @@
   "shortcut": {
     "HorizontalIconSpacing": "链接左右间距",
     "VerticalIconSpacing": "链接上下间距",
+    "disablePaging": "禁用翻页",
     "enableAreaShadow": "显示区域阴影",
     "enableBg": "显示区域背景",
     "enableShadow": "显示图标阴影",
+    "iconMarginBottom": "图标与标题间距",
     "iconRatio": "图标填充比例",
     "iconSize": "图标大小",
     "marginTop": "区域上边距",
     "maxColumns": "最大列数",
     "maxItemsTipForChrome": "最常访问的上限只有 10 个噢~",
     "maxRows": "最大行数",
-    "restoreDefault": "恢复默认",
+    "restoreDefault": "恢复隐藏的链接",
     "restoreDefaultTitle": "你确定要恢复默认快速访问吗？",
+    "showOnSearchFocus": "搜索框聚焦时显示",
     "showPinnedIcon": "显示置顶图标",
     "showTitle": "显示标题",
     "showTopSites": "展示最常访问",
     "tip": "Tip：可以拖动设置窗口以观察快速访问区域变化噢~",
     "title": "快速访问",
-    "disablePaging": "禁用翻页",
+    "titleExtraWidth": "标题扩展宽度",
     "whiteTextInLightMode": "【快速访问】浅色模式下使用白色文字",
-    "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~",
-    "showOnSearchFocus": "搜索框聚焦时显示"
+    "whiteTextTip": "关闭【显示区域背景】并把【遮罩不透明度】改为 0 效果更佳噢~"
   },
   "theme": {
     "colorNames": {

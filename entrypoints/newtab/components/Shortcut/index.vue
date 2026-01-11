@@ -205,7 +205,7 @@ const containerAnimationClasses = computed(() => ({
 const containerGridStyle = computed(() => ({
   gridTemplateColumns: `repeat(${displayColumns.value}, 1fr)`,
   gridTemplateRows: `repeat(${displayRows.value}, 1fr)`,
-  gridGap: `${2 * settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+  gridGap: `${settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
   '--icon_size': `${settings.shortcut.iconSize}px`,
   '--icon_ratio': `${settings.shortcut.iconRatio}`
 }))
