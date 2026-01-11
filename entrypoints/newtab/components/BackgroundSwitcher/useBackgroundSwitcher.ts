@@ -134,25 +134,29 @@ function useBackgroundSwitcher() {
 
   const deleteLocalBg = async () => {
     if (isDarkBg.value) {
-      const oldUrl = settings.localDarkBackground.url
-      settings.localDarkBackground = { id: '', url: '', mediaType: undefined }
+      const oldUrl = settings.background.localDark?.url
+      settings.background.localDark = { id: '', url: '', mediaType: undefined }
       metaDark.value = null
       await nextTick()
       await promiseTimeout(200)
-      try {
-        URL.revokeObjectURL(oldUrl)
-      } catch {}
+      if (oldUrl) {
+        try {
+          URL.revokeObjectURL(oldUrl)
+        } catch {}
+      }
       useDarkWallpaperStorge.clear()
       await wallpaperUrlStore.clearUrl('dark')
     } else {
-      const oldUrl = settings.localBackground.url
-      settings.localBackground = { id: '', url: '', mediaType: undefined }
+      const oldUrl = settings.background.local?.url
+      settings.background.local = { id: '', url: '', mediaType: undefined }
       metaLight.value = null
       await nextTick()
       await promiseTimeout(200)
-      try {
-        URL.revokeObjectURL(oldUrl)
-      } catch {}
+      if (oldUrl) {
+        try {
+          URL.revokeObjectURL(oldUrl)
+        } catch {}
+      }
       useWallpaperStorge.clear()
       await wallpaperUrlStore.clearUrl('light')
     }
@@ -162,7 +166,7 @@ function useBackgroundSwitcher() {
   const tempOnlineUrl = ref('') // 用于在线壁纸输入框的临时存储，避免频繁修改 settingsStore
 
   const onlineImageWarn = async () => {
-    if (settings.background.onlineUrl) {
+    if (settings.background.online.url) {
       settings.background.bgType = BgType.Online
       return
     }
@@ -178,7 +182,7 @@ function useBackgroundSwitcher() {
       })
       .catch(() => {
         settings.background.bgType = BgType.None
-        settings.background.onlineUrl = ''
+        settings.background.online.url = ''
       })
   }
 
@@ -190,8 +194,8 @@ function useBackgroundSwitcher() {
     if (result === PermissionResult.GrantedAll) return true
 
     if (result === PermissionResult.GrantedCurrent) {
-      if (settings.monetColor) {
-        settings.monetColor = false
+      if (settings.theme.monetColor) {
+        settings.theme.monetColor = false
         ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
       }
       return true
@@ -209,20 +213,20 @@ function useBackgroundSwitcher() {
     const _url = (e.target as HTMLInputElement).value
     if (!_url) {
       settings.background.bgType = BgType.None
-      settings.background.onlineUrl = ''
+      settings.background.online.url = ''
       tempOnlineUrl.value = ''
       return
     }
     const { hostname } = new URL(_url)
 
-    if (import.meta.env.FIREFOX && !settings.monetColor) {
-      settings.background.onlineUrl = _url
+    if (import.meta.env.FIREFOX && !settings.theme.monetColor) {
+      settings.background.online.url = _url
       return
     }
 
     isShowingPermissionDialog = true
     if (await handlePermissions(_url, hostname)) {
-      settings.background.onlineUrl = _url
+      settings.background.online.url = _url
     } else {
       settings.background.bgType = BgType.None
       tempOnlineUrl.value = ''
@@ -234,7 +238,7 @@ function useBackgroundSwitcher() {
     watch(
       isDark,
       (newVal) => {
-        if (settings.localDarkBackground.id) {
+        if (settings.background.localDark.id) {
           isDarkBg.value = newVal
         }
       },
@@ -243,19 +247,19 @@ function useBackgroundSwitcher() {
 
     const tasks: Array<Promise<void>> = []
 
-    if (settings.localBackground?.id) {
+    if (settings.background.local?.id) {
       tasks.push(
         (async () => {
           try {
             await wallpaperUrlStore.getUrl('light')
-            const file = await useWallpaperStorge.getItem<Blob>(settings.localBackground.id)
+            const file = await useWallpaperStorge.getItem<Blob>(settings.background.local.id)
             if (file) {
               metaLight.value = { size: (file as File).size }
               readMediaMeta(file as File, (m) => {
                 metaLight.value = { ...metaLight.value, ...m }
               })
-              if (!settings.localBackground.mediaType) {
-                settings.localBackground.mediaType = file.type.startsWith('video/')
+              if (!settings.background.local.mediaType) {
+                settings.background.local.mediaType = file.type.startsWith('video/')
                   ? 'video'
                   : 'image'
               }
@@ -265,19 +269,21 @@ function useBackgroundSwitcher() {
       )
     }
 
-    if (settings.localDarkBackground?.id) {
+    if (settings.background.localDark?.id) {
       tasks.push(
         (async () => {
           try {
             await wallpaperUrlStore.getUrl('dark')
-            const file = await useDarkWallpaperStorge.getItem<Blob>(settings.localDarkBackground.id)
+            const file = await useDarkWallpaperStorge.getItem<Blob>(
+              settings.background.localDark.id
+            )
             if (file) {
               metaDark.value = { size: (file as File).size }
               readMediaMeta(file as File, (m) => {
                 metaDark.value = { ...metaDark.value, ...m }
               })
-              if (!settings.localDarkBackground.mediaType) {
-                settings.localDarkBackground.mediaType = file.type.startsWith('video/')
+              if (!settings.background.localDark.mediaType) {
+                settings.background.localDark.mediaType = file.type.startsWith('video/')
                   ? 'video'
                   : 'image'
               }
@@ -289,8 +295,8 @@ function useBackgroundSwitcher() {
 
     await Promise.all(tasks)
 
-    if (settings.background.onlineUrl) {
-      tempOnlineUrl.value = settings.background.onlineUrl
+    if (settings.background.online.url) {
+      tempOnlineUrl.value = settings.background.online.url
     }
   })
 

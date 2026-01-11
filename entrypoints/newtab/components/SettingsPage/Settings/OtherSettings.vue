@@ -72,9 +72,9 @@ async function confirmClearWallpaperData() {
 async function clearWallpaperData() {
   const resetSettings = () => {
     settings.background.bgType = defaultSettings.background.bgType
-    settings.localBackground = { ...defaultSettings.localBackground }
-    settings.localDarkBackground = { ...defaultSettings.localDarkBackground }
-    settings.bingBackground = { ...defaultSettings.bingBackground }
+    settings.background.local = { ...defaultSettings.background.local }
+    settings.background.localDark = { ...defaultSettings.background.localDark }
+    settings.background.bing = { ...defaultSettings.background.bing }
   }
 
   ElLoading.service({

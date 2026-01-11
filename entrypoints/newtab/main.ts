@@ -86,24 +86,24 @@ export const main = async () => {
     await saveSettings(state)
   }, 500)
 
-  if (settings.primaryColor.toLowerCase() === '#ffbb00') {
+  if (settings.theme.primaryColor.toLowerCase() === '#ffbb00') {
     // 强制替换旧版本对比度过低的主题色
-    settings.primaryColor = defaultSettings.primaryColor
+    settings.theme.primaryColor = defaultSettings.theme.primaryColor
     await saveSettings(settings)
     lastSavedState = JSON.stringify(toRaw(settings.$state))
   }
 
-  changeTheme(settings.primaryColor)
-  color = settings.primaryColor
+  changeTheme(settings.theme.primaryColor)
+  color = settings.theme.primaryColor
 
   settings.$subscribe(async (_mutation, state) => {
     // 主题色变化时立即保存，不使用防抖
-    if (state.primaryColor !== color) {
-      if (state.primaryColor === null) {
-        state.primaryColor = defaultSettings.primaryColor
+    if (state.theme.primaryColor !== color) {
+      if (state.theme.primaryColor === null) {
+        state.theme.primaryColor = defaultSettings.theme.primaryColor
       }
-      color = state.primaryColor
-      changeTheme(state.primaryColor)
+      color = state.theme.primaryColor
+      changeTheme(state.theme.primaryColor)
 
       const currentState = JSON.stringify(state)
       if (lastSavedState !== currentState) {

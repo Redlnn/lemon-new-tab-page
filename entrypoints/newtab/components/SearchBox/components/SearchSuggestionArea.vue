@@ -38,7 +38,7 @@ const emit = defineEmits<{
 
 const areaClasses = computed(() => [
   {
-    'search-suggestion-area--shadow': settings.search.enableShadow,
+    'search-suggestion-area--shadow': settings.search.shadow,
     'search-suggestion-area--dark':
       settings.background.bgType === BgType.None && searchSuggestions.value.length > 0
   },
@@ -120,7 +120,7 @@ function showSuggestionsDebounced() {
     return
   }
 
-  const api = searchSuggestAPIs[settings.search.selectedSearchSuggestionAPI]
+  const api = searchSuggestAPIs[settings.search.suggestionAPI]
   if (!api) {
     console.error('Selected search suggestion API not found')
     return

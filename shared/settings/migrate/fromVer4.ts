@@ -4,59 +4,27 @@ import { defaultSettings } from '..'
 export function migrateFromVer4To5(oldSettings: SettingsInterfaceVer4): SettingsInterfaceVer5 {
   return {
     primaryColor: oldSettings.primaryColor,
-    time: {
-      isMeridiem: oldSettings.time.isMeridiem,
-      showMeridiem: oldSettings.time.showMeridiem,
-      showDate: oldSettings.time.showDate,
-      showLunar: oldSettings.time.showLunar,
-      enableShadow: oldSettings.time.enableShadow,
-      invertColor: {
-        light: oldSettings.time.invertColor.light,
-        night: oldSettings.time.invertColor.night
-      }
-    },
-    search: {
-      autoFocus: oldSettings.search.autoFocus,
-      selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
-      selectedSearchEngine: oldSettings.search.selectedSearchEngine,
-      searchInNewTab: oldSettings.search.searchInNewTab,
-      recordSearchHistory: oldSettings.search.recordSearchHistory,
-      enableShadow: oldSettings.search.enableShadow,
-      enableYiyan: oldSettings.search.enableYiyan
-    },
+    time: structuredClone(oldSettings.time),
+    search: { ...oldSettings.search },
     background: {
       bgType: oldSettings.background.bgType,
       enableVignetting: oldSettings.background.enableVignetting,
       blurIntensity: oldSettings.background.blurIntensity,
       bgMaskOpacity: oldSettings.background.bgMaskOpacity,
       lightMaskColor: oldSettings.background.maskColor,
-      nightMaskColor: defaultSettings.background.nightMaskColor,
+      nightMaskColor: defaultSettings.background.mask.night,
       onlineUrl: oldSettings.background.onlineUrl
     },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: defaultSettings.localBackground.url
+      url: defaultSettings.background.local.url!
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: defaultSettings.bingBackground.url,
+      url: defaultSettings.background.bing.url!,
       updateDate: oldSettings.bingBackground.updateDate
     },
-    shortcut: {
-      enabled: oldSettings.shortcut.enabled,
-      enableTopSites: oldSettings.shortcut.enableTopSites,
-      enableShadow: oldSettings.shortcut.enableShadow,
-      rows: oldSettings.shortcut.rows,
-      columns: oldSettings.shortcut.columns,
-      itemMarginH: oldSettings.shortcut.itemMarginH,
-      itemMarginV: oldSettings.shortcut.itemMarginV,
-      showShortcutTitle: oldSettings.shortcut.showShortcutTitle,
-      showPinnedIcon: oldSettings.shortcut.showPinnedIcon,
-      showShortcutContainerBg: oldSettings.shortcut.showShortcutContainerBg,
-      iconSize: oldSettings.shortcut.iconSize,
-      whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
-      marginTop: oldSettings.shortcut.marginTop
-    },
+    shortcut: { ...oldSettings.shortcut },
     sync: {
       enabled: defaultSettings.sync.enabled
     },

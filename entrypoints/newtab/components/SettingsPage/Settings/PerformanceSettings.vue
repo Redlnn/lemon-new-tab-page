@@ -56,11 +56,11 @@ function toggleBlurSettings(disable: boolean) {
 }
 
 function toggleAnimationSettings(disable: boolean) {
-  settings.time.blinkingColon = !disable
+  settings.clock.blink = !disable
   settings.perf.disableDialogAnimation = disable
   settings.perf.disableFocusScale = disable
   settings.perf.disableFocusBlur = disable
-  settings.search.launchAnim = !disable
+  settings.search.launchAnimation = !disable
   settings.perf.disableBgSwitchAnim = disable
 }
 </script>
@@ -102,14 +102,14 @@ function toggleAnimationSettings(disable: boolean) {
     <el-divider></el-divider>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('background.pauseWhenBlur') }}</div>
-      <el-switch v-model="settings.background.pauseWhenBlur" />
+      <el-switch v-model="settings.background.pauseOnBlur" />
     </div>
     <p class="settings__item--note">
       {{ t('background.videoBlurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
-      <el-switch v-model="settings.time.blinkingColon" />
+      <el-switch v-model="settings.clock.blink" />
     </div>
     <p class="settings__item--note">
       {{ t('clock.blinkingTip') }}
@@ -143,7 +143,7 @@ function toggleAnimationSettings(disable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.launchAnim') }}</div>
-      <el-switch v-model="settings.search.launchAnim" />
+      <el-switch v-model="settings.search.launchAnimation" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.focusScale') }}</div>

@@ -203,14 +203,14 @@ export const useSyncDataStore = defineStore('sync', {
         const cloudData = await syncDataStorage.getValue()
 
         cloudData.settings.background.bgType = localSettings.background.bgType // 保持本地背景类型
-        cloudData.settings.localBackground = localSettings.$state.localBackground // 保持本地壁纸数据
-        cloudData.settings.localDarkBackground = localSettings.$state.localDarkBackground || {
+        cloudData.settings.background.local = localSettings.$state.background.local // 保持本地壁纸数据
+        cloudData.settings.background.localDark = localSettings.$state.background.localDark || {
           id: '',
           url: '',
           mediaType: undefined
         } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
-        cloudData.settings.bingBackground = localSettings.$state.bingBackground // 保持本地必应壁纸数据
-        cloudData.settings.background.onlineUrl = localSettings.background.onlineUrl // 保持本地在线壁纸URL
+        cloudData.settings.background.bing = localSettings.$state.background.bing // 保持本地必应壁纸数据
+        cloudData.settings.background.online.url = localSettings.$state.background.online.url // 保持本地在线壁纸URL
 
         localSettings.$patch(cloudData.settings)
         saveShortcut(cloudData.bookmarks)

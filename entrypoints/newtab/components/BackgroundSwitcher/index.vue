@@ -53,8 +53,8 @@ const isLocalBg = computed(() => settings.background.bgType === BgType.Local)
 const isVideoBg = computed(
   () =>
     settings.background.bgType === BgType.Local &&
-    (settings.localBackground.mediaType === 'video' ||
-      settings.localDarkBackground.mediaType === 'video')
+    (settings.background.local.mediaType === 'video' ||
+      settings.background.localDark.mediaType === 'video')
 )
 
 const {
@@ -72,14 +72,14 @@ const {
 
 function handleNoneBg() {
   settings.background.bgType = BgType.None
-  if (settings.monetColor) {
+  if (settings.theme.monetColor) {
     ElMessage.info(t('background.warning.monetColorDisabled'))
-    settings.monetColor = false
+    settings.theme.monetColor = false
   }
 }
 
 const isShowDeleteIcon = computed(() =>
-  Boolean(isDarkBg.value ? settings.localDarkBackground.id : settings.localBackground.id)
+  Boolean(isDarkBg.value ? settings.background.localDark.id : settings.background.local.id)
 )
 const bingWallpaperSrc = bingWallpaperURLGetter.getBgUrl()
 const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
@@ -146,10 +146,10 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
           :before-upload="beforeBackgroundUpload"
           accept="image/*,video/*"
         >
-          <template v-if="settings.localBackground.id">
+          <template v-if="settings.background.local.id">
             <div class="bg-switcher-preview">
               <video
-                v-if="settings.localBackground.mediaType === 'video'"
+                v-if="settings.background.local.mediaType === 'video'"
                 :src="localBgUrl"
                 muted
                 playsinline
@@ -160,17 +160,17 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
           <el-icon v-else class="bg-switcher-preview__placeholder"><plus /></el-icon>
         </el-upload>
         <el-upload
-          v-if="isDarkBg && settings.localBackground.id"
+          v-if="isDarkBg && settings.background.local.id"
           class="bg-switcher-uploader"
           :show-file-list="false"
           :http-request="(option: UploadRequestOptions) => handleUpload(option)"
           :before-upload="beforeBackgroundUpload"
           accept="image/*,video/*"
         >
-          <template v-if="settings.localDarkBackground.id">
+          <template v-if="settings.background.localDark.id">
             <div class="bg-switcher-preview">
               <video
-                v-if="settings.localDarkBackground.mediaType === 'video'"
+                v-if="settings.background.localDark.mediaType === 'video'"
                 :src="localDarkBgUrl"
                 muted
                 playsinline
@@ -203,7 +203,7 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
           </el-icon>
           <el-icon
             :class="{ active: isDarkBg }"
-            @click="isDarkBg = settings.localBackground.id.length > 0"
+            @click="isDarkBg = settings.background.local.id.length > 0"
           >
             <DarkModeTwotone />
           </el-icon>

@@ -36,13 +36,13 @@ let timeTimer: ReturnType<typeof setInterval> | null = null
 
 function setupTimeTimer() {
   if (timeTimer) clearInterval(timeTimer)
-  const interval = settings.time.showSeconds ? 200 : 1000
+  const interval = settings.clock.showSeconds ? 200 : 1000
   timeTimer = setInterval(() => {
     timeNow.value = new Date()
   }, interval)
 }
 
-watch(() => settings.time.showSeconds, setupTimeTimer, { immediate: true })
+watch(() => settings.clock.showSeconds, setupTimeTimer, { immediate: true })
 
 onUnmounted(() => {
   if (timeTimer) clearInterval(timeTimer)
@@ -79,51 +79,47 @@ const formattedDate = computed(() => {
     ref="time"
     class="clock noselect"
     :class="[
-      settings.time.enableShadow ? 'clock--shadow' : undefined,
-      settings.time.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
-      settings.time.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
+      settings.clock.shadow ? 'clock--shadow' : undefined,
+      settings.clock.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
+      settings.clock.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
     <div
       class="clock__time-container"
-      :class="[settings.time.small ? 'clock__time-container-small' : undefined]"
+      :class="[settings.clock.small ? 'clock__time-container-small' : undefined]"
     >
-      <span v-if="settings.time.showMeridiem && isChinese" class="clock__meridiem">
+      <span v-if="settings.clock.showMeridiem && isChinese" class="clock__meridiem">
         {{ formattedDate.meridiemZH }}
       </span>
       <span class="clock__time">
         <span class="clock__hour">
-          {{ settings.time.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour }}
+          {{ settings.clock.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour }}
         </span>
-        <span
-          class="clock__colon"
-          :class="{ 'clock__colon--blinking': settings.time.blinkingColon }"
+        <span class="clock__colon" :class="{ 'clock__colon--blinking': settings.clock.blink }"
           >:</span
         >
         <span class="clock__minute">{{ formattedTime.minute }}</span>
-        <template v-if="settings.time.showSeconds">
-          <span
-            class="clock__colon"
-            :class="{ 'clock__colon--blinking': settings.time.blinkingColon }"
+        <template v-if="settings.clock.showSeconds">
+          <span class="clock__colon" :class="{ 'clock__colon--blinking': settings.clock.blink }"
             >:</span
           >
           <span class="clock__second">{{ formattedTime.second }}</span>
         </template>
       </span>
       <span
-        v-if="settings.time.showMeridiem && !isChinese"
+        v-if="settings.clock.showMeridiem && !isChinese"
         class="clock__meridiem"
         style="margin-left: 5px"
       >
         {{ formattedTime.meridiem }}
       </span>
     </div>
-    <div v-if="settings.time.showDate" class="clock__date">
+    <div v-if="settings.clock.showDate" class="clock__date">
       <span>
         {{ formattedDate.date }}
         {{ formattedDate.weekday }}
       </span>
-      <span v-if="settings.time.showLunar && isChinese">{{ ` ${formattedDate.lunar}` }}</span>
+      <span v-if="settings.clock.showLunar && isChinese">{{ ` ${formattedDate.lunar}` }}</span>
     </div>
   </div>
 </template>

@@ -45,10 +45,10 @@ const { width: searchFormWidth } = useElementSize(searchForm)
 
 const formClasses = computed(() => [
   {
-    'search-box__form--shadow': settings.search.enableShadow,
+    'search-box__form--shadow': settings.search.shadow,
     'search-box__form--dark': settings.background.bgType === BgType.None,
-    'search-box__form--expand': settings.search.alwaysExpandSearchBar,
-    'search-box__form--always-icon': settings.search.alwaysShowIcon
+    'search-box__form--expand': settings.search.expandAlways,
+    'search-box__form--always-icon': settings.search.showIconAlways
   },
   getPerfClasses(
     {
@@ -170,7 +170,7 @@ function activeOneSuggest(index: number) {
 
 function handleTabNavigation(direction: 1 | -1) {
   // Tab 键在所有搜索引擎（内置+自定义）之间切换
-  const currentKey = settings.search.selectedSearchEngine
+  const currentKey = settings.search.engine
 
   // 构建完整的搜索引擎列表：内置引擎 + 自定义引擎
   const builtInKeys = Object.keys(searchEngines)
@@ -185,12 +185,12 @@ function handleTabNavigation(direction: 1 | -1) {
 
   // 如果当前引擎不在列表中（可能被删除了），从第一个开始
   if (currentIndex === -1) {
-    settings.search.selectedSearchEngine = allEngineKeys[0]!
+    settings.search.engine = allEngineKeys[0]!
     return
   }
 
   const newIndex = (currentIndex + direction + allEngineKeys.length) % allEngineKeys.length
-  settings.search.selectedSearchEngine = allEngineKeys[newIndex]!
+  settings.search.engine = allEngineKeys[newIndex]!
 }
 
 function handlePrevTab() {
@@ -202,7 +202,7 @@ function handleNextTab() {
 }
 
 const saveSearchHistory = async (text: string) => {
-  if (!settings.search.recordSearchHistory || !text) {
+  if (!settings.search.recordHistory || !text) {
     return
   }
   await addHistory(text)
@@ -216,16 +216,16 @@ const doSearchWithText = async (text: string, newtab: boolean = false) => {
 
   await saveSearchHistory(text)
 
-  const searchUrl = getSearchEngineUrl(settings.search.selectedSearchEngine)
+  const searchUrl = getSearchEngineUrl(settings.search.engine)
   if (!searchUrl) {
-    console.error('Invalid search engine:', settings.search.selectedSearchEngine)
+    console.error('Invalid search engine:', settings.search.engine)
     ElMessage.error(t('search.searchEngineNotFound'))
     return
   }
 
   window.open(
     searchUrl.replace('%s', encodeURIComponent(text)),
-    newtab || settings.search.searchInNewTab ? '_blank' : '_self',
+    newtab || settings.search.openInNewTab ? '_blank' : '_self',
     'noopener noreferrer'
   )
   suggedtionArea.value!.clearSearchSuggestions()
@@ -237,7 +237,7 @@ function doSearch() {
 }
 
 onMounted(() => {
-  if (settings.search.launchAnim) {
+  if (settings.search.launchAnimation) {
     useTimeoutFn(() => (mounted.value = true), 100)
   }
   void ensureHistoryLoaded()
@@ -250,7 +250,9 @@ onMounted(() => {
       ref="searchForm"
       class="search-box__form"
       :class="formClasses"
-      :style="{ '--width': settings.search.launchAnim ? (mounted ? undefined : '0') : undefined }"
+      :style="{
+        '--width': settings.search.launchAnimation ? (mounted ? undefined : '0') : undefined
+      }"
       @submit.prevent="doSearch"
     >
       <search-engine-menu ref="searchEngineMenuRef" />
@@ -271,7 +273,7 @@ onMounted(() => {
       />
       <div
         class="search-box__btn"
-        :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
+        :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }"
       >
         <el-icon @click="doSearch"><search /></el-icon>
       </div>

@@ -4,26 +4,8 @@ import { defaultSettings } from '..'
 export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): SettingsInterfaceVer3 {
   return {
     primaryColor: oldSettings.primaryColor,
-    time: {
-      isMeridiem: oldSettings.time.isMeridiem,
-      showMeridiem: oldSettings.time.showMeridiem,
-      showDate: oldSettings.time.showDate,
-      showLunar: oldSettings.time.showLunar,
-      enableShadow: oldSettings.time.enableShadow,
-      invertColor: {
-        light: oldSettings.time.invertColor.light,
-        night: oldSettings.time.invertColor.night
-      }
-    },
-    search: {
-      autoFocus: oldSettings.search.autoFocus,
-      selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
-      selectedSearchEngine: oldSettings.search.selectedSearchEngine,
-      searchInNewTab: oldSettings.search.searchInNewTab,
-      recordSearchHistory: oldSettings.search.recordSearchHistory,
-      enableShadow: oldSettings.search.enableShadow,
-      enableYiyan: oldSettings.search.enableYiyan
-    },
+    time: structuredClone(oldSettings.time),
+    search: { ...oldSettings.search },
     background: {
       bgType: oldSettings.background.bgType,
       enableVignetting: oldSettings.background.bgDarkCorners,
@@ -34,11 +16,11 @@ export function migrateFromVer2To3(oldSettings: SettingsInterfaceVer2): Settings
     },
     localBackground: {
       id: oldSettings.localBackground.bgId,
-      url: defaultSettings.localBackground.url
+      url: defaultSettings.background.local.url!
     },
     bingBackground: {
       id: oldSettings.bingBackground.bgId,
-      url: defaultSettings.bingBackground.url,
+      url: defaultSettings.background.bing.url!,
       updateDate: oldSettings.bingBackground.updateDate
     },
     quickStart: {

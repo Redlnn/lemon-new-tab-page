@@ -161,7 +161,7 @@ function toggleDocumentClass(className: string, shouldAdd: boolean) {
 }
 
 watch(
-  () => settings.colorfulMode,
+  () => settings.theme.colorfulMode,
   (colorful) => {
     toggleDocumentClass('colorful', colorful)
   },
@@ -227,7 +227,7 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
       class="app"
       @contextmenu="openBookmarkSidebar"
     >
-      <clock v-if="settings.time.enabled" @contextmenu.stop />
+      <clock v-if="settings.clock.enabled" @contextmenu.stop />
       <search-box v-if="settings.search.enabled" @contextmenu.stop />
       <shortcut v-if="settings.shortcut.enabled" @contextmenu.stop />
       <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />

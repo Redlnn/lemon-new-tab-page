@@ -34,7 +34,7 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
         {{ t('search.searchSuggestionProvider') }}
       </div>
       <el-select
-        v-model="settings.search.selectedSearchSuggestionAPI"
+        v-model="settings.search.suggestionAPI"
         style="width: 150px"
         fit-input-width
         :show-arrow="false"
@@ -49,29 +49,29 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('common.openInNewTab') }}</div>
-      <el-switch v-model="settings.search.searchInNewTab" />
+      <el-switch v-model="settings.search.openInNewTab" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.alwaysExpandSearchBar') }}</div>
       <el-switch
-        v-model="settings.search.alwaysExpandSearchBar"
-        @change="!settings.search.alwaysExpandSearchBar && (settings.search.alwaysShowIcon = false)"
+        v-model="settings.search.expandAlways"
+        @change="!settings.search.expandAlways && (settings.search.showIconAlways = false)"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.alwaysShowIcon') }}</div>
       <el-switch
-        :disabled="!settings.search.alwaysExpandSearchBar"
-        v-model="settings.search.alwaysShowIcon"
+        :disabled="!settings.search.expandAlways"
+        v-model="settings.search.showIconAlways"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.enableShadow') }}</div>
-      <el-switch v-model="settings.search.enableShadow" />
+      <el-switch v-model="settings.search.shadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.recordSearchHistory') }}</div>
-      <el-switch v-model="settings.search.recordSearchHistory" />
+      <el-switch v-model="settings.search.recordHistory" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.placeholder') }}</div>
@@ -79,7 +79,7 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.launchAnim') }}</div>
-      <el-switch v-model="settings.search.launchAnim" />
+      <el-switch v-model="settings.search.launchAnimation" />
     </div>
   </div>
 </template>

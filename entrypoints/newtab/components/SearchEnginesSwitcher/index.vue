@@ -28,7 +28,7 @@ const customSearchEngineStore = useCustomSearchEngineStore()
 const addCustomSearchEngineRef = ref<InstanceType<typeof AddCustomSearchEngine>>()
 
 function selectCustomEngine(engineId: string) {
-  settings.search.selectedSearchEngine = engineId
+  settings.search.engine = engineId
 }
 
 function editCustomEngine(index: number) {
@@ -51,8 +51,8 @@ async function deleteCustomEngine(index: number) {
     )
 
     // 如果删除的是当前选中的引擎，切换到 Bing
-    if (settings.search.selectedSearchEngine === engine.id) {
-      settings.search.selectedSearchEngine = 'bing'
+    if (settings.search.engine === engine.id) {
+      settings.search.engine = 'bing'
     }
 
     customSearchEngineStore.items.splice(index, 1)
@@ -105,8 +105,8 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
         >
           <div
             class="se-switcher-item"
-            :class="{ 'is-active': settings.search.selectedSearchEngine === key }"
-            @click="settings.search.selectedSearchEngine = key"
+            :class="{ 'is-active': settings.search.engine === key }"
+            @click="settings.search.engine = key"
           >
             <el-icon size="16" class="se-switcher-item__icon">
               <component :is="searchEngines[key].icon" />
@@ -137,7 +137,7 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
         >
           <CustomEngineItem
             :engine="engine"
-            :is-active="settings.search.selectedSearchEngine === engine.id"
+            :is-active="settings.search.engine === engine.id"
             :icon-url="getCustomEngineFavicon(engine)"
             @select="selectCustomEngine"
             @edit="() => editCustomEngine(index)"

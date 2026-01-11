@@ -56,11 +56,11 @@ async function processSyncQueue() {
     syncItem.settings.background.bgType = BgType.Bing
   }
   // 重置壁纸缓存数据
-  syncItem.settings.localBackground = defaultSettings.localBackground
-  syncItem.settings.localDarkBackground = defaultSettings.localDarkBackground
-  syncItem.settings.bingBackground = defaultSettings.bingBackground
+  syncItem.settings.background.local = defaultSettings.background.local
+  syncItem.settings.background.localDark = defaultSettings.background.localDark
+  syncItem.settings.background.bing = defaultSettings.background.bing
   // 由于无法同步在线壁纸，所以重置在线壁纸url
-  syncItem.settings.background.onlineUrl = defaultSettings.background.onlineUrl
+  syncItem.settings.background.online.url = defaultSettings.background.online.url
 
   await syncDataStorage.setValue({
     settings: syncItem.settings,

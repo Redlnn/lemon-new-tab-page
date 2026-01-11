@@ -91,11 +91,11 @@ class BingWallpaperURLGetter {
     const settings = useSettingsStore()
 
     // 兼容旧版逻辑：如果 updateDate 存在，迁移到 startdate
-    if (typeof settings.bingBackground.updateDate === 'string') {
+    if (typeof settings.background.bing.updateDate === 'string') {
       // 将旧版的 new Date().toDateString() 格式转换为 ISO 格式
-      const parsedDate = new Date(settings.bingBackground.updateDate)
+      const parsedDate = new Date(settings.background.bing.updateDate)
       if (!isNaN(parsedDate.getTime())) {
-        settings.bingBackground.updateDate = formatUTCCompact(parsedDate)
+        settings.background.bing.updateDate = formatUTCCompact(parsedDate)
         // await saveSettings(settings)
       }
     }
@@ -107,7 +107,7 @@ class BingWallpaperURLGetter {
 
   private async resolveLocalBingWallpaperURL() {
     const settings = useSettingsStore()
-    const { id } = settings.bingBackground
+    const { id } = settings.background.bing
     const wallpaperUrlStore = useWallpaperUrlStore()
 
     // 尝试从 store 获取 URL (会自动处理缓存和从 DB 加载)
@@ -124,8 +124,8 @@ class BingWallpaperURLGetter {
     }
 
     // 如果获取失败（文件不存在或不是图片），则清除相关数据和缓存
-    settings.bingBackground.id = ''
-    settings.bingBackground.updateDate = 0
+    settings.background.bing.id = ''
+    settings.background.bing.updateDate = 0
     await bingInfoCache.setValue({
       url: '',
       copyright: '',
@@ -141,11 +141,11 @@ class BingWallpaperURLGetter {
     const settings = useSettingsStore()
 
     try {
-      if (settings.bingBackground.url && settings.bingBackground.url.startsWith('blob:')) {
-        URL.revokeObjectURL(settings.bingBackground.url)
+      if (settings.background.bing.url && settings.background.bing.url.startsWith('blob:')) {
+        URL.revokeObjectURL(settings.background.bing.url)
       }
     } catch {}
-    settings.bingBackground.url = ''
+    settings.background.bing.url = ''
   }
 
   public async refresh() {
@@ -161,7 +161,7 @@ class BingWallpaperURLGetter {
       )
       this.info.value = data.images[0]!
       this.updateUHDUrl(data.images[0]!.url)
-      if (data.images[0]!.fullstartdate === settings.bingBackground.updateDate) {
+      if (data.images[0]!.fullstartdate === settings.background.bing.updateDate) {
         // 最新更新日期等于上次更新日期
         return
       }
@@ -204,7 +204,7 @@ class BingWallpaperURLGetter {
       const id = crypto.randomUUID()
       const url = URL.createObjectURL(file)
       await useBingWallpaperStorge.setItem<Blob>(id, file)
-      settings.bingBackground = {
+      settings.background.bing = {
         id: id,
         url: url,
         updateDate: data.images[0]!.fullstartdate

@@ -18,7 +18,7 @@ const customSearchEngineStore = useCustomSearchEngineStore()
 const searchEngineMenu = ref<TooltipInstance>()
 
 const isBuiltInEngine = computed(() => {
-  return settings.search.selectedSearchEngine in searchEngines
+  return settings.search.engine in searchEngines
 })
 
 // 缓存自定义搜索引擎的 favicon Ref
@@ -40,9 +40,7 @@ const currentCustomEngine = computed(() => {
   if (isBuiltInEngine.value) {
     return null
   } else {
-    return customSearchEngineStore.items.find(
-      (engine) => engine.id === settings.search.selectedSearchEngine
-    )
+    return customSearchEngineStore.items.find((engine) => engine.id === settings.search.engine)
   }
 })
 
@@ -57,7 +55,7 @@ defineExpose({ hide })
   <el-tooltip
     ref="searchEngineMenu"
     trigger="click"
-    :disabled="!focusStore.isFocused && !settings.search.alwaysShowIcon"
+    :disabled="!focusStore.isFocused && !settings.search.showIconAlways"
     :show-arrow="false"
     :popper-class="
       getPerfClasses(
@@ -78,9 +76,9 @@ defineExpose({ hide })
         :key="key"
         class="search-engine-menu-item"
         :class="{
-          'search-engine-menu-item--active': settings.search.selectedSearchEngine === key
+          'search-engine-menu-item--active': settings.search.engine === key
         }"
-        @click="settings.search.selectedSearchEngine = key"
+        @click="settings.search.engine = key"
       >
         <div style="display: flex; align-items: center">
           <el-icon class="search-engine-menu-item__icon"
@@ -89,7 +87,7 @@ defineExpose({ hide })
           <span>{{ t(searchEngines[key].nameKey) }}</span>
         </div>
         <div
-          v-if="key === settings.search.selectedSearchEngine"
+          v-if="key === settings.search.engine"
           style="font-size: 11px; color: var(--el-text-color-secondary)"
         >
           {{ t('search.searchEngineMenu.current') }}
@@ -104,9 +102,9 @@ defineExpose({ hide })
           :key="engine.id"
           class="search-engine-menu-item"
           :class="{
-            'search-engine-menu-item--active': settings.search.selectedSearchEngine === engine.id
+            'search-engine-menu-item--active': settings.search.engine === engine.id
           }"
-          @click="settings.search.selectedSearchEngine = engine.id"
+          @click="settings.search.engine = engine.id"
         >
           <div style="display: flex; align-items: center">
             <div
@@ -118,7 +116,7 @@ defineExpose({ hide })
             <span>{{ engine.name }}</span>
           </div>
           <div
-            v-if="engine.id === settings.search.selectedSearchEngine"
+            v-if="engine.id === settings.search.engine"
             style="font-size: 11px; color: var(--el-text-color-secondary)"
           >
             {{ t('search.searchEngineMenu.current') }}
@@ -134,16 +132,14 @@ defineExpose({ hide })
     <el-icon
       v-if="isBuiltInEngine"
       class="search-engine-menu__icon"
-      :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
+      :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }"
     >
-      <component
-        :is="searchEngines[settings.search.selectedSearchEngine as keyof typeof searchEngines].icon"
-      />
+      <component :is="searchEngines[settings.search.engine as keyof typeof searchEngines].icon" />
     </el-icon>
     <div
       v-else
       class="search-engine-menu__icon search-engine-menu__icon--custom"
-      :style="{ opacity: focusStore.isFocused || settings.search.alwaysShowIcon ? 1 : 0 }"
+      :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }"
     >
       <img :src="getCustomEngineFavicon(currentCustomEngine!)" />
     </div>

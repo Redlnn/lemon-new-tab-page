@@ -3,6 +3,10 @@ import { defaultSettings } from '..'
 import { searchEnginesMap } from './searchEnginesMap'
 
 export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): SettingsInterfaceVer6 {
+  const engine =
+    searchEnginesMap[oldSettings.search.selectedSearchEngine as keyof typeof searchEnginesMap] ??
+    defaultSettings.search.engine
+
   return {
     primaryColor: oldSettings.primaryColor,
     time: {
@@ -10,9 +14,9 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
-      small: defaultSettings.time.small,
+      small: defaultSettings.clock.small,
       enableShadow: oldSettings.time.enableShadow,
-      blinkingColon: defaultSettings.time.blinkingColon,
+      blinkingColon: defaultSettings.clock.blink,
       invertColor: {
         light: oldSettings.time.invertColor.light,
         night: oldSettings.time.invertColor.night
@@ -21,32 +25,24 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
     search: {
       autoFocus: oldSettings.search.autoFocus,
       selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
-      selectedSearchEngine: searchEnginesMap[oldSettings.search.selectedSearchEngine],
+      selectedSearchEngine: engine,
       searchInNewTab: oldSettings.search.searchInNewTab,
       recordSearchHistory: oldSettings.search.recordSearchHistory,
       enableShadow: oldSettings.search.enableShadow,
       placeholder: defaultSettings.search.placeholder
     },
-    background: {
-      bgType: oldSettings.background.bgType,
-      enableVignetting: oldSettings.background.enableVignetting,
-      blurIntensity: oldSettings.background.blurIntensity,
-      bgMaskOpacity: oldSettings.background.bgMaskOpacity,
-      lightMaskColor: oldSettings.background.lightMaskColor,
-      nightMaskColor: oldSettings.background.nightMaskColor,
-      onlineUrl: oldSettings.background.onlineUrl
-    },
+    background: { ...oldSettings.background },
     localBackground: {
       id: oldSettings.localBackground.id,
-      url: defaultSettings.localBackground.url
+      url: defaultSettings.background.local.url!
     },
     localDarkBackground: {
-      id: defaultSettings.localDarkBackground.id,
-      url: defaultSettings.localDarkBackground.url
+      id: defaultSettings.background.localDark.id,
+      url: defaultSettings.background.localDark.url!
     },
     bingBackground: {
       id: oldSettings.bingBackground.id,
-      url: defaultSettings.bingBackground.url,
+      url: defaultSettings.background.bing.url!,
       updateDate: oldSettings.bingBackground.updateDate
     },
     shortcut: {
@@ -65,9 +61,7 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
       marginTop: oldSettings.shortcut.marginTop
     },
-    sync: {
-      enabled: oldSettings.sync.enabled
-    },
+    sync: { ...oldSettings.sync },
     yiyan: {
       enabled: oldSettings.search.enableYiyan,
       alwaysShow: defaultSettings.yiyan.alwaysShow,

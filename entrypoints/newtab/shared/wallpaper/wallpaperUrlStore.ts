@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 
 import { isMediaFile, isVideoFile } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
+import type { localBackground } from '@/shared/settings/types/type'
 
 import {
   useBingWallpaperStorge,
@@ -17,13 +18,6 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   const lightUrl = ref('')
   const darkUrl = ref('')
   const bingUrl = ref('')
-
-  const getBackgroundKey = (type: 'light' | 'dark' | 'bing' = 'bing') => {
-    if (type === 'light') return 'localBackground'
-    if (type === 'dark') return 'localDarkBackground'
-    if (type === 'bing') return 'bingBackground'
-    return 'bingBackground'
-  }
 
   const getTargetRef = (type: 'light' | 'dark' | 'bing') => {
     if (type === 'light') return lightUrl
@@ -41,7 +35,10 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   }
 
   const getUrl = async (type: 'light' | 'dark' | 'bing'): Promise<Ref<string>> => {
-    const background = settings[getBackgroundKey(type)]
+    let background: localBackground
+    if (type === 'light') background = settings.background.local
+    else if (type === 'dark') background = settings.background.localDark
+    else background = settings.background.bing
     const targetRef = getTargetRef(type)
 
     if (!background.id) {
@@ -81,7 +78,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       const url = URL.createObjectURL(file)
 
       if (type === 'dark' || type === 'light') {
-        const bg = background as typeof settings.localBackground
+        const bg = background as typeof settings.background.local
         if (!bg.mediaType) {
           bg.mediaType = isVideoFile(file) ? 'video' : 'image'
         }
@@ -100,17 +97,17 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   }
 
   watch(
-    () => settings.localBackground.id,
+    () => settings.background.local.id,
     () => getUrl('light'),
     { immediate: true }
   )
   watch(
-    () => settings.localDarkBackground.id,
+    () => settings.background.localDark.id,
     () => getUrl('dark'),
     { immediate: true }
   )
   watch(
-    () => settings.bingBackground.id,
+    () => settings.background.bing.id,
     () => getUrl('bing'),
     { immediate: true }
   )

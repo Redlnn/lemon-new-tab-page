@@ -4,15 +4,15 @@ import { defaultSettings } from '..'
 export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): SettingsInterfaceVer7 {
   return {
     primaryColor: oldSettings.primaryColor,
-    colorfulMode: defaultSettings.colorfulMode,
-    monetColor: defaultSettings.monetColor,
+    colorfulMode: defaultSettings.theme.colorfulMode,
+    monetColor: defaultSettings.theme.monetColor,
     time: {
-      enabled: defaultSettings.time.enabled,
+      enabled: defaultSettings.clock.enabled,
       isMeridiem: oldSettings.time.isMeridiem,
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
-      showSeconds: defaultSettings.time.showSeconds,
+      showSeconds: defaultSettings.clock.showSeconds,
       small: oldSettings.time.small,
       enableShadow: oldSettings.time.enableShadow,
       blinkingColon: oldSettings.time.blinkingColon,
@@ -24,14 +24,14 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
     search: {
       enabled: defaultSettings.search.enabled,
       alwaysExpandSearchBar: oldSettings.search.autoFocus,
-      alwaysShowIcon: defaultSettings.search.alwaysShowIcon,
+      alwaysShowIcon: defaultSettings.search.showIconAlways,
       selectedSearchSuggestionAPI: oldSettings.search.selectedSearchSuggestionAPI,
       selectedSearchEngine: oldSettings.search.selectedSearchEngine,
       searchInNewTab: oldSettings.search.searchInNewTab,
       recordSearchHistory: oldSettings.search.recordSearchHistory,
       enableShadow: oldSettings.search.enableShadow,
       placeholder: oldSettings.search.placeholder,
-      launchAnim: defaultSettings.search.launchAnim
+      launchAnim: defaultSettings.search.launchAnimation
     },
     background: {
       bgType: oldSettings.background.bgType,
@@ -41,8 +41,8 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       lightMaskColor: oldSettings.background.lightMaskColor,
       nightMaskColor: oldSettings.background.nightMaskColor,
       onlineUrl: oldSettings.background.onlineUrl,
-      pauseWhenBlur: defaultSettings.background.pauseWhenBlur,
-      fasterBgAnim: defaultSettings.background.fasterBgAnim
+      pauseWhenBlur: defaultSettings.background.pauseOnBlur,
+      fasterBgAnim: defaultSettings.background.fastAnimation
     },
     localBackground: {
       id: oldSettings.localBackground.id,

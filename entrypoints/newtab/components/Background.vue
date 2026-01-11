@@ -26,7 +26,7 @@ const focusStore = useFocusStore()
 const settings = useSettingsStore()
 
 // 如果设置了快速初始动画，则直接使用短时间
-if (settings.background.fasterBgAnim) {
+if (settings.background.fastAnimation) {
   animationDuration = 300
 }
 
@@ -37,7 +37,7 @@ const switchStore = useBgSwtichStore()
 const imageRef = useTemplateRef('imageRef')
 const videoRef = useTemplateRef('videoRef')
 const bgURL = ref<string>('')
-const bgOpacityDuration = ref(settings.background.fasterBgAnim ? '0.3s' : '1.25s')
+const bgOpacityDuration = ref(settings.background.fastAnimation ? '0.3s' : '1.25s')
 
 function shortenBgFadeDuration() {
   if (hasShortenedFade) return
@@ -60,7 +60,7 @@ function updateVideoPlayback() {
   // 如果页面不可见，或者窗口失去焦点且设置了失去焦点时暂停视频，则暂停视频
   if (
     document.visibilityState === 'hidden' ||
-    (settings.background.pauseWhenBlur && !isWindowFocused.value)
+    (settings.background.pauseOnBlur && !isWindowFocused.value)
   ) {
     try {
       vid.pause()
@@ -85,8 +85,8 @@ const isVideoWallpaper = computed(() => {
   }
 
   const mediaType = isDark.value
-    ? (settings.localDarkBackground.mediaType ?? settings.localBackground.mediaType)
-    : settings.localBackground.mediaType
+    ? (settings.background.localDark.mediaType ?? settings.background.local.mediaType)
+    : settings.background.local.mediaType
 
   return mediaType === 'video'
 })
@@ -94,7 +94,7 @@ const isVideoWallpaper = computed(() => {
 // 壁纸更新相关逻辑
 
 const currentLocalUrl = computed(() => {
-  if (isDark.value && settings.localDarkBackground.id) {
+  if (isDark.value && settings.background.localDark.id) {
     return darkUrl
   }
   return lightUrl
@@ -107,9 +107,9 @@ const bgTypeProviders: Record<
   [BgType.Bing]: () => bingWallpaperURLGetter.getBgUrl(),
   [BgType.Local]: () => currentLocalUrl.value,
   [BgType.Online]: async () => {
-    const rawUrl = settings.background.onlineUrl
+    const rawUrl = settings.background.online.url
     if (!rawUrl) return ''
-    if (!settings.monetColor) {
+    if (!settings.theme.monetColor) {
       return rawUrl
     }
     if (isChrome) {
@@ -153,7 +153,7 @@ async function assignMaybeRef<T>(
 }
 
 watch(
-  [isVideoWallpaper, documentVisibility, isWindowFocused, () => settings.background.pauseWhenBlur],
+  [isVideoWallpaper, documentVisibility, isWindowFocused, () => settings.background.pauseOnBlur],
   ([isVideo]) => {
     if (!isVideo) {
       // 非视频壁纸，确保视频被暂停
@@ -230,7 +230,7 @@ function activateBackgroundWatch(type: BgType) {
     stopLocalBgWatch = watch(currentLocalUrl, handleLocalBgChange)
   } else if (type === BgType.Online) {
     // 只在使用在线背景时监听在线URL变化
-    stopOnlineBgWatch = watch(() => settings.background.onlineUrl, handleOnlineBgChange)
+    stopOnlineBgWatch = watch(() => settings.background.online.url, handleOnlineBgChange)
   }
   // Bing和None类型不需要watch，因为它们不会动态变化
 }
@@ -246,7 +246,7 @@ watch(
 )
 
 watch(
-  () => settings.monetColor,
+  () => settings.theme.monetColor,
   async (statu) => {
     if (statu) {
       document.documentElement.classList.add('monet')
@@ -266,7 +266,7 @@ watch(
 
 onMounted(async () => {
   // 如果开启了莫奈模式，先应用之前存储的莫奈配色，避免加载壁纸期间的视觉跳变
-  if (settings.monetColor) {
+  if (settings.theme.monetColor) {
     const storedColors = await getMonetColors()
     if (storedColors) {
       applyStoredMonetColors(storedColors)
@@ -287,7 +287,7 @@ onUnmounted(() => {
 })
 
 async function onImgLoaded() {
-  if (!(settings.monetColor || isVideoWallpaper.value)) return
+  if (!(settings.theme.monetColor || isVideoWallpaper.value)) return
   if (bgURL.value.startsWith('http')) return
   // 不加延迟会导致刷新开屏卡住切换动画
   requestAnimationFrame(() => {
@@ -303,15 +303,15 @@ async function onImgLoaded() {
     ref="backgroundWrapper"
     class="background-wrapper noselect"
     :style="{
-      '--mask-opacity': settings.background.bgMaskOpacity / 100,
-      '--mask-color__light': settings.background.lightMaskColor,
-      '--mask-color__night': settings.background.nightMaskColor,
-      '--blur-intensity': `${settings.background.blurIntensity}px`,
+      '--mask-opacity': settings.background.mask.opacity / 100,
+      '--mask-color__light': settings.background.mask.light,
+      '--mask-color__night': settings.background.mask.night,
+      '--blur-intensity': `${settings.background.blur}px`,
       '--bg-opacity-duration': bgOpacityDuration
     }"
   >
     <div class="background-mask"></div>
-    <div v-if="settings.background.enableVignetting" class="background__vignette" />
+    <div v-if="settings.background.vignette" class="background__vignette" />
     <Transition name="v-fade">
       <div
         v-show="!switchStore.isSwitching"

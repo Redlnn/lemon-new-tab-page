@@ -13,45 +13,45 @@ const settings = useSettingsStore()
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
-      <el-switch v-model="settings.time.enabled" />
+      <el-switch v-model="settings.clock.enabled" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.use12HourClock') }}</div>
-      <el-switch v-model="settings.time.isMeridiem" />
+      <el-switch v-model="settings.clock.isMeridiem" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.showAMPM') }}</div>
-      <el-switch v-model="settings.time.showMeridiem" />
+      <el-switch v-model="settings.clock.showMeridiem" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.showDate') }}</div>
-      <el-switch v-model="settings.time.showDate" />
+      <el-switch v-model="settings.clock.showDate" />
     </div>
     <div
-      v-if="settings.time.showDate && isChinese"
+      v-if="settings.clock.showDate && isChinese"
       class="settings__item settings__item--horizontal"
     >
       <div class="settings__label">{{ t('clock.showLunar') }}</div>
-      <el-switch v-model="settings.time.showLunar" />
+      <el-switch v-model="settings.clock.showLunar" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.showSeconds') }}</div>
-      <el-switch v-model="settings.time.showSeconds" />
+      <el-switch v-model="settings.clock.showSeconds" />
     </div>
     <p class="settings__item--note">
       {{ t('clock.secondsTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.smallFont') }}</div>
-      <el-switch v-model="settings.time.small" />
+      <el-switch v-model="settings.clock.small" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.enableShadow') }}</div>
-      <el-switch v-model="settings.time.enableShadow" />
+      <el-switch v-model="settings.clock.shadow" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
-      <el-switch v-model="settings.time.blinkingColon" />
+      <el-switch v-model="settings.clock.blink" />
     </div>
     <p class="settings__item--note">
       {{ t('clock.blinkingTip') }}

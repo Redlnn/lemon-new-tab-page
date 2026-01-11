@@ -24,7 +24,7 @@ const predefineColorsMapClassic = [
   { value: '#9c5333', labelKey: 'theme.colorNames.classic.ochre' },
   { value: '#d75455', labelKey: 'theme.colorNames.classic.crimson' },
   { value: '#ec6800', labelKey: 'theme.colorNames.classic.orangeRed' },
-  { value: defaultSettings.primaryColor, labelKey: 'theme.colorNames.classic.yamabuki' },
+  { value: defaultSettings.theme.primaryColor, labelKey: 'theme.colorNames.classic.yamabuki' },
   { value: '#aacf53', labelKey: 'theme.colorNames.classic.yellowGreen' },
   { value: '#008899', labelKey: 'theme.colorNames.classic.teal' },
   { value: '#1677ff', labelKey: 'theme.colorNames.classic.antBlue' }, // Ant Design Primary
@@ -114,13 +114,13 @@ function toggleAuto() {
 const { checkAndRequestPermission } = usePermission()
 
 const beforeMonetChange = async () => {
-  if (settings.monetColor) return true
+  if (settings.theme.monetColor) return true
 
   if (settings.background.bgType === BgType.None) return false
   if (settings.background.bgType !== BgType.Online) return true
-  if (!settings.background.onlineUrl) return false
+  if (!settings.background.online.url) return false
 
-  const { hostname } = new URL(settings.background.onlineUrl)
+  const { hostname } = new URL(settings.background.online.url)
   const result = await checkAndRequestPermission(hostname, true)
   return result === PermissionResult.GrantedAll
 }
@@ -151,7 +151,7 @@ watch(mode, () => {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('theme.monet.label') }}</div>
       <el-switch
-        v-model="settings.monetColor"
+        v-model="settings.theme.monetColor"
         :disabled="settings.background.bgType === BgType.None"
         :before-change="beforeMonetChange"
       />
@@ -160,17 +160,17 @@ watch(mode, () => {
     <div class="settings__item settings__item--horizontal">
       <div
         class="settings__label"
-        :style="{ color: settings.monetColor ? 'var(--el-text-color-disabled)' : undefined }"
+        :style="{ color: settings.theme.monetColor ? 'var(--el-text-color-disabled)' : undefined }"
       >
         {{ t('theme.primaryColor') }}
       </div>
       <div class="settings__theme">
         <el-select
-          v-model="settings.primaryColor"
+          v-model="settings.theme.primaryColor"
           style="width: 183px"
           popper-class="settings-item-popper"
           :show-arrow="false"
-          :disabled="settings.monetColor"
+          :disabled="settings.theme.monetColor"
         >
           <el-option-group
             v-for="group in predefineColorsMap"
@@ -191,9 +191,9 @@ watch(mode, () => {
           </el-option-group>
         </el-select>
         <el-color-picker
-          v-model="settings.primaryColor"
+          v-model="settings.theme.primaryColor"
           :predefine="predefineColors"
-          :disabled="settings.monetColor"
+          :disabled="settings.theme.monetColor"
         />
       </div>
     </div>
@@ -201,16 +201,16 @@ watch(mode, () => {
       <div class="settings__label">
         {{ t('theme.colorful.label') }}
       </div>
-      <el-switch v-model="settings.colorfulMode" />
+      <el-switch v-model="settings.theme.colorfulMode" />
     </div>
     <p class="settings__item--note">{{ t('theme.colorful.desc') }}</p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.invertColorLight') }}</div>
-      <el-switch v-model="settings.time.invertColor.light" />
+      <el-switch v-model="settings.clock.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.invertColorDark') }}</div>
-      <el-switch v-model="settings.time.invertColor.night" />
+      <el-switch v-model="settings.clock.invertColor.night" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">

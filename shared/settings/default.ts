@@ -4,10 +4,12 @@ import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current
 import { BgType, DrawerDirection } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
-  primaryColor: '#f5b800',
-  colorfulMode: false,
-  monetColor: false,
-  time: {
+  theme: {
+    primaryColor: '#f5b800',
+    colorfulMode: false,
+    monetColor: false
+  },
+  clock: {
     enabled: true,
     isMeridiem: false,
     showMeridiem: true,
@@ -15,8 +17,8 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showLunar: true,
     showSeconds: false,
     small: true,
-    enableShadow: true,
-    blinkingColon: true,
+    shadow: true,
+    blink: true,
     invertColor: {
       light: false,
       night: false
@@ -24,41 +26,45 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   },
   search: {
     enabled: true,
-    alwaysExpandSearchBar: false,
-    alwaysShowIcon: false,
-    selectedSearchSuggestionAPI: 'bing',
-    selectedSearchEngine: 'bing',
-    searchInNewTab: false,
-    recordSearchHistory: true,
-    enableShadow: true,
+    expandAlways: false,
+    showIconAlways: false,
+    suggestionAPI: 'bing',
+    engine: 'bing',
+    openInNewTab: false,
+    recordHistory: true,
+    shadow: true,
     placeholder: i18next.t('newtab:search.placeholder'),
-    launchAnim: true
+    launchAnimation: true
   },
   background: {
     bgType: BgType.Bing,
-    enableVignetting: false,
-    blurIntensity: 3,
-    bgMaskOpacity: 0,
-    lightMaskColor: '#f2f3f5',
-    nightMaskColor: '#000',
-    onlineUrl: '',
-    pauseWhenBlur: false,
-    fasterBgAnim: false
-  },
-  localBackground: {
-    id: '',
-    url: '',
-    mediaType: undefined
-  },
-  localDarkBackground: {
-    id: '',
-    url: '',
-    mediaType: undefined
-  },
-  bingBackground: {
-    id: '',
-    url: '',
-    updateDate: ''
+    vignette: false,
+    blur: 3,
+    mask: {
+      opacity: 0,
+      light: '#f2f3f5',
+      night: '#000'
+    },
+    pauseOnBlur: false,
+    fastAnimation: false,
+    local: {
+      id: '',
+      url: '',
+      mediaType: undefined
+    },
+    localDark: {
+      id: '',
+      url: '',
+      mediaType: undefined
+    },
+    bing: {
+      id: '',
+      url: '',
+      updateDate: ''
+    },
+    online: {
+      url: ''
+    }
   },
   shortcut: {
     enabled: true,

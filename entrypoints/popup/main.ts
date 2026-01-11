@@ -21,7 +21,7 @@ export const main = async () => {
   const settings = useSettingsStore()
 
   // 应用主题色
-  changeTheme(settings.primaryColor)
+  changeTheme(settings.theme.primaryColor)
 
   // 工具函数：切换 DOM 类名
   const toggleDocumentClass = (className: string, shouldAdd: boolean) => {
@@ -44,10 +44,10 @@ export const main = async () => {
   applyDarkMode(preferredDark.value)
 
   // 应用 colorful 模式
-  toggleDocumentClass('colorful', settings.colorfulMode)
+  toggleDocumentClass('colorful', settings.theme.colorfulMode)
 
   // 应用莫奈模式
-  if (settings.monetColor) {
+  if (settings.theme.monetColor) {
     const monetColors = await getMonetColors()
     if (monetColors) {
       applyStoredMonetColors(monetColors)

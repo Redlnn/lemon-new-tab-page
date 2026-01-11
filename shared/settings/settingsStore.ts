@@ -93,9 +93,9 @@ export async function initSettings() {
   }
 
   // 清除过期的 blob url，避免使用失效的 URL
-  settings.localBackground.url = ''
-  settings.localDarkBackground.url = ''
-  settings.bingBackground.url = ''
+  settings.background.local.url = ''
+  settings.background.localDark.url = ''
+  settings.background.bing.url = ''
 
   useSettingsStore().$patch(settings)
 }
