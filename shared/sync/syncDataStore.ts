@@ -3,7 +3,28 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { browser } from 'wxt/browser'
 
-import { defaultSettings, useSettingsStore } from '../settings'
+import type {
+  CURRENT_CONFIG_INTERFACE,
+  OldSettingsInterface,
+  SettingsInterfaceVer2,
+  SettingsInterfaceVer3,
+  SettingsInterfaceVer4,
+  SettingsInterfaceVer5,
+  SettingsInterfaceVer6,
+  SettingsInterfaceVer7
+} from '../settings'
+import {
+  CURRENT_CONFIG_VERSION,
+  defaultSettings,
+  migrateFromVer1,
+  migrateFromVer2To3,
+  migrateFromVer3To4,
+  migrateFromVer4To5,
+  migrateFromVer5To6,
+  migrateFromVer6To7,
+  migrateFromVer7To8,
+  useSettingsStore
+} from '../settings'
 import { defaultShortcut, saveShortcut, useShortcutStore } from '../shortcut'
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
@@ -61,7 +82,7 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
     cloudData = await syncDataStorage.getValue()
     if (cloudData.settings.pluginVersion === '') {
       // 默认配置，使用本地配置覆盖
-      cloudData.settings = localSettings
+      cloudData.settings = localSettings.$state
     }
     const syncDataStore = useSyncDataStore()
     syncDataStore.$patch(cloudData)
@@ -114,6 +135,16 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
 export async function deinitSyncSettings() {
   // 移除同步储存更新消息监听器
   browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage)
+}
+
+const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
+  1: (s) => migrateFromVer1(s as OldSettingsInterface),
+  2: (s) => migrateFromVer2To3(s as SettingsInterfaceVer2),
+  3: (s) => migrateFromVer3To4(s as SettingsInterfaceVer3),
+  4: (s) => migrateFromVer4To5(s as SettingsInterfaceVer4),
+  5: (s) => migrateFromVer5To6(s as SettingsInterfaceVer5),
+  6: (s) => migrateFromVer6To7(s as SettingsInterfaceVer6),
+  7: (s) => migrateFromVer7To8(s as SettingsInterfaceVer7)
 }
 
 export const useSyncDataStore = defineStore('sync', {
@@ -201,6 +232,56 @@ export const useSyncDataStore = defineStore('sync', {
       try {
         const localSettings = useSettingsStore()
         const cloudData = await syncDataStorage.getValue()
+
+        if (cloudData.settings.version < CURRENT_CONFIG_VERSION) {
+          // 云端配置版本落后，逐步应用迁移直到达到当前版本
+          try {
+            let s = cloudData.settings
+
+            // 老版本字符串场景直接走 1 号迁移
+            if (typeof s.version === 'string') {
+              const fn1 = migrations[1] as typeof migrateFromVer1
+              if (fn1) s = await fn1(s as unknown as OldSettingsInterface)
+            }
+
+            // 逐步通过映射函数迁移到 CURRENT_CONFIG_VERSION
+            while ((s.version as number) < CURRENT_CONFIG_VERSION) {
+              const v = s.version as number
+              const fn = migrations[v]
+              if (!fn) {
+                // 未知版本：关闭云同步并通知 UI 处理版本不匹配
+                localSettings.sync.enabled = false
+                if (syncEventCallback) {
+                  syncEventCallback('version-mismatch', {
+                    cloud: String(s.version),
+                    local: String(localSettings.version)
+                  })
+                }
+                return
+              }
+              // @ts-expect-error：此处s要经过多轮升级才会变为最新版本
+              s = await fn(s)
+            }
+
+            const migratedSettings = s as CURRENT_CONFIG_INTERFACE
+            cloudData.settings = migratedSettings
+          } catch (err) {
+            console.error(
+              `Failed to migrate cloud settings from ${cloudData.settings.version} to ${CURRENT_CONFIG_VERSION}:`,
+              err
+            )
+            // 迁移失败：关闭云同步并通知 UI
+            localSettings.sync.enabled = false
+            if (syncEventCallback) {
+              if (err instanceof Error) {
+                syncEventCallback('sync-error', err)
+              } else {
+                syncEventCallback('sync-error', new Error(String(err)))
+              }
+            }
+            return
+          }
+        }
 
         cloudData.settings.background.bgType = localSettings.background.bgType // 保持本地背景类型
         cloudData.settings.background.local = localSettings.$state.background.local // 保持本地壁纸数据
