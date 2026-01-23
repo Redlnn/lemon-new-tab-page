@@ -1,5 +1,3 @@
-import type { Rgba } from '@material/material-color-utilities'
-
 import { mixLegacy } from './mix'
 import {
   BLACK_COLOR,

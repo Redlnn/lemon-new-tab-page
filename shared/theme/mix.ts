@@ -1,5 +1,3 @@
-import type { Rgba } from '@material/material-color-utilities'
-
 /**
  * Sass legacy color.mix 算法
  * https://github.com/sass/dart-sass/blame/main/lib/src/functions/color.dart#L1509

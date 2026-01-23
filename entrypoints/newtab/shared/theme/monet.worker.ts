@@ -1,19 +1,17 @@
 /// <reference lib="webworker" />
 
 import {
-  argbFromRgb,
   hexFromArgb,
-  QuantizerCelebi,
-  type Rgba,
-  rgbaFromArgb,
   Scheme,
-  Score,
+  sourceColorFromImageBytes,
   themeFromSourceColor
 } from '@material/material-color-utilities'
 
 import { mixLegacy } from '@/shared/theme/mix'
 import { BLACK_COLOR, EL_BG_COLOR_RGBA, WHITE_COLOR } from '@/shared/theme/token'
 import { rgba2Hex } from '@/shared/theme/utils'
+
+import { rgbaFromArgb } from './helper'
 
 const shadeCache = new WeakMap<Rgba, ReturnType<typeof buildColorShades>>()
 
@@ -139,29 +137,7 @@ self.onmessage = (
   ctx.drawImage(imageBitmap, 0, 0)
   const imageData = ctx.getImageData(0, 0, width, height).data
 
-  const pixels: number[] = []
-
-  for (let i = 0; i < imageData.length; i += 4) {
-    const r = imageData[i]
-    const g = imageData[i + 1]
-    const b = imageData[i + 2]
-    const a = imageData[i + 3]
-
-    if (a === undefined || r === undefined || g === undefined || b === undefined || a < 255) {
-      continue
-    }
-
-    pixels.push(argbFromRgb(r, g, b))
-  }
-
-  const result = QuantizerCelebi.quantize(pixels, 128)
-  const ranked = Score.score(result)
-  const top = ranked[0]
-
-  if (top === undefined) {
-    self.postMessage({ id, error: new Error('No suitable color found') })
-    return
-  }
+  const top = sourceColorFromImageBytes(imageData)
 
   const theme = themeFromSourceColor(top)
   const cssLight = buildCssVars(theme.schemes.light, 'light')

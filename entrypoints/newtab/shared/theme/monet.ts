@@ -84,7 +84,7 @@ async function getThemeFromImage(
   const bitmap = await createImageBitmap(image, sx, sy, sw, sh, {
     resizeWidth: width,
     resizeHeight: height,
-    resizeQuality: 'medium'
+    resizeQuality: 'low'
   })
 
   return new Promise((resolve, reject) => {

@@ -1,5 +1,3 @@
-import type { Rgba } from '@material/material-color-utilities'
-
 /**
  * 校验是否为支持的 HEX 颜色格式：#RGB/#RGBA/#RRGGBB/#RRGGBBAA
  */

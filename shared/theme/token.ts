@@ -1,5 +1,3 @@
-import type { Rgba } from '@material/material-color-utilities'
-
 import { hex2rgba } from './utils'
 
 // 缓存常用颜色的 RGBA 对象，避免重复解析
