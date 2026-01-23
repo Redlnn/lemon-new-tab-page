@@ -83,6 +83,10 @@ const isShowDeleteIcon = computed(() =>
 )
 const bingWallpaperSrc = bingWallpaperURLGetter.getBgUrl()
 const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
+const switchToBing = () => {
+  bingWallpaperURLGetter.refresh(true)
+  settings.background.bgType = BgType.Bing
+}
 </script>
 
 <template>
@@ -90,11 +94,7 @@ const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()
     <!-- Bing 每日壁纸 -->
     <div class="bg-switcher-title" style="margin-top: 20px">{{ t('background.today') }}</div>
     <div class="bg-switcher-container">
-      <div
-        class="bg-switcher-preview"
-        style="cursor: pointer"
-        @click="settings.background.bgType = BgType.Bing"
-      >
+      <div class="bg-switcher-preview" style="cursor: pointer" @click="switchToBing">
         <el-image :src="bingWallpaperSrc">
           <template #error>
             <div class="bg-switcher-preview__error">

@@ -148,7 +148,7 @@ class BingWallpaperURLGetter {
     settings.background.bing.url = ''
   }
 
-  public async refresh() {
+  public async refresh(force = false) {
     const settings = useSettingsStore()
 
     let data: BingWallpaperResp | null = null
@@ -161,7 +161,7 @@ class BingWallpaperURLGetter {
       )
       this.info.value = data.images[0]!
       this.updateUHDUrl(data.images[0]!.url)
-      if (data.images[0]!.fullstartdate === settings.background.bing.updateDate) {
+      if (data.images[0]!.fullstartdate === settings.background.bing.updateDate && !force) {
         // 最新更新日期等于上次更新日期
         return
       }
