@@ -1,7 +1,5 @@
 import { defineStore } from 'pinia'
 
-import { browser } from 'wxt/browser'
-
 import type {
   CURRENT_CONFIG_INTERFACE,
   OldSettingsInterface,
@@ -17,10 +15,6 @@ const searchSuggestAPIsMap: Record<
   百度: 'baidu',
   必应: 'bing',
   谷歌: 'google'
-}
-
-interface WxtSettingsVersion {
-  settings$?: { v: number }
 }
 
 type OldStorageSettings = OldSettingsInterface | SettingsInterfaceVer2
@@ -51,12 +45,11 @@ export async function initSettings() {
 
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
     // 并行读取旧设置和新设置
-    const [oldSettings, newSettings, wxtSettingsVer] = await Promise.all([
+    const [oldSettings, newSettings] = await Promise.all([
       chrome.storage.local.get({ settings: null }) as Promise<{
         settings: OldStorageSettings | null
       }>,
-      settingsStorage.getValue(),
-      browser.storage.local.get('settings$') as Promise<WxtSettingsVersion>
+      settingsStorage.getValue()
     ])
 
     if (oldSettings.settings && !('pluginVersion' in oldSettings.settings)) {
@@ -73,22 +66,11 @@ export async function initSettings() {
 
     if (!settings) {
       settings = newSettings
-      if (wxtSettingsVer.settings$ && settings.version !== wxtSettingsVer.settings$.v) {
-        settings.version = wxtSettingsVer.settings$.v as CURRENT_CONFIG_INTERFACE['version']
-      }
       console.log('[Settings] Initializing settings storage with config version', settings.version)
     }
   } else {
-    // Firefox: 并行读取设置
-    const [newSettings, wxtSettings] = await Promise.all([
-      settingsStorage.getValue(),
-      browser.storage.local.get('settings$') as Promise<WxtSettingsVersion>
-    ])
-
+    const newSettings = await settingsStorage.getValue()
     settings = newSettings
-    if (wxtSettings.settings$ && settings.version !== wxtSettings.settings$.v) {
-      settings.version = wxtSettings.settings$.v as CURRENT_CONFIG_INTERFACE['version']
-    }
     console.log('[Settings] Initializing settings storage with config version', settings.version)
   }
 
