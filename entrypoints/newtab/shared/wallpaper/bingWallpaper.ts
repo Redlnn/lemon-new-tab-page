@@ -213,10 +213,9 @@ class BingWallpaperURLGetter {
       await useWallpaperUrlStore().setUrl('bing', url)
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)
-      ElNotification({
+      ElNotification.error({
         title: i18next.t('newtab:notification.bingWallpaper.error.title'),
-        message: i18next.t('newtab:notification.bingWallpaper.error.message'),
-        type: 'error'
+        message: i18next.t('newtab:notification.bingWallpaper.error.message')
       })
       throw error
     }
