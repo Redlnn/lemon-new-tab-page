@@ -100,10 +100,32 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
     browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
 
     // 监听变化触发同步
+    // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
+    // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
+    // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
+    let prevSyncEnabled = localSettings.sync.enabled
+
     const subChange = async () => {
-      if (isProcessing || !localSettings.sync.enabled) {
+      const nowEnabled = localSettings.sync.enabled
+
+      // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
+      if (isProcessing) {
+        prevSyncEnabled = nowEnabled
         return
       }
+
+      if (!nowEnabled) {
+        return
+      }
+
+      // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
+      if (!prevSyncEnabled && nowEnabled) {
+        prevSyncEnabled = true
+        await syncDataStore.checkCloudSync()
+        return
+      }
+
+      prevSyncEnabled = nowEnabled
 
       await localSyncDataStorage.setValue({
         lastUpdate: Date.now()
