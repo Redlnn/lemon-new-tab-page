@@ -6,15 +6,20 @@
 
 ### Improvements⚡️
 
-- Improve pagination logic and performance
+- Improve pagination logic
+- Improve performance
 - Optimize the trigger priority of swipe pagination and
   drag sorting for quick access when touching
   > Now pagination is less likely to trigger drag sorting
+- Added "Title Expand Width" and "Icon and Title Spacing" settings
+  ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
 
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut pagination flickered on Firefox
   ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
+- Fixed security issues when importing settings
+- Added missing settings version migration function for cloud sync
 
 ## 3.0.1 (Jan 02, 2026)
 
