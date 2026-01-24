@@ -169,22 +169,13 @@ defineExpose({ open, close })
       >
         <template #dropdown>
           <el-dropdown-menu class="noselect">
-            <el-dropdown-item @click="openInNewTab">
-              <el-icon>
-                <open-in-new-round />
-              </el-icon>
+            <el-dropdown-item :icon="OpenInNewRound" @click="openInNewTab">
               <span>{{ t('settings:common.openInNewTab') }}</span>
             </el-dropdown-item>
-            <el-dropdown-item @click="openInNewWindow">
-              <el-icon>
-                <open-in-new-round />
-              </el-icon>
+            <el-dropdown-item :icon="OpenInNewRound" @click="openInNewWindow">
               <span>{{ t('settings:common.openInNewWindow') }}</span>
             </el-dropdown-item>
-            <el-dropdown-item @click="copyLink">
-              <el-icon>
-                <content-copy-round />
-              </el-icon>
+            <el-dropdown-item :icon="ContentCopyRound" @click="copyLink">
               <span>{{ t('settings:common.copyLink') }}</span>
             </el-dropdown-item>
             <slot name="submenu"></slot>

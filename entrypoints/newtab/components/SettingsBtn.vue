@@ -66,34 +66,27 @@ function sponsorMessage() {
     </div>
     <template #dropdown>
       <el-dropdown-menu class="noselect">
-        <el-dropdown-item @click="emit('open-settings')">
-          <el-icon :size="17"><settings-round /></el-icon>
+        <el-dropdown-item :icon="SettingsRound" @click="emit('open-settings')">
           <span>{{ t('settings:title') }}</span>
         </el-dropdown-item>
-        <el-dropdown-item @click="emit('open-search-engine-preference')">
-          <el-icon :size="17"><search-round /></el-icon>
+        <el-dropdown-item :icon="SearchRound" @click="emit('open-search-engine-preference')">
           <span>{{ t('menu.searchEnginePreference') }}</span>
         </el-dropdown-item>
-        <el-dropdown-item @click="emit('open-background-switcher')">
-          <el-icon :size="17"><wallpaper-round /></el-icon>
+        <el-dropdown-item :icon="WallpaperRound" @click="emit('open-background-switcher')">
           <span>{{ t('menu.backgroundPreference') }}</span>
         </el-dropdown-item>
         <el-badge is-dot :offset="[-3, 17]" :hidden="settings.readChangeLog" style="width: 100%">
-          <el-dropdown-item divided @click="emit('open-changelog')">
-            <el-icon :size="17"><access-time-filled-round /></el-icon>
+          <el-dropdown-item :icon="AccessTimeFilledRound" divided @click="emit('open-changelog')">
             <span>{{ t('changelog.title') }}</span>
           </el-dropdown-item>
         </el-badge>
-        <el-dropdown-item @click="emit('open-faq')">
-          <el-icon :size="17"><help-filled /></el-icon>
+        <el-dropdown-item :icon="HelpFilled" @click="emit('open-faq')">
           <span>{{ t('menu.help') }}</span>
         </el-dropdown-item>
-        <el-dropdown-item @click="sponsorMessage">
-          <el-icon :size="17"><heart-filled /></el-icon>
+        <el-dropdown-item :icon="HeartFilled" @click="sponsorMessage">
           <span>{{ t('menu.sponsor') }}</span>
         </el-dropdown-item>
-        <el-dropdown-item divided @click="emit('open-about')">
-          <el-icon :size="17"><info-round /></el-icon>
+        <el-dropdown-item :icon="InfoRound" divided @click="emit('open-about')">
           <span>{{ t('menu.about') }}</span>
         </el-dropdown-item>
       </el-dropdown-menu>

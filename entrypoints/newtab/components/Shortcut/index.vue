@@ -488,25 +488,22 @@ const isHideShortcut = computed(() => {
                   <template #submenu>
                     <template v-if="item.isPinned">
                       <el-dropdown-item
+                        :icon="Edit16Regular"
                         divided
                         @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
                       >
-                        <el-icon>
-                          <edit16-regular />
-                        </el-icon>
                         {{ t('common.edit') }}
                       </el-dropdown-item>
                       <el-dropdown-item
+                        :icon="PinOff16Regular"
                         @click="removeShortcut(item.originalIndex, shortcutStore, refreshDebounced)"
                       >
-                        <el-icon>
-                          <pin-off16-regular />
-                        </el-icon>
                         {{ t('shortcut.unpin') }}
                       </el-dropdown-item>
                     </template>
                     <template v-else>
                       <el-dropdown-item
+                        :icon="ClearRound"
                         divided
                         @click="
                           async () => {
@@ -515,17 +512,12 @@ const isHideShortcut = computed(() => {
                           }
                         "
                       >
-                        <el-icon>
-                          <clear-round />
-                        </el-icon>
                         {{ t('shortcut.hide') }}
                       </el-dropdown-item>
                       <el-dropdown-item
+                        :icon="Pin16Regular"
                         @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
                       >
-                        <el-icon>
-                          <pin16-regular />
-                        </el-icon>
                         {{ t('shortcut.pin') }}
                       </el-dropdown-item>
                     </template>
