@@ -128,7 +128,7 @@ async function addToShortcut() {
     favicon: faviconRef.value
   })
   await saveShortcut(shortcutStore.$state)
-  ElMessage.success(t('bookmarkSidebar.addedToShortcut'))
+  ElMessage.success(t('bookmark.addedToShortcut'))
 }
 
 // 注入共享的 activeMap（按深度索引），用于跨层级控制折叠展开
@@ -175,7 +175,7 @@ function deleteBookmark() {
   } else {
     browser.bookmarks.remove(props.node.id)
   }
-  ElMessage.success(t('bookmarkSidebar.deleteSuccess', { title: props.node.title }))
+  ElMessage.success(t('bookmark.deleteSuccess', { title: props.node.title }))
 }
 
 // 创建子节点的本地可编辑副本（用于拖动）
@@ -222,9 +222,9 @@ const handleNestedDragSort = async (event: DraggableEvent) => {
       })
     }
   } catch (error) {
-    console.error(t('bookmarkSidebar.moveError'), error)
+    console.error(t('bookmark.moveError'), error)
     ElNotification.error({
-      title: t('bookmarkSidebar.moveError'),
+      title: t('bookmark.moveError'),
       message: (error as Error).message || 'Unknown error.'
     })
   }
@@ -319,7 +319,7 @@ const isDragDisabled = computed(() => {
             <span>{{ t('settings:common.copyLink') }}</span>
           </el-dropdown-item>
           <el-dropdown-item :icon="Pin12Regular" @click="addToShortcut">
-            <span>{{ t('bookmarkSidebar.addToShortcut') }}</span>
+            <span>{{ t('bookmark.addToShortcut') }}</span>
           </el-dropdown-item>
           <el-dropdown-item :icon="DeleteOutlineRound" @click="deleteBookmark">
             <span>{{ t('common.delete') }}</span>

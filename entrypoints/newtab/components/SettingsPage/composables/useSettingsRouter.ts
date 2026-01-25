@@ -60,7 +60,7 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     key: SettingsRoute.BOOKMARK_SIDEBAR,
     icon: BookmarkBorderRound,
-    titleKey: 'bookmarkSidebar.title'
+    titleKey: 'bookmark.title'
   },
   {
     key: SettingsRoute.YIYAN,

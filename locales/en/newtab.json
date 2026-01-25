@@ -3,7 +3,7 @@
     "yiyanApiProviderPrefix": "Chinese poetry API provided by",
     "yiyanApiProviderSuffix": ""
   },
-  "bookmarkSidebar": {
+  "bookmark": {
     "404": "Nothing found",
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",

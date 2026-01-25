@@ -67,7 +67,7 @@
     },
     "youLikeFine": "你喜欢就好~"
   },
-  "bookmarkSidebar": {
+  "bookmark": {
     "defaultSort": {
       "title": "默认排序方式",
       "desc": "刷新页面后生效"

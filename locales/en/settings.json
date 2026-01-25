@@ -67,7 +67,7 @@
     },
     "youLikeFine": "If you like it, that’s fine~"
   },
-  "bookmarkSidebar": {
+  "bookmark": {
     "defaultSort": {
       "title": "Default sorting",
       "desc": "Takes effect after refreshing the page"

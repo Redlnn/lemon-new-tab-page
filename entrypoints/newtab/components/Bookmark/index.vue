@@ -76,27 +76,27 @@ const sortMode = ref(getEnumKeyByValue(SortMode, store.sortMode))
 const sortOptions = [
   {
     value: '',
-    labelKey: 'bookmarkSidebar.sortMode.origin',
+    labelKey: 'bookmark.sortMode.origin',
     click: () => store.setSortMode(SortMode.Original)
   },
   {
     value: 'NameAsc',
-    labelKey: 'bookmarkSidebar.sortMode.nameAsc',
+    labelKey: 'bookmark.sortMode.nameAsc',
     click: () => store.setSortMode(SortMode.NameAsc)
   },
   {
     value: 'NnameDesc',
-    labelKey: 'bookmarkSidebar.sortMode.nameDesc',
+    labelKey: 'bookmark.sortMode.nameDesc',
     click: () => store.setSortMode(SortMode.NameDesc)
   },
   {
     value: 'CreatedAsc',
-    labelKey: 'bookmarkSidebar.sortMode.createdAsc',
+    labelKey: 'bookmark.sortMode.createdAsc',
     click: () => store.setSortMode(SortMode.CreatedDesc)
   },
   {
     value: 'CreatedDesc',
-    labelKey: 'bookmarkSidebar.sortMode.createdDesc',
+    labelKey: 'bookmark.sortMode.createdDesc',
     click: () => store.setSortMode(SortMode.CreatedAsc)
   }
 ]
@@ -142,7 +142,7 @@ watch(
     ref="drawerRef"
     v-model="opened"
     :direction="settings.bookmark.direction"
-    :title="t('bookmarkSidebar.title')"
+    :title="t('bookmark.title')"
     size="400"
     class="noselect"
     :class="[
@@ -173,7 +173,7 @@ watch(
             @compositionend="handleCompositionEnd"
             @input="handleInput"
           />
-          <el-select v-model="sortMode" :placeholder="t('bookmarkSidebar.sortBy')">
+          <el-select v-model="sortMode" :placeholder="t('bookmark.sortBy')">
             <el-option
               v-for="(item, index) in sortOptions"
               :key="index"
@@ -200,17 +200,17 @@ watch(
           <div class="bookmark-404">
             <div class="bookmark-404--icon">🧐</div>
             <code class="bookmark-404--title">404</code>
-            <div class="bookmark-404--desc">{{ t('bookmarkSidebar.404') }}</div>
+            <div class="bookmark-404--desc">{{ t('bookmark.404') }}</div>
           </div>
         </template>
       </section>
       <section v-else class="bookmark-small">
         <div class="bookmark-small__icon">🙈</div>
         <div class="bookmark-small__title">
-          {{ t('bookmarkSidebar.tooSmall') }}
+          {{ t('bookmark.tooSmall') }}
         </div>
         <div class="bookmark-small__desc">
-          {{ t('bookmarkSidebar.expandHint') }}
+          {{ t('bookmark.expandHint') }}
         </div>
       </section>
     </Transition>

@@ -67,7 +67,7 @@
     },
     "youLikeFine": "你喜歡就好~"
   },
-  "bookmarkSidebar": {
+  "bookmark": {
     "defaultSort": {
       "title": "預設排序方式",
       "desc": "重新整理頁面後生效"

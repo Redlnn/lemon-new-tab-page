@@ -3,7 +3,7 @@
     "yiyanApiProviderPrefix": "一言API由",
     "yiyanApiProviderSuffix": "提供"
   },
-  "bookmarkSidebar": {
+  "bookmark": {
     "404": "什么都没找到",
     "addToShortcut": "添加到快捷方式",
     "addedToShortcut": "已添加到快捷方式",

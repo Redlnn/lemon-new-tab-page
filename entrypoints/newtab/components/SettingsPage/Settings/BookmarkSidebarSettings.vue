@@ -11,34 +11,34 @@ const settings = useSettingsStore()
 
 const directionOptions = [
   {
-    label: 'bookmarkSidebar.direction.rtl',
+    label: 'bookmark.direction.rtl',
     value: DrawerDirection.rtl
   },
   {
-    label: 'bookmarkSidebar.direction.ltr',
+    label: 'bookmark.direction.ltr',
     value: DrawerDirection.ltr
   }
 ]
 
 const sortModeOptions = [
   {
-    label: 'bookmarkSidebar.sortMode.origin',
+    label: 'bookmark.sortMode.origin',
     value: SortMode.Original
   },
   {
-    label: 'bookmarkSidebar.sortMode.nameAsc',
+    label: 'bookmark.sortMode.nameAsc',
     value: SortMode.NameAsc
   },
   {
-    label: 'bookmarkSidebar.sortMode.nameDesc',
+    label: 'bookmark.sortMode.nameDesc',
     value: SortMode.NameDesc
   },
   {
-    label: 'bookmarkSidebar.sortMode.createdAsc',
+    label: 'bookmark.sortMode.createdAsc',
     value: SortMode.CreatedAsc
   },
   {
-    label: 'bookmarkSidebar.sortMode.createdDesc',
+    label: 'bookmark.sortMode.createdDesc',
     value: SortMode.CreatedDesc
   }
 ]
@@ -47,7 +47,7 @@ const sortModeOptions = [
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('bookmarkSidebar.direction.title') }}</div>
+      <div class="settings__label">{{ t('bookmark.direction.title') }}</div>
       <el-select v-model="settings.bookmark.direction" placeholder="Select" style="width: 150px">
         <el-option
           v-for="item in directionOptions"
@@ -58,7 +58,7 @@ const sortModeOptions = [
       </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('bookmarkSidebar.defaultSort.title') }}</div>
+      <div class="settings__label">{{ t('bookmark.defaultSort.title') }}</div>
       <el-select
         v-model="settings.bookmark.defaultSortMode"
         placeholder="Select"
@@ -72,13 +72,13 @@ const sortModeOptions = [
         />
       </el-select>
     </div>
-    <p class="settings__item--note">{{ t('bookmarkSidebar.defaultSort.desc') }}</p>
+    <p class="settings__item--note">{{ t('bookmark.defaultSort.desc') }}</p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('bookmarkSidebar.rightClickToOpen') }}</div>
+      <div class="settings__label">{{ t('bookmark.rightClickToOpen') }}</div>
       <el-switch v-model="settings.bookmark.rightClickToOpen" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('bookmarkSidebar.hideBtn') }}</div>
+      <div class="settings__label">{{ t('bookmark.hideBtn') }}</div>
       <el-switch v-model="settings.bookmark.hideBtn" />
     </div>
   </div>
