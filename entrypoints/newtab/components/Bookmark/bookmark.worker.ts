@@ -47,7 +47,8 @@ function createComparator(mode: SortMode, origIndexMap: Map<string, number>, lan
     const aIsFolder = Array.isArray(a.children)
     const bIsFolder = Array.isArray(b.children)
 
-    if (aIsFolder !== bIsFolder) return aIsFolder ? -1 : 1
+    // 将文件夹强制排在最前
+    if (aIsFolder !== bIsFolder && mode !== SortMode.Original) return aIsFolder ? -1 : 1
 
     const bothFolders = aIsFolder && bIsFolder
     const bothLinks = !aIsFolder && !bIsFolder
