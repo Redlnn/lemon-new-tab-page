@@ -176,7 +176,13 @@ watch(
         <template v-if="store.filteredResult.length > 0">
           <el-scrollbar style="height: calc(100% - 42px)">
             <el-collapse v-model="topModel" expand-icon-position="left" accordion>
-              <bookmark-item v-for="item in store.filteredResult" :key="item.id" :node="item" />
+              <bookmark-item
+                v-for="item in store.filteredResult"
+                :key="item.id"
+                :node="item"
+                :is-searching="searchQuery.trim() !== ''"
+                :is-sorted-mode="store.sortMode !== SortMode.Original"
+              />
             </el-collapse>
           </el-scrollbar>
         </template>
@@ -333,6 +339,20 @@ watch(
   }
 }
 
+.bookmark .el-scrollbar__view > .el-collapse {
+  &:not(:has(.sortable-chosen)) {
+    .bookmark-link-item:hover,
+    .el-collapse-item__header:hover {
+      background-color: var(--el-color-primary-light-8);
+    }
+
+    .bookmark-drag-handle:hover {
+      background-color: var(--el-color-primary-light-5);
+      opacity: 1;
+    }
+  }
+}
+
 .bookmark .el-collapse {
   --el-collapse-border-color: transparent;
   --el-collapse-header-bg-color: transparent;
@@ -344,15 +364,11 @@ watch(
     padding-left: var(--depth);
   }
 
-  .el-collapse-item__header:hover {
-    background-color: var(--el-color-primary-light-8);
-  }
-
   .el-collapse-item__title {
     display: flex;
     align-items: center;
 
-    .el-icon {
+    .el-icon:not(.bookmark-drag-handle) {
       margin-right: 10px;
     }
   }
@@ -364,7 +380,6 @@ watch(
 
 .bookmark-link-item {
   display: flex;
-  gap: 10px;
   align-items: center;
   height: var(--el-collapse-header-height);
   padding-right: 20px;
@@ -372,12 +387,9 @@ watch(
   color: inherit;
   text-decoration: none;
 
-  &:hover {
-    background-color: var(--el-color-primary-light-8);
-  }
-
   img {
     height: 1em;
+    margin-right: 10px;
     border-radius: 3px;
   }
 
@@ -409,5 +421,44 @@ watch(
     font-size: var(--el-font-size-extra-small);
     border-radius: 11px;
   }
+}
+
+// 拖动相关样式
+.bookmark-drag-handle {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  color: var(--el-text-color-regular);
+  cursor: grab;
+  border-radius: 50%;
+  opacity: 0.3;
+  transition:
+    opacity var(--el-transition-duration-fast),
+    background-color var(--el-transition-duration-fast);
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &-container {
+    display: flex;
+    flex-grow: 1;
+    flex-direction: row-reverse;
+    align-items: center;
+    height: 100%;
+  }
+}
+
+.bookmark-link-item {
+  &.is-no-drag {
+    .bookmark-drag-handle {
+      display: none;
+    }
+  }
+}
+
+.bookmark-no-drag {
+  pointer-events: none;
 }
 </style>

@@ -12,6 +12,7 @@ import {
 } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
+import { type DraggableEvent, VueDraggable } from 'vue-draggable-plus'
 import { browser, type Browser } from 'wxt/browser'
 
 import { getFaviconURL } from '@/shared/media'
@@ -29,9 +30,15 @@ const props = withDefaults(
   defineProps<{
     node: Browser.bookmarks.BookmarkTreeNode
     depth?: number
+    isSearching?: boolean
+    isSortedMode?: boolean
+    disableDrag?: boolean
   }>(),
   {
-    depth: 1
+    depth: 1,
+    isSearching: false,
+    isSortedMode: false,
+    disableDrag: false
   }
 )
 
@@ -170,6 +177,63 @@ function deleteBookmark() {
   }
   ElMessage.success(t('bookmarkSidebar.deleteSuccess', { title: props.node.title }))
 }
+
+// 创建子节点的本地可编辑副本（用于拖动）
+const localChildren = computed({
+  get: () => props.node.children || [],
+  set: () => {}
+})
+
+// 嵌套拖拽完成的处理器
+const handleNestedDragSort = async (event: DraggableEvent) => {
+  try {
+    // 获取拖拽源和目标的信息
+    const oldIndex = event.oldIndex
+    let newIndex = event.newIndex
+
+    // 只有在索引改变时才更新
+    if (oldIndex !== newIndex && oldIndex !== undefined && newIndex !== undefined) {
+      const nodeId = event.item?.dataset?.nodeId // 需要在模板中设置
+      if (!nodeId) return
+
+      // 如果在同一个文件夹内，parentId 是 props.node.id
+      // 如果跨文件夹，需要通过 event.to 获取目标容器找出 parentId
+      let parentId = props.node.id
+
+      // 检查是否跨越了文件夹（通过检查 event.to 元素）
+      if (event.to !== event.from) {
+        // 从目标容器往上找到对应的文件夹 node
+        // parentId 需要从 event.to 的关联数据中获取
+        parentId = event.to.dataset?.parentId || props.node.id
+      }
+
+      if (parentId === props.node.id) {
+        // 同一文件夹内移动
+        if (newIndex > oldIndex) {
+          // 向后移动
+          newIndex += 1
+        }
+      }
+
+      // 调用浏览器 API 移动书签
+      await browser.bookmarks.move(nodeId, {
+        parentId,
+        index: newIndex
+      })
+    }
+  } catch (error) {
+    console.error(t('bookmarkSidebar.moveError'), error)
+    ElNotification.error({
+      title: t('bookmarkSidebar.moveError'),
+      message: (error as Error).message || 'Unknown error.'
+    })
+  }
+}
+
+// 判断是否应该禁用拖动：搜索中、使用非原始排序、顶层文件夹
+const isDragDisabled = computed(() => {
+  return props.disableDrag || props.isSearching || props.isSortedMode
+})
 </script>
 
 <template>
@@ -177,15 +241,40 @@ function deleteBookmark() {
     <template #title>
       <el-icon color="var(--el-color-primary)"><folder-open-round /></el-icon>
       <span>{{ node.title || '(未命名)' }}</span>
+      <div class="bookmark-drag-handle-container" v-if="!(depth === 1)">
+        <el-icon v-if="!isDragDisabled" class="bookmark-drag-handle">
+          <drag-indicator-round />
+        </el-icon>
+      </div>
     </template>
     <template v-if="shouldRenderChildren">
-      <el-collapse v-model="model" expand-icon-position="left" accordion v-if="node.children">
-        <bookmark-item
-          v-for="child in node.children"
-          :key="child.id"
-          :node="child"
-          :depth="depth + 1"
-        />
+      <el-collapse
+        v-model="model"
+        expand-icon-position="left"
+        accordion
+        :class="{ 'bookmark-no-drag': isDragDisabled }"
+      >
+        <vue-draggable
+          v-model="localChildren"
+          :disabled="isDragDisabled"
+          :data-parent-id="node.id"
+          handle=".bookmark-drag-handle"
+          :animation="200"
+          group="g1"
+          @end="handleNestedDragSort"
+        >
+          <bookmark-item
+            v-for="child in localChildren"
+            :key="child.id"
+            :node="child"
+            :depth="depth + 1"
+            :is-searching="isSearching"
+            :is-sorted-mode="isSortedMode"
+            :disable-drag="isDragDisabled"
+            :data-node-id="child.id"
+            :data-node-indexx="child.index"
+          />
+        </vue-draggable>
       </el-collapse>
     </template>
   </el-collapse-item>
@@ -193,14 +282,19 @@ function deleteBookmark() {
     v-else
     ref="itemRef"
     class="bookmark-link-item"
+    :class="{ 'is-no-drag': isDragDisabled }"
     :href="node.url"
-    :style="{ paddingLeft: `${(depth + 1) * 20}px` }"
     @contextmenu="handleContextmenu"
   >
     <img :src="faviconRef" />
     <el-text line-clamp="2">
       {{ node.title }}
     </el-text>
+    <div class="bookmark-drag-handle-container">
+      <el-icon v-if="!isDragDisabled" class="bookmark-drag-handle">
+        <drag-indicator-round />
+      </el-icon>
+    </div>
     <el-dropdown
       ref="dropdownRef"
       :virtual-ref="triggerRef"
