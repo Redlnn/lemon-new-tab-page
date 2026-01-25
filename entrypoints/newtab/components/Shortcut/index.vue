@@ -5,10 +5,10 @@ import {
   ChevronLeft20Filled,
   ChevronRight20Filled,
   Edit16Regular,
-  Pin16Regular,
+  Pin12Regular,
   PinOff16Regular
 } from '@vicons/fluent'
-import { ClearRound } from '@vicons/material'
+import { BlockRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
@@ -503,8 +503,14 @@ const isHideShortcut = computed(() => {
                     </template>
                     <template v-else>
                       <el-dropdown-item
-                        :icon="ClearRound"
+                        :icon="Pin12Regular"
                         divided
+                        @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
+                      >
+                        {{ t('shortcut.pin') }}
+                      </el-dropdown-item>
+                      <el-dropdown-item
+                        :icon="BlockRound"
                         @click="
                           async () => {
                             await blockSite(item.url, refreshDebounced)
@@ -513,12 +519,6 @@ const isHideShortcut = computed(() => {
                         "
                       >
                         {{ t('shortcut.hide') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        :icon="Pin16Regular"
-                        @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
-                      >
-                        {{ t('shortcut.pin') }}
                       </el-dropdown-item>
                     </template>
                   </template>
