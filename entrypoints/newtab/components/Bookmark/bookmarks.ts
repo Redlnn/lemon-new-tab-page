@@ -7,6 +7,35 @@ import { SortMode } from './types'
 
 let worker: Worker | null = null
 
+const bookmarkListeners: {
+  created?: (id: string, bookmark: Browser.bookmarks.BookmarkTreeNode) => void
+  removed?: (
+    id: string,
+    removeInfo: {
+      parentId: string
+      index: number
+      node: Browser.bookmarks.BookmarkTreeNode
+    }
+  ) => void
+  changed?: (
+    id: string,
+    changeInfo: {
+      title: string
+      url?: string | undefined
+    }
+  ) => void
+  moved?: (
+    id: string,
+    moveInfo: {
+      parentId: string
+      index: number
+      oldParentId: string
+      oldIndex: number
+    }
+  ) => void
+  importEnded?: () => void
+} = {}
+
 export { SortMode }
 
 export const useBookmarkStore = defineStore('bookmark', {
@@ -42,6 +71,47 @@ export const useBookmarkStore = defineStore('bookmark', {
           this.filteredResult = filteredResult
           this.firstMatchPath = firstMatchPath
           if (type === 'INIT_DONE') this.loaded = true
+        }
+      }
+
+      // 添加书签变更监听，变更时重新加载书签并刷新 worker 缓存
+      if (!bookmarkListeners.created) {
+        bookmarkListeners.created = () => {
+          this.loadBookmarks().catch(() => {})
+        }
+        browser.bookmarks.onCreated.addListener(bookmarkListeners.created)
+      }
+
+      if (!bookmarkListeners.removed) {
+        bookmarkListeners.removed = () => {
+          this.loadBookmarks().catch(() => {})
+        }
+        browser.bookmarks.onRemoved.addListener(bookmarkListeners.removed)
+      }
+
+      if (!bookmarkListeners.changed) {
+        bookmarkListeners.changed = () => {
+          this.loadBookmarks().catch(() => {})
+        }
+        browser.bookmarks.onChanged.addListener(bookmarkListeners.changed)
+      }
+
+      if (!bookmarkListeners.moved) {
+        bookmarkListeners.moved = () => {
+          this.loadBookmarks().catch(() => {})
+        }
+        browser.bookmarks.onMoved.addListener(bookmarkListeners.moved)
+      }
+
+      if (!bookmarkListeners.importEnded) {
+        bookmarkListeners.importEnded = () => {
+          this.loadBookmarks().catch(() => {})
+        }
+        // importEnded 在导入书签完成时触发（可选）
+        try {
+          browser.bookmarks.onImportEnded.addListener(bookmarkListeners.importEnded)
+        } catch {
+          // 某些浏览器/环境可能不支持该事件，忽略错误
         }
       }
     },
@@ -85,6 +155,38 @@ export const useBookmarkStore = defineStore('bookmark', {
     },
 
     terminateWorker() {
+      // 移除书签事件监听
+      if (bookmarkListeners.created) {
+        try {
+          browser.bookmarks.onCreated.removeListener(bookmarkListeners.created)
+        } catch {}
+        delete bookmarkListeners.created
+      }
+      if (bookmarkListeners.removed) {
+        try {
+          browser.bookmarks.onRemoved.removeListener(bookmarkListeners.removed)
+        } catch {}
+        delete bookmarkListeners.removed
+      }
+      if (bookmarkListeners.changed) {
+        try {
+          browser.bookmarks.onChanged.removeListener(bookmarkListeners.changed)
+        } catch {}
+        delete bookmarkListeners.changed
+      }
+      if (bookmarkListeners.moved) {
+        try {
+          browser.bookmarks.onMoved.removeListener(bookmarkListeners.moved)
+        } catch {}
+        delete bookmarkListeners.moved
+      }
+      if (bookmarkListeners.importEnded) {
+        try {
+          browser.bookmarks.onImportEnded.removeListener(bookmarkListeners.importEnded)
+        } catch {}
+        delete bookmarkListeners.importEnded
+      }
+
       if (worker) {
         worker.terminate()
         worker = null
