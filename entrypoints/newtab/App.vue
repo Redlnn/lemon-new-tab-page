@@ -197,7 +197,7 @@ watch(preferredDark, () => {
 })
 
 function openBookmarkSidebar(e: Event) {
-  if (settings.bookmarkSidebar.rightClickToOpen) {
+  if (settings.bookmark.rightClickToOpen) {
     e.preventDefault()
     BookmarkRef.value?.show()
   }
@@ -239,10 +239,7 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
       @open-faq="FaqRef?.show"
       @open-background-switcher="BGSwticherRef?.show"
     />
-    <bookmark-btn
-      v-if="!settings.bookmarkSidebar.hideBtn"
-      @open-bookmark-sidebar="BookmarkRef?.show"
-    />
+    <bookmark-btn v-if="!settings.bookmark.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />

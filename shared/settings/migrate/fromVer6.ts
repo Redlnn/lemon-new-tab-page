@@ -109,9 +109,9 @@ export function migrateFromVer6To7(oldSettings: SettingsInterfaceVer6): Settings
       disableBgSwitchAnim: defaultSettings.perf.disableBgSwitchAnim
     },
     bookmarkSidebar: {
-      direction: defaultSettings.bookmarkSidebar.direction,
-      rightClickToOpen: defaultSettings.bookmarkSidebar.rightClickToOpen,
-      hideBtn: defaultSettings.bookmarkSidebar.hideBtn
+      direction: defaultSettings.bookmark.direction,
+      rightClickToOpen: defaultSettings.bookmark.rightClickToOpen,
+      hideBtn: defaultSettings.bookmark.hideBtn
     },
     hideMajorChangelog: defaultSettings.hideMajorChangelog,
     readChangeLog: defaultSettings.readChangeLog,

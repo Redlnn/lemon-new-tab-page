@@ -1,7 +1,7 @@
 import i18next from 'i18next'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
-import { BgType, DrawerDirection } from './types'
+import { BgType, DrawerDirection, SortMode } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   theme: {
@@ -119,10 +119,11 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     disableSettingsBtnTransparent: false,
     disableBgSwitchAnim: false
   },
-  bookmarkSidebar: {
+  bookmark: {
     direction: DrawerDirection.rtl,
     rightClickToOpen: true,
-    hideBtn: false
+    hideBtn: false,
+    defaultSortMode: SortMode.Original
   },
   hideMajorChangelog: true,
   readChangeLog: false,

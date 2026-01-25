@@ -2,7 +2,15 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 3.0.2 (WIP)
+## 3.1.0 (WIP)
+
+### New Features✨
+
+- You can now bookmark shortcuts to browser bookmarks via the right-click menu
+- Support deleting bookmarks
+- Support dragging to reorder bookmarks
+- Support setting the default sorting method for the bookmark bar
+  ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
 
 ### Improvements⚡️
 
@@ -13,6 +21,10 @@
   > Now pagination is less likely to trigger drag sorting
 - Added "Title Expand Width" and "Icon and Title Spacing" settings
   ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
+- Force refresh when switching to Bing wallpaper
+- In the bookmark bar, folders are only placed at the front when not in original sorting
+- Changed the default sorting of the bookmark bar to original sorting
+- Adjust the order and icon thickness of the shortcut right-click menu options
 
 ### Bug Fixes🐛
 
@@ -20,6 +32,10 @@
   ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
 - Fixed security issues when importing settings
 - Added missing settings version migration function for cloud sync
+- Fixed issue where settings migration logic did not take effect
+- Fixed issue where enabling cloud sync would overwrite cloud configuration
+- Fixed issue where changes to bookmarks made elsewhere would not sync
+  to already opened new tab pages
 
 ## 3.0.1 (Jan 02, 2026)
 

@@ -1,6 +1,6 @@
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
-import type { BgType, DrawerDirection } from './enum'
+import type { BgType, DrawerDirection, SortMode } from './enum'
 import type { bingBackground, localBackground } from './type'
 
 export interface SettingsInterfaceVer8 {
@@ -124,10 +124,11 @@ export interface SettingsInterfaceVer8 {
   }
 
   // 书签侧边栏
-  bookmarkSidebar: {
+  bookmark: {
     direction: DrawerDirection
     rightClickToOpen: boolean
     hideBtn: boolean
+    defaultSortMode: SortMode
   }
 
   hideMajorChangelog: boolean

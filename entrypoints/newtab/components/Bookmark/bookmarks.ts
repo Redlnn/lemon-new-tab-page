@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import i18next from 'i18next'
 import { browser, type Browser } from 'wxt/browser'
 
-import { SortMode } from './types'
+import { SortMode } from '@/shared/settings'
 
 let worker: Worker | null = null
 
@@ -35,8 +35,6 @@ const bookmarkListeners: {
   ) => void
   importEnded?: () => void
 } = {}
-
-export { SortMode }
 
 export const useBookmarkStore = defineStore('bookmark', {
   state: () => ({
@@ -131,6 +129,11 @@ export const useBookmarkStore = defineStore('bookmark', {
         }
       })
       return tree
+    },
+
+    _setSortMode(mode: SortMode) {
+      if (this.sortMode === mode) return
+      this.sortMode = mode
     },
 
     setSortMode(mode: SortMode) {

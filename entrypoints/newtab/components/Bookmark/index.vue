@@ -4,12 +4,12 @@ import { useDebounceFn } from '@vueuse/core'
 import { SearchRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { useSettingsStore } from '@/shared/settings'
+import { SortMode, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
 
-import { SortMode, useBookmarkStore } from './bookmarks'
+import { useBookmarkStore } from './bookmarks'
 import BookmarkItem from './components/BookmarkItem.vue'
 
 const { opened, show, hide, toggle } = useDialog()
@@ -19,6 +19,7 @@ const { t } = useTranslation()
 const settings = useSettingsStore()
 
 const store = useBookmarkStore()
+store._setSortMode(settings.bookmark.defaultSortMode)
 
 const drawerWidth = ref(400)
 
@@ -62,7 +63,16 @@ function handleInput() {
   updateStoreDebounced()
 }
 
-const sortMode = ref('')
+function getEnumKeyByValue<T extends Record<string, string>, V extends T[keyof T]>(
+  enumObj: T,
+  value: V
+): keyof T | undefined {
+  const key = (Object.keys(enumObj) as Array<keyof T>).find((key) => enumObj[key] === value)
+  if (key === 'Original') return ''
+  return key
+}
+
+const sortMode = ref(getEnumKeyByValue(SortMode, store.sortMode))
 const sortOptions = [
   {
     value: '',
@@ -70,22 +80,22 @@ const sortOptions = [
     click: () => store.setSortMode(SortMode.Original)
   },
   {
-    value: 'nameAsc',
+    value: 'NameAsc',
     labelKey: 'bookmarkSidebar.sortMode.nameAsc',
     click: () => store.setSortMode(SortMode.NameAsc)
   },
   {
-    value: 'nameDesc',
+    value: 'NnameDesc',
     labelKey: 'bookmarkSidebar.sortMode.nameDesc',
     click: () => store.setSortMode(SortMode.NameDesc)
   },
   {
-    value: 'createdAsc',
+    value: 'CreatedAsc',
     labelKey: 'bookmarkSidebar.sortMode.createdAsc',
     click: () => store.setSortMode(SortMode.CreatedDesc)
   },
   {
-    value: 'createdDesc',
+    value: 'CreatedDesc',
     labelKey: 'bookmarkSidebar.sortMode.createdDesc',
     click: () => store.setSortMode(SortMode.CreatedAsc)
   }
@@ -131,7 +141,7 @@ watch(
   <el-drawer
     ref="drawerRef"
     v-model="opened"
-    :direction="settings.bookmarkSidebar.direction"
+    :direction="settings.bookmark.direction"
     :title="t('bookmarkSidebar.title')"
     size="400"
     class="noselect"

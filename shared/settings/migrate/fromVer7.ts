@@ -96,7 +96,10 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       }
     },
     perf: { ...oldSettings.perf },
-    bookmarkSidebar: { ...oldSettings.bookmarkSidebar },
+    bookmark: {
+      ...oldSettings.bookmarkSidebar,
+      defaultSortMode: defaultSettings.bookmark.defaultSortMode
+    },
     hideMajorChangelog: oldSettings.hideMajorChangelog,
     readChangeLog: oldSettings.readChangeLog,
     pluginVersion: oldSettings.pluginVersion,

@@ -68,6 +68,10 @@
     "youLikeFine": "If you like it, that’s fine~"
   },
   "bookmarkSidebar": {
+    "defaultSort": {
+      "title": "Default sorting",
+      "desc": "Takes effect after refreshing the page"
+    },
     "direction": {
       "ltr": "Left to right",
       "rtl": "Right to left",

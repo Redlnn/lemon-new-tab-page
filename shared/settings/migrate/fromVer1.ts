@@ -91,7 +91,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       invertColor: { ...defaultSettings.yiyan.invertColor }
     },
     perf: { ...defaultSettings.perf },
-    bookmarkSidebar: { ...defaultSettings.bookmarkSidebar },
+    bookmark: { ...defaultSettings.bookmark },
     hideMajorChangelog: defaultSettings.hideMajorChangelog,
     readChangeLog: defaultSettings.readChangeLog,
     pluginVersion: oldSettings.version,
