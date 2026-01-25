@@ -6,7 +6,7 @@
  * @param b Blue value should be between 0-255
  * @param a Alpha value should be between 0-255
  */
-interface Rgba {
+declare interface Rgba {
   r: number
   g: number
   b: number
