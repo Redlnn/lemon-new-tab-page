@@ -2,7 +2,7 @@
 import { toRef } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
-import { Pin16Regular } from '@vicons/fluent'
+import { Pin16Regular, Star12Regular } from '@vicons/fluent'
 import { ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -113,6 +113,22 @@ function copyLink() {
   navigator.clipboard.writeText(props.url)
 }
 
+async function createBookmark() {
+  const res = await browser.bookmarks.search({ url: props.url })
+  if (res.length !== 0) {
+    ElMessage.info(t('shortcut.bookmark.existing'))
+    return
+  }
+  browser.bookmarks.create({ title: props.title, url: props.url }, (res) => {
+    console.log(res)
+    if (!res.parentId) return
+    chrome.bookmarks.get(res.parentId, (nodes) => {
+      const folderTitle = nodes?.[0]?.title ?? null
+      ElMessage.success(t('shortcut.bookmark.success', { folder: folderTitle }))
+    })
+  })
+}
+
 defineExpose({ open, close })
 </script>
 
@@ -177,6 +193,9 @@ defineExpose({ open, close })
             </el-dropdown-item>
             <el-dropdown-item :icon="ContentCopyRound" @click="copyLink">
               <span>{{ t('settings:common.copyLink') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="Star12Regular" @click="createBookmark">
+              <span>{{ t('shortcut.bookmark.add') }}</span>
             </el-dropdown-item>
             <slot name="submenu"></slot>
           </el-dropdown-menu>

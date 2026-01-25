@@ -99,6 +99,11 @@
       "uploadFaviconAlert": "不上传图标时会尝试自动获取。"
     },
     "addShortcut": "添加快速访问",
+    "bookmark": {
+      "add": "收藏到书签",
+      "existing": "该书签已存在",
+      "success": "已收藏到「{{folder}}」"
+    },
     "editShortcut": "编辑快速访问",
     "hide": "隐藏",
     "hideTopMessage": {

@@ -99,6 +99,11 @@
       "uploadFaviconAlert": "Auto-detect if not provided."
     },
     "addShortcut": "Add Shortcut",
+    "bookmark": {
+      "add": "Add to bookmarks",
+      "existing": "This bookmark already exists",
+      "success": "Saved to “{{folder}}”"
+    },
     "editShortcut": "Edit Shortcut",
     "hide": "Hide",
     "hideTopMessage": {

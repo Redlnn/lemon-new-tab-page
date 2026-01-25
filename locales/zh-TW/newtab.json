@@ -99,6 +99,11 @@
       "uploadFaviconAlert": "沒上傳圖示時會自動嘗試取得。"
     },
     "addShortcut": "新增捷徑",
+    "bookmark": {
+      "add": "加入書籤",
+      "existing": "此書籤已存在",
+      "success": "已加入「{{folder}}」"
+    },
     "editShortcut": "編輯捷徑",
     "hide": "隱藏",
     "hideTopMessage": {

@@ -99,6 +99,11 @@
       "uploadFaviconAlert": "冇上載圖示時會嘗試自動提取。"
     },
     "addShortcut": "新增快速存取",
+    "bookmark": {
+      "add": "加入書籤",
+      "existing": "此書籤已存在",
+      "success": "已加入「{{folder}}」"
+    },
     "editShortcut": "編輯快速存取",
     "hide": "隱藏",
     "hideTopMessage": {
