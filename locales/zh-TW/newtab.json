@@ -8,6 +8,8 @@
     "addToShortcut": "新增至捷徑",
     "addedToShortcut": "已新增至捷徑",
     "expandHint": "請展開側欄以查看書籤",
+    "deleteSuccess": "已刪除「 {{title}}」",
+    "moveError": "書籤移動失敗",
     "sortBy": "排序方式",
     "sortMode": {
       "createdAsc": "由新到舊",

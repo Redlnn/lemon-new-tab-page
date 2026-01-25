@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { onLongPress } from '@vueuse/core'
 
-import { Dismiss16Regular, Pin16Regular } from '@vicons/fluent'
-import { ContentCopyRound, FolderOpenRound, OpenInNewRound } from '@vicons/material'
+import { Dismiss12Regular, Pin12Regular } from '@vicons/fluent'
+import {
+  ContentCopyRound,
+  DeleteOutlineRound,
+  DragIndicatorRound,
+  EditOutlined,
+  FolderOpenRound,
+  OpenInNewRound
+} from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { browser, type Browser } from 'wxt/browser'
@@ -154,6 +161,15 @@ watch(
 )
 
 const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.value)
+
+function deleteBookmark() {
+  if (props.node.children) {
+    browser.bookmarks.removeTree(props.node.id)
+  } else {
+    browser.bookmarks.remove(props.node.id)
+  }
+  ElMessage.success(t('bookmarkSidebar.deleteSuccess', { title: props.node.title }))
+}
 </script>
 
 <template>
@@ -205,13 +221,16 @@ const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.
           <el-dropdown-item :icon="OpenInNewRound" @click="openInNewWindow">
             <span>{{ t('settings:common.openInNewWindow') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :icon="ContentCopyRound" @click="copyLink">
+          <el-dropdown-item :icon="ContentCopyRound" divided @click="copyLink">
             <span>{{ t('settings:common.copyLink') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :icon="Pin16Regular" divided @click="addToShortcut">
+          <el-dropdown-item :icon="Pin12Regular" @click="addToShortcut">
             <span>{{ t('bookmarkSidebar.addToShortcut') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :icon="Dismiss16Regular" divided>
+          <el-dropdown-item :icon="DeleteOutlineRound" @click="deleteBookmark">
+            <span>{{ t('common.delete') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="Dismiss12Regular" divided>
             <span>{{ t('common.cancel') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>

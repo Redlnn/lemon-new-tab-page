@@ -8,6 +8,8 @@
     "addToShortcut": "添加到快捷方式",
     "addedToShortcut": "已添加到快捷方式",
     "expandHint": "请展开侧边栏以查看书签",
+    "deleteSuccess": "已删除「 {{title}}」",
+    "moveError": "书签移动失败",
     "sortBy": "排序方式",
     "sortMode": {
       "createdAsc": "由新到旧",

@@ -8,6 +8,8 @@
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",
     "expandHint": "Please expand the sidebar to view bookmarks",
+    "deleteSuccess": "{{title}}” has been deleted",
+    "moveError": "Failed to move bookmark",
     "sortBy": "Sort by",
     "sortMode": {
       "createdAsc": "Newest",

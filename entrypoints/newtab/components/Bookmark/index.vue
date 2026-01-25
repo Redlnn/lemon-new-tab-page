@@ -368,6 +368,7 @@ watch(
   align-items: center;
   height: var(--el-collapse-header-height);
   padding-right: 20px;
+  padding-left: calc(var(--depth) + 40px);
   color: inherit;
   text-decoration: none;
 
