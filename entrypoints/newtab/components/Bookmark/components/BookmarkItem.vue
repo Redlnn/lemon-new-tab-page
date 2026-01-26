@@ -20,7 +20,10 @@ import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+import { OPEN_BOOKMARK_EDIT_DIALOG } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
+
+const openBookmarkEditDialog = inject(OPEN_BOOKMARK_EDIT_DIALOG)
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
@@ -320,6 +323,13 @@ const isDragDisabled = computed(() => {
           </el-dropdown-item>
           <el-dropdown-item :icon="Pin12Regular" @click="addToShortcut">
             <span>{{ t('bookmark.addToShortcut') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item
+            :icon="EditOutlined"
+            divided
+            @click="openBookmarkEditDialog && openBookmarkEditDialog(node)"
+          >
+            <span>{{ t('common.edit') }}</span>
           </el-dropdown-item>
           <el-dropdown-item :icon="DeleteOutlineRound" @click="deleteBookmark">
             <span>{{ t('common.delete') }}</span>

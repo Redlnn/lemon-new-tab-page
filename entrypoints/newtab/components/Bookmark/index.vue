@@ -8,8 +8,10 @@ import { SortMode, useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
+import { OPEN_BOOKMARK_EDIT_DIALOG } from '@newtab/shared/keys'
 
 import { useBookmarkStore } from './bookmarks'
+import BookmarkEditDialog from './components/BookmarkEditDialog.vue'
 import BookmarkItem from './components/BookmarkItem.vue'
 
 const { opened, show, hide, toggle } = useDialog()
@@ -22,6 +24,12 @@ const store = useBookmarkStore()
 store._setSortMode(settings.bookmark.defaultSortMode)
 
 const drawerWidth = ref(400)
+const editDialogRef = ref<InstanceType<typeof BookmarkEditDialog>>()
+
+provide(
+  OPEN_BOOKMARK_EDIT_DIALOG,
+  (node) => editDialogRef.value && editDialogRef.value.openEditDialog(node)
+)
 
 function onDrawerResize(evt: MouseEvent, size: number): void {
   drawerWidth.value = size
@@ -195,6 +203,7 @@ watch(
               />
             </el-collapse>
           </el-scrollbar>
+          <bookmark-edit-dialog ref="editDialogRef" />
         </template>
         <template v-else>
           <div class="bookmark-404">
