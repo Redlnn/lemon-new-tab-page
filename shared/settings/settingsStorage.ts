@@ -1,4 +1,4 @@
-import { storage } from 'wxt/utils/storage'
+import { storage } from '#imports'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 import { defaultSettings } from './default'

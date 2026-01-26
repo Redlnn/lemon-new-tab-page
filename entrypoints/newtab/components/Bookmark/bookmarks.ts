@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import i18next from 'i18next'
 import { browser, type Browser } from 'wxt/browser'
 
-import { SortMode } from '@/shared/settings'
+import { SortMode } from '@/shared/enums'
 
 let worker: Worker | null = null
 

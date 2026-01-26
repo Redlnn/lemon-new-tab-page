@@ -9,7 +9,8 @@ import {
 } from '@vicons/material'
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-import { storage } from 'wxt/utils/storage'
+
+import { storage } from '#imports'
 
 import { type CURRENT_CONFIG_INTERFACE, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'

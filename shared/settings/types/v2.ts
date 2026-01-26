@@ -1,4 +1,4 @@
-import type { BgType } from './enum'
+import type { BgType } from '@/shared/enums'
 
 export interface SettingsInterfaceVer2 {
   primaryColor: string

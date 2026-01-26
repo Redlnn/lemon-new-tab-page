@@ -1,6 +1,7 @@
+import type { BgType, DrawerDirection, SortMode } from '@/shared/enums'
+
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
-import type { BgType, DrawerDirection, SortMode } from './enum'
 import type { bingBackground, localBackground } from './type'
 
 export interface SettingsInterfaceVer8 {

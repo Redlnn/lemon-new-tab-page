@@ -1,7 +1,8 @@
 import i18next from 'i18next'
 
+import { BgType, DrawerDirection, SortMode } from '@/shared/enums'
+
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
-import { BgType, DrawerDirection, SortMode } from './types'
 
 export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   theme: {

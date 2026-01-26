@@ -1,6 +1,6 @@
-import type { YiyanProviderKey } from '@newtab/shared/yiyan'
+import type { BgType, DrawerDirection } from '@/shared/enums'
 
-import type { BgType, DrawerDirection } from './enum'
+import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 export interface SettingsInterfaceVer7 {
   primaryColor: string

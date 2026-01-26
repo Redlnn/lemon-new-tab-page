@@ -1,7 +1,7 @@
 /// <reference lib="webworker" />
 import type { Browser } from 'wxt/browser'
 
-import { SortMode } from '@/shared/settings'
+import { SortMode } from '@/shared/enums'
 
 type BookmarkTreeNode = Browser.bookmarks.BookmarkTreeNode
 

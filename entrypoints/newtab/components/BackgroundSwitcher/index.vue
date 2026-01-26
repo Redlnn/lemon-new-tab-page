@@ -21,7 +21,8 @@ import {
 import type { UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { BgType, useSettingsStore } from '@/shared/settings'
+import { BgType } from '@/shared/enums'
+import { useSettingsStore } from '@/shared/settings'
 
 import Bing from '@newtab/assets/bing_gray.svg'
 import BaseDialog from '@newtab/components/BaseDialog.vue'

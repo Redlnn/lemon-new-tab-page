@@ -10,7 +10,8 @@ import {
 
 import { browser } from '#imports'
 
-import { BgType, useSettingsStore } from '@/shared/settings'
+import { BgType } from '@/shared/enums'
+import { useSettingsStore } from '@/shared/settings'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
+import { DrawerDirection, SortMode } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
-import { DrawerDirection, SortMode } from '@/shared/settings/types'
 
 const { t } = useTranslation('settings')
 const { t: tt } = useTranslation()

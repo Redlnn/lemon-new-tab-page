@@ -4,7 +4,8 @@ import { useDebounceFn } from '@vueuse/core'
 import { SearchRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { SortMode, useSettingsStore } from '@/shared/settings'
+import { SortMode } from '@/shared/enums'
+import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'

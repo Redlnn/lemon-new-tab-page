@@ -2,7 +2,8 @@ import { browser } from 'wxt/browser'
 
 import { defineBackground } from '#imports'
 
-import { BgType, defaultSettings } from '@/shared/settings'
+import { BgType } from '@/shared/enums'
+import { defaultSettings } from '@/shared/settings'
 import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync'
 import { localSyncDataStorage, syncDataStorage } from '@/shared/sync'
 

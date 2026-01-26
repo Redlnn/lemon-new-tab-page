@@ -1,4 +1,3 @@
-export * from './enum'
 export type * from './old'
 export type * from './v2'
 export type * from './v3'

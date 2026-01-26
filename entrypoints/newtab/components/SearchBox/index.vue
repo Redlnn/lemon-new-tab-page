@@ -10,7 +10,8 @@ import {
 import { Search } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
 
-import { BgType, useSettingsStore } from '@/shared/settings'
+import { BgType } from '@/shared/enums'
+import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'

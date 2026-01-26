@@ -3,8 +3,9 @@ import { promiseTimeout, useDark } from '@vueuse/core'
 import type { UploadProps, UploadRequestOptions } from 'element-plus'
 import i18next from 'i18next'
 
+import { BgType } from '@/shared/enums'
 import { isMediaFile } from '@/shared/media'
-import { BgType, useSettingsStore } from '@/shared/settings'
+import { useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {

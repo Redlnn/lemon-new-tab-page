@@ -4,7 +4,8 @@ import { useColorMode, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 import { CloudOffRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
-import { BgType, defaultSettings, useSettingsStore } from '@/shared/settings'
+import { BgType } from '@/shared/enums'
+import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 
