@@ -57,8 +57,6 @@ const triggerRef = ref({
 const itemRef = useTemplateRef('itemRef')
 
 function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
-  event.preventDefault()
-
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
@@ -139,7 +137,7 @@ defineExpose({ open, close })
       class="shortcut__item-link"
       :href="url"
       :target="settings.shortcut.openInNewTab ? '_blank' : '_self'"
-      @contextmenu="handleContextmenu"
+      @contextmenu.stop.prevent="handleContextmenu"
     >
       <div
         class="shortcut__icon-container"

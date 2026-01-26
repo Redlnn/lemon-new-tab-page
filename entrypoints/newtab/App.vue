@@ -196,9 +196,8 @@ watch(preferredDark, () => {
   }
 })
 
-function openBookmarkSidebar(e: Event) {
+function openBookmarkSidebar() {
   if (settings.bookmark.rightClickToOpen) {
-    e.preventDefault()
     BookmarkRef.value?.show()
   }
 }
@@ -223,7 +222,7 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
     <main
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
-      @contextmenu="openBookmarkSidebar"
+      @contextmenu.stop.prevent="openBookmarkSidebar"
     >
       <clock v-if="settings.clock.enabled" @contextmenu.stop />
       <search-box v-if="settings.search.enabled" @contextmenu.stop />

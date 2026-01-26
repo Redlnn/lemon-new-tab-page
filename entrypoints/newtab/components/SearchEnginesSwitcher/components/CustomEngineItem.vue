@@ -56,8 +56,6 @@ function handleContextmenu(e: MouseEvent | TouchEvent | PointerEvent) {
     openedMenuCloseFn.value()
   }
 
-  e.preventDefault()
-
   let clientX = 0
   let clientY = 0
 
@@ -102,7 +100,7 @@ defineExpose({ open, close })
     class="se-switcher-item se-switcher-item--custom"
     :class="{ 'is-active': isActive }"
     @click="handleClick"
-    @contextmenu="handleContextmenu"
+    @contextmenu.stop.prevent="handleContextmenu"
   >
     <div class="se-switcher-item__icon">
       <img :src="iconUrl" />

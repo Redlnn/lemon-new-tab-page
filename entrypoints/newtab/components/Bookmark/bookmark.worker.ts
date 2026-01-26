@@ -137,7 +137,7 @@ function createRebuild(
   return function rebuild(node: BookmarkTreeNode, parents: string[]): BookmarkTreeNode | null {
     if (!keepIds.has(node.id)) return null
 
-    const isFolder = node.children !== undefined
+    const isFolder = !!node.children
 
     if (!foundFirst && matchedIds.has(node.id)) {
       foundFirst = true
