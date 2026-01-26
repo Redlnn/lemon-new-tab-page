@@ -8,7 +8,11 @@
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",
     "expandHint": "Please expand the sidebar to view bookmarks",
-    "deleteSuccess": "{{title}}” has been deleted",
+    "delete": {
+      "confirm": "Are you sure you want to delete “{{title}}”?",
+      "confirmFolder": "“{{title}}” is a folder. Deleting it will also delete all bookmarks inside it. Are you sure?",
+      "success": "“{{title}}” has been deleted"
+    },
     "moveError": "Failed to move bookmark",
     "sortBy": "Sort by",
     "sortMode": {

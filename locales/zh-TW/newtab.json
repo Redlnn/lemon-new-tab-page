@@ -8,7 +8,11 @@
     "addToShortcut": "新增至捷徑",
     "addedToShortcut": "已新增至捷徑",
     "expandHint": "請展開側欄以查看書籤",
-    "deleteSuccess": "已刪除「 {{title}}」",
+    "delete": {
+      "confirm": "你確定要刪除「{{name}}」嗎？",
+      "confirmFolder": "「{{name}}」是一個資料夾，刪除它會將其中所有書籤一起刪除，確定嗎？",
+      "success": "已刪除「 {{title}}」"
+    },
     "moveError": "書籤移動失敗",
     "sortBy": "排序方式",
     "sortMode": {

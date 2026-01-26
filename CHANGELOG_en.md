@@ -7,9 +7,9 @@
 ### New Features✨
 
 - You can now bookmark shortcuts to browser bookmarks via the right-click menu
-- Support deleting bookmarks
-- Support dragging to reorder bookmarks
-- Support setting the default sorting method for the bookmark bar
+- Added support for editing and deleting bookmarks
+- Added support for dragging to reorder bookmarks
+- Added support for setting the default sort order for the Bookmarks Sidebar
   ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
 
 ### Improvements⚡️

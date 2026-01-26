@@ -14,10 +14,12 @@ const data: {
   url: string
   title: string
   id: string
+  isFolder: boolean
 } = reactive({
   url: '',
   title: '',
-  id: ''
+  id: '',
+  isFolder: false
 })
 
 function resetFields() {
@@ -30,7 +32,8 @@ function openEditDialog(node: BookmarkTreeNode) {
   Object.assign(data, {
     url: node.url,
     title: node.title,
-    id: node.id
+    id: node.id,
+    isFolder: !!node.children
   })
   showDialog.value = true
 }
@@ -46,22 +49,27 @@ function isValidUrl(url: string) {
 }
 
 async function submit() {
-  if (!isValidUrl(data.url)) {
-    ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
+  if (data.isFolder) {
+    await browser.bookmarks.update(data.id, { title: data.title.trim() })
     return
-  }
+  } else {
+    if (!isValidUrl(data.url)) {
+      ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
+      return
+    }
 
-  // 如果没有协议,自动添加https://
-  let finalUrl = data.url.trim()
-  if (!finalUrl.includes('://')) {
-    finalUrl = `https://${finalUrl}`
-  }
+    // 如果没有协议,自动添加https://
+    let finalUrl = data.url.trim()
+    if (!finalUrl.includes('://')) {
+      finalUrl = `https://${finalUrl}`
+    }
 
-  const bookmark = {
-    url: finalUrl,
-    title: data.title.trim()
+    const bookmark = {
+      url: finalUrl,
+      title: data.title.trim()
+    }
+    await browser.bookmarks.update(data.id, bookmark)
   }
-  await browser.bookmarks.update(data.id, bookmark)
   showDialog.value = false
   resetFields()
 }
@@ -89,7 +97,7 @@ defineExpose({
       <el-form-item :label="t('common.name')" label-position="top">
         <el-input v-model="data.title" size="large" />
       </el-form-item>
-      <el-form-item :label="t('common.url')" label-position="top">
+      <el-form-item v-if="!data.isFolder" :label="t('common.url')" label-position="top">
         <el-input v-model="data.url" size="large" @keyup.enter="submit" />
       </el-form-item>
     </el-form>

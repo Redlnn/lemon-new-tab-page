@@ -8,7 +8,11 @@
     "addToShortcut": "添加到快捷方式",
     "addedToShortcut": "已添加到快捷方式",
     "expandHint": "请展开侧边栏以查看书签",
-    "deleteSuccess": "已删除「 {{title}}」",
+    "delete": {
+      "confirm": "你确定要删除「{{name}}」吗？",
+      "confirmFolder": "「{{name}}」是一个目录，删除他会把其中所有书签一起删除，确定吗？",
+      "success": "已删除「 {{title}}」"
+    },
     "moveError": "书签移动失败",
     "sortBy": "排序方式",
     "sortMode": {

@@ -44,6 +44,7 @@ const props = withDefaults(
     disableDrag: false
   }
 )
+const isFolder = computed(() => !!props.node.children)
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
@@ -72,12 +73,17 @@ const triggerRef = ref({
 
 const itemRef = useTemplateRef('itemRef')
 
-function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
+function onContextMenu(e: MouseEvent | TouchEvent | PointerEvent) {
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
   }
 
+  if (props.depth === 1) return
+  handleContextmenu(e)
+}
+
+function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
   let clientX = 0
   let clientY = 0
 
@@ -93,7 +99,6 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
     x: clientX,
     y: clientY
   })
-  event.preventDefault()
   dropdownRef.value?.handleOpen()
 
   // 记录当前菜单的关闭函数
@@ -172,13 +177,29 @@ watch(
 
 const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.value)
 
-function deleteBookmark() {
-  if (props.node.children) {
-    browser.bookmarks.removeTree(props.node.id)
-  } else {
-    browser.bookmarks.remove(props.node.id)
+async function deleteBookmark() {
+  try {
+    await ElMessageBox.confirm(
+      isFolder.value
+        ? t('bookmark.delete.confirmFolder', { name: props.node.title })
+        : t('bookmark.delete.confirm', { name: props.node.title }),
+      t('common.warning'),
+      {
+        confirmButtonText: t('common.delete'),
+        cancelButtonText: t('common.no'),
+        type: 'warning'
+      }
+    )
+
+    if (props.node.children) {
+      browser.bookmarks.removeTree(props.node.id)
+    } else {
+      browser.bookmarks.remove(props.node.id)
+    }
+    ElMessage.success(t('bookmark.delete.success', { title: props.node.title }))
+  } catch {
+    return
   }
-  ElMessage.success(t('bookmark.deleteSuccess', { title: props.node.title }))
 }
 
 // 创建子节点的本地可编辑副本（用于拖动）
@@ -240,64 +261,69 @@ const isDragDisabled = computed(() => {
 </script>
 
 <template>
-  <el-collapse-item v-if="node.children" :name="node.id" :style="{ '--depth': `${depth * 20}px` }">
-    <template #title>
-      <el-icon color="var(--el-color-primary)"><folder-open-round /></el-icon>
-      <span>{{ node.title || '(未命名)' }}</span>
-      <div class="bookmark-drag-handle-container" v-if="!(depth === 1)">
+  <div style="display: grid" @contextmenu.stop.prevent="onContextMenu">
+    <el-collapse-item
+      v-if="node.children"
+      :name="node.id"
+      :style="{ '--depth': `${depth * 20}px` }"
+    >
+      <template #title>
+        <el-icon color="var(--el-color-primary)"><folder-open-round /></el-icon>
+        <span>{{ node.title || '(未命名)' }}</span>
+        <div class="bookmark-drag-handle-container" v-if="!(depth === 1)">
+          <el-icon v-if="!isDragDisabled" class="bookmark-drag-handle">
+            <drag-indicator-round />
+          </el-icon>
+        </div>
+      </template>
+      <template v-if="shouldRenderChildren">
+        <el-collapse
+          v-model="model"
+          expand-icon-position="left"
+          accordion
+          :class="{ 'bookmark-no-drag': isDragDisabled }"
+        >
+          <vue-draggable
+            v-model="localChildren"
+            :disabled="isDragDisabled"
+            :data-parent-id="node.id"
+            handle=".bookmark-drag-handle"
+            :animation="200"
+            group="g1"
+            @end="handleNestedDragSort"
+          >
+            <bookmark-item
+              v-for="child in localChildren"
+              :key="child.id"
+              :node="child"
+              :depth="depth + 1"
+              :is-searching="isSearching"
+              :is-sorted-mode="isSortedMode"
+              :disable-drag="isDragDisabled"
+              :data-node-id="child.id"
+              :data-node-indexx="child.index"
+            />
+          </vue-draggable>
+        </el-collapse>
+      </template>
+    </el-collapse-item>
+    <a
+      v-else
+      ref="itemRef"
+      class="bookmark-link-item"
+      :class="{ 'is-no-drag': isDragDisabled }"
+      :href="node.url"
+    >
+      <img :src="faviconRef" />
+      <el-text line-clamp="2">
+        {{ node.title }}
+      </el-text>
+      <div class="bookmark-drag-handle-container">
         <el-icon v-if="!isDragDisabled" class="bookmark-drag-handle">
           <drag-indicator-round />
         </el-icon>
       </div>
-    </template>
-    <template v-if="shouldRenderChildren">
-      <el-collapse
-        v-model="model"
-        expand-icon-position="left"
-        accordion
-        :class="{ 'bookmark-no-drag': isDragDisabled }"
-      >
-        <vue-draggable
-          v-model="localChildren"
-          :disabled="isDragDisabled"
-          :data-parent-id="node.id"
-          handle=".bookmark-drag-handle"
-          :animation="200"
-          group="g1"
-          @end="handleNestedDragSort"
-        >
-          <bookmark-item
-            v-for="child in localChildren"
-            :key="child.id"
-            :node="child"
-            :depth="depth + 1"
-            :is-searching="isSearching"
-            :is-sorted-mode="isSortedMode"
-            :disable-drag="isDragDisabled"
-            :data-node-id="child.id"
-            :data-node-indexx="child.index"
-          />
-        </vue-draggable>
-      </el-collapse>
-    </template>
-  </el-collapse-item>
-  <a
-    v-else
-    ref="itemRef"
-    class="bookmark-link-item"
-    :class="{ 'is-no-drag': isDragDisabled }"
-    :href="node.url"
-    @contextmenu="handleContextmenu"
-  >
-    <img :src="faviconRef" />
-    <el-text line-clamp="2">
-      {{ node.title }}
-    </el-text>
-    <div class="bookmark-drag-handle-container">
-      <el-icon v-if="!isDragDisabled" class="bookmark-drag-handle">
-        <drag-indicator-round />
-      </el-icon>
-    </div>
+    </a>
     <el-dropdown
       ref="dropdownRef"
       :virtual-ref="triggerRef"
@@ -312,21 +338,23 @@ const isDragDisabled = computed(() => {
     >
       <template #dropdown>
         <el-dropdown-menu class="noselect">
-          <el-dropdown-item :icon="OpenInNewRound" @click="openInNewTab">
-            <span>{{ t('settings:common.openInNewTab') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="OpenInNewRound" @click="openInNewWindow">
-            <span>{{ t('settings:common.openInNewWindow') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="ContentCopyRound" divided @click="copyLink">
-            <span>{{ t('settings:common.copyLink') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="Pin12Regular" @click="addToShortcut">
-            <span>{{ t('bookmark.addToShortcut') }}</span>
-          </el-dropdown-item>
+          <template v-if="!isFolder">
+            <el-dropdown-item :icon="OpenInNewRound" @click="openInNewTab">
+              <span>{{ t('settings:common.openInNewTab') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="OpenInNewRound" @click="openInNewWindow">
+              <span>{{ t('settings:common.openInNewWindow') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="ContentCopyRound" divided @click="copyLink">
+              <span>{{ t('settings:common.copyLink') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="Pin12Regular" @click="addToShortcut">
+              <span>{{ t('bookmark.addToShortcut') }}</span>
+            </el-dropdown-item>
+          </template>
           <el-dropdown-item
             :icon="EditOutlined"
-            divided
+            :divided="!isFolder"
             @click="openBookmarkEditDialog && openBookmarkEditDialog(node)"
           >
             <span>{{ t('common.edit') }}</span>
@@ -340,5 +368,5 @@ const isDragDisabled = computed(() => {
         </el-dropdown-menu>
       </template>
     </el-dropdown>
-  </a>
+  </div>
 </template>
