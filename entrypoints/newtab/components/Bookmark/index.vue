@@ -421,6 +421,7 @@ watch(
     font-size: inherit;
     line-height: 1.2em;
     color: inherit;
+    overflow-wrap: anywhere;
   }
 }
 
@@ -449,7 +450,6 @@ watch(
 
 // 拖动相关样式
 .bookmark-drag-handle {
-  flex-shrink: 0;
   width: 30px;
   height: 30px;
   margin-left: 10px;
@@ -468,6 +468,7 @@ watch(
   &-container {
     display: flex;
     flex-grow: 1;
+    flex-shrink: 0;
     flex-direction: row-reverse;
     align-items: center;
     height: 100%;
