@@ -119,7 +119,6 @@ async function createBookmark() {
     return
   }
   browser.bookmarks.create({ title: props.title, url: props.url }, (res) => {
-    console.log(res)
     if (!res.parentId) return
     chrome.bookmarks.get(res.parentId, (nodes) => {
       const folderTitle = nodes?.[0]?.title ?? null

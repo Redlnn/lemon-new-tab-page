@@ -56,7 +56,7 @@ export const main = async () => {
               <<~<~~~~{}{nhhhhhhahn}{{~~~~~<~<
                     ~<~<~<~~~~~~<~<~<~<~
 `
-    console.log(devBanner, 'color: orange;line-height:0.8rem;')
+    console.log(devBanner, 'color:orange;line-height:0.8rem;')
   }
 
   let color = ''
