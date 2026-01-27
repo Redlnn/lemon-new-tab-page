@@ -222,7 +222,7 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
     <main
       :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
       class="app"
-      @contextmenu.stop.prevent="openBookmarkSidebar"
+      @contextmenu.prevent="openBookmarkSidebar"
     >
       <clock v-if="settings.clock.enabled" @contextmenu.stop />
       <search-box v-if="settings.search.enabled" @contextmenu.stop />
