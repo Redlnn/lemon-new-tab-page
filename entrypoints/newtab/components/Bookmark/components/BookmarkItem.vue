@@ -49,6 +49,7 @@ const props = withDefaults(
   }
 )
 const isFolder = computed(() => !!props.node.children)
+const isTopLevel = computed(() => props.depth === 1)
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
@@ -77,17 +78,12 @@ const triggerRef = ref({
 
 const itemRef = useTemplateRef('itemRef')
 
-function onContextMenu(e: MouseEvent | TouchEvent | PointerEvent) {
+function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
   // 打开新菜单前关闭旧菜单
   if (openedMenuCloseFn?.value) {
     openedMenuCloseFn.value()
   }
 
-  if (props.depth === 1) return
-  handleContextmenu(e)
-}
-
-function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void {
   let clientX = 0
   let clientY = 0
 
@@ -257,6 +253,17 @@ const handleNestedDragSort = async (event: DraggableEvent) => {
   }
 }
 
+function collapseOther(e: Event | undefined, all: boolean = false) {
+  if (!activeMap) return
+  const depthKey = props.depth
+  if (all) {
+    activeMap.value[depthKey] = []
+  } else {
+    if (props.node.index === undefined) return
+    activeMap.value[depthKey] = [props.node.id.toString()]
+  }
+}
+
 // 判断是否应该禁用拖动：搜索中、使用非原始排序、顶层文件夹
 const isDragDisabled = computed(() => {
   return props.disableDrag || props.isSearching || props.isSortedMode
@@ -264,7 +271,7 @@ const isDragDisabled = computed(() => {
 </script>
 
 <template>
-  <div style="display: grid" @contextmenu.stop.prevent="onContextMenu">
+  <div style="display: grid" @contextmenu.stop.prevent="handleContextmenu">
     <el-collapse-item
       v-if="node.children"
       :name="node.id"
@@ -354,17 +361,35 @@ const isDragDisabled = computed(() => {
               <span>{{ t('bookmark.addToShortcut') }}</span>
             </el-dropdown-item>
           </template>
+          <template v-if="!isTopLevel">
+            <el-dropdown-item
+              :icon="EditOutlined"
+              :divided="!isFolder"
+              @click="openBookmarkEditDialog && openBookmarkEditDialog(node)"
+            >
+              <span>{{ t('common.edit') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="DeleteOutlineRound" @click="deleteBookmark">
+              <span>{{ t('common.delete') }}</span>
+            </el-dropdown-item>
+          </template>
+          <template v-if="isFolder">
+            <el-dropdown-item
+              :icon="ContentCopyRound"
+              :divided="!isTopLevel"
+              @click="collapseOther"
+            >
+              <span>{{ t('bookmark.collapse.other') }}</span>
+            </el-dropdown-item>
+          </template>
           <el-dropdown-item
-            :icon="EditOutlined"
+            :icon="ContentCopyRound"
             :divided="!isFolder"
-            @click="openBookmarkEditDialog && openBookmarkEditDialog(node)"
+            @click="collapseOther(undefined, true)"
           >
-            <span>{{ t('common.edit') }}</span>
+            <span>{{ t('bookmark.collapse.all') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :icon="DeleteOutlineRound" @click="deleteBookmark">
-            <span>{{ t('common.delete') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="Dismiss12Regular" divided>
+          <el-dropdown-item :icon="Dismiss12Regular">
             <span>{{ t('common.cancel') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>

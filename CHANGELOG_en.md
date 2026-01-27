@@ -9,6 +9,7 @@
 - You can now bookmark shortcuts to browser bookmarks via the right-click menu
 - Added support for editing and deleting bookmarks
 - Added support for dragging to reorder bookmarks
+- Added support for collapsing other/all sibling directories
 - Added support for setting the default sort order for the Bookmarks Sidebar
   ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
 

@@ -7,6 +7,10 @@
     "404": "Nothing found",
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",
+    "collapse": {
+      "other": "Collapse Others",
+      "all": "Collapse All"
+    },
     "expandHint": "Please expand the sidebar to view bookmarks",
     "delete": {
       "confirm": "Are you sure you want to delete “{{title}}”?",

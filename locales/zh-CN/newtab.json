@@ -7,6 +7,10 @@
     "404": "什么都没找到",
     "addToShortcut": "添加到快捷方式",
     "addedToShortcut": "已添加到快捷方式",
+    "collapse": {
+      "other": "折叠其他",
+      "all": "折叠所有"
+    },
     "expandHint": "请展开侧边栏以查看书签",
     "delete": {
       "confirm": "你确定要删除「{{name}}」吗？",
