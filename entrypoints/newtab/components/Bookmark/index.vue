@@ -9,7 +9,11 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
-import { OPEN_BOOKMARK_EDIT_DIALOG } from '@newtab/shared/keys'
+import {
+  BOOKMARK_ACTIVE_MAP,
+  BOOKMARK_OPENED_MENU_CLOSE_FN,
+  OPEN_BOOKMARK_EDIT_DIALOG
+} from '@newtab/shared/keys'
 
 import { useBookmarkStore } from './bookmarks'
 import BookmarkEditDialog from './components/BookmarkEditDialog.vue'
@@ -116,7 +120,7 @@ provide(BOOKMARK_ACTIVE_MAP, activeMap)
 
 // 记录当前打开的右键菜单关闭函数，实现全局唯一
 const openedMenuCloseFn = ref<(() => void) | null>(null)
-provide('bookmarkOpenedMenuCloseFn', openedMenuCloseFn)
+provide(BOOKMARK_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
 
 // 顶层 collapse 对应深度为 1，暴露一个 computed 以绑定到 v-model
 const topModel = computed({

@@ -12,6 +12,7 @@ import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore
 } from '@newtab/shared/customSearchEngine'
+import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { searchEngines } from '@newtab/shared/search'
 
 import AddCustomSearchEngine from './components/AddCustomSearchEngine.vue'
@@ -63,7 +64,7 @@ async function deleteCustomEngine(index: number) {
 }
 
 const openedMenuCloseFn = ref<(() => void) | null>(null)
-provide('customEngineOpenedMenuCloseFn', openedMenuCloseFn)
+provide(CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
 
 function handleScroll() {
   if (openedMenuCloseFn.value) {

@@ -13,6 +13,7 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 const { t } = useTranslation()
@@ -42,7 +43,7 @@ const perfClasses = computed(() => {
   }
 })
 
-const openedMenuCloseFn = inject<Ref<(() => void) | null>>('shortcutOpenedMenuCloseFn')
+const openedMenuCloseFn = inject(SHORTCUT_OPENED_MENU_CLOSE_FN)
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({
   top: 0,

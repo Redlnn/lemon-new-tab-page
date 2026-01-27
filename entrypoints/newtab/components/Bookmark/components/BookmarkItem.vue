@@ -20,7 +20,11 @@ import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
-import { OPEN_BOOKMARK_EDIT_DIALOG } from '@newtab/shared/keys'
+import {
+  BOOKMARK_ACTIVE_MAP,
+  BOOKMARK_OPENED_MENU_CLOSE_FN,
+  OPEN_BOOKMARK_EDIT_DIALOG
+} from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 const openBookmarkEditDialog = inject(OPEN_BOOKMARK_EDIT_DIALOG)
@@ -59,7 +63,7 @@ const menuPopperClass = computed(() =>
 )
 
 // 右键菜单相关
-const openedMenuCloseFn = inject<Ref<(() => void) | null>>('bookmarkOpenedMenuCloseFn')
+const openedMenuCloseFn = inject(BOOKMARK_OPENED_MENU_CLOSE_FN)
 const dropdownRef = ref<DropdownInstance>()
 const position = ref({
   top: 0,

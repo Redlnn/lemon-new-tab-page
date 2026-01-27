@@ -8,6 +8,7 @@ import { useTranslation } from 'i18next-vue'
 import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
+import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 const { t } = useTranslation()
@@ -37,7 +38,7 @@ const perfClassesPopper = computed(() =>
   )
 )
 
-const openedMenuCloseFn = inject<Ref<(() => void) | null>>('customEngineOpenedMenuCloseFn')
+const openedMenuCloseFn = inject(CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN)
 const dropdownRef = ref<DropdownInstance | null>(null)
 const position = ref<DOMRect | null>(null)
 const itemRef = useTemplateRef('itemRef')

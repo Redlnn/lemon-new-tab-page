@@ -16,6 +16,7 @@ import type { TopSites } from 'webextension-polyfill'
 import { useSettingsStore } from '@/shared/settings'
 import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 
+import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/shared/store'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
@@ -247,7 +248,7 @@ const displayRows = computed(() => {
 
 // 记录当前打开的右键菜单关闭函数，实现全局唯一
 const openedMenuCloseFn = ref<(() => void) | null>(null)
-provide('shortcutOpenedMenuCloseFn', openedMenuCloseFn)
+provide(SHORTCUT_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
 
 // 切换页面时重置并关闭已打开的菜单
 watch(
