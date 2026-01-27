@@ -21,10 +21,11 @@
   > Now pagination is less likely to trigger drag sorting
 - Added "Title Expand Width" and "Icon and Title Spacing" settings
   ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
-- Force refresh when switching to Bing wallpaper
-- In the bookmark bar, folders are only placed at the front when not in original sorting
-- Changed the default sorting of the bookmark bar to original sorting
 - Adjust the order and icon thickness of the shortcut right-click menu options
+- Force refresh when switching to Bing wallpaper
+- In the bookmark sidebar, folders are only placed at the front when not in original sorting
+- Changed the default sorting of the bookmark sidebar to original sorting
+- Allow multiple same-level directories to be expanded in the bookmark sidebar
 
 ### Bug Fixes🐛
 
@@ -101,7 +102,7 @@
 - Fixed issue where the dark mode wallpaper would not immediately switch to the light mode wallpaper
   after deleting the dark mode wallpaper
 - Fixed issue where shortcuts were displayed before they were fully loaded at startup
-- Fixed issue where the left and right areas of quote could not trigger the bookmark bar with right-click
+- Fixed issue where the left and right areas of quote could not trigger the bookmark sidebar with right-click
 - Fixed issue where the most visited page titles could not be obtained on Firefox
 - Fixed issue with quote appearance and disappearance animations
 - Fixed several other minor issues

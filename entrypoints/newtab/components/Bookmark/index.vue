@@ -111,8 +111,8 @@ const sortOptions = [
 ]
 
 // 控制不同深度层级的激活值（按深度索引），避免父子 collapse 共享同一数组导致冲突
-const activeMap = ref<Record<number, string | string[]>>({})
-provide('bookmarkActiveMap', activeMap)
+const activeMap = ref<Record<number, string[]>>({})
+provide(BOOKMARK_ACTIVE_MAP, activeMap)
 
 // 记录当前打开的右键菜单关闭函数，实现全局唯一
 const openedMenuCloseFn = ref<(() => void) | null>(null)
@@ -120,8 +120,8 @@ provide('bookmarkOpenedMenuCloseFn', openedMenuCloseFn)
 
 // 顶层 collapse 对应深度为 1，暴露一个 computed 以绑定到 v-model
 const topModel = computed({
-  get: () => activeMap.value[1] ?? '',
-  set: (v: string | string[]) => {
+  get: () => activeMap.value[1] ?? [],
+  set: (v: string[]) => {
     activeMap.value[1] = v
   }
 })
@@ -138,7 +138,7 @@ watch(
     if (path && path.length > 0) {
       for (let i = 0, len = path.length; i < len; i++) {
         // 深度索引从 1 开始
-        activeMap.value[i + 1] = path[i]!
+        activeMap.value[i + 1] = [path[i]!]
       }
     }
   },
@@ -194,7 +194,7 @@ watch(
         </div>
         <template v-if="store.filteredResult.length > 0">
           <el-scrollbar style="height: calc(100% - 42px)">
-            <el-collapse v-model="topModel" expand-icon-position="left" accordion>
+            <el-collapse v-model="topModel" expand-icon-position="left">
               <bookmark-item
                 v-for="item in store.filteredResult"
                 :key="item.id"

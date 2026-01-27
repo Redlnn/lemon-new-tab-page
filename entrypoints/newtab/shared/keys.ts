@@ -14,3 +14,8 @@ export const OPEN_BACKGROUND_PREFERENCE: InjectionKey<() => void> = Symbol(
 export const OPEN_BOOKMARK_EDIT_DIALOG: InjectionKey<
   (node: Browser.bookmarks.BookmarkTreeNode) => void
 > = Symbol('openBookmarkEditDialog')
+
+// 书签激活状态映射：depth -> 激活节点 id 列表
+export const BOOKMARK_ACTIVE_MAP: InjectionKey<Ref<Record<number, string[]>>> =
+  Symbol('bookmarkActiveMap')
+

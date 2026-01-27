@@ -140,14 +140,14 @@ async function addToShortcut() {
 }
 
 // 注入共享的 activeMap（按深度索引），用于跨层级控制折叠展开
-const activeMap = inject('bookmarkActiveMap') as Ref<Record<number, string | string[]>> | undefined
+const activeMap = inject(BOOKMARK_ACTIVE_MAP)
 
 // 本层嵌套 collapse 对应的深度键（children 的深度）
 const childDepthKey = props.depth + 1
 
 const model = computed({
-  get: () => activeMap?.value?.[childDepthKey] ?? '',
-  set: (v: string | string[]) => {
+  get: () => activeMap?.value?.[childDepthKey] ?? [],
+  set: (v: string[]) => {
     if (!activeMap) return
     const prev = activeMap.value || {}
     activeMap.value = {
@@ -159,8 +159,7 @@ const model = computed({
 
 // 懒加载优化：判断当前节点是否展开
 const isExpanded = computed(() => {
-  const active = activeMap?.value?.[props.depth]
-  return active === props.node.id
+  return activeMap?.value && props.depth in activeMap.value
 })
 
 const hasBeenExpanded = ref(false)
@@ -280,7 +279,6 @@ const isDragDisabled = computed(() => {
         <el-collapse
           v-model="model"
           expand-icon-position="left"
-          accordion
           :class="{ 'bookmark-no-drag': isDragDisabled }"
         >
           <vue-draggable
