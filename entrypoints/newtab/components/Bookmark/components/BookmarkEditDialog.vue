@@ -51,7 +51,6 @@ function isValidUrl(url: string) {
 async function submit() {
   if (data.isFolder) {
     await browser.bookmarks.update(data.id, { title: data.title.trim() })
-    return
   } else {
     if (!isValidUrl(data.url)) {
       ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
