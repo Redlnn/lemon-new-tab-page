@@ -8,8 +8,8 @@
     "addToShortcut": "添加到快捷方式",
     "addedToShortcut": "已添加到快捷方式",
     "collapse": {
-      "other": "折叠其他",
-      "all": "折叠所有"
+      "other": "折叠同级其他项",
+      "all": "折叠本层全部"
     },
     "expandHint": "请展开侧边栏以查看书签",
     "delete": {

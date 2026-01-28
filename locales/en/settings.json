@@ -97,9 +97,9 @@
     "use12HourClock": "12-hour clock"
   },
   "common": {
-    "copyLink": "Copy link address",
-    "openInNewTab": "Open in new tab",
-    "openInNewWindow": "Open in new window"
+    "copyLink": "Copy Link Address",
+    "openInNewTab": "Open in New Tab",
+    "openInNewWindow": "Open in New Window"
   },
   "other": {
     "confirmPurgeData": {

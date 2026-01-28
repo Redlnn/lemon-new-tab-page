@@ -8,8 +8,8 @@
     "addToShortcut": "新增至捷徑",
     "addedToShortcut": "已新增至捷徑",
     "collapse": {
-      "other": "摺疊其他",
-      "all": "摺疊全部"
+      "other": "摺疊同層其他",
+      "all": "摺疊本層全部"
     },
     "expandHint": "請展開側欄以查看書籤",
     "delete": {

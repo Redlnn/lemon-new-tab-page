@@ -8,8 +8,8 @@
     "addToShortcut": "Add to Shortcuts",
     "addedToShortcut": "Added to shortcuts",
     "collapse": {
-      "other": "Collapse Others",
-      "all": "Collapse All"
+      "other": "Collapse Other at Level",
+      "all": "Collapse All at Level"
     },
     "expandHint": "Please expand the sidebar to view bookmarks",
     "delete": {
@@ -110,7 +110,7 @@
     },
     "addShortcut": "Add Shortcut",
     "bookmark": {
-      "add": "Add to bookmarks",
+      "add": "Add to Bookmarks",
       "existing": "This bookmark already exists",
       "success": "Saved to “{{folder}}”"
     },
