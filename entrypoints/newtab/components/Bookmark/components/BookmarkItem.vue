@@ -50,6 +50,20 @@ const props = withDefaults(
 )
 const isFolder = computed(() => !!props.node.children)
 const isTopLevel = computed(() => props.depth === 1)
+const expandeds = computed(() => activeMap?.value[props.depth] ?? [])
+const id = computed(() => props.node.id)
+const canCollapseOther = computed(() => {
+  if (!isFolder) return false
+
+  const list = expandeds.value
+  const len = list.length
+  if (len === 0) return false
+
+  const idStr = String(id.value)
+
+  // 只有“唯一展开的就是自己”时不能折叠其它
+  return !(len === 1 && list[0] === idStr)
+})
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
@@ -191,9 +205,9 @@ async function deleteBookmark() {
     )
 
     if (props.node.children) {
-      browser.bookmarks.removeTree(props.node.id)
+      browser.bookmarks.removeTree(id.value)
     } else {
-      browser.bookmarks.remove(props.node.id)
+      browser.bookmarks.remove(id.value)
     }
     ElMessage.success(t('bookmark.delete.success', { title: props.node.title }))
   } catch {
@@ -203,7 +217,7 @@ async function deleteBookmark() {
 
 // 创建子节点的本地可编辑副本（用于拖动）
 const localChildren = computed({
-  get: () => props.node.children || [],
+  get: () => props.node.children ?? [],
   set: () => {}
 })
 
@@ -221,16 +235,16 @@ const handleNestedDragSort = async (event: DraggableEvent) => {
 
       // 如果在同一个文件夹内，parentId 是 props.node.id
       // 如果跨文件夹，需要通过 event.to 获取目标容器找出 parentId
-      let parentId = props.node.id
+      let parentId = id.value
 
       // 检查是否跨越了文件夹（通过检查 event.to 元素）
       if (event.to !== event.from) {
         // 从目标容器往上找到对应的文件夹 node
         // parentId 需要从 event.to 的关联数据中获取
-        parentId = event.to.dataset?.parentId || props.node.id
+        parentId = event.to.dataset?.parentId || id.value
       }
 
-      if (parentId === props.node.id) {
+      if (parentId === id.value) {
         // 同一文件夹内移动
         if (newIndex > oldIndex) {
           // 向后移动
@@ -254,13 +268,27 @@ const handleNestedDragSort = async (event: DraggableEvent) => {
 }
 
 function collapseOther(e: Event | undefined, all: boolean = false) {
-  if (!activeMap) return
-  const depthKey = props.depth
+  const map = activeMap?.value
+  if (!map) return
+
+  const depth = props.depth
+  const self = String(id.value)
+  const list = map[depth] ?? []
+
   if (all) {
-    activeMap.value[depthKey] = []
-  } else {
-    if (props.node.index === undefined) return
-    activeMap.value[depthKey] = [props.node.id.toString()]
+    if (list.length !== 0) map[depth] = []
+    return
+  }
+
+  // 判断当前是否展开
+  const isSelfExpanded = list.includes(self)
+
+  // 目标状态
+  const next = isSelfExpanded ? [self] : []
+
+  // 避免无效写入（Vue diff 依赖引用变化）
+  if (list.length !== next.length || list[0] !== next[0]) {
+    map[depth] = next
   }
 }
 
@@ -286,35 +314,34 @@ const isDragDisabled = computed(() => {
           </el-icon>
         </div>
       </template>
-      <template v-if="shouldRenderChildren">
-        <el-collapse
-          v-model="model"
-          expand-icon-position="left"
-          :class="{ 'bookmark-no-drag': isDragDisabled }"
+      <el-collapse
+        v-if="shouldRenderChildren"
+        v-model="model"
+        expand-icon-position="left"
+        :class="{ 'bookmark-no-drag': isDragDisabled }"
+      >
+        <vue-draggable
+          v-model="localChildren"
+          :disabled="isDragDisabled"
+          :data-parent-id="node.id"
+          handle=".bookmark-drag-handle"
+          :animation="200"
+          group="g1"
+          @end="handleNestedDragSort"
         >
-          <vue-draggable
-            v-model="localChildren"
-            :disabled="isDragDisabled"
-            :data-parent-id="node.id"
-            handle=".bookmark-drag-handle"
-            :animation="200"
-            group="g1"
-            @end="handleNestedDragSort"
-          >
-            <bookmark-item
-              v-for="child in localChildren"
-              :key="child.id"
-              :node="child"
-              :depth="depth + 1"
-              :is-searching="isSearching"
-              :is-sorted-mode="isSortedMode"
-              :disable-drag="isDragDisabled"
-              :data-node-id="child.id"
-              :data-node-indexx="child.index"
-            />
-          </vue-draggable>
-        </el-collapse>
-      </template>
+          <bookmark-item
+            v-for="child in localChildren"
+            :key="child.id"
+            :node="child"
+            :depth="depth + 1"
+            :is-searching="isSearching"
+            :is-sorted-mode="isSortedMode"
+            :disable-drag="isDragDisabled"
+            :data-node-id="child.id"
+            :data-node-indexx="child.index"
+          />
+        </vue-draggable>
+      </el-collapse>
     </el-collapse-item>
     <a
       v-else
@@ -373,23 +400,18 @@ const isDragDisabled = computed(() => {
               <span>{{ t('common.delete') }}</span>
             </el-dropdown-item>
           </template>
-          <template v-if="isFolder">
-            <el-dropdown-item
-              :icon="ContentCopyRound"
-              :divided="!isTopLevel"
-              @click="collapseOther"
-            >
-              <span>{{ t('bookmark.collapse.other') }}</span>
-            </el-dropdown-item>
-          </template>
+          <li role="separator" class="el-dropdown-menu__item--divided"></li>
+          <el-dropdown-item v-if="canCollapseOther" :icon="ContentCopyRound" @click="collapseOther">
+            <span>{{ t('bookmark.collapse.other') }}</span>
+          </el-dropdown-item>
           <el-dropdown-item
+            v-if="expandeds.length > 0"
             :icon="ContentCopyRound"
-            :divided="!isFolder"
             @click="collapseOther(undefined, true)"
           >
             <span>{{ t('bookmark.collapse.all') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :icon="Dismiss12Regular">
+          <el-dropdown-item :divided="!(isFolder || expandeds.length > 0)" :icon="Dismiss12Regular">
             <span>{{ t('common.cancel') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
