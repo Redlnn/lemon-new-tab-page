@@ -117,7 +117,7 @@ export const useBookmarkStore = defineStore('bookmark', {
     async loadBookmarks(): Promise<Browser.bookmarks.BookmarkTreeNode[]> {
       this.initWorker()
       const tree = await browser.bookmarks.getTree()
-      const _tree = tree[0]?.children || []
+      const _tree = tree[0]?.children ?? []
       this.tree = _tree
 
       worker?.postMessage({

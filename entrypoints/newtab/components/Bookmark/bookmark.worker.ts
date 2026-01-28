@@ -169,7 +169,7 @@ function buildIndex() {
   const map: typeof indexMap = {}
 
   const stack: Array<{ nodes: BookmarkTreeNode[]; parents: string[] }> = [
-    { nodes: tree || [], parents: [] }
+    { nodes: tree, parents: [] }
   ]
 
   while (stack.length) {
@@ -220,7 +220,7 @@ function getSortedTree(mode: SortMode): BookmarkTreeNode[] {
 
 function filter(query: string, mode: SortMode) {
   const q = (query || '').trim().toLowerCase()
-  const source = getSortedTree(mode) || []
+  const source = getSortedTree(mode)
 
   if (!q) {
     return {
@@ -302,7 +302,7 @@ function filter(query: string, mode: SortMode) {
 
   return {
     filteredResult: result,
-    firstMatchPath: firstPath || []
+    firstMatchPath: firstPath ?? []
   }
 }
 
