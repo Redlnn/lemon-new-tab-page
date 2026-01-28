@@ -411,7 +411,7 @@ const isDragDisabled = computed(() => {
           >
             <span>{{ t('bookmark.collapse.all') }}</span>
           </el-dropdown-item>
-          <el-dropdown-item :divided="!(isFolder || expandeds.length > 0)" :icon="Dismiss12Regular">
+          <el-dropdown-item :icon="Dismiss12Regular">
             <span>{{ t('common.cancel') }}</span>
           </el-dropdown-item>
         </el-dropdown-menu>
