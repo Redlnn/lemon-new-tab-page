@@ -400,7 +400,7 @@ const isDragDisabled = computed(() => {
               <span>{{ t('common.delete') }}</span>
             </el-dropdown-item>
           </template>
-          <li role="separator" class="el-dropdown-menu__item--divided"></li>
+          <li v-if="!isTopLevel" role="separator" class="el-dropdown-menu__item--divided"></li>
           <el-dropdown-item v-if="canCollapseOther" :icon="ContentCopyRound" @click="collapseOther">
             <span>{{ t('bookmark.collapse.other') }}</span>
           </el-dropdown-item>
