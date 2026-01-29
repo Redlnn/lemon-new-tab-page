@@ -6,6 +6,7 @@ import {
   InfoRound,
   SearchRound,
   SettingsRound,
+  SettingsTwotone,
   WallpaperRound
 } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
@@ -61,7 +62,7 @@ function sponsorMessage() {
       }"
     >
       <el-badge is-dot :offset="[3, 0]" :hidden="settings.readChangeLog">
-        <el-icon><settings-round /></el-icon>
+        <el-icon><settings-twotone /></el-icon>
       </el-badge>
     </div>
     <template #dropdown>
