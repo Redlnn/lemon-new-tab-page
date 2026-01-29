@@ -442,7 +442,7 @@ watch(
   }
 
   .el-dropdown-menu__item {
-    padding: 2px 30px 2px 10px;
+    padding: 3px 30px 2px 10px;
     font-size: var(--el-font-size-extra-small);
     border-radius: 11px;
   }
