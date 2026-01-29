@@ -76,8 +76,7 @@ watch(isWindowFocused, (isFocused) => {
   if (searchText.value.length > 0 || isFocused) {
     return
   }
-  resetSearch()
-  searchInput.value?.blur()
+  handleEsc()
 })
 
 onClickOutside(searchBox, (e) => {
@@ -97,6 +96,11 @@ onClickOutside(searchBox, (e) => {
   }
   resetSearch()
 })
+
+function handleEsc() {
+  resetSearch()
+  searchInput.value?.blur()
+}
 
 function handleFocus() {
   searchForm.value?.classList.add('search-box__form--focus')
@@ -271,6 +275,7 @@ onMounted(() => {
         @keydown.down.prevent="handleDown"
         @keydown.tab.shift.prevent.exact="handlePrevTab"
         @keydown.tab.prevent.exact="handleNextTab"
+        @keydown.esc="handleEsc"
       />
       <div
         class="search-box__btn"
