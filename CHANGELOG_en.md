@@ -45,6 +45,7 @@
   to already opened new tab pages
 - Fixed an issue where suggestions appeared after the search field lost focus
 - Fixed an issue where some shortcut titles were clipped when the window width was reduced
+- Fixed an issue where parts of shortcut titles from the previous and next pages were visible
 
 ## 3.0.1 (Jan 02, 2026)
 
