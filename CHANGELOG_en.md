@@ -44,6 +44,7 @@
 - Fixed issue where changes to bookmarks made elsewhere would not sync
   to already opened new tab pages
 - Fixed an issue where suggestions appeared after the search field lost focus
+- Fixed an issue where some shortcut titles were clipped when the window width was reduced
 
 ## 3.0.1 (Jan 02, 2026)
 
