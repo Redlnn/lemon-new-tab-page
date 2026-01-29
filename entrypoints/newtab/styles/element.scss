@@ -14,6 +14,12 @@ body {
 
 .el-select-dropdown {
   overflow: hidden;
+
+  &__wrap &__item {
+    height: 30px;
+    font-size: var(--el-font-size-small);
+    line-height: 30px;
+  }
 }
 
 .el-select:not(.el-select--small, .el-select--large) {
