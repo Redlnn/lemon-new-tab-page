@@ -6,6 +6,8 @@
 
 ### New Features✨
 
+- Added "Title Expand Width" and "Icon and Title Spacing" settings
+  ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
 - You can now bookmark shortcuts to browser bookmarks via the right-click menu
 - Added support for editing and deleting bookmarks
 - Added support for dragging to reorder bookmarks
@@ -20,14 +22,13 @@
 ### Improvements⚡️
 
 - Improve pagination logic
-- Improve performance
-- Optimize the trigger priority of swipe pagination and
+- Optimized performance and refined details.
+- Optimized the trigger priority of swipe pagination and
   drag sorting for quick access when touching
   > Now pagination is less likely to trigger drag sorting
-- Added "Title Expand Width" and "Icon and Title Spacing" settings
-  ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
 - Adjust the order and icon thickness of the shortcut right-click menu options
 - Force refresh when switching to Bing wallpaper
+- Monet color extraction updated to the 2025 spec
 - In the bookmark sidebar, folders are only placed at the front when not in original sorting
 - Changed the default sorting of the bookmark sidebar to original sorting
 - Allow multiple same-level directories to be expanded in the bookmark sidebar
