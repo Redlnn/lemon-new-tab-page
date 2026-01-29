@@ -37,7 +37,7 @@ let timeTimer: ReturnType<typeof setInterval> | null = null
 
 function setupTimeTimer() {
   if (timeTimer) clearInterval(timeTimer)
-  const interval = settings.clock.showSeconds ? 200 : 1000
+  const interval = settings.clock.showSeconds ? 100 : 1000
   timeTimer = setInterval(() => {
     timeNow.value = new Date()
   }, interval)
