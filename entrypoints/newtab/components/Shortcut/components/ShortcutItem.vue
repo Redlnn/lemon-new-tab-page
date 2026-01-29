@@ -2,7 +2,7 @@
 import { toRef } from 'vue'
 import { onLongPress } from '@vueuse/core'
 
-import { Pin16Regular, Star12Regular } from '@vicons/fluent'
+import { Pin12Regular, Star12Regular } from '@vicons/fluent'
 import { ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -148,7 +148,7 @@ defineExpose({ open, close })
           :class="['shortcut__pin-icon', perfClasses.pinIcon]"
         >
           <el-icon size="11">
-            <pin16-regular />
+            <pin12-regular />
           </el-icon>
         </div>
         <div class="shortcut__icon" :class="perfClasses.icon">
