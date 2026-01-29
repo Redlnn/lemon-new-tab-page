@@ -69,8 +69,8 @@
   },
   "bookmark": {
     "defaultSort": {
-      "title": "默认排序方式",
-      "desc": "刷新页面后生效"
+      "desc": "刷新页面后生效",
+      "title": "默认排序方式"
     },
     "direction": {
       "ltr": "从左到右",
@@ -87,14 +87,29 @@
     "enableShadow": "显示阴影",
     "invertColorDark": "【时钟】深色模式下使用深色文字",
     "invertColorLight": "【时钟】浅色模式下使用深色文字",
+    "largeLabel": "「上午 / 下午」大字号",
     "secondsTip": "开启会增加性能消耗，建议同时开启「小号时间」以获得更佳效果",
     "showAMPM": "显示「上午 / 下午」",
     "showDate": "显示日期",
     "showLunar": "显示农历",
     "showSeconds": "显示秒钟",
-    "smallFont": "小号时间",
+    "size": {
+      "large": "大",
+      "medium": "中",
+      "small": "小",
+      "title": "时钟大小"
+    },
     "title": "时钟",
-    "use12HourClock": "使用 12 小时制"
+    "use12HourClock": "使用 12 小时制",
+    "weight": {
+      "black": "最粗（900）",
+      "bold": "粗体（600）",
+      "extraBold": "加粗（700）",
+      "heavy": "非常粗（800）",
+      "medium": "准粗（500）",
+      "normal": "标准（400）",
+      "title": "时钟粗细"
+    }
   },
   "common": {
     "copyLink": "复制链接地址",

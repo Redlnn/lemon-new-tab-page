@@ -1,4 +1,4 @@
-import type { BgType } from '@/shared/enums'
+import type { OldBgType } from '@/shared/enums'
 
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
@@ -27,7 +27,7 @@ export interface SettingsInterfaceVer6 {
     placeholder: string
   }
   background: {
-    bgType: BgType
+    bgType: OldBgType
     enableVignetting: boolean
     blurIntensity: number
     bgMaskOpacity: number

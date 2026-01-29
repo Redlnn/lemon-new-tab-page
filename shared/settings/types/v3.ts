@@ -1,4 +1,4 @@
-import type { BgType } from '@/shared/enums'
+import type { OldBgType } from '@/shared/enums'
 
 export interface SettingsInterfaceVer3 {
   primaryColor: string
@@ -16,14 +16,14 @@ export interface SettingsInterfaceVer3 {
   search: {
     autoFocus: boolean
     selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/search').searchSuggestAPIs
-    selectedSearchEngine: keyof typeof import('../migrate/searchEnginesMap').searchEnginesMap
+    selectedSearchEngine: keyof typeof import('../migrate/map').searchEnginesMap
     searchInNewTab: boolean
     recordSearchHistory: boolean
     enableShadow: boolean
     enableYiyan: boolean
   }
   background: {
-    bgType: BgType
+    bgType: OldBgType
     enableVignetting: boolean
     blurIntensity: number
     bgMaskPpacity: number

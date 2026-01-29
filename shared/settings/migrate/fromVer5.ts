@@ -1,6 +1,6 @@
 import type { SettingsInterfaceVer5, SettingsInterfaceVer6 } from '..'
 import { defaultSettings } from '..'
-import { searchEnginesMap } from './searchEnginesMap'
+import { searchEnginesMap } from './map'
 
 export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): SettingsInterfaceVer6 {
   const engine =
@@ -14,7 +14,7 @@ export function migrateFromVer5To6(oldSettings: SettingsInterfaceVer5): Settings
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
-      small: defaultSettings.clock.small,
+      small: true,
       enableShadow: oldSettings.time.enableShadow,
       blinkingColon: defaultSettings.clock.blink,
       invertColor: {

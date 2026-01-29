@@ -1,4 +1,4 @@
-import type { BgType, DrawerDirection, SortMode } from '@/shared/enums'
+import type { BgType, ClockSize, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
 
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
@@ -20,7 +20,9 @@ export interface SettingsInterfaceVer8 {
     showDate: boolean
     showLunar: boolean
     showSeconds: boolean
-    small: boolean
+    size: ClockSize
+    weight: ClockWeight
+    meridiemFollowSize: boolean
     shadow: boolean
     blink: boolean
     invertColor: {

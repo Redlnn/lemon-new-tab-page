@@ -12,6 +12,9 @@
 - Added support for collapsing other/all sibling directories
 - Added support for setting the default sort order for the Bookmarks Sidebar
   ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
+- Added support for setting clock font weight
+- Added support for setting AM/PM font size to follow time font size
+- Added support for setting clock font size (small, medium, large)
 
 ### Improvements⚡️
 
@@ -27,6 +30,7 @@
 - In the bookmark sidebar, folders are only placed at the front when not in original sorting
 - Changed the default sorting of the bookmark sidebar to original sorting
 - Allow multiple same-level directories to be expanded in the bookmark sidebar
+- Adjusted the placement of AM/PM in English environments to be before the time
 
 ### Bug Fixes🐛
 

@@ -69,8 +69,8 @@
   },
   "bookmark": {
     "defaultSort": {
-      "title": "Default sorting",
-      "desc": "Takes effect after refreshing the page"
+      "desc": "Takes effect after refreshing the page",
+      "title": "Default sorting"
     },
     "direction": {
       "ltr": "Left to right",
@@ -87,14 +87,29 @@
     "enableShadow": "Show shadow",
     "invertColorDark": "[Clock] Use dark text in dark mode",
     "invertColorLight": "[Clock] Use dark text in light mode",
+    "largeLabel": "Large AM/PM Label",
     "secondsTip": "This increases performance usage. Consider enabling “Smaller time” for a better look.",
     "showAMPM": "Show AM/PM",
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
     "showSeconds": "Show seconds",
-    "smallFont": "Smaller time",
+    "size": {
+      "large": "Large",
+      "medium": "Medium",
+      "small": "Small",
+      "title": "Clock size"
+    },
     "title": "Clock",
-    "use12HourClock": "12-hour clock"
+    "use12HourClock": "12-hour clock",
+    "weight": {
+      "black": "Heaviest (900)",
+      "bold": "Bold (600)",
+      "extraBold": "Very Bold (700)",
+      "heavy": "Extra Bold (800)",
+      "medium": "Slightly Bold (500)",
+      "normal": "Normal (400)",
+      "title": "Clock weight"
+    }
   },
   "common": {
     "copyLink": "Copy Link Address",

@@ -1,4 +1,4 @@
-import type { BgType, DrawerDirection } from '@/shared/enums'
+import type { DrawerDirection, OldBgType } from '@/shared/enums'
 
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
@@ -34,7 +34,7 @@ export interface SettingsInterfaceVer7 {
     launchAnim: boolean
   }
   background: {
-    bgType: BgType
+    bgType: OldBgType
     enableVignetting: boolean
     blurIntensity: number
     bgMaskOpacity: number

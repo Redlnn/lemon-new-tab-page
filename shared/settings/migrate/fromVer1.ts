@@ -1,6 +1,6 @@
 import type { CURRENT_CONFIG_INTERFACE, OldSettingsInterface } from '..'
 import { defaultSettings } from '..'
-import { searchEnginesMap } from './searchEnginesMap'
+import { searchEnginesMap, toNewBgType } from './map'
 
 export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONFIG_INTERFACE {
   return {
@@ -16,7 +16,9 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       showDate: defaultSettings.clock.showDate,
       showLunar: defaultSettings.clock.showLunar,
       showSeconds: defaultSettings.clock.showSeconds,
-      small: defaultSettings.clock.small,
+      size: defaultSettings.clock.size,
+      weight: defaultSettings.clock.weight,
+      meridiemFollowSize: defaultSettings.clock.meridiemFollowSize,
       shadow: defaultSettings.clock.shadow,
       blink: defaultSettings.clock.blink,
       invertColor: { ...defaultSettings.clock.invertColor }
@@ -34,7 +36,7 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       launchAnimation: defaultSettings.search.launchAnimation
     },
     background: {
-      bgType: oldSettings.bgType,
+      bgType: toNewBgType(oldSettings.bgType),
       vignette: oldSettings.bgDarkCorners,
       blur: oldSettings.bgBlur,
       mask: {

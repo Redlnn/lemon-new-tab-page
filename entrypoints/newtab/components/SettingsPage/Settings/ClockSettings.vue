@@ -1,12 +1,55 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
+import { ClockSize, ClockWeight } from '@/shared/enums'
 import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
+
+const sizeOptions = [
+  {
+    value: ClockSize.Small,
+    label: 'clock.size.small'
+  },
+  {
+    value: ClockSize.Medium,
+    label: 'clock.size.medium'
+  },
+  {
+    value: ClockSize.Large,
+    label: 'clock.size.large'
+  }
+]
+
+const weightOptions = [
+  {
+    value: ClockWeight.Normal,
+    label: 'clock.weight.normal'
+  },
+  {
+    value: ClockWeight.Medium,
+    label: 'clock.weight.medium'
+  },
+  {
+    value: ClockWeight.Bold,
+    label: 'clock.weight.bold'
+  },
+  {
+    value: ClockWeight.ExtraBold,
+    label: 'clock.weight.extraBold'
+  },
+  {
+    value: ClockWeight.Heavy,
+    label: 'clock.weight.heavy'
+  },
+  {
+    value: ClockWeight.Black,
+    label: 'clock.weight.black'
+  }
+]
 </script>
 
 <template>
@@ -22,6 +65,13 @@ const settings = useSettingsStore()
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.showAMPM') }}</div>
       <el-switch v-model="settings.clock.showMeridiem" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('clock.largeLabel') }}</div>
+      <el-switch
+        v-model="settings.clock.meridiemFollowSize"
+        :disabled="!settings.clock.showMeridiem"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.showDate') }}</div>
@@ -42,8 +92,40 @@ const settings = useSettingsStore()
       {{ t('clock.secondsTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.smallFont') }}</div>
-      <el-switch v-model="settings.clock.small" />
+      <div class="settings__label">{{ t('clock.size.title') }}</div>
+      <div class="settings__theme">
+        <el-select
+          v-model="settings.clock.size"
+          style="width: 160px"
+          popper-class="settings-item-popper"
+          :show-arrow="false"
+        >
+          <el-option
+            v-for="item in sizeOptions"
+            :key="item.value"
+            :label="t(item.label)"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('clock.weight.title') }}</div>
+      <div class="settings__theme">
+        <el-select
+          v-model="settings.clock.weight"
+          style="width: 160px"
+          popper-class="settings-item-popper"
+          :show-arrow="false"
+        >
+          <el-option
+            v-for="item in weightOptions"
+            :key="item.value"
+            :label="t(item.label)"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.enableShadow') }}</div>

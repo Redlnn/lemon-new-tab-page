@@ -1,14 +1,14 @@
-import type { BgType } from '@/shared/enums'
+import type { OldBgType } from '@/shared/enums'
 
 export interface OldSettingsInterface {
   primaryColor: string
   isMeridiem: boolean
   showMeridiem: boolean
   selectedSearchSuggestionAPI: keyof typeof import('@newtab/shared/search').searchSuggestAPIs
-  selectedSearchEngine: keyof typeof import('../migrate/searchEnginesMap').searchEnginesMap
+  selectedSearchEngine: keyof typeof import('../migrate/map').searchEnginesMap
   searchInNewTab: boolean
   recordSearchHistory: boolean
-  bgType: BgType
+  bgType: OldBgType
   bgDarkCorners: boolean
   bgBlur: number
   bgId: string

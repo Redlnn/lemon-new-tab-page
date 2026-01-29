@@ -1,5 +1,8 @@
+import { ClockSize } from '@/shared/enums'
+
 import type { SettingsInterfaceVer7, SettingsInterfaceVer8 } from '..'
 import { defaultSettings } from '..'
+import { toNewBgType } from './map'
 
 export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): SettingsInterfaceVer8 {
   return {
@@ -15,7 +18,9 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
       showSeconds: oldSettings.time.showSeconds,
-      small: oldSettings.time.small,
+      size: oldSettings.time.small ? ClockSize.Small : ClockSize.Medium,
+      weight: defaultSettings.clock.weight,
+      meridiemFollowSize: defaultSettings.clock.meridiemFollowSize,
       shadow: oldSettings.time.enableShadow,
       blink: oldSettings.time.blinkingColon,
       invertColor: {
@@ -36,7 +41,7 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       launchAnimation: oldSettings.search.launchAnim
     },
     background: {
-      bgType: oldSettings.background.bgType,
+      bgType: toNewBgType(oldSettings.background.bgType),
       vignette: oldSettings.background.enableVignetting,
       blur: oldSettings.background.blurIntensity,
       mask: {

@@ -23,31 +23,37 @@
     transform: scale(1.1);
   }
 
-  &__time {
-    font-size: 60px;
-    font-variant-numeric: tabular-nums;
-    line-height: 1em;
-  }
-
-  &__meridiem {
-    margin-right: 5px;
-    font-size: 40px;
-    line-height: 1em;
-  }
-
   &__time-container {
     display: flex;
     align-items: baseline;
     justify-content: center;
     margin-bottom: 5px;
+    font-size: 60px;
+    transition:
+      font-size 0.3s cubic-bezier(0.5, 0, 0.5, 1.8),
+      font-weight var(--el-transition-duration) ease;
+
+    .clock__time {
+      font-variant-numeric: tabular-nums;
+      line-height: 1em;
+    }
+
+    .clock__meridiem {
+      margin-right: 5px;
+      line-height: 1em;
+      transition: font-size 0.3s cubic-bezier(0.5, 0, 0.5, 1.8);
+
+      &-small {
+        font-size: 36px;
+      }
+    }
 
     &-small {
-      align-items: center;
+      font-size: 40px;
+    }
 
-      .clock__meridiem,
-      .clock__time {
-        font-size: 40px;
-      }
+    &-medium {
+      font-size: 50px;
     }
   }
 
@@ -98,12 +104,12 @@
 
 @media (width <= 600px) {
   .clock {
-    &__time {
-      font-size: 50px;
-    }
+    &__time-container {
+      font-size: 40px;
 
-    &__meridiem {
-      font-size: 35px;
+      &-medium {
+        font-size: 40px;
+      }
     }
 
     &__date {

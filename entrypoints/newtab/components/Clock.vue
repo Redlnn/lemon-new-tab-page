@@ -4,6 +4,7 @@ import { useNow, useTimeoutFn } from '@vueuse/core'
 import dayjs from 'dayjs/esm'
 import { useTranslation } from 'i18next-vue'
 
+import { ClockSize, ClockWeight } from '@/shared/enums'
 import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -72,6 +73,28 @@ const formattedDate = computed(() => {
     lunar: now.format('LMLD')
   }
 })
+
+const sizeMap = {
+  [ClockSize.Small]: 'clock__time-container-small',
+  [ClockSize.Medium]: 'clock__time-container-medium',
+  [ClockSize.Large]: undefined
+}
+
+const weightMap = {
+  [ClockWeight.Normal]: 400,
+  [ClockWeight.Medium]: 500,
+  [ClockWeight.Bold]: 600,
+  [ClockWeight.ExtraBold]: 700,
+  [ClockWeight.Heavy]: 800,
+  [ClockWeight.Black]: 900
+}
+
+const clockClass = computed(() => [sizeMap[settings.clock.size]])
+const clockStyle = computed(() => {
+  return {
+    fontWeight: weightMap[settings.clock.weight]
+  }
+})
 </script>
 
 <template>
@@ -84,12 +107,13 @@ const formattedDate = computed(() => {
       settings.clock.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
-    <div
-      class="clock__time-container"
-      :class="[settings.clock.small ? 'clock__time-container-small' : undefined]"
-    >
-      <span v-if="settings.clock.showMeridiem && isChinese" class="clock__meridiem">
-        {{ formattedDate.meridiemZH }}
+    <div class="clock__time-container" :class="clockClass" :style="clockStyle">
+      <span
+        v-if="settings.clock.showMeridiem"
+        class="clock__meridiem"
+        :class="[settings.clock.meridiemFollowSize ? undefined : 'clock__meridiem-small']"
+      >
+        {{ isChinese ? formattedDate.meridiemZH : formattedTime.meridiem }}
       </span>
       <span class="clock__time">
         <span class="clock__hour">
@@ -105,13 +129,6 @@ const formattedDate = computed(() => {
           >
           <span class="clock__second">{{ formattedTime.second }}</span>
         </template>
-      </span>
-      <span
-        v-if="settings.clock.showMeridiem && !isChinese"
-        class="clock__meridiem"
-        style="margin-left: 5px"
-      >
-        {{ formattedTime.meridiem }}
       </span>
     </div>
     <div v-if="settings.clock.showDate" class="clock__date">

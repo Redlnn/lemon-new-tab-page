@@ -1,6 +1,6 @@
 import i18next from 'i18next'
 
-import { BgType, DrawerDirection, SortMode } from '@/shared/enums'
+import { BgType, ClockSize, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 
@@ -17,7 +17,9 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showDate: true,
     showLunar: true,
     showSeconds: false,
-    small: true,
+    size: ClockSize.Small,
+    weight: ClockWeight.Normal,
+    meridiemFollowSize: false,
     shadow: true,
     blink: true,
     invertColor: {
