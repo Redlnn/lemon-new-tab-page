@@ -51,9 +51,11 @@ function open(url: string) {
 }
 
 const isLocalBg = computed(() => settings.background.bgType === BgType.Local)
+const isOnlineBg = computed(() => settings.background.bgType === BgType.Online)
+const isNoneBg = computed(() => settings.background.bgType === BgType.None)
 const isVideoBg = computed(
   () =>
-    settings.background.bgType === BgType.Local &&
+    isLocalBg.value &&
     (settings.background.local.mediaType === 'video' ||
       settings.background.localDark.mediaType === 'video')
 )
@@ -131,7 +133,7 @@ const switchToBing = () => {
     <!-- 自定义壁纸 -->
     <div class="bg-switcher-title">{{ t('background.custom') }}</div>
     <div class="bg-switcher-container bg-switcher-container--custom">
-      <div class="bg-switcher--local-previews" v-if="settings.background.bgType === BgType.None">
+      <div class="bg-switcher--local-previews" v-if="isNoneBg">
         <el-icon class="bg-switcher-preview__placeholder"><brightness6-twotone /></el-icon>
       </div>
       <div
@@ -210,10 +212,7 @@ const switchToBing = () => {
           </el-icon>
         </div>
       </div>
-      <div
-        class="bg-switcher--local-previews"
-        v-else-if="settings.background.bgType === BgType.Online"
-      >
+      <div class="bg-switcher--local-previews" v-else-if="isOnlineBg">
         <el-icon class="bg-switcher-preview__placeholder"><cloud-queue-twotone /></el-icon>
       </div>
       <div
@@ -225,21 +224,13 @@ const switchToBing = () => {
       <div class="bg-switcher-content-wrapper">
         <div class="bg-switcher-content" ref="customLocalContentRef">
           <div class="bg-switcher-content-title">{{ t('background.chooseImageOrVideo') }}</div>
-          <el-text
-            v-if="settings.background.bgType === BgType.None"
-            line-clamp="2"
-            class="bg-switcher-content-description"
-          >
+          <el-text v-if="isNoneBg" line-clamp="2" class="bg-switcher-content-description">
             {{ t('background.sunMoonSaying') }}
           </el-text>
           <el-text v-else-if="isLocalBg" line-clamp="2" class="bg-switcher-content-description">
             {{ t('background.myZoneMyRule') }}
           </el-text>
-          <el-text
-            v-else-if="settings.background.bgType === BgType.Online"
-            line-clamp="2"
-            class="bg-switcher-content-description"
-          >
+          <el-text v-else-if="isOnlineBg" line-clamp="2" class="bg-switcher-content-description">
             {{ t('background.alwaysFresh') }}
           </el-text>
           <el-text v-else line-clamp="2" class="bg-switcher-content-description">
@@ -250,7 +241,7 @@ const switchToBing = () => {
               bg
               text
               :icon="TripOriginRound"
-              :class="{ active: settings.background.bgType === BgType.None }"
+              :class="{ active: isNoneBg }"
               @click="handleNoneBg"
             >
               {{ isDark ? t('background.button.bathe.moon') : t('background.button.bathe.sun') }}
@@ -259,7 +250,7 @@ const switchToBing = () => {
               bg
               text
               :icon="FolderCopyRound"
-              :class="{ active: settings.background.bgType === BgType.Local }"
+              :class="{ active: isLocalBg }"
               @click="settings.background.bgType = BgType.Local"
             >
               {{ t('background.type.local') }}
@@ -268,7 +259,7 @@ const switchToBing = () => {
               bg
               text
               :icon="InsertLinkRound"
-              :class="{ active: settings.background.bgType === BgType.Online }"
+              :class="{ active: isOnlineBg }"
               @click="onlineImageWarn"
             >
               {{ t('background.type.online') }}
@@ -278,7 +269,7 @@ const switchToBing = () => {
       </div>
       <div class="bg-switcher-extra">
         <el-input
-          v-if="settings.background.bgType === BgType.Online"
+          v-if="isOnlineBg"
           v-model="tempOnlineUrl"
           @blur="changeOnlineBg"
           @keydown.enter="changeOnlineBg"
@@ -287,13 +278,13 @@ const switchToBing = () => {
           <template #prepend>URL</template>
         </el-input>
         <ul class="bg-switcher-warning">
-          <li v-if="settings.background.bgType === BgType.Local">
+          <li v-if="isLocalBg">
             {{ t('background.tip') }}
           </li>
           <li v-if="isVideoBg">
             {{ t('background.videoWarning') }}
           </li>
-          <template v-if="settings.background.bgType === BgType.Online">
+          <template v-if="isOnlineBg">
             <li>{{ t('background.onlineTips.a') }}</li>
             <li>{{ t('background.onlineTips.b') }}</li>
             <li>{{ t('background.onlineTips.c') }}</li>
