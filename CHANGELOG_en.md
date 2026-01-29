@@ -15,6 +15,7 @@
 - Added support for setting clock font weight
 - Added support for setting AM/PM font size to follow time font size
 - Added support for setting clock font size (small, medium, large)
+- The search bar now supports closing with the Esc key.
 
 ### Improvements⚡️
 
@@ -42,6 +43,7 @@
 - Fixed issue where enabling cloud sync would overwrite cloud configuration
 - Fixed issue where changes to bookmarks made elsewhere would not sync
   to already opened new tab pages
+- Fixed an issue where suggestions appeared after the search field lost focus
 
 ## 3.0.1 (Jan 02, 2026)
 

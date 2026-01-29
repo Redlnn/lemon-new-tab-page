@@ -142,6 +142,7 @@ function hideSearchHistories() {
 }
 
 function clearSearchSuggestions() {
+  runner.cancel()
   hideSearchHistories()
   currentActiveSuggest.value = null
   searchSuggestions.value = []
