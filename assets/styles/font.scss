@@ -1,5 +1,20 @@
 @use '@/assets/styles/variables.scss' as *;
 
+// 不加 @font-face 就算写了 Segoe UI Variable XXXXX 或 Segoe UI Variable 也不会调用可变字体
+@font-face {
+  font-family: 'Segoe UI Variable';
+
+  /* 光学尺寸轴 opsz */
+  font-variation-settings: 'opsz' 36;
+
+  /* 指定可变字体轴的范围：weight 可以从 300 到 700 */
+  font-weight: 300 700;
+
+  src:
+    local('Segoe UI Variable Display'), local('Segoe UI Variable Text'),
+    local('Segoe UI Variable Small'), local('Segoe UI Variable');
+}
+
 html {
   &[lang^='zh-Hans'],
   &[lang^='zh-CN'],
