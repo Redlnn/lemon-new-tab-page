@@ -71,7 +71,7 @@ function toggleAnimationSettings(disable: boolean) {
       <div class="settings__label" style="color: var(--el-color-danger-dark-2)">
         {{ t('perf.toggleAll.disable') }}
       </div>
-      <span class="perf-button-group">
+      <span class="button-group">
         <el-button @click="toggleAnimationSettings(true)">
           {{ t('perf.toggleAll.animation') }}
         </el-button>
@@ -87,7 +87,7 @@ function toggleAnimationSettings(disable: boolean) {
       <div class="settings__label" style="color: var(--el-color-success-dark-2)">
         {{ t('perf.toggleAll.enable') }}
       </div>
-      <span class="perf-button-group">
+      <span class="button-group">
         <el-button @click="toggleAnimationSettings(false)">
           {{ t('perf.toggleAll.animation') }}
         </el-button>
@@ -190,13 +190,3 @@ function toggleAnimationSettings(disable: boolean) {
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.perf-button-group {
-  display: flex;
-  flex: 1;
-  flex-wrap: wrap;
-  row-gap: 8px;
-  justify-content: flex-end;
-}
-</style>

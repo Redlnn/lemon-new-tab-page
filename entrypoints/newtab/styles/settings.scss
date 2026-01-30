@@ -135,6 +135,14 @@
     }
   }
 
+  .button-group {
+    display: flex;
+    flex: 1;
+    flex-wrap: wrap;
+    row-gap: 8px;
+    justify-content: flex-end;
+  }
+
   .el-slider {
     height: 35px;
     padding: 0 10px;

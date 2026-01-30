@@ -376,7 +376,7 @@ function changeLanguage(lang: string) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.importExport.settings') }}</div>
-      <span>
+      <span class="button-group">
         <el-button type="primary" :icon="DownloadRound" @click="exportSettings">
           {{ t('other.importExport.export') }}
         </el-button>
@@ -387,7 +387,7 @@ function changeLanguage(lang: string) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.importExport.shortcuts') }}</div>
-      <span>
+      <span class="button-group">
         <el-button type="primary" :icon="DownloadRound" @click="exportShortcuts">
           {{ t('other.importExport.export') }}
         </el-button>
@@ -398,7 +398,7 @@ function changeLanguage(lang: string) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.importExport.customSearchEngines') }}</div>
-      <span>
+      <span class="button-group">
         <el-button type="primary" :icon="DownloadRound" @click="exportCustomSearchEngines">
           {{ t('other.importExport.export') }}
         </el-button>
