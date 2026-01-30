@@ -4,6 +4,7 @@ import {
   promiseTimeout,
   useDark,
   useDocumentVisibility,
+  useEventListener,
   useTimeoutFn,
   useWindowFocus
 } from '@vueuse/core'
@@ -279,6 +280,13 @@ onMounted(async () => {
 
   // 初始化时激活当前背景类型的watch
   activateBackgroundWatch(settings.background.bgType)
+})
+
+useEventListener('pageshow', async (e) => {
+  if (e.persisted) {
+    await updateBackgroundURL(settings.background.bgType)
+    activateBackgroundWatch(settings.background.bgType)
+  }
 })
 
 // 组件卸载时清理watch
