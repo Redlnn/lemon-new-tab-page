@@ -124,5 +124,9 @@ onMounted(async () => {
   @media (width <= 600px) {
     width: 80%;
   }
+
+  @media (height <= 800px) {
+    bottom: 60px;
+  }
 }
 </style>

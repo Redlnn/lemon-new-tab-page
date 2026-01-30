@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useDebounceFn, useEventListener, useResizeObserver } from '@vueuse/core'
+import { useDebounceFn, useEventListener, useResizeObserver, useWindowSize } from '@vueuse/core'
 
 import {
   ChevronLeft20Filled,
@@ -37,6 +37,8 @@ const { t } = useTranslation()
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
+
+const { height } = useWindowSize({ type: 'visual' })
 
 const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
 
@@ -404,7 +406,7 @@ const isHideShortcut = computed(() => {
     :style="{
       opacity: isHideShortcut,
       paddingTop: `${settings.shortcut.marginTop / 2}px`,
-      marginTop: `${settings.shortcut.marginTop / 2}px`
+      marginTop: height > 400 ? `${settings.shortcut.marginTop / 2}px` : undefined
     }"
   >
     <div ref="shortcutWrapperRef" class="shortcut__wrapper">

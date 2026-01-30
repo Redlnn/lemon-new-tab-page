@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { CSSProperties } from 'vue'
 import { useColorMode, usePreferredDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'
@@ -220,7 +221,11 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
     }"
   >
     <main
-      :style="[settings.shortcut.enabled ? { justifyContent: 'center' } : { paddingTop: '30vh' }]"
+      :style="
+        settings.shortcut.enabled
+          ? { justifyContent: 'center' }
+          : ({ paddingTop: ['30vh', '30dvh'] } as unknown as CSSProperties)
+      "
       class="app"
       @contextmenu.prevent="openBookmarkSidebar"
     >

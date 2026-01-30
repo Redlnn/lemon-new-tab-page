@@ -12,7 +12,7 @@ export interface UseShortcutLayout {
 
 export function useShortcutLayout(): UseShortcutLayout {
   const settings = useSettingsStore()
-  const { width: windowWidth } = useWindowSize()
+  const { width: windowWidth, height: windowHeight } = useWindowSize({ type: 'visual' })
 
   const columnsNum = ref(0)
   const rowsNum = ref(settings.shortcut.rows)
@@ -44,7 +44,10 @@ export function useShortcutLayout(): UseShortcutLayout {
   // 计算所需行数（纯函数）
   // 行数：元素不足一行则为1，否则在需要行数与上限中取较小值
   const computeNeededRows = (itemCount: number, columns: number) => {
-    const neededRows = Math.ceil(itemCount / columns) || 1
+    let neededRows = Math.ceil(itemCount / columns) || 1
+    if (windowHeight.value < 450) {
+      neededRows = 1
+    }
     return Math.min(neededRows, settings.shortcut.rows)
   }
 

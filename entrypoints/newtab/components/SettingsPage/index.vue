@@ -18,7 +18,7 @@ const DESKTOP_DIALOG_WIDTH = 900
 
 const { t } = useTranslation('settings')
 const router = useSettingsRouter()
-const { width: windowWidth } = useWindowSize()
+const { width: windowWidth } = useWindowSize({ type: 'visual' })
 const { opened, show, hide, toggle } = useDialog()
 
 const detailViewRef = ref<InstanceType<typeof SettingsDetailView>>()

@@ -33,7 +33,7 @@ const scrollbarRef = ref<ScrollbarInstance>()
 const dialogRef = ref<DialogInstance>()
 
 const headerIsVisible = useElementVisibility(headerRef)
-const { width: windowWidth } = useWindowSize()
+const { width: windowWidth } = useWindowSize({ type: 'visual' })
 
 function onClose() {
   emit('close')

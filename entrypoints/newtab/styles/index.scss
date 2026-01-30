@@ -22,14 +22,32 @@ html {
   text-autospace: normal;
 }
 
+:root {
+  /* 旧浏览器 fallback */
+  --app-vh: 100vh;
+  --app-vw: 100vw;
+}
+
+/* 支持新视口单位的浏览器覆盖 */
+@supports (height: 100dvh) {
+  :root {
+    --app-vh: 100dvh;
+    --app-vw: 100dvw;
+  }
+}
+
 html,
 body {
-  width: 100vw;
-  height: 100vh;
+  position: relative;
+  width: var(--app-vw);
+  height: var(--app-vh);
   margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none; // 禁止滚动消失工具栏
   font-family: var(--el-font-family);
   font-size: var(--el-font-size-base);
   color: var(--el-text-color-primary);
+  -webkit-overflow-scrolling: touch; // iOS 让滚动别走主线程
 }
 
 html.colorful {
@@ -54,10 +72,14 @@ html.dialog-acrylic {
 }
 
 .app {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
   height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left); // 移动端安全区
 }
 
 .noselect {

@@ -8,7 +8,7 @@ import { getYiyanCache, isCacheFresh, setYiyanCache, yiyanProviders } from '@new
 export function useYiYan() {
   const focusStore = useFocusStore()
   const settings = useSettingsStore()
-  const { height } = useWindowSize()
+  const { height } = useWindowSize({ type: 'visual' })
 
   const yiyan = ref<string>()
   const yiyanOrigin = ref<string>()
@@ -33,7 +33,7 @@ export function useYiYan() {
 
   const isEnabled = computed(() =>
     Boolean(
-      yiyan.value && height.value >= 800 && (focusStore.isFocused || settings.yiyan.alwaysShow)
+      yiyan.value && height.value >= 700 && (focusStore.isFocused || settings.yiyan.alwaysShow)
     )
   )
 
