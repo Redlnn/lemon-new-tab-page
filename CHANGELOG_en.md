@@ -27,6 +27,8 @@
   drag sorting for quick access when touching
   > Now pagination is less likely to trigger drag sorting
 - Adjust the order and icon thickness of the shortcut right-click menu options
+- Improved mobile layout stability (alignment, jitter, overlap)
+- Refactored shortcut layout logic for better performance and mobile support
 - Force refresh when switching to Bing wallpaper
 - Monet color extraction updated to the 2025 spec
 - In the bookmark sidebar, folders are only placed at the front when not in original sorting
@@ -42,6 +44,7 @@
 - Added missing settings version migration function for cloud sync
 - Fixed issue where settings migration logic did not take effect
 - Fixed issue where enabling cloud sync would overwrite cloud configuration
+- Attempted to fix background loss when navigating back to the new tab on mobile
 - Fixed issue where changes to bookmarks made elsewhere would not sync
   to already opened new tab pages
 - Fixed an issue where suggestions appeared after the search field lost focus
