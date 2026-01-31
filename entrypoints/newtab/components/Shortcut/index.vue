@@ -114,8 +114,6 @@ const {
   setupSwipe
 } = useShortcutPagination(paginationTotalItems, slotsPerPage)
 
-const isLastPage = computed(() => currentPage.value === totalPages.value - 1)
-
 // 是否在指定页显示添加按钮
 function showAddButtonForPage(pageIndex: number) {
   return pageIndex === totalPages.value - 1
@@ -132,9 +130,10 @@ function getPageItems(pageIndex: number) {
 
   const slots = slotsPerPage.value
   const startIndex = pageIndex * slots
+  const isLastPage = pageIndex === totalPages.value - 1
 
   // 计算最大项目数，最后一页限制为 slots - 1
-  const maxItems = isLastPage.value ? slots - 1 : slots
+  const maxItems = isLastPage ? slots - 1 : slots
   return allItems.value.slice(startIndex, startIndex + maxItems)
 }
 
@@ -199,6 +198,7 @@ const grid = computed(() => {
     return { cols: maxFitCols.value, rows: maxFitRows.value }
   }
   const currentCount = currentPageItems.value.length
+  const isLastPage = currentPage.value === totalPages.value - 1
   // 单页 → 根据内容收缩
   return solveGridColumnFirst(
     isLastPage ? currentCount + 1 : currentCount,
