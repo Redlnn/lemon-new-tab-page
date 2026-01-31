@@ -88,7 +88,7 @@ const allItems = computed(() => {
   return result
 })
 
-const { maxFitCols, maxFitRows } = usePagedGridLayout()
+const { updateMaxCols, maxFitCols, maxFitRows } = usePagedGridLayout()
 const slotsPerPage = computed(() => maxFitCols.value * maxFitRows.value)
 const totalItemsCount = computed(() => allItems.value.length)
 
@@ -295,6 +295,11 @@ watch(
   ],
   refreshDebounced
 )
+
+// useResizeObserver 会在开始观察时立即触发一次
+useResizeObserver(document.documentElement, updateMaxCols)
+
+watch(isOnlyTouchDevice, updateMaxCols)
 
 watch(
   () => settings.shortcut.enableTopSites,

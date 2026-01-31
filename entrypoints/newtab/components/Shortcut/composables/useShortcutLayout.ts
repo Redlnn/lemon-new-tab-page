@@ -1,5 +1,6 @@
-import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
+import { useDebounceFn, useWindowSize } from '@vueuse/core'
 
+import { isOnlyTouchDevice } from '@/entrypoints/newtab/shared/touch'
 import { useSettingsStore } from '@/shared/settings'
 
 /**
@@ -29,7 +30,7 @@ export function usePagedGridLayout() {
     const marginH = settings.shortcut.itemMarginH
     const unitWidth = getItemWidth() + marginH
     let extra = settings.shortcut.showShortcutContainerBg ? 60 : 40 // 预留padding空间
-    if (!settings.shortcut.disablePaging) {
+    if (!(isOnlyTouchDevice.value || settings.shortcut.disablePaging)) {
       // 多页模式下预留分页按钮和间距空间
       extra += 88
     }
@@ -50,11 +51,9 @@ export function usePagedGridLayout() {
   const updateMaxCols = useDebounceFn(() => {
     maxFitCols.value = computeFitColumns()
   }, 100)
-  // useResizeObserver 会在开始观察时立即触发一次
-  useResizeObserver(document.documentElement, updateMaxCols)
 
   // 纯最大行数
   const maxFitRows = computed(() => (windowHeight.value < 450 ? 1 : settings.shortcut.rows))
 
-  return { maxFitCols, maxFitRows }
+  return { updateMaxCols, maxFitCols, maxFitRows }
 }
