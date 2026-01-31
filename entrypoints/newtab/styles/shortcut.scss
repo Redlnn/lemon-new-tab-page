@@ -11,13 +11,9 @@
   &__wrapper-inner {
     display: flex;
     flex-direction: row;
-    gap: 12px;
+    gap: 10px;
     align-items: center;
     justify-content: center;
-
-    @media (width >= 769px) {
-      gap: 20px;
-    }
   }
 
   // 滑动视口（可见区域）

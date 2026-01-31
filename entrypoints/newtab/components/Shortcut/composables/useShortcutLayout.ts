@@ -32,7 +32,7 @@ export function usePagedGridLayout() {
     let extra = settings.shortcut.showShortcutContainerBg ? 60 : 40 // 预留padding空间
     if (!(isOnlyTouchDevice.value || settings.shortcut.disablePaging)) {
       // 多页模式下预留分页按钮和间距空间
-      extra += 88
+      extra += 80
     }
 
     // 假设有 n 列，则总宽度为 n * unitWidth - marginH + extra
