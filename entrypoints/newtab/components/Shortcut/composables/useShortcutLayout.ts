@@ -45,7 +45,7 @@ export function usePagedGridLayout() {
   }
 
   // 最大列数
-  const maxFitCols = ref(0)
+  const maxFitCols = ref(settings.shortcut.columns)
 
   const updateMaxCols = useDebounceFn(() => {
     maxFitCols.value = computeFitColumns()
