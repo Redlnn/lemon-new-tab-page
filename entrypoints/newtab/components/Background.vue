@@ -285,7 +285,6 @@ onMounted(async () => {
 useEventListener('pageshow', async (e) => {
   if (e.persisted) {
     await updateBackgroundURL(settings.background.bgType)
-    activateBackgroundWatch(settings.background.bgType)
   }
 })
 

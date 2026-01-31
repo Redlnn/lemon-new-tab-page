@@ -152,7 +152,6 @@ watch(
 
 <template>
   <el-drawer
-    ref="drawerRef"
     v-model="opened"
     :direction="settings.bookmark.direction"
     :title="t('bookmark.title')"
