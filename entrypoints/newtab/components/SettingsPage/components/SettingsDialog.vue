@@ -1,26 +1,37 @@
+<!-- https://github.com/element-plus/element-plus/blob/dev/packages/components/dialog/src/dialog.vue -->
 <script lang="ts" setup>
 import type { TransitionProps } from 'vue'
 
 import {
   dialogEmits,
   dialogInjectionKey,
-  dialogProps,
+  type DialogProps,
   useDialog,
   useNamespace,
   useSameTarget
 } from 'element-plus'
+import { dialogContentPropsDefaults } from 'element-plus/es/components/dialog/src/dialog-content'
+import ElFocusTrap from 'element-plus/es/components/focus-trap/src/focus-trap.vue'
+import ElTeleport from 'element-plus/es/components/teleport/src/teleport.vue'
 
-import { ElFocusTrap, ElTeleport } from './ElComponents'
 import SettingsDialogContent from './SettingsDialogContent.vue'
 
-const props = defineProps({
-  ...dialogProps,
-  class: {
-    type: [String, Object, Array] as PropType<
-      string | Record<string, boolean> | Array<string | Record<string, boolean>>
-    >,
-    default: ''
-  }
+type DialogProps_ = DialogProps & {
+  class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>
+}
+
+const props = withDefaults(defineProps<DialogProps_>(), {
+  ...dialogContentPropsDefaults,
+  appendTo: 'body',
+  closeOnClickModal: true,
+  closeOnPressEscape: true,
+  lockScroll: true,
+  modal: true,
+  openDelay: 0,
+  closeDelay: 0,
+  headerAriaLevel: '2',
+  transition: undefined,
+  class: ''
 })
 defineEmits(dialogEmits)
 
@@ -77,6 +88,7 @@ const resetPosition = () => {
 }
 
 defineExpose({
+  /** @description whether the dialog is visible */
   visible,
   dialogContentRef,
   resetPosition,

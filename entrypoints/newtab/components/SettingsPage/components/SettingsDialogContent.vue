@@ -2,14 +2,15 @@
 import { dialogInjectionKey, useDraggable, useLocale } from 'element-plus'
 import {
   dialogContentEmits,
-  dialogContentProps
+  type DialogContentProps,
+  dialogContentPropsDefaults
 } from 'element-plus/es/components/dialog/src/dialog-content'
 import { FOCUS_TRAP_INJECTION_KEY } from 'element-plus/es/components/focus-trap/src/tokens'
 import { composeRefs } from 'element-plus/es/utils/vue/refs'
 
 const { t: t_ } = useLocale()
 
-const props = defineProps(dialogContentProps)
+const props = withDefaults(defineProps<DialogContentProps>(), dialogContentPropsDefaults)
 defineEmits(dialogContentEmits)
 
 const { dialogRef, headerRef, bodyId, ns, style } = inject(dialogInjectionKey)!
