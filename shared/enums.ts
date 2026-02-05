@@ -19,13 +19,21 @@ export enum ClockSize {
   Large = 'large'
 }
 
+/**
+ * - Normal: 400
+ * - Medium: 500
+ * - Bold: 600
+ * - ExtraBold: 700
+ * - Heavy: 800
+ * - Black: 900
+ */
 export enum ClockWeight {
-  Normal = 'normal', // 400
-  Medium = 'medium', // 500
-  Bold = 'bold', // 600
-  ExtraBold = 'extra-bold', // 700
-  Heavy = 'heavy', // 800
-  Black = 'black' // 900
+  Normal = 'normal',
+  Medium = 'medium',
+  Bold = 'bold',
+  ExtraBold = 'extra-bold',
+  Heavy = 'heavy',
+  Black = 'black'
 }
 
 export enum DrawerDirection {
