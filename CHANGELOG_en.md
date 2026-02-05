@@ -21,16 +21,16 @@
 
 ### Improvements⚡️
 
-- Improve pagination logic
 - Optimized performance and refined details.
+- Improve pagination logic
+- Improved mobile layout stability (alignment, jitter, overlap)
+- Force refresh when switching to Bing wallpaper
+- Monet color extraction updated to the 2025 spec
 - Optimized the trigger priority of swipe pagination and
   drag sorting for quick access when touching
   > Now pagination is less likely to trigger drag sorting
 - Adjust the order and icon thickness of the shortcut right-click menu options
-- Improved mobile layout stability (alignment, jitter, overlap)
 - Refactored shortcut layout logic for better performance and mobile support
-- Force refresh when switching to Bing wallpaper
-- Monet color extraction updated to the 2025 spec
 - In the bookmark sidebar, folders are only placed at the front when not in original sorting
 - Changed the default sorting of the bookmark sidebar to original sorting
 - Allow multiple same-level directories to be expanded in the bookmark sidebar
@@ -38,8 +38,6 @@
 
 ### Bug Fixes🐛
 
-- Fixed issue where shortcut pagination flickered on Firefox
-  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
 - Fixed security issues when importing settings
 - Added missing settings version migration function for cloud sync
 - Fixed issue where settings migration logic did not take effect
@@ -50,6 +48,8 @@
 - Fixed an issue where suggestions appeared after the search field lost focus
 - Fixed an issue where some shortcut titles were clipped when the window width was reduced
 - Fixed an issue where parts of shortcut titles from the previous and next pages were visible
+- Fixed issue where shortcut pagination flickered on Firefox
+  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
 
 ## 3.0.1 (Jan 02, 2026)
 
