@@ -18,7 +18,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     showLunar: true,
     showSeconds: false,
     size: ClockSize.Small,
-    weight: ClockWeight.Normal,
+    weight: ClockWeight.Bold,
     meridiemFollowSize: false,
     shadow: true,
     blink: true,
