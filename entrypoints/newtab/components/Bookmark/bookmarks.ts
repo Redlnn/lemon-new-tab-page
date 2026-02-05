@@ -5,6 +5,8 @@ import { browser, type Browser } from 'wxt/browser'
 
 import { SortMode } from '@/shared/enums'
 
+import BookmarkWorker from './bookmark.worker?worker'
+
 let worker: Worker | null = null
 
 const bookmarkListeners: {
@@ -51,8 +53,7 @@ export const useBookmarkStore = defineStore('bookmark', {
   actions: {
     initWorker() {
       if (worker) return
-      worker = new Worker(new URL('./bookmark.worker.ts', import.meta.url), { type: 'module' })
-
+      worker = new BookmarkWorker()
       i18next.on('languageChanged', (lang) => {
         worker?.postMessage({
           type: 'UPDATE_SETTINGS',
