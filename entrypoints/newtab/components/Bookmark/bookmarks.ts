@@ -114,7 +114,7 @@ export const useBookmarkStore = defineStore('bookmark', {
       }
     },
 
-    async loadBookmarks(): Promise<Browser.bookmarks.BookmarkTreeNode[]> {
+    async loadBookmarks() {
       this.initWorker()
       const tree = await browser.bookmarks.getTree()
       const _tree = tree[0]?.children ?? []
@@ -128,7 +128,6 @@ export const useBookmarkStore = defineStore('bookmark', {
           sortMode: this.sortMode
         }
       })
-      return tree
     },
 
     _setSortMode(mode: SortMode) {
