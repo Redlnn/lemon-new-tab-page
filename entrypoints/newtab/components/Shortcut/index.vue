@@ -292,7 +292,10 @@ watch(
     settings.shortcut.itemMarginV,
     settings.shortcut.disablePaging
   ],
-  refreshDebounced
+  async () => {
+    updateMaxCols()
+    await refreshDebounced()
+  }
 )
 
 // useResizeObserver 会在开始观察时立即触发一次
