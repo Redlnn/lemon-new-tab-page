@@ -70,7 +70,6 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
     shortcut: {
       enabled: oldSettings.shortcut.enabled,
       enableTopSites: oldSettings.shortcut.enableTopSites,
-      enableAreaShadow: oldSettings.shortcut.enableShadow,
       enableShadow: oldSettings.shortcut.enableShadow,
       disablePaging: defaultSettings.shortcut.disablePaging,
       showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
@@ -80,7 +79,6 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       itemMarginV: 2 * oldSettings.shortcut.itemMarginV, // 新版更改了间距逻辑，去除了模板代码中的缩放，因此这里需要补偿
       showShortcutTitle: oldSettings.shortcut.showShortcutTitle,
       showPinnedIcon: oldSettings.shortcut.showPinnedIcon,
-      showShortcutContainerBg: oldSettings.shortcut.showShortcutContainerBg,
       iconSize: oldSettings.shortcut.iconSize,
       iconRatio: defaultSettings.shortcut.iconRatio,
       iconMarginBottom: defaultSettings.shortcut.iconMarginBottom,

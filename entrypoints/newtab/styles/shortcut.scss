@@ -27,20 +27,6 @@
     @media (pointer: coarse) {
       touch-action: pan-y pinch-zoom;
     }
-
-    &--bg {
-      @include acrylic.acrylic;
-      padding: 20px;
-      background-color: var(--le-bg-color-overlay-opacity-60);
-
-      &.shortcut__slide-viewport--shadow {
-        box-shadow: var(--el-box-shadow);
-
-        html.dark & {
-          box-shadow: var(--el-box-shadow-light);
-        }
-      }
-    }
   }
 
   // 滑动轨道（定位容器）

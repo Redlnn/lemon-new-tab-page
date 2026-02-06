@@ -29,7 +29,7 @@ export function usePagedGridLayout() {
     const containerWidth = windowWidth.value * 0.85
     const marginH = settings.shortcut.itemMarginH
     const unitWidth = getItemWidth() + marginH
-    let extra = settings.shortcut.showShortcutContainerBg ? 60 : 40 // 预留padding空间
+    let extra = 40 // 预留padding空间
     if (!(isOnlyTouchDevice.value || settings.shortcut.disablePaging)) {
       // 多页模式下预留分页按钮和间距空间
       extra += 80

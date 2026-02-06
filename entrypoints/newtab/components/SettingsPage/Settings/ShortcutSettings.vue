@@ -36,17 +36,6 @@ async function restoreDefaultTopSites() {
         <el-switch v-model="settings.shortcut.enableTopSites" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.enableBg') }}</div>
-        <el-switch v-model="settings.shortcut.showShortcutContainerBg" />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.enableAreaShadow') }}</div>
-        <el-switch
-          v-model="settings.shortcut.enableAreaShadow"
-          :disabled="!settings.shortcut.showShortcutContainerBg"
-        />
-      </div>
-      <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('shortcut.enableShadow') }}</div>
         <el-switch v-model="settings.shortcut.enableShadow" />
       </div>

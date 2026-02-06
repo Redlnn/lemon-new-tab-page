@@ -69,7 +69,6 @@ export interface SettingsInterfaceVer8 {
   shortcut: {
     enabled: boolean
     enableTopSites: boolean
-    enableAreaShadow: boolean
     enableShadow: boolean
     disablePaging: boolean
     showOnSearchFocus: boolean
@@ -79,7 +78,6 @@ export interface SettingsInterfaceVer8 {
     itemMarginV: number
     showShortcutTitle: boolean
     showPinnedIcon: boolean
-    showShortcutContainerBg: boolean
     iconSize: number
     iconRatio: number
     iconMarginBottom: number

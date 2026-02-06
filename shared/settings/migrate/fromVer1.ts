@@ -61,7 +61,6 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
     shortcut: {
       enabled: oldSettings.enabled,
       enableTopSites: oldSettings.enableTopSites,
-      enableAreaShadow: defaultSettings.shortcut.enableAreaShadow,
       enableShadow: defaultSettings.shortcut.enableShadow,
       disablePaging: defaultSettings.shortcut.disablePaging,
       showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
@@ -75,7 +74,6 @@ export function migrateFromVer1(oldSettings: OldSettingsInterface): CURRENT_CONF
       ),
       showShortcutTitle: oldSettings.showQuickStartTitle,
       showPinnedIcon: oldSettings.showPinnedIcon,
-      showShortcutContainerBg: defaultSettings.shortcut.showShortcutContainerBg,
       iconSize: defaultSettings.shortcut.iconSize,
       iconRatio: defaultSettings.shortcut.iconRatio,
       iconMarginBottom: defaultSettings.shortcut.iconMarginBottom,

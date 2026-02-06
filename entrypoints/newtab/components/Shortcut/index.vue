@@ -290,7 +290,6 @@ watch(
     settings.shortcut.iconSize,
     settings.shortcut.itemMarginH,
     settings.shortcut.itemMarginV,
-    settings.shortcut.showShortcutContainerBg,
     settings.shortcut.disablePaging
   ],
   refreshDebounced
@@ -408,16 +407,7 @@ const navBtnBaseClasses = computed(() =>
         </button>
         <div style="overflow: hidden">
           <!-- 滑动轨道容器 -->
-          <div
-            ref="shortcutContainerRef"
-            class="shortcut__slide-viewport"
-            :class="[
-              settings.shortcut.showShortcutContainerBg
-                ? 'shortcut__slide-viewport--bg'
-                : undefined,
-              settings.shortcut.enableAreaShadow ? 'shortcut__slide-viewport--shadow' : undefined
-            ]"
-          >
+          <div ref="shortcutContainerRef" class="shortcut__slide-viewport">
             <div class="shortcut__slide-track">
               <!-- 前一页 -->
               <div

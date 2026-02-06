@@ -72,7 +72,6 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
   shortcut: {
     enabled: true,
     enableTopSites: true,
-    enableAreaShadow: true,
     enableShadow: true,
     disablePaging: false,
     showOnSearchFocus: false,
@@ -82,7 +81,6 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     itemMarginV: 20,
     showShortcutTitle: true,
     showPinnedIcon: true,
-    showShortcutContainerBg: false,
     iconSize: 50,
     iconRatio: 0.5,
     iconMarginBottom: 8,

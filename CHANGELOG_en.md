@@ -6,35 +6,39 @@
 
 ### New Features✨
 
-- Added "Title Expand Width" and "Icon and Title Spacing" settings
+- **Shortcut:** Added "Title Expand Width" and "Icon and Title Spacing" settings
   ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
-- You can now bookmark shortcuts to browser bookmarks via the right-click menu
-- Added support for editing and deleting bookmarks
-- Added support for dragging to reorder bookmarks
-- Added support for collapsing other/all sibling directories
-- Added support for setting the default sort order for the Bookmarks Sidebar
+- **Bookmarks Bar:** You can now bookmark shortcuts to browser bookmarks via the right-click menu
+- **Bookmarks Bar:** Added support for editing and deleting bookmarks
+- **Bookmarks Bar:** Added support for dragging to reorder bookmarks
+- **Bookmarks Bar:** Added support for collapsing other/all sibling directories
+- **Bookmarks Bar:** Added support for setting the default sort order for the Bookmarks Sidebar
   ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
-- Added support for setting clock font weight
-- Added support for setting AM/PM font size to follow time font size
-- Added support for setting clock font size (small, medium, large)
-- The search bar now supports closing with the Esc key.
+- **Clock:** Added support for setting clock font weight
+- **Clock:** Added support for setting AM/PM font size to follow time font size
+- **Clock:** Added support for setting clock font size (small, medium, large)
+- **Search:** The search bar now supports closing with the Esc key.
 
 ### Improvements⚡️
 
 - Optimized performance and refined details.
-- Improve pagination logic
 - Improved mobile layout stability (alignment, jitter, overlap)
 - Force refresh when switching to Bing wallpaper
 - Monet color extraction updated to the 2025 spec
-- Optimized the trigger priority of swipe pagination and
+- **Shortcut:** Improve pagination logic
+- **Shortcut:** Optimized the trigger priority of swipe pagination and
   drag sorting for quick access when touching
   > Now pagination is less likely to trigger drag sorting
-- Adjust the order and icon thickness of the shortcut right-click menu options
-- Refactored shortcut layout logic for better performance and mobile support
-- In the bookmark sidebar, folders are only placed at the front when not in original sorting
-- Changed the default sorting of the bookmark sidebar to original sorting
-- Allow multiple same-level directories to be expanded in the bookmark sidebar
-- Adjusted the placement of AM/PM in English environments to be before the time
+- **Shortcut:** Adjust the order and icon thickness of the shortcut right-click menu options
+- **Shortcut:** Refactored shortcut layout logic for better performance and mobile support
+- **Bookmarks Bar:** In the bookmark sidebar, folders are only placed at the front when not in original sorting
+- **Bookmarks Bar:** Changed the default sorting of the bookmark sidebar to original sorting
+- **Bookmarks Bar:** Allow multiple same-level directories to be expanded in the bookmark sidebar
+- **Clock:** Adjusted the placement of AM/PM in English environments to be before the time
+
+### Removed 🗑️
+
+- **Shortcut:** Quick Access: Removed the “Show area background” option due to lack of maintenance and conflicts with the paginated layout style.
 
 ### Bug Fixes🐛
 
@@ -43,12 +47,12 @@
 - Fixed issue where settings migration logic did not take effect
 - Fixed issue where enabling cloud sync would overwrite cloud configuration
 - Attempted to fix background loss when navigating back to the new tab on mobile
-- Fixed issue where changes to bookmarks made elsewhere would not sync
+- **Search:** Fixed issue where changes to bookmarks made elsewhere would not sync
   to already opened new tab pages
-- Fixed an issue where suggestions appeared after the search field lost focus
-- Fixed an issue where some shortcut titles were clipped when the window width was reduced
-- Fixed an issue where parts of shortcut titles from the previous and next pages were visible
-- Fixed issue where shortcut pagination flickered on Firefox
+- **Bookmarks Bar:** Fixed an issue where suggestions appeared after the search field lost focus
+- **Shortcut:** Fixed an issue where some shortcut titles were clipped when the window width was reduced
+- **Shortcut:** Fixed an issue where parts of shortcut titles from the previous and next pages were visible
+- **Shortcut:** Fixed issue where shortcut pagination flickered on Firefox
   ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
 
 ## 3.0.1 (Jan 02, 2026)
