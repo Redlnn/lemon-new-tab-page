@@ -47,12 +47,12 @@ function handleClose() {
           <p>{{ t('changelog.otherVersions.description') }}</p>
           <ul>
             <li>
-              <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG.md">
+              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/CHANGELOG.md">
                 {{ t('changelog.otherVersions.linkZhCN') }}
               </a>
             </li>
             <li>
-              <a href="https://github.com/Redlnn/lemon-new-tab-page/blob/master/CHANGELOG_en.md">
+              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/CHANGELOG_en.md">
                 {{ t('changelog.otherVersions.linkEn') }}
               </a>
             </li>

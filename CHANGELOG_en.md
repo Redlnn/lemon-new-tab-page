@@ -7,13 +7,13 @@
 ### New Features✨
 
 - **Shortcut:** Added "Title Expand Width" and "Icon and Title Spacing" settings
-  ([#65](https://github.com/Redlnn/lemon-new-tab-page/issues/65))
+  ([#65](https://github.com/Redlnn/lemon-new-tab/issues/65))
 - **Bookmarks Bar:** You can now bookmark shortcuts to browser bookmarks via the right-click menu
 - **Bookmarks Bar:** Added support for editing and deleting bookmarks
 - **Bookmarks Bar:** Added support for dragging to reorder bookmarks
 - **Bookmarks Bar:** Added support for collapsing other/all sibling directories
 - **Bookmarks Bar:** Added support for setting the default sort order for the Bookmarks Sidebar
-  ([#68](https://github.com/Redlnn/lemon-new-tab-page/issues/68))
+  ([#68](https://github.com/Redlnn/lemon-new-tab/issues/68))
 - **Clock:** Added support for setting clock font weight
 - **Clock:** Added support for setting AM/PM font size to follow time font size
 - **Clock:** Added support for setting clock font size (small, medium, large)
@@ -53,14 +53,14 @@
 - **Shortcut:** Fixed an issue where some shortcut titles were clipped when the window width was reduced
 - **Shortcut:** Fixed an issue where parts of shortcut titles from the previous and next pages were visible
 - **Shortcut:** Fixed issue where shortcut pagination flickered on Firefox
-  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
+  ([#64](https://github.com/Redlnn/lemon-new-tab/issues/64))
 
 ## 3.0.1 (Jan 02, 2026)
 
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut icon background blur did not work on Firefox
-  ([#64](https://github.com/Redlnn/lemon-new-tab-page/issues/64))
+  ([#64](https://github.com/Redlnn/lemon-new-tab/issues/64))
 
 ## 3.0.0 (Jan 01, 2026)
 
@@ -75,9 +75,9 @@
 - Support setting shortcuts to open in a new tab by default
 - Support adding the current page to shortcuts from the browser toolbar button
 - Support adding pages to shortcuts from the bookmarks sidebar
-  ([#55](https://github.com/Redlnn/lemon-new-tab-page/issues/55))
+  ([#55](https://github.com/Redlnn/lemon-new-tab/issues/55))
 - Shortcuts support pagination
-  ([#57](https://github.com/Redlnn/lemon-new-tab-page/issues/57))
+  ([#57](https://github.com/Redlnn/lemon-new-tab/issues/57))
   > Pagination methods:
   >
   > 1. Click the pagination buttons to switch pages (for devices with a mouse only)
@@ -85,15 +85,15 @@
   > 3. Support touch swipe gestures to switch pages (for touch-enabled devices only)
   > 4. Click the page indicators below the shortcuts area to switch pages
 - Support customizing the relative size of shortcut icons to their containers
-  ([#58](https://github.com/Redlnn/lemon-new-tab-page/issues/58))
+  ([#58](https://github.com/Redlnn/lemon-new-tab/issues/58))
 - When the search box is always expanded,
   support displaying the search engine icon and search button by default
-  ([#60](https://github.com/Redlnn/lemon-new-tab-page/issues/60))
+  ([#60](https://github.com/Redlnn/lemon-new-tab/issues/60))
 - Support speeding up the display of the background at startup
   and disabling background transition animations
-  ([#62](https://github.com/Redlnn/lemon-new-tab-page/issues/62))
+  ([#62](https://github.com/Redlnn/lemon-new-tab/issues/62))
 - Support not hiding quick access when the search box is focused
-  ([#63](https://github.com/Redlnn/lemon-new-tab-page/issues/63))
+  ([#63](https://github.com/Redlnn/lemon-new-tab/issues/63))
 - Right-click menu supports copying link address and opening in a new window
 
 ### Improvements⚡️
@@ -102,7 +102,7 @@
 - When adding shortcuts, allow omitting the protocol prefix (http:// or https://)
 - Optimize the styles of the "Add Shortcut" and "Add Search Engine" dialogs
 - Reduce the size of the pin icon for pinned links
-  ([#61](https://github.com/Redlnn/lemon-new-tab-page/issues/61))
+  ([#61](https://github.com/Redlnn/lemon-new-tab/issues/61))
 - Comprehensively adjusted all corner radii for a better visual experience
 - Optimize right-click menu styles
 - Optimized performance
@@ -110,7 +110,7 @@
 ### Bug Fixes🐛
 
 - Fixed issue where shortcut drag-and-drop sorting UI did not update
-  ([#53](https://github.com/Redlnn/lemon-new-tab-page/issues/53))
+  ([#53](https://github.com/Redlnn/lemon-new-tab/issues/53))
 - Fixed issue where changes to shortcuts on the new tab page
   were not promptly synced from cloud sync, popup menu, and other sources
 - Fixed shortcut title text shadow being cut off
@@ -170,7 +170,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 ### Bug Fixes🐛
 
 - Fixed the issue where the background mask would flicker on startup
-  ([#46](https://github.com/Redlnn/lemon-new-tab-page/issues/46))
+  ([#46](https://github.com/Redlnn/lemon-new-tab/issues/46))
 - Fixed some misalignment issues in the Quote settings page
 - Fixed style and layout issues of Quote on the About page
 - Fixed settings button pop-up menu not transparent
@@ -184,7 +184,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 - Added two new theme colors
 - Support for switching languages
 - Support for exporting and importing favorite/pinned websites
-  ([#45](https://github.com/Redlnn/lemon-new-tab-page/issues/45))
+  ([#45](https://github.com/Redlnn/lemon-new-tab/issues/45))
 - Support for custom search engines (and import/export)
 - Right-click to open shortcut menu, removed the long-term display of the three-dot entry to optimize visual experience
 
@@ -214,7 +214,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 ### New Features✨
 
 - Added Help and Feedback page
-  ([#41](https://github.com/Redlnn/lemon-new-tab-page/issues/41))
+  ([#41](https://github.com/Redlnn/lemon-new-tab/issues/41))
 - Support for disabling the transparency effect of Quote
 
 ### Improvements⚡️
@@ -228,12 +228,12 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 
 - Fixed issue where switching colors did not have a transition effect.
 - Fixed issue where wallpapers did not display in dark mode when only light mode wallpapers were uploaded and the wallpaper type was set to image.
-  ([#40](https://github.com/Redlnn/lemon-new-tab-page/issues/40))
+  ([#40](https://github.com/Redlnn/lemon-new-tab/issues/40))
 - Fixed missing styles.
 - Fixed issue where the dark mode button state did not follow browser or system changes.
-  ([#42](https://github.com/Redlnn/lemon-new-tab-page/issues/42))
+  ([#42](https://github.com/Redlnn/lemon-new-tab/issues/42))
 - Fixed missing color transition animations for some elements on the settings page.
-  ([#43](https://github.com/Redlnn/lemon-new-tab-page/issues/43))
+  ([#43](https://github.com/Redlnn/lemon-new-tab/issues/43))
 - Fixed localization errors/missing translations.
 
 ## 2.5.2 (Oct 21, 2025)
@@ -241,7 +241,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 ### New Features✨
 
 - Brand new macOS-style settings page
-  ([#39](https://github.com/Redlnn/lemon-new-tab-page/pull/39))
+  ([#39](https://github.com/Redlnn/lemon-new-tab/pull/39))
 - Added "Hide major update changelog" switch (enabled by default)
 - Added `text-autospace: normal` to add spacing between CJK and non-CJK characters
 - Support for hiding the search box and clock
@@ -327,7 +327,7 @@ Monet colors from Material Design 3 — bring softer, more dynamic hues to your 
 - Fixed a missing translation
 - Fixed an issue where the config version might not update in time
 - Fixed issue where shortcuts could not be saved on Firefox
-  ([#37](https://github.com/Redlnn/lemon-new-tab-page/issues/37))
+  ([#37](https://github.com/Redlnn/lemon-new-tab/issues/37))
 - Fixed issue where dragging non-pinned shortcuts caused the shortcut area to disappear
 - Fixed misalignment issue when using SVG for custom shortcut icons
 
@@ -577,7 +577,7 @@ Here’s to another year of making your browsing better!
 
 - Fixed the issue that background color does not follow system (or browser)
   when JS is not loaded
-  ([#19](https://github.com/Redlnn/lemon-new-tab-page/issues/19))
+  ([#19](https://github.com/Redlnn/lemon-new-tab/issues/19))
 - Fixed the logic and animation issues of "Dark mode" and "Follow system" switch
 
 ## 1.8.0 (Jan 05, 2025)
@@ -654,7 +654,7 @@ Here’s to another year of making your browsing better!
 - Now you can disable the background of the quick access area.
 - Optimized the position of the search bar after closing the quick access area.
 - **Firefox**: Now supports setting it as the homepage
-  ([#12](https://github.com/Redlnn/lemon-new-tab-page/issues/12)).
+  ([#12](https://github.com/Redlnn/lemon-new-tab/issues/12)).
 
 ### Fixes🐛
 
@@ -678,7 +678,7 @@ Here’s to another year of making your browsing better!
 
 - Fixed the issue where unpinning did not take effect.
 - Fixed the issue where frequently visited sites could not be deleted
-  ([#8](https://github.com/Redlnn/lemon-new-tab-page/issues/8)).
+  ([#8](https://github.com/Redlnn/lemon-new-tab/issues/8)).
 - Fixed the issue where the "Enable Most Visited" switch did not work.
 - Fixed the issue where duplicate shortcuts appeared after hiding most visited.
 - Hid Chrome-specific hints in Firefox browser.

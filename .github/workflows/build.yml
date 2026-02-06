@@ -38,7 +38,7 @@ jobs:
         run: |
           SHORT_HASH=$(echo "${{ github.sha }}" | cut -c1-7)
           cd .output
-          for file in lemon-tab-page-*.zip; do
+          for file in lemon-new-tab-*.zip; do
             if [ -f "$file" ]; then
               new_name=$(echo "$file" | sed -E 's/-[0-9.]+-/-'"$SHORT_HASH"'-/')
               mv "$file" "$new_name"
@@ -59,13 +59,13 @@ jobs:
         with:
           name: ${{ env.ARTIFACT_NAME }}
           include-hidden-files: true
-          path: .output/lemon-tab-page-*.zip
+          path: .output/lemon-new-tab-*.zip
 
       - name: Release Tag
         uses: softprops/action-gh-release@v2
         if: github.ref_type == 'tag'
         with:
-          files: .output/lemon-tab-page-*.zip
+          files: .output/lemon-new-tab-*.zip
           tag_name: ${{ github.ref_name }}
           name: ${{ github.ref_name }}
 
@@ -94,7 +94,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.event_name == 'workflow_dispatch'
         with:
-          files: .output/lemon-tab-page-*.zip
+          files: .output/lemon-new-tab-*.zip
           name: dev-release
           tag_name: dev-release
           prerelease: true

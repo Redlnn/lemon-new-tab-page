@@ -26,7 +26,7 @@ function handleEmailClick() {
       <div class="issue-links">
         <a
           class="issue-link"
-          href="https://github.com/Redlnn/lemon-new-tab-page/issues/new"
+          href="https://github.com/Redlnn/lemon-new-tab/issues/new"
           target="_blank"
         >
           <span class="issue-link-icon">
@@ -71,7 +71,7 @@ function handleEmailClick() {
           <p>{{ t('items.chromeFooter.content.step') }}</p>
           <p>
             {{ t('items.chromeFooter.content.reference') }}
-            <a href="https://github.com/Redlnn/lemon-new-tab-page/issues/30" target="_blank">
+            <a href="https://github.com/Redlnn/lemon-new-tab/issues/30" target="_blank">
               {{ t('items.chromeFooter.content.githubIssue') }}
             </a>
           </p>

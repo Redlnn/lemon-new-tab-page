@@ -71,11 +71,7 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
         >
           <el-icon :size="20"><Firefox /></el-icon>
         </el-link>
-        <el-link
-          underline="never"
-          target="_blank"
-          href="https://github.com/Redlnn/lemon-new-tab-page/"
-        >
+        <el-link underline="never" target="_blank" href="https://github.com/Redlnn/lemon-new-tab/">
           <el-icon :size="20"><Github /></el-icon>
         </el-link>
         <el-link :underline="'never'" target="_blank" href="https://space.bilibili.com/20858581">

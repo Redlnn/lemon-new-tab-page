@@ -1,4 +1,4 @@
-![lemon-new-tab-page](https://socialify.git.ci/redlnn/lemon-new-tab-page/image?custom_description=A+simple+local+new+tab+extension&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab-page%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)
+![lemon-new-tab](https://socialify.git.ci/redlnn/lemon-new-tab/image?custom_description=A+simple+local+new+tab+extension&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)
 
 <div align="center">
 
@@ -83,8 +83,8 @@ This project is built with Vue 3 (TypeScript) + Element Plus.
 #### For Chrome
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab-page.git
-cd lemon-new-tab-page
+git clone https://github.com/Redlnn/lemon-new-tab.git
+cd lemon-new-tab
 pnpm install
 # pnpm dev  # Run development mode, opens in a standalone browser
 # Build
@@ -95,8 +95,8 @@ pnpm zip    # Package Chrome extension
 #### For Firefox
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab-page.git
-cd lemon-new-tab-page
+git clone https://github.com/Redlnn/lemon-new-tab.git
+cd lemon-new-tab
 pnpm install
 # pnpm dev  # Run development mode, opens in a standalone browser
 # Build

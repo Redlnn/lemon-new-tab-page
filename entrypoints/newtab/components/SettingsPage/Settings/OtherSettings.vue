@@ -168,17 +168,17 @@ async function openCustomSearchEngineFilePicker() {
 }
 
 async function exportSettings() {
-  downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lemon-tab-page-settings.json')
+  downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lenmon-new-tab-settings.json')
 }
 
 async function exportShortcuts() {
-  downloadJSON<Shortcut>(shortcuts.$state, 'lemon-tab-page-shortcuts.json')
+  downloadJSON<Shortcut>(shortcuts.$state, 'lenmon-new-tab-shortcuts.json')
 }
 
 async function exportCustomSearchEngines() {
   downloadJSON<CustomSearchEngineStorage>(
     customSearchEngineStore.$state,
-    'lemon-tab-page-custom-search-engines.json'
+    'lenmon-new-tab-custom-search-engines.json'
   )
 }
 
