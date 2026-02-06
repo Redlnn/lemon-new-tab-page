@@ -29,7 +29,9 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
   <base-dialog v-model="opened" acrylic opacity container-class="about__dialog noselect">
     <section>
       <div class="ext-icon">
-        <div class="ext-icon__container"></div>
+        <a href="https://lemon.redlnn.top" target="_blank">
+          <div class="ext-icon__container"></div>
+        </a>
       </div>
       <h1 class="ext-name">{{ browser.i18n.getMessage('extension_name') }}</h1>
       <div class="ext-version">{{ version }}</div>
