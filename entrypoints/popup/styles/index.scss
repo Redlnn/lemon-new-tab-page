@@ -2,19 +2,19 @@
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
 @use 'element-plus/theme-chalk/src/loading.scss' as *;
 
+:root {
+  color-scheme: light dark;
+}
+
 * {
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 html,
 body {
+  padding: 0;
+  margin: 0;
   background: var(--el-bg-color-page);
-}
-
-body {
-  --el-font-weight-primary: 400;
 }
 
 // Colorful 模式：背景和元素添加主题色调

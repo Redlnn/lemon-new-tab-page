@@ -54,6 +54,8 @@
 - **Shortcut:** Fixed an issue where parts of shortcut titles from the previous and next pages were visible
 - **Shortcut:** Fixed issue where shortcut pagination flickered on Firefox
   ([#64](https://github.com/Redlnn/lemon-new-tab/issues/64))
+- **Background:** Fixed issue where white background flickered briefly when first opening in dark mode
+- **Settings:** Fixed issue where dark mode button did not follow system changes when "Follow
 
 ## 3.0.1 (Jan 02, 2026)
 

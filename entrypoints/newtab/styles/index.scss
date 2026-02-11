@@ -23,6 +23,8 @@ html {
 }
 
 :root {
+  color-scheme: light dark;
+
   /* 旧浏览器 fallback */
   --app-vh: 100vh;
   --app-vw: 100vw;

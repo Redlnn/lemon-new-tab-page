@@ -56,6 +56,20 @@ const preferredDark = usePreferredDark()
 const isAuto = computed(() => mode.store.value === 'auto')
 const isAutoUI = ref(isAuto.value)
 
+watch(
+  preferredDark,
+  () => {
+    if (mode.store.value === 'auto') {
+      if (preferredDark.value) {
+        isDarkUI.value = true
+      } else {
+        isDarkUI.value = false
+      }
+    }
+  },
+  { immediate: true }
+)
+
 function changeByPreferred() {
   if (preferredDark.value) {
     document.documentElement.classList.add('dark')
@@ -125,12 +139,6 @@ const beforeMonetChange = async () => {
   const result = await checkAndRequestPermission(hostname, true)
   return result === PermissionResult.GrantedAll
 }
-
-watch(mode, () => {
-  if (mode.value === 'auto') {
-    isDarkUI.value = preferredDark.value
-  }
-})
 </script>
 
 <template>

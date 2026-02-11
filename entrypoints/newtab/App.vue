@@ -183,20 +183,6 @@ watch(
   { immediate: true }
 )
 
-const preferredDark = usePreferredDark()
-const { store } = useColorMode()
-watch(preferredDark, () => {
-  if (store.value === 'auto') {
-    if (preferredDark.value) {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-    } else {
-      document.documentElement.classList.add('light')
-      document.documentElement.classList.remove('dark')
-    }
-  }
-})
-
 function openBookmarkSidebar() {
   if (settings.bookmark.rightClickToOpen) {
     BookmarkRef.value?.show()

@@ -1,7 +1,7 @@
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'
-import { useDebounceFn } from '@vueuse/core'
+import { useColorMode, useDebounceFn, usePreferredDark } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
@@ -14,6 +14,24 @@ import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
 
 import App from './App.vue'
 import { changeTheme } from './shared/theme'
+
+const preferredDark = usePreferredDark()
+const { store } = useColorMode()
+watch(
+  preferredDark,
+  () => {
+    if (store.value === 'auto') {
+      if (preferredDark.value) {
+        document.documentElement.classList.add('dark')
+        document.documentElement.classList.remove('light')
+      } else {
+        document.documentElement.classList.add('light')
+        document.documentElement.classList.remove('dark')
+      }
+    }
+  },
+  { immediate: true }
+)
 
 export const main = async () => {
   const banner = `
