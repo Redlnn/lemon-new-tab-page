@@ -50,6 +50,7 @@ body {
   font-size: var(--el-font-size-base);
   color: var(--el-text-color-primary);
   -webkit-overflow-scrolling: touch; // iOS 让滚动别走主线程
+  text-underline-offset: 0.25em;
 }
 
 html.colorful {
