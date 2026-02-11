@@ -8,6 +8,14 @@
   "faqTitle": "常見問題",
   "faqSubtitle": "希望能幫到你喵~",
   "items": {
+    "activateSearch": {
+      "title": "是否可以在開啟新分頁或瀏覽器時，自動讓搜尋框取得焦點？",
+      "content": {
+        "intro": "由於瀏覽器的安全性政策限制，新建立的分頁無法自動取得焦點，瀏覽器會優先將焦點放在網址列，因此無法實現此功能。",
+        "chrome": "Chrome 或其他 Chromium 系列瀏覽器使用者，在開啟新分頁後按一次 {key} 鍵，即可將焦點切換至本擴充功能的搜尋框。",
+        "firefox": "Firefox 使用者亦相同，但由於 Firefox 會先將焦點移至視窗中的其他按鈕，因此可能需要比 Chrome 使用者多按幾次 {key} 鍵。"
+      }
+    },
     "restoreShortcut": {
       "title": "如何還原已刪除/預設捷徑連結",
       "content": "移除任何快速存取連結後，可在彈出的通知中進行還原操作。"

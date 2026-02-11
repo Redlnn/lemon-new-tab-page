@@ -16,6 +16,9 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
 
 <template>
   <div class="settings__items-container">
+    <p class="settings__item--note" style="margin-top: 1em">
+      {{ t('search.tip') }}
+    </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.search.enabled" />

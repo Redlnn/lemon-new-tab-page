@@ -8,6 +8,14 @@
   "faqTitle": "常見問題解答",
   "faqSubtitle": "希望能幫到你",
   "items": {
+    "activateSearch": {
+      "title": "是否可以一打開新標籤頁或瀏覽器，就自動將焦點移至搜尋框？",
+      "content": {
+        "intro": "由於瀏覽器的安全策略限制，無法在新建立的標籤頁自動取得焦點，瀏覽器會自動聚焦其網址列，因此無法實現。",
+        "chrome": "對於 Chrome 或其他 Chromium 系瀏覽器用戶，打開新標籤頁後按一下 {key} 鍵即可自動激活本擴充功能的搜尋框",
+        "firefox": "對於 FireFox 用戶也是，但由於 FireFox 會先激活其視窗其他按鈕，因此需要比 Chrome 用戶多按幾次 {key} 鍵"
+      }
+    },
     "restoreShortcut": {
       "title": "如何還原已刪除/預設快速存取連結",
       "content": "移除任意快速存取連結後，在彈出的通知中操作即可還原。"

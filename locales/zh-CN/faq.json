@@ -8,6 +8,14 @@
   "faqTitle": "常见问题解答",
   "faqSubtitle": "希望能帮到你喵~",
   "items": {
+    "activateSearch": {
+      "title": "是否可以一打开新标签页或浏览器，就自动激活搜索框？",
+      "content": {
+        "intro": "由于浏览器的安全策略限制，无法在新创建的标签页自动获取焦点，浏览器会自动聚焦其地址栏，因此无法实现。",
+        "chrome": "对于 Chrome 或其他 Chromium 系浏览器用户，打开新标签页后按一下 {key} 键即可自动激活本扩展的搜索框",
+        "firefox": "对于 FireFox 用户也是，但由于 FireFox 会先激活其窗口其他按钮，因此需要比 Chrome 用户多按几次 {key} 键"
+      }
+    },
     "restoreShortcut": {
       "title": "如何恢复已删除/默认快捷链接",
       "content": "移除任意快速访问链接后，在弹出的通知中操作即可恢复。"

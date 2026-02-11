@@ -192,7 +192,8 @@
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",
     "searchSuggestionProvider": "Search suggestion API",
-    "title": "Search"
+    "title": "Search",
+    "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page."
   },
   "shortcut": {
     "HorizontalIconSpacing": "Horizontal icon spacing",

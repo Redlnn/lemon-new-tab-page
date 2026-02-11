@@ -192,7 +192,8 @@
     "placeholder": "搜索框占位文字",
     "recordSearchHistory": "记录搜索历史",
     "searchSuggestionProvider": "搜索建议 API",
-    "title": "搜索"
+    "title": "搜索",
+    "tip": "想要打开新标签页就激活搜索输入？请查看页面右下角按钮菜单的「帮助和反馈」"
   },
   "shortcut": {
     "HorizontalIconSpacing": "链接左右间距",

@@ -44,11 +44,44 @@ function handleEmailClick() {
     </div>
     <div class="faq noselect">
       {{ t('faqTitle') }}
-      <span style="margin-left: 5px; color: var(--el-text-color-secondary)">
+      <span style="margin-left: 5px; font-size: 0.9em; color: var(--el-text-color-secondary)">
         {{ t('faqSubtitle') }}
       </span>
     </div>
     <div class="faq-container">
+      <div class="faq-item">
+        <div class="faq-item__title">{{ t('items.activateSearch.title') }}</div>
+        <div class="markdown-body">
+          <p>
+            {{ t('items.activateSearch.content.intro') }}
+          </p>
+          <ul>
+            <li>
+              <i18next :translation="t('items.activateSearch.content.chrome')">
+                <template #key>
+                  <kbd>Tab</kbd>
+                </template>
+              </i18next>
+            </li>
+            <li>
+              <i18next :translation="t('items.activateSearch.content.firefox')">
+                <template #key>
+                  <kbd>Tab</kbd>
+                </template>
+              </i18next>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-item__title">{{ t('items.performance.title') }}</div>
+        <div class="markdown-body">
+          <ul>
+            <li>{{ t('items.performance.content.item1') }}</li>
+            <li>{{ t('items.performance.content.item2') }}</li>
+          </ul>
+        </div>
+      </div>
       <div class="faq-item">
         <div class="faq-item__title">{{ t('items.restoreShortcut.title') }}</div>
         <div class="markdown-body">

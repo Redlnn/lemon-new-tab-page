@@ -8,6 +8,14 @@
   "faqTitle": "Frequently Asked Questions",
   "faqSubtitle": "Hope this helps~",
   "items": {
+    "activateSearch": {
+      "title": "Can the search box be auto-activated when opening a new tab or browser?",
+      "content": {
+        "intro": "Due to browser security policy restrictions, we cannot automatically focus the search box on a newly created tab. The browser will automatically focus its address bar instead, so this is not possible.",
+        "chrome": "For Chrome and other Chromium-based browser users, you can simply press {key} after opening a new tab to auto-activate our extension's search box.",
+        "firefox": "The same applies to Firefox users, but since Firefox will first activate other buttons in the window, you may need to press {key} several more times than Chrome users."
+      }
+    },
     "restoreShortcut": {
       "title": "How to restore deleted/default shortcut links",
       "content": "After removing any quick access link, you can restore it from the notification that pops up."
