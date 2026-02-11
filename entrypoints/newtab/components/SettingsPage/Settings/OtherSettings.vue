@@ -25,6 +25,7 @@ import { downloadJSON } from '@newtab/shared/getJson'
 import {
   useBingWallpaperStorge,
   useDarkWallpaperStorge,
+  useOnlineWallpaperCacheStore,
   useWallpaperStorge
 } from '@newtab/shared/wallpaper'
 
@@ -89,7 +90,8 @@ async function clearWallpaperData() {
     resetSettings(),
     useWallpaperStorge.clear(),
     useDarkWallpaperStorge.clear(),
-    useBingWallpaperStorge.clear()
+    useBingWallpaperStorge.clear(),
+    useOnlineWallpaperCacheStore.clear()
   ])
     .catch(console.error)
     .finally(() => {
@@ -113,6 +115,7 @@ function clearExtensionData() {
     useWallpaperStorge.clear(),
     useDarkWallpaperStorge.clear(),
     useBingWallpaperStorge.clear(),
+    useOnlineWallpaperCacheStore.clear(),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync')

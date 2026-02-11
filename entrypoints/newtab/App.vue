@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import type { CSSProperties } from 'vue'
-import { useColorMode, usePreferredDark } from '@vueuse/core'
 
 import type { Language } from 'element-plus/es/locale'
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
+import { BgType } from '@/shared/enums'
 import { getLang } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
@@ -14,16 +14,17 @@ import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
 import type AboutCompComponent from './components/About.vue'
+import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
+import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
+import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
 import Background from './components/Background.vue'
 import type BackgroundSwitcherComponent from './components/BackgroundSwitcher/index.vue'
 import Bookmark from './components/Bookmark/index.vue'
-import BookmarkBtn from './components/BookmarkBtn.vue'
 import type ChangelogComponent from './components/Changelog.vue'
 import Clock from './components/Clock.vue'
 import PermissionDialog from './components/PermissionDialog.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import type SearchEnginesSwitcherComponent from './components/SearchEnginesSwitcher/index.vue'
-import SettingsBtn from './components/SettingsBtn.vue'
 import type SettingsPageComponent from './components/SettingsPage/index.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
@@ -85,6 +86,7 @@ type AboutCompInstance = InstanceType<typeof AboutCompComponent>
 type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
 type BackgroundSwitcherInstance = InstanceType<typeof BackgroundSwitcherComponent>
 type BookmarkInstance = InstanceType<typeof Bookmark>
+type BackgroundInstance = InstanceType<typeof Background>
 
 const SettingsPageRef = ref<SettingsPageInstance>()
 const ChangelogRef = ref<ChangelogInstance>()
@@ -93,6 +95,7 @@ const AboutRef = ref<AboutCompInstance>()
 const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
 const BGSwticherRef = ref<BackgroundSwitcherInstance>()
 const BookmarkRef = ref<BookmarkInstance>()
+const BackgroundRef = ref<BackgroundInstance>()
 
 const settings = useSettingsStore()
 
@@ -193,6 +196,20 @@ provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 
 const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = usePermission()
+
+const actionClass = computed(() => {
+  const perf = settings.perf
+  const dt = perf.disableSettingsBtnTransparent
+  const db = perf.disableSettingsBtnBlur
+
+  const enableTransparent = !dt
+  const enableBlur = !db && enableTransparent
+
+  return {
+    'action-btn--tran': enableTransparent,
+    'action-btn--blur': enableBlur
+  }
+})
 </script>
 
 <template>
@@ -220,16 +237,28 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
       <shortcut v-if="settings.shortcut.enabled" @contextmenu.stop />
       <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
     </main>
-    <background />
-    <settings-btn
-      @open-settings="SettingsPageRef?.toggle"
-      @open-changelog="ChangelogRef?.show"
-      @open-about="AboutRef?.toggle"
-      @open-search-engine-preference="SESwitcherRef?.show"
-      @open-faq="FaqRef?.show"
-      @open-background-switcher="BGSwticherRef?.show"
-    />
-    <bookmark-btn v-if="!settings.bookmark.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
+    <background ref="BackgroundRef" />
+    <div class="action-btn-container">
+      <settings-btn
+        :btn-class="actionClass"
+        @open-settings="SettingsPageRef?.toggle"
+        @open-changelog="ChangelogRef?.show"
+        @open-about="AboutRef?.toggle"
+        @open-search-engine-preference="SESwitcherRef?.show"
+        @open-faq="FaqRef?.show"
+        @open-background-switcher="BGSwticherRef?.show"
+      />
+      <bookmark-btn
+        v-if="!settings.bookmark.hideBtn"
+        :btn-class="actionClass"
+        @open-bookmark-sidebar="BookmarkRef?.show"
+      />
+      <refresh-bg-btn
+        v-if="settings.background.bgType === BgType.Online"
+        :btn-class="actionClass"
+        @refresh-background="BackgroundRef?.refreshBackground"
+      ></refresh-bg-btn>
+    </div>
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
     <faq ref="FaqRef" />

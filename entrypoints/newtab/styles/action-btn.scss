@@ -1,8 +1,15 @@
 @use './mixins/acrylic.scss' as acrylic;
 
-.action-btn {
+.action-btn-container {
   position: fixed;
+  right: 30px;
   bottom: 20px;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 5px;
+}
+
+.action-btn {
   width: 37px;
   height: 37px;
   padding: 6px;
@@ -30,7 +37,7 @@
   }
 
   .el-icon {
-    transition: transform 0.15s ease;
+    transition: transform 0.3s ease-in-out;
   }
 
   &:hover {
@@ -40,20 +47,30 @@
 }
 
 .bookmark-btn {
-  right: 72px;
+  &:hover {
+    .el-icon {
+      transform: scaleX(-1);
+    }
+  }
+}
+
+.refresh-btn {
+  &:hover {
+    .el-icon {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 .setting-btn {
-  right: 30px;
-
-  .el-badge {
-    display: block;
-  }
-
   &:hover {
     .el-icon {
       transform: rotate(180deg);
     }
+  }
+
+  .el-badge {
+    display: block;
   }
 
   &__popper.el-popper {

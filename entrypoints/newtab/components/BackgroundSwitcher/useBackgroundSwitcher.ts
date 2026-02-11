@@ -9,6 +9,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {
+  clearAllOnlineWallpaperCache,
   uploadBackground,
   useDarkWallpaperStorge,
   useWallpaperStorge,
@@ -199,6 +200,13 @@ function useBackgroundSwitcher() {
         settings.theme.monetColor = false
         ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
       }
+      // 如果只授予了当前地址权限，则无法安全使用在线壁纸缓存。
+      // 如果用户之前启用了缓存，则自动关闭并清理缓存，同时给出提示说明原因。
+      if (settings.background.online.cacheEnable) {
+        settings.background.online.cacheEnable = false
+        await clearAllOnlineWallpaperCache()
+        ElMessage.warning(i18next.t('settings:background.warning.cacheDisabled'))
+      }
       return true
     }
 
@@ -218,6 +226,8 @@ function useBackgroundSwitcher() {
       tempOnlineUrl.value = ''
       return
     }
+    // 清除已有缓存
+    await clearAllOnlineWallpaperCache()
     const { hostname } = new URL(_url)
 
     if (import.meta.env.FIREFOX && !settings.theme.monetColor) {

@@ -62,6 +62,9 @@ export interface SettingsInterfaceVer8 {
     bing: bingBackground
     online: {
       url: string
+      cacheEnable: boolean
+      cacheDuration: number // 缓存时长，单位为小时
+      noExpires: boolean
     }
   }
 

@@ -15,6 +15,10 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { getPerfClasses } from '@newtab/composables/perfClasses'
 
+defineProps<{
+  btnClass: Record<string, boolean>
+}>()
+
 const emit = defineEmits<{
   (e: 'open-settings'): void
   (e: 'open-changelog'): void
@@ -52,15 +56,7 @@ function sponsorMessage() {
     trigger="click"
     @contextmenu.prevent.stop
   >
-    <div
-      class="action-btn setting-btn"
-      :class="{
-        'action-btn--tran': !settings.perf.disableSettingsBtnTransparent,
-        'action-btn--blur': !(
-          settings.perf.disableSettingsBtnBlur || settings.perf.disableSettingsBtnTransparent
-        )
-      }"
-    >
+    <div class="action-btn setting-btn" :class="btnClass">
       <el-badge is-dot :offset="[3, 0]" :hidden="settings.readChangeLog">
         <el-icon><settings-twotone /></el-icon>
       </el-badge>

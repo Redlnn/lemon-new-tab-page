@@ -9,9 +9,15 @@
         "sun": "Bathe in sunlight"
       }
     },
+    "cache": {
+      "duration": "Cache expiration duration",
+      "noExpires": "Cache never expires",
+      "nextStartup": "Effective on next startup"
+    },
     "change": "Change background",
     "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
     "custom": "Custom",
+    "enableOnlineWallpaperCache": "Online wallpaper cache",
     "enableVignetting": "Enable vignetting",
     "fasterBgAnim": "Faster background display on startup",
     "maskColor": "Mask color",
@@ -36,7 +42,7 @@
         },
         "subB": {
           "content": "Requires “Access all sites”.",
-          "label": "Dynamic Theme Colors (Monet Extraction): "
+          "label": "Dynamic theme colors / Cache: "
         },
         "title": "Permission Request"
       }
@@ -53,10 +59,11 @@
     "videoBlurTip": "Turn on to reduce performance usage when multiple new tabs or windows are open on the screen simultaneously.",
     "videoWarning": "Using a video as a background consumes a lot of GPU resources. It is recommended to avoid opening multiple new tabs at the same time. It is recommended to turn off animation, blur, and transparency effects appropriately to reduce performance consumption.",
     "warning": {
+      "cacheDisabled": "Online wallpaper caching has been disabled because the “Access all websites” permission was not granted.",
       "fileIsNotImage": "The selected file is not an image!",
       "granted": "Permission granted.",
       "monetColorDisabled": "Monet color extraction disabled",
-      "monetDisabled": "Dynamic Theme Colors (Monet Extraction) has been disabled because \"Access all sites\" permission was not granted.",
+      "monetDisabled": "Dynamic Theme Colors (Monet Extraction) has been disabled because “Access all sites” permission was not granted.",
       "notGranted": "Permission not granted, cannot access this host.",
       "title": "Warning",
       "tooLarge": {
@@ -113,6 +120,7 @@
   },
   "common": {
     "copyLink": "Copy Link Address",
+    "hour": "Hour",
     "openInNewTab": "Open in New Tab",
     "openInNewWindow": "Open in New Window"
   },
@@ -192,8 +200,8 @@
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",
     "searchSuggestionProvider": "Search suggestion API",
-    "title": "Search",
-    "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page."
+    "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page.",
+    "title": "Search"
   },
   "shortcut": {
     "HorizontalIconSpacing": "Horizontal icon spacing",
@@ -252,6 +260,10 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "monet": {
+      "askEnableCache": {
+        "message": "To use dynamic theme colors, online wallpaper cache must be enabled. Enabling cache will store images from this domains. Do you want to enable it?",
+        "title": "Enable wallpaper cache?"
+      },
       "desc": "Inspired by Material Design 3, extracts theme colors from your wallpaper. Only supports image backgrounds. For the best visual effect, use it together with the “Global Color Mode” option.",
       "label": "Dynamic Theme Colors (Monet Extraction)"
     },

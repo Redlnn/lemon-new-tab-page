@@ -9,9 +9,15 @@
         "sun": "晒太阳"
       }
     },
+    "cache": {
+      "duration": "缓存有效期",
+      "noExpires": "缓存永不过期",
+      "nextStartup": "下次启动生效"
+    },
     "change": "更改背景",
     "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
     "custom": "自定义",
+    "enableOnlineWallpaperCache": "在线壁纸缓存",
     "enableVignetting": "暗角效果",
     "fasterBgAnim": "启动时更快地显示背景",
     "maskColor": "遮罩颜色",
@@ -36,7 +42,7 @@
         },
         "subB": {
           "content": "需要「访问所有网站」",
-          "label": "动态主题色（莫奈取色）："
+          "label": "动态主题色 / 壁纸缓存："
         },
         "title": "权限请求"
       }
@@ -53,6 +59,7 @@
     "videoBlurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用",
     "videoWarning": "使用视频作为背景会大量消耗 GPU 资源，建议避免同时开多个新标签页，建议适当关闭动画、模糊、透明效果以降低性能消耗",
     "warning": {
+      "cacheDisabled": "由于未授予「访问所有网站」权限，无法安全缓存在线壁纸，故已将「在线壁纸缓存」关闭。",
       "fileIsNotImage": "所选文件不是图片！",
       "granted": "已授予访问权限",
       "monetColorDisabled": "莫奈取色已关闭",
@@ -113,6 +120,7 @@
   },
   "common": {
     "copyLink": "复制链接地址",
+    "hour": "小时",
     "openInNewTab": "在新标签页中打开",
     "openInNewWindow": "在新窗口中打开"
   },
@@ -192,8 +200,8 @@
     "placeholder": "搜索框占位文字",
     "recordSearchHistory": "记录搜索历史",
     "searchSuggestionProvider": "搜索建议 API",
-    "title": "搜索",
-    "tip": "想要打开新标签页就激活搜索输入？请查看页面右下角按钮菜单的「帮助和反馈」"
+    "tip": "想要打开新标签页就激活搜索输入？请查看页面右下角按钮菜单的「帮助和反馈」",
+    "title": "搜索"
   },
   "shortcut": {
     "HorizontalIconSpacing": "链接左右间距",
@@ -252,6 +260,10 @@
     "darkMode": "深色模式",
     "lightMode": "浅色模式",
     "monet": {
+      "askEnableCache": {
+        "message": "要使用动态主题色，需要启用在线壁纸缓存，启用缓存将存储来自这个域名的图片。是否启用？",
+        "title": "启用壁纸缓存？"
+      },
       "desc": "源自 Material Design 3，从壁纸中提取主题色。仅支持图片背景，搭配「全局色彩」可获得最佳视觉效果。",
       "label": "动态主题色（莫奈取色）"
     },

@@ -18,6 +18,8 @@
 - **Clock:** Added support for setting AM/PM font size to follow time font size
 - **Clock:** Added support for setting clock font size (small, medium, large)
 - **Search:** The search bar now supports closing with the Esc key.
+- **Online Wallpaper:** Added support for caching online wallpapers.
+  ([#69](https://github.com/Redlnn/lemon-new-tab/issues/69))
 
 ### Improvements⚡️
 

@@ -2,7 +2,7 @@ import localForage from 'localforage'
 
 import { storage } from '#imports'
 
-const COMMON_CONFIG: LocalForageOptions = {
+export const COMMON_CONFIG: LocalForageOptions = {
   name: '柠檬起始页',
   driver: localForage.INDEXEDDB
 }

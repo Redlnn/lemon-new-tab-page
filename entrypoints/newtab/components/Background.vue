@@ -17,7 +17,13 @@ import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
-import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
+import {
+  bingWallpaperURLGetter,
+  cacheOnlineWallpaper,
+  clearAllOnlineWallpaperCache,
+  getCachedOnlineWallpaper,
+  useWallpaperUrlStore
+} from '@newtab/shared/wallpaper'
 
 let animationDuration = 1250
 let hasShortenedFade = false
@@ -111,9 +117,12 @@ const bgTypeProviders: Record<
   [BgType.Online]: async () => {
     const rawUrl = settings.background.online.url
     if (!rawUrl) return ''
-    if (!settings.theme.monetColor) {
+
+    // 如果没有开启缓存且没有开启莫奈，直接返回原始URL
+    if (!settings.background.online.cacheEnable && !settings.theme.monetColor) {
       return rawUrl
     }
+
     if (isChrome) {
       const allGranted = await browser.permissions.contains({ origins: [`*://*/*`] })
       if (!allGranted) {
@@ -122,9 +131,28 @@ const bgTypeProviders: Record<
     }
 
     try {
-      const response = await fetch(rawUrl)
-      if (!response.ok) throw new Error(response.statusText)
-      const blob = await response.blob()
+      let blob: Blob | null = null
+
+      // 如果开启了缓存，则尝试从缓存中获取
+      if (settings.background.online.cacheEnable) {
+        blob = await getCachedOnlineWallpaper(
+          rawUrl,
+          settings.background.online.noExpires ? Infinity : settings.background.online.cacheDuration
+        )
+      }
+
+      // 如果缓存中没有（或没有开启缓存），则下载新的
+      if (!blob) {
+        const response = await fetch(rawUrl)
+        if (!response.ok) throw new Error(response.statusText)
+        blob = await response.blob()
+
+        // 缓存新下载的图像（如果开启了缓存）
+        if (settings.background.online.cacheEnable) {
+          await cacheOnlineWallpaper(rawUrl, blob)
+        }
+      }
+
       const blobUrl = URL.createObjectURL(blob)
       return blobUrl
     } catch {
@@ -281,6 +309,21 @@ onMounted(async () => {
   // 初始化时激活当前背景类型的watch
   activateBackgroundWatch(settings.background.bgType)
 })
+
+// 暴露刷新方法，供父组件调用
+async function refreshBackground() {
+  const type = settings.background.bgType
+  try {
+    if (type === BgType.Bing) {
+      await bingWallpaperURLGetter.refresh(true)
+      await updateBackgroundURL(BgType.Bing)
+    } else if (type === BgType.Online) {
+      await clearAllOnlineWallpaperCache(bgURL.value)
+      await updateBackgroundURL(BgType.Online)
+    }
+  } catch {}
+}
+defineExpose({ refreshBackground })
 
 useEventListener('pageshow', async (e) => {
   if (e.persisted) {

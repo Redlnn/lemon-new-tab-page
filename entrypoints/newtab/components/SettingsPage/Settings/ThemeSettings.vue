@@ -2,6 +2,7 @@
 import { useColorMode, usePreferredDark, useTimeoutFn } from '@vueuse/core'
 
 import { CloudOffRound } from '@vicons/material'
+import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
 import { BgType } from '@/shared/enums'
@@ -129,15 +130,39 @@ function toggleAuto() {
 const { checkAndRequestPermission } = usePermission()
 
 const beforeMonetChange = async () => {
+  // 已经开了就是想要关，所以允许关
   if (settings.theme.monetColor) return true
-
+  // 无背景不允许开
   if (settings.background.bgType === BgType.None) return false
+  // 必应和本地壁纸随便开
   if (settings.background.bgType !== BgType.Online) return true
-  if (!settings.background.online.url) return false
+  if (settings.background.bgType === BgType.Online) {
+    // 没有在线壁纸url不给开
+    if (!settings.background.online.url) return false
+    // 开了缓存说明有权限不再申请
+    if (settings.background.online.cacheEnable) return true
 
+    try {
+      await ElMessageBox.confirm(
+        t('theme.monet.askEnableCache.message'),
+        t('theme.monet.askEnableCache.title'),
+        { type: 'warning' }
+      )
+    } catch {
+      // 用户取消或关闭对话框：不允许开启
+      return false
+    }
+  }
+
+  // 用户同意开启缓存
   const { hostname } = new URL(settings.background.online.url)
   const result = await checkAndRequestPermission(hostname, true)
-  return result === PermissionResult.GrantedAll
+  const res = result === PermissionResult.GrantedAll
+
+  if (res) settings.background.online.cacheEnable = true
+  else ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
+
+  return res
 }
 </script>
 

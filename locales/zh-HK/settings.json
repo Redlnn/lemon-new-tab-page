@@ -9,9 +9,15 @@
         "sun": "曬太陽"
       }
     },
+    "cache": {
+      "duration": "快取有效期",
+      "noExpires": "快取永不過期",
+      "將於下次啟動時生效": "下次启动生效"
+    },
     "change": "更改背景",
     "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
     "custom": "自訂",
+    "enableOnlineWallpaperCache": "線上壁紙快取",
     "enableVignetting": "暗角效果",
     "fasterBgAnim": "啟動時更快地顯示背景",
     "maskColor": "",
@@ -36,7 +42,7 @@
         },
         "subB": {
           "content": "需要「訪問所有網站」",
-          "label": "動態主題色（莫奈取色）："
+          "label": "動態主題色 / 壁紙快取："
         },
         "title": "權限請求"
       }
@@ -53,6 +59,7 @@
     "videoBlurTip": "啟用此開關可緩解同時開啟多個新分頁或多個視窗時的效能佔用",
     "videoWarning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開多個新分頁，建議適當停用動效、模糊、透明效果以降低效能消耗",
     "warning": {
+      "cacheDisabled": "由於未授予「訪問所有網站」權限，無法安全快取線上壁紙，因此已停用「線上壁紙快取」。",
       "fileIsNotImage": "所選檔案並非圖片！",
       "granted": "已授權訪問",
       "monetColorDisabled": "莫奈取色已關閉",
@@ -113,6 +120,7 @@
   },
   "common": {
     "copyLink": "複製連結網址",
+    "hour": "個鈡",
     "openInNewTab": "在新分頁中開啟",
     "openInNewWindow": "在新視窗中開啟"
   },
@@ -192,8 +200,8 @@
     "placeholder": "搜尋框占位文字",
     "recordSearchHistory": "記錄搜尋歷史",
     "searchSuggestionProvider": "搜尋建議 API",
-    "title": "搜尋",
-    "tip": "想要打開新分頁就將焦點移至搜尋框？請查看頁面右下角按鈕菜單的「幫助和反饋」"
+    "tip": "想要打開新分頁就將焦點移至搜尋框？請查看頁面右下角按鈕菜單的「幫助和反饋」",
+    "title": "搜尋"
   },
   "shortcut": {
     "HorizontalIconSpacing": "連結左右間距",
@@ -252,6 +260,10 @@
     "darkMode": "深色模式",
     "lightMode": "淺色模式",
     "monet": {
+      "askEnableCache": {
+        "message": "要使用動態主題色，需啟用線上壁紙快取。啟用快取將儲存來自這個網址的圖片。是否啟用？",
+        "title": "啟用壁紙快取？"
+      },
       "desc": "源自 Material Design 3，從背景提取主題色。只支援圖片背景，配合「全局色彩」可獲得最佳視覺效果。",
       "label": "動態主題色（莫奈取色）"
     },

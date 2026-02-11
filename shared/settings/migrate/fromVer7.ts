@@ -64,7 +64,10 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
         updateDate: oldSettings.bingBackground.updateDate
       },
       online: {
-        url: oldSettings.background.onlineUrl
+        url: oldSettings.background.onlineUrl,
+        cacheEnable: defaultSettings.background.online.cacheEnable,
+        cacheDuration: defaultSettings.background.online.cacheDuration,
+        noExpires: defaultSettings.background.online.noExpires
       }
     },
     shortcut: {

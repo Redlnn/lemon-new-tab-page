@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import { BubbleChartRound } from '@vicons/material'
+import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
+import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import { OPEN_BACKGROUND_PREFERENCE } from '@newtab/shared/keys'
 
 const { t } = useTranslation('settings')
@@ -14,6 +16,24 @@ const settings = useSettingsStore()
 const predefineMaskColor = ['#f2f3f5', '#000']
 
 const openBackgroundPreference = inject(OPEN_BACKGROUND_PREFERENCE)
+
+const { checkAndRequestPermission } = usePermission()
+
+const beforeCacheChange = async () => {
+  // 已经开了就是想要关，所以允许关
+  if (settings.background.online.cacheEnable) return true
+  // 不是在线壁纸不允许开
+  if (settings.background.bgType !== BgType.Online) return false
+  // 没有在线壁纸url不给开
+  if (!settings.background.online.url) return false
+
+  const { hostname } = new URL(settings.background.online.url)
+  const result = await checkAndRequestPermission(hostname, true)
+  const res = result === PermissionResult.GrantedAll
+  if (res) ElMessage.success(i18next.t('settings:background.cache.nextStartup'))
+  else ElMessage.warning(i18next.t('settings:background.warning.cacheDisabled'))
+  return res
+}
 </script>
 
 <template>
@@ -83,6 +103,39 @@ const openBackgroundPreference = inject(OPEN_BACKGROUND_PREFERENCE)
           "
         />
       </span>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.enableOnlineWallpaperCache') }}</div>
+      <el-switch
+        v-model="settings.background.online.cacheEnable"
+        :disabled="settings.background.bgType !== BgType.Online"
+        :before-change="beforeCacheChange"
+      />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.cache.noExpires') }}</div>
+      <el-switch
+        v-model="settings.background.online.noExpires"
+        :disabled="!settings.background.online.cacheEnable"
+      />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.cache.duration') }}</div>
+      <el-input-number
+        v-model="settings.background.online.cacheDuration"
+        :disabled="
+          settings.background.bgType !== BgType.Online ||
+          !settings.background.online.cacheEnable ||
+          settings.background.online.noExpires
+        "
+        :step="0.1"
+        :min="0.1"
+        style="width: 150px"
+      >
+        <template #suffix>
+          <span>{{ t('common.hour') }}</span>
+        </template>
+      </el-input-number>
     </div>
   </div>
 </template>

@@ -66,7 +66,10 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
       updateDate: ''
     },
     online: {
-      url: ''
+      url: '',
+      cacheEnable: false,
+      cacheDuration: 1, // 默认缓存1小时
+      noExpires: false
     }
   },
   shortcut: {
