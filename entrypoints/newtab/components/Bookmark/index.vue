@@ -134,7 +134,7 @@ watch(
   () => store.firstMatchPath,
   (path) => {
     activeMap.value = {}
-    if (path && path.length > 0) {
+    if (path.length > 0) {
       for (let i = 0, len = path.length; i < len; i++) {
         // 深度索引从 1 开始
         activeMap.value[i + 1] = [path[i]!]

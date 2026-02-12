@@ -28,7 +28,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   const updateRef = (type: 'light' | 'dark' | 'bing', url: string) => {
     const targetRef = getTargetRef(type)
     const oldUrl = targetRef.value
-    if (oldUrl && oldUrl.startsWith('blob:') && oldUrl !== url) {
+    if (oldUrl.startsWith('blob:') && oldUrl !== url) {
       URL.revokeObjectURL(oldUrl)
     }
     targetRef.value = url
@@ -116,7 +116,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
     const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
     const cachedUrl = cache[type]
-    if (cachedUrl && cachedUrl.startsWith('blob:') && cachedUrl !== url) {
+    if (cachedUrl.startsWith('blob:') && cachedUrl !== url) {
       URL.revokeObjectURL(cachedUrl)
     }
 
@@ -128,7 +128,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
     const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
     const cachedUrl = cache[type]
-    if (cachedUrl && cachedUrl.startsWith('blob:')) {
+    if (cachedUrl.startsWith('blob:')) {
       URL.revokeObjectURL(cachedUrl)
     }
 
