@@ -182,17 +182,19 @@ const dialogId = computed(() => {
     position: absolute;
     top: 15px;
     right: 20px;
-    height: 20px;
+    width: 24px;
+    height: 24px;
+    padding: 2px;
     line-height: 1em;
     color: var(--el-text-color-regular);
     cursor: pointer;
-    transition:
-      transform 0.1s ease-in-out,
-      color var(--el-transition-duration-fast) ease;
+    border-radius: 50%;
+    transition: var(--el-transition-duration-fast) ease-in-out;
 
     &:hover {
       color: var(--el-text-color-primary);
-      transform: rotate(90deg);
+      background-color: var(--el-fill-color-blank);
+      transform: rotate(180deg);
     }
 
     svg {

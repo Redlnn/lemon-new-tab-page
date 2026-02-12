@@ -37,7 +37,7 @@
   }
 
   .el-icon {
-    transition: transform 0.3s ease-in-out;
+    transition: transform var(--el-transition-duration) ease-in-out;
   }
 
   &:hover {

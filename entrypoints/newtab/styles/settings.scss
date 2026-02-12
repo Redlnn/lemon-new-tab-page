@@ -43,24 +43,22 @@
   text-align: center;
   cursor: move;
 
-  .base-dialog-close-btn {
-    width: 20px;
-    line-height: 1;
-  }
-
   .mobile-back-btn {
     position: absolute;
     top: 15px;
     left: 20px;
-    width: 20px;
-    height: 20px;
-    line-height: 1;
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+    line-height: 1em;
     color: var(--el-text-color-regular);
     cursor: pointer;
-    transition: color var(--el-transition-duration-fast);
+    border-radius: 50%;
+    transition: var(--el-transition-duration-fast) ease-in-out;
 
     &:hover {
       color: var(--el-text-color-primary);
+      background-color: var(--el-fill-color-blank);
     }
   }
 }

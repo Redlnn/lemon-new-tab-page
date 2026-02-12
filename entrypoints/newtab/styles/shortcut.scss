@@ -160,7 +160,7 @@
     transition:
       background-color var(--el-transition-duration-fast) ease,
       box-shadow var(--el-transition-duration-fast) ease,
-      transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform var(--el-transition-duration) cubic-bezier(0.4, 0, 0.2, 1);
 
     a {
       color: inherit;

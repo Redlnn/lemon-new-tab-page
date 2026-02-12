@@ -30,7 +30,7 @@
     margin-bottom: 5px;
     font-size: 60px;
     transition:
-      font-size 0.3s cubic-bezier(0.5, 0, 0.5, 1.8),
+      font-size var(--el-transition-duration) cubic-bezier(0.5, 0, 0.5, 1.8),
       font-weight var(--el-transition-duration) ease;
 
     .clock__time {
@@ -41,7 +41,7 @@
     .clock__meridiem {
       margin-right: 5px;
       line-height: 1em;
-      transition: font-size 0.3s cubic-bezier(0.5, 0, 0.5, 1.8);
+      transition: font-size var(--el-transition-duration) cubic-bezier(0.5, 0, 0.5, 1.8);
 
       &-small {
         font-size: 36px;
