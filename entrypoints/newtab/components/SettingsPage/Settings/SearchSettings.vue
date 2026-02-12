@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BubbleChartRound } from '@vicons/material'
+import { BubbleChartRound, CloudOffRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
@@ -24,7 +24,10 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
       <el-switch v-model="settings.search.enabled" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('search.defaultSearchEngine') }}</div>
+      <div class="settings__label">
+        {{ t('search.defaultSearchEngine') }}
+        <cloud-off-round />
+      </div>
       <el-button
         :icon="BubbleChartRound"
         @click="openSearchEnginePreference && openSearchEnginePreference()"

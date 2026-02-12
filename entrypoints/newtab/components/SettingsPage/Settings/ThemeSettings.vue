@@ -183,7 +183,10 @@ const beforeMonetChange = async () => {
       <el-switch v-model="isAutoUI" @change="toggleAuto" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('theme.monet.label') }}</div>
+      <div class="settings__label">
+        {{ t('theme.monet.label') }}
+        <cloud-off-round />
+      </div>
       <el-switch
         v-model="settings.theme.monetColor"
         :disabled="settings.background.bgType === BgType.None"

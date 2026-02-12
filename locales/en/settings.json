@@ -159,8 +159,8 @@
     "purge": "Purge",
     "purgeData": "Purge all data",
     "purgeWallpaperData": "Purge wallpaper cache",
-    "sync": "Cloud sync",
-    "syncWarning": "Cloud sync does not support syncing the following items: local or online background images, most visited sites (including ignored sites), dark mode, and system follow status. Items that are not supported for sync will have an icon like this on the right:\n",
+    "sync": "Cloud Sync (Experimental)",
+    "syncWarning": "Cloud Sync may overwrite local settings and cannot sync the following items: background images, most visited sites, dark mode state, etc. Items that do not support syncing will be marked with an indicator as shown on the right:",
     "title": "Other"
   },
   "perf": {

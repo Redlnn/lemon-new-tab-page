@@ -3,6 +3,7 @@ import { useDebounceFn } from '@vueuse/core'
 
 import { browser } from 'wxt/browser'
 
+import { BgType } from '../enums'
 import type {
   CURRENT_CONFIG_INTERFACE,
   OldSettingsInterface,
@@ -305,15 +306,37 @@ export const useSyncDataStore = defineStore('sync', {
           }
         }
 
-        cloudData.settings.background.bgType = localSettings.background.bgType // 保持本地背景类型
-        cloudData.settings.background.local = localSettings.$state.background.local // 保持本地壁纸数据
-        cloudData.settings.background.localDark = localSettings.$state.background.localDark || {
+        const localState = localSettings.$state
+
+        cloudData.settings.background.bgType = localState.background.bgType // 保持本地背景类型
+        cloudData.settings.background.local = localState.background.local // 保持本地壁纸数据
+        cloudData.settings.background.localDark = localState.background.localDark || {
           id: '',
           url: '',
           mediaType: undefined
         } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
-        cloudData.settings.background.bing = localSettings.$state.background.bing // 保持本地必应壁纸数据
-        cloudData.settings.background.online.url = localSettings.$state.background.online.url // 保持本地在线壁纸URL
+        cloudData.settings.background.bing = localState.background.bing // 保持本地必应壁纸数据
+        cloudData.settings.background.online.url = localState.background.online.url // 保持本地在线壁纸URL
+
+        // 用了自定义搜索引擎则保持不变
+        if (
+          !['google', 'baidu', 'bing', 'yandex', 'duckduckgo'].includes(
+            cloudData.settings.search.engine
+          )
+        ) {
+          cloudData.settings.search.engine = localState.search.engine
+        }
+
+        // 在线壁纸需获取权限，禁用相关设置
+        // 保持本地在线壁纸缓存设置
+        cloudData.settings.background.online.cacheEnable = localState.background.online.cacheEnable
+        if (
+          localSettings.background.bgType === BgType.Online &&
+          !localState.background.online.cacheEnable
+        ) {
+          // 关闭莫奈
+          cloudData.settings.theme.monetColor = false
+        }
 
         localSettings.$patch(cloudData.settings)
         saveShortcut(cloudData.bookmarks)

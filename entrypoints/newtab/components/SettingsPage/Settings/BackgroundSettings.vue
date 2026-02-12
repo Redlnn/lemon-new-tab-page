@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { BubbleChartRound } from '@vicons/material'
+import { BubbleChartRound, CloudOffRound } from '@vicons/material'
 import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
@@ -39,7 +39,10 @@ const beforeCacheChange = async () => {
 <template>
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('background.change') }}</div>
+      <div class="settings__label">
+        {{ t('background.change') }}
+        <cloud-off-round />
+      </div>
       <el-button
         :icon="BubbleChartRound"
         @click="openBackgroundPreference && openBackgroundPreference()"
@@ -105,7 +108,10 @@ const beforeCacheChange = async () => {
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('background.enableOnlineWallpaperCache') }}</div>
+      <div class="settings__label">
+        {{ t('background.enableOnlineWallpaperCache') }}
+        <cloud-off-round />
+      </div>
       <el-switch
         v-model="settings.background.online.cacheEnable"
         :disabled="settings.background.bgType !== BgType.Online"
