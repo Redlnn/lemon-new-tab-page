@@ -219,13 +219,23 @@ function getSortedTree(mode: SortMode): BookmarkTreeNode[] {
 }
 
 function filter(query: string, mode: SortMode) {
-  const q = (query || '').trim().toLowerCase()
+  const q = query.trim().toLowerCase()
   const source = getSortedTree(mode)
 
   if (!q) {
+    // 如果没有查询，返回完整排序树并默认展开第一个有内容的顶层目录
+    let firstMatchPath: string[] = []
+    for (let i = 0; i < source.length; i++) {
+      const n = source[i]!
+      if (n.children && n.children.length) {
+        firstMatchPath = [n.id]
+        break
+      }
+    }
+
     return {
       filteredResult: source,
-      firstMatchPath: []
+      firstMatchPath
     }
   }
 
@@ -334,7 +344,11 @@ self.onmessage = (e: MessageEvent) => {
         break
 
       case 'FILTER':
-        const { query, sortMode } = payload
+        const { query, sortMode } = payload as {
+          query: string
+          sortMode: SortMode
+          language: string
+        }
         const res = filter(query, sortMode)
         self.postMessage({ type: 'FILTER_DONE', ...res })
         break

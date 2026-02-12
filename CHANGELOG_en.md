@@ -36,6 +36,7 @@
 - **Bookmarks Bar:** In the bookmark sidebar, folders are only placed at the front when not in original sorting
 - **Bookmarks Bar:** Changed the default sorting of the bookmark sidebar to original sorting
 - **Bookmarks Bar:** Allow multiple same-level directories to be expanded in the bookmark sidebar
+- **Bookmarks Bar:** Default to expanding the first top-level directory with content
 - **Clock:** Adjusted the placement of AM/PM in English environments to be before the time
 
 ### Removed 🗑️

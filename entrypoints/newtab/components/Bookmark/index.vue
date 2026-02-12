@@ -133,11 +133,6 @@ const topModel = computed({
 watch(
   () => store.firstMatchPath,
   (path) => {
-    const q = (store.searchQuery || '').trim()
-    if (!q) {
-      return
-    }
-
     activeMap.value = {}
     if (path && path.length > 0) {
       for (let i = 0, len = path.length; i < len; i++) {
