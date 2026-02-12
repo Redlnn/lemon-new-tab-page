@@ -314,12 +314,7 @@ const isDragDisabled = computed(() => {
           </el-icon>
         </div>
       </template>
-      <el-collapse
-        v-if="shouldRenderChildren"
-        v-model="model"
-        expand-icon-position="left"
-        :class="{ 'bookmark-no-drag': isDragDisabled }"
-      >
+      <el-collapse v-if="shouldRenderChildren" v-model="model" expand-icon-position="left">
         <vue-draggable
           v-model="localChildren"
           :disabled="isDragDisabled"

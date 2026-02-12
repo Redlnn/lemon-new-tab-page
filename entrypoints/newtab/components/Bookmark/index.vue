@@ -476,8 +476,4 @@ watch(
     }
   }
 }
-
-.bookmark-no-drag {
-  pointer-events: none;
-}
 </style>
