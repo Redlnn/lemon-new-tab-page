@@ -1,25 +1,3 @@
-/**
- * 创建一个可以被中止的 Promise
- */
-function createAbortablePromise<T>(promise: Promise<T>, timeoutMs: number): Promise<T> {
-  const controller = new AbortController()
-  const { signal } = controller
-
-  const timeoutPromise = new Promise<T>((_, reject) => {
-    const timeout = setTimeout(() => {
-      controller.abort()
-      reject(new Error(`Request timed out after ${timeoutMs}ms`))
-    }, timeoutMs)
-
-    // 清理定时器
-    signal.addEventListener('abort', () => clearTimeout(timeout))
-  })
-
-  const fetchPromise = promise.finally(() => controller.abort())
-
-  return Promise.race([fetchPromise, timeoutPromise])
-}
-
 interface FetchOptions extends RequestInit {
   timeout?: number
   responseType?: 'json' | 'text'
@@ -44,17 +22,16 @@ export async function enhancedFetch<T = unknown>(
   }
 
   const controller = new AbortController()
-  const { signal } = controller
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
 
   try {
-    const response = await createAbortablePromise(
-      fetch(url, {
-        ...fetchOptions,
-        headers,
-        signal
-      }),
-      timeout
-    )
+    const response = await fetch(url, {
+      ...fetchOptions,
+      headers,
+      signal: controller.signal
+    })
+
+    clearTimeout(timeoutId)
 
     // 处理 HTTP 错误状态码
     if (!response.ok) {
@@ -74,9 +51,16 @@ export async function enhancedFetch<T = unknown>(
     return response.json() as Promise<T>
   } catch (error) {
     if (error instanceof Error) {
-      console.error('Fetch error:', error.message)
+      // 区分超时/中止错误
+      if (error.name === 'AbortError') {
+        console.error(`Fetch aborted after ${timeout}ms:`, url)
+      } else {
+        console.error('Fetch error:', error.message)
+      }
     }
     throw error
+  } finally {
+    clearTimeout(timeoutId)
   }
 }
 
