@@ -16,12 +16,12 @@ import type { TopSites } from 'webextension-polyfill'
 import { useSettingsStore } from '@/shared/settings'
 import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
 
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/shared/store'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
-import getPerfClasses from '../../composables/perfClasses'
 import AddShortcut from './components/AddShortcut.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import ShortcutPaginationDots from './components/ShortcutPaginationDots.vue'
@@ -371,15 +371,12 @@ const containerGridStyle = computed(() => ({
 }))
 
 // 导航按钮通用class
-const navBtnBaseClasses = computed(() =>
-  getPerfClasses(
-    {
-      transparentOff: settings.perf.disableShortcutTransparent,
-      blurOff: settings.perf.disableShortcutBlur
-    },
-    'shortcut__nav-btn'
-  )
-)
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableShortcutTransparent,
+  blurOff: settings.perf.disableShortcutBlur
+}))
+
+const navBtnPerfClass = perf('shortcut__nav-btn')
 </script>
 
 <template>
@@ -399,7 +396,7 @@ const navBtnBaseClasses = computed(() =>
           class="shortcut__nav-btn--prev"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === 0 || isAnimating },
-            navBtnBaseClasses
+            navBtnPerfClass
           ]"
           :disabled="currentPage === 0 || isAnimating"
           @click="prevPage"
@@ -545,7 +542,7 @@ const navBtnBaseClasses = computed(() =>
           class="shortcut__nav-btn--next"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === totalPages - 1 || isAnimating },
-            navBtnBaseClasses
+            navBtnPerfClass
           ]"
           :disabled="currentPage === totalPages - 1 || isAnimating"
           @click="nextPage"

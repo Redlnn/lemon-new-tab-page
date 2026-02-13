@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useYiYan } from '@newtab/composables/useYiYan'
 
 const { yiyan, yiyanOrigin, load, isEnabled } = useYiYan()
 const settings = useSettingsStore()
+
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableYiyanTransparent,
+  blurOff: settings.perf.disableYiyanBlur
+}))
+const yiyanPerfClass = perf('yiyan', { withoutPrefix: true })
 
 onMounted(async () => {
   await load()
@@ -23,14 +29,7 @@ onMounted(async () => {
             'yiyan--invert yiyan--light': settings.yiyan.invertColor.light,
             'yiyan--invert yiyan--night': settings.yiyan.invertColor.night
           },
-          getPerfClasses(
-            {
-              transparentOff: settings.perf.disableYiyanTransparent,
-              blurOff: settings.perf.disableYiyanBlur
-            },
-            'yiyan',
-            { withoutPrefix: true }
-          )
+          yiyanPerfClass
         ]"
       >
         <p class="yiyan__content">「 {{ yiyan }} 」</p>

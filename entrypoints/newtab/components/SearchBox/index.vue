@@ -13,7 +13,7 @@ import { useTranslation } from 'i18next-vue'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { getSearchEngineUrl, searchEngines } from '@newtab/shared/search'
@@ -44,20 +44,19 @@ const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache(
 
 const { width: searchFormWidth } = useElementSize(searchForm)
 
-const formClasses = computed(() => [
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableSearchBarTransparent,
+  blurOff: settings.perf.disableSearchBarBlur
+}))
+
+const formPerfClass = computed(() => [
   {
     'search-box__form--shadow': settings.search.shadow,
     'search-box__form--dark': settings.background.bgType === BgType.None,
     'search-box__form--expand': settings.search.expandAlways,
     'search-box__form--always-icon': settings.search.showIconAlways
   },
-  getPerfClasses(
-    {
-      transparentOff: settings.perf.disableSearchBarTransparent,
-      blurOff: settings.perf.disableSearchBarBlur
-    },
-    'search-box__form'
-  )
+  perf('search-box__form').value
 ])
 
 const searchPlaceholder = computed(() =>
@@ -254,7 +253,7 @@ onMounted(() => {
     <form
       ref="searchForm"
       class="search-box__form"
-      :class="formClasses"
+      :class="formPerfClass"
       :style="{
         '--width': settings.search.launchAnimation ? (mounted ? undefined : '0') : undefined
       }"

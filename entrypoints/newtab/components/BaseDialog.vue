@@ -4,7 +4,7 @@ import { useElementVisibility, useWindowSize } from '@vueuse/core'
 import { CloseRound } from '@vicons/material'
 import type { DialogInstance, ScrollbarInstance } from 'element-plus'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 
 interface Props {
   title?: string
@@ -54,6 +54,13 @@ function onScroll(e: { scrollLeft: number; scrollTop: number }) {
   emit('scroll', e)
 }
 
+const perf = usePerfClasses(() => ({
+  transparentOff: !props.opacity,
+  blurOff: !props.acrylic
+}))
+
+const dialogPerfClass = perf('base-dialog')
+
 const dialogId = computed(() => {
   return (
     (dialogRef.value?.$el as HTMLElement)?.nextElementSibling?.firstElementChild?.getAttribute(
@@ -68,10 +75,7 @@ const dialogId = computed(() => {
     ref="dialogRef"
     :model-value="modelValue"
     :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
-    :class="[
-      containerClass,
-      getPerfClasses({ transparentOff: !opacity, blurOff: !acrylic }, 'base-dialog')
-    ]"
+    :class="[containerClass, dialogPerfClass]"
     :style="style"
     :show-close="false"
     lock-scroll

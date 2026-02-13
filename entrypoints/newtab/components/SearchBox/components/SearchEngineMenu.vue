@@ -5,7 +5,7 @@ import { useTranslation } from 'i18next-vue'
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { searchEngines } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
@@ -48,6 +48,13 @@ function hide() {
   searchEngineMenu.value?.hide()
 }
 
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableSearchBarTransparent,
+  blurOff: settings.perf.disableSearchBarBlur
+}))
+
+const popperPerfClass = perf('search-engine-menu')
+
 defineExpose({ hide })
 </script>
 
@@ -57,15 +64,7 @@ defineExpose({ hide })
     trigger="click"
     :disabled="!focusStore.isFocused && !settings.search.showIconAlways"
     :show-arrow="false"
-    :popper-class="
-      getPerfClasses(
-        {
-          transparentOff: settings.perf.disableSearchBarTransparent,
-          blurOff: settings.perf.disableSearchBarBlur
-        },
-        'search-engine-menu'
-      )
-    "
+    :popper-class="popperPerfClass"
     placement="bottom-start"
     effect="customized"
   >

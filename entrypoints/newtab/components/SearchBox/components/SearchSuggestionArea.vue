@@ -5,7 +5,7 @@ import { useTranslation } from 'i18next-vue'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { createSuggestRunner, searchSuggestAPIs, searchSuggestCache } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
@@ -37,19 +37,18 @@ const emit = defineEmits<{
   doSearchWithText: [text: string]
 }>()
 
-const areaClasses = computed(() => [
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableSearchBarTransparent,
+  blurOff: settings.perf.disableSearchBarBlur
+}))
+
+const suggestionAreaPerfClass = computed(() => [
   {
     'search-suggestion-area--shadow': settings.search.shadow,
     'search-suggestion-area--dark':
       settings.background.bgType === BgType.None && searchSuggestions.value.length > 0
   },
-  getPerfClasses(
-    {
-      transparentOff: settings.perf.disableSearchBarTransparent,
-      blurOff: settings.perf.disableSearchBarBlur
-    },
-    'search-suggestion-area'
-  )
+  perf('search-suggestion-area').value
 ])
 
 const areaHeight = computed(() => {
@@ -181,7 +180,7 @@ defineExpose({
   <div
     ref="searchSuggestionArea"
     class="search-suggestion-area"
-    :class="areaClasses"
+    :class="suggestionAreaPerfClass"
     :style="{
       width: `${searchFormWidth}px`,
       height: areaHeight

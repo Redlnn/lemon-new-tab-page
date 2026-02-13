@@ -13,7 +13,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 
 defineProps<{
   btnClass: Record<string, boolean>
@@ -30,6 +30,11 @@ const emit = defineEmits<{
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableSettingsBtnTransparent,
+  blurOff: settings.perf.disableSettingsBtnBlur
+}))
+const popperPerfClass = perf('setting-btn__popper')
 
 function sponsorMessage() {
   ElMessageBox.alert(t('sponsor'), t('newtab:menu.sponsor'), {
@@ -42,15 +47,7 @@ function sponsorMessage() {
 <template>
   <el-dropdown
     style="display: block"
-    :popper-class="
-      getPerfClasses(
-        {
-          transparentOff: settings.perf.disableSettingsBtnTransparent,
-          blurOff: settings.perf.disableSettingsBtnBlur
-        },
-        'setting-btn__popper'
-      )
-    "
+    :popper-class="popperPerfClass"
     :show-arrow="false"
     placement="top-end"
     trigger="click"

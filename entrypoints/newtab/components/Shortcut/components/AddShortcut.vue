@@ -7,7 +7,7 @@ import { useTranslation } from 'i18next-vue'
 import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 
 import { useFaviconUpload } from '../composables/useFaviconUpload'
 
@@ -116,6 +116,13 @@ async function cancel() {
 defineExpose({
   openEditDialog
 })
+
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableShortcutTransparent,
+  blurOff: settings.perf.disableShortcutBlur
+}))
+
+const iconPerfClass = perf('shortcut__icon')
 </script>
 
 <template>
@@ -125,18 +132,7 @@ defineExpose({
         class="shortcut__icon-container"
         :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
       >
-        <div
-          class="shortcut__icon"
-          :class="
-            getPerfClasses(
-              {
-                transparentOff: settings.perf.disableShortcutTransparent,
-                blurOff: settings.perf.disableShortcutBlur
-              },
-              'shortcut__icon'
-            )
-          "
-        >
+        <div class="shortcut__icon" :class="iconPerfClass">
           <add-round />
         </div>
       </div>

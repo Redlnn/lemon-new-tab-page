@@ -19,7 +19,7 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import {
   BOOKMARK_ACTIVE_MAP,
   BOOKMARK_OPENED_MENU_CLOSE_FN,
@@ -67,15 +67,12 @@ const canCollapseOther = computed(() => {
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
-const menuPopperClass = computed(() =>
-  getPerfClasses(
-    {
-      transparentOff: settings.perf.disableBookmarkTransparent,
-      blurOff: settings.perf.disableBookmarkBlur
-    },
-    'bookmark__menu-popper'
-  )
-)
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableBookmarkTransparent,
+  blurOff: settings.perf.disableBookmarkBlur
+}))
+
+const popperPerfClass = perf('bookmark__menu-popper')
 
 // 右键菜单相关
 const openedMenuCloseFn = inject(BOOKMARK_OPENED_MENU_CLOSE_FN)
@@ -365,7 +362,7 @@ const isDragDisabled = computed(() => {
       :popper-options="{
         modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
       }"
-      :popper-class="menuPopperClass"
+      :popper-class="popperPerfClass"
     >
       <template #dropdown>
         <el-dropdown-menu class="noselect">

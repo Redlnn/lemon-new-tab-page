@@ -7,7 +7,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
@@ -27,16 +27,12 @@ const emit = defineEmits<{
   (e: 'delete'): void
 }>()
 
-// 缓存 getPerfClasses 结果
-const perfClassesPopper = computed(() =>
-  getPerfClasses(
-    {
-      transparentOff: settings.perf.disableDialogTransparent,
-      blurOff: settings.perf.disableDialogBlur
-    },
-    'se-switcher-item__menu-popper'
-  )
-)
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableDialogTransparent,
+  blurOff: settings.perf.disableDialogBlur
+}))
+
+const popperPerfClass = perf('se-switcher-item__menu-popper')
 
 const openedMenuCloseFn = inject(CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN)
 const dropdownRef = ref<DropdownInstance | null>(null)
@@ -122,7 +118,7 @@ defineExpose({ open, close })
       trigger="contextmenu"
       placement="bottom-start"
       :popper-options="{ modifiers: [{ name: 'offset', options: { offset: [0, 0] } }] }"
-      :popper-class="perfClassesPopper"
+      :popper-class="popperPerfClass"
     >
       <template #dropdown>
         <el-dropdown-menu class="noselect">

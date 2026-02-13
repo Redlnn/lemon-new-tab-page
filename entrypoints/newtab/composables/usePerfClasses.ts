@@ -1,3 +1,5 @@
+type Opts = { transparentOff: boolean; blurOff: boolean }
+
 /**
  * 生成受性能开关控制的类名字符串。
  * 规则：
@@ -6,7 +8,7 @@
  * - 未禁用模糊 且 (未禁用透明 或 options.blurIndependent 为 true) => 添加 `${prefix}--blur`
  */
 export function getPerfClasses(
-  opts: { transparentOff: boolean; blurOff: boolean },
+  opts: Opts,
   prefix: string,
   options?: { blurIndependent?: boolean; withoutPrefix?: boolean }
 ): string {
@@ -31,4 +33,17 @@ export function getPerfClasses(
   return opacity || blur
 }
 
-export default getPerfClasses
+/**
+ * 小工具：根据动态 opts 生成 perf class 的便捷函数，避免在组件中重复计算相同 opts
+ * 用法：
+ * ```
+ * const perf = usePerfClasses(() => ({ transparentOff: ..., blurOff: ... }));
+ * const cls = perf('prefix') // cls is a computed ref
+ * ```
+ */
+export function usePerfClasses(getOpts: () => Opts) {
+  return (prefix: string, options?: { blurIndependent?: boolean; withoutPrefix?: boolean }) =>
+    computed(() => getPerfClasses(getOpts(), prefix, options))
+}
+
+export default usePerfClasses

@@ -12,7 +12,7 @@ import { browser } from '#imports'
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
@@ -30,18 +30,14 @@ const props = defineProps<{
 const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
-// 合并多个 getPerfClasses 调用，共享相同的输入参数，只计算一次
-const perfClasses = computed(() => {
-  const opts = {
-    transparentOff: settings.perf.disableShortcutTransparent,
-    blurOff: settings.perf.disableShortcutBlur
-  }
-  return {
-    icon: getPerfClasses(opts, 'shortcut__icon'),
-    pinIcon: getPerfClasses(opts, 'shortcut__pin-icon'),
-    popper: getPerfClasses(opts, 'shortcut__menu-popper')
-  }
-})
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableShortcutTransparent,
+  blurOff: settings.perf.disableShortcutBlur
+}))
+
+const iconClass = perf('shortcut__icon')
+const pinIconClass = perf('shortcut__pin-icon')
+const popperClass = perf('shortcut__menu-popper')
 
 const openedMenuCloseFn = inject(SHORTCUT_OPENED_MENU_CLOSE_FN)
 const dropdownRef = ref<DropdownInstance>()
@@ -145,13 +141,13 @@ defineExpose({ open, close })
       >
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
-          :class="['shortcut__pin-icon', perfClasses.pinIcon]"
+          :class="['shortcut__pin-icon', pinIconClass]"
         >
           <el-icon size="11">
             <pin12-regular />
           </el-icon>
         </div>
-        <div class="shortcut__icon" :class="perfClasses.icon">
+        <div class="shortcut__icon" :class="iconClass">
           <span
             class="span"
             :style="{
@@ -179,7 +175,7 @@ defineExpose({ open, close })
         :popper-options="{
           modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
         }"
-        :popper-class="perfClasses.popper"
+        :popper-class="popperClass"
       >
         <template #dropdown>
           <el-dropdown-menu class="noselect">

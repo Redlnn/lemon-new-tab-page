@@ -7,8 +7,8 @@ import { useTranslation } from 'i18next-vue'
 import { SortMode } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { getPerfClasses } from '@newtab/composables/perfClasses'
 import { useDialog } from '@newtab/composables/useDialog'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import {
   BOOKMARK_ACTIVE_MAP,
   BOOKMARK_OPENED_MENU_CLOSE_FN,
@@ -24,6 +24,13 @@ defineExpose({ show, hide, toggle })
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
+
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableBookmarkTransparent,
+  blurOff: settings.perf.disableBookmarkBlur
+}))
+
+const bookmarkPerfClass = perf('bookmark')
 
 const store = useBookmarkStore()
 store._setSortMode(settings.bookmark.defaultSortMode)
@@ -152,15 +159,7 @@ watch(
     :title="t('bookmark.title')"
     size="400"
     class="noselect"
-    :class="[
-      getPerfClasses(
-        {
-          transparentOff: settings.perf.disableBookmarkTransparent,
-          blurOff: settings.perf.disableBookmarkBlur
-        },
-        'bookmark'
-      )
-    ]"
+    :class="bookmarkPerfClass"
     append-to-body
     resizable
     @resize="onDrawerResize"
