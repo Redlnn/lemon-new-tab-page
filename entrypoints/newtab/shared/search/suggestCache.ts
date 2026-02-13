@@ -1,75 +1,34 @@
 /**
- * LRU (Least Recently Used) 缓存实现
+ * 轻量 LRU 缓存：基于 Map 的实现，利用插入顺序管理最近使用。
  * 用于缓存搜索建议结果，减少网络请求
  */
-
-interface CacheNode {
-  key: string
-  value: string[]
-  prev: CacheNode | null
-  next: CacheNode | null
-}
-
 export class LRUCache {
   private capacity: number
-  private cache: Map<string, CacheNode>
-  private head: CacheNode
-  private tail: CacheNode
+  private cache: Map<string, string[]>
 
   constructor(capacity: number = 50) {
     this.capacity = capacity
     this.cache = new Map()
-
-    // 创建虚拟头尾节点
-    this.head = { key: '', value: [], prev: null, next: null }
-    this.tail = { key: '', value: [], prev: null, next: null }
-    this.head.next = this.tail
-    this.tail.prev = this.head
   }
 
-  /**
-   * 获取缓存的搜索建议
-   */
   get(key: string): string[] | null {
-    const node = this.cache.get(key)
-    if (!node) {
-      return null
-    }
+    const value = this.cache.get(key)
+    if (value === undefined) return null
 
-    // 将访问的节点移到最前面（最近使用）
-    this.moveToHead(node)
-    return node.value
+    // 标记为最近使用：删除后重新插入到 Map 末尾
+    this.cache.delete(key)
+    this.cache.set(key, value)
+    return value
   }
 
-  /**
-   * 设置搜索建议缓存
-   */
   set(key: string, value: string[]): void {
-    const existingNode = this.cache.get(key)
+    if (this.cache.has(key)) this.cache.delete(key)
+    this.cache.set(key, value)
 
-    if (existingNode) {
-      // 如果已存在，更新值并移到前面
-      existingNode.value = value
-      this.moveToHead(existingNode)
-    } else {
-      // 创建新节点
-      const newNode: CacheNode = {
-        key,
-        value,
-        prev: null,
-        next: null
-      }
-
-      this.cache.set(key, newNode)
-      this.addToHead(newNode)
-
-      // 如果超过容量，删除最久未使用的
-      if (this.cache.size > this.capacity) {
-        const removed = this.removeTail()
-        if (removed) {
-          this.cache.delete(removed.key)
-        }
-      }
+    if (this.cache.size > this.capacity) {
+      // 删除最久未使用的项（Map 的第一个键）
+      const firstKey = this.cache.keys().next().value
+      if (firstKey !== undefined) this.cache.delete(firstKey)
     }
   }
 
@@ -78,8 +37,6 @@ export class LRUCache {
    */
   clear(): void {
     this.cache.clear()
-    this.head.next = this.tail
-    this.tail.prev = this.head
   }
 
   /**
@@ -87,58 +44,6 @@ export class LRUCache {
    */
   size(): number {
     return this.cache.size
-  }
-
-  /**
-   * 将节点添加到头部
-   */
-  private addToHead(node: CacheNode): void {
-    node.prev = this.head
-    node.next = this.head.next
-    if (this.head.next) {
-      this.head.next.prev = node
-    }
-    this.head.next = node
-  }
-
-  /**
-   * 移除节点
-   */
-  private removeNode(node: CacheNode): void {
-    if (node.prev) {
-      node.prev.next = node.next
-    }
-    if (node.next) {
-      node.next.prev = node.prev
-    }
-  }
-
-  /**
-   * 将节点移到头部
-   */
-  private moveToHead(node: CacheNode): void {
-    // 内联 removeNode
-    const { prev, next } = node
-    if (prev) prev.next = next
-    if (next) next.prev = prev
-
-    // 内联 addToHead
-    node.prev = this.head
-    node.next = this.head.next
-    this.head.next!.prev = node
-    this.head.next = node
-  }
-
-  /**
-   * 移除尾部节点
-   */
-  private removeTail(): CacheNode | null {
-    const node = this.tail.prev
-    if (node && node !== this.head) {
-      this.removeNode(node)
-      return node
-    }
-    return null
   }
 }
 
