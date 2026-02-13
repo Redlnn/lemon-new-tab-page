@@ -60,7 +60,7 @@ const formPerfClass = computed(() => [
 ])
 
 const searchPlaceholder = computed(() =>
-  focusStore.isFocused ? undefined : settings.search.placeholder
+  focusStore.isFocused ? undefined : settings.search.placeholder || t('search.placeholder')
 )
 
 function resetSearch() {
