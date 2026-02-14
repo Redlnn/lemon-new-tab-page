@@ -28,15 +28,3 @@ const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = Object.key
 
 export const getSettingsView = (route: SettingsRoute): Component | null =>
   settingsAsyncViewMap[route]
-
-export const prefetchSettingsView = async (route: SettingsRoute) => {
-  const loader = settingsViewLoaders[route]
-  if (!loader) return
-
-  try {
-    await loader()
-  } catch (error) {
-    // 预取失败不应中断主流程，简单警告便于排查
-    console.warn('[settings] failed to prefetch settings view', route, error)
-  }
-}

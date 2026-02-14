@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useElementVisibility, useTimeoutFn } from '@vueuse/core'
 
-import { getSettingsView, prefetchSettingsView } from '../composables/SettingsAsyncViews'
+import { getSettingsView } from '../composables/SettingsAsyncViews'
 import { SettingsRoute } from '../composables/useSettingsRouter'
 
 interface Props {
@@ -62,19 +62,10 @@ onBeforeUnmount(() => {
 })
 
 watch(
-  () => props.currentRoute,
-  (route) => {
-    prefetchSettingsView(route)
-  },
-  { immediate: true }
-)
-
-watch(
   () => props.dialogOpened,
   (opened) => {
     if (opened) {
       ensureActiveViewMounted()
-      prefetchSettingsView(props.currentRoute)
     }
   },
   { immediate: true }

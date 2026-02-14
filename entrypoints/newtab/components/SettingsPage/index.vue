@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTimeoutFn, useWindowSize } from '@vueuse/core'
+import { useWindowSize } from '@vueuse/core'
 
 import { ArrowBackRound, CloseRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
@@ -9,7 +9,6 @@ import { useDialog } from '@newtab/composables/useDialog'
 import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
-import { prefetchSettingsView } from './composables/SettingsAsyncViews'
 import { MENU_ITEMS, SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
 const MOBILE_BREAKPOINT = 650
@@ -44,16 +43,12 @@ const slideTransitionName = computed(() =>
 const resetRouter = () => router.reset(isMobile.value ? SettingsRoute.MENU : SettingsRoute.THEME)
 
 function customShow() {
-  // 预加载主题设置视图
-  prefetchSettingsView(SettingsRoute.THEME)
   resetRouter()
   show()
 }
 
 function customToggle() {
   if (!opened.value) {
-    // 预加载主题设置视图
-    prefetchSettingsView(SettingsRoute.THEME)
     resetRouter()
   }
   toggle()
@@ -80,14 +75,6 @@ watch(windowWidth, (newWidth, oldWidth) => {
     const isNowMobile = newWidth < MOBILE_BREAKPOINT
     if (wasMobile !== isNowMobile) resetRouter()
   }
-})
-
-onMounted(() => {
-  useTimeoutFn(() => {
-    // 预加载主题设置视图，等待3秒以避免影响初始加载性能和壁纸进入动画
-    prefetchSettingsView(SettingsRoute.THEME)
-    resetRouter()
-  }, 3000)
 })
 
 defineExpose({ show: customShow, hide, toggle: customToggle })
