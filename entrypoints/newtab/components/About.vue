@@ -36,16 +36,18 @@ const currentYiyanProvider = computed(() => yiyanProviders[settings.yiyan.provid
       <h1 class="ext-name">{{ browser.i18n.getMessage('extension_name') }}</h1>
       <div class="ext-version">{{ version }}</div>
       <div class="yiyan-links">
-        {{ t('newtab:about.yiyanApiProviderPrefix') }}
-        <el-link
-          underline="never"
-          target="_blank"
-          type="primary"
-          :href="currentYiyanProvider.website"
-        >
-          {{ t(currentYiyanProvider.nameKey) }}
-        </el-link>
-        {{ t('newtab:about.yiyanApiProviderSuffix') }}
+        <i18next :translation="t('newtab:about.yiyanProvider')">
+          <template #api>
+            <el-link
+              underline="never"
+              target="_blank"
+              type="primary"
+              :href="currentYiyanProvider.website"
+            >
+              {{ t(currentYiyanProvider.nameKey) }}
+            </el-link>
+          </template>
+        </i18next>
       </div>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;

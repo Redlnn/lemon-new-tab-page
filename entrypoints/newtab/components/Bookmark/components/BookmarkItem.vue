@@ -147,7 +147,7 @@ async function addToShortcut() {
     favicon: faviconRef.value
   })
   await saveShortcut(shortcutStore.$state)
-  ElMessage.success(t('bookmark.addedToShortcut'))
+  ElMessage.success(t('bookmark.added'))
 }
 
 // 注入共享的 activeMap（按深度索引），用于跨层级控制折叠展开

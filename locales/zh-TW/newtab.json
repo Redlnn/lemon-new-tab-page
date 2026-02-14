@@ -30,7 +30,7 @@
     "tooSmall": "側欄寬度過小"
   },
   "changelog": {
-    "hideMajorChangelog": "不顯示大版本更新日誌",
+    "hideMajor": "不顯示大版本更新日誌",
     "newVersionMsg": "你的起始頁更新啦~",
     "otherVersions": {
       "description": "僅包含5個版本的更新日誌，剩餘內容請點擊下方連結跳轉檢視：",

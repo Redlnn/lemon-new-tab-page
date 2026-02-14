@@ -37,7 +37,7 @@ function handleClose() {
   >
     <div class="changelog-wrapper">
       <div class="changelog-hide-major noselect">
-        <span>{{ t('changelog.hideMajorChangelog') }}</span>
+        <span>{{ t('changelog.hideMajor') }}</span>
         <el-switch v-model="settings.hideMajorChangelog" />
       </div>
       <component :is="isChinese ? ChangelogZh : ChangelogEn" />

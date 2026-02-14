@@ -1,12 +1,11 @@
 {
   "about": {
-    "yiyanApiProviderPrefix": "Chinese poetry API provided by ",
-    "yiyanApiProviderSuffix": ""
+    "yiyanProvider": "Chinese poetry API provided by {api}"
   },
   "bookmark": {
     "404": "Nothing found",
     "addToShortcut": "Add to Shortcuts",
-    "addedToShortcut": "Added to shortcuts",
+    "added": "Added to shortcuts",
     "collapse": {
       "other": "Collapse Other at Level",
       "all": "Collapse All at Level"
@@ -30,7 +29,7 @@
     "tooSmall": "Sidebar is too narrow"
   },
   "changelog": {
-    "hideMajorChangelog": "Hide major update changelog",
+    "hideMajor": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",
     "otherVersions": {
       "description": "Only the latest 5 versions are included. Click the links below to view the full changelog:",

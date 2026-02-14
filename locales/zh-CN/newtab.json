@@ -1,12 +1,11 @@
 {
   "about": {
-    "yiyanApiProviderPrefix": "一言API由",
-    "yiyanApiProviderSuffix": "提供"
+    "yiyanProvider": "一言API由 {api} 提供"
   },
   "bookmark": {
     "404": "什么都没找到",
     "addToShortcut": "添加到快捷方式",
-    "addedToShortcut": "已添加到快捷方式",
+    "added": "已添加到快捷方式",
     "collapse": {
       "other": "折叠同级其他项",
       "all": "折叠本层全部"
@@ -31,7 +30,7 @@
   },
   "changelog": {
     "hideMajorChangelog": "不显示大版本更新日志",
-    "newVersionMsg": "你的起始页更新啦~",
+    "hideMajor": "不显示大版本更新日志",
     "otherVersions": {
       "description": "仅包含5个版本的更新日志，剩余内容请点击下方链接跳转查看：",
       "linkEn": "English",

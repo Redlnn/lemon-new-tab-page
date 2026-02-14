@@ -355,7 +355,7 @@ function changeLanguage(lang: string) {
       <cloud-off-round />
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:changelog.hideMajorChangelog') }}</div>
+      <div class="settings__label">{{ t('newtab:changelog.hideMajor') }}</div>
       <el-switch v-model="settings.hideMajorChangelog" />
     </div>
     <div class="settings__item settings__item--horizontal">
