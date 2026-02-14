@@ -4,13 +4,26 @@ import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 import { usePreferredDark } from '@vueuse/core'
 
-import { i18n } from '@/shared/i18n'
-import { initSettings, useSettingsStore } from '@/shared/settings'
-import { applyStoredMonetColors, changeTheme, getMonetColors } from '@/shared/theme'
+import { i18n, i18nInitPromise } from '@/shared/i18n'
 
 import App from './App.vue'
 
-export const main = async () => {
+const preferredDark = usePreferredDark()
+watch(
+  preferredDark,
+  () => {
+    if (preferredDark.value) {
+      document.documentElement.classList.add('dark')
+      document.documentElement.classList.remove('light')
+    } else {
+      document.documentElement.classList.add('light')
+      document.documentElement.classList.remove('dark')
+    }
+  },
+  { immediate: true }
+)
+
+i18nInitPromise.then(async () => {
   const app = i18n(createApp(App))
   const pinia = createPinia()
 
@@ -22,26 +35,6 @@ export const main = async () => {
 
   // 应用主题色
   changeTheme(settings.theme.primaryColor)
-
-  // 工具函数：切换 DOM 类名
-  const toggleDocumentClass = (className: string, shouldAdd: boolean) => {
-    document.documentElement.classList.toggle(className, shouldAdd)
-  }
-
-  const applyDarkMode = (isDark: boolean) => {
-    if (isDark) {
-      document.documentElement.classList.add('dark')
-      document.documentElement.classList.remove('light')
-    } else {
-      document.documentElement.classList.add('light')
-      document.documentElement.classList.remove('dark')
-    }
-  }
-
-  // 跟随系统
-  // Popup 更适合跟随系统深色模式
-  const preferredDark = usePreferredDark()
-  applyDarkMode(preferredDark.value)
 
   // 应用 colorful 模式
   toggleDocumentClass('colorful', settings.theme.colorfulMode)
@@ -56,4 +49,4 @@ export const main = async () => {
   }
 
   app.mount('body')
-}
+})

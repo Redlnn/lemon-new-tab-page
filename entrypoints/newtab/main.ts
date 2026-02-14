@@ -9,10 +9,12 @@ import { i18n } from '@/shared/i18n'
 import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
 import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
+import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
 
 import App from './App.vue'
+import { setupAutoSaveSettings } from './shared/autoSaveSettings'
 import { changeTheme } from './shared/theme'
 
 const preferredDark = usePreferredDark()
@@ -83,56 +85,22 @@ export const main = async () => {
 
   app.use(pinia)
 
-  // 先初始化设置，再挂载vue，再初始化云同步
   await initSettings()
   await initCustomSearchEngine()
   await initShortcut()
   const settings = useSettingsStore()
 
-  // 判断设置变更时再保存，避免无意义的写入
-  let lastSavedState: string | null = null
-  const saveSettingsDebounced = useDebounceFn(async (state: typeof settings.$state) => {
-    // 序列化当前状态用于比较
-    const currentState = JSON.stringify(state)
+  changeTheme(settings.theme.primaryColor)
 
-    // 如果状态没有变化，跳过保存
-    if (lastSavedState === currentState) {
-      return
+  // 如果开启了莫奈模式，先应用之前存储的莫奈配色，避免加载壁纸期间的视觉跳变
+  if (settings.theme.monetColor) {
+    const storedColors = await getMonetColors()
+    if (storedColors) {
+      applyStoredMonetColors(storedColors)
     }
-
-    lastSavedState = currentState
-    await saveSettings(state)
-  }, 500)
-
-  if (settings.theme.primaryColor.toLowerCase() === '#ffbb00') {
-    // 强制替换旧版本对比度过低的主题色
-    settings.theme.primaryColor = defaultSettings.theme.primaryColor
-    await saveSettings(settings)
-    lastSavedState = JSON.stringify(toRaw(settings.$state))
   }
 
-  changeTheme(settings.theme.primaryColor)
-  color = settings.theme.primaryColor
-
-  settings.$subscribe(async (_mutation, state) => {
-    // 主题色变化时立即保存，不使用防抖
-    if (state.theme.primaryColor !== color) {
-      if (state.theme.primaryColor === null) {
-        state.theme.primaryColor = defaultSettings.theme.primaryColor
-      }
-      color = state.theme.primaryColor
-      changeTheme(state.theme.primaryColor)
-
-      const currentState = JSON.stringify(state)
-      if (lastSavedState !== currentState) {
-        lastSavedState = currentState
-        await saveSettings(state)
-      }
-    } else {
-      // 其他设置使用防抖保存
-      await saveSettingsDebounced(state)
-    }
-  })
+  setupAutoSaveSettings(settings)
 
   app.mount('body')
 

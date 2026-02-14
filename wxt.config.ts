@@ -114,6 +114,9 @@ export default defineConfig({
     build: {
       sourcemap: false // for HMP (@wxt-dev/module-vue 会自动添加)
     },
+    ssr: {
+      noExternal: ['element-plus']
+    },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./', import.meta.url)),

@@ -61,7 +61,7 @@ export const i18nInitPromise = i18next
     })
   })
 
-export const i18n = <T extends App>(app: T) => {
+export function i18n<T extends App>(app: T) {
   app.use(I18NextVue, { i18next })
   return app
 }

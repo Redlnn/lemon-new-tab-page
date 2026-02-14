@@ -10,6 +10,7 @@ import { BgType } from '@/shared/enums'
 import { getLang } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
+import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 
 import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
@@ -143,10 +144,15 @@ onMounted(async () => {
   })
 })
 
-// 合并DOM类名切换的watch，使用统一的工具函数
-function toggleDocumentClass(className: string, shouldAdd: boolean) {
-  document.documentElement.classList.toggle(className, shouldAdd)
-}
+watch(
+  () => settings.theme.primaryColor,
+  (color) => {
+    if (color === null) {
+      return
+    }
+    changeTheme(color)
+  }
+)
 
 watch(
   () => settings.theme.colorfulMode,
