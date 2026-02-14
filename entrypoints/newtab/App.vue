@@ -13,19 +13,13 @@ import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 
 import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
-import type AboutCompComponent from './components/About.vue'
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
 import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
 import Background from './components/Background.vue'
-import type BackgroundSwitcherComponent from './components/BackgroundSwitcher/index.vue'
 import Bookmark from './components/Bookmark/index.vue'
-import type ChangelogComponent from './components/Changelog.vue'
 import Clock from './components/Clock.vue'
-import PermissionDialog from './components/PermissionDialog.vue'
 import SearchBox from './components/SearchBox/index.vue'
-import type SearchEnginesSwitcherComponent from './components/SearchEnginesSwitcher/index.vue'
-import type SettingsPageComponent from './components/SettingsPage/index.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
 import { usePermission } from './composables/usePermission'
@@ -68,34 +62,26 @@ const onLngChanged = async (lng: string) => {
 }
 i18next.on('languageChanged', onLngChanged)
 
-const SettingsPage = defineAsyncComponent(() => import('@newtab/components/SettingsPage/index.vue'))
-const Changelog = defineAsyncComponent(() => import('@newtab/components/Changelog.vue'))
-const Faq = defineAsyncComponent(() => import('@newtab/components/Faq.vue'))
-const AboutComp = defineAsyncComponent(() => import('@newtab/components/About.vue'))
+const SettingsPage = defineAsyncComponent(() => import('./components/SettingsPage/index.vue'))
+const Changelog = defineAsyncComponent(() => import('./components/Changelog.vue'))
+const Faq = defineAsyncComponent(() => import('./components/Faq.vue'))
+const AboutComp = defineAsyncComponent(() => import('./components/About.vue'))
 const SearchEnginesSwitcher = defineAsyncComponent(
-  () => import('@newtab/components/SearchEnginesSwitcher/index.vue')
+  () => import('./components/SearchEnginesSwitcher/index.vue')
 )
 const BackgroundSwitcher = defineAsyncComponent(
-  () => import('@newtab/components/BackgroundSwitcher/index.vue')
+  () => import('./components/BackgroundSwitcher/index.vue')
 )
+const PermissionDialog = defineAsyncComponent(() => import('./components/PermissionDialog.vue'))
 
-type SettingsPageInstance = InstanceType<typeof SettingsPageComponent>
-type ChangelogInstance = InstanceType<typeof ChangelogComponent>
-type FaqInstance = InstanceType<typeof Faq>
-type AboutCompInstance = InstanceType<typeof AboutCompComponent>
-type SearchEnginesSwitcherInstance = InstanceType<typeof SearchEnginesSwitcherComponent>
-type BackgroundSwitcherInstance = InstanceType<typeof BackgroundSwitcherComponent>
-type BookmarkInstance = InstanceType<typeof Bookmark>
-type BackgroundInstance = InstanceType<typeof Background>
-
-const SettingsPageRef = ref<SettingsPageInstance>()
-const ChangelogRef = ref<ChangelogInstance>()
-const FaqRef = ref<FaqInstance>()
-const AboutRef = ref<AboutCompInstance>()
-const SESwitcherRef = ref<SearchEnginesSwitcherInstance>()
-const BGSwticherRef = ref<BackgroundSwitcherInstance>()
-const BookmarkRef = ref<BookmarkInstance>()
-const BackgroundRef = ref<BackgroundInstance>()
+const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
+const ChangelogRef = ref<InstanceType<typeof Changelog>>()
+const FaqRef = ref<InstanceType<typeof Faq>>()
+const AboutRef = ref<InstanceType<typeof AboutComp>>()
+const SESwitcherRef = ref<InstanceType<typeof SearchEnginesSwitcher>>()
+const BGSwticherRef = ref<InstanceType<typeof BackgroundSwitcher>>()
+const BookmarkRef = ref<InstanceType<typeof Bookmark>>()
+const BackgroundRef = ref<InstanceType<typeof Background>>()
 
 const settings = useSettingsStore()
 
@@ -266,7 +252,7 @@ const actionClass = computed(() => {
     <search-engines-switcher ref="SESwitcherRef" />
     <background-switcher ref="BGSwticherRef" />
     <bookmark ref="BookmarkRef" />
-    <PermissionDialog
+    <permission-dialog
       v-model="permissionDialogVisible"
       :hostname="currentHostname"
       @result="onPermissionDialogResult"
