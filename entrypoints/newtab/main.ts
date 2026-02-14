@@ -36,10 +36,7 @@ watch(
 )
 
 export const main = async () => {
-  const banner = `
-%c Lemon New Tab %c ${version}%c
-
-`
+  const banner = `\n%c Lemon New Tab %c ${version}%c\n\n`
 
   console.log(
     banner,
@@ -48,38 +45,6 @@ export const main = async () => {
     ''
   )
 
-  if (import.meta.env.DEV) {
-    const devBanner = `%c
-                    ~~<~<~~<~<~~<~<~~<~~
-              <~~<~~<~{{{rhhhahhhhx}{{~<~~<~~<
-           <~<~<~|Uhhhahhhhao&W*ahhhhahhhU|~<~<~<
-        -~~<~?Chhhh     khkhh  hkhkk     hhhhC?~~<~-
-      +<~<~Jhhak   *hhhahhhhh  hhhahhhah*   kahhJ~~<~+
-     <~~<uhah   khhhahhhhahah  ahhhhahhhhhhk   hahu~<~<
-   <~<~thaa     hahhhahahhhha  hahahhhahahaa     ahht~<~<
-   <~~khh8 Bahhh  dahhhhhahha  hhhhhahhhad  hhhaB 8hhh~~~
- ~~~_hah  hhhhahhhk  ahahhahh  ahahhhaa  khhhhhhhh  hhh_<~~
-~<~<Uhh  hhhahhhhhhh   ahhhha  hhhaha   hhhhahahahh  ahU<~<~
-~<~(ha  hhhahhahahahhhh  Maha  ahaM  hhhahhhhhhhhhhh  hh|~<~
-~~<hho  hhhhhhhhhhhahahhh          hhahhhhahahahahah  oak~~<
-<~~hh                                                  hh~<~
-~<~kao  hhhhhhhhhhhhhhhah          hhhhhhhhhhhhhhhhh  oah<~~
-~~<|hh  hhahahahahahahh  Mahh  hhaM  hahahahahahahah  hh|<~~
-<~~<Uhh  hhhhhhhhhhh   ahhhha  ahhhha   hhhhhhhhhhh  haU<~<~
- ~<~_hah  hhahahahk  ahhhahha  hhahahha  khhahahah  hhh_~<~
-   ~<+khh8 Bahhh  dahhhahhahh  ahhhhhahhad  hhhaB 8hhh~~<
-   <~<~thha     ahhahhahhhhha  hhahahhhhahhh     ahht~<~<
-     <~~~uhah   khhhahhhahahh  ahhhhhahhhhak   hahv~~<~
-      +<~~~Jhhah   *hhahhhhha  hhahahhaa*   kahaJ<~<~+
-        -~<~~?Chhhh     hhhhh  hhhkk     hhhaJ?~~<~-
-           <~<~~~|Uhhhaakhkao&W*hhhhahhhhU|~<~~<<
-              <<~<~~~~{}{nhhhhhhahn}{{~~~~~<~<
-                    ~<~<~<~~~~~~<~<~<~<~
-`
-    console.log(devBanner, 'color:orange;line-height:0.8rem;')
-  }
-
-  let color = ''
   const app = i18n(createApp(App))
   const pinia = createPinia()
 
