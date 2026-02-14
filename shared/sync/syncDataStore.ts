@@ -4,25 +4,10 @@ import { useDebounceFn } from '@vueuse/core'
 import { browser } from 'wxt/browser'
 
 import { BgType } from '../enums'
-import type {
-  CURRENT_CONFIG_INTERFACE,
-  OldSettingsInterface,
-  SettingsInterfaceVer2,
-  SettingsInterfaceVer3,
-  SettingsInterfaceVer4,
-  SettingsInterfaceVer5,
-  SettingsInterfaceVer6,
-  SettingsInterfaceVer7
-} from '../settings'
+import type { CURRENT_CONFIG_INTERFACE, SettingsInterfaceVer7 } from '../settings'
 import {
   CURRENT_CONFIG_VERSION,
   defaultSettings,
-  migrateFromVer1,
-  migrateFromVer2To3,
-  migrateFromVer3To4,
-  migrateFromVer4To5,
-  migrateFromVer5To6,
-  migrateFromVer6To7,
   migrateFromVer7To8,
   useSettingsStore
 } from '../settings'
@@ -161,12 +146,6 @@ export async function deinitSyncSettings() {
 }
 
 const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
-  1: (s) => migrateFromVer1(s as OldSettingsInterface),
-  2: (s) => migrateFromVer2To3(s as SettingsInterfaceVer2),
-  3: (s) => migrateFromVer3To4(s as SettingsInterfaceVer3),
-  4: (s) => migrateFromVer4To5(s as SettingsInterfaceVer4),
-  5: (s) => migrateFromVer5To6(s as SettingsInterfaceVer5),
-  6: (s) => migrateFromVer6To7(s as SettingsInterfaceVer6),
   7: (s) => migrateFromVer7To8(s as SettingsInterfaceVer7)
 }
 
@@ -260,12 +239,6 @@ export const useSyncDataStore = defineStore('sync', {
           // 云端配置版本落后，逐步应用迁移直到达到当前版本
           try {
             let s = cloudData.settings
-
-            // 老版本字符串场景直接走 1 号迁移
-            if (typeof s.version === 'string') {
-              const fn1 = migrations[1] as typeof migrateFromVer1
-              if (fn1) s = await fn1(s as unknown as OldSettingsInterface)
-            }
 
             // 逐步通过映射函数迁移到 CURRENT_CONFIG_VERSION
             while ((s.version as number) < CURRENT_CONFIG_VERSION) {

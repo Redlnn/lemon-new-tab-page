@@ -13,6 +13,7 @@ import localForage from 'localforage'
 
 import { storage } from '#imports'
 
+import { downloadJSON } from '@/shared/getJson'
 import { type CURRENT_CONFIG_INTERFACE, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
@@ -22,7 +23,6 @@ import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore
 } from '@newtab/shared/customSearchEngine'
-import { downloadJSON } from '@newtab/shared/getJson'
 
 const { t, i18next } = useTranslation('settings')
 

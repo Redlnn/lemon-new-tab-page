@@ -39,8 +39,9 @@
 - **Bookmarks Bar:** Default to expanding the first top-level directory with content
 - **Clock:** Adjusted the placement of AM/PM in English environments to be before the time
 
-### Removed 🗑️
+### Breaking Change💥
 
+- Compatibility with old version configurations has been removed. If unsupported configuration data is encountered, a prompt will appear to reset settings and clear data
 - **Shortcut:** Quick Access: Removed the “Show area background” option due to lack of maintenance and conflicts with the paginated layout style.
 
 ### Bug Fixes🐛

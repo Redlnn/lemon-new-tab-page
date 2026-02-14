@@ -2,23 +2,8 @@ import { storage } from '#imports'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 import { defaultSettings } from './default'
-import {
-  migrateFromVer2To3,
-  migrateFromVer3To4,
-  migrateFromVer4To5,
-  migrateFromVer5To6,
-  migrateFromVer6To7,
-  migrateFromVer7To8
-} from './migrate'
-import type {
-  SettingsInterfaceVer2,
-  SettingsInterfaceVer3,
-  SettingsInterfaceVer4,
-  SettingsInterfaceVer5,
-  SettingsInterfaceVer6,
-  SettingsInterfaceVer7,
-  SettingsInterfaceVer8
-} from './types'
+import { migrateFromVer7To8 } from './migrate'
+import type { SettingsInterfaceVer7, SettingsInterfaceVer8 } from './types'
 
 // 合并重复的迁移逻辑，通过辅助函数创建迁移函数
 function createMigration<From, To>(
@@ -41,11 +26,7 @@ export const settingsStorage = storage.defineItem<CURRENT_CONFIG_INTERFACE>('loc
   fallback: structuredClone(defaultSettings),
   version: CURRENT_CONFIG_VERSION,
   migrations: {
-    3: createMigration<SettingsInterfaceVer2, SettingsInterfaceVer3>(2, migrateFromVer2To3),
-    4: createMigration<SettingsInterfaceVer3, SettingsInterfaceVer4>(3, migrateFromVer3To4),
-    5: createMigration<SettingsInterfaceVer4, SettingsInterfaceVer5>(4, migrateFromVer4To5),
-    6: createMigration<SettingsInterfaceVer5, SettingsInterfaceVer6>(5, migrateFromVer5To6),
-    7: createMigration<SettingsInterfaceVer6, SettingsInterfaceVer7>(6, migrateFromVer6To7),
+    // 不再提供对第6版及以前的迁移支持，遇到 <=6 的数据应由初始化逻辑提示用户清除数据
     8: createMigration<SettingsInterfaceVer7, SettingsInterfaceVer8>(7, migrateFromVer7To8)
   }
 })

@@ -1,7 +1,1 @@
-export * from './fromVer1'
-export * from './fromVer2'
-export * from './fromVer3'
-export * from './fromVer4'
-export * from './fromVer5'
-export * from './fromVer6'
 export * from './fromVer7'

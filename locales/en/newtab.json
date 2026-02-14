@@ -28,6 +28,14 @@
     "title": "Bookmark",
     "tooSmall": "Sidebar is too narrow"
   },
+  "bootstrap": {
+    "invalidVer": {
+      "title": "Unsupported Settings Version",
+      "msg": "We’re sorry, but an unsupported legacy settings version was detected. To ensure the extension functions properly, please clear the extension data and refresh.",
+      "bak": "You may also click the button below to download a backup of the previous settings version (it cannot be imported into the current version).",
+      "btn": "Clear and Refresh"
+    }
+  },
   "changelog": {
     "hideMajor": "Hide major update changelog",
     "newVersionMsg": "Your start page has been updated!",

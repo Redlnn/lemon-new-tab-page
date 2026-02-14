@@ -28,9 +28,17 @@
     "title": "书签",
     "tooSmall": "侧边栏宽度过小"
   },
+  "bootstrap": {
+    "invalidVer": {
+      "title": "不支持的配置版本",
+      "msg": "非常抱歉，检测到不受支持的历史设置版本。为保证扩展功能正常运行，请清除扩展数据并刷新。",
+      "bak": "你还可以点击下方按钮以下载旧版本的配置文件备份（不支持导入到当前版本）。",
+      "btn": "清除并刷新"
+    }
+  },
   "changelog": {
-    "hideMajorChangelog": "不显示大版本更新日志",
     "hideMajor": "不显示大版本更新日志",
+    "newVersionMsg": "你的起始页更新啦~",
     "otherVersions": {
       "description": "仅包含5个版本的更新日志，剩余内容请点击下方链接跳转查看：",
       "linkEn": "English",

@@ -1,8 +1,2 @@
-export type * from './old'
-export type * from './v2'
-export type * from './v3'
-export type * from './v4'
-export type * from './v5'
-export type * from './v6'
 export type * from './v7'
 export type * from './v8'

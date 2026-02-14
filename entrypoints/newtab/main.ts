@@ -1,12 +1,12 @@
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'
-import { useColorMode, useDebounceFn, usePreferredDark } from '@vueuse/core'
+import { useColorMode, usePreferredDark } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
 import { i18n } from '@/shared/i18n'
-import { defaultSettings, initSettings, saveSettings, useSettingsStore } from '@/shared/settings'
+import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
 import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
@@ -45,9 +45,12 @@ export const main = async () => {
     ''
   )
 
-  const app = i18n(createApp(App))
+  await shouldStartApp()
+
+  const app = createApp(App)
   const pinia = createPinia()
 
+  i18n(app)
   app.use(pinia)
 
   await initSettings()

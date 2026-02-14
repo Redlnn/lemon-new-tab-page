@@ -5,6 +5,13 @@ import { createApp } from 'vue'
 import { usePreferredDark } from '@vueuse/core'
 
 import { i18n, i18nInitPromise } from '@/shared/i18n'
+import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
+import {
+  applyStoredMonetColors,
+  changeTheme,
+  getMonetColors,
+  toggleDocumentClass
+} from '@/shared/theme'
 
 import App from './App.vue'
 
@@ -24,9 +31,12 @@ watch(
 )
 
 i18nInitPromise.then(async () => {
+  await shouldStartApp()
+
   const app = i18n(createApp(App))
   const pinia = createPinia()
 
+  i18n(app)
   app.use(pinia)
 
   // 初始化设置

@@ -2,6 +2,8 @@ import type { DrawerDirection, OldBgType } from '@/shared/enums'
 
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
+import type { bingBackground, localBackground } from './type'
+
 export interface SettingsInterfaceVer7 {
   primaryColor: string
   colorfulMode: boolean
@@ -44,24 +46,9 @@ export interface SettingsInterfaceVer7 {
     pauseWhenBlur: boolean // 视频壁纸
     fasterBgAnim: boolean
   }
-  localBackground: {
-    id: string
-    /** @deprecated */
-    url: string
-    mediaType?: 'image' | 'video' // 可选的媒体类型: 'image' | 'video'，用于在渲染时选择 <img> 或 <video>
-  }
-  localDarkBackground: {
-    id: string
-    /** @deprecated */
-    url: string
-    mediaType?: 'image' | 'video'
-  }
-  bingBackground: {
-    id: string
-    /** @deprecated */
-    url: string
-    updateDate: string | number
-  }
+  localBackground: localBackground
+  localDarkBackground: localBackground
+  bingBackground: bingBackground
   shortcut: {
     enabled: boolean
     enableTopSites: boolean
