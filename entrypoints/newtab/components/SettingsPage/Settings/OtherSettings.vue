@@ -122,14 +122,17 @@ function sendSyncMessage() {
   }
 }
 
-const settingsFileInput = useTemplateRef('settingsFileInput')
-const shortcutFileInput = useTemplateRef('shortcutFileInput')
-const customSearchEngineFileInput = useTemplateRef('customSearchEngineFileInput')
+const fileInput = useTemplateRef('fileInput')
+type Backup = {
+  settings: CURRENT_CONFIG_INTERFACE
+  shortcuts: Shortcut
+  customSearchEngines: CustomSearchEngineStorage
+}
 
 /**
  * 通用文件选择器打开函数
  */
-async function openFilePicker(inputRef: Ref<HTMLInputElement | null>) {
+async function openFilePicker() {
   try {
     await ElMessageBox.confirm(
       t('other.importExport.warningDialog.content'),
@@ -140,35 +143,80 @@ async function openFilePicker(inputRef: Ref<HTMLInputElement | null>) {
         type: 'warning'
       }
     )
-    inputRef.value?.click()
+    fileInput.value?.click()
   } catch {}
 }
 
-async function openSettingsFilePicker() {
-  await openFilePicker(settingsFileInput)
+async function exportBackup() {
+  const backup: Backup = {
+    settings: settings.$state,
+    shortcuts: shortcuts.$state,
+    customSearchEngines: customSearchEngineStore.$state
+  }
+
+  downloadJSON<Backup>(backup, 'lenmon-new-tab-backup.json')
 }
 
-async function openShortcutFilePicker() {
-  await openFilePicker(shortcutFileInput)
-}
-
-async function openCustomSearchEngineFilePicker() {
-  await openFilePicker(customSearchEngineFileInput)
-}
-
-async function exportSettings() {
-  downloadJSON<CURRENT_CONFIG_INTERFACE>(settings.$state, 'lenmon-new-tab-settings.json')
-}
-
-async function exportShortcuts() {
-  downloadJSON<Shortcut>(shortcuts.$state, 'lenmon-new-tab-shortcuts.json')
-}
-
-async function exportCustomSearchEngines() {
-  downloadJSON<CustomSearchEngineStorage>(
-    customSearchEngineStore.$state,
-    'lenmon-new-tab-custom-search-engines.json'
+function backupValidator(data: unknown): data is Backup {
+  if (typeof data !== 'object' || data === null) return false
+  if ('settings' in data && typeof data.settings === 'object' && data.settings !== null) return true
+  if ('shortcuts' in data && typeof data.shortcuts === 'object' && data.shortcuts !== null)
+    return true
+  if (
+    'customSearchEngines' in data &&
+    typeof data.customSearchEngines === 'object' &&
+    data.customSearchEngines !== null
   )
+    return true
+  return false
+}
+
+function handleFileChange(event: Event) {
+  return handleFileImport<Backup>(event, fileInput, backupValidator, async (data) => {
+    // settings 部分（沿用之前的逻辑）
+    if (settings.version !== data.settings.version) {
+      ElMessage.error(
+        t('other.importExport.importFailed', { reason: t('other.importExport.versionMismatch') })
+      )
+      return
+    }
+
+    const originalSyncState = settings.$state.sync.enabled
+
+    data.settings.background.local = settings.$state.background.local
+    data.settings.background.localDark = data.settings.background.localDark || {
+      id: '',
+      url: '',
+      mediaType: undefined
+    }
+    data.settings.background.bing = settings.$state.background.bing
+    data.settings.background.online.url = settings.$state.background.online.url
+
+    settings.$patch(data.settings)
+    if (originalSyncState !== data.settings.sync.enabled) {
+      if (data.settings.sync.enabled) {
+        initSyncSettings(settings)
+      } else {
+        deinitSyncSettings()
+      }
+    }
+
+    // shortcuts 部分
+    if (data.shortcuts) {
+      shortcuts.$patch(data.shortcuts)
+      await saveShortcut(data.shortcuts)
+    }
+
+    // custom search engines 部分
+    if (data.customSearchEngines) {
+      customSearchEngineStore.$patch(data.customSearchEngines)
+      await saveCustomSearchEngine(data.customSearchEngines)
+    }
+
+    if (settings.sync.enabled) {
+      initSyncSettings(settings)
+    }
+  })
 }
 
 /**
@@ -227,79 +275,6 @@ function handleFileImport<T>(
       resolve()
     }
   })
-}
-
-function handleSettingsFileChange(event: Event) {
-  return handleFileImport<CURRENT_CONFIG_INTERFACE>(
-    event,
-    settingsFileInput,
-    (data): data is CURRENT_CONFIG_INTERFACE => typeof data === 'object' && data !== null,
-    (data) => {
-      if (settings.version !== data.version) {
-        ElMessage.error(
-          t('other.importExport.importFailed', { reason: t('other.importExport.versionMismatch') })
-        )
-        return
-      }
-
-      const originalSyncState = settings.$state.sync.enabled
-
-      data.background.local = settings.$state.background.local // 保持本地壁纸数据
-      data.background.localDark = settings.$state.background.localDark || {
-        id: '',
-        url: '',
-        mediaType: undefined
-      } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
-      data.background.bing = settings.$state.background.bing // 保持本地必应壁纸数据
-      data.background.online.url = settings.$state.background.online.url // 保持本地在线壁纸URL
-
-      if (originalSyncState !== data.sync.enabled) {
-        // 如果同步状态有变化，重新初始化或取消同步
-        if (data.sync.enabled) {
-          settings.$patch(data)
-          initSyncSettings(settings)
-          return
-        } else {
-          deinitSyncSettings()
-        }
-      }
-      settings.$patch(data)
-    }
-  )
-}
-
-function storageValidator<T>(data: unknown): data is T {
-  return typeof data === 'object' && data !== null && 'items' in data && Array.isArray(data.items)
-}
-
-function handleShortcutFileChange(event: Event) {
-  return handleFileImport<Shortcut>(
-    event,
-    shortcutFileInput,
-    storageValidator<Shortcut>,
-    async (data) => {
-      shortcuts.$patch(data)
-      await saveShortcut(data)
-      if (settings.sync.enabled) {
-        initSyncSettings(settings)
-      }
-    }
-  )
-}
-
-function handleCustomSearchEngineFileChange(event: Event) {
-  return handleFileImport<CustomSearchEngineStorage>(
-    event,
-    customSearchEngineFileInput,
-    storageValidator<CustomSearchEngineStorage>,
-    async (data) => {
-      customSearchEngineStore.$patch(data)
-      await saveCustomSearchEngine(data)
-      if (settings.sync.enabled) {
-        initSyncSettings(settings)
-      }
-    }
-  )
 }
 
 const currentLanguage = ref(i18next.language)
@@ -364,34 +339,12 @@ function changeLanguage(lang: string) {
       </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.importExport.settings') }}</div>
+      <div class="settings__label">{{ t('other.importExport.backup') }}</div>
       <span class="button-group">
-        <el-button type="primary" :icon="DownloadRound" @click="exportSettings">
+        <el-button type="primary" :icon="DownloadRound" @click="exportBackup">
           {{ t('other.importExport.export') }}
         </el-button>
-        <el-button :icon="FileUploadRound" @click="openSettingsFilePicker">
-          {{ t('other.importExport.import') }}
-        </el-button>
-      </span>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.importExport.shortcuts') }}</div>
-      <span class="button-group">
-        <el-button type="primary" :icon="DownloadRound" @click="exportShortcuts">
-          {{ t('other.importExport.export') }}
-        </el-button>
-        <el-button :icon="FileUploadRound" @click="openShortcutFilePicker">
-          {{ t('other.importExport.import') }}
-        </el-button>
-      </span>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.importExport.customSearchEngines') }}</div>
-      <span class="button-group">
-        <el-button type="primary" :icon="DownloadRound" @click="exportCustomSearchEngines">
-          {{ t('other.importExport.export') }}
-        </el-button>
-        <el-button :icon="FileUploadRound" @click="openCustomSearchEngineFilePicker">
+        <el-button :icon="FileUploadRound" @click="openFilePicker">
           {{ t('other.importExport.import') }}
         </el-button>
       </span>
@@ -408,29 +361,12 @@ function changeLanguage(lang: string) {
         {{ t('other.purge') }}
       </el-button>
     </div>
-    <!-- 隐藏的设置导入按钮 -->
     <input
-      ref="settingsFileInput"
+      ref="fileInput"
       type="file"
       accept="application/json"
       style="display: none"
-      @change="handleSettingsFileChange"
-    />
-    <!-- 隐藏的书签导入按钮 -->
-    <input
-      ref="shortcutFileInput"
-      type="file"
-      accept="application/json"
-      style="display: none"
-      @change="handleShortcutFileChange"
-    />
-    <!-- 隐藏的自定义搜索引擎导入按钮 -->
-    <input
-      ref="customSearchEngineFileInput"
-      type="file"
-      accept="application/json"
-      style="display: none"
-      @change="handleCustomSearchEngineFileChange"
+      @change="handleFileChange"
     />
   </div>
 </template>

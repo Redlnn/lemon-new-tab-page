@@ -136,7 +136,7 @@
       "title": "确定要清除壁纸缓存吗？"
     },
     "importExport": {
-      "customSearchEngines": "导入 / 导出自定义搜索引擎",
+      "backup": "备份扩展设置",
       "export": "导出",
       "import": "导入",
       "importFailed": "导入失败：{{reason}}",
@@ -144,8 +144,6 @@
       "invalidFileFormat": "文件格式不正确",
       "invalidJSON": "无效的 JSON 格式",
       "noFileSelected": "未选择文件",
-      "settings": "导入 / 导出设置",
-      "shortcuts": "导入 / 导出快捷方式",
       "unknownError": "未知错误",
       "versionMismatch": "文件内配置版本与当前扩展配置版本不符",
       "warningDialog": {

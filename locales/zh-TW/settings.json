@@ -12,7 +12,7 @@
     "cache": {
       "duration": "快取有效期",
       "noExpires": "快取永不過期",
-      "將於下次啟動時生效": "下次启动生效"
+      "nextStartup": "將於下次啟動時生效"
     },
     "change": "更改背景",
     "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
@@ -136,7 +136,7 @@
       "title": "確定要清除壁紙快取？"
     },
     "importExport": {
-      "customSearchEngines": "匯入 / 匯出自訂搜尋引擎",
+      "backup": "備份擴充功能設定",
       "export": "匯出",
       "import": "匯入",
       "importFailed": "匯入失敗：{{reason}}",
@@ -144,8 +144,6 @@
       "invalidFileFormat": "檔案格式不正確",
       "invalidJSON": "無效的 JSON 格式",
       "noFileSelected": "未選擇檔案",
-      "settings": "匯入 / 匯出設定",
-      "shortcuts": "匯入 / 匯出捷徑",
       "unknownError": "未知錯誤",
       "versionMismatch": "檔案內設定版本與目前擴充功能設定版本不符",
       "warningDialog": {

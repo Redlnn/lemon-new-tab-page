@@ -136,7 +136,7 @@
       "title": "Are you sure you want to purge all wallpaper cache?"
     },
     "importExport": {
-      "customSearchEngines": "Import / Export custom search engines",
+      "backup": "Back up extension settings",
       "export": "Export",
       "import": "Import",
       "importFailed": "Import failed: {{reason}}",
@@ -144,8 +144,6 @@
       "invalidFileFormat": "Invalid file format",
       "invalidJSON": "Invalid JSON format",
       "noFileSelected": "No file selected",
-      "settings": "Import / Export settings",
-      "shortcuts": "Import / Export shortcuts",
       "unknownError": "Unknown error",
       "versionMismatch": "The configuration version in the file does not match the current extension configuration version.",
       "warningDialog": {
