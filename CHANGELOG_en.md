@@ -2,7 +2,11 @@
 
 > Translated by ChatGPT from Chinese.
 
-## 3.1.0 (WIP)
+## 3.1.0 (Feb 14, 2026)
+
+### Happy Chinese New Year🧨
+
+Wishing you a happy Chinese New Year! May your days be as fresh and wonderful as lemons! Thank you for your continued support and feedback, and we look forward to continuing to accompany you in the new year!
 
 ### New Features✨
 
