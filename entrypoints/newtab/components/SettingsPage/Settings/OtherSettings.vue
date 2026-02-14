@@ -9,6 +9,7 @@ import {
 } from '@vicons/material'
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
+import localForage from 'localforage'
 
 import { storage } from '#imports'
 
@@ -22,12 +23,6 @@ import {
   useCustomSearchEngineStore
 } from '@newtab/shared/customSearchEngine'
 import { downloadJSON } from '@newtab/shared/getJson'
-import {
-  useBingWallpaperStorge,
-  useDarkWallpaperStorge,
-  useOnlineWallpaperCacheStore,
-  useWallpaperStorge
-} from '@newtab/shared/wallpaper'
 
 const { t, i18next } = useTranslation('settings')
 
@@ -86,13 +81,7 @@ async function clearWallpaperData() {
     background: 'var(--el-overlay-color-light)'
   })
 
-  Promise.all([
-    resetSettings(),
-    useWallpaperStorge.clear(),
-    useDarkWallpaperStorge.clear(),
-    useBingWallpaperStorge.clear(),
-    useOnlineWallpaperCacheStore.clear()
-  ])
+  Promise.all([resetSettings(), localForage.dropInstance({ name: '柠檬起始页' })])
     .catch(console.error)
     .finally(() => {
       setTimeout(() => {
@@ -112,10 +101,7 @@ function clearExtensionData() {
   Promise.all([
     localStorage.clear(),
     sessionStorage.clear(),
-    useWallpaperStorge.clear(),
-    useDarkWallpaperStorge.clear(),
-    useBingWallpaperStorge.clear(),
-    useOnlineWallpaperCacheStore.clear(),
+    localForage.dropInstance({ name: '柠檬起始页' }),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync')
