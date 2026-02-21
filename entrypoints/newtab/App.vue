@@ -15,6 +15,7 @@ import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
+import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
 import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
 import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
 import Background from './components/Background.vue'
@@ -250,6 +251,7 @@ const actionClass = computed(() => {
         :btn-class="actionClass"
         @refresh-background="BackgroundRef?.refreshBackground"
       ></refresh-bg-btn>
+      <download-bg-btn :btn-class="actionClass"></download-bg-btn>
     </div>
     <settings-page ref="SettingsPageRef" />
     <changelog ref="ChangelogRef" />
