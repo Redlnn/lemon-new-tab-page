@@ -104,18 +104,27 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
       >
         {{ currentPageTitle }}
       </div>
-      <span
+      <div
+        role="button"
+        tabindex="0"
         v-show="isMobile && !router.isAtMenu.value"
         class="mobile-back-btn"
         @click="handleMobileBack"
+        @keydown.enter="handleMobileBack"
       >
         <el-icon color="currentColor" :size="20">
           <component :is="ArrowBackRound" />
         </el-icon>
-      </span>
-      <span class="base-dialog-close-btn" @click="close">
+      </div>
+      <div
+        role="button"
+        tabindex="0"
+        class="base-dialog-close-btn"
+        @click="close"
+        @keydown.enter="close"
+      >
         <component :is="CloseRound" />
-      </span>
+      </div>
     </template>
 
     <template #aside>

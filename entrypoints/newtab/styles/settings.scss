@@ -56,7 +56,8 @@
     border-radius: 50%;
     transition: var(--el-transition-duration-fast) ease-in-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: var(--el-text-color-primary);
       background-color: var(--el-fill-color-blank);
     }
@@ -253,8 +254,13 @@
       --el-menu-base-level-padding: 30px;
     }
 
+    &:focus {
+      background-color: var(--el-menu-hover-bg-color);
+    }
+
     &.is-active,
-    html.colorful &:hover {
+    html.colorful &:hover,
+    html.colorful &:focus {
       background-color: var(--el-color-primary-light-9);
     }
 

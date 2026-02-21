@@ -45,6 +45,8 @@ function handleMenuSelect(key: string) {
         :key="item.key"
         :index="item.key"
         class="settings-menu-item noselect"
+        tabindex="0"
+        @keydown.enter="$event.currentTarget.click()"
       >
         <el-icon>
           <component :is="item.icon" />

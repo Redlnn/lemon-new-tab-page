@@ -105,9 +105,12 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
           :span="12"
         >
           <div
+            role="button"
+            tabindex="0"
             class="se-switcher-item"
             :class="{ 'is-active': settings.search.engine === key }"
             @click="settings.search.engine = key"
+            @keydown.enter="settings.search.engine = key"
           >
             <el-icon size="16" class="se-switcher-item__icon">
               <component :is="searchEngines[key].icon" />
@@ -147,8 +150,11 @@ function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string
         </el-col>
         <el-col :span="12">
           <div
+            role="button"
+            tabindex="0"
             class="se-switcher-item se-switcher-item--add"
             @click="addCustomSearchEngineRef?.openAddDialog"
+            @keydown.enter="addCustomSearchEngineRef?.openAddDialog"
           >
             <el-icon size="16" class="se-switcher-item__icon">
               <Plus />

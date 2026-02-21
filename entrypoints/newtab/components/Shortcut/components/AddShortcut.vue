@@ -21,9 +21,11 @@ const props = withDefaults(
   defineProps<{
     reload: () => Promise<void>
     showButton?: boolean
+    tabindex?: boolean
   }>(),
   {
-    showButton: true
+    showButton: true,
+    tabindex: true
   }
 )
 const showDialog = ref(false)
@@ -127,7 +129,14 @@ const iconPerfClass = perf('shortcut__icon')
 
 <template>
   <div v-if="props.showButton" class="shortcut__item shortcut__item--add-shortcut noselect">
-    <div class="shortcut__item-link" style="cursor: pointer" @click="openAddDialog">
+    <div
+      role="button"
+      :tabindex="tabindex ? '0' : '-1'"
+      class="shortcut__item-link"
+      style="cursor: pointer"
+      @click="openAddDialog"
+      @keydown.enter="openAddDialog"
+    >
       <div
         class="shortcut__icon-container"
         :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
@@ -320,7 +329,8 @@ const iconPerfClass = perf('shortcut__icon')
     border-radius: 12px;
     transition: var(--el-transition-duration-fast);
 
-    &:hover {
+    &:hover,
+    &:focus {
       border-color: var(--el-color-primary);
 
       .shortcut__favicon-uploader-icon {

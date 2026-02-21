@@ -430,6 +430,7 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   v-if="showPrevPageAddButton"
                   :reload="refreshDebounced"
                   :show-button="true"
+                  :tabindex="false"
                 />
               </div>
               <!-- 前一页占位（当没有前一页时） -->
@@ -457,6 +458,7 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   :title="item.title"
                   :favicon="item.favicon"
                   :pined="item.isPinned"
+                  :tabindex="focusStore.isFocused ? -1 : 0"
                 >
                   <template #submenu>
                     <template v-if="item.isPinned">
@@ -526,6 +528,7 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   v-if="showNextPageAddButton"
                   :reload="refreshDebounced"
                   :show-button="true"
+                  :tabindex="false"
                 />
               </div>
               <!-- 后一页占位（当没有后一页时） -->

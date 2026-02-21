@@ -77,7 +77,16 @@ async function download() {
 </script>
 
 <template>
-  <div class="action-btn" :class="btnClass" @mouseenter="play" @mouseleave="play" @click="download">
+  <div
+    role="button"
+    tabindex="0"
+    class="action-btn"
+    :class="btnClass"
+    @mouseenter="play"
+    @mouseleave="play"
+    @click="download"
+    @keydown.enter="download"
+  >
     <el-icon>
       <svg viewBox="0 0 24 24">
         <!-- material: DownloadRound -->

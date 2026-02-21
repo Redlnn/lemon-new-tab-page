@@ -52,7 +52,7 @@ function sponsorMessage() {
     trigger="click"
     @contextmenu.prevent.stop
   >
-    <div class="action-btn setting-btn" :class="btnClass">
+    <div role="button" tabindex="0" class="action-btn setting-btn" :class="btnClass">
       <el-badge is-dot :offset="[3, 0]" :hidden="settings.readChangeLog">
         <el-icon><settings-round /></el-icon>
       </el-badge>

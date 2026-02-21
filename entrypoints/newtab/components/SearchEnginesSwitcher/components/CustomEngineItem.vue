@@ -94,6 +94,8 @@ defineExpose({ open, close })
 <template>
   <div
     ref="itemRef"
+    role="button"
+    tabindex="0"
     class="se-switcher-item se-switcher-item--custom"
     :class="{ 'is-active': isActive }"
     @click="handleClick"

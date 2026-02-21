@@ -252,6 +252,7 @@ onMounted(() => {
   <section ref="searchBox" class="search-box">
     <form
       ref="searchForm"
+      role="search"
       class="search-box__form"
       :class="formPerfClass"
       :style="{
@@ -278,6 +279,7 @@ onMounted(() => {
       />
       <div
         class="search-box__btn"
+        tabindex="-1"
         :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }"
       >
         <el-icon @click="doSearch"><search /></el-icon>

@@ -11,7 +11,14 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="action-btn refresh-btn" :class="btnClass" @click="emit('refresh-background')">
+  <div
+    role="button"
+    tabindex="0"
+    class="action-btn refresh-btn"
+    :class="btnClass"
+    @click="emit('refresh-background')"
+    @keydown.enter="emit('refresh-background')"
+  >
     <el-icon><refresh-round /></el-icon>
   </div>
 </template>

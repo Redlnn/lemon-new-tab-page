@@ -11,7 +11,14 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div class="action-btn bookmark-btn" :class="btnClass" @click="emit('open-bookmark-sidebar')">
+  <div
+    role="button"
+    tabindex="0"
+    class="action-btn bookmark-btn"
+    :class="btnClass"
+    @click="emit('open-bookmark-sidebar')"
+    @keydown.enter="emit('open-bookmark-sidebar')"
+  >
     <el-icon><bookmark-twotone /></el-icon>
   </div>
 </template>

@@ -96,9 +96,15 @@ const dialogId = computed(() => {
       >
         {{ title }}
       </div>
-      <span class="base-dialog-close-btn" @click="onClose">
+      <div
+        role="button"
+        tabindex="0"
+        class="base-dialog-close-btn"
+        @click="onClose"
+        @keydown.enter="onClose"
+      >
         <component :is="CloseRound" />
-      </span>
+      </div>
     </template>
     <div
       v-if="title"
@@ -195,7 +201,8 @@ const dialogId = computed(() => {
     border-radius: 50%;
     transition: var(--el-transition-duration-fast) ease-in-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: var(--el-text-color-primary);
       background-color: var(--el-fill-color-blank);
       transform: rotate(180deg);

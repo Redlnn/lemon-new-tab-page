@@ -21,12 +21,14 @@
   border-radius: 12px;
   transition: var(--el-transition-duration-fast) ease-in-out;
 
-  &:hover {
+  &:hover,
+  &:focus {
     border-radius: 50%;
     box-shadow: var(--el-box-shadow-lighter);
   }
 
-  &:not(.action-btn--tran):hover {
+  &:not(.action-btn--tran):hover,
+  &:not(.action-btn--tran):focus {
     color: var(--el-color-primary);
     background-color: var(--el-color-primary-light-8);
   }
@@ -36,7 +38,8 @@
     background-color: transparent;
     border-radius: 50%;
 
-    &:hover {
+    &:hover,
+    &:focus {
       color: rgb(from var(--el-text-color-primary) r g b / 60%);
       background-color: rgb(from var(--el-bg-color-overlay) r g b / 30%);
 
@@ -52,7 +55,8 @@
 }
 
 .bookmark-btn {
-  &:hover {
+  &:hover,
+  &:focus {
     .el-icon {
       transform: scaleX(-1);
     }
@@ -60,7 +64,8 @@
 }
 
 .refresh-btn {
-  &:hover {
+  &:hover,
+  &:focus {
     .el-icon {
       transform: rotate(360deg);
     }
@@ -68,7 +73,8 @@
 }
 
 .setting-btn {
-  &:hover {
+  &:hover,
+  &:focus {
     .el-icon {
       transform: rotate(180deg);
     }

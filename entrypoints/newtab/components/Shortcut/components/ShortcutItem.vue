@@ -127,10 +127,11 @@ defineExpose({ open, close })
 </script>
 
 <template>
-  <div class="shortcut__item noselect" :class="[{ pined: pined }]">
+  <div role="button" class="shortcut__item noselect" :class="[{ pined: pined }]">
     <a
       ref="itemRef"
       class="shortcut__item-link"
+      tabindex="-1"
       :href="url"
       :target="settings.shortcut.openInNewTab ? '_blank' : '_self'"
       @contextmenu.stop.prevent="handleContextmenu"

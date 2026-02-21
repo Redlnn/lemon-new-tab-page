@@ -179,7 +179,8 @@ defineExpose({ hide })
     cursor: pointer;
     border-radius: 10px;
 
-    &:hover {
+    &:hover,
+    &:focus {
       background: var(--le-bg-color-overlay-opacity-30);
     }
 
