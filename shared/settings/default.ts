@@ -35,7 +35,7 @@ export const defaultSettings: CURRENT_CONFIG_INTERFACE = {
     recordHistory: true,
     shadow: true,
     placeholder: '',
-    launchAnimation: true
+    launchAnimation: false
   },
   background: {
     bgType: BgType.Bing,
