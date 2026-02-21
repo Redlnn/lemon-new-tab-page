@@ -49,7 +49,7 @@ function onDeny() {
     :title="t('background.permission.request.title')"
     width="400px"
     class="permission-dialog base-dialog--blur base-dialog--opacity noselect"
-    @update:model-value="(val) => emit('update:modelValue', val)"
+    @update:model-value="(val: boolean) => emit('update:modelValue', val)"
   >
     <div class="permission-dialog-content">
       <p>{{ t('background.permission.request.message') }}</p>

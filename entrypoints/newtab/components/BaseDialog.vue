@@ -83,7 +83,7 @@ const dialogId = computed(() => {
     :append-to-body="appendToBody"
     :destroy-on-close="destroyOnClose"
     :header-class="headerClass"
-    @update:model-value="(val) => emit('update:modelValue', val)"
+    @update:model-value="(val: boolean) => emit('update:modelValue', val)"
     @open="onOpen"
     @close="onClose"
     @closed="onClosed"
