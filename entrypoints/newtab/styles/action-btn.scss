@@ -18,31 +18,36 @@
   color: var(--el-text-color-secondary);
   cursor: pointer;
   background-color: var(--el-bg-color-overlay);
-  border-radius: 50%;
-  transition:
-    color 0.1s ease,
-    background-color var(--el-transition-duration-fast) ease;
+  border-radius: 12px;
+  transition: var(--el-transition-duration-fast) ease-in-out;
 
-  &--blur {
-    @include acrylic.acrylic;
+  &:hover {
+    border-radius: 50%;
+    box-shadow: var(--el-box-shadow-lighter);
+  }
+
+  &:not(.action-btn--tran):hover {
+    color: var(--el-color-primary);
+    background-color: var(--el-color-primary-light-8);
   }
 
   &--tran {
-    color: var(--le-text-color-primary-opacity-65);
-    background-color: var(--le-bg-color-overlay-opacity-80);
+    color: rgb(from var(--el-text-color-primary) r g b / 35%);
+    background-color: transparent;
+    border-radius: 50%;
 
     &:hover {
-      background-color: var(--el-bg-color-overlay);
+      color: rgb(from var(--el-text-color-primary) r g b / 60%);
+      background-color: rgb(from var(--el-bg-color-overlay) r g b / 30%);
+
+      &.action-btn--blur {
+        @include acrylic.acrylic;
+      }
     }
   }
 
   .el-icon {
     transition: transform var(--el-transition-duration) ease-in-out;
-  }
-
-  &:hover {
-    color: var(--el-color-primary);
-    box-shadow: var(--el-box-shadow-lighter);
   }
 }
 
