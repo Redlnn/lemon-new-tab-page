@@ -178,11 +178,11 @@ function toggleAnimationSettings(disable: boolean) {
       <el-switch :disabled="settings.perf.disableYiyanTransparent" v-model="yiyanBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.settingsBtnTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.actionBtnTransparent') }}</div>
       <el-switch v-model="settingsBtnTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.settingsBtnBlur') }}</div>
+      <div class="settings__label">{{ t('perf.actionBtnBlur') }}</div>
       <el-switch
         :disabled="settings.perf.disableSettingsBtnTransparent"
         v-model="settingsBtnBlur"

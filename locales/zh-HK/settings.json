@@ -162,6 +162,8 @@
     "title": "其他"
   },
   "perf": {
+    "actionBtnBlur": "右下按鈕模糊",
+    "actionBtnTransparent": "右下按鈕透明",
     "bgSwitchAnim": "背景切換動效",
     "bgSwitchAnimTip": "關閉後切換背景時將不再有淡入淡出動效，能微弱提升切換速度。同時啟動時的背景動效也會被停用",
     "bookmarkBlur": "書籤欄背景模糊",
@@ -173,8 +175,6 @@
     "focusScale": "點擊搜尋框時縮放背景",
     "searchBarBlur": "搜尋框模糊",
     "searchBarTransparent": "搜尋框透明",
-    "settingsBtnBlur": "設定按鈕模糊",
-    "settingsBtnTransparent": "設定按鈕透明",
     "shortcutBlur": "快速存取圖示模糊",
     "shortcutTransparent": "快速存取圖示透明",
     "title": "效能",

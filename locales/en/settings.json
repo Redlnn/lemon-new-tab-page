@@ -162,6 +162,8 @@
     "title": "Other"
   },
   "perf": {
+    "actionBtnBlur": "Bottom-right button blur",
+    "actionBtnTransparent": "Bottom-right button transparency",
     "bgSwitchAnim": "Background switch animation",
     "bgSwitchAnimTip": "When disabled, there will be no fade-in/fade-out animation when switching backgrounds, which can slightly improve switching speed. Background animation on startup will also be disabled",
     "bookmarkBlur": "Bookmarks sidebar blur",
@@ -173,8 +175,6 @@
     "focusScale": "Scale background on search focus",
     "searchBarBlur": "Search bar blur",
     "searchBarTransparent": "Search bar transparency",
-    "settingsBtnBlur": "Settings button blur",
-    "settingsBtnTransparent": "Settings button transparency",
     "shortcutBlur": "Shortcut blur",
     "shortcutTransparent": "Shortcut transparency",
     "title": "Performance",
