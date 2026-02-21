@@ -70,9 +70,9 @@ async function download() {
     ElMessage.warning('需要开启「在线壁纸缓存」后才能下载壁纸')
     return
   }
-  const blob = await getCachedOnlineWallpaper(settings.background.online.url, Infinity)
-  if (!blob) return
-  downloadImageBlob(blob)
+  const cached = await getCachedOnlineWallpaper(settings.background.online.url)
+  if (!cached) return
+  downloadImageBlob(cached.blob)
 }
 </script>
 

@@ -129,34 +129,51 @@ const bgTypeProviders: Record<
       }
     }
 
-    try {
-      let blob: Blob | null = null
+    const now = Date.now()
+    const useCache = settings.background.online.cacheEnable
+    // 如果开启了缓存，则尝试从缓存中获取
+    const cached = useCache ? await getCachedOnlineWallpaper(rawUrl) : null
 
-      // 如果开启了缓存，则尝试从缓存中获取
-      if (settings.background.online.cacheEnable) {
-        blob = await getCachedOnlineWallpaper(
-          rawUrl,
-          settings.background.online.noExpires ? Infinity : settings.background.online.cacheDuration
-        )
-      }
+    let isCacheValid = false
 
-      // 如果缓存中没有（或没有开启缓存），则下载新的
-      if (!blob) {
-        const response = await fetch(rawUrl)
-        if (!response.ok) throw new Error(response.statusText)
-        blob = await response.blob()
+    if (cached) {
+      const ageHours = (now - cached.timestamp) / 36e5
+      const withinDuration = ageHours <= settings.background.online.cacheDuration
 
-        // 缓存新下载的图像（如果开启了缓存）
-        if (settings.background.online.cacheEnable) {
-          await cacheOnlineWallpaper(rawUrl, blob)
-        }
-      }
-
-      const blobUrl = URL.createObjectURL(blob)
-      return blobUrl
-    } catch {
-      return rawUrl
+      isCacheValid = settings.background.online.noExpires || withinDuration
     }
+
+    if (isCacheValid) {
+      return URL.createObjectURL(cached!.blob)
+    }
+
+    let blob: Blob | null = null
+
+    // 如果没有命中缓存或没有开启缓存
+    try {
+      // 下载新的图像
+      const res = await fetch(rawUrl)
+      if (!res.ok) throw new Error(`${res.status} ${res.statusText}`)
+      blob = await res.blob()
+    } catch (e) {
+      ElNotification.error({
+        title: '缓存在线壁纸失败',
+        message: `无法缓存在线壁纸：${e}`
+        // TODO: i18n
+      })
+      if (cached)
+        return URL.createObjectURL(cached.blob) // 如果下载失败，不管缓存是否过期都继续使用缓存
+      else return rawUrl // 假如开了莫奈，这里会有未定义行为，也许在应用莫奈的时候会出错
+    }
+
+    const newCache = { blob, timestamp: now }
+
+    // 缓存新下载的图像（如果开启了缓存）
+    if (settings.background.online.cacheEnable) {
+      await cacheOnlineWallpaper(rawUrl, newCache)
+    }
+
+    return URL.createObjectURL(blob)
   },
   [BgType.None]: () => Promise.resolve('')
 }
