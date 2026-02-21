@@ -1,17 +1,11 @@
-import { BgType, OldBgType } from '@/shared/enums'
+import { BgType, type OldBgType } from '@/shared/enums'
 
-export const searchEnginesMap = {
-  0: 'google',
-  1: 'baidu',
-  2: 'bing'
-} as const
-
-const OldToNewMap: Record<OldBgType, BgType> = {
-  [OldBgType.none]: BgType.None,
-  [OldBgType.Local]: BgType.Local,
-  [OldBgType.Bing]: BgType.Bing,
-  [OldBgType.Online]: BgType.Online
-}
+const OldToNewMap = {
+  0: BgType.None,
+  1: BgType.Local,
+  2: BgType.Bing,
+  3: BgType.Online
+} satisfies Record<OldBgType, BgType>
 
 export function toNewBgType(old: OldBgType): BgType {
   return OldToNewMap[old]

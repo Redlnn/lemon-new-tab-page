@@ -2,12 +2,13 @@ import { ref } from 'vue'
 
 import { browser } from 'wxt/browser'
 
-export enum PermissionResult {
-  GrantedAll = 'granted-all',
-  GrantedCurrent = 'granted-current',
-  DeniedByUser = 'denied-by-user',
-  DeniedByBrowser = 'denied-by-browser'
-}
+export const PermissionResult = {
+  GrantedAll: 'granted-all',
+  GrantedCurrent: 'granted-current',
+  DeniedByUser: 'denied-by-user',
+  DeniedByBrowser: 'denied-by-browser'
+} as const
+export type PermissionResult = (typeof PermissionResult)[keyof typeof PermissionResult]
 
 const permissionDialogVisible = ref(false)
 const currentHostname = ref('')

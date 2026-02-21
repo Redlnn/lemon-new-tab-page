@@ -12,18 +12,19 @@ import {
   FormatQuoteRound
 } from '@vicons/material'
 
-export enum SettingsRoute {
-  MENU = 'menu',
-  THEME = 'theme',
-  CLOCK = 'clock',
-  SEARCH = 'search',
-  BACKGROUND = 'background',
-  SHORTCUT = 'shortcut',
-  BOOKMARK_SIDEBAR = 'bookmarkSidebar',
-  YIYAN = 'yiyan',
-  PERFORMANCE = 'performance',
-  OTHER = 'other'
-}
+export const SettingsRoute = {
+  MENU: 'menu',
+  THEME: 'theme',
+  CLOCK: 'clock',
+  SEARCH: 'search',
+  BACKGROUND: 'background',
+  SHORTCUT: 'shortcut',
+  BOOKMARK_SIDEBAR: 'bookmarkSidebar',
+  YIYAN: 'yiyan',
+  PERFORMANCE: 'performance',
+  OTHER: 'other'
+} as const
+export type SettingsRoute = (typeof SettingsRoute)[keyof typeof SettingsRoute]
 
 interface MenuItem {
   key: SettingsRoute

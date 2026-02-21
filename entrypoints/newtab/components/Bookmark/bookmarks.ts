@@ -42,7 +42,7 @@ export const useBookmarkStore = defineStore('bookmark', {
   state: () => ({
     tree: [] as Browser.bookmarks.BookmarkTreeNode[],
     loaded: false,
-    sortMode: SortMode.Original,
+    sortMode: SortMode.Original as SortMode,
     searchQuery: '',
     // 根据查询/排序计算后的树结果
     filteredResult: [] as Browser.bookmarks.BookmarkTreeNode[],
