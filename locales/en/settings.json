@@ -130,6 +130,11 @@
     "openInNewTab": "Open in New Tab",
     "openInNewWindow": "Open in New Window"
   },
+  "dock": {
+    "limitCount": "Limit maximum count",
+    "maxCount": "Maximum count",
+    "title": "Dock"
+  },
   "other": {
     "confirmPurgeData": {
       "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
@@ -211,8 +216,6 @@
     "HorizontalIconSpacing": "Horizontal icon spacing",
     "VerticalIconSpacing": "Vertical icon spacing",
     "disablePaging": "Disable paging",
-    "enableAreaShadow": "Show area shadow",
-    "enableBg": "Show area background",
     "enableShadow": "Show icon shadow",
     "iconMarginBottom": "Icon–Title Spacing",
     "iconRatio": "Icon ratio",

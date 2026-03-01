@@ -130,6 +130,11 @@
     "openInNewTab": "在新分頁中開啟",
     "openInNewWindow": "在新視窗中開啟"
   },
+  "dock": {
+    "limitCount": "限制最大數量",
+    "maxCount": "最大數量",
+    "title": "Dock"
+  },
   "other": {
     "confirmPurgeData": {
       "message": "此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。",
@@ -211,8 +216,6 @@
     "HorizontalIconSpacing": "捷徑左右間距",
     "VerticalIconSpacing": "捷徑上下間距",
     "disablePaging": "停用翻頁",
-    "enableAreaShadow": "顯示區域陰影",
-    "enableBg": "顯示區域背景",
     "enableShadow": "顯示圖示陰影",
     "iconMarginBottom": "圖標與標題間距",
     "iconRatio": "圖示填充比例",

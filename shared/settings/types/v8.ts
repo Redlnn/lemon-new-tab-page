@@ -94,6 +94,19 @@ export interface SettingsInterfaceVer8 {
     openInNewTab: boolean
   }
 
+  // 快速访问
+  dock: {
+    enabled: boolean
+    enableTopSites: boolean
+    showOnSearchFocus: boolean
+    gap: number
+    limitCount: boolean
+    maxCount: number
+    iconSize: number
+    iconRatio: number
+    openInNewTab: boolean
+  }
+
   // 同步
   sync: {
     enabled: boolean

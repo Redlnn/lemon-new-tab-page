@@ -22,6 +22,7 @@ import Bookmark from './components/Bookmark/index.vue'
 import Clock from './components/Clock.vue'
 import SearchBox from './components/SearchBox/index.vue'
 import AddShortcutDialog from './components/Shortcut/components/AddShortcutDialog.vue'
+import Dock from './components/Shortcut/Dock.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
 import { useElementLang } from './composables/useElementLang'
@@ -164,7 +165,8 @@ const actionClass = computed(() => {
 
   return {
     'action-btn-container--tran': enableTransparent,
-    'action-btn-container--blur': enableBlur
+    'action-btn-container--blur': enableBlur,
+    'action-btn-container--top': settings.dock.enabled
   }
 })
 </script>
@@ -199,6 +201,10 @@ const actionClass = computed(() => {
         @contextmenu.stop
       />
       <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
+      <dock
+        v-if="settings.dock.enabled"
+        :on-open-add-dialog="() => AddShortcutDialogRef?.openAddDialog()"
+      />
     </main>
     <background ref="BackgroundRef" />
     <div class="action-btn-container" :class="actionClass">

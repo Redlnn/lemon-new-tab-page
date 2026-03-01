@@ -94,6 +94,7 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       marginTop: oldSettings.shortcut.marginTop,
       openInNewTab: defaultSettings.shortcut.openInNewTab
     },
+    dock: { ...defaultSettings.dock },
     sync: { enabled: oldSettings.sync.enabled },
     yiyan: {
       enabled: oldSettings.yiyan.enabled,

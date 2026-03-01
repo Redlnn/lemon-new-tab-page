@@ -130,6 +130,11 @@
     "openInNewTab": "在新标签页中打开",
     "openInNewWindow": "在新窗口中打开"
   },
+  "dock": {
+    "limitCount": "限制最大数量",
+    "maxCount": "最大数量",
+    "title": "Dock"
+  },
   "other": {
     "confirmPurgeData": {
       "message": "该操作将会重置扩展设置、已忽略的最常访问网站、收藏/置顶的网站、已选择的背景图片/视频等。",
@@ -211,8 +216,6 @@
     "HorizontalIconSpacing": "链接左右间距",
     "VerticalIconSpacing": "链接上下间距",
     "disablePaging": "禁用翻页",
-    "enableAreaShadow": "显示区域阴影",
-    "enableBg": "显示区域背景",
     "enableShadow": "显示图标阴影",
     "iconMarginBottom": "图标与标题间距",
     "iconRatio": "图标填充比例",

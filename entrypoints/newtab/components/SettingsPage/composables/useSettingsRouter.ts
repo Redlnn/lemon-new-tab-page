@@ -1,10 +1,5 @@
-import {
-  AppstoreOutlined,
-  ClockCircleOutlined,
-  ControlOutlined,
-  PictureOutlined,
-  SearchOutlined
-} from '@vicons/antd'
+import { ClockCircleOutlined, ControlOutlined, PictureOutlined, SearchOutlined } from '@vicons/antd'
+import { DockRow24Regular, ExtendedDock24Regular } from '@vicons/fluent'
 import {
   ApiRound,
   BookmarkBorderRound,
@@ -19,6 +14,7 @@ export const SettingsRoute = {
   SEARCH: 'search',
   BACKGROUND: 'background',
   SHORTCUT: 'shortcut',
+  DOCK: 'dock',
   BOOKMARK_SIDEBAR: 'bookmarkSidebar',
   YIYAN: 'yiyan',
   PERFORMANCE: 'performance',
@@ -55,8 +51,13 @@ export const MENU_ITEMS: MenuItem[] = [
   },
   {
     key: SettingsRoute.SHORTCUT,
-    icon: AppstoreOutlined,
+    icon: DockRow24Regular,
     titleKey: 'shortcut.title'
+  },
+  {
+    key: SettingsRoute.DOCK,
+    icon: ExtendedDock24Regular,
+    titleKey: 'dock.title'
   },
   {
     key: SettingsRoute.BOOKMARK_SIDEBAR,

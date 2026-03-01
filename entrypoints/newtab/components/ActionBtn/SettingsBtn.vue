@@ -44,7 +44,7 @@ function sponsorMessage() {
     style="display: block"
     :popper-class="popperPerfClass"
     :show-arrow="false"
-    placement="top-end"
+    :placement="settings.dock.enabled ? 'bottom-end' : 'top-end'"
     trigger="click"
     @contextmenu.prevent.stop
   >

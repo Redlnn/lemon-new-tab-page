@@ -8,6 +8,7 @@ const settingsViewLoaders: Record<SettingsRoute, (() => Promise<{ default: Compo
   [SettingsRoute.SEARCH]: () => import('../Settings/SearchSettings.vue'),
   [SettingsRoute.BACKGROUND]: () => import('../Settings/BackgroundSettings.vue'),
   [SettingsRoute.SHORTCUT]: () => import('../Settings/ShortcutSettings.vue'),
+  [SettingsRoute.DOCK]: () => import('../Settings/DockSettings.vue'),
   [SettingsRoute.BOOKMARK_SIDEBAR]: () => import('../Settings/BookmarkSidebarSettings.vue'),
   [SettingsRoute.YIYAN]: () => import('../Settings/YiyanSettings.vue'),
   [SettingsRoute.PERFORMANCE]: () => import('../Settings/PerformanceSettings.vue'),

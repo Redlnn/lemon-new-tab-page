@@ -94,6 +94,17 @@ export const defaultSettings = {
     marginTop: 50,
     openInNewTab: false
   },
+  dock: {
+    enabled: false,
+    enableTopSites: true,
+    showOnSearchFocus: true,
+    gap: 5,
+    limitCount: false,
+    maxCount: 10,
+    iconSize: 40,
+    iconRatio: 0.5,
+    openInNewTab: false
+  },
   sync: {
     enabled: false
   },
