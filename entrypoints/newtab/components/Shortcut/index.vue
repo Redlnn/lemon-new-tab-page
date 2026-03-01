@@ -6,31 +6,35 @@ import {
   ChevronRight20Filled,
   Edit16Regular,
   Pin12Regular,
-  PinOff16Regular
+  PinOff16Regular,
+  Star12Regular
 } from '@vicons/fluent'
-import { BlockRound } from '@vicons/material'
+import { BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
+import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
 import type { TopSites } from 'webextension-polyfill'
 
+import { browser } from '#imports'
+
 import { useSettingsStore } from '@/shared/settings'
-import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
+import { useShortcutStore } from '@/shared/shortcut'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
-import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 import { useFocusStore } from '@newtab/shared/store'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import AddShortcut from './components/AddShortcut.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import ShortcutPaginationDots from './components/ShortcutPaginationDots.vue'
+import { useShortcutData } from './composables/useShortcutData'
 import { useShortcutDrag } from './composables/useShortcutDrag'
 import { solveGridColumnFirst, usePagedGridLayout } from './composables/useShortcutLayout'
 import { useShortcutPagination } from './composables/useShortcutPagination'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 import { pinShortcut, removeShortcut } from './utils/shortcut'
-import { blockSite, invalidateTopSitesCache } from './utils/topSites'
+import { blockSite } from './utils/topSites'
 
 const { t } = useTranslation()
 
@@ -40,12 +44,16 @@ const shortcutStore = useShortcutStore()
 
 const { height } = useWindowSize({ type: 'visual' })
 
-const shortcutEditorRef = ref<InstanceType<typeof AddShortcut> | null>(null)
+const props = defineProps<{
+  onOpenAddDialog?: () => void
+  onOpenEditDialog?: (index: number) => void
+}>()
 
-const topSites = ref<TopSites.MostVisitedURL[]>([])
-const shortcuts = ref<{ url: string; title: string; favicon?: string }[]>([])
-const mounted = ref(false)
-const topSitesNeedsReload = ref(true)
+const { onOpenAddDialog, onOpenEditDialog } = props
+
+const refreshDebounced = useDebounceFn(refresh, 100)
+
+const { topSites, shortcuts, mounted, topSitesNeedsReload } = useShortcutData(refreshDebounced)
 
 // 合并后的完整项目列表（shortcuts + topSites）
 const allItems = computed(() => {
@@ -180,6 +188,88 @@ const showNextPageAddButton = computed(() => {
 const openedMenuCloseFn = ref<(() => void) | null>(null)
 provide(SHORTCUT_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
 
+// ---- 共享右键菜单 ----
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableShortcutTransparent,
+  blurOff: settings.perf.disableShortcutBlur
+}))
+const popperClass = perf('shortcut__menu-popper')
+const navBtnPerfClass = perf('shortcut__nav-btn')
+
+const ctxDropdownRef = ref<DropdownInstance>()
+const ctxPosition = ref<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
+const ctxTriggerRef = ref({ getBoundingClientRect: () => ctxPosition.value })
+const ctxItem = ref<{
+  url: string
+  title: string
+  isPinned: boolean
+  originalIndex: number
+} | null>(null)
+
+function openCtxMenu(
+  event: MouseEvent | PointerEvent,
+  item: { url: string; title: string; isPinned: boolean; originalIndex: number }
+): void {
+  // 关闭上一个
+  if (openedMenuCloseFn.value) {
+    openedMenuCloseFn.value()
+  }
+  ctxItem.value = item
+  ctxPosition.value = DOMRect.fromRect({ x: event.clientX, y: event.clientY })
+  ctxDropdownRef.value?.handleOpen()
+  openedMenuCloseFn.value = () => ctxDropdownRef.value?.handleClose()
+}
+
+async function ctxOpenInNewTab(): Promise<void> {
+  if (ctxItem.value) window.open(ctxItem.value.url, '_blank')
+}
+
+function ctxOpenInNewWindow(): void {
+  if (ctxItem.value) browser.windows.create({ url: ctxItem.value.url })
+}
+
+function ctxCopyLink(): void {
+  if (ctxItem.value) navigator.clipboard.writeText(ctxItem.value.url)
+}
+
+async function ctxCreateBookmark(): Promise<void> {
+  if (!ctxItem.value) return
+  const { url, title } = ctxItem.value
+  const res = await browser.bookmarks.search({ url })
+  if (res.length !== 0) {
+    ElMessage.info(t('shortcut.bookmark.existing'))
+    return
+  }
+  browser.bookmarks.create({ title, url }, (created) => {
+    if (!created.parentId) return
+    chrome.bookmarks.get(created.parentId, (nodes) => {
+      const folderTitle = nodes?.[0]?.title ?? null
+      ElMessage.success(t('shortcut.bookmark.success', { folder: folderTitle }))
+    })
+  })
+}
+
+async function ctxUnpin(): Promise<void> {
+  if (!ctxItem.value?.isPinned) return
+  await removeShortcut(ctxItem.value.originalIndex, shortcutStore, refreshDebounced)
+}
+
+async function ctxPin(): Promise<void> {
+  if (!ctxItem.value || ctxItem.value.isPinned) return
+  await pinShortcut(shortcutStore, refreshDebounced, ctxItem.value.url, ctxItem.value.title)
+}
+
+async function ctxBlockSite(): Promise<void> {
+  if (!ctxItem.value || ctxItem.value.isPinned) return
+  await blockSite(ctxItem.value.url, refreshDebounced)
+  await refreshDebounced()
+}
+
+function ctxEdit(): void {
+  if (!ctxItem.value?.isPinned) return
+  onOpenEditDialog?.(ctxItem.value.originalIndex)
+}
+
 // 切换页面时重置并关闭已打开的菜单
 watch(
   () => currentPage.value,
@@ -247,7 +337,6 @@ async function refresh() {
   }
 }
 
-const refreshDebounced = useDebounceFn(refresh, 100)
 const { isDragging } = useShortcutDrag(currentPageContainerRef, shortcuts, refreshDebounced)
 
 // 设置滑动手势支持（绑定到 slide-viewport，以便切换时能切换 overflow）
@@ -278,8 +367,9 @@ useEventListener(currentPageContainerRef, 'wheel', (evt: WheelEvent) => {
   }
 })
 
-// useResizeObserver 会在开始观察时立即触发一次
+// useResizeObserver 会在开始观察时立即触发一次，因此不需要额外的 onMounted 刷新调用
 useResizeObserver(document.documentElement, async () => {
+  updateMaxCols()
   await refreshDebounced()
 })
 
@@ -298,9 +388,6 @@ watch(
   }
 )
 
-// useResizeObserver 会在开始观察时立即触发一次
-useResizeObserver(document.documentElement, updateMaxCols)
-
 watch(isOnlyTouchDevice, updateMaxCols)
 
 watch(
@@ -312,29 +399,6 @@ watch(
     refreshDebounced()
   }
 )
-
-// 云同步或 popup 添加书签导致 storage 变动时刷新
-shortcutStorage.watch(async (newValue) => {
-  // 先同步 store 数据，再刷新 UI
-  if (newValue) {
-    shortcutStore.$patch(newValue)
-  }
-  await refreshDebounced()
-})
-
-blockedTopSitesStorage.watch(() => {
-  topSitesNeedsReload.value = true
-  invalidateTopSitesCache()
-  refreshDebounced()
-})
-
-// 根据原始索引获取快捷方式的实际索引（用于编辑）
-function getShortcutEditIndex(item: (typeof currentPageItems.value)[number]): number {
-  if (item.isPinned) {
-    return item.originalIndex
-  }
-  return -1
-}
 
 const isHideShortcut = computed(() => {
   if (!mounted.value) {
@@ -369,14 +433,6 @@ const containerGridStyle = computed(() => ({
   '--icon_size': `${settings.shortcut.iconSize}px`,
   '--icon_ratio': `${settings.shortcut.iconRatio}`
 }))
-
-// 导航按钮通用class
-const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
-}))
-
-const navBtnPerfClass = perf('shortcut__nav-btn')
 </script>
 
 <template>
@@ -425,12 +481,13 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   :title="item.title"
                   :favicon="item.favicon"
                   :pined="item.isPinned"
+                  :on-context-menu="(e) => openCtxMenu(e, item)"
                 />
                 <add-shortcut
                   v-if="showPrevPageAddButton"
-                  :reload="refreshDebounced"
                   :show-button="true"
                   :tabindex="false"
+                  :on-open="onOpenAddDialog"
                 />
               </div>
               <!-- 前一页占位（当没有前一页时） -->
@@ -458,53 +515,12 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   :title="item.title"
                   :favicon="item.favicon"
                   :pined="item.isPinned"
+                  :on-context-menu="(e) => openCtxMenu(e, item)"
                   :tabindex="focusStore.isFocused ? -1 : 0"
-                >
-                  <template #submenu>
-                    <template v-if="item.isPinned">
-                      <el-dropdown-item
-                        :icon="Edit16Regular"
-                        divided
-                        @click="shortcutEditorRef?.openEditDialog(getShortcutEditIndex(item))"
-                      >
-                        {{ t('common.edit') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        :icon="PinOff16Regular"
-                        @click="removeShortcut(item.originalIndex, shortcutStore, refreshDebounced)"
-                      >
-                        {{ t('shortcut.unpin') }}
-                      </el-dropdown-item>
-                    </template>
-                    <template v-else>
-                      <el-dropdown-item
-                        :icon="Pin12Regular"
-                        divided
-                        @click="pinShortcut(shortcutStore, refreshDebounced, item.url, item.title)"
-                      >
-                        {{ t('shortcut.pin') }}
-                      </el-dropdown-item>
-                      <el-dropdown-item
-                        :icon="BlockRound"
-                        @click="
-                          async () => {
-                            await blockSite(item.url, refreshDebounced)
-                            await refreshDebounced()
-                          }
-                        "
-                      >
-                        {{ t('shortcut.hide') }}
-                      </el-dropdown-item>
-                    </template>
-                  </template>
-                </shortcut-item>
+                />
 
                 <!-- 添加快捷方式按钮（始终在最后一页最后一格） -->
-                <add-shortcut
-                  ref="shortcutEditorRef"
-                  :reload="refreshDebounced"
-                  :show-button="showAddButton"
-                />
+                <add-shortcut :show-button="showAddButton" :on-open="onOpenAddDialog" />
               </div>
 
               <!-- 后一页 -->
@@ -523,12 +539,13 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
                   :title="item.title"
                   :favicon="item.favicon"
                   :pined="item.isPinned"
+                  :on-context-menu="(e) => openCtxMenu(e, item)"
                 />
                 <add-shortcut
                   v-if="showNextPageAddButton"
-                  :reload="refreshDebounced"
                   :show-button="true"
                   :tabindex="false"
+                  :on-open="onOpenAddDialog"
                 />
               </div>
               <!-- 后一页占位（当没有后一页时） -->
@@ -564,5 +581,52 @@ const navBtnPerfClass = perf('shortcut__nav-btn')
         @goto="goToPage"
       />
     </div>
+
+    <!-- 共享右键菜单 -->
+    <el-dropdown
+      ref="ctxDropdownRef"
+      :virtual-ref="ctxTriggerRef"
+      :show-arrow="false"
+      virtual-triggering
+      trigger="contextmenu"
+      placement="bottom-start"
+      :popper-options="{
+        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+      }"
+      :popper-class="popperClass"
+    >
+      <template #dropdown>
+        <el-dropdown-menu class="noselect">
+          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewTab">
+            <span>{{ t('settings:common.openInNewTab') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewWindow">
+            <span>{{ t('settings:common.openInNewWindow') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="ContentCopyRound" @click="ctxCopyLink">
+            <span>{{ t('settings:common.copyLink') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="Star12Regular" @click="ctxCreateBookmark">
+            <span>{{ t('shortcut.bookmark.add') }}</span>
+          </el-dropdown-item>
+          <template v-if="ctxItem?.isPinned">
+            <el-dropdown-item :icon="Edit16Regular" divided @click="ctxEdit">
+              <span>{{ t('common.edit') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="PinOff16Regular" @click="ctxUnpin">
+              <span>{{ t('shortcut.unpin') }}</span>
+            </el-dropdown-item>
+          </template>
+          <template v-else>
+            <el-dropdown-item :icon="Pin12Regular" divided @click="ctxPin">
+              <span>{{ t('shortcut.pin') }}</span>
+            </el-dropdown-item>
+            <el-dropdown-item :icon="BlockRound" @click="ctxBlockSite">
+              <span>{{ t('shortcut.hide') }}</span>
+            </el-dropdown-item>
+          </template>
+        </el-dropdown-menu>
+      </template>
+    </el-dropdown>
   </section>
 </template>
