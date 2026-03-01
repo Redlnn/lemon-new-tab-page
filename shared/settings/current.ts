@@ -1,4 +1,4 @@
-import type { SettingsInterfaceVer8 } from './types'
+import type { SettingsInterfaceVer9 } from './types'
 
-export const CURRENT_CONFIG_VERSION = 8
-export type CURRENT_CONFIG_INTERFACE = SettingsInterfaceVer8
+export const CURRENT_CONFIG_VERSION = 9
+export type CURRENT_CONFIG_INTERFACE = SettingsInterfaceVer9

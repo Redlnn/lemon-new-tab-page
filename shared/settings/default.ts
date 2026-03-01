@@ -1,4 +1,4 @@
-import { BgType, ClockSize, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
+import { BgType, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
 
 import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
 
@@ -18,7 +18,7 @@ export const defaultSettings = {
     showDate: true,
     showLunar: true,
     showSeconds: false,
-    size: ClockSize.Medium,
+    size: 40,
     weight: ClockWeight.Black,
     calcWeight: ClockWeight.Medium,
     meridiemFollowSize: false,

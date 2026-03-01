@@ -1,5 +1,3 @@
-import { ClockSize } from '@/shared/enums'
-
 import type { SettingsInterfaceVer7, SettingsInterfaceVer8 } from '..'
 import { defaultSettings } from '..'
 import { toNewBgType } from './map'
@@ -21,7 +19,7 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       showDate: oldSettings.time.showDate,
       showLunar: oldSettings.time.showLunar,
       showSeconds: oldSettings.time.showSeconds,
-      size: oldSettings.time.small ? ClockSize.Small : ClockSize.Medium,
+      size: oldSettings.time.small ? 'small' : 'medium',
       weight: defaultSettings.clock.weight,
       calcWeight: defaultSettings.clock.calcWeight,
       meridiemFollowSize: defaultSettings.clock.meridiemFollowSize,

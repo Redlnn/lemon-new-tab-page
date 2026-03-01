@@ -4,7 +4,7 @@ import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 import type { bingBackground, localBackground } from './type'
 
-export interface SettingsInterfaceVer8 {
+export interface SettingsInterfaceVer9 {
   // 主题相关
   theme: {
     primaryColor: string
@@ -23,7 +23,7 @@ export interface SettingsInterfaceVer8 {
     showDate: boolean
     showLunar: boolean
     showSeconds: boolean
-    size: 'small' | 'medium' | 'large'
+    size: number
     weight: ClockWeight
     calcWeight: ClockWeight
     meridiemFollowSize: boolean
@@ -155,5 +155,5 @@ export interface SettingsInterfaceVer8 {
   hideMajorChangelog: boolean
   readChangeLog: boolean
   pluginVersion: string
-  version: 8
+  version: 9
 }

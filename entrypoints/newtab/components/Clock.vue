@@ -4,7 +4,7 @@ import { useNow, useTimeoutFn } from '@vueuse/core'
 import dayjs from 'dayjs/esm'
 import { useTranslation } from 'i18next-vue'
 
-import { ClockSize, ClockWeight } from '@/shared/enums'
+import { ClockWeight } from '@/shared/enums'
 import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
@@ -74,14 +74,6 @@ const formattedDate = computed(() => {
   }
 })
 
-const sizeMap = {
-  [ClockSize.Small]: 'clock__time-container-small',
-  [ClockSize.Medium]: 'clock__time-container-medium',
-  [ClockSize.Large]: undefined,
-  [ClockSize.EvenLarge]: 'clock__time-container-even-large',
-  [ClockSize.ExtraLarge]: 'clock__time-container-extra-large'
-}
-
 const weightMap = {
   [ClockWeight.Normal]: 400,
   [ClockWeight.Medium]: 500,
@@ -91,13 +83,11 @@ const weightMap = {
   [ClockWeight.Black]: 900
 }
 
-const clockClass = computed(() => [
-  sizeMap[settings.clock.size],
-  settings.clock.newStyle ? 'clock__new' : undefined
-])
+const clockClass = computed(() => [settings.clock.newStyle ? 'clock__new' : undefined])
 const clockStyle = computed(() => {
   return {
-    fontWeight: weightMap[settings.clock.weight]
+    fontWeight: weightMap[settings.clock.weight],
+    fontSize: settings.clock.size + 'px'
   }
 })
 const calcStyle = computed(() => {

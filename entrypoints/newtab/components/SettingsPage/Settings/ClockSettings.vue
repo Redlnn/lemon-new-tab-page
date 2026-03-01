@@ -1,36 +1,13 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
-import { ClockSize, ClockWeight } from '@/shared/enums'
+import { ClockWeight } from '@/shared/enums'
 import { isChinese } from '@/shared/i18n'
 import { useSettingsStore } from '@/shared/settings'
 
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
-
-const sizeOptions = [
-  {
-    value: ClockSize.Small,
-    label: 'clock.size.small'
-  },
-  {
-    value: ClockSize.Medium,
-    label: 'clock.size.medium'
-  },
-  {
-    value: ClockSize.Large,
-    label: 'clock.size.large'
-  },
-  {
-    value: ClockSize.EvenLarge,
-    label: 'clock.size.evgnlarge'
-  },
-  {
-    value: ClockSize.ExtraLarge,
-    label: 'clock.size.extralarge'
-  }
-]
 
 const weightOptions = [
   {
@@ -114,59 +91,47 @@ function handleNewStyleChange(val: string | number | boolean) {
     <p class="settings__item--note">
       {{ t('clock.secondsTip') }}
     </p>
-    <div class="settings__item settings__item--horizontal">
+    <div class="settings__item settings__item--vertical">
       <div class="settings__label">{{ t('clock.size.title') }}</div>
-      <div class="settings__theme">
-        <el-select
-          v-model="settings.clock.size"
-          style="width: 160px"
-          popper-class="settings-item-popper"
-          :show-arrow="false"
-        >
-          <el-option
-            v-for="item in sizeOptions"
-            :key="item.value"
-            :label="t(item.label)"
-            :value="item.value"
-          />
-        </el-select>
-      </div>
+      <el-slider
+        v-model="settings.clock.size"
+        :min="30"
+        :max="100"
+        :show-tooltip="false"
+        show-input
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.weight.title') }}</div>
-      <div class="settings__theme">
-        <el-select
-          v-model="settings.clock.weight"
-          style="width: 160px"
-          popper-class="settings-item-popper"
-          :show-arrow="false"
-        >
-          <el-option
-            v-for="item in weightOptions"
-            :key="item.value"
-            :label="t(item.label)"
-            :value="item.value"
-          />
-        </el-select>
-      </div>
+      <el-select
+        v-model="settings.clock.weight"
+        style="width: 160px"
+        popper-class="settings-item-popper"
+        :show-arrow="false"
+      >
+        <el-option
+          v-for="item in weightOptions"
+          :key="item.value"
+          :label="t(item.label)"
+          :value="item.value"
+        />
+      </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.calcWeightTitle') }}</div>
-      <div class="settings__theme">
-        <el-select
-          v-model="settings.clock.calcWeight"
-          style="width: 160px"
-          popper-class="settings-item-popper"
-          :show-arrow="false"
-        >
-          <el-option
-            v-for="item in weightOptions"
-            :key="item.value"
-            :label="t(item.label)"
-            :value="item.value"
-          />
-        </el-select>
-      </div>
+      <el-select
+        v-model="settings.clock.calcWeight"
+        style="width: 160px"
+        popper-class="settings-item-popper"
+        :show-arrow="false"
+      >
+        <el-option
+          v-for="item in weightOptions"
+          :key="item.value"
+          :label="t(item.label)"
+          :value="item.value"
+        />
+      </el-select>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.colorfulClock') }}</div>

@@ -28,7 +28,7 @@
     align-items: baseline;
     justify-content: center;
     margin-bottom: 5px;
-    font-size: 60px;
+    font-size: 50px;
     font-feature-settings: 'tnum';
     font-variant-numeric: tabular-nums;
     transition:
@@ -75,22 +75,6 @@
       &-small {
         font-size: 36px;
       }
-    }
-
-    &-small {
-      font-size: 40px;
-    }
-
-    &-medium {
-      font-size: 50px;
-    }
-
-    &-even-large {
-      font-size: 70px;
-    }
-
-    &-extra-large {
-      font-size: 80px;
     }
   }
 

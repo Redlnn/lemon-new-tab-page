@@ -161,9 +161,12 @@
       margin-top: 8px;
     }
 
-    .el-input-number,
-    .el-input {
-      width: 60px;
+    .el-input-number {
+      width: 110px;
+
+      &.is-without-controls {
+        width: 60px;
+      }
     }
   }
 

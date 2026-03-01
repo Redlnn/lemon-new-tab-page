@@ -14,15 +14,6 @@ export const BgType = {
 } as const
 export type BgType = (typeof BgType)[keyof typeof BgType]
 
-export const ClockSize = {
-  Small: 'small',
-  Medium: 'medium',
-  Large: 'large',
-  EvenLarge: 'even-large',
-  ExtraLarge: 'extra-large'
-} as const
-export type ClockSize = (typeof ClockSize)[keyof typeof ClockSize]
-
 /**
  * - Normal: 400
  * - Medium: 500
