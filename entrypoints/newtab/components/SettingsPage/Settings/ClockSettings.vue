@@ -51,102 +51,104 @@ function handleNewStyleChange(val: string | number | boolean) {
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.clock.enabled" />
     </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.use12HourClock') }}</div>
-      <el-switch v-model="settings.clock.isMeridiem" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.newStyle') }}</div>
-      <el-switch v-model="settings.clock.newStyle" @change="handleNewStyleChange" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('clock.newStyleDesc') }}
-    </p>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.showAMPM') }}</div>
-      <el-switch v-model="settings.clock.showMeridiem" :disabled="settings.clock.newStyle" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.largeLabel') }}</div>
-      <el-switch
-        v-model="settings.clock.meridiemFollowSize"
-        :disabled="!settings.clock.showMeridiem || settings.clock.newStyle"
-      />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.showDate') }}</div>
-      <el-switch v-model="settings.clock.showDate" />
-    </div>
-    <div
-      v-if="settings.clock.showDate && isChinese"
-      class="settings__item settings__item--horizontal"
-    >
-      <div class="settings__label">{{ t('clock.showLunar') }}</div>
-      <el-switch v-model="settings.clock.showLunar" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.showSeconds') }}</div>
-      <el-switch v-model="settings.clock.showSeconds" :disabled="settings.clock.newStyle" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('clock.secondsTip') }}
-    </p>
-    <div class="settings__item settings__item--vertical">
-      <div class="settings__label">{{ t('clock.size.title') }}</div>
-      <el-slider
-        v-model="settings.clock.size"
-        :min="30"
-        :max="100"
-        :show-tooltip="false"
-        show-input
-      />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.weight.title') }}</div>
-      <el-select
-        v-model="settings.clock.weight"
-        style="width: 160px"
-        popper-class="settings-item-popper"
-        :show-arrow="false"
-      >
-        <el-option
-          v-for="item in weightOptions"
-          :key="item.value"
-          :label="t(item.label)"
-          :value="item.value"
+    <template v-if="settings.clock.enabled">
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.use12HourClock') }}</div>
+        <el-switch v-model="settings.clock.isMeridiem" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.newStyle') }}</div>
+        <el-switch v-model="settings.clock.newStyle" @change="handleNewStyleChange" />
+      </div>
+      <p class="settings__item--note">
+        {{ t('clock.newStyleDesc') }}
+      </p>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.showAMPM') }}</div>
+        <el-switch v-model="settings.clock.showMeridiem" :disabled="settings.clock.newStyle" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.largeLabel') }}</div>
+        <el-switch
+          v-model="settings.clock.meridiemFollowSize"
+          :disabled="!settings.clock.showMeridiem || settings.clock.newStyle"
         />
-      </el-select>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.calcWeightTitle') }}</div>
-      <el-select
-        v-model="settings.clock.calcWeight"
-        style="width: 160px"
-        popper-class="settings-item-popper"
-        :show-arrow="false"
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.showDate') }}</div>
+        <el-switch v-model="settings.clock.showDate" />
+      </div>
+      <div
+        v-if="settings.clock.showDate && isChinese"
+        class="settings__item settings__item--horizontal"
       >
-        <el-option
-          v-for="item in weightOptions"
-          :key="item.value"
-          :label="t(item.label)"
-          :value="item.value"
+        <div class="settings__label">{{ t('clock.showLunar') }}</div>
+        <el-switch v-model="settings.clock.showLunar" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.showSeconds') }}</div>
+        <el-switch v-model="settings.clock.showSeconds" :disabled="settings.clock.newStyle" />
+      </div>
+      <p class="settings__item--note">
+        {{ t('clock.secondsTip') }}
+      </p>
+      <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('clock.size.title') }}</div>
+        <el-slider
+          v-model="settings.clock.size"
+          :min="30"
+          :max="100"
+          :show-tooltip="false"
+          show-input
         />
-      </el-select>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.colorfulClock') }}</div>
-      <el-switch v-model="settings.clock.colorfulNum" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.enableShadow') }}</div>
-      <el-switch v-model="settings.clock.shadow" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
-      <el-switch v-model="settings.clock.blink" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('clock.blinkingTip') }}
-    </p>
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.weight.title') }}</div>
+        <el-select
+          v-model="settings.clock.weight"
+          style="width: 160px"
+          popper-class="settings-item-popper"
+          :show-arrow="false"
+        >
+          <el-option
+            v-for="item in weightOptions"
+            :key="item.value"
+            :label="t(item.label)"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.calcWeightTitle') }}</div>
+        <el-select
+          v-model="settings.clock.calcWeight"
+          style="width: 160px"
+          popper-class="settings-item-popper"
+          :show-arrow="false"
+        >
+          <el-option
+            v-for="item in weightOptions"
+            :key="item.value"
+            :label="t(item.label)"
+            :value="item.value"
+          />
+        </el-select>
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.colorfulClock') }}</div>
+        <el-switch v-model="settings.clock.colorfulNum" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.enableShadow') }}</div>
+        <el-switch v-model="settings.clock.shadow" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
+        <el-switch v-model="settings.clock.blink" />
+      </div>
+      <p class="settings__item--note">
+        {{ t('clock.blinkingTip') }}
+      </p>
+    </template>
   </div>
 </template>

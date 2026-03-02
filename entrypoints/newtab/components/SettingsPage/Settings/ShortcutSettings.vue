@@ -26,177 +26,179 @@ async function restoreDefaultTopSites() {
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.shortcut.enabled" />
     </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('shortcut.showOnSearchFocus') }}</div>
-      <el-switch v-model="settings.shortcut.showOnSearchFocus" />
-    </div>
-    <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
+    <template v-if="settings.shortcut.enabled">
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
-        <el-switch v-model="settings.shortcut.enableTopSites" />
+        <div class="settings__label">{{ t('shortcut.showOnSearchFocus') }}</div>
+        <el-switch v-model="settings.shortcut.showOnSearchFocus" />
       </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.enableShadow') }}</div>
-        <el-switch v-model="settings.shortcut.enableShadow" />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.showPinnedIcon') }}</div>
-        <el-switch
-          :disabled="!settings.shortcut.enableTopSites"
-          v-model="settings.shortcut.showPinnedIcon"
-        />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.disablePaging') }}</div>
-        <el-switch v-model="settings.shortcut.disablePaging" />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.showTitle') }}</div>
-        <el-switch v-model="settings.shortcut.showShortcutTitle" />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('common.openInNewTab') }}</div>
-        <el-switch v-model="settings.shortcut.openInNewTab" />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.maxRows') }}</div>
-        <el-slider
-          v-model="settings.shortcut.rows"
-          :step="1"
-          :min="1"
-          :max="5"
-          show-stops
-          :show-tooltip="false"
-          style="margin-bottom: 20px"
-          :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.maxColumns') }}</div>
-        <el-slider
-          v-model="settings.shortcut.columns"
-          :step="1"
-          :min="1"
-          :max="10"
-          show-stops
-          :show-tooltip="false"
-          style="margin-bottom: 20px"
-          :marks="{ 1: '1', 10: '10' }"
-        />
-      </div>
-      <p
-        v-if="isChrome"
-        style="
-          margin-top: 0;
-          font-size: var(--el-font-size-extra-small);
-          line-height: 1.5em;
-          color: var(--el-text-color-regular);
-        "
-      >
-        {{ t('shortcut.maxItemsTipForChrome') }}
-      </p>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
-        <el-slider
-          v-model="settings.shortcut.iconSize"
-          :min="30"
-          :max="200"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.iconRatio') }}</div>
-        <el-slider
-          v-model="settings.shortcut.iconRatio"
-          :min="0.1"
-          :max="1"
-          :step="0.1"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.iconMarginBottom') }}</div>
-        <el-slider
-          v-model="settings.shortcut.iconMarginBottom"
-          :min="0"
-          :max="50"
-          :step="1"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.titleExtraWidth') }}</div>
-        <el-slider
-          v-model="settings.shortcut.titleExtraWidth"
-          :min="0"
-          :max="100"
-          :step="0.5"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">
-          {{ t('shortcut.HorizontalIconSpacing') }}
+      <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+          <el-switch v-model="settings.shortcut.enableTopSites" />
         </div>
-        <el-slider
-          v-model="settings.shortcut.itemMarginH"
-          :min="0"
-          :max="50"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">
-          {{ t('shortcut.VerticalIconSpacing') }}
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.enableShadow') }}</div>
+          <el-switch v-model="settings.shortcut.enableShadow" />
         </div>
-        <el-slider
-          v-model="settings.shortcut.itemMarginV"
-          :min="0"
-          :max="30"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">
-          {{ t('shortcut.marginTop') }}
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.showPinnedIcon') }}</div>
+          <el-switch
+            :disabled="!settings.shortcut.enableTopSites"
+            v-model="settings.shortcut.showPinnedIcon"
+          />
         </div>
-        <el-slider
-          v-model="settings.shortcut.marginTop"
-          :min="10"
-          :max="150"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.restoreDefault') }}</div>
-        <el-popconfirm
-          width="220"
-          :confirm-button-text="t('newtab:common.confirm')"
-          :cancel-button-text="t('newtab:common.no')"
-          :icon="RestoreRound"
-          icon-color="#626AEF"
-          :title="t('shortcut.restoreDefaultTitle')"
-          @confirm="restoreDefaultTopSites()"
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.disablePaging') }}</div>
+          <el-switch v-model="settings.shortcut.disablePaging" />
+        </div>
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.showTitle') }}</div>
+          <el-switch v-model="settings.shortcut.showShortcutTitle" />
+        </div>
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('common.openInNewTab') }}</div>
+          <el-switch v-model="settings.shortcut.openInNewTab" />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.maxRows') }}</div>
+          <el-slider
+            v-model="settings.shortcut.rows"
+            :step="1"
+            :min="1"
+            :max="5"
+            show-stops
+            :show-tooltip="false"
+            style="margin-bottom: 20px"
+            :marks="{ 1: '1', 2: '2', 3: '3', 4: '4', 5: '5' }"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.maxColumns') }}</div>
+          <el-slider
+            v-model="settings.shortcut.columns"
+            :step="1"
+            :min="1"
+            :max="10"
+            show-stops
+            :show-tooltip="false"
+            style="margin-bottom: 20px"
+            :marks="{ 1: '1', 10: '10' }"
+          />
+        </div>
+        <p
+          v-if="isChrome"
+          style="
+            margin-top: 0;
+            font-size: var(--el-font-size-extra-small);
+            line-height: 1.5em;
+            color: var(--el-text-color-regular);
+          "
         >
-          <template #reference>
-            <el-button :icon="RestoreRound" circle />
-          </template>
-        </el-popconfirm>
+          {{ t('shortcut.maxItemsTipForChrome') }}
+        </p>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
+          <el-slider
+            v-model="settings.shortcut.iconSize"
+            :min="30"
+            :max="200"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.iconRatio') }}</div>
+          <el-slider
+            v-model="settings.shortcut.iconRatio"
+            :min="0.1"
+            :max="1"
+            :step="0.1"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.iconMarginBottom') }}</div>
+          <el-slider
+            v-model="settings.shortcut.iconMarginBottom"
+            :min="0"
+            :max="50"
+            :step="1"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.titleExtraWidth') }}</div>
+          <el-slider
+            v-model="settings.shortcut.titleExtraWidth"
+            :min="0"
+            :max="100"
+            :step="0.5"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">
+            {{ t('shortcut.HorizontalIconSpacing') }}
+          </div>
+          <el-slider
+            v-model="settings.shortcut.itemMarginH"
+            :min="0"
+            :max="50"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">
+            {{ t('shortcut.VerticalIconSpacing') }}
+          </div>
+          <el-slider
+            v-model="settings.shortcut.itemMarginV"
+            :min="0"
+            :max="30"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">
+            {{ t('shortcut.marginTop') }}
+          </div>
+          <el-slider
+            v-model="settings.shortcut.marginTop"
+            :min="10"
+            :max="150"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.restoreDefault') }}</div>
+          <el-popconfirm
+            width="220"
+            :confirm-button-text="t('newtab:common.confirm')"
+            :cancel-button-text="t('newtab:common.no')"
+            :icon="RestoreRound"
+            icon-color="#626AEF"
+            :title="t('shortcut.restoreDefaultTitle')"
+            @confirm="restoreDefaultTopSites()"
+          >
+            <template #reference>
+              <el-button :icon="RestoreRound" circle />
+            </template>
+          </el-popconfirm>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>

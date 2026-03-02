@@ -22,35 +22,37 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
     <p v-if="!isChinese" class="settings__item--note">
       {{ t('yiyan.description') }}
     </p>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.alwaysShow') }}</div>
-      <el-switch v-model="settings.yiyan.alwaysShow" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('yiyan.normalyShowTip') }}
-    </p>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.enableShadow') }}</div>
-      <el-switch v-model="settings.yiyan.enableShadow" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.title') }}</div>
-      <el-select
-        v-model="settings.yiyan.provider"
-        style="width: 180px"
-        fit-input-width
-        :show-arrow="false"
-      >
-        <el-option
-          v-for="(provider, key) in yiyanProviders"
-          :key="key"
-          :label="t(provider.nameKey)"
-          :value="key"
-        />
-      </el-select>
-    </div>
-    <p v-if="currentProviderNote" class="settings__item--note">
-      {{ t(currentProviderNote) }}
-    </p>
+    <template v-if="settings.yiyan.enabled">
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('yiyan.alwaysShow') }}</div>
+        <el-switch v-model="settings.yiyan.alwaysShow" />
+      </div>
+      <p class="settings__item--note">
+        {{ t('yiyan.normalyShowTip') }}
+      </p>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('yiyan.enableShadow') }}</div>
+        <el-switch v-model="settings.yiyan.enableShadow" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('yiyan.title') }}</div>
+        <el-select
+          v-model="settings.yiyan.provider"
+          style="width: 180px"
+          fit-input-width
+          :show-arrow="false"
+        >
+          <el-option
+            v-for="(provider, key) in yiyanProviders"
+            :key="key"
+            :label="t(provider.nameKey)"
+            :value="key"
+          />
+        </el-select>
+      </div>
+      <p v-if="currentProviderNote" class="settings__item--note">
+        {{ t(currentProviderNote) }}
+      </p>
+    </template>
   </div>
 </template>
