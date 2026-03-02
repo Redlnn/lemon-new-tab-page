@@ -91,21 +91,25 @@
   "clock": {
     "blinkingColon": "闪烁时间分隔符",
     "blinkingTip": "关闭可缓解持续性的 GPU 占用",
+    "calcWeightTitle": "日期粗细",
+    "colorfulClock": "多彩时钟",
     "enableShadow": "显示阴影",
     "invertColorDark": "【时钟】深色模式下使用深色文字",
     "invertColorLight": "【时钟】浅色模式下使用深色文字",
     "largeLabel": "「上午 / 下午」大字号",
+    "newStyle": "新风格",
+    "newStyleDesc": "若开启将同时开启“显示「上午 / 下午」以及「显示秒钟」且不可关闭",
     "secondsTip": "开启会增加性能消耗",
     "showAMPM": "显示「上午 / 下午」",
     "showDate": "显示日期",
     "showLunar": "显示农历",
     "showSeconds": "显示秒钟",
     "size": {
+      "evgnlarge": "超大",
+      "extralarge": "特大",
       "large": "大",
       "medium": "中",
       "small": "小",
-      "evgnlarge": "超大",
-      "extralarge": "特大",
       "title": "时钟大小"
     },
     "title": "时钟",
@@ -118,11 +122,7 @@
       "medium": "准粗（500）",
       "normal": "标准（400）",
       "title": "时钟粗细"
-    },
-    "calcWeightTitle": "日期粗细",
-    "colorfulClock": "多彩时钟",
-    "newStyle": "新风格",
-    "newStyleDesc": "若开启将同时开启“显示「上午 / 下午」以及「显示秒钟」且不可关闭"
+    }
   },
   "common": {
     "copyLink": "复制链接地址",
@@ -264,6 +264,7 @@
       "label": "全局色彩"
     },
     "darkMode": "深色模式",
+    "idleHide": "不活动时淡出页面元素",
     "lightMode": "浅色模式",
     "monet": {
       "askEnableCache": {
@@ -275,7 +276,6 @@
     },
     "primaryColor": "主题色",
     "systemMode": "跟随系统 / 浏览器",
-    "idleHide": "不活动时淡出页面元素",
     "title": "主题"
   },
   "title": "设置",

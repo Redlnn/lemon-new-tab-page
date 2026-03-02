@@ -1,53 +1,53 @@
 {
-  "helpSection": {
-    "title": "Get Help · Provide Feedback and Suggestions",
-    "github": "GitHub",
-    "email": "Email",
-    "emailCopied": "Email address copied"
-  },
-  "faqTitle": "Frequently Asked Questions",
   "faqSubtitle": "Hope this helps~",
+  "faqTitle": "Frequently Asked Questions",
+  "helpSection": {
+    "email": "Email",
+    "emailCopied": "Email address copied",
+    "github": "GitHub",
+    "title": "Get Help · Provide Feedback and Suggestions"
+  },
   "items": {
     "activateSearch": {
-      "title": "Can the search box be auto-activated when opening a new tab or browser?",
       "content": {
-        "intro": "Due to browser security policy restrictions, we cannot automatically focus the search box on a newly created tab. The browser will automatically focus its address bar instead, so this is not possible.",
         "chrome": "For Chrome and other Chromium-based browser users, you can simply press {key} after opening a new tab to auto-activate our extension's search box.",
-        "firefox": "The same applies to Firefox users, but since Firefox will first activate other buttons in the window, you may need to press {key} several more times than Chrome users."
-      }
-    },
-    "restoreShortcut": {
-      "title": "How to restore deleted/default shortcut links",
-      "content": "After removing any quick access link, you can restore it from the notification that pops up."
-    },
-    "performance": {
-      "title": "Interface lag or stuttering, high CPU/GPU usage",
-      "content": {
-        "intro": "Try the following methods:",
-        "item1": "Disable unnecessary effects in the performance settings (do not enable blur effects when using video wallpapers)",
-        "item2": "Enable browser hardware acceleration"
-      }
-    },
-    "chromeFooter": {
-      "title": "How to hide the footer at the bottom of Chrome's new tab page?",
-      "content": {
-        "reason": "This is because Google has placed all \"Customize Chrome\" related features in the sidebar, and the entry point for this sidebar is only on the new tab page.",
-        "step": "You can first click the \"Customize Chrome\" button in the lower right corner to open the sidebar, then scroll to the bottom of the page, and turn off \"Show footer on the 'New Tab' page\" in the footer section.",
-        "reference": "Reference 👉",
-        "githubIssue": "GitHub Issue"
-      }
+        "firefox": "The same applies to Firefox users, but since Firefox will first activate other buttons in the window, you may need to press {key} several more times than Chrome users.",
+        "intro": "Due to browser security policy restrictions, we cannot automatically focus the search box on a newly created tab. The browser will automatically focus its address bar instead, so this is not possible."
+      },
+      "title": "Can the search box be auto-activated when opening a new tab or browser?"
     },
     "browserFreeze": {
-      "title": "Browser freezes on startup",
       "content": {
         "intro": "On some Windows devices with Intel integrated graphics, Chromium-based browsers may freeze on startup. Try the following solutions:",
         "step1": "Update graphics driver: Make sure your graphics driver is up to date.",
         "step2": {
-          "text": "On the Experiments (chrome://flags) page, change {code1} to {code2}",
-          "note": "Google does not recommend using OpenGL API rendering, changing to other options may also work"
+          "note": "Google does not recommend using OpenGL API rendering, changing to other options may also work",
+          "text": "On the Experiments (chrome://flags) page, change {code1} to {code2}"
         },
         "step3": "(Not recommended) Disable browser hardware acceleration (aka \"GPU acceleration\" or \"graphics acceleration\")."
-      }
+      },
+      "title": "Browser freezes on startup"
+    },
+    "chromeFooter": {
+      "content": {
+        "githubIssue": "GitHub Issue",
+        "reason": "This is because Google has placed all \"Customize Chrome\" related features in the sidebar, and the entry point for this sidebar is only on the new tab page.",
+        "reference": "Reference 👉",
+        "step": "You can first click the \"Customize Chrome\" button in the lower right corner to open the sidebar, then scroll to the bottom of the page, and turn off \"Show footer on the 'New Tab' page\" in the footer section."
+      },
+      "title": "How to hide the footer at the bottom of Chrome's new tab page?"
+    },
+    "performance": {
+      "content": {
+        "intro": "Try the following methods:",
+        "item1": "Disable unnecessary effects in the performance settings (do not enable blur effects when using video wallpapers)",
+        "item2": "Enable browser hardware acceleration"
+      },
+      "title": "Interface lag or stuttering, high CPU/GPU usage"
+    },
+    "restoreShortcut": {
+      "content": "After removing any quick access link, you can restore it from the notification that pops up.",
+      "title": "How to restore deleted/default shortcut links"
     }
   }
 }

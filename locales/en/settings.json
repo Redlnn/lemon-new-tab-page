@@ -42,7 +42,7 @@
         },
         "subB": {
           "content": "Requires “Access all sites”.",
-          "label": "Dynamic theme colors / Cache: "
+          "label": "Dynamic theme colors / Cache:"
         },
         "title": "Permission Request"
       }
@@ -91,21 +91,25 @@
   "clock": {
     "blinkingColon": "Blinking colon",
     "blinkingTip": "Turning this off can reduce sustained GPU usage.",
+    "calcWeightTitle": "Date weight",
+    "colorfulClock": "Colorful clock numbers",
     "enableShadow": "Show shadow",
     "invertColorDark": "[Clock] Use dark text in dark mode",
     "invertColorLight": "[Clock] Use dark text in light mode",
     "largeLabel": "Large AM/PM Label",
+    "newStyle": "New style",
+    "newStyleDesc": "When enabled, will simultaneously enable “Show AM/PM” and “Show seconds” and cannot be disabled",
     "secondsTip": "This increases performance usage.",
     "showAMPM": "Show AM/PM",
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
     "showSeconds": "Show seconds",
     "size": {
+      "evgnlarge": "X-Large",
+      "extralarge": "XX-Large",
       "large": "Large",
       "medium": "Medium",
       "small": "Small",
-      "evgnlarge": "X-Large",
-      "extralarge": "XX-Large",
       "title": "Clock size"
     },
     "title": "Clock",
@@ -118,11 +122,7 @@
       "medium": "Slightly Bold (500)",
       "normal": "Normal (400)",
       "title": "Clock weight"
-    },
-    "calcWeightTitle": "Date weight",
-    "colorfulClock": "Colorful clock numbers",
-    "newStyle": "New style",
-    "newStyleDesc": "When enabled, will simultaneously enable “Show AM/PM” and “Show seconds” and cannot be disabled"
+    }
   },
   "common": {
     "copyLink": "Copy Link Address",
@@ -264,6 +264,7 @@
       "label": "Global Color Mode"
     },
     "darkMode": "Dark mode",
+    "idleHide": "Fade out page elements when inactive",
     "lightMode": "Light mode",
     "monet": {
       "askEnableCache": {
@@ -275,7 +276,6 @@
     },
     "primaryColor": "Primary color",
     "systemMode": "Follow system / browser",
-    "idleHide": "Fade out page elements when inactive",
     "title": "Theme"
   },
   "title": "Settings",

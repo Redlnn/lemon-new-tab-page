@@ -2,23 +2,20 @@
   "about": {
     "yiyanProvider": "Chinese poetry API provided by {api}"
   },
-  "yiyan": {
-    "copied": "Copied to clipboard"
-  },
   "bookmark": {
     "404": "Nothing found",
     "addToShortcut": "Add to Shortcuts",
     "added": "Added to shortcuts",
     "collapse": {
-      "other": "Collapse Other at Level",
-      "all": "Collapse All at Level"
+      "all": "Collapse All at Level",
+      "other": "Collapse Other at Level"
     },
-    "expandHint": "Please expand the sidebar to view bookmarks",
     "delete": {
       "confirm": "Are you sure you want to delete “{{title}}”?",
       "confirmFolder": "“{{title}}” is a folder. Deleting it will also delete all bookmarks inside it. Are you sure?",
       "success": "“{{title}}” has been deleted"
     },
+    "expandHint": "Please expand the sidebar to view bookmarks",
     "moveError": "Failed to move bookmark",
     "sortBy": "Sort by",
     "sortMode": {
@@ -33,10 +30,10 @@
   },
   "bootstrap": {
     "invalidVer": {
-      "title": "Unsupported Settings Version",
-      "msg": "We’re sorry, but an unsupported legacy settings version was detected. To ensure the extension functions properly, please clear the extension data and refresh.",
       "bak": "You may also click the button below to download a backup of the previous settings version (it cannot be imported into the current version).",
-      "btn": "Clear and Refresh"
+      "btn": "Clear and Refresh",
+      "msg": "We’re sorry, but an unsupported legacy settings version was detected. To ensure the extension functions properly, please clear the extension data and refresh.",
+      "title": "Unsupported Settings Version"
     }
   },
   "changelog": {
@@ -151,5 +148,8 @@
     "morning": "",
     "noon": ""
   },
-  "title": "New Tab"
+  "title": "New Tab",
+  "yiyan": {
+    "copied": "Copied to clipboard"
+  }
 }

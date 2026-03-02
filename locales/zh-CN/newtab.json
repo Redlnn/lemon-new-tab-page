@@ -2,23 +2,20 @@
   "about": {
     "yiyanProvider": "一言API由 {api} 提供"
   },
-  "yiyan": {
-    "copied": "已复制到剪贴板"
-  },
   "bookmark": {
     "404": "什么都没找到",
     "addToShortcut": "添加到快捷方式",
     "added": "已添加到快捷方式",
     "collapse": {
-      "other": "折叠同级其他项",
-      "all": "折叠本层全部"
+      "all": "折叠本层全部",
+      "other": "折叠同级其他项"
     },
-    "expandHint": "请展开侧边栏以查看书签",
     "delete": {
       "confirm": "你确定要删除「{{name}}」吗？",
       "confirmFolder": "「{{name}}」是一个目录，删除他会把其中所有书签一起删除，确定吗？",
       "success": "已删除「 {{title}}」"
     },
+    "expandHint": "请展开侧边栏以查看书签",
     "moveError": "书签移动失败",
     "sortBy": "排序方式",
     "sortMode": {
@@ -33,10 +30,10 @@
   },
   "bootstrap": {
     "invalidVer": {
-      "title": "不支持的配置版本",
-      "msg": "非常抱歉，检测到不受支持的历史设置版本。为保证扩展功能正常运行，请清除扩展数据并刷新。",
       "bak": "你还可以点击下方按钮以下载旧版本的配置文件备份（不支持导入到当前版本）。",
-      "btn": "清除并刷新"
+      "btn": "清除并刷新",
+      "msg": "非常抱歉，检测到不受支持的历史设置版本。为保证扩展功能正常运行，请清除扩展数据并刷新。",
+      "title": "不支持的配置版本"
     }
   },
   "changelog": {
@@ -151,5 +148,8 @@
     "morning": "早上",
     "noon": "中午"
   },
-  "title": "新标签页"
+  "title": "新标签页",
+  "yiyan": {
+    "copied": "已复制到剪贴板"
+  }
 }
