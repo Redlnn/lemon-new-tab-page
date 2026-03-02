@@ -102,7 +102,7 @@ export const defaultSettings = {
     limitCount: false,
     maxCount: 10,
     iconSize: 40,
-    iconRatio: 0.5,
+    iconRatio: 0.7,
     openInNewTab: false
   },
   sync: {
