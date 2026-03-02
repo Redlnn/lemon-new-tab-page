@@ -59,6 +59,8 @@ function onTransitionEnd(e: TransitionEvent, ripple: Ripple) {
 }
 
 function onPointerDown(e: PointerEvent) {
+  if (settings.perf.disableYiyanRipple) return
+
   const x = e.clientX - left.value
   const y = e.clientY - top.value
 

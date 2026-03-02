@@ -132,9 +132,11 @@ export const defaultSettings = {
     disableSearchBarBlur: false,
     disableYiyanTransparent: false,
     disableYiyanBlur: false,
+    disableYiyanRipple: false,
     disableSettingsBtnBlur: false,
     disableSettingsBtnTransparent: false,
-    disableBgSwitchAnim: false
+    disableBgSwitchAnim: false,
+    disableDockScale: false
   },
   bookmark: {
     direction: DrawerDirection.rtl,

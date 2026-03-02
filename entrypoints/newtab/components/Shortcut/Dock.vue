@@ -178,6 +178,8 @@ function applyTransition(duration: string): void {
 }
 
 function onMouseEnter(e: MouseEvent): void {
+  if (settings.perf.disableDockScale) return
+
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
   transitionTimer = setTimeout(() => applyTransition('0s'), 80)
@@ -186,10 +188,14 @@ function onMouseEnter(e: MouseEvent): void {
 }
 
 function onMouseMove(e: MouseEvent): void {
+  if (settings.perf.disableDockScale) return
+
   updateScales(e.clientX)
 }
 
 function onMouseLeave(): void {
+  if (settings.perf.disableDockScale) return
+
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
   updateScales(null)

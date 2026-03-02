@@ -197,7 +197,9 @@
       "transparent": "Transparency"
     },
     "yiyanBlur": "Quote blur",
-    "yiyanTransparent": "Quote transparency"
+    "yiyanTransparent": "Quote transparency",
+    "yiyanRipple": "Quote ripple animation",
+    "dockScale": "Dock icon scale animation"
   },
   "search": {
     "alwaysExpandSearchBar": "Always expand search bar",

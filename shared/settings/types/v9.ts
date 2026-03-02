@@ -139,9 +139,11 @@ export interface SettingsInterfaceVer9 {
     disableSearchBarBlur: boolean
     disableYiyanTransparent: boolean
     disableYiyanBlur: boolean
+    disableYiyanRipple: boolean
     disableSettingsBtnBlur: boolean
     disableSettingsBtnTransparent: boolean
     disableBgSwitchAnim: boolean
+    disableDockScale: boolean
   }
 
   // 书签侧边栏

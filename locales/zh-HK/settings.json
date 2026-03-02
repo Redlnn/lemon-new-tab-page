@@ -197,7 +197,9 @@
       "transparent": "透明效果"
     },
     "yiyanBlur": "一言背景模糊",
-    "yiyanTransparent": "一言背景透明"
+    "yiyanTransparent": "一言背景透明",
+    "yiyanRipple": "一言水波紋動效",
+    "dockScale": "Dock圖示縮放動效"
   },
   "search": {
     "alwaysExpandSearchBar": "一直展開搜尋框",
