@@ -135,6 +135,7 @@
       "restoreSuccess": "已恢复默认最常访问网站"
     },
     "pin": "置顶",
+    "topSites": "最常访问",
     "unpin": "取消置顶",
     "unpinMessage": "已取消置顶该链接"
   },

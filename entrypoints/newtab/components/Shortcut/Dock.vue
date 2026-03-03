@@ -2,8 +2,8 @@
 import { OnLongPress } from '@vueuse/components'
 import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import { Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
-import { AddRound, BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
+import { Apps24Regular, Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
+import { BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 // 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
@@ -22,12 +22,15 @@ import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
+import SpotlightPanel from './SpotlightPanel.vue'
 import { pinShortcut, removeShortcut } from './utils/shortcut'
 import { blockSite } from './utils/topSites'
 
 defineProps<{
   onOpenAddDialog?: () => void
 }>()
+
+const spotlightPanelRef = useTemplateRef('spotlightPanelRef')
 
 const perf = usePerfClasses(() => ({
   transparentOff: settings.perf.disableShortcutTransparent,
@@ -130,13 +133,13 @@ const dockRef = ref<HTMLElement | null>(null)
 const scalableDynEls = shallowRef<HTMLElement[]>([])
 // 静态部分（不在 v-for 内）：只在挂载时收集，不受 onBeforeUpdate 影响
 const postSepGapEl = ref<HTMLElement | null>(null)
-const addBtnEl = ref<HTMLElement | null>(null)
+const appBtnEl = ref<HTMLElement | null>(null)
 
 // 合并动态+静态，供 cacheNaturalCenters / updateScales 使用
 const scalableEls = computed(() => {
   const els = [...scalableDynEls.value]
   if (postSepGapEl.value) els.push(postSepGapEl.value)
-  if (addBtnEl.value) els.push(addBtnEl.value)
+  if (appBtnEl.value) els.push(appBtnEl.value)
   return els
 })
 // 缓存元素在 scale=1 时的中心点 X 坐标，避免放大后位置偏移导致波形变形
@@ -226,8 +229,8 @@ function setPostSepGapRef(el: unknown): void {
   postSepGapEl.value = el instanceof HTMLElement ? el : null
 }
 
-function setAddBtnRef(el: unknown): void {
-  addBtnEl.value = el instanceof HTMLElement ? el : null
+function setAppBtnRef(el: unknown): void {
+  appBtnEl.value = el instanceof HTMLElement ? el : null
 }
 
 // ---- 右键上下文菜单 ----
@@ -326,6 +329,10 @@ async function ctxBlockSite(): Promise<void> {
     @mouseleave="onMouseLeave"
     @contextmenu.stop.prevent
   >
+    <div class="dock-item" :ref="setAppBtnRef" @click="spotlightPanelRef?.toggle">
+      <Apps24Regular />
+    </div>
+    <div class="dock-gap" :ref="setPostSepGapRef"></div>
     <template v-for="(item, idx) in visibleShortcuts" :key="`pin-${idx}`">
       <el-tooltip
         :content="item.title"
@@ -363,8 +370,7 @@ async function ctxBlockSite(): Promise<void> {
       </el-tooltip>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <!-- shortcuts 与 topSites 之间的分隔符，两者都有内容时才显示 -->
-    <template v-if="visibleShortcuts.length && visibleTopSites.length">
+    <template v-if="visibleTopSites.length">
       <div class="dock-separator"></div>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
@@ -408,13 +414,17 @@ async function ctxBlockSite(): Promise<void> {
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div v-if="j === visibleTopSites.length" class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <div class="dock-separator"></div>
-    <div class="dock-gap" :ref="setPostSepGapRef"></div>
-    <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
-      <add-round />
-    </div>
+
+    <!-- Spotlight 应用面板 -->
+    <SpotlightPanel
+      ref="spotlightPanelRef"
+      :shortcuts="shortcuts"
+      :top-sites="topSites"
+      :refresh-debounced="refreshDebounced"
+      :on-open-add-dialog="onOpenAddDialog"
+    />
 
     <!-- 共享右键菜单 -->
     <el-dropdown

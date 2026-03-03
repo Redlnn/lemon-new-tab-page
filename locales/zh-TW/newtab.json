@@ -135,6 +135,7 @@
       "restoreSuccess": "已還原預設最常訪問網站"
     },
     "pin": "釘選",
+    "topSites": "最常訪問",
     "unpin": "取消釘選",
     "unpinMessage": "已取消釘選該捷徑"
   },

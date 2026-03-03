@@ -135,6 +135,7 @@
       "restoreSuccess": "Default most visited site restored"
     },
     "pin": "Pin",
+    "topSites": "Most Visited",
     "unpin": "Unpin",
     "unpinMessage": "Shortcut unpinned."
   },
