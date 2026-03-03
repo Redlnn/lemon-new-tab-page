@@ -138,6 +138,13 @@
     "unpin": "Unpin",
     "unpinMessage": "Shortcut unpinned."
   },
+  "dock": {
+    "launchpad": {
+      "title": "Launchpad",
+      "search": "Search...",
+      "empty": "No results"
+    }
+  },
   "sponsor": "I first built this extension in my free time to meet my own needs, and I’m glad it’s useful for you too! If you’d like to support me, you can reach me at: redlnn@outlook.com. Thanks for your support!",
   "time": {
     "afternoon": "",

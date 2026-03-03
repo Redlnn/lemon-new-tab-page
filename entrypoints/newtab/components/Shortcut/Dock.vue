@@ -2,7 +2,7 @@
 import { OnLongPress } from '@vueuse/components'
 import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import { Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
+import { Apps24Regular, Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
 import { AddRound, BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -22,6 +22,7 @@ import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
+import Launchpad from './Launchpad.vue'
 import { pinShortcut, removeShortcut } from './utils/shortcut'
 import { blockSite } from './utils/topSites'
 
@@ -131,10 +132,15 @@ const scalableDynEls = shallowRef<HTMLElement[]>([])
 // 静态部分（不在 v-for 内）：只在挂载时收集，不受 onBeforeUpdate 影响
 const postSepGapEl = ref<HTMLElement | null>(null)
 const addBtnEl = ref<HTMLElement | null>(null)
+// 启动台入口（静态）
+const launchpadBtnEl = ref<HTMLElement | null>(null)
+const showLaunchpad = ref(false)
 
 // 合并动态+静态，供 cacheNaturalCenters / updateScales 使用
 const scalableEls = computed(() => {
-  const els = [...scalableDynEls.value]
+  const els: HTMLElement[] = []
+  if (launchpadBtnEl.value) els.push(launchpadBtnEl.value)
+  els.push(...scalableDynEls.value)
   if (postSepGapEl.value) els.push(postSepGapEl.value)
   if (addBtnEl.value) els.push(addBtnEl.value)
   return els
@@ -228,6 +234,10 @@ function setPostSepGapRef(el: unknown): void {
 
 function setAddBtnRef(el: unknown): void {
   addBtnEl.value = el instanceof HTMLElement ? el : null
+}
+
+function setLaunchpadBtnRef(el: unknown): void {
+  launchpadBtnEl.value = el instanceof HTMLElement ? el : null
 }
 
 // ---- 右键上下文菜单 ----
@@ -326,6 +336,21 @@ async function ctxBlockSite(): Promise<void> {
     @mouseleave="onMouseLeave"
     @contextmenu.stop.prevent
   >
+    <!--  -->
+    <!-- 启动台固定入口 -->
+    <el-tooltip
+      :content="t('dock.launchpad.title')"
+      placement="top"
+      effect="light"
+      :hide-after="0"
+      :show-arrow="false"
+      :enterable="false"
+      transition="none"
+    >
+      <div class="dock-item" :ref="setLaunchpadBtnRef" @click="showLaunchpad = !showLaunchpad">
+        <apps24-regular />
+      </div>
+    </el-tooltip>
     <template v-for="(item, idx) in visibleShortcuts" :key="`pin-${idx}`">
       <el-tooltip
         :content="item.title"
@@ -361,13 +386,10 @@ async function ctxBlockSite(): Promise<void> {
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <!-- shortcuts 与 topSites 之间的分隔符，两者都有内容时才显示 -->
-    <template v-if="visibleShortcuts.length && visibleTopSites.length">
-      <div class="dock-separator"></div>
-      <div class="dock-gap" :ref="setScalableRef"></div>
-    </template>
+    <div class="dock-gap" :ref="setScalableRef"></div>
+    <div class="dock-separator"></div>
+    <div class="dock-gap" :ref="setScalableRef"></div>
     <template v-for="(item, j) in visibleTopSites" :key="`top-${j}`">
       <el-tooltip
         :content="item.title"
@@ -415,6 +437,9 @@ async function ctxBlockSite(): Promise<void> {
     <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
       <add-round />
     </div>
+
+    <!-- 启动台覆盖层 -->
+    <Launchpad v-model="showLaunchpad" />
 
     <!-- 共享右键菜单 -->
     <el-dropdown
@@ -469,6 +494,7 @@ async function ctxBlockSite(): Promise<void> {
   position: fixed;
   bottom: 20px;
   left: 50%;
+  z-index: 2;
   display: flex;
   align-items: flex-end;
   max-width: 93%;
