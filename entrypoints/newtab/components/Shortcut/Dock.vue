@@ -479,9 +479,19 @@ async function ctxBlockSite(): Promise<void> {
   border-radius: 15px;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);
   transform: translateX(-50%);
-  transition: opacity var(--el-transition-duration-fast) ease;
+  transition:
+    opacity var(--el-transition-duration-fast) ease,
+    bottom var(--el-transition-duration-fast) ease;
 
   @include acrylic.acrylic(10px, 1.2, 1.1);
+}
+
+.app:has(.yiyan) {
+  .dock {
+    @media (height <= 800px) {
+      bottom: 10px;
+    }
+  }
 }
 
 .dock-item {

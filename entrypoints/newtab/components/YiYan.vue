@@ -167,7 +167,8 @@ async function copyToClipboard() {
   transition:
     background-color var(--el-transition-duration-fast) ease,
     backdrop-filter var(--el-transition-duration-fast) ease,
-    color var(--el-transition-duration-fast) ease;
+    color var(--el-transition-duration-fast) ease,
+    bottom var(--el-transition-duration-fast) ease;
 
   .yiyan__copy-btn {
     position: absolute;
@@ -271,7 +272,7 @@ async function copyToClipboard() {
   }
 
   @media (height <= 800px) {
-    bottom: 60px;
+    bottom: 70px;
   }
 }
 
