@@ -20,6 +20,10 @@ export function migrateFromVer8To9(oldSettings: SettingsInterfaceVer8): Settings
       ...oldSettings.clock,
       size: clockSizeToNumber(oldSettings.clock.size)
     },
+    dock: {
+      ...oldSettings.dock,
+      showLaunchpad: defaultSettings.dock.showLaunchpad
+    },
     perf: {
       ...oldSettings.perf,
       disableYiyanRipple: defaultSettings.perf.disableYiyanRipple,
