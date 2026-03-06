@@ -174,12 +174,19 @@ function updateScales(clientX: number | null): void {
 
 let transitionTimer: ReturnType<typeof setTimeout> | null = null
 
+// 追踪当前交互是否来自触屏，用于混合设备（鼠标+触屏）的判断
+const isUsingTouch = ref(false)
+
+function onPointerEnter(e: PointerEvent): void {
+  isUsingTouch.value = e.pointerType !== 'mouse'
+}
+
 function applyTransition(duration: string): void {
   dockRef.value?.style.setProperty('--td', duration)
 }
 
 function onMouseEnter(e: MouseEvent): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -189,13 +196,13 @@ function onMouseEnter(e: MouseEvent): void {
 }
 
 function onMouseMove(e: MouseEvent): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   updateScales(e.clientX)
 }
 
 function onMouseLeave(): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -326,6 +333,7 @@ async function ctxBlockSite(): Promise<void> {
       '--item-ratio': settings.dock.iconRatio * 100 + '%',
       '--gap-size': settings.dock.gap + 'px'
     }"
+    @pointerenter="onPointerEnter"
     @mouseenter="onMouseEnter"
     @mousemove="onMouseMove"
     @mouseleave="onMouseLeave"
@@ -341,6 +349,7 @@ async function ctxBlockSite(): Promise<void> {
       :hide-after="0"
       :show-arrow="false"
       :enterable="false"
+      :disabled="isUsingTouch"
       transition="none"
     >
       <div class="dock-item" :ref="setLaunchpadBtnRef" @click="showLaunchpad = !showLaunchpad">
@@ -355,6 +364,7 @@ async function ctxBlockSite(): Promise<void> {
         :hide-after="0"
         :show-arrow="false"
         :enterable="false"
+        :disabled="isUsingTouch"
         transition="none"
       >
         <OnLongPress
@@ -396,6 +406,7 @@ async function ctxBlockSite(): Promise<void> {
         :hide-after="0"
         :show-arrow="false"
         :enterable="false"
+        :disabled="isUsingTouch"
         transition="none"
       >
         <OnLongPress
