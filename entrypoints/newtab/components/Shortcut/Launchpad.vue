@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onKeyStroke, useSwipe, useWindowSize } from '@vueuse/core'
+import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
 
 import { useTranslation } from 'i18next-vue'
 
@@ -7,7 +7,12 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore } from '@/shared/shortcut'
 
-import { getTopSites } from './utils/topSites'
+import { useShortcutData } from './composables/useShortcutData'
+import { useTopSitesMerge } from './composables/useTopSitesMerge'
+
+const refreshDebounced = useDebounceFn(refresh, 100)
+
+const { topSites, shortcuts, topSitesNeedsReload } = useShortcutData(refreshDebounced)
 
 const model = defineModel<boolean>({ required: true })
 
@@ -17,20 +22,34 @@ const shortcutStore = useShortcutStore()
 
 const { width: windowWidth } = useWindowSize({ type: 'visual' })
 
-// ---- 配置 ----
-const COLS = computed(() => (windowWidth.value <= 600 ? 4 : windowWidth.value <= 1000 ? 5 : 7))
-const ROWS = 2
-
-const pageSize = computed(() => COLS.value * ROWS)
-
 // ---- 状态 ----
 const query = ref('')
 const page = ref(0)
 const containerRef = useTemplateRef<HTMLElement>('container')
 const searchInputRef = useTemplateRef<{ focus: () => void }>('searchInput')
+const { height: containerHeight } = useElementSize(containerRef)
 
-const shortcuts = ref<{ url: string; title: string; favicon?: string }[]>([])
-const topSites = ref<{ url: string; title: string; favicon?: string }[]>([])
+const COLS = computed(() => {
+  if (windowWidth.value <= 500) return 4
+  else if (windowWidth.value <= 800) return 5
+  else if (windowWidth.value <= 1000) return 6
+  else return 7
+})
+const ROWS = computed(() => {
+  if (windowWidth.value <= 500) {
+    const h = containerHeight.value - 70 - 64 // 减去搜索栏高度、分页控制高度与图标网格的间距
+    const rows = Math.floor((h + 8) / 106) // 每行106px（图标+间距，额外8px间距）
+    if (rows === 0) return 1
+    else return rows
+  }
+
+  const h = containerHeight.value - 88 - 64 // 减去搜索栏高度、分页控制高度与图标网格的间距
+  if (windowWidth.value <= 800) return Math.floor((h + 8) / 114)
+  else return Math.floor(h / 114)
+})
+
+const pageSize = computed(() => COLS.value * ROWS.value)
+
 const allItems = computed(() => [...shortcuts.value, ...topSites.value])
 
 const isSearching = computed(() => query.value.trim().length > 0)
@@ -54,38 +73,38 @@ const currentItems = computed(() => {
 // ---- 数据获取 ----
 async function refresh() {
   shortcuts.value = shortcutStore.items.slice()
-  if (settings.dock.enableTopSites) {
-    try {
-      const sites = await getTopSites()
-      const shortcutUrls = new Set(shortcuts.value.map((s) => s.url))
-      topSites.value = sites
-        .filter((s) => s.url && !shortcutUrls.has(s.url))
-        .map((s) => {
-          let title = s.title?.trim()
-          if (!title) {
-            try {
-              title = new URL(s.url).hostname.replace(/^www\./, '')
-            } catch {
-              title = s.url
-            }
-          }
-          return { url: s.url, title }
-        })
-    } catch {
-      topSites.value = []
-    }
+
+  // 合并最常访问
+  if (settings.shortcut.enableTopSites) {
+    topSites.value = await useTopSitesMerge({
+      shortcuts: shortcuts.value,
+      columns: COLS.value,
+      maxRows: ROWS.value,
+      force: topSitesNeedsReload.value,
+      noCap: true // 不截断，获取所有可用的 top sites
+    })
+    topSitesNeedsReload.value = false
+    // topSites.value = sites.map((s) => ({ url: s.url, title: s.title ?? '', favicon: s.favicon }))
   } else {
     topSites.value = []
   }
 }
 
 // ---- 翻页 ----
+const pageDirection = ref<'forward' | 'backward'>('forward')
+
 function prevPage() {
-  if (page.value > 0) page.value--
+  if (page.value > 0) {
+    pageDirection.value = 'backward'
+    page.value--
+  }
 }
 
 function nextPage() {
-  if (page.value < pageCount.value - 1) page.value++
+  if (page.value < pageCount.value - 1) {
+    pageDirection.value = 'forward'
+    page.value++
+  }
 }
 
 // ---- 关闭 ----
@@ -124,15 +143,19 @@ onKeyStroke('ArrowRight', (e) => {
 })
 
 // ---- 打开时重置 & 刷新 ----
-watch(model, async (v) => {
-  if (v) {
-    query.value = ''
-    page.value = 0
-    await refresh()
-    await nextTick()
-    searchInputRef.value?.focus()
-  }
-})
+watch(
+  model,
+  async (v) => {
+    if (v) {
+      query.value = ''
+      page.value = 0
+      await refresh()
+      await nextTick()
+      searchInputRef.value?.focus()
+    }
+  },
+  { immediate: true }
+)
 
 // 搜索时回到第0页
 watch(query, () => {
@@ -153,8 +176,8 @@ function openItem(url: string) {
 <template>
   <Teleport to="body">
     <Transition name="launchpad-fade">
-      <div v-if="model" class="launchpad-overlay noselect" @click.self="close">
-        <div class="launchpad-wrapper" ref="container">
+      <el-overlay v-show="model" :overlay-class="['launchpad-overlay', 'noselect']" :z-index="1">
+        <div class="launchpad-wrapper" ref="container" @click.self="close">
           <!-- 搜索栏 -->
           <div class="launchpad-search">
             <el-input
@@ -178,11 +201,15 @@ function openItem(url: string) {
           </div>
 
           <!-- 图标网格 -->
-          <Transition name="launchpad-page" mode="out-in">
+          <Transition
+            :name="pageDirection === 'backward' ? 'launchpad-page-back' : 'launchpad-page'"
+            mode="out-in"
+          >
             <div
               :key="isSearching ? 'search' : page"
               class="launchpad-grid"
               :style="{ '--lp-cols': COLS }"
+              @click.self="close"
             >
               <div
                 v-for="item in currentItems"
@@ -193,7 +220,9 @@ function openItem(url: string) {
                 <div class="launchpad-item__icon">
                   <img :src="item.favicon || getFaviconURL(item.url).value" alt="" />
                 </div>
-                <div class="launchpad-item__label">{{ item.title }}</div>
+                <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                  {{ item.title }}
+                </el-text>
               </div>
               <!-- 无结果 -->
               <div v-if="currentItems.length === 0" class="launchpad-empty">
@@ -216,7 +245,7 @@ function openItem(url: string) {
                 class="launchpad-dot"
                 :class="{ 'launchpad-dot--active': page === i - 1 }"
                 @click="page = i - 1"
-              />
+              ></span>
             </div>
             <button class="launchpad-arrow" :disabled="page === pageCount - 1" @click="nextPage">
               <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
@@ -225,21 +254,14 @@ function openItem(url: string) {
             </button>
           </div>
         </div>
-      </div>
+      </el-overlay>
     </Transition>
   </Teleport>
 </template>
 
 <style lang="scss">
 .launchpad-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgb(0 0 0 / 55%);
-  -webkit-backdrop-filter: blur(40px) saturate(1.5);
+  overflow: hidden;
   backdrop-filter: blur(40px) saturate(1.5);
 }
 
@@ -249,12 +271,11 @@ function openItem(url: string) {
   align-items: center;
   width: 100%;
   height: 100%;
-  max-height: 100vh;
-  padding: 60px 40px 40px;
-  overflow: hidden;
+  max-height: 100dvh;
+  padding: 60px 40px 90px;
 
-  @media (width <= 600px) {
-    padding: 40px 16px 30px;
+  @media (width <= 500px) {
+    padding: 40px 16px 90px;
   }
 }
 
@@ -263,7 +284,7 @@ function openItem(url: string) {
   max-width: 90vw;
   margin-bottom: 48px;
 
-  @media (width <= 600px) {
+  @media (width <= 500px) {
     margin-bottom: 30px;
   }
 
@@ -274,22 +295,10 @@ function openItem(url: string) {
     --el-input-focus-border-color: rgb(255 255 255 / 80%);
     --el-input-text-color: #fff;
     --el-input-placeholder-color: rgb(255 255 255 / 55%);
-    --el-input-icon-color: rgb(255 255 255 / 65%);
     --el-input-clear-hover-color: #fff;
 
     .el-input__wrapper {
-      border-radius: 30px;
-      box-shadow: 0 0 0 1px var(--el-input-border-color);
-      -webkit-backdrop-filter: blur(10px);
       backdrop-filter: blur(10px);
-
-      &:hover {
-        box-shadow: 0 0 0 1px var(--el-input-hover-border-color);
-      }
-
-      &.is-focus {
-        box-shadow: 0 0 0 1px var(--el-input-focus-border-color);
-      }
     }
   }
 }
@@ -298,7 +307,7 @@ function openItem(url: string) {
   display: grid;
   flex: 1;
   grid-template-columns: repeat(var(--lp-cols, 7), 1fr);
-  gap: 8px 0;
+  gap: 8px;
   align-content: start;
   width: 100%;
   max-width: 1000px;
@@ -316,13 +325,10 @@ function openItem(url: string) {
     background-color 0.15s ease,
     transform 0.15s ease;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background-color: rgb(255 255 255 / 12%);
     transform: scale(1.06);
-  }
-
-  &:active {
-    transform: scale(0.95);
   }
 
   &__icon {
@@ -335,19 +341,20 @@ function openItem(url: string) {
     margin-bottom: 8px;
     overflow: hidden;
     border-radius: 18px;
+    transition: 0.15s ease;
 
     // background-color: var(--el-fill-color-lighter);
     // box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
 
     @media (width <= 800px) {
-      width: 58px;
-      height: 58px;
+      width: 64px;
+      height: 64px;
       border-radius: 14px;
     }
 
-    @media (width <= 600px) {
-      width: 48px;
-      height: 48px;
+    @media (width <= 500px) {
+      width: 56px;
+      height: 56px;
       border-radius: 12px;
     }
 
@@ -356,21 +363,13 @@ function openItem(url: string) {
       height: 75%;
       object-fit: contain;
       border-radius: 10px;
-
-      // filter: drop-shadow(0 0 3px rgb(0 0 0 / 30%));
     }
   }
 
   &__label {
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: 12px;
     font-weight: 500;
-    line-height: 1.3;
     color: #fff;
-    text-align: center;
-    white-space: nowrap;
     text-shadow: 0 1px 4px rgb(0 0 0 / 40%);
   }
 }
@@ -467,7 +466,7 @@ function openItem(url: string) {
   }
 }
 
-/* ---- 翻页动画 ---- */
+/* ---- 翻页动画（下一页：右→左）---- */
 .launchpad-page-enter-active,
 .launchpad-page-leave-active {
   transition:
@@ -483,5 +482,23 @@ function openItem(url: string) {
 .launchpad-page-leave-to {
   opacity: 0;
   transform: translateX(-24px);
+}
+
+/* ---- 翻页动画（上一页：左→右）---- */
+.launchpad-page-back-enter-active,
+.launchpad-page-back-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.launchpad-page-back-enter-from {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.launchpad-page-back-leave-to {
+  opacity: 0;
+  transform: translateX(24px);
 }
 </style>

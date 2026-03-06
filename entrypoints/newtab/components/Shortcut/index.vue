@@ -12,8 +12,6 @@ import {
 import { BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
-import type { TopSites } from 'webextension-polyfill'
 
 import { browser } from '#imports'
 
@@ -312,24 +310,21 @@ async function refresh() {
     openedMenuCloseFn.value = null
   }
 
-  const _shortcuts = shortcutStore.items.slice()
+  shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.shortcut.enableTopSites) {
-    const topList = await useTopSitesMerge({
-      shortcuts: _shortcuts,
+    topSites.value = await useTopSitesMerge({
+      shortcuts: shortcuts.value,
       columns: displayColumns.value,
       maxRows: displayRows.value,
       force: topSitesNeedsReload.value,
       noCap: true // 不截断，获取所有可用的 top sites
     })
-    mergedTop = topList
     topSitesNeedsReload.value = false
+  } else {
+    topSites.value = []
   }
-
-  shortcuts.value = _shortcuts
-  topSites.value = mergedTop
 
   // 首次刷新完成后设置 mounted 标志
   if (!mounted.value) {

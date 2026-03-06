@@ -6,8 +6,6 @@ import { Apps24Regular, Pin12Regular, PinOff16Regular, Star12Regular } from '@vi
 import { AddRound, BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
-import type { TopSites } from 'webextension-polyfill'
 
 import { browser } from '#imports'
 
@@ -49,24 +47,21 @@ const refreshDebounced = useDebounceFn(refresh, 100)
 const { topSites, shortcuts, mounted, topSitesNeedsReload } = useShortcutData(refreshDebounced)
 
 async function refresh() {
-  const _shortcuts = shortcutStore.items.slice()
+  shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.dock.enableTopSites) {
-    const topList = await useTopSitesMerge({
-      shortcuts: _shortcuts,
+    topSites.value = await useTopSitesMerge({
+      shortcuts: shortcuts.value,
       columns: 1,
       maxRows: 1,
       force: topSitesNeedsReload.value,
       noCap: true // 不截断，获取所有可用的 top sites
     })
-    mergedTop = topList
     topSitesNeedsReload.value = false
+  } else {
+    topSites.value = []
   }
-
-  shortcuts.value = _shortcuts
-  topSites.value = mergedTop
 
   // 首次刷新完成后设置 mounted 标志
   if (!mounted.value) {
