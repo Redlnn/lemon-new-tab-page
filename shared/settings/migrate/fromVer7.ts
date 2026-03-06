@@ -113,5 +113,5 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
     readChangeLog: oldSettings.readChangeLog,
     pluginVersion: oldSettings.pluginVersion,
     version: 8
-  }
+  } satisfies SettingsInterfaceVer8
 }

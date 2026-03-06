@@ -1,4 +1,4 @@
-import type { SettingsInterfaceVer8, SettingsInterfaceVer9 } from '..'
+import { defaultSettings, type SettingsInterfaceVer8, type SettingsInterfaceVer9 } from '..'
 
 function clockSizeToNumber(size: 'small' | 'medium' | 'large'): number {
   switch (size) {
@@ -20,6 +20,11 @@ export function migrateFromVer8To9(oldSettings: SettingsInterfaceVer8): Settings
       ...oldSettings.clock,
       size: clockSizeToNumber(oldSettings.clock.size)
     },
+    perf: {
+      ...oldSettings.perf,
+      disableYiyanRipple: defaultSettings.perf.disableYiyanRipple,
+      disableDockScale: defaultSettings.perf.disableDockScale
+    },
     version: 9
-  }
+  } satisfies SettingsInterfaceVer9
 }
