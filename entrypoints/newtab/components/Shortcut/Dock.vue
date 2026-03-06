@@ -341,21 +341,23 @@ async function ctxBlockSite(): Promise<void> {
   >
     <!--  -->
     <!-- 启动台固定入口 -->
-    <el-tooltip
-      v-if="settings.dock.showLaunchpad"
-      :content="t('dock.launchpad.title')"
-      placement="top"
-      effect="light"
-      :hide-after="0"
-      :show-arrow="false"
-      :enterable="false"
-      :disabled="isUsingTouch"
-      transition="none"
-    >
-      <div class="dock-item" :ref="setLaunchpadBtnRef" @click="showLaunchpad = !showLaunchpad">
-        <apps24-regular />
-      </div>
-    </el-tooltip>
+    <template v-if="settings.dock.showLaunchpad">
+      <el-tooltip
+        :content="t('dock.launchpad.title')"
+        placement="top"
+        effect="light"
+        :hide-after="0"
+        :show-arrow="false"
+        :enterable="false"
+        :disabled="isUsingTouch"
+        transition="none"
+      >
+        <div class="dock-item" :ref="setLaunchpadBtnRef" @click="showLaunchpad = !showLaunchpad">
+          <apps24-regular />
+        </div>
+      </el-tooltip>
+      <div class="dock-gap" :ref="setScalableRef"></div>
+    </template>
     <template v-for="(item, idx) in visibleShortcuts" :key="`pin-${idx}`">
       <el-tooltip
         :content="item.title"
@@ -392,9 +394,9 @@ async function ctxBlockSite(): Promise<void> {
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
+      <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
     <template v-if="visibleShortcuts.length > 0 || settings.dock.showLaunchpad">
-      <div class="dock-gap" :ref="setScalableRef"></div>
       <div class="dock-separator"></div>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
