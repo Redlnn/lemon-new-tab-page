@@ -334,6 +334,7 @@ async function ctxBlockSite(): Promise<void> {
     <!--  -->
     <!-- 启动台固定入口 -->
     <el-tooltip
+      v-if="settings.dock.showLaunchpad"
       :content="t('dock.launchpad.title')"
       placement="top"
       effect="light"
@@ -382,9 +383,11 @@ async function ctxBlockSite(): Promise<void> {
         </OnLongPress>
       </el-tooltip>
     </template>
-    <div class="dock-gap" :ref="setScalableRef"></div>
-    <div class="dock-separator"></div>
-    <div class="dock-gap" :ref="setScalableRef"></div>
+    <template v-if="visibleShortcuts.length > 0 || settings.dock.showLaunchpad">
+      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div class="dock-separator"></div>
+      <div class="dock-gap" :ref="setScalableRef"></div>
+    </template>
     <template v-for="(item, j) in visibleTopSites" :key="`top-${j}`">
       <el-tooltip
         :content="item.title"
@@ -427,14 +430,16 @@ async function ctxBlockSite(): Promise<void> {
       </el-tooltip>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <div class="dock-separator"></div>
-    <div class="dock-gap" :ref="setPostSepGapRef"></div>
-    <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
-      <add-round />
-    </div>
+    <template v-if="!settings.dock.showLaunchpad">
+      <div class="dock-separator"></div>
+      <div class="dock-gap" :ref="setPostSepGapRef"></div>
+      <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
+        <add-round />
+      </div>
+    </template>
 
     <!-- 启动台覆盖层 -->
-    <Launchpad v-model="showLaunchpad" />
+    <Launchpad v-model="showLaunchpad" :on-open-add-dialog="onOpenAddDialog" />
 
     <!-- 共享右键菜单 -->
     <el-dropdown

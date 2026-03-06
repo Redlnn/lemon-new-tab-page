@@ -96,6 +96,7 @@ export const defaultSettings = {
   },
   dock: {
     enabled: false,
+    showLaunchpad: false,
     enableTopSites: true,
     showOnSearchFocus: true,
     gap: 5,

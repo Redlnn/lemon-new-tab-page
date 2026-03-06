@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
 
+import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { getFaviconURL } from '@/shared/media'
@@ -15,6 +16,10 @@ const refreshDebounced = useDebounceFn(refresh, 100)
 const { topSites, shortcuts, topSitesNeedsReload } = useShortcutData(refreshDebounced)
 
 const model = defineModel<boolean>({ required: true })
+
+const props = defineProps<{
+  onOpenAddDialog?: () => void
+}>()
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
@@ -36,16 +41,11 @@ const COLS = computed(() => {
   else return 7
 })
 const ROWS = computed(() => {
-  if (windowWidth.value <= 500) {
-    const h = containerHeight.value - 70 - 64 // 减去搜索栏高度、分页控制高度与图标网格的间距
-    const rows = Math.floor((h + 8) / 106) // 每行106px（图标+间距，额外8px间距）
-    if (rows === 0) return 1
-    else return rows
-  }
-
-  const h = containerHeight.value - 88 - 64 // 减去搜索栏高度、分页控制高度与图标网格的间距
-  if (windowWidth.value <= 800) return Math.floor((h + 8) / 114)
-  else return Math.floor(h / 114)
+  const isSmall = windowWidth.value <= 500
+  const isMid = windowWidth.value <= 800
+  const h = containerHeight.value - (isSmall ? 70 : 88) - 64
+  const rowHeight = isSmall ? 106 : isMid ? 114 : 122
+  return Math.max(1, Math.floor((h + 8) / rowHeight))
 })
 
 const pageSize = computed(() => COLS.value * ROWS.value)
@@ -62,12 +62,19 @@ const filteredItems = computed(() => {
   )
 })
 
-const pageCount = computed(() => Math.max(1, Math.ceil(allItems.value.length / pageSize.value)))
+// 添加按钮占1个槽，纳入分页计算
+const pageCount = computed(() => {
+  const total = !isSearching.value ? allItems.value.length + 1 : allItems.value.length
+  return Math.max(1, Math.ceil(total / pageSize.value))
+})
 
 const currentItems = computed(() => {
   if (isSearching.value) return filteredItems.value
   const start = page.value * pageSize.value
-  return allItems.value.slice(start, start + pageSize.value)
+  const isLastPage = page.value === pageCount.value - 1
+  // 最后一页留一个槽给添加按钮
+  const end = isLastPage && !isSearching.value ? start + pageSize.value - 1 : start + pageSize.value
+  return allItems.value.slice(start, end)
 })
 
 // ---- 数据获取 ----
@@ -78,8 +85,6 @@ async function refresh() {
   if (settings.shortcut.enableTopSites) {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
-      columns: COLS.value,
-      maxRows: ROWS.value,
       force: topSitesNeedsReload.value,
       noCap: true // 不截断，获取所有可用的 top sites
     })
@@ -225,8 +230,21 @@ function openItem(url: string) {
                 </el-text>
               </div>
               <!-- 无结果 -->
-              <div v-if="currentItems.length === 0" class="launchpad-empty">
+              <div v-if="currentItems.length === 0 && isSearching" class="launchpad-empty">
                 {{ t('dock.launchpad.empty') }}
+              </div>
+              <!-- 添加按钮（仅最后一页显示）-->
+              <div
+                v-if="!isSearching && page === pageCount - 1"
+                class="launchpad-item"
+                @click="props.onOpenAddDialog"
+              >
+                <el-icon class="launchpad-item__icon launchpad-item__icon--add">
+                  <add-round />
+                </el-icon>
+                <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                  {{ t('dock.launchpad.add') }}
+                </el-text>
               </div>
             </div>
           </Transition>
@@ -325,10 +343,18 @@ function openItem(url: string) {
     background-color 0.15s ease,
     transform 0.15s ease;
 
-  &:hover,
+  &:hover:not(:has(.launchpad-item__icon--add)),
   &:focus-visible {
     background-color: rgb(255 255 255 / 12%);
+  }
+
+  &:hover,
+  &:focus-visible {
     transform: scale(1.06);
+
+    .launchpad-item__icon--add {
+      background-color: rgb(255 255 255 / 25%);
+    }
   }
 
   &__icon {
@@ -342,9 +368,6 @@ function openItem(url: string) {
     overflow: hidden;
     border-radius: 18px;
     transition: 0.15s ease;
-
-    // background-color: var(--el-fill-color-lighter);
-    // box-shadow: 0 2px 8px rgb(0 0 0 / 20%);
 
     @media (width <= 800px) {
       width: 64px;
@@ -363,6 +386,12 @@ function openItem(url: string) {
       height: 75%;
       object-fit: contain;
       border-radius: 10px;
+    }
+
+    &--add {
+      background-color: rgb(255 255 255 / 15%);
+      color: rgb(255 255 255 / 85%);
+      font-size: 38px;
     }
   }
 

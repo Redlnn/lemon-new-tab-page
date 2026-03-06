@@ -97,6 +97,7 @@ export interface SettingsInterfaceVer9 {
   // 快速访问
   dock: {
     enabled: boolean
+    showLaunchpad: boolean
     enableTopSites: boolean
     showOnSearchFocus: boolean
     gap: number
