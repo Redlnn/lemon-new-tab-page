@@ -188,20 +188,23 @@ async function copyToClipboard() {
     opacity: 0;
     transition: all var(--el-transition-duration-fast) ease;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       color: var(--el-text-color-primary);
       background-color: var(--el-fill-color-darker);
     }
-  }
 
-  &:hover .yiyan__copy-btn {
-    opacity: 1;
+    &:focus-visible {
+      outline: 2px solid var(--el-color-primary);
+      outline-offset: -2px;
+    }
   }
 
   &.yiyan--opacity .yiyan__copy-btn {
     color: #eee;
 
-    &:hover {
+    &:hover,
+    &:focus-visible {
       color: #fff;
       background-color: var(--le-bg-color-overlay-opacity-60);
     }
@@ -217,16 +220,19 @@ async function copyToClipboard() {
   &.yiyan--shadow {
     text-shadow: 1px 1px 3px rgb(0 0 0 / 40%);
 
-    &:hover {
+    &:hover,
+    &:focus-within {
       text-shadow: 1px 1px 3px rgb(0 0 0 / 60%);
     }
 
-    &:not(.yiyan--opacity):hover {
+    &:not(.yiyan--opacity):hover,
+    &:not(.yiyan--opacity):focus-within {
       text-shadow: initial;
     }
   }
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     color: var(--el-text-color-regular);
     background-color: var(--el-bg-color-overlay);
 
@@ -246,6 +252,10 @@ async function copyToClipboard() {
     .yiyan__extra {
       opacity: 1;
     }
+
+    .yiyan__copy-btn {
+      opacity: 1;
+    }
   }
 
   &.yiyan--invert.yiyan--light,
@@ -254,7 +264,8 @@ async function copyToClipboard() {
     color: var(--el-text-color-regular);
 
     /* stylelint-disable-next-line no-descending-specificity */
-    &:hover {
+    &:hover,
+    &:focus-within {
       color: var(--el-text-color-primary);
     }
   }
@@ -262,7 +273,8 @@ async function copyToClipboard() {
   html.dark &.yiyan--invert.yiyan--night {
     color: var(--el-fill-color-extra-light);
 
-    &:hover {
+    &:hover,
+    &:focus-within {
       color: var(--el-fill-color);
     }
   }
