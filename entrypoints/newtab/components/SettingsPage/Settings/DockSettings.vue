@@ -28,6 +28,10 @@ async function restoreDefaultTopSites() {
         <el-switch v-model="settings.dock.showOnSearchFocus" />
       </div>
       <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('dock.showLaunchpad') }}</div>
+        <el-switch v-model="settings.dock.showLaunchpad" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
         <el-switch v-model="settings.dock.enableTopSites" />
       </div>

@@ -1,7 +1,5 @@
 import type { TopSites } from 'webextension-polyfill'
 
-import { useSettingsStore } from '@/shared/settings'
-
 import { getTopSites } from '@newtab/components/Shortcut/utils/topSites'
 
 interface UseTopSitesMergeOptions {
@@ -29,13 +27,6 @@ function getFallbackTitle(url: string) {
 export async function useTopSitesMerge(
   options: UseTopSitesMergeOptions
 ): Promise<TopSites.MostVisitedURL[]> {
-  const settings = useSettingsStore()
-
-  if (!settings.shortcut.enableTopSites) {
-    // 不启用最常访问：不追加，final = 书签 + 添加按钮
-    return []
-  }
-
   // 如果 getTopSites() 返回 undefined，则默认空数组
   const topSites = (await getTopSites(options.force)) ?? []
 

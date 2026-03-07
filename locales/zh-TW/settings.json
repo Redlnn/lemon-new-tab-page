@@ -133,6 +133,7 @@
   "dock": {
     "limitCount": "限制最大數量",
     "maxCount": "最大數量",
+    "showLaunchpad": "在 Dock 中啟用啟動台",
     "title": "Dock"
   },
   "other": {

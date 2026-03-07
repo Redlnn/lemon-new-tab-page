@@ -2,14 +2,9 @@
 import { OnLongPress } from '@vueuse/components'
 import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import { Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
-import { AddRound, BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
-import type { DropdownInstance } from 'element-plus'
+import { Apps24Regular } from '@vicons/fluent'
+import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
-// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
-import type { TopSites } from 'webextension-polyfill'
-
-import { browser } from '#imports'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -19,11 +14,12 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useFocusStore } from '@newtab/shared/store'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
+import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
+import type { CtxShortcutItem } from './composables/useShortcutContextMenu'
 import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
-import { pinShortcut, removeShortcut } from './utils/shortcut'
-import { blockSite } from './utils/topSites'
+import Launchpad from './Launchpad.vue'
 
 defineProps<{
   onOpenAddDialog?: () => void
@@ -48,24 +44,21 @@ const refreshDebounced = useDebounceFn(refresh, 100)
 const { topSites, shortcuts, mounted, topSitesNeedsReload } = useShortcutData(refreshDebounced)
 
 async function refresh() {
-  const _shortcuts = shortcutStore.items.slice()
+  shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.dock.enableTopSites) {
-    const topList = await useTopSitesMerge({
-      shortcuts: _shortcuts,
+    topSites.value = await useTopSitesMerge({
+      shortcuts: shortcuts.value,
       columns: 1,
       maxRows: 1,
       force: topSitesNeedsReload.value,
       noCap: true // 不截断，获取所有可用的 top sites
     })
-    mergedTop = topList
     topSitesNeedsReload.value = false
+  } else {
+    topSites.value = []
   }
-
-  shortcuts.value = _shortcuts
-  topSites.value = mergedTop
 
   // 首次刷新完成后设置 mounted 标志
   if (!mounted.value) {
@@ -105,14 +98,8 @@ watch(
 )
 
 const isHideDock = computed(() => {
-  if (!mounted.value) {
-    return '0'
-  }
-
-  if (!focusStore.isFocused) {
-    return '1'
-  }
-
+  if (!mounted.value) return '0'
+  if (!focusStore.isFocused) return '1'
   return settings.dock.showOnSearchFocus ? '1' : '0'
 })
 
@@ -131,10 +118,15 @@ const scalableDynEls = shallowRef<HTMLElement[]>([])
 // 静态部分（不在 v-for 内）：只在挂载时收集，不受 onBeforeUpdate 影响
 const postSepGapEl = ref<HTMLElement | null>(null)
 const addBtnEl = ref<HTMLElement | null>(null)
+// 启动台入口（静态）
+const launchpadBtnEl = ref<HTMLElement | null>(null)
+const showLaunchpad = ref(false)
 
 // 合并动态+静态，供 cacheNaturalCenters / updateScales 使用
 const scalableEls = computed(() => {
-  const els = [...scalableDynEls.value]
+  const els: HTMLElement[] = []
+  if (launchpadBtnEl.value) els.push(launchpadBtnEl.value)
+  els.push(...scalableDynEls.value)
   if (postSepGapEl.value) els.push(postSepGapEl.value)
   if (addBtnEl.value) els.push(addBtnEl.value)
   return els
@@ -173,12 +165,19 @@ function updateScales(clientX: number | null): void {
 
 let transitionTimer: ReturnType<typeof setTimeout> | null = null
 
+// 追踪当前交互是否来自触屏，用于混合设备（鼠标+触屏）的判断
+const isUsingTouch = ref(false)
+
+function onPointerEnter(e: PointerEvent): void {
+  isUsingTouch.value = e.pointerType !== 'mouse'
+}
+
 function applyTransition(duration: string): void {
   dockRef.value?.style.setProperty('--td', duration)
 }
 
 function onMouseEnter(e: MouseEvent): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -188,13 +187,13 @@ function onMouseEnter(e: MouseEvent): void {
 }
 
 function onMouseMove(e: MouseEvent): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   updateScales(e.clientX)
 }
 
 function onMouseLeave(): void {
-  if (settings.perf.disableDockScale) return
+  if (settings.perf.disableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -230,83 +229,18 @@ function setAddBtnRef(el: unknown): void {
   addBtnEl.value = el instanceof HTMLElement ? el : null
 }
 
+function setLaunchpadBtnRef(el: unknown): void {
+  launchpadBtnEl.value = el instanceof HTMLElement ? el : null
+}
+
 // ---- 右键上下文菜单 ----
-const ctxDropdownRef = ref<DropdownInstance>()
-const ctxPosition = shallowRef<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
-const ctxTriggerRef = ref({
-  getBoundingClientRect: () => ctxPosition.value
-})
-const ctxItem = shallowRef<{
-  url: string
-  title: string
-  isPinned: boolean
-  idx: number
-} | null>(null)
+const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctxMenuRef')
 
 function handleContextmenu(
   event: MouseEvent | TouchEvent | PointerEvent,
-  item: { url: string; title: string; isPinned: boolean; idx: number }
+  item: CtxShortcutItem
 ): void {
-  ctxItem.value = item
-
-  let clientX = 0
-  let clientY = 0
-
-  if ('clientX' in event) {
-    clientX = event.clientX
-    clientY = event.clientY
-  } else if ('touches' in event && event.touches[0]) {
-    clientX = event.touches[0].clientX
-    clientY = event.touches[0].clientY
-  }
-
-  ctxPosition.value = DOMRect.fromRect({ x: clientX, y: clientY })
-  ctxDropdownRef.value?.handleOpen()
-}
-
-function ctxOpenInNewTab(): void {
-  if (ctxItem.value) window.open(ctxItem.value.url, '_blank')
-}
-
-function ctxOpenInNewWindow(): void {
-  if (ctxItem.value) browser.windows.create({ url: ctxItem.value.url })
-}
-
-function ctxCopyLink(): void {
-  if (ctxItem.value) navigator.clipboard.writeText(ctxItem.value.url)
-}
-
-async function ctxCreateBookmark(): Promise<void> {
-  if (!ctxItem.value) return
-  const { url, title } = ctxItem.value
-  const res = await browser.bookmarks.search({ url })
-  if (res.length !== 0) {
-    ElMessage.info(t('shortcut.bookmark.existing'))
-    return
-  }
-  browser.bookmarks.create({ title, url }, (created) => {
-    if (!created.parentId) return
-    chrome.bookmarks.get(created.parentId, (nodes) => {
-      const folderTitle = nodes?.[0]?.title ?? null
-      ElMessage.success(t('shortcut.bookmark.success', { folder: folderTitle }))
-    })
-  })
-}
-
-async function ctxUnpin(): Promise<void> {
-  if (!ctxItem.value || !ctxItem.value.isPinned) return
-  await removeShortcut(ctxItem.value.idx, shortcutStore, refreshDebounced)
-}
-
-async function ctxPin(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await pinShortcut(shortcutStore, refreshDebounced, ctxItem.value.url, ctxItem.value.title)
-}
-
-async function ctxBlockSite(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await blockSite(ctxItem.value.url, refreshDebounced)
-  await refreshDebounced()
+  ctxMenuRef.value?.open(event, item)
 }
 </script>
 
@@ -321,11 +255,37 @@ async function ctxBlockSite(): Promise<void> {
       '--item-ratio': settings.dock.iconRatio * 100 + '%',
       '--gap-size': settings.dock.gap + 'px'
     }"
+    @pointerenter="onPointerEnter"
     @mouseenter="onMouseEnter"
     @mousemove="onMouseMove"
     @mouseleave="onMouseLeave"
     @contextmenu.stop.prevent
   >
+    <!--  -->
+    <!-- 启动台固定入口 -->
+    <template v-if="settings.dock.showLaunchpad">
+      <el-tooltip
+        :content="t('dock.launchpad.title')"
+        placement="top"
+        effect="light"
+        :hide-after="0"
+        :show-arrow="false"
+        :enterable="false"
+        :disabled="isUsingTouch"
+        transition="none"
+      >
+        <div
+          role="button"
+          tabindex="0"
+          class="dock-item"
+          :ref="setLaunchpadBtnRef"
+          @click="showLaunchpad = !showLaunchpad"
+        >
+          <apps24-regular />
+        </div>
+      </el-tooltip>
+      <div class="dock-gap" :ref="setScalableRef"></div>
+    </template>
     <template v-for="(item, idx) in visibleShortcuts" :key="`pin-${idx}`">
       <el-tooltip
         :content="item.title"
@@ -334,6 +294,7 @@ async function ctxBlockSite(): Promise<void> {
         :hide-after="0"
         :show-arrow="false"
         :enterable="false"
+        :disabled="isUsingTouch"
         transition="none"
       >
         <OnLongPress
@@ -348,13 +309,18 @@ async function ctxBlockSite(): Promise<void> {
                 url: item.url,
                 title: item.title,
                 isPinned: true,
-                idx
+                originalIndex: idx
               })
           "
           @trigger="
             (e: PointerEvent) => {
               if (isHasTouchDevice && isTouchEvent(e))
-                handleContextmenu(e, { url: item.url, title: item.title, isPinned: true, idx })
+                handleContextmenu(e, {
+                  url: item.url,
+                  title: item.title,
+                  isPinned: true,
+                  originalIndex: idx
+                })
             }
           "
         >
@@ -363,8 +329,7 @@ async function ctxBlockSite(): Promise<void> {
       </el-tooltip>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <!-- shortcuts 与 topSites 之间的分隔符，两者都有内容时才显示 -->
-    <template v-if="visibleShortcuts.length && visibleTopSites.length">
+    <template v-if="visibleShortcuts.length > 0 || settings.dock.showLaunchpad">
       <div class="dock-separator"></div>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
@@ -376,6 +341,7 @@ async function ctxBlockSite(): Promise<void> {
         :hide-after="0"
         :show-arrow="false"
         :enterable="false"
+        :disabled="isUsingTouch"
         transition="none"
       >
         <OnLongPress
@@ -390,7 +356,7 @@ async function ctxBlockSite(): Promise<void> {
                 url: item.url,
                 title: item.title || '',
                 isPinned: false,
-                idx: j
+                originalIndex: j
               })
           "
           @trigger="
@@ -400,7 +366,7 @@ async function ctxBlockSite(): Promise<void> {
                   url: item.url,
                   title: item.title || '',
                   isPinned: false,
-                  idx: j
+                  originalIndex: j
                 })
             }
           "
@@ -408,57 +374,26 @@ async function ctxBlockSite(): Promise<void> {
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div v-if="j !== visibleTopSites.length - 1" class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <div class="dock-separator"></div>
-    <div class="dock-gap" :ref="setPostSepGapRef"></div>
-    <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
-      <add-round />
-    </div>
+    <template v-if="!settings.dock.showLaunchpad">
+      <div class="dock-separator"></div>
+      <div class="dock-gap" :ref="setPostSepGapRef"></div>
+      <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
+        <add-round />
+      </div>
+    </template>
+
+    <!-- 启动台覆盖层 -->
+    <Launchpad v-model="showLaunchpad" :on-open-add-dialog="onOpenAddDialog" />
 
     <!-- 共享右键菜单 -->
-    <el-dropdown
-      ref="ctxDropdownRef"
-      :virtual-ref="ctxTriggerRef"
-      :show-arrow="false"
-      virtual-triggering
-      trigger="contextmenu"
+    <shortcut-context-menu
+      ref="ctxMenuRef"
       placement="top-start"
-      :popper-options="{
-        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-      }"
       :popper-class="popperClass"
-    >
-      <template #dropdown>
-        <el-dropdown-menu class="noselect">
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewTab">
-            <span>{{ t('settings:common.openInNewTab') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewWindow">
-            <span>{{ t('settings:common.openInNewWindow') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="ContentCopyRound" @click="ctxCopyLink">
-            <span>{{ t('settings:common.copyLink') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="Star12Regular" @click="ctxCreateBookmark">
-            <span>{{ t('shortcut.bookmark.add') }}</span>
-          </el-dropdown-item>
-          <template v-if="ctxItem?.isPinned">
-            <el-dropdown-item :icon="PinOff16Regular" divided @click="ctxUnpin">
-              <span>{{ t('shortcut.unpin') }}</span>
-            </el-dropdown-item>
-          </template>
-          <template v-else>
-            <el-dropdown-item :icon="Pin12Regular" divided @click="ctxPin">
-              <span>{{ t('shortcut.pin') }}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :icon="BlockRound" @click="ctxBlockSite">
-              <span>{{ t('shortcut.hide') }}</span>
-            </el-dropdown-item>
-          </template>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+      :refresh-fn="refreshDebounced"
+    />
   </div>
 </template>
 
@@ -469,6 +404,7 @@ async function ctxBlockSite(): Promise<void> {
   position: fixed;
   bottom: 20px;
   left: 50%;
+  z-index: 2;
   display: flex;
   align-items: flex-end;
   max-width: 93%;
@@ -524,6 +460,11 @@ async function ctxBlockSite(): Promise<void> {
     width: var(--item-ratio);
     height: var(--item-ratio);
     border-radius: 6px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--el-color-primary);
+    outline-offset: -2px;
   }
 }
 
