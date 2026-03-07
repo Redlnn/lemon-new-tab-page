@@ -274,7 +274,13 @@ function handleContextmenu(
         :disabled="isUsingTouch"
         transition="none"
       >
-        <div class="dock-item" :ref="setLaunchpadBtnRef" @click="showLaunchpad = !showLaunchpad">
+        <div
+          role="button"
+          tabindex="0"
+          class="dock-item"
+          :ref="setLaunchpadBtnRef"
+          @click="showLaunchpad = !showLaunchpad"
+        >
           <apps24-regular />
         </div>
       </el-tooltip>
@@ -454,6 +460,11 @@ function handleContextmenu(
     width: var(--item-ratio);
     height: var(--item-ratio);
     border-radius: 6px;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--el-color-primary);
+    outline-offset: -2px;
   }
 }
 
