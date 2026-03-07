@@ -30,13 +30,13 @@ function useBackgroundSwitcher() {
   const isDarkBg = ref(false)
 
   // 存储上传后的元信息
-  const metaLight = ref<{
+  const metaLight = shallowRef<{
     width?: number
     height?: number
     duration?: number
     size?: number
   } | null>(null)
-  const metaDark = ref<{
+  const metaDark = shallowRef<{
     width?: number
     height?: number
     duration?: number

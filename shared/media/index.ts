@@ -40,6 +40,7 @@ export function getFaviconURLChrome(url: string, size = '128') {
 
 export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
   const iconUrl = ref('/favicon.png')
+  let img: HTMLImageElement | null = null
 
   const resolve = (u: string | null | undefined) => {
     if (!u) {
@@ -54,7 +55,12 @@ export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
 
     const primary = new URL('/favicon.ico', u).toString()
 
-    const img = new Image()
+    if (img) {
+      img.onload = null
+      img.onerror = null
+    }
+
+    img = new Image()
     img.onload = () => (iconUrl.value = primary)
     img.onerror = () => (iconUrl.value = '/favicon.png')
     img.src = primary
@@ -64,11 +70,19 @@ export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
   const initial = unref(url)
   resolve(initial)
 
-  if (typeof url === 'object' && 'value' in url) {
-    watch(url as Ref<string | null>, (v) => {
+  if (isRef(url)) {
+    watch(url, (v) => {
       resolve(v)
     })
   }
+
+  onUnmounted(() => {
+    if (img) {
+      img.onload = null
+      img.onerror = null
+      img = null
+    }
+  })
 
   return iconUrl
 }

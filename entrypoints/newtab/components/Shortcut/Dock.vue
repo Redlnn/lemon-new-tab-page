@@ -232,11 +232,11 @@ function setAddBtnRef(el: unknown): void {
 
 // ---- 右键上下文菜单 ----
 const ctxDropdownRef = ref<DropdownInstance>()
-const ctxPosition = ref<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
+const ctxPosition = shallowRef<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
 const ctxTriggerRef = ref({
   getBoundingClientRect: () => ctxPosition.value
 })
-const ctxItem = ref<{
+const ctxItem = shallowRef<{
   url: string
   title: string
   isPinned: boolean

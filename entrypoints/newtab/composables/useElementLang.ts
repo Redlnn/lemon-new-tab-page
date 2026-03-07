@@ -21,7 +21,7 @@ async function loadElementLocale(): Promise<Language> {
   return (await import('element-plus/es/locale/lang/zh-cn.mjs')).default
 }
 
-const elLocale = ref<Language>()
+const elLocale = shallowRef<Language>()
 
 export function useElementLang() {
   onBeforeMount(async () => {

@@ -1,6 +1,6 @@
 import { searchHistoriesStorage } from '@newtab/shared/storages/searchHistoriesStorage'
 
-const historiesRef: Ref<string[]> = ref([])
+const historiesRef: Ref<string[]> = shallowRef([])
 let loaded = false
 let loadingPromise: Promise<void> | null = null
 let watching = false

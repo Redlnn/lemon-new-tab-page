@@ -46,6 +46,15 @@ const switchStore = useBgSwtichStore()
 const imageRef = useTemplateRef('imageRef')
 const videoRef = useTemplateRef('videoRef')
 const bgURL = ref<string>('')
+const lastBlobUrl = ref<string>('')
+
+function revokeLastBlobUrl() {
+  if (lastBlobUrl.value) {
+    URL.revokeObjectURL(lastBlobUrl.value)
+    lastBlobUrl.value = ''
+  }
+}
+
 const bgOpacityDuration = ref(settings.background.fastAnimation ? '0.3s' : '1.25s')
 
 function shortenBgFadeDuration() {
@@ -146,7 +155,10 @@ const bgTypeProviders: Record<
     }
 
     if (isCacheValid) {
-      return URL.createObjectURL(cached!.blob)
+      revokeLastBlobUrl()
+      const url = URL.createObjectURL(cached!.blob)
+      lastBlobUrl.value = url
+      return url
     }
 
     let blob: Blob | null = null
@@ -162,9 +174,12 @@ const bgTypeProviders: Record<
         title: i18next.t('newtab:notification.onlineWallpaperCache.error.title'),
         message: i18next.t('newtab:notification.onlineWallpaperCache.error.message', { error: e })
       })
-      if (cached)
-        return URL.createObjectURL(cached.blob) // 如果下载失败，不管缓存是否过期都继续使用缓存
-      else return rawUrl // 假如开了莫奈，这里会有未定义行为，也许在应用莫奈的时候会出错
+      if (cached) {
+        revokeLastBlobUrl()
+        const url = URL.createObjectURL(cached.blob) // 如果下载失败，不管缓存是否过期都继续使用缓存
+        lastBlobUrl.value = url
+        return url
+      } else return rawUrl // 假如开了莫奈，这里会有未定义行为，也许在应用莫奈的时候会出错
     }
 
     const newCache = { blob, timestamp: now }
@@ -174,7 +189,10 @@ const bgTypeProviders: Record<
       await cacheOnlineWallpaper(rawUrl, newCache)
     }
 
-    return URL.createObjectURL(blob)
+    revokeLastBlobUrl()
+    const url = URL.createObjectURL(blob)
+    lastBlobUrl.value = url
+    return url
   },
   [BgType.None]: () => Promise.resolve('')
 }
@@ -205,7 +223,7 @@ watch(
     if (!isVideo) {
       // 非视频壁纸，确保视频被暂停
       const vid = videoRef.value
-      if (vid) {
+      if (vid && !vid.paused) {
         try {
           vid.pause()
         } catch {}
@@ -344,6 +362,8 @@ useEventListener('pageshow', async (e) => {
 onUnmounted(() => {
   stopLocalBgWatch?.()
   stopOnlineBgWatch?.()
+  // 卸载时释放 Blob URL
+  revokeLastBlobUrl()
 })
 
 async function onImgLoaded() {

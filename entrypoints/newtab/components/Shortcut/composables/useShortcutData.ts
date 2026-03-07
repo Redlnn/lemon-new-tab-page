@@ -15,8 +15,8 @@ import { invalidateTopSitesCache } from '../utils/topSites'
 export function useShortcutData(refreshDebounced: () => void) {
   const shortcutStore = useShortcutStore()
 
-  const topSites = ref<TopSites.MostVisitedURL[]>([])
-  const shortcuts = ref<{ url: string; title: string; favicon?: string }[]>([])
+  const topSites = shallowRef<TopSites.MostVisitedURL[]>([])
+  const shortcuts = shallowRef<{ url: string; title: string; favicon?: string }[]>([])
   const mounted = ref(false)
   const topSitesNeedsReload = ref(true)
 

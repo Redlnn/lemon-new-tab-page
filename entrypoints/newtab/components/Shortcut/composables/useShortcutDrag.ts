@@ -4,7 +4,7 @@ import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 export function useShortcutDrag(
   containerRef: Ref<HTMLElement | undefined | null>,
-  shortcuts: Ref<{ url: string; title: string; favicon?: string }[]>,
+  shortcuts: ShallowRef<{ url: string; title: string; favicon?: string }[]>,
   refresh: () => void
 ) {
   const shortcutStore = useShortcutStore()

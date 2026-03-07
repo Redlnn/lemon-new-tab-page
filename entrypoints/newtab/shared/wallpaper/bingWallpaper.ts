@@ -49,7 +49,7 @@ function formatUTCCompact(date: Date): number {
 }
 
 class BingWallpaperURLGetter {
-  public info: Ref<BingWallpaperImage> = ref({
+  public info: ShallowRef<BingWallpaperImage> = shallowRef({
     startdate: 0,
     fullstartdate: 0,
     enddate: 0,
@@ -115,10 +115,13 @@ class BingWallpaperURLGetter {
 
     if (url) {
       const cache = await bingInfoCache.getValue()
-      this.info.value.url = cache.url
-      this.info.value.copyright = cache.copyright
-      this.info.value.copyrightlink = cache.copyrightlink
-      this.info.value.title = cache.title
+      this.info.value = {
+        ...this.info.value,
+        url: cache.url,
+        copyright: cache.copyright,
+        copyrightlink: cache.copyrightlink,
+        title: cache.title
+      }
       this.updateUHDUrl(cache.url)
       return url
     }
@@ -177,8 +180,11 @@ class BingWallpaperURLGetter {
       const cache = await bingInfoCache.getValue()
       if (cache.url.length === 0) {
         // 如果没有缓存
-        this.info.value.copyright = i18next.t('newtab:notification.bingWallpaper.error.message')
-        this.info.value.title = i18next.t('newtab:notification.bingWallpaper.error.title')
+        this.info.value = {
+          ...this.info.value,
+          copyright: i18next.t('newtab:notification.bingWallpaper.error.message'),
+          title: i18next.t('newtab:notification.bingWallpaper.error.title')
+        }
       }
       return
     }

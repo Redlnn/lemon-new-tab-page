@@ -16,3 +16,27 @@ export function shouldShowChangelog(previousVersion: string, nextVersion: string
   if (previousMajorMinor[0] > nextMajorMinor[0]) return false
   return previousMajorMinor[1] < nextMajorMinor[1]
 }
+
+/**
+ * 校验 URL 是否合法
+ */
+export function isValidUrl(url: string) {
+  try {
+    const urlToCheck = url.includes('://') ? url : `http://${url}`
+    new URL(urlToCheck)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * 格式化 URL，如果没有协议则自动补全 https://
+ */
+export function formatUrl(url: string) {
+  let finalUrl = url.trim()
+  if (!finalUrl.includes('://')) {
+    finalUrl = `https://${finalUrl}`
+  }
+  return finalUrl
+}

@@ -26,7 +26,7 @@ const clearSearchHistory = useTemplateRef('clearSearchHistory')
 const isShowSearchHistories = ref(false)
 const currentActiveSuggest = ref<null | number>(null)
 const searchSuggestionArea = useTemplateRef('searchSuggestionArea')
-const searchSuggestions = ref<string[]>([])
+const searchSuggestions = shallowRef<string[]>([])
 
 const props = defineProps<{
   searchText: string

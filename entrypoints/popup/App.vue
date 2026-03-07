@@ -24,7 +24,7 @@ function normalizeUrlForCompare(url: string): string {
   return normalized
 }
 
-const currentTab = ref<{
+const currentTab = shallowRef<{
   url: string
   title: string
   favIconUrl?: string

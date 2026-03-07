@@ -197,9 +197,9 @@ const popperClass = perf('shortcut__menu-popper')
 const navBtnPerfClass = perf('shortcut__nav-btn')
 
 const ctxDropdownRef = ref<DropdownInstance>()
-const ctxPosition = ref<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
+const ctxPosition = shallowRef<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
 const ctxTriggerRef = ref({ getBoundingClientRect: () => ctxPosition.value })
-const ctxItem = ref<{
+const ctxItem = shallowRef<{
   url: string
   title: string
   isPinned: boolean

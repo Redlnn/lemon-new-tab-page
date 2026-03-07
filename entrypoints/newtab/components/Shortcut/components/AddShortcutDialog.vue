@@ -3,6 +3,7 @@ import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
+import { formatUrl, isValidUrl } from '@/entrypoints/newtab/shared/utils'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { useFaviconUpload } from '../composables/useFaviconUpload'
@@ -56,29 +57,14 @@ function openEditDialog(index: number) {
   showDialog.value = true
 }
 
-function isValidUrl(url: string) {
-  try {
-    const urlToCheck = url.includes('://') ? url : `http://${url}`
-    new URL(urlToCheck)
-    return true
-  } catch {
-    return false
-  }
-}
-
 async function submit() {
   if (!isValidUrl(data.url)) {
     ElMessage.error(t('shortcut.addDialog.invalidUrlError'))
     return
   }
 
-  let finalUrl = data.url.trim()
-  if (!finalUrl.includes('://')) {
-    finalUrl = `https://${finalUrl}`
-  }
-
   const shortcut = {
-    url: finalUrl,
+    url: formatUrl(data.url),
     title: data.title.trim(),
     ...(!data.favicon ? {} : { favicon: data.favicon })
   }

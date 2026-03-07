@@ -3,6 +3,8 @@ import type { FormInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { browser, type Browser } from 'wxt/browser'
 
+import { formatUrl, isValidUrl } from '@/entrypoints/newtab/shared/utils'
+
 type BookmarkTreeNode = Browser.bookmarks.BookmarkTreeNode
 
 const { t } = useTranslation()
@@ -38,16 +40,6 @@ function openEditDialog(node: BookmarkTreeNode) {
   showDialog.value = true
 }
 
-function isValidUrl(url: string) {
-  try {
-    const urlToCheck = url.includes('://') ? url : `http://${url}`
-    new URL(urlToCheck)
-    return true
-  } catch {
-    return false
-  }
-}
-
 async function submit() {
   if (data.isFolder) {
     await browser.bookmarks.update(data.id, { title: data.title.trim() })
@@ -57,14 +49,8 @@ async function submit() {
       return
     }
 
-    // 如果没有协议,自动添加https://
-    let finalUrl = data.url.trim()
-    if (!finalUrl.includes('://')) {
-      finalUrl = `https://${finalUrl}`
-    }
-
     const bookmark = {
-      url: finalUrl,
+      url: formatUrl(data.url),
       title: data.title.trim()
     }
     await browser.bookmarks.update(data.id, bookmark)
