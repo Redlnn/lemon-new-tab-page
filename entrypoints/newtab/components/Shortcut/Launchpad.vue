@@ -2,6 +2,7 @@
 import { OnLongPress } from '@vueuse/components'
 import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
 
+import { Pin12Regular } from '@vicons/fluent'
 import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 import { useDraggable } from 'vue-draggable-plus'
@@ -303,10 +304,10 @@ useDraggable(gridRef, shortcuts, {
                 "
               >
                 <div class="launchpad-item__icon">
-                  <img :src="item.favicon || getFaviconURL(item.url).value" alt="" />
+                  <img :src="item.favicon || getFaviconURL(item.url).value" :alt="item.title" />
                 </div>
                 <el-text :line-clamp="1" truncated class="launchpad-item__label">
-                  {{ item.title }}
+                  <el-icon v-if="item.isPinned"><pin12-regular /></el-icon> {{ item.title }}
                 </el-text>
               </OnLongPress>
               <!-- 无结果 -->
