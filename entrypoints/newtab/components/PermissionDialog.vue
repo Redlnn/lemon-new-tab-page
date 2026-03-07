@@ -5,12 +5,10 @@ import { browser } from 'wxt/browser'
 import { PermissionResult } from '@newtab/composables/usePermission'
 
 const props = defineProps<{
-  modelValue: boolean
   hostname: string
 }>()
-
+const model = defineModel<boolean>({ required: true })
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
   result: [result: PermissionResult]
 }>()
 
@@ -45,11 +43,10 @@ function onDeny() {
 
 <template>
   <el-dialog
-    :model-value="modelValue"
+    v-model="model"
     :title="t('background.permission.request.title')"
     width="400px"
     class="permission-dialog base-dialog--blur base-dialog--opacity noselect"
-    @update:model-value="(val: boolean) => emit('update:modelValue', val)"
   >
     <div class="permission-dialog-content">
       <p>{{ t('background.permission.request.message') }}</p>
