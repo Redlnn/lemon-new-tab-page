@@ -8,7 +8,6 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 
 interface Props {
   title?: string
-  modelValue: boolean
   containerClass?: string
   acrylic?: boolean
   opacity?: boolean
@@ -20,8 +19,8 @@ interface Props {
 }
 
 const props = defineProps<Props>()
+const model = defineModel<boolean>({ required: true })
 const emit = defineEmits<{
-  'update:modelValue': [value: boolean]
   open: []
   close: []
   closed: []
@@ -37,7 +36,7 @@ const { width: windowWidth } = useWindowSize({ type: 'visual' })
 
 function onClose() {
   emit('close')
-  emit('update:modelValue', false)
+  model.value = false
 }
 
 function onClosed() {
@@ -73,7 +72,7 @@ const dialogId = computed(() => {
 <template>
   <el-dialog
     ref="dialogRef"
-    :model-value="modelValue"
+    v-model="model"
     :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
     :class="[containerClass, dialogPerfClass]"
     :style="style"
@@ -83,7 +82,6 @@ const dialogId = computed(() => {
     :append-to-body="appendToBody"
     :destroy-on-close="destroyOnClose"
     :header-class="headerClass"
-    @update:model-value="(val: boolean) => emit('update:modelValue', val)"
     @open="onOpen"
     @close="onClose"
     @closed="onClosed"
