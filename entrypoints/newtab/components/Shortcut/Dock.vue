@@ -2,12 +2,9 @@
 import { OnLongPress } from '@vueuse/components'
 import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import { Apps24Regular, Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
-import { AddRound, BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
-import type { DropdownInstance } from 'element-plus'
+import { Apps24Regular } from '@vicons/fluent'
+import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
-
-import { browser } from '#imports'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -17,12 +14,12 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useFocusStore } from '@newtab/shared/store'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
+import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
+import type { CtxShortcutItem } from './composables/useShortcutContextMenu'
 import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 import Launchpad from './Launchpad.vue'
-import { pinShortcut, removeShortcut } from './utils/shortcut'
-import { blockSite } from './utils/topSites'
 
 defineProps<{
   onOpenAddDialog?: () => void
@@ -101,14 +98,8 @@ watch(
 )
 
 const isHideDock = computed(() => {
-  if (!mounted.value) {
-    return '0'
-  }
-
-  if (!focusStore.isFocused) {
-    return '1'
-  }
-
+  if (!mounted.value) return '0'
+  if (!focusStore.isFocused) return '1'
   return settings.dock.showOnSearchFocus ? '1' : '0'
 })
 
@@ -243,82 +234,13 @@ function setLaunchpadBtnRef(el: unknown): void {
 }
 
 // ---- 右键上下文菜单 ----
-const ctxDropdownRef = ref<DropdownInstance>()
-const ctxPosition = shallowRef<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
-const ctxTriggerRef = ref({
-  getBoundingClientRect: () => ctxPosition.value
-})
-const ctxItem = shallowRef<{
-  url: string
-  title: string
-  isPinned: boolean
-  idx: number
-} | null>(null)
+const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctxMenuRef')
 
 function handleContextmenu(
   event: MouseEvent | TouchEvent | PointerEvent,
-  item: { url: string; title: string; isPinned: boolean; idx: number }
+  item: CtxShortcutItem
 ): void {
-  ctxItem.value = item
-
-  let clientX = 0
-  let clientY = 0
-
-  if ('clientX' in event) {
-    clientX = event.clientX
-    clientY = event.clientY
-  } else if ('touches' in event && event.touches[0]) {
-    clientX = event.touches[0].clientX
-    clientY = event.touches[0].clientY
-  }
-
-  ctxPosition.value = DOMRect.fromRect({ x: clientX, y: clientY })
-  ctxDropdownRef.value?.handleOpen()
-}
-
-function ctxOpenInNewTab(): void {
-  if (ctxItem.value) window.open(ctxItem.value.url, '_blank')
-}
-
-function ctxOpenInNewWindow(): void {
-  if (ctxItem.value) browser.windows.create({ url: ctxItem.value.url })
-}
-
-function ctxCopyLink(): void {
-  if (ctxItem.value) navigator.clipboard.writeText(ctxItem.value.url)
-}
-
-async function ctxCreateBookmark(): Promise<void> {
-  if (!ctxItem.value) return
-  const { url, title } = ctxItem.value
-  const res = await browser.bookmarks.search({ url })
-  if (res.length !== 0) {
-    ElMessage.info(t('shortcut.bookmark.existing'))
-    return
-  }
-  browser.bookmarks.create({ title, url }, (created) => {
-    if (!created.parentId) return
-    chrome.bookmarks.get(created.parentId, (nodes) => {
-      const folderTitle = nodes?.[0]?.title ?? null
-      ElMessage.success(t('shortcut.bookmark.success', { folder: folderTitle }))
-    })
-  })
-}
-
-async function ctxUnpin(): Promise<void> {
-  if (!ctxItem.value || !ctxItem.value.isPinned) return
-  await removeShortcut(ctxItem.value.idx, shortcutStore, refreshDebounced)
-}
-
-async function ctxPin(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await pinShortcut(shortcutStore, refreshDebounced, ctxItem.value.url, ctxItem.value.title)
-}
-
-async function ctxBlockSite(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await blockSite(ctxItem.value.url, refreshDebounced)
-  await refreshDebounced()
+  ctxMenuRef.value?.open(event, item)
 }
 </script>
 
@@ -381,13 +303,18 @@ async function ctxBlockSite(): Promise<void> {
                 url: item.url,
                 title: item.title,
                 isPinned: true,
-                idx
+                originalIndex: idx
               })
           "
           @trigger="
             (e: PointerEvent) => {
               if (isHasTouchDevice && isTouchEvent(e))
-                handleContextmenu(e, { url: item.url, title: item.title, isPinned: true, idx })
+                handleContextmenu(e, {
+                  url: item.url,
+                  title: item.title,
+                  isPinned: true,
+                  originalIndex: idx
+                })
             }
           "
         >
@@ -423,7 +350,7 @@ async function ctxBlockSite(): Promise<void> {
                 url: item.url,
                 title: item.title || '',
                 isPinned: false,
-                idx: j
+                originalIndex: j
               })
           "
           @trigger="
@@ -433,7 +360,7 @@ async function ctxBlockSite(): Promise<void> {
                   url: item.url,
                   title: item.title || '',
                   isPinned: false,
-                  idx: j
+                  originalIndex: j
                 })
             }
           "
@@ -441,7 +368,7 @@ async function ctxBlockSite(): Promise<void> {
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div v-if="j !== visibleTopSites.length - 1" class="dock-gap" :ref="setScalableRef"></div>
     </template>
     <template v-if="!settings.dock.showLaunchpad">
       <div class="dock-separator"></div>
@@ -455,48 +382,12 @@ async function ctxBlockSite(): Promise<void> {
     <Launchpad v-model="showLaunchpad" :on-open-add-dialog="onOpenAddDialog" />
 
     <!-- 共享右键菜单 -->
-    <el-dropdown
-      ref="ctxDropdownRef"
-      :virtual-ref="ctxTriggerRef"
-      :show-arrow="false"
-      virtual-triggering
-      trigger="contextmenu"
+    <shortcut-context-menu
+      ref="ctxMenuRef"
       placement="top-start"
-      :popper-options="{
-        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-      }"
       :popper-class="popperClass"
-    >
-      <template #dropdown>
-        <el-dropdown-menu class="noselect">
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewTab">
-            <span>{{ t('settings:common.openInNewTab') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewWindow">
-            <span>{{ t('settings:common.openInNewWindow') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="ContentCopyRound" @click="ctxCopyLink">
-            <span>{{ t('settings:common.copyLink') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="Star12Regular" @click="ctxCreateBookmark">
-            <span>{{ t('shortcut.bookmark.add') }}</span>
-          </el-dropdown-item>
-          <template v-if="ctxItem?.isPinned">
-            <el-dropdown-item :icon="PinOff16Regular" divided @click="ctxUnpin">
-              <span>{{ t('shortcut.unpin') }}</span>
-            </el-dropdown-item>
-          </template>
-          <template v-else>
-            <el-dropdown-item :icon="Pin12Regular" divided @click="ctxPin">
-              <span>{{ t('shortcut.pin') }}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :icon="BlockRound" @click="ctxBlockSite">
-              <span>{{ t('shortcut.hide') }}</span>
-            </el-dropdown-item>
-          </template>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+      :refresh-fn="refreshDebounced"
+    />
   </div>
 </template>
 

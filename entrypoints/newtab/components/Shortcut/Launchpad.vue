@@ -1,13 +1,19 @@
 <script setup lang="ts">
+import { OnLongPress } from '@vueuse/components'
 import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
 
 import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
+import { useDraggable } from 'vue-draggable-plus'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
-import { useShortcutStore } from '@/shared/shortcut'
+import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
+import { usePerfClasses } from '@newtab/composables/usePerfClasses'
+import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
+
+import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
 import { useShortcutData } from './composables/useShortcutData'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 
@@ -19,6 +25,7 @@ const model = defineModel<boolean>({ required: true })
 
 const props = defineProps<{
   onOpenAddDialog?: () => void
+  onOpenEditDialog?: (index: number) => void
 }>()
 
 const { t } = useTranslation()
@@ -50,7 +57,28 @@ const ROWS = computed(() => {
 
 const pageSize = computed(() => COLS.value * ROWS.value)
 
-const allItems = computed(() => [...shortcuts.value, ...topSites.value])
+const allItems = computed(() => {
+  const items: {
+    url: string
+    title: string
+    favicon?: string
+    isPinned: boolean
+    originalIndex: number
+  }[] = []
+  shortcuts.value.forEach((s, i) => {
+    items.push({ ...s, isPinned: true, originalIndex: i })
+  })
+  topSites.value.forEach((s, i) => {
+    items.push({
+      url: s.url,
+      title: s.title || '',
+      favicon: s.favicon,
+      isPinned: false,
+      originalIndex: i
+    })
+  })
+  return items
+})
 
 const isSearching = computed(() => query.value.trim().length > 0)
 
@@ -114,6 +142,11 @@ function nextPage() {
 
 // ---- 关闭 ----
 function close() {
+  if (ctxMenuOpen.value) {
+    ctxMenuRef.value?.close()
+    ctxMenuOpen.value = false
+    return
+  }
   model.value = false
 }
 
@@ -176,6 +209,44 @@ watch(pageCount, (count) => {
 function openItem(url: string) {
   window.open(url, settings.dock.openInNewTab ? '_blank' : '_self')
 }
+
+// ---- 右键菜单 ----
+const perf = usePerfClasses(() => ({
+  transparentOff: settings.perf.disableShortcutTransparent,
+  blurOff: settings.perf.disableShortcutBlur
+}))
+
+const popperClass = perf('shortcut__menu-popper')
+
+const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctxMenuRef')
+const ctxMenuOpen = ref(false)
+
+function openCtxMenu(
+  event: MouseEvent | PointerEvent,
+  item: { url: string; title: string; isPinned: boolean; originalIndex: number }
+): void {
+  ctxMenuRef.value?.open(event, item)
+  ctxMenuOpen.value = true
+}
+
+// ---- 拖动排序（仅置顶项目）----
+const gridRef = useTemplateRef<HTMLElement>('gridRef')
+
+useDraggable(gridRef, shortcuts, {
+  animation: 150,
+  delayOnTouchOnly: true,
+  touchStartThreshold: 10,
+  delay: 100,
+  handle: '.launchpad-item--pined',
+  onStart() {
+    ctxMenuRef.value?.close()
+  },
+  onUpdate() {
+    shortcutStore.items = shortcuts.value
+    saveShortcut(shortcutStore.$state)
+    refreshDebounced()
+  }
+})
 </script>
 
 <template>
@@ -212,15 +283,24 @@ function openItem(url: string) {
           >
             <div
               :key="isSearching ? 'search' : page"
+              ref="gridRef"
               class="launchpad-grid"
               :style="{ '--lp-cols': COLS }"
               @click.self="close"
             >
-              <div
+              <OnLongPress
                 v-for="item in currentItems"
                 :key="item.url"
+                as="div"
                 class="launchpad-item"
+                :class="{ 'launchpad-item--pined': item.isPinned }"
                 @click="openItem(item.url)"
+                @contextmenu.prevent="openCtxMenu($event, item)"
+                @trigger="
+                  (e: PointerEvent) => {
+                    if (isHasTouchDevice && isTouchEvent(e)) openCtxMenu(e, item)
+                  }
+                "
               >
                 <div class="launchpad-item__icon">
                   <img :src="item.favicon || getFaviconURL(item.url).value" alt="" />
@@ -228,7 +308,7 @@ function openItem(url: string) {
                 <el-text :line-clamp="1" truncated class="launchpad-item__label">
                   {{ item.title }}
                 </el-text>
-              </div>
+              </OnLongPress>
               <!-- 无结果 -->
               <div v-if="currentItems.length === 0 && isSearching" class="launchpad-empty">
                 {{ t('dock.launchpad.empty') }}
@@ -274,6 +354,16 @@ function openItem(url: string) {
         </div>
       </el-overlay>
     </Transition>
+
+    <!-- 右键菜单 -->
+    <shortcut-context-menu
+      ref="ctxMenuRef"
+      :refresh-fn="refreshDebounced"
+      :on-open-edit-dialog="props.onOpenEditDialog"
+      :popper-class="popperClass"
+      show-edit
+      @visible-change="(v: boolean) => (ctxMenuOpen = v)"
+    />
   </Teleport>
 </template>
 
@@ -342,6 +432,14 @@ function openItem(url: string) {
   transition:
     background-color 0.15s ease,
     transform 0.15s ease;
+
+  &--pined {
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
 
   &:hover:not(:has(.launchpad-item__icon--add)),
   &:focus-visible {
