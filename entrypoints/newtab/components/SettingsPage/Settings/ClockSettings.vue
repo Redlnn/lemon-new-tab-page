@@ -97,7 +97,7 @@ function handleNewStyleChange(val: string | number | boolean) {
         <el-slider
           v-model="settings.clock.size"
           :min="30"
-          :max="100"
+          :max="200"
           :show-tooltip="false"
           show-input
         />
