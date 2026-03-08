@@ -10,9 +10,9 @@ import {
   useNamespace,
   useSameTarget
 } from 'element-plus'
-import { dialogContentPropsDefaults } from 'element-plus/es/components/dialog/src/dialog-content'
-import ElFocusTrap from 'element-plus/es/components/focus-trap/src/focus-trap.vue'
-import ElTeleport from 'element-plus/es/components/teleport/src/teleport.vue'
+import { dialogPropsDefaults } from 'element-plus/es/components/dialog/src/dialog'
+import ElFocusTrap from 'element-plus/es/components/focus-trap/src/focus-trap.mjs'
+import ElTeleport from 'element-plus/es/components/teleport/src/teleport2.mjs'
 
 import SettingsDialogContent from './SettingsDialogContent.vue'
 
@@ -21,16 +21,7 @@ type DialogProps_ = DialogProps & {
 }
 
 const props = withDefaults(defineProps<DialogProps_>(), {
-  ...dialogContentPropsDefaults,
-  appendTo: 'body',
-  closeOnClickModal: true,
-  closeOnPressEscape: true,
-  lockScroll: true,
-  modal: true,
-  openDelay: 0,
-  closeDelay: 0,
-  headerAriaLevel: '2',
-  transition: undefined,
+  ...dialogPropsDefaults,
   class: ''
 })
 defineEmits(dialogEmits)
@@ -38,7 +29,7 @@ defineEmits(dialogEmits)
 const ns = useNamespace('dialog')
 const dialogRef = ref<HTMLElement>()
 const headerRef = ref<HTMLElement>()
-const dialogContentRef = ref<typeof SettingsDialogContent>()
+const dialogContentRef = ref<InstanceType<typeof SettingsDialogContent>>()
 
 const {
   visible,

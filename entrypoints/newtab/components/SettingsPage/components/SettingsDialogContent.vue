@@ -1,10 +1,11 @@
+<!-- https://github.com/element-plus/element-plus/blob/dev/packages/components/dialog/src/dialog-content.ts -->
 <script lang="ts" setup>
 import { dialogInjectionKey, useDraggable, useLocale } from 'element-plus'
+import { type DialogContentProps } from 'element-plus/es/components/dialog/src/dialog-content'
 import {
   dialogContentEmits,
-  type DialogContentProps,
   dialogContentPropsDefaults
-} from 'element-plus/es/components/dialog/src/dialog-content'
+} from 'element-plus/es/components/dialog/src/dialog-content.mjs'
 import { FOCUS_TRAP_INJECTION_KEY } from 'element-plus/es/components/focus-trap/src/tokens'
 import { composeRefs } from 'element-plus/es/utils/vue/refs'
 
@@ -65,6 +66,9 @@ defineExpose({
         </button>
       </header>
       <slot></slot>
+      <footer v-if="$slots.footer" :class="[ns.e('footer'), footerClass]">
+        <slot name="footer"></slot>
+      </footer>
     </div>
   </div>
 </template>
