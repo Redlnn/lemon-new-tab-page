@@ -163,7 +163,7 @@ watch(
     append-to-body
     resizable
     @resize="onDrawerResize"
-    lock-scroll
+    :lock-scroll="false"
     close-on-click-modal
     close-on-press-escape
     destroy-on-close

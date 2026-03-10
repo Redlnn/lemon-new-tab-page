@@ -77,7 +77,7 @@ const dialogId = computed(() => {
     :class="[containerClass, dialogPerfClass]"
     :style="style"
     :show-close="false"
-    lock-scroll
+    :lock-scroll="false"
     draggable
     :append-to-body="appendToBody"
     :destroy-on-close="destroyOnClose"
