@@ -11,7 +11,11 @@ import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 
-import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
+import {
+  OPEN_BACKGROUND_PREFERENCE,
+  OPEN_SEARCH_ENGINE_PREFERENCE,
+  OPEN_SETTINGS
+} from '@newtab/shared/keys'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
@@ -150,6 +154,7 @@ function openBookmarkSidebar() {
   }
 }
 
+provide(OPEN_SETTINGS, () => SettingsPageRef.value?.toggle())
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 
@@ -196,14 +201,15 @@ const actionClass = computed(() => {
       <search-box v-if="settings.search.enabled" @contextmenu.stop />
       <shortcut
         v-if="settings.shortcut.enabled"
-        :on-open-add-dialog="() => AddShortcutDialogRef?.openAddDialog()"
-        :on-open-edit-dialog="(i: number) => AddShortcutDialogRef?.openEditDialog(i)"
+        :on-open-add-dialog="AddShortcutDialogRef?.openAddDialog"
+        :on-open-edit-dialog="AddShortcutDialogRef?.openEditDialog"
         @contextmenu.stop
       />
       <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
       <dock
         v-if="settings.dock.enabled"
-        :on-open-add-dialog="() => AddShortcutDialogRef?.openAddDialog()"
+        :on-open-add-dialog="AddShortcutDialogRef?.openAddDialog"
+        :on-open-edit-dialog="AddShortcutDialogRef?.openEditDialog"
       />
     </main>
     <background ref="BackgroundRef" />

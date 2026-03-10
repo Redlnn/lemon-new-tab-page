@@ -27,12 +27,10 @@ const shortcutStore = useShortcutStore()
 
 const { height } = useWindowSize({ type: 'visual' })
 
-const props = defineProps<{
+defineProps<{
   onOpenAddDialog?: () => void
   onOpenEditDialog?: (index: number) => void
 }>()
-
-const { onOpenAddDialog, onOpenEditDialog } = props
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 

@@ -214,6 +214,10 @@
       margin-bottom: 10px;
     }
   }
+
+  html.colorful & {
+    background-color: var(--el-color-primary-light-8);
+  }
 }
 
 .settings__label {

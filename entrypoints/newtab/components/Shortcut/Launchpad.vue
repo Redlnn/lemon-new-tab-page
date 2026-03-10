@@ -3,7 +3,7 @@ import { OnLongPress } from '@vueuse/components'
 import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
 
 import { Pin12Regular } from '@vicons/fluent'
-import { AddRound } from '@vicons/material'
+import { AddRound, SettingsRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 import { useDraggable } from 'vue-draggable-plus'
 
@@ -12,6 +12,7 @@ import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
 import { usePerfClasses } from '@newtab/composables/usePerfClasses'
+import { OPEN_SETTINGS } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
@@ -32,6 +33,8 @@ const props = defineProps<{
 const { t } = useTranslation()
 const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
+
+const openSettings = inject(OPEN_SETTINGS)
 
 const { width: windowWidth } = useWindowSize({ type: 'visual' })
 
@@ -307,7 +310,10 @@ useDraggable(gridRef, shortcuts, {
                   <img :src="item.favicon || getFaviconURL(item.url).value" :alt="item.title" />
                 </div>
                 <el-text :line-clamp="1" truncated class="launchpad-item__label">
-                  <el-icon v-if="item.isPinned"><pin12-regular /></el-icon> {{ item.title }}
+                  <el-icon v-if="item.isPinned && settings.dock.launchpad.enableTopSites">
+                    <pin12-regular />
+                  </el-icon>
+                  {{ item.title }}
                 </el-text>
               </OnLongPress>
               <!-- 无结果 -->
@@ -351,6 +357,16 @@ useDraggable(gridRef, shortcuts, {
                 <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" />
               </svg>
             </button>
+          </div>
+
+          <!-- 设置按钮 -->
+          <div
+            role="button"
+            tabindex="0"
+            class="launchpad-settings action-btn setting-btn"
+            @click="openSettings"
+          >
+            <el-icon><settings-round /></el-icon>
           </div>
         </div>
       </el-overlay>
@@ -410,6 +426,13 @@ useDraggable(gridRef, shortcuts, {
       backdrop-filter: blur(10px);
     }
   }
+}
+
+.launchpad-settings {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  color: rgb(255 255 255 / 30%);
 }
 
 .launchpad-grid {

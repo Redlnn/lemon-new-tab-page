@@ -1,5 +1,8 @@
 import type { Browser } from 'wxt/browser'
 
+// 打开设置页面
+export const OPEN_SETTINGS: InjectionKey<() => void> = Symbol('openSettings')
+
 // 打开搜索引擎偏好弹窗
 export const OPEN_SEARCH_ENGINE_PREFERENCE: InjectionKey<() => void> = Symbol(
   'openSearchEnginePreference'

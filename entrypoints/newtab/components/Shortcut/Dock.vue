@@ -23,6 +23,7 @@ import Launchpad from './Launchpad.vue'
 
 defineProps<{
   onOpenAddDialog?: () => void
+  onOpenEditDialog?: (index: number) => void
 }>()
 
 const perf = usePerfClasses(() => ({
@@ -383,14 +384,20 @@ function handleContextmenu(
     </template>
 
     <!-- 启动台覆盖层 -->
-    <Launchpad v-model="showLaunchpad" :on-open-add-dialog="onOpenAddDialog" />
+    <Launchpad
+      v-model="showLaunchpad"
+      :on-open-add-dialog="onOpenAddDialog"
+      :on-open-edit-dialog="onOpenEditDialog"
+    />
 
     <!-- 共享右键菜单 -->
     <shortcut-context-menu
       ref="ctxMenuRef"
       placement="top-start"
       :popper-class="popperClass"
+      show-edit
       :refresh-fn="refreshDebounced"
+      :on-open-edit-dialog="onOpenEditDialog"
     />
   </div>
 </template>
