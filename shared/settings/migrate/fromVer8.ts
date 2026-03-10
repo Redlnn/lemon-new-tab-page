@@ -22,7 +22,7 @@ export function migrateFromVer8To9(oldSettings: SettingsInterfaceVer8): Settings
     },
     dock: {
       ...oldSettings.dock,
-      showLaunchpad: defaultSettings.dock.showLaunchpad
+      launchpad: defaultSettings.dock.launchpad
     },
     perf: {
       ...oldSettings.perf,

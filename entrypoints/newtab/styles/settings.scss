@@ -198,6 +198,24 @@
   }
 }
 
+.settings__group {
+  transition: var(--el-transition-duration) ease;
+
+  &.active {
+    background-color: var(--el-fill-color-dark);
+    padding: 10px 20px;
+    border-radius: 10px;
+
+    &.settings__item:first-of-type {
+      margin-top: 10px;
+    }
+
+    &.settings__item:last-of-type {
+      margin-bottom: 10px;
+    }
+  }
+}
+
 .settings__label {
   display: flex;
   flex-wrap: wrap;

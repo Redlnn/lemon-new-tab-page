@@ -29,66 +29,100 @@ async function restoreDefaultTopSites() {
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('dock.showLaunchpad') }}</div>
-        <el-switch v-model="settings.dock.showLaunchpad" />
+        <el-switch v-model="settings.dock.launchpad.enabled" />
       </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
-        <el-switch v-model="settings.dock.enableTopSites" />
+      <div
+        class="settings__item settings__group"
+        :class="{ active: settings.dock.launchpad.enabled }"
+      >
+        <el-collapse-transition>
+          <section v-if="settings.dock.launchpad.enabled">
+            <p class="settings__item--note" style="margin-top: 5px">
+              {{ t('dock.launchpadTitle') }}
+            </p>
+            <div class="settings__item settings__item--horizontal">
+              <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+              <el-switch v-model="settings.dock.launchpad.enableTopSites" />
+            </div>
+            <div class="settings__item settings__item--horizontal">
+              <div class="settings__label">{{ t('common.openInNewTab') }}</div>
+              <el-switch v-model="settings.dock.launchpad.openInNewTab" />
+            </div>
+          </section>
+        </el-collapse-transition>
       </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('common.openInNewTab') }}</div>
-        <el-switch v-model="settings.dock.openInNewTab" />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('dock.limitCount') }}</div>
-        <el-switch v-model="settings.dock.limitCount" />
-      </div>
-      <div v-if="settings.dock.limitCount" class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('dock.maxCount') }}</div>
-        <el-slider
-          v-model="settings.dock.maxCount"
-          :min="1"
-          :max="20"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
-        <el-slider
-          v-model="settings.dock.iconSize"
-          :min="30"
-          :max="64"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">{{ t('shortcut.iconRatio') }}</div>
-        <el-slider
-          v-model="settings.dock.iconRatio"
-          :min="0.1"
-          :max="1"
-          :step="0.05"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
-      </div>
-      <div class="settings__item settings__item--vertical">
-        <div class="settings__label">
-          {{ t('shortcut.HorizontalIconSpacing') }}
+      <div
+        class="settings__item settings__group"
+        :class="{ active: settings.dock.launchpad.enabled }"
+      >
+        <el-collapse-transition>
+          <p
+            v-if="settings.dock.launchpad.enabled"
+            class="settings__item--note"
+            style="margin-top: 5px"
+          >
+            {{ t('dock.title') }}
+          </p>
+        </el-collapse-transition>
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+          <el-switch v-model="settings.dock.enableTopSites" />
         </div>
-        <el-slider
-          v-model="settings.dock.gap"
-          :min="3"
-          :max="10"
-          show-input
-          :show-input-controls="false"
-          :show-tooltip="false"
-        />
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('common.openInNewTab') }}</div>
+          <el-switch v-model="settings.dock.openInNewTab" />
+        </div>
+        <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('dock.limitCount') }}</div>
+          <el-switch v-model="settings.dock.limitCount" />
+        </div>
+        <div v-if="settings.dock.limitCount" class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('dock.maxCount') }}</div>
+          <el-slider
+            v-model="settings.dock.maxCount"
+            :min="1"
+            :max="20"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.iconSize') }}</div>
+          <el-slider
+            v-model="settings.dock.iconSize"
+            :min="30"
+            :max="64"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('shortcut.iconRatio') }}</div>
+          <el-slider
+            v-model="settings.dock.iconRatio"
+            :min="0.1"
+            :max="1"
+            :step="0.05"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">
+            {{ t('shortcut.HorizontalIconSpacing') }}
+          </div>
+          <el-slider
+            v-model="settings.dock.gap"
+            :min="3"
+            :max="10"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('shortcut.restoreDefault') }}</div>

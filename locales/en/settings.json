@@ -133,6 +133,7 @@
   "dock": {
     "limitCount": "Limit maximum count",
     "maxCount": "Maximum count",
+    "launchpadTitle": "Launchpad",
     "showLaunchpad": "Show Launchpad in Dock",
     "title": "Dock"
   },

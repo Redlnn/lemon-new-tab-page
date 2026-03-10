@@ -116,7 +116,6 @@ const dockRef = ref<HTMLElement | null>(null)
 // 动态部分（v-for 生成）：每次更新前清空后重新收集
 const scalableDynEls = shallowRef<HTMLElement[]>([])
 // 静态部分（不在 v-for 内）：只在挂载时收集，不受 onBeforeUpdate 影响
-const postSepGapEl = ref<HTMLElement | null>(null)
 const addBtnEl = ref<HTMLElement | null>(null)
 // 启动台入口（静态）
 const launchpadBtnEl = ref<HTMLElement | null>(null)
@@ -127,7 +126,6 @@ const scalableEls = computed(() => {
   const els: HTMLElement[] = []
   if (launchpadBtnEl.value) els.push(launchpadBtnEl.value)
   els.push(...scalableDynEls.value)
-  if (postSepGapEl.value) els.push(postSepGapEl.value)
   if (addBtnEl.value) els.push(addBtnEl.value)
   return els
 })
@@ -221,10 +219,6 @@ function setScalableRef(el: unknown): void {
   if (node) scalableDynEls.value.push(node)
 }
 
-function setPostSepGapRef(el: unknown): void {
-  postSepGapEl.value = el instanceof HTMLElement ? el : null
-}
-
 function setAddBtnRef(el: unknown): void {
   addBtnEl.value = el instanceof HTMLElement ? el : null
 }
@@ -263,7 +257,7 @@ function handleContextmenu(
   >
     <!--  -->
     <!-- 启动台固定入口 -->
-    <template v-if="settings.dock.showLaunchpad">
+    <template v-if="settings.dock.launchpad.enabled">
       <el-tooltip
         :content="t('dock.launchpad.title')"
         placement="top"
@@ -284,7 +278,7 @@ function handleContextmenu(
           <apps24-regular />
         </div>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div v-if="settings.dock.launchpad.enabled" class="dock-gap" :ref="setScalableRef"></div>
     </template>
     <template v-for="(item, idx) in visibleShortcuts" :key="`pin-${idx}`">
       <el-tooltip
@@ -327,9 +321,10 @@ function handleContextmenu(
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
-      <div class="dock-gap" :ref="setScalableRef"></div>
+      <div v-if="idx !== visibleShortcuts.length - 1" class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <template v-if="visibleShortcuts.length > 0 || settings.dock.showLaunchpad">
+    <template v-if="visibleShortcuts.length > 0 && visibleTopSites.length > 0">
+      <div class="dock-gap" :ref="setScalableRef"></div>
       <div class="dock-separator"></div>
       <div class="dock-gap" :ref="setScalableRef"></div>
     </template>
@@ -376,9 +371,12 @@ function handleContextmenu(
       </el-tooltip>
       <div v-if="j !== visibleTopSites.length - 1" class="dock-gap" :ref="setScalableRef"></div>
     </template>
-    <template v-if="!settings.dock.showLaunchpad">
+    <template v-if="!settings.dock.launchpad.enabled">
+      <div class="dock-gap" :ref="setScalableRef"></div>
       <div class="dock-separator"></div>
-      <div class="dock-gap" :ref="setPostSepGapRef"></div>
+      <div class="dock-gap" :ref="setScalableRef"></div>
+    </template>
+    <template v-if="!settings.dock.launchpad.enabled">
       <div class="dock-item" :ref="setAddBtnRef" @click="onOpenAddDialog">
         <add-round />
       </div>

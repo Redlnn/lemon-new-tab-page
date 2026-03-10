@@ -94,10 +94,9 @@ export interface SettingsInterfaceVer9 {
     openInNewTab: boolean
   }
 
-  // 快速访问
+  // Dock
   dock: {
     enabled: boolean
-    showLaunchpad: boolean
     enableTopSites: boolean
     showOnSearchFocus: boolean
     gap: number
@@ -106,6 +105,11 @@ export interface SettingsInterfaceVer9 {
     iconSize: number
     iconRatio: number
     openInNewTab: boolean
+    launchpad: {
+      enabled: boolean
+      enableTopSites: boolean
+      openInNewTab: boolean
+    }
   }
 
   // 同步

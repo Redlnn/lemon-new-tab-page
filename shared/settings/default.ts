@@ -96,7 +96,6 @@ export const defaultSettings = {
   },
   dock: {
     enabled: false,
-    showLaunchpad: false,
     enableTopSites: true,
     showOnSearchFocus: true,
     gap: 5,
@@ -104,7 +103,12 @@ export const defaultSettings = {
     maxCount: 10,
     iconSize: 40,
     iconRatio: 0.7,
-    openInNewTab: false
+    openInNewTab: false,
+    launchpad: {
+      enabled: false,
+      enableTopSites: true,
+      openInNewTab: false
+    }
   },
   sync: {
     enabled: false

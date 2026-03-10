@@ -111,7 +111,7 @@ async function refresh() {
   shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  if (settings.shortcut.enableTopSites) {
+  if (settings.dock.launchpad.enableTopSites) {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       force: topSitesNeedsReload.value,
@@ -208,7 +208,7 @@ watch(pageCount, (count) => {
 
 // ---- 点击打开 ----
 function openItem(url: string) {
-  window.open(url, settings.dock.openInNewTab ? '_blank' : '_self')
+  window.open(url, settings.dock.launchpad.openInNewTab ? '_blank' : '_self')
 }
 
 // ---- 右键菜单 ----
