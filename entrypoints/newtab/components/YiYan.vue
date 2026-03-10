@@ -110,7 +110,7 @@ async function copyToClipboard() {
 </script>
 
 <template>
-  <Transition name="fade">
+  <Transition name="el-fade-in">
     <div
       v-if="isEnabled"
       class="yiyan noselect"

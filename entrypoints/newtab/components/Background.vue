@@ -392,7 +392,7 @@ async function onImgLoaded() {
   >
     <div class="background-mask"></div>
     <div v-if="settings.background.vignette" class="background__vignette" />
-    <Transition name="v-fade">
+    <Transition name="bg-fade">
       <div
         v-show="!switchStore.isSwitching"
         ref="bgRef"
