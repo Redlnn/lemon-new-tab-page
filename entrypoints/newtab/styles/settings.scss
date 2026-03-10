@@ -215,7 +215,7 @@
     }
   }
 
-  html.colorful & {
+  html.colorful &.active {
     background-color: var(--el-color-primary-light-8);
   }
 }
