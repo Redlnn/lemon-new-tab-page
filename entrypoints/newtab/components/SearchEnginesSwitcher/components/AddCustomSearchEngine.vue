@@ -115,6 +115,7 @@ defineExpose({
     :title="dialogTitle"
     class="add-custom-search-engine-dialog base-dialog--blur base-dialog--opacity noselect"
     width="450"
+    :lock-scroll="false"
     append-to-body
     destroy-on-close
   >

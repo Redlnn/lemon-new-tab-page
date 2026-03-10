@@ -75,6 +75,7 @@ defineExpose({
     :title="t('common.edit')"
     class="add-shortcut-dialog base-dialog--blur base-dialog--opacity noselect"
     width="450"
+    :lock-scroll="false"
     append-to-body
     destroy-on-close
   >
