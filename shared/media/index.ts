@@ -76,13 +76,5 @@ export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
     })
   }
 
-  onUnmounted(() => {
-    if (img) {
-      img.onload = null
-      img.onerror = null
-      img = null
-    }
-  })
-
   return iconUrl
 }
