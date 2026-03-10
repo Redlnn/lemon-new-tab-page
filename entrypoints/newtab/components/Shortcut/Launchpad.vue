@@ -209,6 +209,16 @@ watch(pageCount, (count) => {
   if (page.value >= count) page.value = Math.max(0, count - 1)
 })
 
+watch(
+  () => settings.dock.launchpad.enableTopSites,
+  (enabled) => {
+    if (enabled) {
+      topSitesNeedsReload.value = true
+    }
+    refreshDebounced()
+  }
+)
+
 // ---- 点击打开 ----
 function openItem(url: string) {
   window.open(url, settings.dock.launchpad.openInNewTab ? '_blank' : '_self')

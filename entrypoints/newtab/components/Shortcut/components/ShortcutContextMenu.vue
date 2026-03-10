@@ -8,7 +8,7 @@ import { useShortcutContextMenu } from '../composables/useShortcutContextMenu'
 
 const props = withDefaults(
   defineProps<{
-    refreshFn: () => void
+    refreshFn: () => Promise<void>
     onOpenEditDialog?: (index: number) => void
     placement?: 'bottom-start' | 'top-start'
     popperClass?: string
@@ -41,7 +41,7 @@ const {
   ctxBlockSite,
   ctxEdit
 } = useShortcutContextMenu({
-  refreshFn: () => props.refreshFn(),
+  refreshFn: props.refreshFn,
   onOpenEditDialog: (index) => props.onOpenEditDialog?.(index)
 })
 

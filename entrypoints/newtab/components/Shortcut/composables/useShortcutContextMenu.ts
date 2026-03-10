@@ -15,7 +15,7 @@ export type CtxShortcutItem = {
 }
 
 export function useShortcutContextMenu(options: {
-  refreshFn: () => void
+  refreshFn: () => Promise<void>
   onOpenEditDialog?: (index: number) => void
 }) {
   const { t } = useTranslation()
@@ -74,26 +74,17 @@ export function useShortcutContextMenu(options: {
 
   const ctxUnpin = async (): Promise<void> => {
     if (!ctxItem.value?.isPinned) return
-    await removeShortcut(
-      ctxItem.value.originalIndex,
-      shortcutStore,
-      refreshFn as () => Promise<void>
-    )
+    await removeShortcut(ctxItem.value.originalIndex, shortcutStore, refreshFn)
   }
 
   const ctxPin = async (): Promise<void> => {
     if (!ctxItem.value || ctxItem.value.isPinned) return
-    await pinShortcut(
-      shortcutStore,
-      refreshFn as () => Promise<void>,
-      ctxItem.value.url,
-      ctxItem.value.title
-    )
+    await pinShortcut(shortcutStore, refreshFn, ctxItem.value.url, ctxItem.value.title)
   }
 
   const ctxBlockSite = async (): Promise<void> => {
     if (!ctxItem.value || ctxItem.value.isPinned) return
-    await blockSite(ctxItem.value.url, refreshFn as () => Promise<void>)
+    await blockSite(ctxItem.value.url, refreshFn)
     refreshFn()
   }
 
