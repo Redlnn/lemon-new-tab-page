@@ -1,23 +1,8 @@
 /* 集中过渡类：Vue 过渡与对话框过渡 */
 
-.v-fade-enter-from,
-.v-fade-leave-to {
+.bg-fade-enter-from,
+.bg-fade-leave-to {
   opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.15s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
 }
 
 /* 对话框进入/离开 */
