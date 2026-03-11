@@ -302,10 +302,10 @@ export const useSyncDataStore = defineStore('sync', {
 
         // 在线壁纸需获取权限，禁用相关设置
         // 保持本地在线壁纸缓存设置
-        cloudData.settings.background.online.cacheEnable = localState.background.online.cacheEnable
+        cloudData.settings.background.online.enableCache = localState.background.online.enableCache
         if (
           localSettings.background.bgType === BgType.Online &&
-          !localState.background.online.cacheEnable
+          !localState.background.online.enableCache
         ) {
           // 关闭莫奈
           cloudData.settings.theme.monetColor = false
