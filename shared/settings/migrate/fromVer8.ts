@@ -66,7 +66,8 @@ export function migrateFromVer8To9(oldSettings: SettingsInterfaceVer8): Settings
       online: {
         ...oldSettings.background.online,
         enableCache: oldSettings.background.online.cacheEnable
-      }
+      },
+      parallax: defaultSettings.background.parallax
     },
     version: 9
   } satisfies SettingsInterfaceVer9

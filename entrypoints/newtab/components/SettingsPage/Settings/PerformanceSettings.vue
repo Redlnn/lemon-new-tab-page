@@ -35,6 +35,7 @@ function toggleAnimationSettings(enable: boolean) {
   settings.perf.enableBgSwitchAnim = enable
   settings.perf.enableDockScale = enable
   settings.perf.enableYiyanRipple = enable
+  settings.background.parallax = enable
 }
 </script>
 
@@ -100,7 +101,10 @@ function toggleAnimationSettings(enable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.bookmarkBlur') }}</div>
-      <el-switch :disabled="!settings.perf.enableBookmarkTransparent" v-model="settings.perf.enableBookmarkBlur" />
+      <el-switch
+        :disabled="!settings.perf.enableBookmarkTransparent"
+        v-model="settings.perf.enableBookmarkBlur"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogTransparent') }}</div>
@@ -108,7 +112,10 @@ function toggleAnimationSettings(enable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogBlur') }}</div>
-      <el-switch :disabled="!settings.perf.enableDialogTransparent" v-model="settings.perf.enableDialogBlur" />
+      <el-switch
+        :disabled="!settings.perf.enableDialogTransparent"
+        v-model="settings.perf.enableDialogBlur"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogAnimation') }}</div>
@@ -132,7 +139,10 @@ function toggleAnimationSettings(enable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.searchBarBlur') }}</div>
-      <el-switch :disabled="!settings.perf.enableSearchBarTransparent" v-model="settings.perf.enableSearchBarBlur" />
+      <el-switch
+        :disabled="!settings.perf.enableSearchBarTransparent"
+        v-model="settings.perf.enableSearchBarBlur"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.shortcutTransparent') }}</div>
@@ -140,7 +150,10 @@ function toggleAnimationSettings(enable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.shortcutBlur') }}</div>
-      <el-switch :disabled="!settings.perf.enableShortcutTransparent" v-model="settings.perf.enableShortcutBlur" />
+      <el-switch
+        :disabled="!settings.perf.enableShortcutTransparent"
+        v-model="settings.perf.enableShortcutBlur"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanTransparent') }}</div>
@@ -148,7 +161,10 @@ function toggleAnimationSettings(enable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanBlur') }}</div>
-      <el-switch :disabled="!settings.perf.enableYiyanTransparent" v-model="settings.perf.enableYiyanBlur" />
+      <el-switch
+        :disabled="!settings.perf.enableYiyanTransparent"
+        v-model="settings.perf.enableYiyanBlur"
+      />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanRipple') }}</div>
@@ -168,6 +184,10 @@ function toggleAnimationSettings(enable: boolean) {
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dockScale') }}</div>
       <el-switch v-model="settings.perf.enableDockScale" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('background.parallax') }}</div>
+      <el-switch v-model="settings.background.parallax" />
     </div>
   </div>
 </template>

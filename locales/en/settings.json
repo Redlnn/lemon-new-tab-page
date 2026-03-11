@@ -30,6 +30,7 @@
       "d": "Please ensure the wallpaper API you are using allows cross-origin requests; otherwise, it will fail to load."
     },
     "pauseWhenBlur": "Pause video background when the tab loses focus",
+    "parallax": "Wallpaper parallax effect",
     "permission": {
       "allowAll": "Allow all sites",
       "allowCurrent": "Only allow this API URL",

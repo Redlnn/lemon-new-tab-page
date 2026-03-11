@@ -45,6 +45,7 @@ export const defaultSettings = {
   background: {
     bgType: BgType.Bing,
     vignette: false,
+    parallax: false,
     blur: 3,
     mask: {
       opacity: 0,

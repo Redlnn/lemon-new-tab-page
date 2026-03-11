@@ -92,10 +92,53 @@ function updateVideoPlayback() {
 }
 
 const backgroundCss = computed(() => ({
-  'background-container--default-scale': !settings.perf.enableFocusScale,
-  'background-container--focused__scale': focusStore.isFocused && settings.perf.enableFocusScale,
   'background-container--focused__blur': focusStore.isFocused && settings.perf.enableFocusBlur
 }))
+
+// 视差效果
+const mouseX = ref(typeof window !== 'undefined' ? window.innerWidth / 2 : 960)
+const mouseY = ref(typeof window !== 'undefined' ? window.innerHeight / 2 : 540)
+
+watchEffect((onCleanup) => {
+  if (!settings.background.parallax) return
+
+  const onMouseMove = (e: MouseEvent) => {
+    mouseX.value = e.clientX
+    mouseY.value = e.clientY
+  }
+  const onMouseLeave = () => {
+    mouseX.value = window.innerWidth / 2
+    mouseY.value = window.innerHeight / 2
+  }
+
+  const moveCleanup = useEventListener('mousemove', onMouseMove)
+  const leaveCleanup = useEventListener('mouseleave', onMouseLeave)
+
+  onCleanup(() => {
+    moveCleanup()
+    leaveCleanup()
+    mouseX.value = window.innerWidth / 2
+    mouseY.value = window.innerHeight / 2
+  })
+})
+
+const backgroundScale = computed(() => {
+  if (focusStore.isFocused && settings.perf.enableFocusScale) {
+    return 1.1
+  } else if (!settings.perf.enableFocusScale) {
+    return 1.05
+  } else {
+    return 1
+  }
+})
+
+const backgroundTranslate = computed(() => {
+  if (!settings.background.parallax || focusStore.isFocused) return ''
+  const strength = 20
+  const tx = (0.5 - mouseX.value / window.innerWidth) * 2 * strength
+  const ty = (0.5 - mouseY.value / window.innerHeight) * 2 * strength
+  return `${tx}px ${ty}px`
+})
 
 const isVideoWallpaper = computed(() => {
   if (settings.background.bgType !== BgType.Local) {
@@ -394,6 +437,12 @@ async function onImgLoaded() {
         ref="bgRef"
         class="background-container"
         :class="backgroundCss"
+        :style="{
+          scale: backgroundScale,
+          translate: backgroundTranslate,
+          '--parallax-inset':
+            settings.background.parallax && settings.background.blur < 10 ? '15px' : '0px'
+        }"
       >
         <video
           v-if="isVideoWallpaper"
@@ -430,7 +479,6 @@ async function onImgLoaded() {
 
 .background-mask {
   position: absolute;
-  inset: calc(var(--blur-intensity) * -2);
   background-color: var(--mask-color__light);
   opacity: var(--mask-opacity);
   transition: background-color var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
@@ -442,23 +490,16 @@ async function onImgLoaded() {
 
 .background-container {
   position: absolute;
-  inset: calc(var(--blur-intensity) * -2);
+  inset: calc(var(--blur-intensity) * -2 - var(--parallax-inset, 0px));
   z-index: -2;
   filter: blur(var(--blur-intensity));
   transition:
-    transform var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
+    scale var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
     filter var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1),
-    opacity var(--bg-opacity-duration);
-
-  &--default-scale {
-    transform: scale(1.05);
-  }
+    opacity var(--bg-opacity-duration),
+    inset var(--el-transition-duration-fast);
 
   &--focused {
-    &__scale {
-      transform: scale(1.1);
-    }
-
     &__blur {
       filter: blur(calc(var(--blur-intensity) + 10px));
     }

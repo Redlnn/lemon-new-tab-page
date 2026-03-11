@@ -30,6 +30,7 @@
       "d": "请确保你使用的壁纸 API 允许跨域请求，否则会加载失败"
     },
     "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
+    "parallax": "壁纸视差效果",
     "permission": {
       "allowAll": "允许所有网站",
       "allowCurrent": "仅允许该API网址",

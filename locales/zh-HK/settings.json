@@ -30,6 +30,7 @@
       "d": "請確認你使用的圖片 API 支援跨域請求，否則可能載入失敗"
     },
     "pauseWhenBlur": "當分頁失去焦點時暫停影片背景",
+    "parallax": "壁紙視差效果",
     "permission": {
       "allowAll": "允許所有網址",
       "allowCurrent": "僅允許這個API網址",

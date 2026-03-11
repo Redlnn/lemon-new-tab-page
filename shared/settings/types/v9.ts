@@ -54,6 +54,7 @@ export interface SettingsInterfaceVer9 {
   background: {
     bgType: BgType
     vignette: boolean
+    parallax: boolean
     blur: number
     mask: {
       opacity: number
