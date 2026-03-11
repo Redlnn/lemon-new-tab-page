@@ -54,7 +54,8 @@ const formPerfClass = computed(() => [
     'search-box__form--shadow': settings.search.shadow,
     'search-box__form--dark': settings.background.bgType === BgType.None,
     'search-box__form--expand': settings.search.expandAlways,
-    'search-box__form--always-icon': settings.search.showIconAlways
+    'search-box__form--always-icon': settings.search.showIconAlways,
+    border: settings.search.border
   },
   perf('search-box__form').value
 ])

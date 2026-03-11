@@ -45,6 +45,7 @@ export interface SettingsInterfaceVer9 {
     openInNewTab: boolean
     recordHistory: boolean
     shadow: boolean
+    border: boolean
     placeholder: string
     launchAnimation: boolean
   }
@@ -77,6 +78,7 @@ export interface SettingsInterfaceVer9 {
     enabled: boolean
     enableTopSites: boolean
     enableShadow: boolean
+    enableBorder: boolean
     enablePaging: boolean
     showOnSearchFocus: boolean
     rows: number

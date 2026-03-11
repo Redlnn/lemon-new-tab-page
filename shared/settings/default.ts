@@ -38,6 +38,7 @@ export const defaultSettings = {
     openInNewTab: false,
     recordHistory: true,
     shadow: true,
+    border: false,
     placeholder: '',
     launchAnimation: false
   },
@@ -78,6 +79,7 @@ export const defaultSettings = {
     enabled: true,
     enableTopSites: true,
     enableShadow: true,
+    enableBorder: false,
     enablePaging: true,
     showOnSearchFocus: false,
     rows: 2,

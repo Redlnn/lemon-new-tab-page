@@ -16,18 +16,27 @@ function clockSizeToNumber(size: 'small' | 'medium' | 'large'): number {
 export function migrateFromVer8To9(oldSettings: SettingsInterfaceVer8): SettingsInterfaceVer9 {
   return {
     ...oldSettings,
+    theme: {
+      ...oldSettings.theme,
+      idleHide: defaultSettings.theme.idleHide
+    },
     clock: {
       ...oldSettings.clock,
-      size: clockSizeToNumber(oldSettings.clock.size)
+      colorfulNum: defaultSettings.clock.colorfulNum,
+      newStyle: defaultSettings.clock.newStyle,
+      size: clockSizeToNumber(oldSettings.clock.size),
+      calcWeight: defaultSettings.clock.calcWeight
     },
-    dock: {
-      ...oldSettings.dock,
-      launchpad: defaultSettings.dock.launchpad
+    search: {
+      ...oldSettings.search,
+      border: defaultSettings.search.border
     },
     shortcut: {
       ...oldSettings.shortcut,
-      enablePaging: !oldSettings.shortcut.disablePaging
+      enablePaging: !oldSettings.shortcut.disablePaging,
+      enableBorder: defaultSettings.shortcut.enableBorder
     },
+    dock: defaultSettings.dock,
     perf: {
       enableBookmarkTransparent: !oldSettings.perf.disableBookmarkTransparent,
       enableBookmarkBlur: !oldSettings.perf.disableBookmarkBlur,

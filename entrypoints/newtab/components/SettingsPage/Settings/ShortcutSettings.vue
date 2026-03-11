@@ -41,6 +41,10 @@ async function restoreDefaultTopSites() {
           <el-switch v-model="settings.shortcut.enableShadow" />
         </div>
         <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.enableBorder') }}</div>
+          <el-switch v-model="settings.shortcut.enableBorder" />
+        </div>
+        <div class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('shortcut.showPinnedIcon') }}</div>
           <el-switch
             :disabled="!settings.shortcut.enableTopSites"

@@ -30,6 +30,14 @@
       width var(--el-transition-duration-fast) var(--cubic-bezier);
     animation: delayedFadeIn 0.25s;
 
+    &.border {
+      border: solid 1px rgb(255 255 255 / 0.5);
+
+      html.dark & {
+        border: solid 1px rgb(255 255 255 / 0.1);
+      }
+    }
+
     &--blur {
       @include acrylic.acrylic;
     }

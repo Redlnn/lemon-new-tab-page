@@ -47,7 +47,7 @@ const iconPerfClass = perf('shortcut__icon')
         class="shortcut__icon-container"
         :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
       >
-        <div class="shortcut__icon" :class="iconPerfClass">
+        <div class="shortcut__icon" :class="[iconPerfClass, { border: settings.shortcut.enableBorder }]">
           <add-round />
         </div>
       </div>

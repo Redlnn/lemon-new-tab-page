@@ -10,14 +10,11 @@ export interface SettingsInterfaceVer8 {
     primaryColor: string
     colorfulMode: boolean
     monetColor: boolean
-    idleHide: boolean
   }
 
   // 时钟/时间显示
   clock: {
     enabled: boolean
-    colorfulNum: boolean
-    newStyle: boolean
     isMeridiem: boolean
     showMeridiem: boolean
     showDate: boolean
@@ -25,7 +22,6 @@ export interface SettingsInterfaceVer8 {
     showSeconds: boolean
     size: 'small' | 'medium' | 'large'
     weight: ClockWeight
-    calcWeight: ClockWeight
     meridiemFollowSize: boolean
     shadow: boolean
     blink: boolean
@@ -91,19 +87,6 @@ export interface SettingsInterfaceVer8 {
     titleExtraWidth: number
     whiteTextInLightMode: boolean
     marginTop: number
-    openInNewTab: boolean
-  }
-
-  // 快速访问
-  dock: {
-    enabled: boolean
-    enableTopSites: boolean
-    showOnSearchFocus: boolean
-    gap: number
-    limitCount: boolean
-    maxCount: number
-    iconSize: number
-    iconRatio: number
     openInNewTab: boolean
   }
 

@@ -77,6 +77,10 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
         <el-switch v-model="settings.search.shadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('search.enableBorder') }}</div>
+        <el-switch v-model="settings.search.border" />
+      </div>
+      <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('search.recordSearchHistory') }}</div>
         <el-switch v-model="settings.search.recordHistory" />
       </div>

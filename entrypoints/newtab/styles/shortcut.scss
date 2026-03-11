@@ -318,6 +318,15 @@
           background: var(--el-fill-color-darker);
           border-radius: 50%;
           transition: background-color 0.1s ease;
+          border: solid 1px rgb(255 255 255 / 0.1);
+
+          &.border {
+            border: solid 1px rgb(255 255 255 / 0.5);
+
+            html.dark & {
+              border: solid 1px rgb(255 255 255 / 0.1);
+            }
+          }
 
           &--blur {
             @include acrylic.acrylic;

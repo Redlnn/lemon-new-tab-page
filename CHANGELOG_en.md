@@ -10,11 +10,11 @@
 - Added idle fade-out for page elements
 - Full keyboard navigation support (`Tab` + arrow keys)
 - Support for saving the currently displayed wallpaper
+- Support for adding borders to the search bar and shortcuts for better visual appearance
 - **Quote:** Added one-click copy
 - **Clock:** Added a new clock style with more font sizes and date font weight options
 - **Clock:** Added colorful clock toggle
 - **Search:** Pressing `Tab` now shows a toast with the current search engine name
-- Added more animation toggles
 
 ### Improvements⚡️
 

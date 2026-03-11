@@ -57,13 +57,14 @@ const itemRef = useTemplateRef('itemRef')
       >
         <div
           v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
-          :class="['shortcut__pin-icon', pinIconClass]"
+          class="shortcut__pin-icon"
+          :class="pinIconClass"
         >
           <el-icon size="11">
             <pin12-regular />
           </el-icon>
         </div>
-        <div class="shortcut__icon" :class="iconClass">
+        <div class="shortcut__icon" :class="[iconClass, { border: settings.shortcut.enableBorder }]">
           <span
             class="span"
             :style="{
