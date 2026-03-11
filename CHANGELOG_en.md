@@ -6,8 +6,16 @@
 
 ### New Features✨
 
+- Added a bottom Dock bar for pinning frequently visited sites for quick access
+- Added Launchpad to browse and search all shortcuts in one view
 - Full keyboard navigation support (`Tab` + arrow keys)
 - Support for saving the currently displayed online wallpaper
+- **Quote:** Added one-click copy
+- **Clock:** Added a new clock style with more font sizes and date font weight options
+- **Clock:** Added colorful clock toggle
+- **Search:** Pressing `Tab` now shows a toast with the current search engine name
+- Added more animation toggles
+- Added idle fade-out for page elements
 
 ### Improvements⚡️
 
@@ -15,10 +23,14 @@
 - Disabled the search bar expansion animation on startup by default due to performance issues on most devices
 - When caching is enabled, cached wallpapers will continue to be used even after expiration if new wallpapers cannot be fetched
 - **Quote:** Added click animation to the widget
+- **Clock:** Font size now uses a slider, up to 200px
+- **Cloud Sync:** No longer syncs Monet colors, wallpaper cache, or custom search engines
+- Settings items are now hidden when the corresponding feature is disabled
 
 ### Bug Fixes🐛
 
-- Fixed an issue where clicking the quote widget would cause the search bar to lose focus
+- Fixed animation stutter when opening the settings panel for the first time
+- Fixed an issue where clicking the quote widget while the search bar was focused caused it to lose focus
 - **Quote:** Fixed an issue where it would not display in certain cases when "Always Show" was enabled
 
 ## 3.1.0 (Feb 14, 2026)
