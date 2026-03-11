@@ -69,10 +69,12 @@ const allItems = computed(() => {
     isPinned: boolean
     originalIndex: number
   }[] = []
-  shortcuts.value.forEach((s, i) => {
+  for (let i = 0; i < shortcuts.value.length; i++) {
+    const s = shortcuts.value[i]!
     items.push({ ...s, isPinned: true, originalIndex: i })
-  })
-  topSites.value.forEach((s, i) => {
+  }
+  for (let i = 0; i < topSites.value.length; i++) {
+    const s = topSites.value[i]!
     items.push({
       url: s.url,
       title: s.title || '',
@@ -80,7 +82,7 @@ const allItems = computed(() => {
       isPinned: false,
       originalIndex: i
     })
-  })
+  }
   return items
 })
 
@@ -90,7 +92,7 @@ const filteredItems = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return allItems.value
   return allItems.value.filter(
-    (item) => item.title?.toLowerCase().includes(q) || item.url.toLowerCase().includes(q)
+    (item) => item.title.toLowerCase().includes(q) || item.url.toLowerCase().includes(q)
   )
 })
 

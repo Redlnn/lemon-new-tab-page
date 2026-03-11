@@ -151,8 +151,9 @@ function scaleCurve(curveCentreX: number, itemCentreX: number): number {
 }
 
 function updateScales(clientX: number | null): void {
-  for (let i = 0; i < scalableEls.value.length; i++) {
-    const el = scalableEls.value[i]
+  const els = scalableEls.value
+  for (let i = 0; i < els.length; i++) {
+    const el = els[i]
     if (!el) continue
     // 优先使用缓存的自然中心点，保证波形形状不随元素大小变化
     const center =
