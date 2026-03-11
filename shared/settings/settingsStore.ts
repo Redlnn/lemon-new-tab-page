@@ -14,6 +14,12 @@ export async function initSettings() {
   settings.background.bing.url = ''
 
   useSettingsStore().$patch(settings)
+
+  // 监听其他标签页对设置的更改，实时同步到当前标签页的 store
+  settingsStorage.watch((newSettings) => {
+    if (!newSettings) return
+    useSettingsStore().$patch(newSettings)
+  })
 }
 
 export async function saveSettings(

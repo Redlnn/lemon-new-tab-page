@@ -6,16 +6,15 @@
 
 ### New Features✨
 
-- Added a bottom Dock bar for pinning frequently visited sites for quick access
-- Added Launchpad to browse and search all shortcuts in one view
+- Added a bottom Dock bar and Launchpad
+- Added idle fade-out for page elements
 - Full keyboard navigation support (`Tab` + arrow keys)
-- Support for saving the currently displayed online wallpaper
+- Support for saving the currently displayed wallpaper
 - **Quote:** Added one-click copy
 - **Clock:** Added a new clock style with more font sizes and date font weight options
 - **Clock:** Added colorful clock toggle
 - **Search:** Pressing `Tab` now shows a toast with the current search engine name
 - Added more animation toggles
-- Added idle fade-out for page elements
 
 ### Improvements⚡️
 
@@ -26,6 +25,7 @@
 - **Clock:** Font size now uses a slider, up to 200px
 - **Cloud Sync:** No longer syncs Monet colors, wallpaper cache, or custom search engines
 - Settings items are now hidden when the corresponding feature is disabled
+- Real-time synchronization of settings changes across multiple open tabs
 
 ### Bug Fixes🐛
 
