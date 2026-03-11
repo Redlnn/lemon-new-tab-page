@@ -1,7 +1,6 @@
 import './styles/index.scss'
 
 import { createPinia } from 'pinia'
-import { useColorMode, usePreferredDark } from '@vueuse/core'
 
 import { version } from '@/package.json'
 
@@ -12,13 +11,13 @@ import { initSyncSettings } from '@/shared/sync'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
+import { colorMode, preferredDark } from '@newtab/shared/colorMode'
 
 import App from './App.vue'
 import { setupAutoSaveSettings } from './shared/autoSaveSettings'
 import { changeTheme } from './shared/theme'
 
-const preferredDark = usePreferredDark()
-const { store } = useColorMode()
+const { store } = colorMode
 watch(
   preferredDark,
   () => {

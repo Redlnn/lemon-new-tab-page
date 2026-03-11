@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useColorMode, usePreferredDark, useTimeoutFn } from '@vueuse/core'
+import { useTimeoutFn } from '@vueuse/core'
 
 import { CloudOffRound } from '@vicons/material'
 import i18next from 'i18next'
@@ -9,17 +9,11 @@ import { BgType } from '@/shared/enums'
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import { colorMode as mode, preferredDark } from '@newtab/shared/colorMode'
 
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
-const mode = useColorMode({
-  modes: {
-    dark: 'dark',
-    light: 'light',
-    auto: ''
-  }
-})
 
 const predefineColorsMapClassic = [
   { value: '#3e3e3e', labelKey: 'theme.colorNames.classic.ink' },
@@ -52,7 +46,6 @@ const predefineColorsMap = [
 const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapAcgn).map((i) => i.value)
 
 const isDarkUI = ref(mode.value === 'dark')
-const preferredDark = usePreferredDark()
 
 const isAuto = computed(() => mode.store.value === 'auto')
 const isAutoUI = ref(isAuto.value)

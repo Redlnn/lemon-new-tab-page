@@ -52,15 +52,6 @@ const {
   closing
 } = useDialog(props, dialogRef)
 
-watchEffect(() => {
-  // 如果未destroyOnClose，则始终保持rendered为true
-  // 使得可以提前加载子组件触发子组件的生命周期
-  // （主要是要触发子组件的预加载逻辑）
-  if (!props.destroyOnClose) {
-    rendered.value = true
-  }
-})
-
 provide(dialogInjectionKey, {
   dialogRef,
   headerRef,
