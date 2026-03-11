@@ -7,13 +7,10 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
     theme: {
       primaryColor: oldSettings.primaryColor,
       colorfulMode: oldSettings.colorfulMode,
-      monetColor: oldSettings.monetColor,
-      idleHide: defaultSettings.theme.idleHide
+      monetColor: oldSettings.monetColor
     },
     clock: {
       enabled: oldSettings.time.enabled,
-      colorfulNum: defaultSettings.clock.colorfulNum,
-      newStyle: defaultSettings.clock.newStyle,
       isMeridiem: oldSettings.time.isMeridiem,
       showMeridiem: oldSettings.time.showMeridiem,
       showDate: oldSettings.time.showDate,
@@ -21,7 +18,6 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       showSeconds: oldSettings.time.showSeconds,
       size: oldSettings.time.small ? 'small' : 'medium',
       weight: defaultSettings.clock.weight,
-      calcWeight: defaultSettings.clock.calcWeight,
       meridiemFollowSize: defaultSettings.clock.meridiemFollowSize,
       shadow: oldSettings.time.enableShadow,
       blink: oldSettings.time.blinkingColon,
@@ -92,7 +88,6 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       marginTop: oldSettings.shortcut.marginTop,
       openInNewTab: defaultSettings.shortcut.openInNewTab
     },
-    dock: { ...defaultSettings.dock },
     sync: { enabled: oldSettings.sync.enabled },
     yiyan: {
       enabled: oldSettings.yiyan.enabled,
