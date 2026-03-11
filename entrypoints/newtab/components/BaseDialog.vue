@@ -54,8 +54,8 @@ function onScroll(e: { scrollLeft: number; scrollTop: number }) {
 }
 
 const perf = usePerfClasses(() => ({
-  transparentOff: !props.opacity,
-  blurOff: !props.acrylic
+  transparent: props.opacity,
+  blur: props.acrylic
 }))
 
 const dialogPerfClass = perf('base-dialog')

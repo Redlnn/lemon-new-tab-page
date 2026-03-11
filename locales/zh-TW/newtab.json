@@ -138,6 +138,14 @@
     "unpin": "取消釘選",
     "unpinMessage": "已取消釘選該捷徑"
   },
+  "dock": {
+    "launchpad": {
+      "title": "啟動台",
+      "search": "搜尋...",
+      "empty": "無結果",
+      "add": "添加"
+    }
+  },
   "sponsor": "這個擴充功能是我當初利用業餘時間為了滿足自己的需求而開始開發的。很高興它也對你有幫助！如果你真的想支持我，可以聯繫我的郵箱：redlnn@outlook.com。感謝你的關注與支持！",
   "time": {
     "afternoon": "下午",

@@ -23,8 +23,8 @@ withDefaults(
 )
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 
 const iconPerfClass = perf('shortcut__icon')

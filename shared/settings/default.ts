@@ -69,7 +69,7 @@ export const defaultSettings = {
     },
     online: {
       url: '',
-      cacheEnable: false,
+      enableCache: false,
       cacheDuration: 1, // 默认缓存1小时
       noExpires: false
     }
@@ -78,7 +78,7 @@ export const defaultSettings = {
     enabled: true,
     enableTopSites: true,
     enableShadow: true,
-    disablePaging: false,
+    enablePaging: true,
     showOnSearchFocus: false,
     rows: 2,
     columns: 5,
@@ -103,7 +103,12 @@ export const defaultSettings = {
     maxCount: 10,
     iconSize: 40,
     iconRatio: 0.7,
-    openInNewTab: false
+    openInNewTab: false,
+    launchpad: {
+      enabled: false,
+      enableTopSites: true,
+      openInNewTab: false
+    }
   },
   sync: {
     enabled: false
@@ -119,29 +124,29 @@ export const defaultSettings = {
     }
   },
   perf: {
-    disableBookmarkTransparent: false,
-    disableBookmarkBlur: false,
-    disableDialogTransparent: false,
-    disableDialogBlur: false,
-    disableDialogAnimation: false,
-    disableFocusScale: false,
-    disableFocusBlur: false,
-    disableShortcutTransparent: false,
-    disableShortcutBlur: false,
-    disableSearchBarTransparent: false,
-    disableSearchBarBlur: false,
-    disableYiyanTransparent: false,
-    disableYiyanBlur: false,
-    disableYiyanRipple: false,
-    disableSettingsBtnBlur: false,
-    disableSettingsBtnTransparent: false,
-    disableBgSwitchAnim: false,
-    disableDockScale: false
+    enableBookmarkTransparent: true,
+    enableBookmarkBlur: true,
+    enableDialogTransparent: true,
+    enableDialogBlur: true,
+    enableDialogAnimation: true,
+    enableFocusScale: true,
+    enableFocusBlur: true,
+    enableShortcutTransparent: true,
+    enableShortcutBlur: true,
+    enableSearchBarTransparent: true,
+    enableSearchBarBlur: true,
+    enableYiyanTransparent: true,
+    enableYiyanBlur: true,
+    enableYiyanRipple: true,
+    enableSettingsBtnBlur: true,
+    enableSettingsBtnTransparent: true,
+    enableBgSwitchAnim: true,
+    enableDockScale: true
   },
   bookmark: {
     direction: DrawerDirection.rtl,
     rightClickToOpen: true,
-    hideBtn: false,
+    showBtn: true,
     defaultSortMode: SortMode.Original
   },
   hideMajorChangelog: true,

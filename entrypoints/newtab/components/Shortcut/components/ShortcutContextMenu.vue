@@ -1,0 +1,110 @@
+<script setup lang="ts">
+import { Edit16Regular, Pin12Regular, PinOff16Regular, Star12Regular } from '@vicons/fluent'
+import { BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
+import type { DropdownInstance } from 'element-plus'
+import { useTranslation } from 'i18next-vue'
+
+import { useShortcutContextMenu } from '../composables/useShortcutContextMenu'
+
+const props = withDefaults(
+  defineProps<{
+    refreshFn: () => Promise<void>
+    onOpenEditDialog?: (index: number) => void
+    placement?: 'bottom-start' | 'top-start'
+    popperClass?: string
+    showEdit?: boolean
+  }>(),
+  {
+    placement: 'bottom-start',
+    showEdit: false
+  }
+)
+
+const emit = defineEmits<{
+  (e: 'visible-change', visible: boolean): void
+}>()
+
+const { t } = useTranslation()
+
+const dropdownRef = useTemplateRef<DropdownInstance>('dropdownRef')
+
+const {
+  ctxTriggerRef,
+  ctxItem,
+  setCtxContext,
+  ctxOpenInNewTab,
+  ctxOpenInNewWindow,
+  ctxCopyLink,
+  ctxCreateBookmark,
+  ctxUnpin,
+  ctxPin,
+  ctxBlockSite,
+  ctxEdit
+} = useShortcutContextMenu({
+  refreshFn: props.refreshFn,
+  onOpenEditDialog: (index) => props.onOpenEditDialog?.(index)
+})
+
+function open(
+  event: MouseEvent | PointerEvent | TouchEvent,
+  item: Parameters<typeof setCtxContext>[1]
+): void {
+  setCtxContext(event, item)
+  dropdownRef.value?.handleOpen()
+}
+
+function close(): void {
+  dropdownRef.value?.handleClose()
+}
+
+defineExpose({ open, close })
+</script>
+
+<template>
+  <el-dropdown
+    ref="dropdownRef"
+    :virtual-ref="ctxTriggerRef"
+    :show-arrow="false"
+    virtual-triggering
+    trigger="contextmenu"
+    :placement="placement"
+    :popper-options="{
+      modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+    }"
+    :popper-class="popperClass"
+    @visible-change="(v: boolean) => emit('visible-change', v)"
+  >
+    <template #dropdown>
+      <el-dropdown-menu class="noselect">
+        <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewTab">
+          <span>{{ t('settings:common.openInNewTab') }}</span>
+        </el-dropdown-item>
+        <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewWindow">
+          <span>{{ t('settings:common.openInNewWindow') }}</span>
+        </el-dropdown-item>
+        <el-dropdown-item :icon="ContentCopyRound" @click="ctxCopyLink">
+          <span>{{ t('settings:common.copyLink') }}</span>
+        </el-dropdown-item>
+        <el-dropdown-item :icon="Star12Regular" @click="ctxCreateBookmark">
+          <span>{{ t('shortcut.bookmark.add') }}</span>
+        </el-dropdown-item>
+        <template v-if="ctxItem?.isPinned">
+          <el-dropdown-item v-if="showEdit" :icon="Edit16Regular" divided @click="ctxEdit">
+            <span>{{ t('common.edit') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="PinOff16Regular" :divided="!showEdit" @click="ctxUnpin">
+            <span>{{ t('shortcut.unpin') }}</span>
+          </el-dropdown-item>
+        </template>
+        <template v-else>
+          <el-dropdown-item :icon="Pin12Regular" divided @click="ctxPin">
+            <span>{{ t('shortcut.pin') }}</span>
+          </el-dropdown-item>
+          <el-dropdown-item :icon="BlockRound" @click="ctxBlockSite">
+            <span>{{ t('shortcut.hide') }}</span>
+          </el-dropdown-item>
+        </template>
+      </el-dropdown-menu>
+    </template>
+  </el-dropdown>
+</template>

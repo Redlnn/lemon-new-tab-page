@@ -133,7 +133,7 @@ const beforeMonetChange = async () => {
     // 没有在线壁纸url不给开
     if (!settings.background.online.url) return false
     // 开了缓存说明有权限不再申请
-    if (settings.background.online.cacheEnable) return true
+    if (settings.background.online.enableCache) return true
 
     try {
       await ElMessageBox.confirm(
@@ -152,7 +152,7 @@ const beforeMonetChange = async () => {
   const result = await checkAndRequestPermission(hostname, true)
   const res = result === PermissionResult.GrantedAll
 
-  if (res) settings.background.online.cacheEnable = true
+  if (res) settings.background.online.enableCache = true
   else ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
 
   return res

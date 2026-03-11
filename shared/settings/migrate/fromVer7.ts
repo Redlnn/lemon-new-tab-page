@@ -67,7 +67,7 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       },
       online: {
         url: oldSettings.background.onlineUrl,
-        cacheEnable: defaultSettings.background.online.cacheEnable,
+        cacheEnable: !defaultSettings.background.online.enableCache, // 旧版本是反的
         cacheDuration: defaultSettings.background.online.cacheDuration,
         noExpires: defaultSettings.background.online.noExpires
       }
@@ -76,7 +76,7 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       enabled: oldSettings.shortcut.enabled,
       enableTopSites: oldSettings.shortcut.enableTopSites,
       enableShadow: oldSettings.shortcut.enableShadow,
-      disablePaging: defaultSettings.shortcut.disablePaging,
+      disablePaging: !defaultSettings.shortcut.enablePaging, // 旧版本是反的
       showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
       rows: oldSettings.shortcut.rows,
       columns: oldSettings.shortcut.columns,

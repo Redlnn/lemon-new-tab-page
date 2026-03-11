@@ -66,7 +66,7 @@ export interface SettingsInterfaceVer9 {
     bing: bingBackground
     online: {
       url: string
-      cacheEnable: boolean
+      enableCache: boolean
       cacheDuration: number // 缓存时长，单位为小时
       noExpires: boolean
     }
@@ -77,7 +77,7 @@ export interface SettingsInterfaceVer9 {
     enabled: boolean
     enableTopSites: boolean
     enableShadow: boolean
-    disablePaging: boolean
+    enablePaging: boolean
     showOnSearchFocus: boolean
     rows: number
     columns: number
@@ -94,7 +94,7 @@ export interface SettingsInterfaceVer9 {
     openInNewTab: boolean
   }
 
-  // 快速访问
+  // Dock
   dock: {
     enabled: boolean
     enableTopSites: boolean
@@ -105,6 +105,11 @@ export interface SettingsInterfaceVer9 {
     iconSize: number
     iconRatio: number
     openInNewTab: boolean
+    launchpad: {
+      enabled: boolean
+      enableTopSites: boolean
+      openInNewTab: boolean
+    }
   }
 
   // 同步
@@ -126,31 +131,31 @@ export interface SettingsInterfaceVer9 {
 
   // 性能相关
   perf: {
-    disableBookmarkTransparent: boolean
-    disableBookmarkBlur: boolean
-    disableDialogTransparent: boolean
-    disableDialogBlur: boolean
-    disableDialogAnimation: boolean
-    disableFocusScale: boolean
-    disableFocusBlur: boolean
-    disableShortcutTransparent: boolean
-    disableShortcutBlur: boolean
-    disableSearchBarTransparent: boolean
-    disableSearchBarBlur: boolean
-    disableYiyanTransparent: boolean
-    disableYiyanBlur: boolean
-    disableYiyanRipple: boolean
-    disableSettingsBtnBlur: boolean
-    disableSettingsBtnTransparent: boolean
-    disableBgSwitchAnim: boolean
-    disableDockScale: boolean
+    enableBookmarkTransparent: boolean
+    enableBookmarkBlur: boolean
+    enableDialogTransparent: boolean
+    enableDialogBlur: boolean
+    enableDialogAnimation: boolean
+    enableFocusScale: boolean
+    enableFocusBlur: boolean
+    enableShortcutTransparent: boolean
+    enableShortcutBlur: boolean
+    enableSearchBarTransparent: boolean
+    enableSearchBarBlur: boolean
+    enableYiyanTransparent: boolean
+    enableYiyanBlur: boolean
+    enableYiyanRipple: boolean
+    enableSettingsBtnBlur: boolean
+    enableSettingsBtnTransparent: boolean
+    enableBgSwitchAnim: boolean
+    enableDockScale: boolean
   }
 
   // 书签侧边栏
   bookmark: {
     direction: DrawerDirection
     rightClickToOpen: boolean
-    hideBtn: boolean
+    showBtn: boolean
     defaultSortMode: SortMode
   }
 

@@ -11,7 +11,11 @@ import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 
-import { OPEN_BACKGROUND_PREFERENCE, OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
+import {
+  OPEN_BACKGROUND_PREFERENCE,
+  OPEN_SEARCH_ENGINE_PREFERENCE,
+  OPEN_SETTINGS
+} from '@newtab/shared/keys'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
@@ -129,17 +133,17 @@ watch(
 )
 
 watch(
-  () => settings.perf.disableDialogTransparent,
-  (disabled) => {
-    toggleDocumentClass('dialog-transparent', !disabled)
+  () => settings.perf.enableDialogTransparent,
+  (enabled) => {
+    toggleDocumentClass('dialog-transparent', enabled)
   },
   { immediate: true }
 )
 
 watch(
-  () => settings.perf.disableDialogBlur,
-  (disabled) => {
-    toggleDocumentClass('dialog-acrylic', !disabled)
+  () => settings.perf.enableDialogBlur,
+  (enabled) => {
+    toggleDocumentClass('dialog-acrylic', enabled)
   },
   { immediate: true }
 )
@@ -150,6 +154,7 @@ function openBookmarkSidebar() {
   }
 }
 
+provide(OPEN_SETTINGS, () => SettingsPageRef.value?.toggle())
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 
@@ -157,11 +162,8 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
 
 const actionClass = computed(() => {
   const perf = settings.perf
-  const dt = perf.disableSettingsBtnTransparent
-  const db = perf.disableSettingsBtnBlur
-
-  const enableTransparent = !dt
-  const enableBlur = !db && enableTransparent
+  const enableTransparent = perf.enableSettingsBtnTransparent
+  const enableBlur = perf.enableSettingsBtnBlur && enableTransparent
 
   return {
     'action-btn-container--tran': enableTransparent,
@@ -175,7 +177,7 @@ const actionClass = computed(() => {
   <el-config-provider
     :locale="elLocale"
     :dialog="{
-      transition: settings.perf.disableDialogAnimation ? 'none' : 'dialog',
+      transition: settings.perf.enableDialogAnimation ? 'dialog' : 'none',
       alignCenter: true
     }"
     :message="{
@@ -196,14 +198,15 @@ const actionClass = computed(() => {
       <search-box v-if="settings.search.enabled" @contextmenu.stop />
       <shortcut
         v-if="settings.shortcut.enabled"
-        :on-open-add-dialog="() => AddShortcutDialogRef?.openAddDialog()"
-        :on-open-edit-dialog="(i: number) => AddShortcutDialogRef?.openEditDialog(i)"
+        :on-open-add-dialog="AddShortcutDialogRef?.openAddDialog"
+        :on-open-edit-dialog="AddShortcutDialogRef?.openEditDialog"
         @contextmenu.stop
       />
       <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
       <dock
         v-if="settings.dock.enabled"
-        :on-open-add-dialog="() => AddShortcutDialogRef?.openAddDialog()"
+        :on-open-add-dialog="AddShortcutDialogRef?.openAddDialog"
+        :on-open-edit-dialog="AddShortcutDialogRef?.openEditDialog"
       />
     </main>
     <background ref="BackgroundRef" />
@@ -216,7 +219,7 @@ const actionClass = computed(() => {
         @open-faq="FaqRef?.show"
         @open-background-switcher="BGSwticherRef?.show"
       />
-      <bookmark-btn v-if="!settings.bookmark.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
+      <bookmark-btn v-if="settings.bookmark.showBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
       <refresh-bg-btn
         v-if="settings.background.bgType === BgType.Online"
         @refresh-background="BackgroundRef?.refreshBackground"

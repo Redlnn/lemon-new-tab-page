@@ -1,21 +1,7 @@
 <script setup lang="ts">
 import { useDebounceFn, useEventListener, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import {
-  ChevronLeft20Filled,
-  ChevronRight20Filled,
-  Edit16Regular,
-  Pin12Regular,
-  PinOff16Regular,
-  Star12Regular
-} from '@vicons/fluent'
-import { BlockRound, ContentCopyRound, OpenInNewRound } from '@vicons/material'
-import type { DropdownInstance } from 'element-plus'
-import { useTranslation } from 'i18next-vue'
-// 由于 wxt/browser 缺少火狐的 topSites 类型定义，直接用官方的 webextension-polyfill
-import type { TopSites } from 'webextension-polyfill'
-
-import { browser } from '#imports'
+import { ChevronLeft20Filled, ChevronRight20Filled } from '@vicons/fluent'
 
 import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore } from '@/shared/shortcut'
@@ -26,6 +12,7 @@ import { useFocusStore } from '@newtab/shared/store'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import AddShortcut from './components/AddShortcut.vue'
+import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
 import ShortcutItem from './components/ShortcutItem.vue'
 import ShortcutPaginationDots from './components/ShortcutPaginationDots.vue'
 import { useShortcutData } from './composables/useShortcutData'
@@ -33,10 +20,6 @@ import { useShortcutDrag } from './composables/useShortcutDrag'
 import { solveGridColumnFirst, usePagedGridLayout } from './composables/useShortcutLayout'
 import { useShortcutPagination } from './composables/useShortcutPagination'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
-import { pinShortcut, removeShortcut } from './utils/shortcut'
-import { blockSite } from './utils/topSites'
-
-const { t } = useTranslation()
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()
@@ -44,12 +27,10 @@ const shortcutStore = useShortcutStore()
 
 const { height } = useWindowSize({ type: 'visual' })
 
-const props = defineProps<{
+defineProps<{
   onOpenAddDialog?: () => void
   onOpenEditDialog?: (index: number) => void
 }>()
-
-const { onOpenAddDialog, onOpenEditDialog } = props
 
 const refreshDebounced = useDebounceFn(refresh, 100)
 
@@ -102,7 +83,7 @@ const totalItemsCount = computed(() => allItems.value.length)
 
 // 如果用户禁用翻页，则将用于分页计算的总项目数限制为每页格子数，确保只有一页
 const paginationTotalItems = computed(() =>
-  settings.shortcut.disablePaging
+  !settings.shortcut.enablePaging
     ? Math.min(totalItemsCount.value, slotsPerPage.value)
     : totalItemsCount.value
 )
@@ -184,27 +165,19 @@ const showNextPageAddButton = computed(() => {
   return showAddButtonForPage(pageIndex)
 })
 
-// 记录当前打开的右键菜单关闭函数，实现全局唯一
-const openedMenuCloseFn = ref<(() => void) | null>(null)
-provide(SHORTCUT_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
-
 // ---- 共享右键菜单 ----
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 const popperClass = perf('shortcut__menu-popper')
 const navBtnPerfClass = perf('shortcut__nav-btn')
 
-const ctxDropdownRef = ref<DropdownInstance>()
-const ctxPosition = shallowRef<DOMRect>(DOMRect.fromRect({ x: 0, y: 0 }))
-const ctxTriggerRef = ref({ getBoundingClientRect: () => ctxPosition.value })
-const ctxItem = shallowRef<{
-  url: string
-  title: string
-  isPinned: boolean
-  originalIndex: number
-} | null>(null)
+// 记录当前打开的右键菜单关闭函数，实现全局唯一
+const openedMenuCloseFn = ref<(() => void) | null>(null)
+provide(SHORTCUT_OPENED_MENU_CLOSE_FN, openedMenuCloseFn)
+
+const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctxMenuRef')
 
 function openCtxMenu(
   event: MouseEvent | PointerEvent,
@@ -214,60 +187,8 @@ function openCtxMenu(
   if (openedMenuCloseFn.value) {
     openedMenuCloseFn.value()
   }
-  ctxItem.value = item
-  ctxPosition.value = DOMRect.fromRect({ x: event.clientX, y: event.clientY })
-  ctxDropdownRef.value?.handleOpen()
-  openedMenuCloseFn.value = () => ctxDropdownRef.value?.handleClose()
-}
-
-async function ctxOpenInNewTab(): Promise<void> {
-  if (ctxItem.value) window.open(ctxItem.value.url, '_blank')
-}
-
-function ctxOpenInNewWindow(): void {
-  if (ctxItem.value) browser.windows.create({ url: ctxItem.value.url })
-}
-
-function ctxCopyLink(): void {
-  if (ctxItem.value) navigator.clipboard.writeText(ctxItem.value.url)
-}
-
-async function ctxCreateBookmark(): Promise<void> {
-  if (!ctxItem.value) return
-  const { url, title } = ctxItem.value
-  const res = await browser.bookmarks.search({ url })
-  if (res.length !== 0) {
-    ElMessage.info(t('shortcut.bookmark.existing'))
-    return
-  }
-  browser.bookmarks.create({ title, url }, (created) => {
-    if (!created.parentId) return
-    chrome.bookmarks.get(created.parentId, (nodes) => {
-      const folderTitle = nodes?.[0]?.title ?? null
-      ElMessage.success(t('shortcut.bookmark.success', { folder: folderTitle }))
-    })
-  })
-}
-
-async function ctxUnpin(): Promise<void> {
-  if (!ctxItem.value?.isPinned) return
-  await removeShortcut(ctxItem.value.originalIndex, shortcutStore, refreshDebounced)
-}
-
-async function ctxPin(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await pinShortcut(shortcutStore, refreshDebounced, ctxItem.value.url, ctxItem.value.title)
-}
-
-async function ctxBlockSite(): Promise<void> {
-  if (!ctxItem.value || ctxItem.value.isPinned) return
-  await blockSite(ctxItem.value.url, refreshDebounced)
-  await refreshDebounced()
-}
-
-function ctxEdit(): void {
-  if (!ctxItem.value?.isPinned) return
-  onOpenEditDialog?.(ctxItem.value.originalIndex)
+  ctxMenuRef.value?.open(event, item)
+  openedMenuCloseFn.value = () => ctxMenuRef.value?.close()
 }
 
 // 切换页面时重置并关闭已打开的菜单
@@ -312,24 +233,21 @@ async function refresh() {
     openedMenuCloseFn.value = null
   }
 
-  const _shortcuts = shortcutStore.items.slice()
+  shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  let mergedTop: TopSites.MostVisitedURL[] = []
   if (settings.shortcut.enableTopSites) {
-    const topList = await useTopSitesMerge({
-      shortcuts: _shortcuts,
+    topSites.value = await useTopSitesMerge({
+      shortcuts: shortcuts.value,
       columns: displayColumns.value,
       maxRows: displayRows.value,
       force: topSitesNeedsReload.value,
       noCap: true // 不截断，获取所有可用的 top sites
     })
-    mergedTop = topList
     topSitesNeedsReload.value = false
+  } else {
+    topSites.value = []
   }
-
-  shortcuts.value = _shortcuts
-  topSites.value = mergedTop
 
   // 首次刷新完成后设置 mounted 标志
   if (!mounted.value) {
@@ -380,7 +298,7 @@ watch(
     settings.shortcut.iconSize,
     settings.shortcut.itemMarginH,
     settings.shortcut.itemMarginV,
-    settings.shortcut.disablePaging
+    settings.shortcut.enablePaging
   ],
   async () => {
     updateMaxCols()
@@ -552,7 +470,7 @@ const containerGridStyle = computed(() => ({
               <div
                 v-else
                 class="shortcut__container shortcut__container--page shortcut__container--next shortcut__container--placeholder"
-              />
+              ></div>
             </div>
           </div>
         </div>
@@ -583,50 +501,12 @@ const containerGridStyle = computed(() => ({
     </div>
 
     <!-- 共享右键菜单 -->
-    <el-dropdown
-      ref="ctxDropdownRef"
-      :virtual-ref="ctxTriggerRef"
-      :show-arrow="false"
-      virtual-triggering
-      trigger="contextmenu"
-      placement="bottom-start"
-      :popper-options="{
-        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
-      }"
+    <shortcut-context-menu
+      ref="ctxMenuRef"
+      :refresh-fn="refreshDebounced"
+      :on-open-edit-dialog="onOpenEditDialog"
       :popper-class="popperClass"
-    >
-      <template #dropdown>
-        <el-dropdown-menu class="noselect">
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewTab">
-            <span>{{ t('settings:common.openInNewTab') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="OpenInNewRound" @click="ctxOpenInNewWindow">
-            <span>{{ t('settings:common.openInNewWindow') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="ContentCopyRound" @click="ctxCopyLink">
-            <span>{{ t('settings:common.copyLink') }}</span>
-          </el-dropdown-item>
-          <el-dropdown-item :icon="Star12Regular" @click="ctxCreateBookmark">
-            <span>{{ t('shortcut.bookmark.add') }}</span>
-          </el-dropdown-item>
-          <template v-if="ctxItem?.isPinned">
-            <el-dropdown-item :icon="Edit16Regular" divided @click="ctxEdit">
-              <span>{{ t('common.edit') }}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :icon="PinOff16Regular" @click="ctxUnpin">
-              <span>{{ t('shortcut.unpin') }}</span>
-            </el-dropdown-item>
-          </template>
-          <template v-else>
-            <el-dropdown-item :icon="Pin12Regular" divided @click="ctxPin">
-              <span>{{ t('shortcut.pin') }}</span>
-            </el-dropdown-item>
-            <el-dropdown-item :icon="BlockRound" @click="ctxBlockSite">
-              <span>{{ t('shortcut.hide') }}</span>
-            </el-dropdown-item>
-          </template>
-        </el-dropdown-menu>
-      </template>
-    </el-dropdown>
+      show-edit
+    />
   </section>
 </template>
