@@ -127,24 +127,34 @@ const beforeMonetChange = async () => {
   if (settings.theme.monetColor) return true
   // 无背景不允许开
   if (settings.background.bgType === BgType.None) return false
-  // 必应和本地壁纸随便开
-  if (settings.background.bgType !== BgType.Online) return true
-  if (settings.background.bgType === BgType.Online) {
-    // 没有在线壁纸url不给开
-    if (!settings.background.online.url) return false
-    // 开了缓存说明有权限不再申请
-    if (settings.background.online.enableCache) return true
+  // 必应随便开，本地壁纸必须是图片才能开
+  if (settings.background.bgType === BgType.Bing) return true
+  // 本地壁纸必须是图片才能开
+  if (settings.background.bgType === BgType.Local) {
+    if (
+      settings.background.local.mediaType === 'image' ||
+      settings.background.localDark.mediaType === 'image'
+    )
+      return true
+    else return false
+  }
 
-    try {
-      await ElMessageBox.confirm(
-        t('theme.monet.askEnableCache.message'),
-        t('theme.monet.askEnableCache.title'),
-        { type: 'warning' }
-      )
-    } catch {
-      // 用户取消或关闭对话框：不允许开启
-      return false
-    }
+  // 剩下在线壁纸
+
+  // 没有在线壁纸url不给开
+  if (!settings.background.online.url) return false
+  // 开了缓存说明有权限不再申请
+  if (settings.background.online.enableCache) return true
+
+  try {
+    await ElMessageBox.confirm(
+      t('theme.monet.askEnableCache.message'),
+      t('theme.monet.askEnableCache.title'),
+      { type: 'warning' }
+    )
+  } catch {
+    // 用户取消或关闭对话框：不允许开启
+    return false
   }
 
   // 用户同意开启缓存

@@ -53,14 +53,14 @@ function useBackgroundSwitcher() {
 
   const readMediaMeta = (
     file: File,
-    cb: (meta: { width?: number; height?: number; duration?: number }) => void
+    cb: (meta: { width?: number; height?: number; duration?: number }, file?: File) => void
   ) => {
     if (!file) return
     if (file.type.startsWith('image/')) {
       const url = URL.createObjectURL(file)
       const img = new Image()
       img.onload = () => {
-        cb({ width: img.naturalWidth, height: img.naturalHeight })
+        cb({ width: img.naturalWidth, height: img.naturalHeight }, file)
         URL.revokeObjectURL(url)
       }
       img.onerror = () => {
@@ -78,7 +78,7 @@ function useBackgroundSwitcher() {
         URL.revokeObjectURL(url)
       }
       video.onloadedmetadata = () => {
-        cb({ width: video.videoWidth, height: video.videoHeight, duration: video.duration })
+        cb({ width: video.videoWidth, height: video.videoHeight, duration: video.duration }, file)
         cleanup()
       }
       video.onerror = () => {
@@ -117,21 +117,30 @@ function useBackgroundSwitcher() {
     return true
   }
 
+  const setMeta = (m: { width?: number; height?: number; duration?: number }, file?: File) => {
+    if (!file) return
+    if (isDarkBg.value) {
+      metaDark.value = { ...metaDark.value, ...m, size: file.size }
+    } else {
+      metaLight.value = { ...metaLight.value, ...m, size: file.size }
+    }
+  }
+
   const handleUpload = async (option: UploadRequestOptions) => {
     const file = option.file as File
 
     await uploadBackground(file, isDarkBg.value)
 
     // 上传完成后立即读取元信息以展示
-    const setMeta = (m: { width?: number; height?: number; duration?: number }) => {
-      if (isDarkBg.value) {
-        metaDark.value = { ...metaDark.value, ...m, size: file.size }
-      } else {
-        metaLight.value = { ...metaLight.value, ...m, size: file.size }
-      }
-    }
-
     readMediaMeta(file, setMeta)
+    if (
+      settings.theme.monetColor &&
+      settings.background.local.mediaType !== 'image' &&
+      settings.background.localDark.mediaType !== 'image'
+    ) {
+      ElMessage.info(i18next.t('settings:background.warning.monetColorDisabled'))
+      settings.theme.monetColor = false
+    }
   }
 
   const deleteLocalBg = async () => {

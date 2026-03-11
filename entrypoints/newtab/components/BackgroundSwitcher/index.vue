@@ -139,14 +139,17 @@ function beforeLocalBgSwitch() {
     <!-- 自定义壁纸 -->
     <div class="bg-switcher-title">{{ t('background.custom') }}</div>
     <div class="bg-switcher-container bg-switcher-container--custom">
+      <!-- 无壁纸占位 -->
       <div class="bg-switcher--local-previews" v-if="isNoneBg">
         <el-icon class="bg-switcher-preview__placeholder"><brightness6-twotone /></el-icon>
       </div>
+      <!-- 本地壁纸预览/上传 -->
       <div
         v-else-if="isLocalBg"
         class="bg-switcher--local-previews"
         :style="{ height: `${customLocalContentHeight}px` }"
       >
+        <!-- 浅色模式本地壁纸上传 -->
         <el-upload
           v-show="!isDarkBg"
           class="bg-switcher-uploader"
@@ -168,6 +171,7 @@ function beforeLocalBgSwitch() {
           </template>
           <el-icon v-else class="bg-switcher-preview__placeholder"><upload-round /></el-icon>
         </el-upload>
+        <!-- 深色模式本地壁纸上传 -->
         <el-upload
           v-if="isDarkBg && settings.background.local.id"
           class="bg-switcher-uploader"
@@ -189,9 +193,11 @@ function beforeLocalBgSwitch() {
           </template>
           <el-icon v-else class="bg-switcher-preview__placeholder"><upload-round /></el-icon>
         </el-upload>
+        <!-- 删除本地壁纸按钮 -->
         <button v-if="isShowDeleteIcon" class="bg-switcher-uploader-delete" @click="deleteLocalBg">
           <el-icon><close-round /></el-icon>
         </button>
+        <!-- 本地浅色壁纸信息 -->
         <div v-if="metaLight && !isDarkBg" class="bg-switcher-uploader-meta">
           <div>
             {{ metaLight.size ? formatBytes(metaLight.size) : '' }}
@@ -199,6 +205,7 @@ function beforeLocalBgSwitch() {
             {{ metaLight.duration ? `${metaLight.duration.toFixed(1)}s` : '' }}
           </div>
         </div>
+        <!-- 本地深色壁纸信息 -->
         <div v-if="metaDark && isDarkBg" class="bg-switcher-uploader-meta">
           <div>
             {{ metaDark.size ? formatBytes(metaDark.size) : '' }}
@@ -206,6 +213,7 @@ function beforeLocalBgSwitch() {
             {{ metaDark.duration ? `${metaDark.duration.toFixed(1)}s` : '' }}
           </div>
         </div>
+        <!-- 切换浅色/深色模式壁纸 -->
         <div class="bg-switcher-theme-switch">
           <el-switch
             v-model="isDarkBg"
@@ -215,9 +223,11 @@ function beforeLocalBgSwitch() {
           />
         </div>
       </div>
+      <!-- 在线壁纸预览 -->
       <div class="bg-switcher--local-previews" v-else-if="isOnlineBg">
         <el-icon class="bg-switcher-preview__placeholder"><cloud-queue-twotone /></el-icon>
       </div>
+      <!-- 必应壁纸预览 -->
       <div
         class="bg-switcher--local-previews"
         v-else-if="settings.background.bgType === BgType.Bing"
