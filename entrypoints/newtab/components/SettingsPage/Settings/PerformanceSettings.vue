@@ -7,65 +7,34 @@ const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
 
-function useNegate(source: Ref<boolean>): ComputedRef<boolean>
-function useNegate<T extends object, K extends keyof T>(obj: T, key: K): ComputedRef<boolean>
-function useNegate(arg1: Ref<boolean> | object, arg2?: string) {
-  const src: Ref<boolean> =
-    arg2 !== undefined ? toRef(arg1 as Record<string, boolean>, arg2) : (arg1 as Ref<boolean>)
-  return computed<boolean>({
-    get: () => !src.value,
-    set: (val: boolean) => {
-      src.value = !val
-    }
-  })
+function toggleTransparentSettings(enable: boolean) {
+  settings.perf.enableBookmarkTransparent = enable
+  settings.perf.enableDialogTransparent = enable
+  settings.perf.enableSearchBarTransparent = enable
+  settings.perf.enableSettingsBtnTransparent = enable
+  settings.perf.enableShortcutTransparent = enable
+  settings.perf.enableYiyanTransparent = enable
 }
 
-const bookmarkTransparent = useNegate(settings.perf, 'disableBookmarkTransparent')
-const bookmarkBlur = useNegate(settings.perf, 'disableBookmarkBlur')
-const dialogTransparent = useNegate(settings.perf, 'disableDialogTransparent')
-const dialogBlur = useNegate(settings.perf, 'disableDialogBlur')
-const dialogAnimation = useNegate(settings.perf, 'disableDialogAnimation')
-const focusScale = useNegate(settings.perf, 'disableFocusScale')
-const focusBlur = useNegate(settings.perf, 'disableFocusBlur')
-const shortcutTransparent = useNegate(settings.perf, 'disableShortcutTransparent')
-const shortcutBlur = useNegate(settings.perf, 'disableShortcutBlur')
-const searchBarTransparent = useNegate(settings.perf, 'disableSearchBarTransparent')
-const searchBarBlur = useNegate(settings.perf, 'disableSearchBarBlur')
-const yiyanTransparent = useNegate(settings.perf, 'disableYiyanTransparent')
-const yiyanBlur = useNegate(settings.perf, 'disableYiyanBlur')
-const yiyanRipple = useNegate(settings.perf, 'disableYiyanRipple')
-const settingsBtnBlur = useNegate(settings.perf, 'disableSettingsBtnBlur')
-const settingsBtnTransparent = useNegate(settings.perf, 'disableSettingsBtnTransparent')
-const dockScale = useNegate(settings.perf, 'disableDockScale')
-
-function toggleTransparentSettings(disable: boolean) {
-  settings.perf.disableBookmarkTransparent = disable
-  settings.perf.disableDialogTransparent = disable
-  settings.perf.disableSearchBarTransparent = disable
-  settings.perf.disableSettingsBtnTransparent = disable
-  settings.perf.disableShortcutTransparent = disable
-  settings.perf.disableYiyanTransparent = disable
+function toggleBlurSettings(enable: boolean) {
+  settings.perf.enableBookmarkBlur = enable
+  settings.perf.enableDialogBlur = enable
+  settings.perf.enableSearchBarBlur = enable
+  settings.perf.enableSettingsBtnBlur = enable
+  settings.perf.enableShortcutBlur = enable
+  settings.perf.enableYiyanBlur = enable
+  settings.perf.enableFocusBlur = enable
 }
 
-function toggleBlurSettings(disable: boolean) {
-  settings.perf.disableBookmarkBlur = disable
-  settings.perf.disableDialogBlur = disable
-  settings.perf.disableSearchBarBlur = disable
-  settings.perf.disableSettingsBtnBlur = disable
-  settings.perf.disableShortcutBlur = disable
-  settings.perf.disableYiyanBlur = disable
-  settings.perf.disableFocusBlur = disable
-}
-
-function toggleAnimationSettings(disable: boolean) {
-  settings.clock.blink = !disable
-  settings.perf.disableDialogAnimation = disable
-  settings.perf.disableFocusScale = disable
-  settings.perf.disableFocusBlur = disable
-  settings.search.launchAnimation = !disable
-  settings.perf.disableBgSwitchAnim = disable
-  settings.perf.disableDockScale = disable
-  settings.perf.disableYiyanRipple = disable
+function toggleAnimationSettings(enable: boolean) {
+  settings.clock.blink = enable
+  settings.perf.enableDialogAnimation = enable
+  settings.perf.enableFocusScale = enable
+  settings.perf.enableFocusBlur = enable
+  settings.search.launchAnimation = enable
+  settings.perf.enableBgSwitchAnim = enable
+  settings.perf.enableDockScale = enable
+  settings.perf.enableYiyanRipple = enable
 }
 </script>
 
@@ -76,13 +45,13 @@ function toggleAnimationSettings(disable: boolean) {
         {{ t('perf.toggleAll.disable') }}
       </div>
       <span class="button-group">
-        <el-button @click="toggleAnimationSettings(true)">
+        <el-button @click="toggleAnimationSettings(false)">
           {{ t('perf.toggleAll.animation') }}
         </el-button>
-        <el-button @click="toggleTransparentSettings(true)">
+        <el-button @click="toggleTransparentSettings(false)">
           {{ t('perf.toggleAll.transparent') }}
         </el-button>
-        <el-button @click="toggleBlurSettings(true)">
+        <el-button @click="toggleBlurSettings(false)">
           {{ t('perf.toggleAll.blur') }}
         </el-button>
       </span>
@@ -92,13 +61,13 @@ function toggleAnimationSettings(disable: boolean) {
         {{ t('perf.toggleAll.enable') }}
       </div>
       <span class="button-group">
-        <el-button @click="toggleAnimationSettings(false)">
+        <el-button @click="toggleAnimationSettings(true)">
           {{ t('perf.toggleAll.animation') }}
         </el-button>
-        <el-button @click="toggleTransparentSettings(false)">
+        <el-button @click="toggleTransparentSettings(true)">
           {{ t('perf.toggleAll.transparent') }}
         </el-button>
-        <el-button @click="toggleBlurSettings(false)">
+        <el-button @click="toggleBlurSettings(true)">
           {{ t('perf.toggleAll.blur') }}
         </el-button>
       </span>
@@ -120,30 +89,30 @@ function toggleAnimationSettings(disable: boolean) {
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.bgSwitchAnim') }}</div>
-      <el-switch v-model="useNegate(settings.perf, 'disableBgSwitchAnim').value" />
+      <el-switch v-model="settings.perf.enableBgSwitchAnim" />
     </div>
     <p class="settings__item--note">
       {{ t('perf.bgSwitchAnimTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.bookmarkTransparent') }}</div>
-      <el-switch v-model="bookmarkTransparent" />
+      <el-switch v-model="settings.perf.enableBookmarkTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.bookmarkBlur') }}</div>
-      <el-switch :disabled="settings.perf.disableBookmarkTransparent" v-model="bookmarkBlur" />
+      <el-switch :disabled="!settings.perf.enableBookmarkTransparent" v-model="settings.perf.enableBookmarkBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogTransparent') }}</div>
-      <el-switch v-model="dialogTransparent" />
+      <el-switch v-model="settings.perf.enableDialogTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogBlur') }}</div>
-      <el-switch :disabled="settings.perf.disableDialogTransparent" v-model="dialogBlur" />
+      <el-switch :disabled="!settings.perf.enableDialogTransparent" v-model="settings.perf.enableDialogBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dialogAnimation') }}</div>
-      <el-switch v-model="dialogAnimation" />
+      <el-switch v-model="settings.perf.enableDialogAnimation" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('search.launchAnim') }}</div>
@@ -151,54 +120,54 @@ function toggleAnimationSettings(disable: boolean) {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.focusScale') }}</div>
-      <el-switch v-model="focusScale" />
+      <el-switch v-model="settings.perf.enableFocusScale" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.focusBlur') }}</div>
-      <el-switch v-model="focusBlur" />
+      <el-switch v-model="settings.perf.enableFocusBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.searchBarTransparent') }}</div>
-      <el-switch v-model="searchBarTransparent" />
+      <el-switch v-model="settings.perf.enableSearchBarTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.searchBarBlur') }}</div>
-      <el-switch :disabled="settings.perf.disableSearchBarTransparent" v-model="searchBarBlur" />
+      <el-switch :disabled="!settings.perf.enableSearchBarTransparent" v-model="settings.perf.enableSearchBarBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.shortcutTransparent') }}</div>
-      <el-switch v-model="shortcutTransparent" />
+      <el-switch v-model="settings.perf.enableShortcutTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.shortcutBlur') }}</div>
-      <el-switch :disabled="settings.perf.disableShortcutTransparent" v-model="shortcutBlur" />
+      <el-switch :disabled="!settings.perf.enableShortcutTransparent" v-model="settings.perf.enableShortcutBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanTransparent') }}</div>
-      <el-switch v-model="yiyanTransparent" />
+      <el-switch v-model="settings.perf.enableYiyanTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanBlur') }}</div>
-      <el-switch :disabled="settings.perf.disableYiyanTransparent" v-model="yiyanBlur" />
+      <el-switch :disabled="!settings.perf.enableYiyanTransparent" v-model="settings.perf.enableYiyanBlur" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.yiyanRipple') }}</div>
-      <el-switch v-model="yiyanRipple" />
+      <el-switch v-model="settings.perf.enableYiyanRipple" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.actionBtnTransparent') }}</div>
-      <el-switch v-model="settingsBtnTransparent" />
+      <el-switch v-model="settings.perf.enableSettingsBtnTransparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.actionBtnBlur') }}</div>
       <el-switch
-        :disabled="settings.perf.disableSettingsBtnTransparent"
-        v-model="settingsBtnBlur"
+        :disabled="!settings.perf.enableSettingsBtnTransparent"
+        v-model="settings.perf.enableSettingsBtnBlur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('perf.dockScale') }}</div>
-      <el-switch v-model="dockScale" />
+      <el-switch v-model="settings.perf.enableDockScale" />
     </div>
   </div>
 </template>

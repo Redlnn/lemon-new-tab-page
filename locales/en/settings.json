@@ -84,7 +84,7 @@
       "rtl": "Right to left",
       "title": "Open direction"
     },
-    "hideBtn": "Hide bottom-right button",
+    "showBtn": "Show bottom-right button",
     "rightClickToOpen": "Right click on background to open",
     "title": "Bookmarks bar"
   },
@@ -219,7 +219,7 @@
   "shortcut": {
     "HorizontalIconSpacing": "Horizontal icon spacing",
     "VerticalIconSpacing": "Vertical icon spacing",
-    "disablePaging": "Disable paging",
+    "enablePaging": "Enable paging",
     "enableShadow": "Show icon shadow",
     "iconMarginBottom": "Icon–Title Spacing",
     "iconRatio": "Icon ratio",

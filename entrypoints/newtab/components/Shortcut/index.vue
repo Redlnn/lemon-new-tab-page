@@ -83,7 +83,7 @@ const totalItemsCount = computed(() => allItems.value.length)
 
 // 如果用户禁用翻页，则将用于分页计算的总项目数限制为每页格子数，确保只有一页
 const paginationTotalItems = computed(() =>
-  settings.shortcut.disablePaging
+  !settings.shortcut.enablePaging
     ? Math.min(totalItemsCount.value, slotsPerPage.value)
     : totalItemsCount.value
 )
@@ -167,8 +167,8 @@ const showNextPageAddButton = computed(() => {
 
 // ---- 共享右键菜单 ----
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 const popperClass = perf('shortcut__menu-popper')
 const navBtnPerfClass = perf('shortcut__nav-btn')
@@ -298,7 +298,7 @@ watch(
     settings.shortcut.iconSize,
     settings.shortcut.itemMarginH,
     settings.shortcut.itemMarginV,
-    settings.shortcut.disablePaging
+    settings.shortcut.enablePaging
   ],
   async () => {
     updateMaxCols()

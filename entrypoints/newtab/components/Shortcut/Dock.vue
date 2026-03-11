@@ -27,8 +27,8 @@ defineProps<{
 }>()
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 
 const popperClass = perf('shortcut__menu-popper')
@@ -176,7 +176,7 @@ function applyTransition(duration: string): void {
 }
 
 function onMouseEnter(e: MouseEvent): void {
-  if (settings.perf.disableDockScale || isUsingTouch.value) return
+  if (!settings.perf.enableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -186,13 +186,13 @@ function onMouseEnter(e: MouseEvent): void {
 }
 
 function onMouseMove(e: MouseEvent): void {
-  if (settings.perf.disableDockScale || isUsingTouch.value) return
+  if (!settings.perf.enableDockScale || isUsingTouch.value) return
 
   updateScales(e.clientX)
 }
 
 function onMouseLeave(): void {
-  if (settings.perf.disableDockScale || isUsingTouch.value) return
+  if (!settings.perf.enableDockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)

@@ -21,7 +21,7 @@ const { checkAndRequestPermission } = usePermission()
 
 const beforeCacheChange = async () => {
   // 已经开了就是想要关，所以允许关
-  if (settings.background.online.cacheEnable) return true
+  if (settings.background.online.enableCache) return true
   // 不是在线壁纸不允许开
   if (settings.background.bgType !== BgType.Online) return false
   // 没有在线壁纸url不给开
@@ -113,7 +113,7 @@ const beforeCacheChange = async () => {
         <cloud-off-round />
       </div>
       <el-switch
-        v-model="settings.background.online.cacheEnable"
+        v-model="settings.background.online.enableCache"
         :disabled="settings.background.bgType !== BgType.Online"
         :before-change="beforeCacheChange"
       />
@@ -122,7 +122,7 @@ const beforeCacheChange = async () => {
       <div class="settings__label">{{ t('background.cache.noExpires') }}</div>
       <el-switch
         v-model="settings.background.online.noExpires"
-        :disabled="!settings.background.online.cacheEnable"
+        :disabled="!settings.background.online.enableCache"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
@@ -131,7 +131,7 @@ const beforeCacheChange = async () => {
         v-model="settings.background.online.cacheDuration"
         :disabled="
           settings.background.bgType !== BgType.Online ||
-          !settings.background.online.cacheEnable ||
+          !settings.background.online.enableCache ||
           settings.background.online.noExpires
         "
         :step="0.1"

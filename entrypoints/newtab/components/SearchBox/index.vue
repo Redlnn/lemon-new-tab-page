@@ -45,8 +45,8 @@ const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache(
 const { width: searchFormWidth } = useElementSize(searchForm)
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableSearchBarTransparent,
-  blurOff: settings.perf.disableSearchBarBlur
+  transparent: settings.perf.enableSearchBarTransparent,
+  blur: settings.perf.enableSearchBarBlur
 }))
 
 const formPerfClass = computed(() => [

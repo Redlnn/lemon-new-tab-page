@@ -84,7 +84,7 @@
       "rtl": "从右到左",
       "title": "打开方向"
     },
-    "hideBtn": "隐藏右下角入口",
+    "showBtn": "显示右下角入口",
     "rightClickToOpen": "右键背景打开",
     "title": "书签栏"
   },
@@ -219,7 +219,7 @@
   "shortcut": {
     "HorizontalIconSpacing": "链接左右间距",
     "VerticalIconSpacing": "链接上下间距",
-    "disablePaging": "禁用翻页",
+    "enablePaging": "启用翻页",
     "enableShadow": "显示图标阴影",
     "iconMarginBottom": "图标与标题间距",
     "iconRatio": "图标填充比例",

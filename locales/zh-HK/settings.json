@@ -84,7 +84,7 @@
       "rtl": "從右到左",
       "title": "打開方向"
     },
-    "hideBtn": "隱藏右下角按鈕",
+    "showBtn": "顯示右下角按鈕",
     "rightClickToOpen": "右鍵背景打開",
     "title": "書籤欄"
   },
@@ -219,7 +219,7 @@
   "shortcut": {
     "HorizontalIconSpacing": "連結左右間距",
     "VerticalIconSpacing": "連結上下間距",
-    "disablePaging": "停用翻頁",
+    "enablePaging": "啟用翻頁",
     "enableShadow": "顯示圖示陰影",
     "iconMarginBottom": "圖標與標題間距",
     "iconRatio": "圖示填充比例",

@@ -78,8 +78,8 @@ const sortModeOptions = [
       <el-switch v-model="settings.bookmark.rightClickToOpen" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('bookmark.hideBtn') }}</div>
-      <el-switch v-model="settings.bookmark.hideBtn" />
+      <div class="settings__label">{{ t('bookmark.showBtn') }}</div>
+      <el-switch v-model="settings.bookmark.showBtn" />
     </div>
   </div>
 </template>

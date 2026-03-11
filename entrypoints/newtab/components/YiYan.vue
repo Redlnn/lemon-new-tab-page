@@ -14,8 +14,8 @@ const { yiyan, yiyanOrigin, load, isEnabled } = useYiYan()
 const settings = useSettingsStore()
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableYiyanTransparent,
-  blurOff: settings.perf.disableYiyanBlur
+  transparent: settings.perf.enableYiyanTransparent,
+  blur: settings.perf.enableYiyanBlur
 }))
 const yiyanPerfClass = perf('yiyan', { withoutPrefix: true })
 
@@ -59,7 +59,7 @@ function onTransitionEnd(e: TransitionEvent, ripple: Ripple) {
 }
 
 function onPointerDown(e: PointerEvent) {
-  if (settings.perf.disableYiyanRipple) return
+  if (!settings.perf.enableYiyanRipple) return
 
   const x = e.clientX - left.value
   const y = e.clientY - top.value

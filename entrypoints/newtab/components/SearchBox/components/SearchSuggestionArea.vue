@@ -38,8 +38,8 @@ const emit = defineEmits<{
 }>()
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableSearchBarTransparent,
-  blurOff: settings.perf.disableSearchBarBlur
+  transparent: settings.perf.enableSearchBarTransparent,
+  blur: settings.perf.enableSearchBarBlur
 }))
 
 const suggestionAreaPerfClass = computed(() => [

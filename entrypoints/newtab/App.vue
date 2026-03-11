@@ -133,17 +133,17 @@ watch(
 )
 
 watch(
-  () => settings.perf.disableDialogTransparent,
-  (disabled) => {
-    toggleDocumentClass('dialog-transparent', !disabled)
+  () => settings.perf.enableDialogTransparent,
+  (enabled) => {
+    toggleDocumentClass('dialog-transparent', enabled)
   },
   { immediate: true }
 )
 
 watch(
-  () => settings.perf.disableDialogBlur,
-  (disabled) => {
-    toggleDocumentClass('dialog-acrylic', !disabled)
+  () => settings.perf.enableDialogBlur,
+  (enabled) => {
+    toggleDocumentClass('dialog-acrylic', enabled)
   },
   { immediate: true }
 )
@@ -162,11 +162,8 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
 
 const actionClass = computed(() => {
   const perf = settings.perf
-  const dt = perf.disableSettingsBtnTransparent
-  const db = perf.disableSettingsBtnBlur
-
-  const enableTransparent = !dt
-  const enableBlur = !db && enableTransparent
+  const enableTransparent = perf.enableSettingsBtnTransparent
+  const enableBlur = perf.enableSettingsBtnBlur && enableTransparent
 
   return {
     'action-btn-container--tran': enableTransparent,
@@ -180,7 +177,7 @@ const actionClass = computed(() => {
   <el-config-provider
     :locale="elLocale"
     :dialog="{
-      transition: settings.perf.disableDialogAnimation ? 'none' : 'dialog',
+      transition: settings.perf.enableDialogAnimation ? 'dialog' : 'none',
       alignCenter: true
     }"
     :message="{
@@ -222,7 +219,7 @@ const actionClass = computed(() => {
         @open-faq="FaqRef?.show"
         @open-background-switcher="BGSwticherRef?.show"
       />
-      <bookmark-btn v-if="!settings.bookmark.hideBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
+      <bookmark-btn v-if="settings.bookmark.showBtn" @open-bookmark-sidebar="BookmarkRef?.show" />
       <refresh-bg-btn
         v-if="settings.background.bgType === BgType.Online"
         @refresh-background="BackgroundRef?.refreshBackground"

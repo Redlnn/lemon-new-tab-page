@@ -25,8 +25,8 @@ const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 
 const iconClass = perf('shortcut__icon')

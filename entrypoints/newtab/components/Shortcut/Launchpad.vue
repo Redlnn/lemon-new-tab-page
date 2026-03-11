@@ -226,8 +226,8 @@ function openItem(url: string) {
 
 // ---- 右键菜单 ----
 const perf = usePerfClasses(() => ({
-  transparentOff: settings.perf.disableShortcutTransparent,
-  blurOff: settings.perf.disableShortcutBlur
+  transparent: settings.perf.enableShortcutTransparent,
+  blur: settings.perf.enableShortcutBlur
 }))
 
 const popperClass = perf('shortcut__menu-popper')
