@@ -238,8 +238,7 @@ watch(
 
 // 动态watch管理
 let stopBgWatch: (() => void) | undefined
-let stopLocalBgWatch: (() => void) | null = null
-let stopOnlineBgWatch: (() => void) | null = null
+let stopBgTypeWatch: (() => void) | null = null
 
 async function updateBackgroundURL(type: BgType): Promise<void> {
   const provider = bgTypeProviders[type]
@@ -284,18 +283,16 @@ async function handleOnlineBgChange() {
 // 根据背景类型激活对应的watch
 function activateBackgroundWatch(type: BgType) {
   // 清理旧的watch
-  stopLocalBgWatch?.()
-  stopOnlineBgWatch?.()
-  stopLocalBgWatch = null
-  stopOnlineBgWatch = null
+  stopBgTypeWatch?.()
+  stopBgTypeWatch = null
 
   // 根据类型激活对应的watch
   if (type === BgType.Local) {
     // 只在使用本地背景时监听本地背景变化
-    stopLocalBgWatch = watch(currentLocalUrl, handleLocalBgChange)
+    stopBgTypeWatch = watch(currentLocalUrl, handleLocalBgChange)
   } else if (type === BgType.Online) {
     // 只在使用在线背景时监听在线URL变化
-    stopOnlineBgWatch = watch(() => settings.background.online.url, handleOnlineBgChange)
+    stopBgTypeWatch = watch(() => settings.background.online.url, handleOnlineBgChange)
   }
   // Bing和None类型不需要watch，因为它们不会动态变化
 }
@@ -360,8 +357,7 @@ useEventListener('pageshow', async (e) => {
 
 // 组件卸载时清理watch
 onUnmounted(() => {
-  stopLocalBgWatch?.()
-  stopOnlineBgWatch?.()
+  stopBgTypeWatch?.()
   // 卸载时释放 Blob URL
   revokeLastBlobUrl()
 })

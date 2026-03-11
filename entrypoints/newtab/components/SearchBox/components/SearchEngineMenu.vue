@@ -62,8 +62,7 @@ function showEngineToast() {
     const engine = searchEngines[settings.search.engine as keyof typeof searchEngines]
     currentEngineName.value = t(engine.nameKey)
   } else {
-    const customEngine = customSearchEngineStore.items.find((e) => e.id === settings.search.engine)
-    currentEngineName.value = customEngine?.name || ''
+    currentEngineName.value = currentCustomEngine.value?.name || ''
   }
 
   // 显示提示

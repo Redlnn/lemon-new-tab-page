@@ -15,15 +15,17 @@ interface UseTopSitesMergeOptions {
 
 const WWW_RE = /^www\./
 
-function getFallbackTitle(url: string) {
-  // 手工解析 hostname，避免频繁创建 URL 对象与 try/catch 的开销
-  const m = url.match(/^[a-zA-Z]+:\/\/([^/?#:]+)(?::\d+)?/)
-  let host = m && m[1] ? m[1] : url
-  host = host.replace(WWW_RE, '')
-  if (host.split('.').length <= 2) {
-    host = host.charAt(0).toUpperCase() + host.slice(1)
+function getFallbackTitle(url: string): string {
+  try {
+    let host = new URL(url).hostname
+    host = host.replace(WWW_RE, '')
+    if (host.split('.').length <= 2) {
+      host = host.charAt(0).toUpperCase() + host.slice(1)
+    }
+    return host
+  } catch {
+    return url
   }
-  return host
 }
 
 export async function useTopSitesMerge(

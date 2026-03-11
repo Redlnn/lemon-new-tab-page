@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useNow, useTimeoutFn } from '@vueuse/core'
+import { useIntervalFn, useNow, useTimeoutFn } from '@vueuse/core'
 
 import dayjs from 'dayjs/esm'
 import { useTranslation } from 'i18next-vue'
@@ -33,21 +33,7 @@ function customMeridiem(hours: number) {
 
 // 显示秒时使用较短间隔以保证秒数更新及时，否则使用 1000ms 节省资源
 const timeNow = ref(new Date())
-let timeTimer: ReturnType<typeof setInterval> | null = null
-
-function setupTimeTimer() {
-  if (timeTimer) clearInterval(timeTimer)
-  const interval = settings.clock.showSeconds ? 100 : 1000
-  timeTimer = setInterval(() => {
-    timeNow.value = new Date()
-  }, interval)
-}
-
-watch(() => settings.clock.showSeconds, setupTimeTimer, { immediate: true })
-
-onUnmounted(() => {
-  if (timeTimer) clearInterval(timeTimer)
-})
+useIntervalFn(() => { timeNow.value = new Date() }, () => (settings.clock.showSeconds ? 100 : 1000))
 
 const dateNow = useNow({ interval: 60 * 1000 })
 
