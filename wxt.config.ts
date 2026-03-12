@@ -50,6 +50,14 @@ const firefoxManifest = {
   optional_permissions: ['*://*/*'],
   chrome_settings_overrides: {
     homepage: 'newtab.html'
+  },
+  browser_specific_settings: {
+    gecko: {
+      id: '{25566b3f-eaeb-4f05-aac6-da1efc2dc1fd}',
+      data_collection_permissions: {
+        required: ['bookmarksInfo', 'browsingActivity']
+      }
+    }
   }
 }
 
