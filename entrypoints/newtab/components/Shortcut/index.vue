@@ -274,16 +274,21 @@ watch(isDragging, (dragging) => {
   }
 })
 
-useEventListener(currentPageContainerRef, 'wheel', (evt: WheelEvent) => {
-  if (isDragging.value) return
-  if (evt.deltaY < 0 || evt.deltaX < 0) {
-    // 向上滚动，上一页
-    prevPage()
-  } else if (evt.deltaY > 0 || evt.deltaX > 0) {
-    // 向下滚动，下一页
-    nextPage()
-  }
-})
+useEventListener(
+  currentPageContainerRef,
+  'wheel',
+  (evt: WheelEvent) => {
+    if (isDragging.value) return
+    if (evt.deltaY < 0 || evt.deltaX < 0) {
+      // 向上滚动，上一页
+      prevPage()
+    } else if (evt.deltaY > 0 || evt.deltaX > 0) {
+      // 向下滚动，下一页
+      nextPage()
+    }
+  },
+  { passive: true }
+)
 
 // useResizeObserver 会在开始观察时立即触发一次，因此不需要额外的 onMounted 刷新调用
 useResizeObserver(document.documentElement, async () => {
