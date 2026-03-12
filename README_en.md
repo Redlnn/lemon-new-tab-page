@@ -57,9 +57,10 @@ The extension is now available on
 
 ![Standard homepage](./preview/1.webp)  
 ![Solid-color background homepage](./preview/2.webp)  
-![Homepage with quick access background](./preview/3.webp)  
-![Search page](./preview/4.webp)  
-![Settings page](./preview/5.webp)
+![Homepage with Dock and large clock](./preview/3.webp)  
+![Launchpad](./preview/4.webp)  
+![Search page](./preview/5.webp)  
+![Settings page](./preview/6.webp)
 
 </details>
 

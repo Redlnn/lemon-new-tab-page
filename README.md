@@ -55,11 +55,12 @@
 <details>
 <summary>点击展开图片</summary>
 
-![普通主页](./preview/1.webp)
-![纯色背景主页](./preview/2.webp)
-![带快速访问区域背景主页](./preview/3.webp)
-![搜索页面](./preview/4.webp)
-![设置页面](./preview/5.webp)
+![普通主页](./preview/1.webp)  
+![纯色背景主页](./preview/2.webp)  
+![带Dock和大时钟的主页](./preview/3.webp)  
+![Launchpad](./preview/4.webp)  
+![搜索页面](./preview/5.webp)  
+![设置页面](./preview/6.webp)
 
 </details>
 
