@@ -269,6 +269,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
+        popper-class="dock-tooltip"
       >
         <div
           role="button"
@@ -292,6 +293,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
+        popper-class="dock-tooltip"
       >
         <OnLongPress
           as="a"
@@ -340,6 +342,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
+        popper-class="dock-tooltip"
       >
         <OnLongPress
           as="a"
@@ -490,5 +493,16 @@ function handleContextmenu(
   width: 1px;
   height: 60%;
   background-color: rgb(255 255 255 / 50%);
+}
+
+.dock-tooltip.el-popper {
+  border: none;
+  background: rgb(from var(--el-bg-color-overlay) r g b/ 50%);
+
+  html.colorful & {
+    background: rgb(from var(--el-color-primary-light-7) r g b/ 50%);
+  }
+
+  @include acrylic.acrylic(10px, 1.3, 1.4);
 }
 </style>
