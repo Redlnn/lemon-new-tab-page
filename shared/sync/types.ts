@@ -1,4 +1,4 @@
-import type { CURRENT_CONFIG_INTERFACE } from '@/shared/settings'
+import type { CURRENT_CONFIG_SCHEMA } from '@/shared/settings'
 import type { Shortcut } from '@/shared/shortcut/shortcutStorage'
 
 export interface LocalSyncData {
@@ -6,7 +6,7 @@ export interface LocalSyncData {
 }
 
 export interface SyncData extends LocalSyncData {
-  settings: CURRENT_CONFIG_INTERFACE
+  settings: CURRENT_CONFIG_SCHEMA
   bookmarks: Shortcut
 }
 

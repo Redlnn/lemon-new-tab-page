@@ -14,8 +14,8 @@ const { yiyan, yiyanOrigin, load, isEnabled } = useYiYan()
 const settings = useSettingsStore()
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableYiyanTransparent,
-  blur: settings.perf.enableYiyanBlur
+  transparent: settings.perf.yiyan.transparent,
+  blur: settings.perf.yiyan.blur
 }))
 const yiyanPerfClass = perf('yiyan', { withoutPrefix: true })
 
@@ -59,7 +59,7 @@ function onTransitionEnd(e: TransitionEvent, ripple: Ripple) {
 }
 
 function onPointerDown(e: PointerEvent) {
-  if (!settings.perf.enableYiyanRipple) return
+  if (!settings.perf.yiyan.ripple) return
 
   const x = e.clientX - left.value
   const y = e.clientY - top.value
@@ -116,9 +116,9 @@ async function copyToClipboard() {
       class="yiyan noselect"
       :class="[
         {
-          'yiyan--shadow': settings.yiyan.enableShadow,
-          'yiyan--invert yiyan--light': settings.yiyan.invertColor.light,
-          'yiyan--invert yiyan--night': settings.yiyan.invertColor.night
+          'yiyan--shadow': settings.yiyan.style.shadow,
+          'yiyan--invert yiyan--light': settings.yiyan.style.invertColor.light,
+          'yiyan--invert yiyan--night': settings.yiyan.style.invertColor.night
         },
         yiyanPerfClass
       ]"

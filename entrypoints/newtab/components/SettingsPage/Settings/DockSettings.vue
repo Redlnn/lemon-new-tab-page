@@ -42,7 +42,7 @@ async function restoreDefaultTopSites() {
             </p>
             <div class="settings__item settings__item--horizontal">
               <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
-              <el-switch v-model="settings.dock.launchpad.enableTopSites" />
+              <el-switch v-model="settings.dock.launchpad.topSites" />
             </div>
             <div class="settings__item settings__item--horizontal">
               <div class="settings__label">{{ t('common.openInNewTab') }}</div>
@@ -66,7 +66,7 @@ async function restoreDefaultTopSites() {
         </el-collapse-transition>
         <div class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
-          <el-switch v-model="settings.dock.enableTopSites" />
+          <el-switch v-model="settings.dock.topSites" />
         </div>
         <div class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('common.openInNewTab') }}</div>

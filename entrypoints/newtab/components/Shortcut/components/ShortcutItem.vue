@@ -25,8 +25,8 @@ const faviconRef = getFaviconURL(toRef(props, 'url'))
 const iconUrl = computed(() => props.favicon || faviconRef.value)
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableShortcutTransparent,
-  blur: settings.perf.enableShortcutBlur
+  transparent: settings.perf.shortcut.transparent,
+  blur: settings.perf.shortcut.blur
 }))
 
 const iconClass = perf('shortcut__icon')
@@ -53,10 +53,10 @@ const itemRef = useTemplateRef('itemRef')
     >
       <div
         class="shortcut__icon-container"
-        :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
+        :style="{ marginBottom: `${settings.shortcut.spacing.iconTitleGap}px` }"
       >
         <div
-          v-if="pined && settings.shortcut.showPinnedIcon && settings.shortcut.enableTopSites"
+          v-if="pined && settings.shortcut.pinnedIcon && settings.shortcut.topSites"
           class="shortcut__pin-icon"
           :class="pinIconClass"
         >
@@ -64,7 +64,10 @@ const itemRef = useTemplateRef('itemRef')
             <pin12-regular />
           </el-icon>
         </div>
-        <div class="shortcut__icon" :class="[iconClass, { border: settings.shortcut.enableBorder }]">
+        <div
+          class="shortcut__icon"
+          :class="[iconClass, { border: settings.shortcut.style.border }]"
+        >
           <span
             class="span"
             :style="{
@@ -75,9 +78,9 @@ const itemRef = useTemplateRef('itemRef')
       </div>
       <el-text
         :data-content="title"
-        v-if="settings.shortcut.showShortcutTitle"
+        v-if="settings.shortcut.title.show"
         class="shortcut__title"
-        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.titleExtraWidth}px)` }"
+        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.title.extraWidth}px)` }"
         truncated
       >
         {{ title }}

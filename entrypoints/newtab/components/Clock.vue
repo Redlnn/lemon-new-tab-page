@@ -33,7 +33,12 @@ function customMeridiem(hours: number) {
 
 // 显示秒时使用较短间隔以保证秒数更新及时，否则使用 1000ms 节省资源
 const timeNow = ref(new Date())
-useIntervalFn(() => { timeNow.value = new Date() }, () => (settings.clock.showSeconds ? 100 : 1000))
+useIntervalFn(
+  () => {
+    timeNow.value = new Date()
+  },
+  () => (settings.clock.showSeconds ? 100 : 1000)
+)
 
 const dateNow = useNow({ interval: 60 * 1000 })
 
@@ -72,13 +77,13 @@ const weightMap = {
 const clockClass = computed(() => [settings.clock.newStyle ? 'clock__new' : undefined])
 const clockStyle = computed(() => {
   return {
-    fontWeight: weightMap[settings.clock.weight],
+    fontWeight: weightMap[settings.clock.weight.time],
     fontSize: settings.clock.size + 'px'
   }
 })
 const calcStyle = computed(() => {
   return {
-    fontWeight: weightMap[settings.clock.calcWeight]
+    fontWeight: weightMap[settings.clock.weight.date]
   }
 })
 </script>
@@ -88,9 +93,9 @@ const calcStyle = computed(() => {
     ref="time"
     class="clock noselect"
     :class="[
-      settings.clock.shadow ? 'clock--shadow' : undefined,
-      settings.clock.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
-      settings.clock.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
+      settings.clock.style.shadow ? 'clock--shadow' : undefined,
+      settings.clock.style.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
+      settings.clock.style.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
     ]"
   >
     <div class="clock__time-container" :class="clockClass" :style="clockStyle">
@@ -98,17 +103,19 @@ const calcStyle = computed(() => {
         :style="[settings.clock.newStyle ? { display: 'flex', alignItems: 'center' } : undefined]"
       >
         <span
-          v-if="settings.clock.showMeridiem && !settings.clock.newStyle"
+          v-if="settings.clock.meridiem.show && !settings.clock.newStyle"
           class="clock__meridiem"
-          :class="[settings.clock.meridiemFollowSize ? undefined : 'clock__meridiem-small']"
+          :class="[settings.clock.meridiem.followSize ? undefined : 'clock__meridiem-small']"
         >
           {{ isChinese ? formattedDate.meridiemZH : formattedTime.meridiem }}
         </span>
         <span class="clock__time">
           <span class="clock__hour">
-            {{ settings.clock.isMeridiem ? formattedTime.hourMeridiem : formattedTime.hour }}
+            {{ settings.clock.hour12 ? formattedTime.hourMeridiem : formattedTime.hour }}
           </span>
-          <span class="clock__colon" :class="{ 'clock__colon--blinking': settings.clock.blink }"
+          <span
+            class="clock__colon"
+            :class="{ 'clock__colon--blinking': settings.clock.style.blink }"
             >:</span
           >
           <span
@@ -121,7 +128,9 @@ const calcStyle = computed(() => {
             >{{ formattedTime.minute }}</span
           >
           <template v-if="settings.clock.showSeconds && !settings.clock.newStyle">
-            <span class="clock__colon" :class="{ 'clock__colon--blinking': settings.clock.blink }"
+            <span
+              class="clock__colon"
+              :class="{ 'clock__colon--blinking': settings.clock.style.blink }"
               >:</span
             >
             <span

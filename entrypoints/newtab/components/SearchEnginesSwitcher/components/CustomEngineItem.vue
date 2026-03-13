@@ -28,8 +28,8 @@ const emit = defineEmits<{
 }>()
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableDialogTransparent,
-  blur: settings.perf.enableDialogBlur
+  transparent: settings.perf.dialog.transparent,
+  blur: settings.perf.dialog.blur
 }))
 
 const popperPerfClass = perf('se-switcher-item__menu-popper')

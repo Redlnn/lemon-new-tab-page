@@ -75,8 +75,8 @@ function showEngineToast() {
 }
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableSearchBarTransparent,
-  blur: settings.perf.enableSearchBarBlur
+  transparent: settings.perf.searchBar.transparent,
+  blur: settings.perf.searchBar.blur
 }))
 
 const popperPerfClass = perf('search-engine-menu')

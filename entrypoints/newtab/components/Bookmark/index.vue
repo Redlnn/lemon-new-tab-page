@@ -26,8 +26,8 @@ const { t } = useTranslation()
 const settings = useSettingsStore()
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableBookmarkTransparent,
-  blur: settings.perf.enableBookmarkBlur
+  transparent: settings.perf.bookmark.transparent,
+  blur: settings.perf.bookmark.blur
 }))
 
 const bookmarkPerfClass = perf('bookmark')

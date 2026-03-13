@@ -4,7 +4,7 @@ import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 import type { bingBackground, localBackground } from './type'
 
-export interface SettingsInterfaceVer8 {
+export interface SettingsSchemaV8 {
   // 主题相关
   theme: {
     primaryColor: string

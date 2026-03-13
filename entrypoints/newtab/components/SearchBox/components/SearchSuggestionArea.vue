@@ -38,13 +38,13 @@ const emit = defineEmits<{
 }>()
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableSearchBarTransparent,
-  blur: settings.perf.enableSearchBarBlur
+  transparent: settings.perf.searchBar.transparent,
+  blur: settings.perf.searchBar.blur
 }))
 
 const suggestionAreaPerfClass = computed(() => [
   {
-    'search-suggestion-area--shadow': settings.search.shadow,
+    'search-suggestion-area--shadow': settings.search.style.shadow,
     'search-suggestion-area--dark':
       settings.background.bgType === BgType.None && searchSuggestions.value.length > 0
   },

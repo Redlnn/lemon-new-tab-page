@@ -26,8 +26,8 @@ const emit = defineEmits<{
 const { t } = useTranslation()
 const settings = useSettingsStore()
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableSettingsBtnTransparent,
-  blur: settings.perf.enableSettingsBtnBlur
+  transparent: settings.perf.actionBtns.transparent,
+  blur: settings.perf.actionBtns.blur
 }))
 const popperPerfClass = perf('setting-btn__popper')
 

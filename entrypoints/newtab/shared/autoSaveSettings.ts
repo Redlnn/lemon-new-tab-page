@@ -1,9 +1,9 @@
 import type { Store } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
 
-import { type CURRENT_CONFIG_INTERFACE, defaultSettings, saveSettings } from '@/shared/settings'
+import { type CURRENT_CONFIG_SCHEMA, defaultSettings, saveSettings } from '@/shared/settings'
 
-export function setupAutoSaveSettings(settings: Store<'option', CURRENT_CONFIG_INTERFACE>) {
+export function setupAutoSaveSettings(settings: Store<'option', CURRENT_CONFIG_SCHEMA>) {
   let lastSavedState: string | null = null
 
   const saveSettingsDebounced = useDebounceFn(async (state: typeof settings.$state) => {

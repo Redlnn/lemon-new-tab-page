@@ -45,17 +45,17 @@ const { addHistory, ensureLoaded: ensureHistoryLoaded } = useSearchHistoryCache(
 const { width: searchFormWidth } = useElementSize(searchForm)
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableSearchBarTransparent,
-  blur: settings.perf.enableSearchBarBlur
+  transparent: settings.perf.searchBar.transparent,
+  blur: settings.perf.searchBar.blur
 }))
 
 const formPerfClass = computed(() => [
   {
-    'search-box__form--shadow': settings.search.shadow,
+    'search-box__form--shadow': settings.search.style.shadow,
     'search-box__form--dark': settings.background.bgType === BgType.None,
     'search-box__form--expand': settings.search.expandAlways,
     'search-box__form--always-icon': settings.search.showIconAlways,
-    border: settings.search.border
+    border: settings.search.style.border
   },
   perf('search-box__form').value
 ])
@@ -243,7 +243,7 @@ function doSearch() {
 }
 
 onMounted(() => {
-  if (settings.search.launchAnimation) {
+  if (settings.perf.searchBar.launchAnim) {
     useTimeoutFn(() => (mounted.value = true), 100)
   }
   void ensureHistoryLoaded()
@@ -258,7 +258,7 @@ onMounted(() => {
       class="search-box__form"
       :class="formPerfClass"
       :style="{
-        '--width': settings.search.launchAnimation ? (mounted ? undefined : '0') : undefined
+        '--width': settings.perf.searchBar.launchAnim ? (mounted ? undefined : '0') : undefined
       }"
       @submit.prevent="doSearch"
     >

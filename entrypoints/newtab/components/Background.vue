@@ -92,7 +92,7 @@ function updateVideoPlayback() {
 }
 
 const backgroundCss = computed(() => ({
-  'background-container--focused__blur': focusStore.isFocused && settings.perf.enableFocusBlur
+  'background-container--focused__blur': focusStore.isFocused && settings.perf.focus.blur
 }))
 
 // 视差效果
@@ -123,9 +123,9 @@ watchEffect((onCleanup) => {
 })
 
 const backgroundScale = computed(() => {
-  if (focusStore.isFocused && settings.perf.enableFocusScale) {
+  if (focusStore.isFocused && settings.perf.focus.scale) {
     return 1.1
-  } else if (!settings.perf.enableFocusScale) {
+  } else if (!settings.perf.focus.scale) {
     return 1.05
   } else {
     return 1
@@ -172,7 +172,7 @@ const bgTypeProviders: Record<
     if (!rawUrl) return ''
 
     // 如果没有开启缓存且没有开启莫奈，直接返回原始URL
-    if (!settings.background.online.enableCache && !settings.theme.monetColor) {
+    if (!settings.background.online.cache.enabled && !settings.theme.monetColor) {
       return rawUrl
     }
 
@@ -184,7 +184,7 @@ const bgTypeProviders: Record<
     }
 
     const now = Date.now()
-    const useCache = settings.background.online.enableCache
+    const useCache = settings.background.online.cache.enabled
     // 如果开启了缓存，则尝试从缓存中获取
     const cached = useCache ? await getCachedOnlineWallpaper(rawUrl) : null
 
@@ -192,9 +192,9 @@ const bgTypeProviders: Record<
 
     if (cached) {
       const ageHours = (now - cached.timestamp) / 36e5
-      const withinDuration = ageHours <= settings.background.online.cacheDuration
+      const withinDuration = ageHours <= settings.background.online.cache.duration
 
-      isCacheValid = settings.background.online.noExpires || withinDuration
+      isCacheValid = settings.background.online.cache.noExpires || withinDuration
     }
 
     if (isCacheValid) {
@@ -228,7 +228,7 @@ const bgTypeProviders: Record<
     const newCache = { blob, timestamp: now }
 
     // 缓存新下载的图像（如果开启了缓存）
-    if (settings.background.online.enableCache) {
+    if (settings.background.online.cache.enabled) {
       await cacheOnlineWallpaper(rawUrl, newCache)
     }
 
@@ -296,7 +296,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   // 等待过渡动画
   // 首次打开默认白屏，不需要等待白屏动画
   if (bgURL.value !== '') {
-    if (settings.perf.enableBgSwitchAnim) {
+    if (settings.perf.bgSwitchAnim) {
       await promiseTimeout(animationDuration)
     }
     // 不直接赋值是因为避免看到壁纸变形
@@ -307,7 +307,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
   switchStore.end()
-  if (settings.perf.enableBgSwitchAnim) {
+  if (settings.perf.bgSwitchAnim) {
     await promiseTimeout(animationDuration)
   }
   shortenBgFadeDuration()

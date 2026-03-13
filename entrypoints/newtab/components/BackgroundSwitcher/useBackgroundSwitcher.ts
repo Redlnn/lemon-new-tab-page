@@ -211,8 +211,8 @@ function useBackgroundSwitcher() {
       }
       // 如果只授予了当前地址权限，则无法安全使用在线壁纸缓存。
       // 如果用户之前启用了缓存，则自动关闭并清理缓存，同时给出提示说明原因。
-      if (settings.background.online.enableCache) {
-        settings.background.online.enableCache = false
+      if (settings.background.online.cache.enabled) {
+        settings.background.online.cache.enabled = false
         await clearAllOnlineWallpaperCache()
         ElMessage.warning(i18next.t('settings:background.warning.cacheDisabled'))
       }

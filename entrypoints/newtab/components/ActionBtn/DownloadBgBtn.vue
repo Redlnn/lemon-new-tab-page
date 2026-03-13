@@ -63,7 +63,7 @@ function downloadImageBlob(blob: Blob) {
 }
 
 async function downloadOnline() {
-  if (!settings.background.online.enableCache) {
+  if (!settings.background.online.cache.enabled) {
     ElMessage.warning('需要开启「在线壁纸缓存」后才能下载壁纸')
     return
   }

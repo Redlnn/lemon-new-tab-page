@@ -133,7 +133,7 @@ watch(
 )
 
 watch(
-  () => settings.perf.enableDialogTransparent,
+  () => settings.perf.dialog.transparent,
   (enabled) => {
     toggleDocumentClass('dialog-transparent', enabled)
   },
@@ -141,7 +141,7 @@ watch(
 )
 
 watch(
-  () => settings.perf.enableDialogBlur,
+  () => settings.perf.dialog.blur,
   (enabled) => {
     toggleDocumentClass('dialog-acrylic', enabled)
   },
@@ -162,8 +162,8 @@ const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = u
 
 const actionClass = computed(() => {
   const perf = settings.perf
-  const enableTransparent = perf.enableSettingsBtnTransparent
-  const enableBlur = perf.enableSettingsBtnBlur && enableTransparent
+  const enableTransparent = perf.actionBtns.transparent
+  const enableBlur = perf.actionBtns.blur && enableTransparent
 
   return {
     'action-btn-container--tran': enableTransparent,
@@ -177,7 +177,7 @@ const actionClass = computed(() => {
   <el-config-provider
     :locale="elLocale"
     :dialog="{
-      transition: settings.perf.enableDialogAnimation ? 'dialog' : 'none',
+      transition: settings.perf.dialog.animation ? 'dialog' : 'none',
       alignCenter: true
     }"
     :message="{

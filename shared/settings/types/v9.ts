@@ -4,7 +4,7 @@ import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 import type { bingBackground, localBackground } from './type'
 
-export interface SettingsInterfaceVer9 {
+export interface SettingsSchemaV9 {
   // 主题相关
   theme: {
     primaryColor: string
@@ -16,101 +16,145 @@ export interface SettingsInterfaceVer9 {
   // 时钟/时间显示
   clock: {
     enabled: boolean
+
     colorfulNum: boolean
     newStyle: boolean
-    isMeridiem: boolean
-    showMeridiem: boolean
+    hour12: boolean // 12 小时制
+
+    // AM / PM
+    meridiem: {
+      show: boolean
+      followSize: boolean
+    }
+
     showDate: boolean
     showLunar: boolean
     showSeconds: boolean
+
     size: number
-    weight: ClockWeight
-    calcWeight: ClockWeight
-    meridiemFollowSize: boolean
-    shadow: boolean
-    blink: boolean
-    invertColor: {
-      light: boolean
-      night: boolean
+    weight: {
+      time: ClockWeight
+      date: ClockWeight
+    }
+
+    style: {
+      shadow: boolean
+      blink: boolean
+
+      invertColor: {
+        light: boolean
+        night: boolean
+      }
     }
   }
 
   // 搜索相关
   search: {
     enabled: boolean
+
+    placeholder: string
+
     expandAlways: boolean
     showIconAlways: boolean
+
     suggestionAPI: keyof typeof import('@newtab/shared/search').searchSuggestAPIs
     engine: string
+
     openInNewTab: boolean
     recordHistory: boolean
-    shadow: boolean
-    border: boolean
-    placeholder: string
-    launchAnimation: boolean
+
+    style: {
+      shadow: boolean
+      border: boolean
+    }
   }
 
   // 背景设置
   background: {
     bgType: BgType
+
     vignette: boolean
     parallax: boolean
+
     blur: number
+
     mask: {
       opacity: number
       light: string
       night: string
     }
+
     pauseOnBlur: boolean // 视频壁纸
     fastAnimation: boolean
+
     local: localBackground
     localDark: localBackground
     bing: bingBackground
     online: {
       url: string
-      enableCache: boolean
-      cacheDuration: number // 缓存时长，单位为小时
-      noExpires: boolean
+      cache: {
+        enabled: boolean
+        duration: number // 缓存时长，单位为小时
+        noExpires: boolean
+      }
     }
   }
 
   // 快速访问
   shortcut: {
     enabled: boolean
-    enableTopSites: boolean
-    enableShadow: boolean
-    enableBorder: boolean
-    enablePaging: boolean
+
+    topSites: boolean
+    pinnedIcon: boolean
+    openInNewTab: boolean
+    paging: boolean
     showOnSearchFocus: boolean
-    rows: number
-    columns: number
-    itemMarginH: number
-    itemMarginV: number
-    showShortcutTitle: boolean
-    showPinnedIcon: boolean
+
     iconSize: number
     iconRatio: number
-    iconMarginBottom: number
-    titleExtraWidth: number
-    whiteTextInLightMode: boolean
+
+    style: {
+      shadow: boolean
+      border: boolean
+    }
+
+    layout: {
+      rows: number
+      columns: number
+    }
+
     marginTop: number
-    openInNewTab: boolean
+    spacing: {
+      itemGapX: number
+      itemGapY: number
+      iconTitleGap: number
+    }
+
+    title: {
+      show: boolean
+      extraWidth: number
+      whiteInLightMode: boolean
+    }
   }
 
   // Dock
   dock: {
     enabled: boolean
-    enableTopSites: boolean
+
+    topSites: boolean
     showOnSearchFocus: boolean
-    gap: number
+    openInNewTab: boolean
+
     limitCount: boolean
     maxCount: number
+
+    gap: number
     iconSize: number
     iconRatio: number
-    openInNewTab: boolean
+
     launchpad: {
       enabled: boolean
-      enableTopSites: boolean
+      topSites: boolean
       openInNewTab: boolean
     }
   }
@@ -124,34 +168,53 @@ export interface SettingsInterfaceVer9 {
   yiyan: {
     enabled: boolean
     alwaysShow: boolean
+
     provider: YiyanProviderKey
-    enableShadow: boolean
-    invertColor: {
-      light: boolean
-      night: boolean
+
+    style: {
+      shadow: boolean
+      invertColor: {
+        light: boolean
+        night: boolean
+      }
     }
   }
 
   // 性能相关
   perf: {
-    enableBookmarkTransparent: boolean
-    enableBookmarkBlur: boolean
-    enableDialogTransparent: boolean
-    enableDialogBlur: boolean
-    enableDialogAnimation: boolean
-    enableFocusScale: boolean
-    enableFocusBlur: boolean
-    enableShortcutTransparent: boolean
-    enableShortcutBlur: boolean
-    enableSearchBarTransparent: boolean
-    enableSearchBarBlur: boolean
-    enableYiyanTransparent: boolean
-    enableYiyanBlur: boolean
-    enableYiyanRipple: boolean
-    enableSettingsBtnBlur: boolean
-    enableSettingsBtnTransparent: boolean
-    enableBgSwitchAnim: boolean
-    enableDockScale: boolean
+    bgSwitchAnim: boolean
+    dockScale: boolean
+    bookmark: {
+      transparent: boolean
+      blur: boolean
+    }
+    dialog: {
+      transparent: boolean
+      blur: boolean
+      animation: boolean
+    }
+    focus: {
+      scale: boolean
+      blur: boolean
+    }
+    shortcut: {
+      transparent: boolean
+      blur: boolean
+    }
+    searchBar: {
+      transparent: boolean
+      blur: boolean
+      launchAnim: boolean
+    }
+    yiyan: {
+      transparent: boolean
+      blur: boolean
+      ripple: boolean
+    }
+    actionBtns: {
+      blur: boolean
+      transparent: boolean
+    }
   }
 
   // 书签侧边栏
@@ -164,6 +227,7 @@ export interface SettingsInterfaceVer9 {
 
   hideMajorChangelog: boolean
   readChangeLog: boolean
+
   pluginVersion: string
   version: 9
 }

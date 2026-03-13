@@ -68,8 +68,8 @@ const canCollapseOther = computed(() => {
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableBookmarkTransparent,
-  blur: settings.perf.enableBookmarkBlur
+  transparent: settings.perf.bookmark.transparent,
+  blur: settings.perf.bookmark.blur
 }))
 
 const popperPerfClass = perf('bookmark__menu-popper')

@@ -1,6 +1,6 @@
 import { BgType, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
 
-import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
+import { type CURRENT_CONFIG_SCHEMA, CURRENT_CONFIG_VERSION } from './current'
 
 export const defaultSettings = {
   theme: {
@@ -9,51 +9,75 @@ export const defaultSettings = {
     monetColor: false,
     idleHide: false
   },
+
   clock: {
     enabled: true,
+
     colorfulNum: true,
     newStyle: true,
-    isMeridiem: false,
-    showMeridiem: true,
+    hour12: false,
+
+    meridiem: {
+      show: true,
+      followSize: false
+    },
+
     showDate: true,
     showLunar: true,
     showSeconds: false,
+
     size: 50,
-    weight: ClockWeight.Black,
-    calcWeight: ClockWeight.Medium,
-    meridiemFollowSize: false,
-    shadow: true,
-    blink: true,
-    invertColor: {
-      light: false,
-      night: false
+    weight: {
+      time: ClockWeight.Black,
+      date: ClockWeight.Medium
+    },
+
+    style: {
+      shadow: true,
+      blink: true,
+
+      invertColor: {
+        light: false,
+        night: false
+      }
     }
   },
   search: {
     enabled: true,
+
     expandAlways: false,
     showIconAlways: false,
+
     suggestionAPI: 'bing',
     engine: 'bing',
+
     openInNewTab: false,
     recordHistory: true,
-    shadow: true,
-    border: false,
-    placeholder: '',
-    launchAnimation: false
+
+    style: {
+      shadow: true,
+      border: false
+    },
+
+    placeholder: ''
   },
   background: {
     bgType: BgType.Bing,
+
     vignette: false,
     parallax: false,
+
     blur: 3,
+
     mask: {
       opacity: 0,
       light: '#f2f3f5',
       night: '#000'
     },
+
     pauseOnBlur: false,
     fastAnimation: false,
+
     local: {
       id: '',
       url: '',
@@ -71,89 +95,135 @@ export const defaultSettings = {
     },
     online: {
       url: '',
-      enableCache: false,
-      cacheDuration: 1, // 默认缓存1小时
-      noExpires: false
+      cache: {
+        enabled: false,
+        duration: 1, // 默认缓存1小时
+        noExpires: false
+      }
     }
   },
+
   shortcut: {
     enabled: true,
-    enableTopSites: true,
-    enableShadow: true,
-    enableBorder: false,
-    enablePaging: true,
+
+    topSites: true,
+    pinnedIcon: true,
+    openInNewTab: false,
+    paging: true,
     showOnSearchFocus: false,
-    rows: 2,
-    columns: 5,
-    itemMarginH: 5,
-    itemMarginV: 20,
-    showShortcutTitle: true,
-    showPinnedIcon: true,
+
     iconSize: 50,
     iconRatio: 0.5,
-    iconMarginBottom: 8,
-    titleExtraWidth: 35,
-    whiteTextInLightMode: true,
+
+    style: {
+      shadow: true,
+      border: false
+    },
+
+    layout: {
+      rows: 2,
+      columns: 5
+    },
+
     marginTop: 50,
-    openInNewTab: false
+    spacing: {
+      itemGapX: 5,
+      itemGapY: 20,
+      iconTitleGap: 8
+    },
+
+    title: {
+      show: true,
+      extraWidth: 35,
+      whiteInLightMode: true
+    }
   },
+
   dock: {
     enabled: false,
-    enableTopSites: true,
+
+    topSites: true,
     showOnSearchFocus: true,
-    gap: 5,
+    openInNewTab: false,
+
     limitCount: false,
     maxCount: 10,
+
+    gap: 5,
     iconSize: 40,
     iconRatio: 0.7,
-    openInNewTab: false,
+
     launchpad: {
       enabled: false,
-      enableTopSites: true,
+      topSites: true,
       openInNewTab: false
     }
   },
+
   sync: {
     enabled: false
   },
+
   yiyan: {
     enabled: true,
     alwaysShow: true,
+
     provider: 'jinrishici',
-    enableShadow: true,
-    invertColor: {
-      light: false,
-      night: false
+
+    style: {
+      shadow: true,
+      invertColor: {
+        light: false,
+        night: false
+      }
     }
   },
   perf: {
-    enableBookmarkTransparent: true,
-    enableBookmarkBlur: true,
-    enableDialogTransparent: true,
-    enableDialogBlur: true,
-    enableDialogAnimation: true,
-    enableFocusScale: true,
-    enableFocusBlur: true,
-    enableShortcutTransparent: true,
-    enableShortcutBlur: true,
-    enableSearchBarTransparent: true,
-    enableSearchBarBlur: true,
-    enableYiyanTransparent: true,
-    enableYiyanBlur: true,
-    enableYiyanRipple: true,
-    enableSettingsBtnBlur: true,
-    enableSettingsBtnTransparent: true,
-    enableBgSwitchAnim: true,
-    enableDockScale: true
+    bgSwitchAnim: true,
+    dockScale: true,
+    bookmark: {
+      transparent: true,
+      blur: true
+    },
+    dialog: {
+      transparent: true,
+      blur: true,
+      animation: true
+    },
+    focus: {
+      scale: true,
+      blur: true
+    },
+    shortcut: {
+      transparent: true,
+      blur: true
+    },
+    searchBar: {
+      transparent: true,
+      blur: true,
+      launchAnim: false
+    },
+    yiyan: {
+      transparent: true,
+      blur: true,
+      ripple: true
+    },
+    actionBtns: {
+      blur: true,
+      transparent: true
+    }
   },
+
   bookmark: {
     direction: DrawerDirection.rtl,
     rightClickToOpen: true,
     showBtn: true,
     defaultSortMode: SortMode.Original
   },
+
   hideMajorChangelog: true,
   readChangeLog: false,
+
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION
-} satisfies CURRENT_CONFIG_INTERFACE
+} satisfies CURRENT_CONFIG_SCHEMA

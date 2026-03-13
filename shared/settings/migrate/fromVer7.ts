@@ -1,8 +1,8 @@
-import type { SettingsInterfaceVer7, SettingsInterfaceVer8 } from '..'
+import type { SettingsSchemaV7, SettingsSchemaV8 } from '..'
 import { defaultSettings } from '..'
 import { toNewBgType } from './map'
 
-export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): SettingsInterfaceVer8 {
+export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchemaV8 {
   return {
     theme: {
       primaryColor: oldSettings.primaryColor,
@@ -17,8 +17,8 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       showLunar: oldSettings.time.showLunar,
       showSeconds: oldSettings.time.showSeconds,
       size: oldSettings.time.small ? 'small' : 'medium',
-      weight: defaultSettings.clock.weight,
-      meridiemFollowSize: defaultSettings.clock.meridiemFollowSize,
+      weight: defaultSettings.clock.weight.time,
+      meridiemFollowSize: defaultSettings.clock.meridiem.followSize,
       shadow: oldSettings.time.enableShadow,
       blink: oldSettings.time.blinkingColon,
       invertColor: {
@@ -63,16 +63,16 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       },
       online: {
         url: oldSettings.background.onlineUrl,
-        cacheEnable: !defaultSettings.background.online.enableCache, // 旧版本是反的
-        cacheDuration: defaultSettings.background.online.cacheDuration,
-        noExpires: defaultSettings.background.online.noExpires
+        cacheEnable: defaultSettings.background.online.cache.enabled,
+        cacheDuration: defaultSettings.background.online.cache.duration,
+        noExpires: defaultSettings.background.online.cache.noExpires
       }
     },
     shortcut: {
       enabled: oldSettings.shortcut.enabled,
       enableTopSites: oldSettings.shortcut.enableTopSites,
       enableShadow: oldSettings.shortcut.enableShadow,
-      disablePaging: !defaultSettings.shortcut.enablePaging, // 旧版本是反的
+      disablePaging: !defaultSettings.shortcut.paging, // 旧版本是反的
       showOnSearchFocus: defaultSettings.shortcut.showOnSearchFocus,
       rows: oldSettings.shortcut.rows,
       columns: oldSettings.shortcut.columns,
@@ -82,8 +82,8 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
       showPinnedIcon: oldSettings.shortcut.showPinnedIcon,
       iconSize: oldSettings.shortcut.iconSize,
       iconRatio: defaultSettings.shortcut.iconRatio,
-      iconMarginBottom: defaultSettings.shortcut.iconMarginBottom,
-      titleExtraWidth: defaultSettings.shortcut.titleExtraWidth,
+      iconMarginBottom: defaultSettings.shortcut.spacing.iconTitleGap,
+      titleExtraWidth: defaultSettings.shortcut.title.extraWidth,
       whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
       marginTop: oldSettings.shortcut.marginTop,
       openInNewTab: defaultSettings.shortcut.openInNewTab
@@ -108,5 +108,5 @@ export function migrateFromVer7To8(oldSettings: SettingsInterfaceVer7): Settings
     readChangeLog: oldSettings.readChangeLog,
     pluginVersion: oldSettings.pluginVersion,
     version: 8
-  } satisfies SettingsInterfaceVer8
+  } satisfies SettingsSchemaV8
 }

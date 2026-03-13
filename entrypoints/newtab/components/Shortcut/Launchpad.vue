@@ -116,7 +116,7 @@ async function refresh() {
   shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  if (settings.dock.launchpad.enableTopSites) {
+  if (settings.dock.launchpad.topSites) {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       force: topSitesNeedsReload.value,
@@ -212,7 +212,7 @@ watch(pageCount, (count) => {
 })
 
 watch(
-  () => settings.dock.launchpad.enableTopSites,
+  () => settings.dock.launchpad.topSites,
   (enabled) => {
     if (enabled) {
       topSitesNeedsReload.value = true
@@ -228,8 +228,8 @@ function openItem(url: string) {
 
 // ---- 右键菜单 ----
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableShortcutTransparent,
-  blur: settings.perf.enableShortcutBlur
+  transparent: settings.perf.shortcut.transparent,
+  blur: settings.perf.shortcut.blur
 }))
 
 const popperClass = perf('shortcut__menu-popper')
@@ -337,7 +337,7 @@ useDraggable(gridRef, shortcuts, {
                   <img :src="item.favicon || getFaviconURL(item.url).value" :alt="item.title" />
                 </div>
                 <el-text :line-clamp="1" truncated class="launchpad-item__label">
-                  <el-icon v-if="item.isPinned && settings.dock.launchpad.enableTopSites">
+                  <el-icon v-if="item.isPinned && settings.dock.launchpad.topSites">
                     <pin12-regular />
                   </el-icon>
                   {{ item.title }}

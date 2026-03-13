@@ -1,9 +1,9 @@
 import { storage } from '#imports'
 
-import { type CURRENT_CONFIG_INTERFACE, CURRENT_CONFIG_VERSION } from './current'
+import { type CURRENT_CONFIG_SCHEMA, CURRENT_CONFIG_VERSION } from './current'
 import { defaultSettings } from './default'
 import { migrateFromVer7To8, migrateFromVer8To9 } from './migrate'
-import type { SettingsInterfaceVer7, SettingsInterfaceVer8 } from './types'
+import type { SettingsSchemaV7, SettingsSchemaV8 } from './types'
 
 // 合并重复的迁移逻辑，通过辅助函数创建迁移函数
 function createMigration<From, To>(
@@ -22,12 +22,12 @@ function createMigration<From, To>(
   }
 }
 
-export const settingsStorage = storage.defineItem<CURRENT_CONFIG_INTERFACE>('local:settings', {
+export const settingsStorage = storage.defineItem<CURRENT_CONFIG_SCHEMA>('local:settings', {
   fallback: structuredClone(defaultSettings),
   version: CURRENT_CONFIG_VERSION,
   migrations: {
     // 不再提供对第6版及以前的迁移支持，遇到 <=6 的数据应由初始化逻辑提示用户清除数据
-    8: createMigration<SettingsInterfaceVer7, SettingsInterfaceVer8>(7, migrateFromVer7To8),
-    9: createMigration<SettingsInterfaceVer8, CURRENT_CONFIG_INTERFACE>(8, migrateFromVer8To9)
+    8: createMigration<SettingsSchemaV7, SettingsSchemaV8>(7, migrateFromVer7To8),
+    9: createMigration<SettingsSchemaV8, CURRENT_CONFIG_SCHEMA>(8, migrateFromVer8To9)
   }
 })

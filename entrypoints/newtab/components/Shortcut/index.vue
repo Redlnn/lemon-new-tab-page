@@ -83,7 +83,7 @@ const totalItemsCount = computed(() => allItems.value.length)
 
 // 如果用户禁用翻页，则将用于分页计算的总项目数限制为每页格子数，确保只有一页
 const paginationTotalItems = computed(() =>
-  !settings.shortcut.enablePaging
+  !settings.shortcut.paging
     ? Math.min(totalItemsCount.value, slotsPerPage.value)
     : totalItemsCount.value
 )
@@ -167,8 +167,8 @@ const showNextPageAddButton = computed(() => {
 
 // ---- 共享右键菜单 ----
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableShortcutTransparent,
-  blur: settings.perf.enableShortcutBlur
+  transparent: settings.perf.shortcut.transparent,
+  blur: settings.perf.shortcut.blur
 }))
 const popperClass = perf('shortcut__menu-popper')
 const navBtnPerfClass = perf('shortcut__nav-btn')
@@ -236,7 +236,7 @@ async function refresh() {
   shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  if (settings.shortcut.enableTopSites) {
+  if (settings.shortcut.topSites) {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       columns: displayColumns.value,
@@ -298,12 +298,12 @@ useResizeObserver(document.documentElement, async () => {
 
 watch(
   () => [
-    settings.shortcut.columns,
-    settings.shortcut.rows,
+    settings.shortcut.layout.columns,
+    settings.shortcut.layout.rows,
     settings.shortcut.iconSize,
-    settings.shortcut.itemMarginH,
-    settings.shortcut.itemMarginV,
-    settings.shortcut.enablePaging
+    settings.shortcut.spacing.itemGapX,
+    settings.shortcut.spacing.itemGapY,
+    settings.shortcut.paging
   ],
   async () => {
     updateMaxCols()
@@ -314,7 +314,7 @@ watch(
 watch(isOnlyTouchDevice, updateMaxCols)
 
 watch(
-  () => settings.shortcut.enableTopSites,
+  () => settings.shortcut.topSites,
   (enabled) => {
     if (enabled) {
       topSitesNeedsReload.value = true
@@ -337,8 +337,8 @@ const isHideShortcut = computed(() => {
 
 // 提取容器通用class（避免模板中重复）
 const containerBaseClasses = computed(() => [
-  settings.shortcut.enableShadow ? 'shortcut__container--item-shadow' : undefined,
-  settings.shortcut.whiteTextInLightMode ? 'shortcut__container--white-text-light' : undefined
+  settings.shortcut.style.shadow ? 'shortcut__container--item-shadow' : undefined,
+  settings.shortcut.title.whiteInLightMode ? 'shortcut__container--white-in-light' : undefined
 ])
 
 // 容器动画class
@@ -352,7 +352,7 @@ const containerAnimationClasses = computed(() => ({
 const containerGridStyle = computed(() => ({
   gridTemplateColumns: `repeat(${displayColumns.value}, 1fr)`,
   gridTemplateRows: `repeat(${displayRows.value}, 1fr)`,
-  gridGap: `${settings.shortcut.itemMarginV}px ${settings.shortcut.itemMarginH}px`,
+  gridGap: `${settings.shortcut.spacing.itemGapY}px ${settings.shortcut.spacing.itemGapX}px`,
   '--icon_size': `${settings.shortcut.iconSize}px`,
   '--icon_ratio': `${settings.shortcut.iconRatio}`
 }))

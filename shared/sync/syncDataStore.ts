@@ -4,7 +4,7 @@ import { useDebounceFn } from '@vueuse/core'
 import { browser } from 'wxt/browser'
 
 import { BgType } from '../enums'
-import type { CURRENT_CONFIG_INTERFACE, SettingsInterfaceVer7 } from '../settings'
+import type { CURRENT_CONFIG_SCHEMA, SettingsSchemaV7 } from '../settings'
 import {
   CURRENT_CONFIG_VERSION,
   defaultSettings,
@@ -146,7 +146,7 @@ export async function deinitSyncSettings() {
 }
 
 const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
-  7: (s) => migrateFromVer7To8(s as SettingsInterfaceVer7)
+  7: (s) => migrateFromVer7To8(s as SettingsSchemaV7)
 }
 
 export const useSyncDataStore = defineStore('sync', {
@@ -259,7 +259,7 @@ export const useSyncDataStore = defineStore('sync', {
               s = await fn(s)
             }
 
-            const migratedSettings = s as CURRENT_CONFIG_INTERFACE
+            const migratedSettings = s as CURRENT_CONFIG_SCHEMA
             cloudData.settings = migratedSettings
           } catch (err) {
             console.error(
@@ -302,10 +302,10 @@ export const useSyncDataStore = defineStore('sync', {
 
         // 在线壁纸需获取权限，禁用相关设置
         // 保持本地在线壁纸缓存设置
-        cloudData.settings.background.online.enableCache = localState.background.online.enableCache
+        cloudData.settings.background.online.cache = localState.background.online.cache
         if (
           localSettings.background.bgType === BgType.Online &&
-          !localState.background.online.enableCache
+          !localState.background.online.cache
         ) {
           // 关闭莫奈
           cloudData.settings.theme.monetColor = false

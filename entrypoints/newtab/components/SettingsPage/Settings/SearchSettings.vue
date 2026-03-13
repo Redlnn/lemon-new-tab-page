@@ -74,11 +74,11 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('search.enableShadow') }}</div>
-        <el-switch v-model="settings.search.shadow" />
+        <el-switch v-model="settings.search.style.shadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('search.enableBorder') }}</div>
-        <el-switch v-model="settings.search.border" />
+        <el-switch v-model="settings.search.style.border" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('search.recordSearchHistory') }}</div>
@@ -94,7 +94,7 @@ const openSearchEnginePreference = inject(OPEN_SEARCH_ENGINE_PREFERENCE)
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('search.launchAnim') }}</div>
-        <el-switch v-model="settings.search.launchAnimation" />
+        <el-switch v-model="settings.perf.searchBar.launchAnim" />
       </div>
     </template>
   </div>

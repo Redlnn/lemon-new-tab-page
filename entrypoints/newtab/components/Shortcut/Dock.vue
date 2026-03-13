@@ -27,8 +27,8 @@ defineProps<{
 }>()
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableShortcutTransparent,
-  blur: settings.perf.enableShortcutBlur
+  transparent: settings.perf.shortcut.transparent,
+  blur: settings.perf.shortcut.blur
 }))
 
 const popperClass = perf('shortcut__menu-popper')
@@ -48,7 +48,7 @@ async function refresh() {
   shortcuts.value = shortcutStore.items.slice()
 
   // 合并最常访问
-  if (settings.dock.enableTopSites) {
+  if (settings.dock.topSites) {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       columns: 1,
@@ -89,7 +89,7 @@ watch(
 )
 
 watch(
-  () => settings.dock.enableTopSites,
+  () => settings.dock.topSites,
   (enabled) => {
     if (enabled) {
       topSitesNeedsReload.value = true
@@ -188,7 +188,7 @@ function applyTransition(duration: string): void {
 }
 
 function onMouseEnter(e: MouseEvent): void {
-  if (!settings.perf.enableDockScale || isUsingTouch.value) return
+  if (!settings.perf.dockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)
@@ -198,13 +198,13 @@ function onMouseEnter(e: MouseEvent): void {
 }
 
 function onMouseMove(e: MouseEvent): void {
-  if (!settings.perf.enableDockScale || isUsingTouch.value) return
+  if (!settings.perf.dockScale || isUsingTouch.value) return
 
   updateScales(e.clientX)
 }
 
 function onMouseLeave(): void {
-  if (!settings.perf.enableDockScale || isUsingTouch.value) return
+  if (!settings.perf.dockScale || isUsingTouch.value) return
 
   if (transitionTimer) clearTimeout(transitionTimer)
   applyTransition(TRANSITION_DURATION)

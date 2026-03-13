@@ -23,8 +23,8 @@ withDefaults(
 )
 
 const perf = usePerfClasses(() => ({
-  transparent: settings.perf.enableShortcutTransparent,
-  blur: settings.perf.enableShortcutBlur
+  transparent: settings.perf.shortcut.transparent,
+  blur: settings.perf.shortcut.blur
 }))
 
 const iconPerfClass = perf('shortcut__icon')
@@ -45,16 +45,19 @@ const iconPerfClass = perf('shortcut__icon')
     >
       <div
         class="shortcut__icon-container"
-        :style="{ marginBottom: `${settings.shortcut.iconMarginBottom}px` }"
+        :style="{ marginBottom: `${settings.shortcut.spacing.iconTitleGap}px` }"
       >
-        <div class="shortcut__icon" :class="[iconPerfClass, { border: settings.shortcut.enableBorder }]">
+        <div
+          class="shortcut__icon"
+          :class="[iconPerfClass, { border: settings.shortcut.style.border }]"
+        >
           <add-round />
         </div>
       </div>
       <el-text
-        v-if="settings.shortcut.showShortcutTitle"
+        v-if="settings.shortcut.title.show"
         class="shortcut__title"
-        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.titleExtraWidth}px)` }"
+        :style="{ width: `calc(var(--icon_size) + ${settings.shortcut.title.extraWidth}px)` }"
         truncated
       >
         {{ t('shortcut.addShortcut') }}
@@ -88,7 +91,7 @@ const iconPerfClass = perf('shortcut__icon')
   }
 
   // 白色文本容器特化
-  html.light .shortcut__container--white-text-light & {
+  html.light .shortcut__container--white-in-light & {
     .shortcut__title,
     .shortcut__icon {
       color: rgb(255 255 255 / 70%);

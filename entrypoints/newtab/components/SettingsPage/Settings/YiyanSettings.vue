@@ -32,7 +32,7 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
       </p>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('yiyan.enableShadow') }}</div>
-        <el-switch v-model="settings.yiyan.enableShadow" />
+        <el-switch v-model="settings.yiyan.style.shadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('yiyan.title') }}</div>

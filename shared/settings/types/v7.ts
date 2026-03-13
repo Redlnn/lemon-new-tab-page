@@ -4,7 +4,7 @@ import type { YiyanProviderKey } from '@newtab/shared/yiyan'
 
 import type { bingBackground, localBackground } from './type'
 
-export interface SettingsInterfaceVer7 {
+export interface SettingsSchemaV7 {
   primaryColor: string
   colorfulMode: boolean
   monetColor: boolean

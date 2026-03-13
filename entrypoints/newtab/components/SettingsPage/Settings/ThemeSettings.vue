@@ -144,7 +144,7 @@ const beforeMonetChange = async () => {
   // 没有在线壁纸url不给开
   if (!settings.background.online.url) return false
   // 开了缓存说明有权限不再申请
-  if (settings.background.online.enableCache) return true
+  if (settings.background.online.cache.enabled) return true
 
   try {
     await ElMessageBox.confirm(
@@ -162,7 +162,7 @@ const beforeMonetChange = async () => {
   const result = await checkAndRequestPermission(hostname, true)
   const res = result === PermissionResult.GrantedAll
 
-  if (res) settings.background.online.enableCache = true
+  if (res) settings.background.online.cache.enabled = true
   else ElMessage.warning(i18next.t('settings:background.warning.monetDisabled'))
 
   return res
@@ -254,25 +254,25 @@ const beforeMonetChange = async () => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.invertColorLight') }}</div>
-      <el-switch v-model="settings.clock.invertColor.light" />
+      <el-switch v-model="settings.clock.style.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('clock.invertColorDark') }}</div>
-      <el-switch v-model="settings.clock.invertColor.night" />
+      <el-switch v-model="settings.clock.style.invertColor.night" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
         {{ t('shortcut.whiteTextInLightMode') }}
       </div>
-      <el-switch v-model="settings.shortcut.whiteTextInLightMode" />
+      <el-switch v-model="settings.shortcut.title.whiteInLightMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('yiyan.invertColorLight') }}</div>
-      <el-switch v-model="settings.yiyan.invertColor.light" />
+      <el-switch v-model="settings.yiyan.style.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('yiyan.invertColorDark') }}</div>
-      <el-switch v-model="settings.yiyan.invertColor.night" />
+      <el-switch v-model="settings.yiyan.style.invertColor.night" />
     </div>
   </div>
 </template>

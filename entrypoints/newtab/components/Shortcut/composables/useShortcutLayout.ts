@@ -27,10 +27,10 @@ export function usePagedGridLayout() {
   // 计算在当前窗口宽度下可容纳的最大列数
   const computeFitColumns = () => {
     const containerWidth = windowWidth.value * 0.85
-    const marginH = settings.shortcut.itemMarginH
+    const marginH = settings.shortcut.spacing.itemGapX
     const unitWidth = getItemWidth() + marginH
     let extra = 40 // 预留padding空间
-    if (!isOnlyTouchDevice.value && settings.shortcut.enablePaging) {
+    if (!isOnlyTouchDevice.value && settings.shortcut.paging) {
       // 多页模式下预留分页按钮和间距空间
       extra += 80
     }
@@ -42,18 +42,18 @@ export function usePagedGridLayout() {
     // n * unitWidth - marginH + extra <= containerWidth
     // n < (containerWidth + marginH - extra) / unitWidth
     const raw = Math.floor((containerWidth + marginH - extra) / unitWidth)
-    return Math.max(1, Math.min(settings.shortcut.columns, raw))
+    return Math.max(1, Math.min(settings.shortcut.layout.columns, raw))
   }
 
   // 最大列数
-  const maxFitCols = ref(settings.shortcut.columns)
+  const maxFitCols = ref(settings.shortcut.layout.columns)
 
   const updateMaxCols = useDebounceFn(() => {
     maxFitCols.value = computeFitColumns()
   }, 100)
 
   // 纯最大行数
-  const maxFitRows = computed(() => (windowHeight.value < 450 ? 1 : settings.shortcut.rows))
+  const maxFitRows = computed(() => (windowHeight.value < 450 ? 1 : settings.shortcut.layout.rows))
 
   return { updateMaxCols, maxFitCols, maxFitRows }
 }

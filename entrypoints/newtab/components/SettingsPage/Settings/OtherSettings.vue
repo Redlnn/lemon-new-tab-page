@@ -14,7 +14,7 @@ import localForage from 'localforage'
 import { storage } from '#imports'
 
 import { downloadJSON } from '@/shared/getJson'
-import { type CURRENT_CONFIG_INTERFACE, defaultSettings, useSettingsStore } from '@/shared/settings'
+import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
@@ -124,7 +124,7 @@ function sendSyncMessage() {
 
 const fileInput = useTemplateRef('fileInput')
 type Backup = {
-  settings: CURRENT_CONFIG_INTERFACE
+  settings: CURRENT_CONFIG_SCHEMA
   shortcuts: Shortcut
   customSearchEngines: CustomSearchEngineStorage
 }
