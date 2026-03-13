@@ -221,6 +221,7 @@ async function addCurrentPage() {
 
   .el-text {
     align-self: auto;
+    word-break: break-all;
   }
 }
 
