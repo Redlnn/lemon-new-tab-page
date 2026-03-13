@@ -107,10 +107,20 @@ const isHideDock = computed(() => {
 // ---- Dock 缩放逻辑（正弦波曲线，直接操作 DOM CSS 变量，不走响应式）----
 const { width: windowWidth } = useWindowSize({ type: 'visual' })
 
-const CURVE_RANGE = 200
+const CURVE_RANGE = computed(() => {
+  if (windowWidth.value <= 600) return 130
+  else if (windowWidth.value <= 800) return 150
+  else if (windowWidth.value <= 1000) return 180
+  else return 200
+})
 const TRANSITION_DURATION = '0.1s'
 const MIN_SCALE = 1
-const MAX_SCALE = computed(() => (windowWidth.value < 500 ? 1.2 : 1.6))
+const MAX_SCALE = computed(() => {
+  if (windowWidth.value <= 600) return 1.3
+  else if (windowWidth.value <= 800) return 1.4
+  else if (windowWidth.value <= 1000) return 1.5
+  else return 1.6
+})
 
 const dockRef = ref<HTMLElement | null>(null)
 // 按文档顺序存放所有需缩放的元素（item 与 gap 交替）
@@ -142,11 +152,12 @@ function cacheNaturalCenters(): void {
 }
 
 function scaleCurve(curveCentreX: number, itemCentreX: number): number {
-  const beginX = curveCentreX - CURVE_RANGE / 2
-  const endX = curveCentreX + CURVE_RANGE / 2
+  const range = CURVE_RANGE.value
+  const beginX = curveCentreX - range / 2
+  const endX = curveCentreX + range / 2
   if (itemCentreX < beginX || itemCentreX > endX) return MIN_SCALE
   const amplitude = MAX_SCALE.value - MIN_SCALE
-  const angle = ((itemCentreX - beginX) / CURVE_RANGE) * Math.PI
+  const angle = ((itemCentreX - beginX) / range) * Math.PI
   return Math.sin(angle) * amplitude + MIN_SCALE
 }
 
