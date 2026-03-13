@@ -254,7 +254,7 @@ function handleContextmenu(
 <template>
   <div
     ref="dockRef"
-    class="dock"
+    class="dock noselect"
     :style="{
       opacity: isHideDock,
       pointerEvents: isHideDock === '0' ? 'none' : 'auto',
@@ -280,7 +280,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
-        popper-class="dock-tooltip"
+        popper-class="dock-tooltip noselect"
       >
         <div
           role="button"
@@ -304,7 +304,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
-        popper-class="dock-tooltip"
+        popper-class="dock-tooltip noselect"
       >
         <OnLongPress
           as="a"
@@ -353,7 +353,7 @@ function handleContextmenu(
         :enterable="false"
         :disabled="isUsingTouch"
         transition="none"
-        popper-class="dock-tooltip"
+        popper-class="dock-tooltip noselect"
       >
         <OnLongPress
           as="a"
