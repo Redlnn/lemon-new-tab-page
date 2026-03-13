@@ -46,8 +46,8 @@ const searchInputRef = useTemplateRef<{ focus: () => void }>('searchInput')
 const { height: containerHeight } = useElementSize(containerRef)
 
 const COLS = computed(() => {
-  if (windowWidth.value <= 500) return 4
-  else if (windowWidth.value <= 800) return 5
+  if (windowWidth.value <= 700) return 4
+  else if (windowWidth.value <= 900) return 5
   else if (windowWidth.value <= 1000) return 6
   else return 7
 })
@@ -269,7 +269,12 @@ useDraggable(gridRef, shortcuts, {
   <Teleport to="body">
     <Transition name="launchpad-fade">
       <el-overlay v-show="model" :overlay-class="['launchpad-overlay', 'noselect']" :z-index="1">
-        <div class="launchpad-wrapper" ref="container" @click.self="close">
+        <div
+          class="launchpad-wrapper"
+          ref="container"
+          @click.self="close"
+          @contextmenu.prevent.stop
+        >
           <!-- 搜索栏 -->
           <div class="launchpad-search">
             <el-input
@@ -290,6 +295,16 @@ useDraggable(gridRef, shortcuts, {
                 </el-icon>
               </template>
             </el-input>
+
+            <!-- 设置按钮 -->
+            <div
+              role="button"
+              tabindex="0"
+              class="launchpad-settings action-btn setting-btn"
+              @click="openSettings"
+            >
+              <el-icon><settings-round /></el-icon>
+            </div>
           </div>
 
           <!-- 图标网格 -->
@@ -329,7 +344,11 @@ useDraggable(gridRef, shortcuts, {
                 </el-text>
               </OnLongPress>
               <!-- 无结果 -->
-              <div v-if="currentItems.length === 0 && isSearching" class="launchpad-empty">
+              <div
+                v-if="currentItems.length === 0 && isSearching"
+                class="launchpad-empty"
+                style="pointer-events: none"
+              >
                 {{ t('dock.launchpad.empty') }}
               </div>
               <!-- 添加按钮（仅最后一页显示）-->
@@ -370,16 +389,6 @@ useDraggable(gridRef, shortcuts, {
               </svg>
             </button>
           </div>
-
-          <!-- 设置按钮 -->
-          <div
-            role="button"
-            tabindex="0"
-            class="launchpad-settings action-btn setting-btn"
-            @click="openSettings"
-          >
-            <el-icon><settings-round /></el-icon>
-          </div>
         </div>
       </el-overlay>
     </Transition>
@@ -412,14 +421,17 @@ useDraggable(gridRef, shortcuts, {
   padding: 60px 40px 90px;
 
   @media (width <= 500px) {
-    padding: 40px 16px 90px;
+    padding: 40px 20px 90px;
   }
 }
 
 .launchpad-search {
   width: 320px;
-  max-width: 90vw;
+  max-width: 90dvw;
   margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 
   @media (width <= 500px) {
     margin-bottom: 30px;
@@ -445,6 +457,10 @@ useDraggable(gridRef, shortcuts, {
   top: 25px;
   right: 35px;
   color: rgb(255 255 255 / 30%);
+
+  @media (width <= 480px) {
+    position: static;
+  }
 }
 
 .launchpad-grid {
