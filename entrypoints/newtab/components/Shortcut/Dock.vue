@@ -437,7 +437,8 @@ function handleContextmenu(
   transform: translateX(-50%);
   transition:
     opacity var(--el-transition-duration-fast) ease,
-    bottom var(--el-transition-duration-fast) ease;
+    bottom var(--el-transition-duration-fast) ease,
+    background-color var(--el-transition-duration-fast) ease;
 
   @include acrylic.acrylic(10px, 1.2, 1.1);
 }
@@ -465,7 +466,8 @@ function handleContextmenu(
   transition:
     width var(--td, 0s),
     height var(--td, 0s),
-    border-radius var(--td, 0s);
+    border-radius var(--td, 0s),
+    background-color var(--el-transition-duration-fast) ease;
 
   img {
     width: 75%;

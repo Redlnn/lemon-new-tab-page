@@ -10,6 +10,10 @@ body {
   transition:
     background-color var(--el-transition-duration-fast) ease,
     box-shadow var(--el-transition-duration-fast) ease;
+
+  .el-select__placeholder {
+    transition: color var(--el-transition-duration-fast) ease;
+  }
 }
 
 .el-select-dropdown {
@@ -77,6 +81,7 @@ body {
   padding: 0;
   overflow: hidden;
   border-radius: 10px;
+  transition: border var(--el-transition-duration-fast) ease;
 
   .el-color-picker__color {
     border: none;
