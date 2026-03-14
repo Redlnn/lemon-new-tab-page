@@ -11,17 +11,18 @@
     },
     "cache": {
       "duration": "Cache expiration duration",
+      "label": "Online wallpaper cache",
       "nextStartup": "Effective on next startup",
       "noExpires": "Cache never expires"
     },
     "change": "Change background",
     "chooseImageOrVideo": "Choose an image or video to use as wallpaper",
     "custom": "Custom",
-    "enableOnlineWallpaperCache": "Online wallpaper cache",
-    "enableVignetting": "Enable vignetting",
     "fasterBgAnim": "Faster background display on startup",
-    "maskColor": "Mask color",
-    "maskOpacity": "Mask opacity",
+    "mask": {
+      "color": "Mask color",
+      "opacity": "Mask opacity"
+    },
     "myZoneMyRule": "Your space. Your rules.",
     "onlineTips": {
       "a": "Submit after pressing the Enter key or when the input field loses focus.",
@@ -29,8 +30,8 @@
       "c": "There will be a blank screen before the wallpaper finishes loading, and the duration depends on your internet speed.",
       "d": "Please ensure the wallpaper API you are using allows cross-origin requests; otherwise, it will fail to load."
     },
-    "pauseWhenBlur": "Pause video background when the tab loses focus",
     "parallax": "Wallpaper parallax effect",
+    "pauseWhenBlur": "Pause video background when the tab loses focus",
     "permission": {
       "allowAll": "Allow all sites",
       "allowCurrent": "Only allow this API URL",
@@ -57,8 +58,11 @@
       "local": "Local file",
       "online": "Online URL"
     },
-    "videoBlurTip": "Turn on to reduce performance usage when multiple new tabs or windows are open on the screen simultaneously.",
-    "videoWarning": "Using a video as a background consumes a lot of GPU resources. It is recommended to avoid opening multiple new tabs at the same time. It is recommended to turn off animation, blur, and transparency effects appropriately to reduce performance consumption.",
+    "video": {
+      "blurTip": "Turn on to reduce performance usage when multiple new tabs or windows are open on the screen simultaneously.",
+      "warning": "Using a video as a background consumes a lot of GPU resources. It is recommended to avoid opening multiple new tabs at the same time. It is recommended to turn off animation, blur, and transparency effects appropriately to reduce performance consumption."
+    },
+    "vignette": "Enable vignetting",
     "warning": {
       "cacheDisabled": "Online wallpaper caching has been disabled because the “Access all websites” permission was not granted.",
       "fileIsNotImage": "The selected file is not an image!",
@@ -85,23 +89,27 @@
       "rtl": "Right to left",
       "title": "Open direction"
     },
-    "showBtn": "Show bottom-right button",
     "rightClickToOpen": "Right click on background to open",
+    "showBtn": "Show bottom-right button",
     "title": "Bookmarks bar"
   },
   "clock": {
-    "blinkingColon": "Blinking colon",
+    "blink": "Blinking colon",
     "blinkingTip": "Turning this off can reduce sustained GPU usage.",
-    "calcWeightTitle": "Date weight",
-    "colorfulClock": "Colorful clock numbers",
-    "enableShadow": "Show shadow",
-    "invertColorDark": "[Clock] Use dark text in dark mode",
-    "invertColorLight": "[Clock] Use dark text in light mode",
-    "largeLabel": "Large AM/PM Label",
+    "colorful": "Colorful clock numbers",
+    "hour12": "12-hour clock",
+    "invertColor": {
+      "dark": "[Clock] Use dark text in dark mode",
+      "light": "[Clock] Use dark text in light mode"
+    },
+    "meridiem": {
+      "followSize": "Large AM/PM Label",
+      "show": "Show AM/PM"
+    },
     "newStyle": "New style",
     "newStyleDesc": "When enabled, will simultaneously enable “Show AM/PM” and “Show seconds” and cannot be disabled",
     "secondsTip": "This increases performance usage.",
-    "showAMPM": "Show AM/PM",
+    "shadow": "Show shadow",
     "showDate": "Show date",
     "showLunar": "Show Chinese lunar calendar",
     "showSeconds": "Show seconds",
@@ -114,10 +122,10 @@
       "title": "Clock size"
     },
     "title": "Clock",
-    "use12HourClock": "12-hour clock",
     "weight": {
       "black": "Heaviest (900)",
       "bold": "Bold (600)",
+      "dateTitle": "Date weight",
       "extraBold": "Very Bold (700)",
       "heavy": "Extra Bold (800)",
       "medium": "Slightly Bold (500)",
@@ -132,23 +140,15 @@
     "openInNewWindow": "Open in New Window"
   },
   "dock": {
+    "launchpad": {
+      "show": "Show Launchpad in Dock",
+      "title": "Launchpad"
+    },
     "limitCount": "Limit maximum count",
     "maxCount": "Maximum count",
-    "launchpadTitle": "Launchpad",
-    "showLaunchpad": "Show Launchpad in Dock",
     "title": "Dock"
   },
   "other": {
-    "confirmPurgeData": {
-      "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
-      "purging": "Clearing extension data..",
-      "title": "Are you sure you want to purge all data of this extension?"
-    },
-    "confirmPurgeWallpaper": {
-      "message": "This operation will delete the selected background images or videos.",
-      "purging": "Clearing wallpaper cache...",
-      "title": "Are you sure you want to purge all wallpaper cache?"
-    },
     "importExport": {
       "backup": "Back up extension settings",
       "export": "Export",
@@ -168,29 +168,58 @@
       }
     },
     "language": "Language",
-    "purge": "Purge",
-    "purgeData": "Purge all data",
-    "purgeWallpaperData": "Purge wallpaper cache",
+    "purge": {
+      "btn": "Purge",
+      "confirm": {
+        "data": {
+          "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
+          "purging": "Clearing extension data..",
+          "title": "Are you sure you want to purge all data of this extension?"
+        },
+        "wallpaper": {
+          "message": "This operation will delete the selected background images or videos.",
+          "purging": "Clearing wallpaper cache...",
+          "title": "Are you sure you want to purge all wallpaper cache?"
+        }
+      },
+      "data": "Purge all data",
+      "wallpaper": "Purge wallpaper cache"
+    },
     "sync": "Cloud Sync (Experimental)",
     "syncWarning": "Cloud Sync may overwrite local settings and cannot sync the following items: background images, most visited sites, dark mode state, etc. Items that do not support syncing will be marked with an indicator as shown on the right:",
     "title": "Other"
   },
   "perf": {
-    "actionBtnBlur": "Bottom-right button blur",
-    "actionBtnTransparent": "Bottom-right button transparency",
+    "actionBtns": {
+      "blur": "Bottom-right button blur",
+      "transparent": "Bottom-right button transparency"
+    },
     "bgSwitchAnim": "Background switch animation",
     "bgSwitchAnimTip": "When disabled, there will be no fade-in/fade-out animation when switching backgrounds, which can slightly improve switching speed. Background animation on startup will also be disabled",
-    "bookmarkBlur": "Bookmarks sidebar blur",
-    "bookmarkTransparent": "Bookmarks sidebar transparency",
-    "dialogAnimation": "Dialog animation",
-    "dialogBlur": "Dialog blur",
-    "dialogTransparent": "Dialog transparency",
-    "focusBlur": "Blur background on search focus",
-    "focusScale": "Scale background on search focus",
-    "searchBarBlur": "Search bar blur",
-    "searchBarTransparent": "Search bar transparency",
-    "shortcutBlur": "Shortcut blur",
-    "shortcutTransparent": "Shortcut transparency",
+    "bookmark": {
+      "blur": "Bookmarks sidebar blur",
+      "transparent": "Bookmarks sidebar transparency"
+    },
+    "dialog": {
+      "animation": "Dialog animation",
+      "blur": "Dialog blur",
+      "transparent": "Dialog transparency"
+    },
+    "dock": {
+      "scale": "Dock icon scale animation"
+    },
+    "focus": {
+      "blur": "Blur background on search focus",
+      "scale": "Scale background on search focus"
+    },
+    "searchBar": {
+      "blur": "Search bar blur",
+      "transparent": "Search bar transparency"
+    },
+    "shortcut": {
+      "blur": "Shortcut blur",
+      "transparent": "Shortcut transparency"
+    },
     "title": "Performance",
     "toggleAll": {
       "animation": "Animation",
@@ -199,48 +228,51 @@
       "enable": "Enable All",
       "transparent": "Transparency"
     },
-    "yiyanBlur": "Quote blur",
-    "yiyanTransparent": "Quote transparency",
-    "yiyanRipple": "Quote ripple animation",
-    "dockScale": "Dock icon scale animation"
+    "yiyan": {
+      "blur": "Quote blur",
+      "ripple": "Quote ripple animation",
+      "transparent": "Quote transparency"
+    }
   },
   "search": {
     "alwaysExpandSearchBar": "Always expand search bar",
     "alwaysShowIcon": "Always show search engine icon",
+    "border": "Show search box border",
     "clickToChange": "Click to change",
     "defaultSearchEngine": "Search engine",
-    "enableBorder": "Show search box border",
-    "enableShadow": "Show search box shadow",
     "launchAnim": "Search box expand animation on startup",
     "placeholder": "Search placeholder",
     "recordSearchHistory": "Record search history",
     "searchSuggestionProvider": "Search suggestion API",
+    "shadow": "Show search box shadow",
     "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page.",
     "title": "Search"
   },
   "shortcut": {
-    "HorizontalIconSpacing": "Horizontal icon spacing",
-    "VerticalIconSpacing": "Vertical icon spacing",
-    "enablePaging": "Enable paging",
-    "enableBorder": "Show icon border",
-    "enableShadow": "Show icon shadow",
-    "iconMarginBottom": "Icon–Title Spacing",
+    "border": "Show icon border",
     "iconRatio": "Icon ratio",
     "iconSize": "Icon size",
     "marginTop": "Area top margin",
     "maxColumns": "Maximum columns",
     "maxItemsTipForChrome": "Tip: You can only have up to 10 most visited links.",
     "maxRows": "Maximum rows",
+    "paging": "Enable paging",
+    "pinnedIcon": "Show pinned icon",
     "restoreDefault": "Recover hidden links",
     "restoreDefaultTitle": "Are you sure you want to restore default shortcuts?",
+    "shadow": "Show icon shadow",
     "showOnSearchFocus": "Show on search focus",
-    "showPinnedIcon": "Show pinned icon",
     "showTitle": "Show link title",
-    "showTopSites": "Show most visited",
+    "spacing": {
+      "iconTitleGap": "Icon–Title Spacing",
+      "itemGapX": "Horizontal icon spacing",
+      "itemGapY": "Vertical icon spacing"
+    },
     "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
     "title": "Shortcut",
     "titleExtraWidth": "Title expand width",
-    "whiteTextInLightMode": "[Shortcut] Use white text in light mode"
+    "titleWhiteInLight": "[Shortcut] Use white text in light mode",
+    "topSites": "Show most visited"
   },
   "theme": {
     "colorNames": {
@@ -270,9 +302,12 @@
       "desc": "Apply the theme color to more elements",
       "label": "Global Color Mode"
     },
-    "darkMode": "Dark mode",
     "idleHide": "Fade out page elements when inactive",
-    "lightMode": "Light mode",
+    "mode": {
+      "dark": "Dark mode",
+      "light": "Light mode",
+      "system": "Follow system / browser"
+    },
     "monet": {
       "askEnableCache": {
         "message": "To use dynamic theme colors, online wallpaper cache must be enabled. Enabling cache will store images from this domains. Do you want to enable it?",
@@ -282,16 +317,16 @@
       "label": "Dynamic Theme Colors (Monet Extraction)"
     },
     "primaryColor": "Primary color",
-    "systemMode": "Follow system / browser",
     "title": "Theme"
   },
   "title": "Settings",
   "yiyan": {
     "alwaysShow": "Always show",
     "description": "Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!",
-    "enableShadow": "Show text shadow",
-    "invertColorDark": "[Quote] Use dark text in dark mode",
-    "invertColorLight": "[Quote] Use dark text in light mode",
+    "invertColor": {
+      "dark": "[Quote] Use dark text in dark mode",
+      "light": "[Quote] Use dark text in light mode"
+    },
     "normalyShowTip": "When disabled, only show when the search box is focused.",
     "provider": "Provider",
     "providers": {
@@ -303,6 +338,7 @@
         "name": "Chinese Poetry"
       }
     },
+    "shadow": "Show text shadow",
     "title": "Quote"
   }
 }

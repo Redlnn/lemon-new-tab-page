@@ -87,13 +87,13 @@ onMounted(async () => {
     if (type === 'version-mismatch') {
       const p = payload as { cloud: string; local: string }
       ElNotification.error({
-        title: t('failMessage.title'),
-        message: t('failMessage.message', { cloud: p.cloud, local: p.local })
+        title: t('fail.title'),
+        message: t('fail.message', { cloud: p.cloud, local: p.local })
       })
     } else if (type === 'sync-error') {
       const err = payload as Error
       ElNotification.error({
-        title: t('errorMessage.title'),
+        title: t('error.title'),
         message: err.message || 'Unknown error.'
       })
     }

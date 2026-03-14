@@ -173,14 +173,14 @@ const beforeMonetChange = async () => {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('theme.darkMode') }}
+        {{ t('theme.mode.dark') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isDarkUI" @change="toggleDark" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('theme.systemMode') }}
+        {{ t('theme.mode.system') }}
         <cloud-off-round />
       </div>
       <el-switch v-model="isAutoUI" @change="toggleAuto" />
@@ -245,7 +245,7 @@ const beforeMonetChange = async () => {
     </div>
     <p class="settings__item--note">{{ t('theme.colorful.desc') }}</p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.colorfulClock') }}</div>
+      <div class="settings__label">{{ t('clock.colorful') }}</div>
       <el-switch v-model="settings.clock.colorfulNum" />
     </div>
     <div class="settings__item settings__item--horizontal">
@@ -253,25 +253,25 @@ const beforeMonetChange = async () => {
       <el-switch v-model="settings.theme.idleHide" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.invertColorLight') }}</div>
+      <div class="settings__label">{{ t('clock.invertColor.light') }}</div>
       <el-switch v-model="settings.clock.style.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.invertColorDark') }}</div>
+      <div class="settings__label">{{ t('clock.invertColor.dark') }}</div>
       <el-switch v-model="settings.clock.style.invertColor.night" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('shortcut.whiteTextInLightMode') }}
+        {{ t('shortcut.titleWhiteInLight') }}
       </div>
       <el-switch v-model="settings.shortcut.title.whiteInLightMode" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.invertColorLight') }}</div>
+      <div class="settings__label">{{ t('yiyan.invertColor.light') }}</div>
       <el-switch v-model="settings.yiyan.style.invertColor.light" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('yiyan.invertColorDark') }}</div>
+      <div class="settings__label">{{ t('yiyan.invertColor.dark') }}</div>
       <el-switch v-model="settings.yiyan.style.invertColor.night" />
     </div>
   </div>

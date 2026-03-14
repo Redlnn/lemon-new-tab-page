@@ -1,7 +1,5 @@
 {
-  "faqSubtitle": "希望能帮到你喵~",
-  "faqTitle": "常见问题解答",
-  "helpSection": {
+  "help": {
     "email": "Email",
     "emailCopied": "已复制邮箱地址",
     "github": "GitHub",
@@ -49,5 +47,7 @@
       "content": "移除任意快速访问链接后，在弹出的通知中操作即可恢复。",
       "title": "如何恢复已删除/默认快捷链接"
     }
-  }
+  },
+  "subtitle": "希望能帮到你喵~",
+  "title": "常见问题解答"
 }

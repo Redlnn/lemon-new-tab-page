@@ -116,7 +116,7 @@ defineExpose({ hide, showEngineToast })
             v-if="key === settings.search.engine"
             style="font-size: 11px; color: var(--el-text-color-secondary)"
           >
-            {{ t('search.searchEngineMenu.current') }}
+            {{ t('search.engineMenu.current') }}
           </div>
         </div>
 
@@ -145,14 +145,14 @@ defineExpose({ hide, showEngineToast })
               v-if="engine.id === settings.search.engine"
               style="font-size: 11px; color: var(--el-text-color-secondary)"
             >
-              {{ t('search.searchEngineMenu.current') }}
+              {{ t('search.engineMenu.current') }}
             </div>
           </div>
         </template>
         <div class="search-engine-menu__tip">
-          <span>{{ t('search.searchEngineMenu.tipPrefix') }}</span>
+          <span>{{ t('search.engineMenu.tipPrefix') }}</span>
           <kbd class="search-engine-menu__kbd">Tab</kbd>
-          <span>{{ t('search.searchEngineMenu.tipSuffix') }}</span>
+          <span>{{ t('search.engineMenu.tipSuffix') }}</span>
         </div>
       </template>
       <el-icon v-if="isBuiltInEngine" class="search-engine-menu__icon">

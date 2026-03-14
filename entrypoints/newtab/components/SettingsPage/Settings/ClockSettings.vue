@@ -53,7 +53,7 @@ function handleNewStyleChange(val: string | number | boolean) {
     </div>
     <template v-if="settings.clock.enabled">
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.use12HourClock') }}</div>
+        <div class="settings__label">{{ t('clock.hour12') }}</div>
         <el-switch v-model="settings.clock.hour12" />
       </div>
       <div class="settings__item settings__item--horizontal">
@@ -64,11 +64,11 @@ function handleNewStyleChange(val: string | number | boolean) {
         {{ t('clock.newStyleDesc') }}
       </p>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.showAMPM') }}</div>
+        <div class="settings__label">{{ t('clock.meridiem.show') }}</div>
         <el-switch v-model="settings.clock.meridiem.show" :disabled="settings.clock.newStyle" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.largeLabel') }}</div>
+        <div class="settings__label">{{ t('clock.meridiem.followSize') }}</div>
         <el-switch
           v-model="settings.clock.meridiem.followSize"
           :disabled="!settings.clock.meridiem.show || settings.clock.newStyle"
@@ -103,8 +103,7 @@ function handleNewStyleChange(val: string | number | boolean) {
         />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.weight.title') }}</div>
-        <el-select
+        <div class="settings__label">{{ t('clock.weight.title') }}</div>        <el-select
           v-model="settings.clock.weight.time"
           style="width: 160px"
           popper-class="settings-item-popper"
@@ -119,7 +118,7 @@ function handleNewStyleChange(val: string | number | boolean) {
         </el-select>
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.calcWeightTitle') }}</div>
+        <div class="settings__label">{{ t('clock.weight.dateTitle') }}</div>
         <el-select
           v-model="settings.clock.weight.date"
           style="width: 160px"
@@ -135,15 +134,15 @@ function handleNewStyleChange(val: string | number | boolean) {
         </el-select>
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.colorfulClock') }}</div>
+        <div class="settings__label">{{ t('clock.colorful') }}</div>
         <el-switch v-model="settings.clock.colorfulNum" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.enableShadow') }}</div>
+        <div class="settings__label">{{ t('clock.shadow') }}</div>
         <el-switch v-model="settings.clock.style.shadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
+        <div class="settings__label">{{ t('clock.blink') }}</div>
         <el-switch v-model="settings.clock.style.blink" />
       </div>
       <p class="settings__item--note">

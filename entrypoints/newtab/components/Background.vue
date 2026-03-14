@@ -214,8 +214,8 @@ const bgTypeProviders: Record<
       blob = await res.blob()
     } catch (e) {
       ElNotification.error({
-        title: i18next.t('newtab:notification.onlineWallpaperCache.error.title'),
-        message: i18next.t('newtab:notification.onlineWallpaperCache.error.message', { error: e })
+        title: i18next.t('newtab:notification.wallpaperCache.title'),
+        message: i18next.t('newtab:notification.wallpaperCache.message', { error: e })
       })
       if (cached) {
         revokeLastBlobUrl()

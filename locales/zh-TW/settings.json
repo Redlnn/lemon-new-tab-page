@@ -11,17 +11,18 @@
     },
     "cache": {
       "duration": "快取有效期",
+      "label": "線上壁紙快取",
       "nextStartup": "將於下次啟動時生效",
       "noExpires": "快取永不過期"
     },
     "change": "更改背景",
     "chooseImageOrVideo": "選擇你喜歡的圖片或影片作為壁紙",
     "custom": "自訂",
-    "enableOnlineWallpaperCache": "線上壁紙快取",
-    "enableVignetting": "暗角效果",
     "fasterBgAnim": "啟動時更快地顯示背景",
-    "maskColor": "遮罩顏色",
-    "maskOpacity": "遮罩不透明度",
+    "mask": {
+      "color": "遮罩顏色",
+      "opacity": "遮罩不透明度"
+    },
     "myZoneMyRule": "做出你的樣子",
     "onlineTips": {
       "a": "按下 Enter 鍵或當輸入框失去焦點時會提交",
@@ -29,8 +30,8 @@
       "c": "載入圖片前可能會短暫出現白畫面，時間長短取決於你的網路速度",
       "d": "請確認使用的圖片 API 是否允許跨域請求，否則將無法載入圖片"
     },
-    "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
     "parallax": "壁紙視差效果",
+    "pauseWhenBlur": "分頁失去焦點時暫停影片背景",
     "permission": {
       "allowAll": "允許所有網址",
       "allowCurrent": "僅允許這個API網址",
@@ -57,8 +58,11 @@
       "local": "本機圖片/影片",
       "online": "線上圖片"
     },
-    "videoBlurTip": "開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用",
-    "videoWarning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開啟多個新分頁。建議適當停用動畫、模糊、透明效果以降低效能消耗",
+    "video": {
+      "blurTip": "開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用",
+      "warning": "使用影片作為背景會大量消耗 GPU 資源，建議避免同時開啟多個新分頁。建議適當停用動畫、模糊、透明效果以降低效能消耗"
+    },
+    "vignette": "暗角效果",
     "warning": {
       "cacheDisabled": "由於未授予「訪問所有網站」權限，無法安全地快取線上壁紙，因此已停用「線上壁紙快取」。",
       "fileIsNotImage": "所選檔案不是圖片！",
@@ -85,23 +89,27 @@
       "rtl": "從右到左",
       "title": "打開方向"
     },
-    "showBtn": "顯示右下角快捷入口",
     "rightClickToOpen": "右鍵背景打開",
+    "showBtn": "顯示右下角快捷入口",
     "title": "書籤欄"
   },
   "clock": {
-    "blinkingColon": "閃爍時間分隔符",
+    "blink": "閃爍時間分隔符",
     "blinkingTip": "關閉可減輕持續性的 GPU 使用",
-    "calcWeightTitle": "日期字重",
-    "colorfulClock": "多彩時鐘",
-    "enableShadow": "顯示陰影",
-    "invertColorDark": "【時鐘】深色模式下使用深色文字",
-    "invertColorLight": "【時鐘】淺色模式下使用深色文字",
-    "largeLabel": "「上午／下午」大字顯示",
+    "colorful": "多彩時鐘",
+    "hour12": "使用 12 小時制",
+    "invertColor": {
+      "dark": "【時鐘】深色模式下使用深色文字",
+      "light": "【時鐘】淺色模式下使用深色文字"
+    },
+    "meridiem": {
+      "followSize": "「上午／下午」大字顯示",
+      "show": "顯示「上午 / 下午」"
+    },
     "newStyle": "新樣式",
     "newStyleDesc": "若啟用將同時啟用「顯示『上午／下午』」以及「顯示秒數」且無法停用",
     "secondsTip": "開啟會增加效能消耗",
-    "showAMPM": "顯示「上午 / 下午」",
+    "shadow": "顯示陰影",
     "showDate": "顯示日期",
     "showLunar": "顯示農曆",
     "showSeconds": "顯示秒鐘",
@@ -114,10 +122,10 @@
       "title": "時鐘大小"
     },
     "title": "時鐘",
-    "use12HourClock": "使用 12 小時制",
     "weight": {
       "black": "最粗（900）",
       "bold": "粗體（600）",
+      "dateTitle": "日期字重",
       "extraBold": "很粗（700）",
       "heavy": "非常粗（800）",
       "medium": "稍粗（500）",
@@ -132,23 +140,15 @@
     "openInNewWindow": "在新視窗中開啟"
   },
   "dock": {
+    "launchpad": {
+      "show": "在 Dock 中啟用啟動台",
+      "title": "啟動台"
+    },
     "limitCount": "限制最大數量",
     "maxCount": "最大數量",
-    "launchpadTitle": "啟動台",
-    "showLaunchpad": "在 Dock 中啟用啟動台",
     "title": "Dock"
   },
   "other": {
-    "confirmPurgeData": {
-      "message": "此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。",
-      "purging": "正在清除擴充功能資料...",
-      "title": "確定要清除所有資料嗎？"
-    },
-    "confirmPurgeWallpaper": {
-      "message": "此操作將會刪除已選擇的背景圖片/影片。",
-      "purging": "正在清除壁紙快取...",
-      "title": "確定要清除壁紙快取？"
-    },
     "importExport": {
       "backup": "備份擴充功能設定",
       "export": "匯出",
@@ -168,29 +168,58 @@
       }
     },
     "language": "語言",
-    "purge": "清除",
-    "purgeData": "清除本擴充功能的資料",
-    "purgeWallpaperData": "清除壁紙快取",
+    "purge": {
+      "btn": "清除",
+      "confirm": {
+        "data": {
+          "message": "此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。",
+          "purging": "正在清除擴充功能資料...",
+          "title": "確定要清除所有資料嗎？"
+        },
+        "wallpaper": {
+          "message": "此操作將會刪除已選擇的背景圖片/影片。",
+          "purging": "正在清除壁紙快取...",
+          "title": "確定要清除壁紙快取？"
+        }
+      },
+      "data": "清除本擴充功能的資料",
+      "wallpaper": "清除壁紙快取"
+    },
     "sync": "雲端同步（實驗功能）",
     "syncWarning": "雲端同步可能會覆蓋本機設定，且無法同步以下項目：背景圖片、最常造訪網站、深色模式狀態等。不支援同步的項目後方會顯示如右側所示的標示：",
     "title": "其他"
   },
   "perf": {
-    "actionBtnBlur": "右下按鈕模糊",
-    "actionBtnTransparent": "右下按鈕透明",
+    "actionBtns": {
+      "blur": "右下按鈕模糊",
+      "transparent": "右下按鈕透明"
+    },
     "bgSwitchAnim": "壁紙切換動畫",
     "bgSwitchAnimTip": "關閉後切換壁紙時將不再有淡入淡出動畫，能微弱提升切換速度。同時啟動時的壁紙動畫也會被停用",
-    "bookmarkBlur": "書籤欄背景模糊",
-    "bookmarkTransparent": "書籤欄背景透明",
-    "dialogAnimation": "對話框動畫",
-    "dialogBlur": "對話框背景模糊",
-    "dialogTransparent": "對話框背景透明",
-    "focusBlur": "點擊搜尋框時背景模糊",
-    "focusScale": "點擊搜尋框時縮放背景",
-    "searchBarBlur": "搜尋框模糊",
-    "searchBarTransparent": "搜尋框透明",
-    "shortcutBlur": "捷徑圖示模糊",
-    "shortcutTransparent": "捷徑圖示透明",
+    "bookmark": {
+      "blur": "書籤欄背景模糊",
+      "transparent": "書籤欄背景透明"
+    },
+    "dialog": {
+      "animation": "對話框動畫",
+      "blur": "對話框背景模糊",
+      "transparent": "對話框背景透明"
+    },
+    "dock": {
+      "scale": "Dock圖示縮放動畫"
+    },
+    "focus": {
+      "blur": "點擊搜尋框時背景模糊",
+      "scale": "點擊搜尋框時縮放背景"
+    },
+    "searchBar": {
+      "blur": "搜尋框模糊",
+      "transparent": "搜尋框透明"
+    },
+    "shortcut": {
+      "blur": "捷徑圖示模糊",
+      "transparent": "捷徑圖示透明"
+    },
     "title": "效能",
     "toggleAll": {
       "animation": "動畫",
@@ -199,48 +228,51 @@
       "enable": "一鍵啟用所有",
       "transparent": "透明效果"
     },
-    "yiyanBlur": "一言背景模糊",
-    "yiyanTransparent": "一言背景透明",
-    "yiyanRipple": "一言水波紋動畫",
-    "dockScale": "Dock圖示縮放動畫"
+    "yiyan": {
+      "blur": "一言背景模糊",
+      "ripple": "一言水波紋動畫",
+      "transparent": "一言背景透明"
+    }
   },
   "search": {
     "alwaysExpandSearchBar": "一直展開搜尋框",
     "alwaysShowIcon": "始終顯示搜尋引擎圖示",
+    "border": "顯示搜尋框邊框",
     "clickToChange": "點擊更改",
     "defaultSearchEngine": "預設搜尋引擎",
-    "enableBorder": "顯示搜尋框邊框",
-    "enableShadow": "顯示搜尋框陰影",
     "launchAnim": "啟動時搜尋框展開動畫",
     "placeholder": "搜尋框占位文字",
     "recordSearchHistory": "記錄搜尋歷史",
     "searchSuggestionProvider": "搜尋建議 API",
+    "shadow": "顯示搜尋框陰影",
     "tip": "想要打開新分頁就讓搜尋框取得焦點？請查看頁面右下角按鈕菜單的「幫助和反饋」",
     "title": "搜尋"
   },
   "shortcut": {
-    "HorizontalIconSpacing": "捷徑左右間距",
-    "VerticalIconSpacing": "捷徑上下間距",
-    "enablePaging": "啟用翻頁",
-    "enableBorder": "顯示圖示邊框",
-    "enableShadow": "顯示圖示陰影",
-    "iconMarginBottom": "圖標與標題間距",
+    "border": "顯示圖示邊框",
     "iconRatio": "圖示填充比例",
     "iconSize": "圖示大小",
     "marginTop": "區域上邊距",
     "maxColumns": "最大欄數",
     "maxItemsTipForChrome": "最常造訪最多只有 10 個喔～",
     "maxRows": "最大列數",
+    "paging": "啟用翻頁",
+    "pinnedIcon": "顯示釘選圖示",
     "restoreDefault": "恢復隱藏的鏈接",
     "restoreDefaultTitle": "確定要還原為預設捷徑嗎？",
+    "shadow": "顯示圖示陰影",
     "showOnSearchFocus": "搜尋框聚焦時顯示",
-    "showPinnedIcon": "顯示釘選圖示",
     "showTitle": "顯示標題",
-    "showTopSites": "顯示最常造訪",
+    "spacing": {
+      "iconTitleGap": "圖標與標題間距",
+      "itemGapX": "捷徑左右間距",
+      "itemGapY": "捷徑上下間距"
+    },
     "tip": "Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~",
     "title": "捷徑",
     "titleExtraWidth": "標題擴展寬度",
-    "whiteTextInLightMode": "【捷徑】淺色模式下使用白色文字"
+    "titleWhiteInLight": "【捷徑】淺色模式下使用白色文字",
+    "topSites": "顯示最常造訪"
   },
   "theme": {
     "colorNames": {
@@ -270,9 +302,12 @@
       "desc": "將主題色套用至更多介面元素",
       "label": "全域色彩"
     },
-    "darkMode": "深色模式",
     "idleHide": "不活動時淡出頁面元素",
-    "lightMode": "淺色模式",
+    "mode": {
+      "dark": "深色模式",
+      "light": "淺色模式",
+      "system": "跟隨系統 / 瀏覽器"
+    },
     "monet": {
       "askEnableCache": {
         "message": "要使用動態主題色，需要啟用線上壁紙快取。啟用快取將儲存來自這個網址的圖片。是否啟用？",
@@ -282,16 +317,16 @@
       "label": "動態主題色（莫內取色）"
     },
     "primaryColor": "主題色",
-    "systemMode": "跟隨系統 / 瀏覽器",
     "title": "主題"
   },
   "title": "設定",
   "yiyan": {
     "alwaysShow": "總是顯示",
     "description": "",
-    "enableShadow": "顯示文字陰影",
-    "invertColorDark": "【一言】深色模式下使用深色文字",
-    "invertColorLight": "【一言】淺色模式下使用深色文字",
+    "invertColor": {
+      "dark": "【一言】深色模式下使用深色文字",
+      "light": "【一言】淺色模式下使用深色文字"
+    },
     "normalyShowTip": "關閉時僅在搜尋框聚焦時顯示",
     "provider": "一言來源",
     "providers": {
@@ -303,6 +338,7 @@
         "name": "今日詩詞"
       }
     },
+    "shadow": "顯示文字陰影",
     "title": "一言"
   }
 }

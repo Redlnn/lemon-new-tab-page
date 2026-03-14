@@ -79,10 +79,10 @@ function toggleAnimationSettings(enable: boolean) {
       <el-switch v-model="settings.background.pauseOnBlur" />
     </div>
     <p class="settings__item--note">
-      {{ t('background.videoBlurTip') }}
+      {{ t('background.video.blurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('clock.blinkingColon') }}</div>
+      <div class="settings__label">{{ t('clock.blink') }}</div>
       <el-switch v-model="settings.clock.style.blink" />
     </div>
     <p class="settings__item--note">
@@ -96,29 +96,29 @@ function toggleAnimationSettings(enable: boolean) {
       {{ t('perf.bgSwitchAnimTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.bookmarkTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.bookmark.transparent') }}</div>
       <el-switch v-model="settings.perf.bookmark.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.bookmarkBlur') }}</div>
+      <div class="settings__label">{{ t('perf.bookmark.blur') }}</div>
       <el-switch
         :disabled="!settings.perf.bookmark.transparent"
         v-model="settings.perf.bookmark.blur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.dialogTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.dialog.transparent') }}</div>
       <el-switch v-model="settings.perf.dialog.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.dialogBlur') }}</div>
+      <div class="settings__label">{{ t('perf.dialog.blur') }}</div>
       <el-switch
         :disabled="!settings.perf.dialog.transparent"
         v-model="settings.perf.dialog.blur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.dialogAnimation') }}</div>
+      <div class="settings__label">{{ t('perf.dialog.animation') }}</div>
       <el-switch v-model="settings.perf.dialog.animation" />
     </div>
     <div class="settings__item settings__item--horizontal">
@@ -126,60 +126,60 @@ function toggleAnimationSettings(enable: boolean) {
       <el-switch v-model="settings.perf.searchBar.launchAnim" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.focusScale') }}</div>
+      <div class="settings__label">{{ t('perf.focus.scale') }}</div>
       <el-switch v-model="settings.perf.focus.scale" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.focusBlur') }}</div>
+      <div class="settings__label">{{ t('perf.focus.blur') }}</div>
       <el-switch v-model="settings.perf.focus.blur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.searchBarTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.searchBar.transparent') }}</div>
       <el-switch v-model="settings.perf.searchBar.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.searchBarBlur') }}</div>
+      <div class="settings__label">{{ t('perf.searchBar.blur') }}</div>
       <el-switch
         :disabled="!settings.perf.searchBar.transparent"
         v-model="settings.perf.searchBar.blur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.shortcutTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.shortcut.transparent') }}</div>
       <el-switch v-model="settings.perf.shortcut.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.shortcutBlur') }}</div>
+      <div class="settings__label">{{ t('perf.shortcut.blur') }}</div>
       <el-switch
         :disabled="!settings.perf.shortcut.transparent"
         v-model="settings.perf.shortcut.blur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.yiyanTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.yiyan.transparent') }}</div>
       <el-switch v-model="settings.perf.yiyan.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.yiyanBlur') }}</div>
+      <div class="settings__label">{{ t('perf.yiyan.blur') }}</div>
       <el-switch :disabled="!settings.perf.yiyan.transparent" v-model="settings.perf.yiyan.blur" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.yiyanRipple') }}</div>
+      <div class="settings__label">{{ t('perf.yiyan.ripple') }}</div>
       <el-switch v-model="settings.perf.yiyan.ripple" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.actionBtnTransparent') }}</div>
+      <div class="settings__label">{{ t('perf.actionBtns.transparent') }}</div>
       <el-switch v-model="settings.perf.actionBtns.transparent" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.actionBtnBlur') }}</div>
+      <div class="settings__label">{{ t('perf.actionBtns.blur') }}</div>
       <el-switch
         :disabled="!settings.perf.actionBtns.transparent"
         v-model="settings.perf.actionBtns.blur"
       />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('perf.dockScale') }}</div>
+      <div class="settings__label">{{ t('perf.dock.scale') }}</div>
       <el-switch v-model="settings.perf.dockScale" />
     </div>
     <div class="settings__item settings__item--horizontal">

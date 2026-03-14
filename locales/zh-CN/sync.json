@@ -1,8 +1,8 @@
 {
-  "errorMessage": {
+  "error": {
     "title": "云同步异常"
   },
-  "failMessage": {
+  "fail": {
     "message": "云端配置版本（{{cloud}}）高于本地（{{local}}），请更新扩展后重试",
     "title": "云同步失败"
   }

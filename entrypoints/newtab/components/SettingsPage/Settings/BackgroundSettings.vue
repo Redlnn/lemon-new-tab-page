@@ -55,14 +55,14 @@ const beforeCacheChange = async () => {
       <el-switch v-model="settings.background.pauseOnBlur" />
     </div>
     <p class="settings__item--note">
-      {{ t('background.videoBlurTip') }}
+      {{ t('background.video.blurTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('background.fasterBgAnim') }}</div>
       <el-switch v-model="settings.background.fastAnimation" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('background.enableVignetting') }}</div>
+      <div class="settings__label">{{ t('background.vignette') }}</div>
       <el-switch v-model="settings.background.vignette" />
     </div>
     <div class="settings__item settings__item--horizontal">
@@ -78,14 +78,14 @@ const beforeCacheChange = async () => {
     </div>
     <div class="settings__item">
       <div class="settings__label settings__item--vertical">
-        {{ t('background.maskOpacity') }}
+        {{ t('background.mask.opacity') }}
       </div>
       <el-slider v-model="settings.background.mask.opacity" :show-tooltip="false" />
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('background.maskColor') }}</div>
+      <div class="settings__label">{{ t('background.mask.color') }}</div>
       <span>
-        <span>{{ t('theme.lightMode') }}:&ensp;</span>
+        <span>{{ t('theme.mode.light') }}:&ensp;</span>
         <el-color-picker
           v-model="settings.background.mask.light"
           :predefine="predefineMaskColor"
@@ -97,7 +97,7 @@ const beforeCacheChange = async () => {
             }
           "
         />
-        <span style="margin-left: 1em">{{ t('theme.darkMode') }}:&ensp;</span>
+        <span style="margin-left: 1em">{{ t('theme.mode.dark') }}:&ensp;</span>
         <el-color-picker
           v-model="settings.background.mask.night"
           :predefine="predefineMaskColor"
@@ -113,7 +113,7 @@ const beforeCacheChange = async () => {
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('background.enableOnlineWallpaperCache') }}
+        {{ t('background.cache.label') }}
         <cloud-off-round />
       </div>
       <el-switch

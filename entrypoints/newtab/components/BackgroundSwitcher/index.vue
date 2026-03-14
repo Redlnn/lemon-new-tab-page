@@ -295,7 +295,7 @@ function beforeLocalBgSwitch() {
             {{ t('background.tip') }}
           </li>
           <li v-if="isVideoBg">
-            {{ t('background.videoWarning') }}
+            {{ t('background.video.warning') }}
           </li>
           <template v-if="isOnlineBg">
             <li>{{ t('background.onlineTips.a') }}</li>

@@ -1,8 +1,8 @@
 {
-  "errorMessage": {
+  "error": {
     "title": "雲端同步異常"
   },
-  "failMessage": {
+  "fail": {
     "message": "雲端設定版本（{{cloud}}）高於本機版本（{{local}}），請更新擴充功能後再試",
     "title": "雲端同步失敗"
   }

@@ -72,6 +72,14 @@
     "edit": "編輯自訂搜尋引擎",
     "title": "自訂搜尋引擎"
   },
+  "dock": {
+    "launchpad": {
+      "add": "添加",
+      "empty": "無結果",
+      "search": "搜尋...",
+      "title": "啟動台"
+    }
+  },
   "menu": {
     "about": "關於",
     "backgroundPreference": "背景偏好設定",
@@ -80,35 +88,31 @@
     "sponsor": "支持我們"
   },
   "notification": {
-    "bingWallpaper": {
-      "error": {
-        "message": "請查看開發者工具中的主控台提示。",
-        "title": "無法取得 Bing 壁紙"
-      }
+    "bing": {
+      "message": "請查看開發者工具中的主控台提示。",
+      "title": "無法取得 Bing 壁紙"
     },
-    "onlineWallpaperCache": {
-      "error": {
-        "message": "無法快取線上壁紙：${error}",
-        "title": "快取線上壁紙失敗"
-      }
+    "wallpaperCache": {
+      "message": "無法快取線上壁紙：${error}",
+      "title": "快取線上壁紙失敗"
     }
   },
   "search": {
-    "placeholder": "搜尋",
-    "purgeSearchHistory": "清除搜尋歷史",
-    "searchEngineMenu": {
+    "engineMenu": {
       "current": "當前",
       "tipPrefix": "Tip：按",
       "tipSuffix": "可切換搜尋引擎"
     },
+    "engines": {
+      "baidu": "百度",
+      "bing": "必應",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "placeholder": "搜尋",
+    "purgeSearchHistory": "清除搜尋歷史",
     "searchEngineNotFound": "找不到搜尋引擎"
-  },
-  "searchEngineMenu": {
-    "baidu": "百度",
-    "bing": "必應",
-    "duckduckgo": "DuckDuckGo",
-    "google": "Google",
-    "yandex": "Yandex"
   },
   "shortcut": {
     "addDialog": {
@@ -137,14 +141,6 @@
     "pin": "釘選",
     "unpin": "取消釘選",
     "unpinMessage": "已取消釘選此快速存取"
-  },
-  "dock": {
-    "launchpad": {
-      "title": "啟動台",
-      "search": "搜尋...",
-      "empty": "無結果",
-      "add": "添加"
-    }
   },
   "sponsor": "呢個擴充功能是我當初利用業餘時間為了滿足自己的需求而開始開發的。很开心距可以對你有幫助！如果你真的想支持我噶话，可以聯繫我的郵箱：redlnn@outlook.com。多謝你噶關注同埋支持！",
   "time": {

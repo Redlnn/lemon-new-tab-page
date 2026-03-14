@@ -72,6 +72,14 @@
     "edit": "编辑自定义搜索引擎",
     "title": "自定义搜索引擎"
   },
+  "dock": {
+    "launchpad": {
+      "add": "添加",
+      "empty": "无结果",
+      "search": "搜索...",
+      "title": "启动台"
+    }
+  },
   "menu": {
     "about": "关于",
     "backgroundPreference": "背景偏好设置",
@@ -80,35 +88,31 @@
     "sponsor": "支持我们"
   },
   "notification": {
-    "bingWallpaper": {
-      "error": {
-        "message": "请检查开发者工具中的控制台提示。",
-        "title": "获取 Bing 壁纸失败"
-      }
+    "bing": {
+      "message": "请检查开发者工具中的控制台提示。",
+      "title": "获取 Bing 壁纸失败"
     },
-    "onlineWallpaperCache": {
-      "error": {
-        "message": "无法缓存在线壁纸：${error}",
-        "title": "缓存在线壁纸失败"
-      }
+    "wallpaperCache": {
+      "message": "无法缓存在线壁纸：${error}",
+      "title": "缓存在线壁纸失败1"
     }
   },
   "search": {
-    "placeholder": "搜索",
-    "purgeSearchHistory": "清除搜索历史",
-    "searchEngineMenu": {
+    "engineMenu": {
       "current": "当前",
       "tipPrefix": "Tip：按下",
       "tipSuffix": "切换搜索引擎"
     },
+    "engines": {
+      "baidu": "百度",
+      "bing": "必应",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "placeholder": "搜索",
+    "purgeSearchHistory": "清除搜索历史",
     "searchEngineNotFound": "未找到搜索引擎"
-  },
-  "searchEngineMenu": {
-    "baidu": "百度",
-    "bing": "必应",
-    "duckduckgo": "DuckDuckGo",
-    "google": "Google",
-    "yandex": "Yandex"
   },
   "shortcut": {
     "addDialog": {
@@ -137,14 +141,6 @@
     "pin": "置顶",
     "unpin": "取消置顶",
     "unpinMessage": "已取消置顶该链接"
-  },
-  "dock": {
-    "launchpad": {
-      "title": "启动台",
-      "search": "搜索...",
-      "empty": "无结果",
-      "add": "添加"
-    }
   },
   "sponsor": "这个扩展是我当初利用业余时间为了满足自己的需求而开始开发的。很高兴它也对你有帮助！如果你真的想支持我，可以联系我的邮箱：redlnn@outlook.com。感谢你的关注与支持！",
   "time": {

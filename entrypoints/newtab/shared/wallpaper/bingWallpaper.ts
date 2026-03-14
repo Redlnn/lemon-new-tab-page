@@ -182,8 +182,8 @@ class BingWallpaperURLGetter {
         // 如果没有缓存
         this.info.value = {
           ...this.info.value,
-          copyright: i18next.t('newtab:notification.bingWallpaper.error.message'),
-          title: i18next.t('newtab:notification.bingWallpaper.error.title')
+          copyright: i18next.t('newtab:notification.bing.message'),
+          title: i18next.t('newtab:notification.bing.title')
         }
       }
       return
@@ -220,8 +220,8 @@ class BingWallpaperURLGetter {
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)
       ElNotification.error({
-        title: i18next.t('newtab:notification.bingWallpaper.error.title'),
-        message: i18next.t('newtab:notification.bingWallpaper.error.message')
+        title: i18next.t('newtab:notification.bing.title'),
+        message: i18next.t('newtab:notification.bing.message')
       })
       throw error
     }

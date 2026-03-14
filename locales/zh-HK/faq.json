@@ -1,7 +1,5 @@
 {
-  "faqSubtitle": "希望能幫到你",
-  "faqTitle": "常見問題解答",
-  "helpSection": {
+  "help": {
     "email": "Email",
     "emailCopied": "已複製電郵地址",
     "github": "GitHub",
@@ -49,5 +47,7 @@
       "content": "移除任意快速存取連結後，在彈出的通知中操作即可還原。",
       "title": "如何還原已刪除/預設快速存取連結"
     }
-  }
+  },
+  "subtitle": "希望能幫到你",
+  "title": "常見問題解答"
 }

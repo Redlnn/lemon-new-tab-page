@@ -28,7 +28,7 @@ async function restoreDefaultTopSites() {
         <el-switch v-model="settings.dock.showOnSearchFocus" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('dock.showLaunchpad') }}</div>
+        <div class="settings__label">{{ t('dock.launchpad.show') }}</div>
         <el-switch v-model="settings.dock.launchpad.enabled" />
       </div>
       <div
@@ -38,10 +38,10 @@ async function restoreDefaultTopSites() {
         <el-collapse-transition>
           <section v-if="settings.dock.launchpad.enabled">
             <p class="settings__item--note" style="margin-top: 5px">
-              {{ t('dock.launchpadTitle') }}
+              {{ t('dock.launchpad.title') }}
             </p>
             <div class="settings__item settings__item--horizontal">
-              <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+              <div class="settings__label">{{ t('shortcut.topSites') }}</div>
               <el-switch v-model="settings.dock.launchpad.topSites" />
             </div>
             <div class="settings__item settings__item--horizontal">
@@ -65,7 +65,7 @@ async function restoreDefaultTopSites() {
           </p>
         </el-collapse-transition>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+          <div class="settings__label">{{ t('shortcut.topSites') }}</div>
           <el-switch v-model="settings.dock.topSites" />
         </div>
         <div class="settings__item settings__item--horizontal">
@@ -112,7 +112,7 @@ async function restoreDefaultTopSites() {
         </div>
         <div class="settings__item settings__item--vertical">
           <div class="settings__label">
-            {{ t('shortcut.HorizontalIconSpacing') }}
+            {{ t('shortcut.spacing.itemGapX') }}
           </div>
           <el-slider
             v-model="settings.dock.gap"

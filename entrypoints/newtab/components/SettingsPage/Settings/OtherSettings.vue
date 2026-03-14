@@ -33,8 +33,8 @@ const customSearchEngineStore = useCustomSearchEngineStore()
 async function confirmClearExtensionData() {
   try {
     await ElMessageBox.confirm(
-      t('other.confirmPurgeData.message'),
-      t('other.confirmPurgeData.title'),
+      t('other.purge.confirm.data.message'),
+      t('other.purge.confirm.data.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.no'),
@@ -51,8 +51,8 @@ async function confirmClearExtensionData() {
 async function confirmClearWallpaperData() {
   try {
     await ElMessageBox.confirm(
-      t('other.confirmPurgeWallpaper.message'),
-      t('other.confirmPurgeWallpaper.title'),
+      t('other.purge.confirm.wallpaper.message'),
+      t('other.purge.confirm.wallpaper.title'),
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.no'),
@@ -76,7 +76,7 @@ async function clearWallpaperData() {
 
   ElLoading.service({
     lock: true,
-    text: t('other.confirmPurgeWallpaper.purging'),
+    text: t('other.purge.confirm.wallpaper.purging'),
     body: true,
     background: 'var(--el-overlay-color-light)'
   })
@@ -93,7 +93,7 @@ async function clearWallpaperData() {
 function clearExtensionData() {
   ElLoading.service({
     lock: true,
-    text: t('other.confirmPurgeData.purging'),
+    text: t('other.purge.confirm.data.purging'),
     body: true,
     background: 'var(--el-overlay-color-light)'
   })
@@ -350,15 +350,15 @@ function changeLanguage(lang: string) {
       </span>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.purgeWallpaperData') }}</div>
+      <div class="settings__label">{{ t('other.purge.wallpaper') }}</div>
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearWallpaperData">
-        {{ t('other.purge') }}
+        {{ t('other.purge.btn') }}
       </el-button>
     </div>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.purgeData') }}</div>
+      <div class="settings__label">{{ t('other.purge.data') }}</div>
       <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearExtensionData">
-        {{ t('other.purge') }}
+        {{ t('other.purge.btn') }}
       </el-button>
     </div>
     <input

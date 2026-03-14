@@ -11,17 +11,18 @@
     },
     "cache": {
       "duration": "缓存有效期",
+      "label": "在线壁纸缓存",
       "nextStartup": "下次启动生效",
       "noExpires": "缓存永不过期"
     },
     "change": "更改背景",
     "chooseImageOrVideo": "选择你喜欢的图片或视频作为壁纸",
     "custom": "自定义",
-    "enableOnlineWallpaperCache": "在线壁纸缓存",
-    "enableVignetting": "暗角效果",
     "fasterBgAnim": "启动时更快地显示背景",
-    "maskColor": "遮罩颜色",
-    "maskOpacity": "遮罩不透明度",
+    "mask": {
+      "color": "遮罩颜色",
+      "opacity": "遮罩不透明度"
+    },
     "myZoneMyRule": "我的地盘我做主",
     "onlineTips": {
       "a": "按下回车键或者输入框失去焦点后提交",
@@ -29,8 +30,8 @@
       "c": "壁纸加载完成前会白屏一段时间，时长取决于你的网速",
       "d": "请确保你使用的壁纸 API 允许跨域请求，否则会加载失败"
     },
-    "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
     "parallax": "壁纸视差效果",
+    "pauseWhenBlur": "标签页失去焦点时暂停视频背景",
     "permission": {
       "allowAll": "允许所有网站",
       "allowCurrent": "仅允许该API网址",
@@ -57,8 +58,11 @@
       "local": "本地图片/视频",
       "online": "在线图片"
     },
-    "videoBlurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用",
-    "videoWarning": "使用视频作为背景会大量消耗 GPU 资源，建议避免同时开多个新标签页，建议适当关闭动画、模糊、透明效果以降低性能消耗",
+    "video": {
+      "blurTip": "打开此开关以缓解多开新标签页或多个窗口同屏时的性能占用1",
+      "warning": "使用视频作为背景会大量消耗 GPU 资源，建议避免同时开多个新标签页，建议适当关闭动画、模糊、透明效果以降低性能消耗"
+    },
+    "vignette": "暗角效果",
     "warning": {
       "cacheDisabled": "由于未授予「访问所有网站」权限，无法安全缓存在线壁纸，故已将「在线壁纸缓存」关闭。",
       "fileIsNotImage": "所选文件不是图片！",
@@ -85,23 +89,27 @@
       "rtl": "从右到左",
       "title": "打开方向"
     },
-    "showBtn": "显示右下角入口",
     "rightClickToOpen": "右键背景打开",
+    "showBtn": "显示右下角入口",
     "title": "书签栏"
   },
   "clock": {
-    "blinkingColon": "闪烁时间分隔符",
+    "blink": "闪烁时间分隔符",
     "blinkingTip": "关闭可缓解持续性的 GPU 占用",
-    "calcWeightTitle": "日期粗细",
-    "colorfulClock": "多彩时钟",
-    "enableShadow": "显示阴影",
-    "invertColorDark": "【时钟】深色模式下使用深色文字",
-    "invertColorLight": "【时钟】浅色模式下使用深色文字",
-    "largeLabel": "「上午 / 下午」大字号",
+    "colorful": "多彩时钟",
+    "hour12": "使用 12 小时制",
+    "invertColor": {
+      "dark": "【时钟】深色模式下使用深色文字",
+      "light": "【时钟】浅色模式下使用深色文字"
+    },
+    "meridiem": {
+      "followSize": "「上午 / 下午」大字号",
+      "show": "显示「上午 / 下午」"
+    },
     "newStyle": "新风格",
     "newStyleDesc": "若开启将同时开启“显示「上午 / 下午」以及「显示秒钟」且不可关闭",
     "secondsTip": "开启会增加性能消耗",
-    "showAMPM": "显示「上午 / 下午」",
+    "shadow": "显示阴影",
     "showDate": "显示日期",
     "showLunar": "显示农历",
     "showSeconds": "显示秒钟",
@@ -114,10 +122,10 @@
       "title": "时钟大小"
     },
     "title": "时钟",
-    "use12HourClock": "使用 12 小时制",
     "weight": {
       "black": "最粗（900）",
       "bold": "粗体（600）",
+      "dateTitle": "日期粗细",
       "extraBold": "加粗（700）",
       "heavy": "非常粗（800）",
       "medium": "准粗（500）",
@@ -132,23 +140,15 @@
     "openInNewWindow": "在新窗口中打开"
   },
   "dock": {
+    "launchpad": {
+      "show": "在 Dock 中启用启动台",
+      "title": "启动台"
+    },
     "limitCount": "限制最大数量",
     "maxCount": "最大数量",
-    "launchpadTitle": "启动台",
-    "showLaunchpad": "在 Dock 中启用启动台",
     "title": "Dock"
   },
   "other": {
-    "confirmPurgeData": {
-      "message": "该操作将会重置扩展设置、已忽略的最常访问网站、收藏/置顶的网站、已选择的背景图片/视频等。",
-      "purging": "正在清除扩展数据...",
-      "title": "确定要清除所有数据吗？"
-    },
-    "confirmPurgeWallpaper": {
-      "message": "该操作将会删除已选择的背景图片/视频。",
-      "purging": "正在清除壁纸缓存...",
-      "title": "确定要清除壁纸缓存吗？"
-    },
     "importExport": {
       "backup": "备份扩展设置",
       "export": "导出",
@@ -168,29 +168,58 @@
       }
     },
     "language": "语言",
-    "purge": "清除",
-    "purgeData": "清除扩展数据",
-    "purgeWallpaperData": "清除壁纸缓存",
+    "purge": {
+      "btn": "清除",
+      "confirm": {
+        "data": {
+          "message": "该操作将会重置扩展设置、已忽略的最常访问网站、收藏/置顶的网站、已选择的背景图片/视频等。",
+          "purging": "正在清除扩展数据...",
+          "title": "确定要清除所有数据吗？"
+        },
+        "wallpaper": {
+          "message": "该操作将会删除已选择的背景图片/视频。",
+          "purging": "正在清除壁纸缓存...",
+          "title": "确定要清除壁纸缓存吗？"
+        }
+      },
+      "data": "清除扩展数据",
+      "wallpaper": "清除壁纸缓存"
+    },
     "sync": "云同步（实验性）",
     "syncWarning": "云同步可能会导致本地设置被覆盖，且不能同步以下内容：背景图片、最常访问网站、深色模式状态等。不支持同步的项目后面会有如右侧的标识：",
     "title": "其他"
   },
   "perf": {
-    "actionBtnBlur": "右下按钮模糊",
-    "actionBtnTransparent": "右下按钮透明",
+    "actionBtns": {
+      "blur": "右下按钮模糊",
+      "transparent": "右下按钮透明"
+    },
     "bgSwitchAnim": "背景切换动画",
     "bgSwitchAnimTip": "关闭后切换背景时将不再有淡入淡出动画，能微弱提升切换速度。同时启动时的背景动画也会被禁用",
-    "bookmarkBlur": "书签栏背景模糊",
-    "bookmarkTransparent": "书签栏背景透明",
-    "dialogAnimation": "弹窗动画",
-    "dialogBlur": "弹窗背景模糊",
-    "dialogTransparent": "弹窗背景透明",
-    "focusBlur": "点击搜索框模糊背景",
-    "focusScale": "点击搜索框缩放背景",
-    "searchBarBlur": "搜索框模糊",
-    "searchBarTransparent": "搜索框透明",
-    "shortcutBlur": "快捷访问图标模糊",
-    "shortcutTransparent": "快捷访问图标透明",
+    "bookmark": {
+      "blur": "书签栏背景模糊",
+      "transparent": "书签栏背景透明"
+    },
+    "dialog": {
+      "animation": "弹窗动画",
+      "blur": "弹窗背景模糊",
+      "transparent": "弹窗背景透明"
+    },
+    "dock": {
+      "scale": "Dock图标缩放动画"
+    },
+    "focus": {
+      "blur": "点击搜索框模糊背景",
+      "scale": "点击搜索框缩放背景"
+    },
+    "searchBar": {
+      "blur": "搜索框模糊",
+      "transparent": "搜索框透明"
+    },
+    "shortcut": {
+      "blur": "快捷访问图标模糊",
+      "transparent": "快捷访问图标透明"
+    },
     "title": "性能",
     "toggleAll": {
       "animation": "动画",
@@ -199,48 +228,51 @@
       "enable": "一键启用所有",
       "transparent": "透明效果"
     },
-    "yiyanBlur": "一言背景模糊",
-    "yiyanTransparent": "一言背景透明",
-    "yiyanRipple": "一言水波纹动画",
-    "dockScale": "Dock图标缩放动画"
+    "yiyan": {
+      "blur": "一言背景模糊",
+      "ripple": "一言水波纹动画",
+      "transparent": "一言背景透明"
+    }
   },
   "search": {
     "alwaysExpandSearchBar": "一直展开搜索框",
     "alwaysShowIcon": "始终显示搜索引擎图标",
+    "border": "显示搜索框边框",
     "clickToChange": "点击更改",
     "defaultSearchEngine": "搜索引擎",
-    "enableBorder": "显示搜索框边框",
-    "enableShadow": "显示搜索框阴影",
     "launchAnim": "启动时搜索框展开动画",
     "placeholder": "搜索框占位文字",
     "recordSearchHistory": "记录搜索历史",
     "searchSuggestionProvider": "搜索建议 API",
+    "shadow": "显示搜索框阴影",
     "tip": "想要打开新标签页就激活搜索输入？请查看页面右下角按钮菜单的「帮助和反馈」",
     "title": "搜索"
   },
   "shortcut": {
-    "HorizontalIconSpacing": "链接左右间距",
-    "VerticalIconSpacing": "链接上下间距",
-    "enablePaging": "启用翻页",
-    "enableBorder": "显示图标边框",
-    "enableShadow": "显示图标阴影",
-    "iconMarginBottom": "图标与标题间距",
+    "border": "显示图标边框",
     "iconRatio": "图标填充比例",
     "iconSize": "图标大小",
     "marginTop": "区域上边距",
     "maxColumns": "最大列数",
     "maxItemsTipForChrome": "最常访问的上限只有 10 个噢~",
     "maxRows": "最大行数",
+    "paging": "启用翻页",
+    "pinnedIcon": "显示置顶图标",
     "restoreDefault": "恢复隐藏的链接",
     "restoreDefaultTitle": "你确定要恢复默认快速访问吗？",
+    "shadow": "显示图标阴影",
     "showOnSearchFocus": "搜索框聚焦时显示",
-    "showPinnedIcon": "显示置顶图标",
     "showTitle": "显示标题",
-    "showTopSites": "展示最常访问",
+    "spacing": {
+      "iconTitleGap": "图标与标题间距",
+      "itemGapX": "链接左右间距",
+      "itemGapY": "链接上下间距"
+    },
     "tip": "Tip：可以拖动设置窗口以观察快速访问区域变化噢~",
     "title": "快速访问",
     "titleExtraWidth": "标题扩展宽度",
-    "whiteTextInLightMode": "【快速访问】浅色模式下使用白色文字"
+    "titleWhiteInLight": "【快速访问】浅色模式下使用白色文字",
+    "topSites": "展示最常访问"
   },
   "theme": {
     "colorNames": {
@@ -270,9 +302,12 @@
       "desc": "将主题色应用到更多元素",
       "label": "全局色彩"
     },
-    "darkMode": "深色模式",
     "idleHide": "不活动时淡出页面元素",
-    "lightMode": "浅色模式",
+    "mode": {
+      "dark": "深色模式",
+      "light": "浅色模式",
+      "system": "跟随系统 / 浏览器"
+    },
     "monet": {
       "askEnableCache": {
         "message": "要使用动态主题色，需要启用在线壁纸缓存，启用缓存将存储来自这个域名的图片。是否启用？",
@@ -282,16 +317,16 @@
       "label": "动态主题色（莫奈取色）"
     },
     "primaryColor": "主题色",
-    "systemMode": "跟随系统 / 浏览器",
     "title": "主题"
   },
   "title": "设置",
   "yiyan": {
     "alwaysShow": "总是显示",
     "description": "",
-    "enableShadow": "显示文字阴影",
-    "invertColorDark": "【一言】深色模式下使用深色文字",
-    "invertColorLight": "【一言】浅色模式下使用深色文字",
+    "invertColor": {
+      "dark": "【一言】深色模式下使用深色文字",
+      "light": "【一言】浅色模式下使用深色文字"
+    },
     "normalyShowTip": "关闭时仅在搜索框聚焦时显示",
     "provider": "一言来源",
     "providers": {
@@ -303,6 +338,7 @@
         "name": "今日诗词"
       }
     },
+    "shadow": "显示文字阴影",
     "title": "一言"
   }
 }

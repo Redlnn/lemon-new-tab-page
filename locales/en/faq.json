@@ -1,7 +1,5 @@
 {
-  "faqSubtitle": "Hope this helps~",
-  "faqTitle": "Frequently Asked Questions",
-  "helpSection": {
+  "help": {
     "email": "Email",
     "emailCopied": "Email address copied",
     "github": "GitHub",
@@ -49,5 +47,7 @@
       "content": "After removing any quick access link, you can restore it from the notification that pops up.",
       "title": "How to restore deleted/default shortcut links"
     }
-  }
+  },
+  "subtitle": "Hope this helps~",
+  "title": "Frequently Asked Questions"
 }

@@ -82,7 +82,7 @@ async function addCurrentPage() {
       <el-icon size="20" color="var(--el-color-primary)">
         <pin12-regular />
       </el-icon>
-      <span class="popup__title">{{ t('popup.title') }}</span>
+      <span class="popup__title">{{ t('title') }}</span>
     </div>
     <template v-if="isLoading">
       <div v-loading="true" class="popup__loading"></div>
@@ -92,7 +92,7 @@ async function addCurrentPage() {
         <el-icon size="48" color="var(--el-color-success)">
           <check-round />
         </el-icon>
-        <span>{{ t('popup.addSuccess') }}</span>
+        <span>{{ t('addSuccess') }}</span>
       </div>
       <template v-else>
         <div class="popup__content">
@@ -115,7 +115,7 @@ async function addCurrentPage() {
           <el-alert
             v-if="isAlreadyExists"
             type="warning"
-            :title="t('popup.alreadyExists')"
+            :title="t('alreadyExists')"
             :closable="false"
             show-icon
           />
@@ -127,7 +127,7 @@ async function addCurrentPage() {
             :disabled="isAlreadyExists"
             :icon="Add12Filled"
           >
-            {{ t('popup.addToShortcut') }}
+            {{ t('addToShortcut') }}
           </el-button>
         </div>
       </template>
@@ -137,7 +137,7 @@ async function addCurrentPage() {
       <el-icon size="48" color="var(--el-color-danger)">
         <close-round />
       </el-icon>
-      <span>{{ t('popup.cannotAdd') }}</span>
+      <span>{{ t('cannotAdd') }}</span>
     </div>
   </div>
 </template>

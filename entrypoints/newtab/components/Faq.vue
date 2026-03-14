@@ -15,14 +15,14 @@ const { t } = useTranslation('faq')
 
 function handleEmailClick() {
   navigator.clipboard.writeText('redlnn@outlook.com')
-  ElMessage.success(t('helpSection.emailCopied'))
+  ElMessage.success(t('help.emailCopied'))
 }
 </script>
 
 <template>
   <base-dialog v-model="opened" :title="t('newtab:menu.help')" acrylic opacity>
     <div class="issue-container noselect">
-      <div>{{ t('helpSection.title') }}</div>
+      <div>{{ t('help.title') }}</div>
       <div class="issue-links">
         <a
           class="issue-link"
@@ -32,20 +32,20 @@ function handleEmailClick() {
           <span class="issue-link-icon">
             <el-icon><Github /></el-icon>
           </span>
-          <span>{{ t('helpSection.github') }}</span>
+          <span>{{ t('help.github') }}</span>
         </a>
         <div class="issue-link" @click="handleEmailClick">
           <span class="issue-link-icon">
             <el-icon><EmailRound /></el-icon>
           </span>
-          <span>{{ t('helpSection.email') }}</span>
+          <span>{{ t('help.email') }}</span>
         </div>
       </div>
     </div>
     <div class="faq noselect">
-      {{ t('faqTitle') }}
+      {{ t('title') }}
       <span style="margin-left: 5px; font-size: 0.9em; color: var(--el-text-color-secondary)">
-        {{ t('faqSubtitle') }}
+        {{ t('subtitle') }}
       </span>
     </div>
     <div class="faq-container">

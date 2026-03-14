@@ -13,36 +13,36 @@ export * from './suggestRunner'
 
 export const searchEngines = {
   google: {
-    nameKey: 'newtab:searchEngineMenu.google',
+    nameKey: 'newtab:search.engines.google',
     url: 'https://www.google.com/search?q=%s',
     icon: Google
   },
   baidu: {
-    nameKey: 'newtab:searchEngineMenu.baidu',
+    nameKey: 'newtab:search.engines.baidu',
     url: 'https://www.baidu.com/#ie=utf-8&wd=%s',
     icon: Baidu
   },
   bing: {
-    nameKey: 'newtab:searchEngineMenu.bing',
+    nameKey: 'newtab:search.engines.bing',
     url: 'https://www.bing.com/search?q=%s',
     icon: Bing
   },
   yandex: {
-    nameKey: 'newtab:searchEngineMenu.yandex',
+    nameKey: 'newtab:search.engines.yandex',
     url: 'https://yandex.com/search?text=%s',
     icon: Yandex
   },
   duckduckgo: {
-    nameKey: 'newtab:searchEngineMenu.duckduckgo',
+    nameKey: 'newtab:search.engines.duckduckgo',
     url: 'https://duckduckgo.com/?q=%s',
     icon: DuckDuckGo
   }
 } as const
 
 export const searchSuggestAPIs = {
-  google: { nameKey: 'newtab:searchEngineMenu.google', parser: googleSuggestParser },
-  baidu: { nameKey: 'newtab:searchEngineMenu.baidu', parser: baiduSuggestParser },
-  bing: { nameKey: 'newtab:searchEngineMenu.bing', parser: bingSuggestParser }
+  google: { nameKey: 'newtab:search.engines.google', parser: googleSuggestParser },
+  baidu: { nameKey: 'newtab:search.engines.baidu', parser: baiduSuggestParser },
+  bing: { nameKey: 'newtab:search.engines.bing', parser: bingSuggestParser }
 } as const
 
 /**

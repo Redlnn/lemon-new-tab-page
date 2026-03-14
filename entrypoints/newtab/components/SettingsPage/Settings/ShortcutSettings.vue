@@ -33,26 +33,26 @@ async function restoreDefaultTopSites() {
       </div>
       <div v-show="settings.shortcut.enabled" style="margin-top: 8px">
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.showTopSites') }}</div>
+          <div class="settings__label">{{ t('shortcut.topSites') }}</div>
           <el-switch v-model="settings.shortcut.topSites" />
         </div>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.enableShadow') }}</div>
+          <div class="settings__label">{{ t('shortcut.shadow') }}</div>
           <el-switch v-model="settings.shortcut.style.shadow" />
         </div>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.enableBorder') }}</div>
+          <div class="settings__label">{{ t('shortcut.border') }}</div>
           <el-switch v-model="settings.shortcut.style.border" />
         </div>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.showPinnedIcon') }}</div>
+          <div class="settings__label">{{ t('shortcut.pinnedIcon') }}</div>
           <el-switch
             :disabled="!settings.shortcut.topSites"
             v-model="settings.shortcut.pinnedIcon"
           />
         </div>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.enablePaging') }}</div>
+          <div class="settings__label">{{ t('shortcut.paging') }}</div>
           <el-switch v-model="settings.shortcut.paging" />
         </div>
         <div class="settings__item settings__item--horizontal">
@@ -124,7 +124,7 @@ async function restoreDefaultTopSites() {
           />
         </div>
         <div class="settings__item settings__item--vertical">
-          <div class="settings__label">{{ t('shortcut.iconMarginBottom') }}</div>
+          <div class="settings__label">{{ t('shortcut.spacing.iconTitleGap') }}</div>
           <el-slider
             v-model="settings.shortcut.spacing.iconTitleGap"
             :min="0"
@@ -149,7 +149,7 @@ async function restoreDefaultTopSites() {
         </div>
         <div class="settings__item settings__item--vertical">
           <div class="settings__label">
-            {{ t('shortcut.HorizontalIconSpacing') }}
+            {{ t('shortcut.spacing.itemGapX') }}
           </div>
           <el-slider
             v-model="settings.shortcut.spacing.itemGapX"
@@ -162,7 +162,7 @@ async function restoreDefaultTopSites() {
         </div>
         <div class="settings__item settings__item--vertical">
           <div class="settings__label">
-            {{ t('shortcut.VerticalIconSpacing') }}
+            {{ t('shortcut.spacing.itemGapY') }}
           </div>
           <el-slider
             v-model="settings.shortcut.spacing.itemGapY"

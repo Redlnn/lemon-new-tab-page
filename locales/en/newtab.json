@@ -72,6 +72,14 @@
     "edit": "Edit Custom Search Engine",
     "title": "Custom Search Engine"
   },
+  "dock": {
+    "launchpad": {
+      "add": "Add",
+      "empty": "No results",
+      "search": "Search...",
+      "title": "Launchpad"
+    }
+  },
   "menu": {
     "about": "About",
     "backgroundPreference": "Background Preference",
@@ -80,35 +88,31 @@
     "sponsor": "Sponsor"
   },
   "notification": {
-    "bingWallpaper": {
-      "error": {
-        "message": "Please check the console output in developer tools.",
-        "title": "Failed to get Bing wallpaper"
-      }
+    "bing": {
+      "message": "Please check the console output in developer tools.",
+      "title": "Failed to get Bing wallpaper"
     },
-    "onlineWallpaperCache": {
-      "error": {
-        "message": "Unable to cache online wallpaper: ${error}",
-        "title": "Failed to cache online wallpaper"
-      }
+    "wallpaperCache": {
+      "message": "Unable to cache online wallpaper: ${error}",
+      "title": "Failed to cache online wallpaper"
     }
   },
   "search": {
-    "placeholder": "Search",
-    "purgeSearchHistory": "Clear Search History",
-    "searchEngineMenu": {
+    "engineMenu": {
       "current": "Current",
       "tipPrefix": "Tip: Press",
       "tipSuffix": "to switch search engine."
     },
+    "engines": {
+      "baidu": "Baidu",
+      "bing": "Bing",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "placeholder": "Search",
+    "purgeSearchHistory": "Clear Search History",
     "searchEngineNotFound": "Search engine not found"
-  },
-  "searchEngineMenu": {
-    "baidu": "Baidu",
-    "bing": "Bing",
-    "duckduckgo": "DuckDuckGo",
-    "google": "Google",
-    "yandex": "Yandex"
   },
   "shortcut": {
     "addDialog": {
@@ -137,14 +141,6 @@
     "pin": "Pin",
     "unpin": "Unpin",
     "unpinMessage": "Shortcut unpinned."
-  },
-  "dock": {
-    "launchpad": {
-      "title": "Launchpad",
-      "search": "Search...",
-      "empty": "No results",
-      "add": "Add"
-    }
   },
   "sponsor": "I first built this extension in my free time to meet my own needs, and I’m glad it’s useful for you too! If you’d like to support me, you can reach me at: redlnn@outlook.com. Thanks for your support!",
   "time": {
