@@ -304,9 +304,10 @@
     },
     "idleHide": "Fade out page elements when inactive",
     "mode": {
-      "dark": "Dark mode",
-      "light": "Light mode",
-      "system": "Follow system / browser"
+      "alwaysOff": "Always Off",
+      "alwaysOn": "Always On",
+      "label": "Dark Mode",
+      "system": "Follow System"
     },
     "monet": {
       "askEnableCache": {

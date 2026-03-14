@@ -304,9 +304,10 @@
     },
     "idleHide": "不活動時淡出頁面元素",
     "mode": {
-      "dark": "深色模式",
-      "light": "淺色模式",
-      "system": "跟隨系統 / 瀏覽器"
+      "alwaysOff": "始終關閉",
+      "alwaysOn": "始終開啟",
+      "label": "深色模式",
+      "system": "跟隨系統"
     },
     "monet": {
       "askEnableCache": {

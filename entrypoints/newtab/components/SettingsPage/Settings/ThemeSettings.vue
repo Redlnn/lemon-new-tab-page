@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
 
-import { CloudOffRound } from '@vicons/material'
+import { CloudOffRound, ComputerRound, DarkModeRound, LightModeRound } from '@vicons/material'
 import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
@@ -45,79 +45,45 @@ const predefineColorsMap = [
 
 const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapAcgn).map((i) => i.value)
 
-const isDarkUI = ref(mode.value === 'dark')
-
-const isAuto = computed(() => mode.store.value === 'auto')
-const isAutoUI = ref(isAuto.value)
-
-watch(
-  preferredDark,
-  () => {
-    if (mode.store.value === 'auto') {
-      if (preferredDark.value) {
-        isDarkUI.value = true
-      } else {
-        isDarkUI.value = false
-      }
-    }
-  },
-  { immediate: true }
-)
+const currentMode = ref(mode.store.value as 'auto' | 'dark' | 'light')
 
 function changeByPreferred() {
   if (preferredDark.value) {
     document.documentElement.classList.add('dark')
     document.documentElement.classList.remove('light')
-    isDarkUI.value = true
   } else {
     document.documentElement.classList.add('light')
     document.documentElement.classList.remove('dark')
-    isDarkUI.value = false
   }
 }
 
-function changeByUser() {
-  if (isDarkUI.value) {
+function setColorMode(newMode: 'auto' | 'dark' | 'light') {
+  if (newMode === currentMode.value) return
+
+  if (newMode === 'auto') {
+    if ((currentMode.value === 'dark') !== preferredDark.value) {
+      changeByPreferred()
+      useTimeoutFn(() => {
+        mode.store.value = 'auto'
+      }, 300)
+    } else {
+      mode.store.value = 'auto'
+    }
+  } else if (newMode === 'dark') {
     document.documentElement.classList.add('dark')
     document.documentElement.classList.remove('light')
-    isAutoUI.value = false
-  } else {
-    document.documentElement.classList.add('light')
-    document.documentElement.classList.remove('dark')
-    isAutoUI.value = false
-  }
-}
-
-function toggleDark() {
-  if (mode.value === 'dark') {
-    // 先切换CSS，等待动画结束后，再切换mode
-    changeByUser()
-    useTimeoutFn(() => {
-      mode.store.value = 'light'
-    }, 300)
-  } else {
-    changeByUser()
     useTimeoutFn(() => {
       mode.store.value = 'dark'
     }, 300)
-  }
-}
-
-function toggleAuto() {
-  if (!isAutoUI.value) {
-    mode.store.value = isDarkUI.value ? 'dark' : 'light'
-    return
-  }
-
-  if (isDarkUI.value !== preferredDark.value) {
-    // 先切换CSS，等待动画结束后，再切换store
-    changeByPreferred()
-    useTimeoutFn(() => {
-      mode.store.value = 'auto'
-    }, 300)
   } else {
-    mode.store.value = 'auto'
+    document.documentElement.classList.add('light')
+    document.documentElement.classList.remove('dark')
+    useTimeoutFn(() => {
+      mode.store.value = 'light'
+    }, 300)
   }
+
+  currentMode.value = newMode
 }
 
 const { checkAndRequestPermission } = usePermission()
@@ -173,17 +139,35 @@ const beforeMonetChange = async () => {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('theme.mode.dark') }}
+        {{ t('theme.mode.label') }}
         <cloud-off-round />
       </div>
-      <el-switch v-model="isDarkUI" @change="toggleDark" />
     </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">
-        {{ t('theme.mode.system') }}
-        <cloud-off-round />
-      </div>
-      <el-switch v-model="isAutoUI" @change="toggleAuto" />
+    <div class="settings__item theme-mode-selector">
+      <button
+        class="theme-mode-card"
+        :class="{ 'theme-mode-card--active': currentMode === 'auto' }"
+        @click="setColorMode('auto')"
+      >
+        <computer-round class="theme-mode-card__icon" />
+        <span>{{ t('theme.mode.system') }}</span>
+      </button>
+      <button
+        class="theme-mode-card"
+        :class="{ 'theme-mode-card--active': currentMode === 'dark' }"
+        @click="setColorMode('dark')"
+      >
+        <dark-mode-round class="theme-mode-card__icon" />
+        <span>{{ t('theme.mode.alwaysOn') }}</span>
+      </button>
+      <button
+        class="theme-mode-card"
+        :class="{ 'theme-mode-card--active': currentMode === 'light' }"
+        @click="setColorMode('light')"
+      >
+        <light-mode-round class="theme-mode-card__icon" />
+        <span>{{ t('theme.mode.alwaysOff') }}</span>
+      </button>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
@@ -288,6 +272,56 @@ const beforeMonetChange = async () => {
   .el-tag {
     aspect-ratio: 1;
     border: none;
+  }
+}
+
+.theme-mode-selector {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.theme-mode-card {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 12px 8px;
+  font-size: var(--el-font-size-extra-small);
+  color: var(--el-text-color-regular);
+  cursor: pointer;
+  background-color: var(--el-bg-color-page);
+  border: 1.5px solid var(--el-border-color);
+  border-radius: 10px;
+  transition:
+    border-color var(--el-transition-duration-fast) ease,
+    background-color var(--el-transition-duration-fast) ease,
+    color var(--el-transition-duration-fast) ease;
+
+  html.colorful & {
+    background-color: var(--el-color-primary-light-9);
+  }
+
+  &:hover {
+    border-color: var(--el-color-primary-light-3);
+    color: var(--el-color-primary);
+  }
+
+  &--active {
+    color: var(--el-color-primary);
+    background-color: var(--el-color-primary-light-9);
+    border-color: var(--el-color-primary);
+
+    html.colorful & {
+      background-color: var(--el-color-primary-light-8);
+    }
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
   }
 }
 </style>
