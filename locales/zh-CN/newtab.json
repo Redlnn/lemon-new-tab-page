@@ -94,7 +94,7 @@
     },
     "wallpaperCache": {
       "message": "无法缓存在线壁纸：${error}",
-      "title": "缓存在线壁纸失败1"
+      "title": "缓存在线壁纸失败"
     }
   },
   "search": {
