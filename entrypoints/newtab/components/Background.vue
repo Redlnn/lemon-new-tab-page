@@ -422,14 +422,13 @@ async function onImgLoaded() {
     ref="backgroundWrapper"
     class="background-wrapper noselect"
     :style="{
-      '--mask-opacity': settings.background.mask.opacity / 100,
       '--mask-color__light': settings.background.mask.light,
       '--mask-color__night': settings.background.mask.night,
       '--blur-intensity': `${settings.background.blur}px`,
       '--bg-opacity-duration': bgOpacityDuration
     }"
   >
-    <div class="background-mask"></div>
+    <div v-if="settings.background.mask.enabled" class="background-mask"></div>
     <div v-if="settings.background.vignette" class="background__vignette" />
     <Transition name="bg-fade">
       <div
@@ -479,8 +478,9 @@ async function onImgLoaded() {
 
 .background-mask {
   position: absolute;
+  width: 100%;
+  height: 100%;
   background-color: var(--mask-color__light);
-  opacity: var(--mask-opacity);
   transition: background-color var(--el-transition-duration-fast) cubic-bezier(0.65, 0.05, 0.1, 1);
 
   html.dark & {

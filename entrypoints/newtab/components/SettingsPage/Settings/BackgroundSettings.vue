@@ -76,11 +76,11 @@ const beforeCacheChange = async () => {
       <div class="settings__label">{{ t('background.blur') }}</div>
       <el-slider v-model="settings.background.blur" :show-tooltip="false" />
     </div>
-    <div class="settings__item">
-      <div class="settings__label settings__item--vertical">
-        {{ t('background.mask.opacity') }}
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">
+        {{ t('background.mask.enable') }}
       </div>
-      <el-slider v-model="settings.background.mask.opacity" :show-tooltip="false" />
+      <el-switch v-model="settings.background.mask.enabled" />
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('background.mask.color') }}</div>
@@ -89,6 +89,7 @@ const beforeCacheChange = async () => {
         <el-color-picker
           v-model="settings.background.mask.light"
           :predefine="predefineMaskColor"
+          show-alpha
           @change="
             () => {
               if (settings.background.mask.light === null) {
@@ -101,6 +102,7 @@ const beforeCacheChange = async () => {
         <el-color-picker
           v-model="settings.background.mask.night"
           :predefine="predefineMaskColor"
+          show-alpha
           @change="
             () => {
               if (settings.background.mask.night === null) {

@@ -79,7 +79,7 @@ export interface SettingsSchemaV9 {
     blur: number
 
     mask: {
-      opacity: number
+      enabled: boolean
       light: string
       night: string
     }

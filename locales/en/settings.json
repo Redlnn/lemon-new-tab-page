@@ -21,7 +21,7 @@
     "fasterBgAnim": "Faster background display on startup",
     "mask": {
       "color": "Mask color",
-      "opacity": "Mask opacity"
+      "enable": "Enable mask"
     },
     "myZoneMyRule": "Your space. Your rules.",
     "onlineTips": {

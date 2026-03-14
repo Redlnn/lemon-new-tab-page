@@ -70,9 +70,9 @@ export const defaultSettings = {
     blur: 3,
 
     mask: {
-      opacity: 0,
-      light: '#f2f3f5',
-      night: '#000'
+      enabled: false,
+      light: 'rgba(0, 0, 0, 0.15)',
+      night: 'rgba(0, 0, 0, 0.15)'
     },
 
     pauseOnBlur: false,

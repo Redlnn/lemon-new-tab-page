@@ -1,3 +1,5 @@
+import { hex2rgba } from '@/shared/theme'
+
 import { defaultSettings, type SettingsSchemaV8, type SettingsSchemaV9 } from '..'
 
 function clockSizeToNumber(size: 'small' | 'medium' | 'large'): number {
@@ -11,6 +13,11 @@ function clockSizeToNumber(size: 'small' | 'medium' | 'large'): number {
     default:
       return 50
   }
+}
+
+function hex2maskColor(hex: string, alpha: number): string {
+  const rgba = hex2rgba(hex)
+  return `rgba(${rgba.r}, ${rgba.g}, ${rgba.b}, ${alpha / 100})`
 }
 
 export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchemaV9 {
@@ -84,9 +91,12 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       blur: oldSettings.background.blur,
 
       mask: {
-        opacity: oldSettings.background.mask.opacity,
-        light: oldSettings.background.mask.light,
-        night: oldSettings.background.mask.night
+        enabled: oldSettings.background.mask.opacity > 0,
+        light: hex2maskColor(
+          oldSettings.background.mask.light,
+          oldSettings.background.mask.opacity
+        ),
+        night: hex2maskColor(oldSettings.background.mask.night, oldSettings.background.mask.opacity)
       },
 
       pauseOnBlur: oldSettings.background.pauseOnBlur,

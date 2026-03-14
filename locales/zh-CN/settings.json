@@ -21,7 +21,7 @@
     "fasterBgAnim": "启动时更快地显示背景",
     "mask": {
       "color": "遮罩颜色",
-      "opacity": "遮罩不透明度"
+      "enable": "启用遮罩"
     },
     "myZoneMyRule": "我的地盘我做主",
     "onlineTips": {

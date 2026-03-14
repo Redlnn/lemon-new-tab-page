@@ -21,7 +21,7 @@
     "fasterBgAnim": "啟動時更快地顯示背景",
     "mask": {
       "color": "遮罩顏色",
-      "opacity": "遮罩不透明度"
+      "enable": "啟用遮罩"
     },
     "myZoneMyRule": "做出你的樣子",
     "onlineTips": {
