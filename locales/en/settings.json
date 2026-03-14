@@ -66,7 +66,6 @@
     "warning": {
       "cacheDisabled": "Online wallpaper caching has been disabled because the “Access all websites” permission was not granted.",
       "fileIsNotImage": "The selected file is not an image!",
-      "granted": "Permission granted.",
       "monetColorDisabled": "Monet color extraction disabled",
       "monetDisabled": "Dynamic Theme Colors (Monet Extraction) has been disabled because “Access all sites” permission was not granted.",
       "notGranted": "Permission not granted, cannot access this host.",
@@ -114,11 +113,6 @@
     "showLunar": "Show Chinese lunar calendar",
     "showSeconds": "Show seconds",
     "size": {
-      "evgnlarge": "X-Large",
-      "extralarge": "XX-Large",
-      "large": "Large",
-      "medium": "Medium",
-      "small": "Small",
       "title": "Clock size"
     },
     "title": "Clock",
@@ -275,7 +269,7 @@
     "topSites": "Show most visited"
   },
   "theme": {
-    "colorNames": {
+    "color": {
       "acgn": {
         "aveMujica": "Ave Mujica",
         "bocchi": "Bocchi the Rock!",
@@ -306,7 +300,8 @@
     "mode": {
       "alwaysOff": "Always Off",
       "alwaysOn": "Always On",
-      "label": "Dark Mode",
+      "dark": "Dark Mode",
+      "light": "Light Mode",
       "system": "Follow System"
     },
     "monet": {

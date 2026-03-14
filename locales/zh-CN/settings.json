@@ -66,7 +66,6 @@
     "warning": {
       "cacheDisabled": "由于未授予「访问所有网站」权限，无法安全缓存在线壁纸，故已将「在线壁纸缓存」关闭。",
       "fileIsNotImage": "所选文件不是图片！",
-      "granted": "已授予访问权限",
       "monetColorDisabled": "莫奈取色已关闭",
       "monetDisabled": "由于未授予「访问所有网站」权限，动态主题色（莫奈取色）已被关闭",
       "notGranted": "未授予权限，无法访问该地址",
@@ -114,11 +113,6 @@
     "showLunar": "显示农历",
     "showSeconds": "显示秒钟",
     "size": {
-      "evgnlarge": "超大",
-      "extralarge": "特大",
-      "large": "大",
-      "medium": "中",
-      "small": "小",
       "title": "时钟大小"
     },
     "title": "时钟",
@@ -275,7 +269,7 @@
     "topSites": "展示最常访问"
   },
   "theme": {
-    "colorNames": {
+    "color": {
       "acgn": {
         "aveMujica": "Ave Mujica",
         "bocchi": "後藤ひとり",
@@ -306,7 +300,8 @@
     "mode": {
       "alwaysOff": "始终关闭",
       "alwaysOn": "始终开启",
-      "label": "深色模式",
+      "dark": "深色模式",
+      "light": "浅色模式",
       "system": "跟随系统"
     },
     "monet": {

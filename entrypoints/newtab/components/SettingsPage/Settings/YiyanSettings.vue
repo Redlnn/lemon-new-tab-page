@@ -35,7 +35,7 @@ const currentProviderNote = computed(() => yiyanProviders[settings.yiyan.provide
         <el-switch v-model="settings.yiyan.style.shadow" />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('yiyan.title') }}</div>
+        <div class="settings__label">{{ t('yiyan.provider') }}</div>
         <el-select
           v-model="settings.yiyan.provider"
           style="width: 180px"

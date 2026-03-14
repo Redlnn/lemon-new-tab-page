@@ -9,7 +9,8 @@
   "i18n-ally.displayLanguage": "zh-CN",
   "i18n-ally.extract.keygenStyle": "camelCase",
   "i18n-ally.pathMatcher": "{locale}/{namespace}.{ext}",
-  "i18n-ally.extract.autoDetect": true,
+  "i18n-ally.extract.autoDetect": false,
+  "i18n-ally.enabledFrameworks": ["i18next", "vue", "custom"],
   "i18n-ally.defaultNamespace": "newtab",
   "markdownlint.config": {
     "MD033": false,

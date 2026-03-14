@@ -16,26 +16,26 @@ const { t } = useTranslation('settings')
 const settings = useSettingsStore()
 
 const predefineColorsMapClassic = [
-  { value: '#3e3e3e', labelKey: 'theme.colorNames.classic.ink' },
-  { value: '#9c5333', labelKey: 'theme.colorNames.classic.ochre' },
-  { value: '#d75455', labelKey: 'theme.colorNames.classic.crimson' },
-  { value: '#ec6800', labelKey: 'theme.colorNames.classic.orangeRed' },
-  { value: defaultSettings.theme.primaryColor, labelKey: 'theme.colorNames.classic.yamabuki' },
-  { value: '#aacf53', labelKey: 'theme.colorNames.classic.yellowGreen' },
-  { value: '#008899', labelKey: 'theme.colorNames.classic.teal' },
-  { value: '#1677ff', labelKey: 'theme.colorNames.classic.antBlue' }, // Ant Design Primary
-  { value: '#1e50a2', labelKey: 'theme.colorNames.classic.lapisBlue' },
-  { value: '#4d5aaf', labelKey: 'theme.colorNames.classic.bellflower' }
+  { value: '#3e3e3e', labelKey: 'theme.color.classic.ink' },
+  { value: '#9c5333', labelKey: 'theme.color.classic.ochre' },
+  { value: '#d75455', labelKey: 'theme.color.classic.crimson' },
+  { value: '#ec6800', labelKey: 'theme.color.classic.orangeRed' },
+  { value: defaultSettings.theme.primaryColor, labelKey: 'theme.color.classic.yamabuki' },
+  { value: '#aacf53', labelKey: 'theme.color.classic.yellowGreen' },
+  { value: '#008899', labelKey: 'theme.color.classic.teal' },
+  { value: '#1677ff', labelKey: 'theme.color.classic.antBlue' }, // Ant Design Primary
+  { value: '#1e50a2', labelKey: 'theme.color.classic.lapisBlue' },
+  { value: '#4d5aaf', labelKey: 'theme.color.classic.bellflower' }
 ]
 
 const predefineColorsMapAcgn = [
-  { value: '#39c5bb', labelKey: 'theme.colorNames.acgn.miku' },
-  { value: '#66ccff', labelKey: 'theme.colorNames.acgn.luo' },
-  { value: '#3388bb', labelKey: 'theme.colorNames.acgn.mygo' },
-  { value: '#730f40', labelKey: 'theme.colorNames.acgn.aveMujica' },
-  { value: '#f7b3c2', labelKey: 'theme.colorNames.acgn.bocchi' },
-  { value: '#ff2291', labelKey: 'theme.colorNames.acgn.kessoku' },
-  { value: '#d90e2c', labelKey: 'theme.colorNames.acgn.togeari' }
+  { value: '#39c5bb', labelKey: 'theme.color.acgn.miku' },
+  { value: '#66ccff', labelKey: 'theme.color.acgn.luo' },
+  { value: '#3388bb', labelKey: 'theme.color.acgn.mygo' },
+  { value: '#730f40', labelKey: 'theme.color.acgn.aveMujica' },
+  { value: '#f7b3c2', labelKey: 'theme.color.acgn.bocchi' },
+  { value: '#ff2291', labelKey: 'theme.color.acgn.kessoku' },
+  { value: '#d90e2c', labelKey: 'theme.color.acgn.togeari' }
 ]
 
 const predefineColorsMap = [
@@ -139,7 +139,7 @@ const beforeMonetChange = async () => {
   <div class="settings__items-container">
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">
-        {{ t('theme.mode.label') }}
+        {{ t('theme.mode.dark') }}
         <cloud-off-round />
       </div>
     </div>

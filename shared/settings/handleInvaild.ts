@@ -50,7 +50,7 @@ export async function handleInvaildSettings() {
 
   ElLoading.service({
     lock: true,
-    text: i18next.t('settings:other.confirmPurgeData.purging'),
+    text: i18next.t('settings:other.purge.confirm.wallpaper.purging'),
     body: true,
     background: 'var(--el-overlay-color-light)'
   })

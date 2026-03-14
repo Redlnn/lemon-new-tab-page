@@ -37,7 +37,6 @@
     },
     "performance": {
       "content": {
-        "intro": "Try the following methods:",
         "item1": "Disable unnecessary effects in the performance settings (do not enable blur effects when using video wallpapers)",
         "item2": "Enable browser hardware acceleration"
       },
