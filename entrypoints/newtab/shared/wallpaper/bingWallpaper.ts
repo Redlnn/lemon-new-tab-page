@@ -160,7 +160,7 @@ class BingWallpaperURLGetter {
       data = await enhancedFetch<BingWallpaperResp>(
         'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1',
         // &mkt=zh-CN 加上区域后会导致后续访问 www.bing.com 被跳转到 cn.bing.com
-        { timeout: 500 }
+        { timeout: 1000 }
       )
       this.info.value = data.images[0]!
       this.updateUHDUrl(data.images[0]!.url)
