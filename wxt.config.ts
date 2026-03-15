@@ -120,7 +120,8 @@ export default defineConfig({
       })
     ],
     build: {
-      sourcemap: false // for HMP (@wxt-dev/module-vue 会自动添加)
+      sourcemap: false, // for HMP (@wxt-dev/module-vue 会自动添加)
+      chunkSizeWarningLimit: 2000
     },
     ssr: {
       noExternal: ['element-plus']
