@@ -2,8 +2,8 @@ import type { App } from 'vue'
 
 import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
-import resourcesToBackend from 'i18next-resources-to-backend'
 import I18NextVue from 'i18next-vue'
+import resources from 'virtual:i18next-loader'
 import { browser } from 'wxt/browser'
 
 export const getLang = () => i18next.language || browser.i18n.getUILanguage()
@@ -31,8 +31,8 @@ export const i18nInitPromise = i18next
   // 检测用户语言
   // 参考: https://github.com/i18next/i18next-browser-languageDetector
   .use(languageDetector)
-  .use(resourcesToBackend((lng: string, ns: string) => import(`@/locales/${lng}/${ns}.json`)))
   .init({
+    resources,
     fallbackLng: {
       'zh-MO': ['zh-HK'],
       zh: ['zh-CN'],

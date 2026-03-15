@@ -48,9 +48,6 @@ importers:
       i18next-browser-languagedetector:
         specifier: ^8.2.1
         version: 8.2.1
-      i18next-resources-to-backend:
-        specifier: ^1.2.1
-        version: 1.2.1
       i18next-vue:
         specifier: ^5.4.0
         version: 5.4.0(i18next@25.8.18(typescript@5.9.3))(vue@3.5.30(typescript@5.9.3))
@@ -85,9 +82,6 @@ importers:
       '@types/chrome':
         specifier: ^0.1.37
         version: 0.1.37
-      '@types/lodash':
-        specifier: ^4.17.24
-        version: 4.17.24
       '@types/node':
         specifier: ^25.5.0
         version: 25.5.0
@@ -127,9 +121,6 @@ importers:
       oxlint:
         specifier: ^1.55.0
         version: 1.55.0
-      postcss-scss:
-        specifier: ^4.0.9
-        version: 4.0.9(postcss@8.5.8)
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
@@ -2096,9 +2087,6 @@ packages:
 
   i18next-browser-languagedetector@8.2.1:
     resolution: {integrity: sha512-bZg8+4bdmaOiApD7N7BPT9W8MLZG+nPTOFlLiJiT8uzKXFjhxw4v2ierCXOwB5sFDMtuA5G4kgYZ0AznZxQ/cw==}
-
-  i18next-resources-to-backend@1.2.1:
-    resolution: {integrity: sha512-okHbVA+HZ7n1/76MsfhPqDou0fptl2dAlhRDu2ideXloRRduzHsqDOznJBef+R3DFZnbvWoBW+KxJ7fnFjd6Yw==}
 
   i18next-vue@5.4.0:
     resolution: {integrity: sha512-GDj0Xvmis5Xgcvo9gMBJMgJCtewYMLZP6gAEPDDGCMjA+QeB4uS4qUf1MK79mkz/FukhaJdC+nlj0y1qk6NO2Q==}
@@ -5493,10 +5481,6 @@ snapshots:
       entities: 4.5.0
 
   i18next-browser-languagedetector@8.2.1:
-    dependencies:
-      '@babel/runtime': 7.28.6
-
-  i18next-resources-to-backend@1.2.1:
     dependencies:
       '@babel/runtime': 7.28.6
 

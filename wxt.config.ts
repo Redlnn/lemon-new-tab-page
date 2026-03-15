@@ -88,7 +88,8 @@ export default defineConfig({
         include: [/\.vue$/, /\.md$/]
       }), // 自己添加 @vitejs/plugin-vue 不使用 @wxt-dev/module-vue
       i18nextLoader({
-        paths: ['./locales']
+        paths: ['./locales'],
+        namespaceResolution: 'basename'
       }),
       svgLoader(),
       Markdown({

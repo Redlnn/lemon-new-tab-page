@@ -2,6 +2,8 @@
 /// <reference types="vite-svg-loader" />
 /// <reference types="chrome" />
 
+declare module 'virtual:*'
+
 declare module '*.md' {
   import type { ComponentOptions } from 'vue'
 
