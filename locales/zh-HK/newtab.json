@@ -116,10 +116,6 @@
   },
   "shortcut": {
     "addDialog": {
-      "confirmSvgCancelBtn": "取消",
-      "confirmSvgDesc": "你確定要使用 SVG 圖片嗎？為防範 XSS 和 XXE 攻擊，檸檬起始頁將對圖片進行處理，可能會導致圖片無法正常顯示。即便處理後仍有風險，請確認圖片來源安全。",
-      "confirmSvgOKBtn": "確定",
-      "confirmSvgTitle": "你選擇了一張 SVG 圖片",
       "extensionIconTip": "你亦可以透過點擊瀏覽器擴展選單中嘅圖示嘷將當前查看的頁面加入快速存取。",
       "invalidUrlError": "網址無效，請重新輸入",
       "tooLargeImageError": "圖片超過 100KiB，請重新選擇",

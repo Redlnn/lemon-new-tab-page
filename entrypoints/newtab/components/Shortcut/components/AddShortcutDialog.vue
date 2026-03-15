@@ -25,7 +25,7 @@ const data: {
   favicon: ''
 })
 
-const { beforeFaviconUpload, httpRequest } = useFaviconUpload({ maxKB: 100 })
+const { beforeFaviconUpload, httpRequest } = useFaviconUpload()
 
 const isEditing = computed(() => editingIndex.value !== null)
 const dialogTitle = computed(() =>
