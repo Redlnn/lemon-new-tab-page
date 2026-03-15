@@ -92,11 +92,14 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
       mask: {
         enabled: oldSettings.background.mask.opacity > 0,
-        light: hex2maskColor(
-          oldSettings.background.mask.light,
-          oldSettings.background.mask.opacity
-        ),
-        night: hex2maskColor(oldSettings.background.mask.night, oldSettings.background.mask.opacity)
+        light:
+          oldSettings.background.mask.opacity > 0
+            ? hex2maskColor(oldSettings.background.mask.light, oldSettings.background.mask.opacity)
+            : defaultSettings.background.mask.light,
+        night:
+          oldSettings.background.mask.opacity > 0
+            ? hex2maskColor(oldSettings.background.mask.night, oldSettings.background.mask.opacity)
+            : defaultSettings.background.mask.night
       },
 
       pauseOnBlur: oldSettings.background.pauseOnBlur,
@@ -202,7 +205,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       searchBar: {
         transparent: !oldSettings.perf.disableSearchBarTransparent,
         blur: !oldSettings.perf.disableSearchBarBlur,
-        launchAnim: oldSettings.search.launchAnimation
+        launchAnim: defaultSettings.perf.searchBar.launchAnim
       },
       yiyan: {
         transparent: !oldSettings.perf.disableYiyanTransparent,
