@@ -430,7 +430,6 @@ function handleContextmenu(
   max-width: 93%;
   height: calc(var(--item-size) + 10px);
   padding: 5px;
-  overflow: visible;
   background-color: var(--le-bg-color-overlay-opacity-60);
   border-radius: 15px;
   box-shadow: 0 4px 6px rgb(0 0 0 / 10%);

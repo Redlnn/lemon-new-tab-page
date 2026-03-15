@@ -43,3 +43,5 @@ declare module 'jinrishici' {
 
   export function load(result: (result: RootObject) => void, err: (error: Error) => void): void
 }
+
+type ClassValue = string | Record<string, boolean> | ClassValue[]

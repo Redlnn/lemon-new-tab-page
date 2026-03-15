@@ -17,7 +17,7 @@ import ElTeleport from 'element-plus/es/components/teleport/src/teleport2.mjs'
 import SettingsDialogContent from './SettingsDialogContent.vue'
 
 type DialogProps_ = DialogProps & {
-  class?: string | Record<string, boolean> | Array<string | Record<string, boolean>>
+  class?: ClassValue
 }
 
 const props = withDefaults(defineProps<DialogProps_>(), {
