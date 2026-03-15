@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import Vue from '@vitejs/plugin-vue'
+import postcss from 'postcss'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
@@ -71,6 +72,22 @@ const elementPlusResolver = ElementPlusResolver({
   importStyle: 'sass'
 })
 
+// 将 所有 Element Plus CSS 包裹在 @layer element-plus { } 中，以便未分层的用户样式始终优先（Vite 8+）
+const elementPlusLayerPlugin: postcss.Plugin = {
+  postcssPlugin: 'element-plus-layer',
+  Once(root, { result }) {
+    const from: string = (result.opts.from ?? '').replace(/\\/g, '/')
+    if (!from.includes('/node_modules/element-plus/')) return
+    if (!root.nodes?.length) return
+
+    const nodes = root.nodes.map((n) => n.clone())
+    root.removeAll()
+    const layer = postcss.atRule({ name: 'layer', params: 'element-plus' })
+    layer.append(...nodes)
+    root.append(layer)
+  }
+}
+
 // See https://wxt.dev/api/config.html
 export default defineConfig({
   modules: ['@wxt-dev/webextension-polyfill'],
@@ -134,6 +151,9 @@ export default defineConfig({
       }
     },
     css: {
+      postcss: {
+        plugins: [elementPlusLayerPlugin]
+      },
       preprocessorOptions: {
         scss: {
           additionalData: `@use "@/assets/styles/element/index.scss" as *;`

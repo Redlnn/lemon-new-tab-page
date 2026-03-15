@@ -59,6 +59,7 @@
     "markdown-exit": "latest",
     "npm-run-all2": "^8.0.4",
     "oxlint": "^1.55.0",
+    "postcss": "^8.5.8",
     "prettier": "^3.8.1",
     "sass-embedded": "^1.98.0",
     "stylelint": "^17.4.0",

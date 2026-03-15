@@ -121,6 +121,9 @@ importers:
       oxlint:
         specifier: ^1.55.0
         version: 1.55.0
+      postcss:
+        specifier: ^8.5.8
+        version: 8.5.8
       prettier:
         specifier: ^3.8.1
         version: 3.8.1
