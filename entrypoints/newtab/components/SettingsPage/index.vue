@@ -12,7 +12,7 @@ import SettingsMenuView from './components/SettingsMenuView.vue'
 import { MENU_ITEMS, SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
 
 const MOBILE_BREAKPOINT = 600
-const COLLAPSE_BREAKPOINT = 900
+const COLLAPSE_BREAKPOINT = 850
 const DESKTOP_DIALOG_WIDTH = 850
 
 const { t } = useTranslation('settings')
