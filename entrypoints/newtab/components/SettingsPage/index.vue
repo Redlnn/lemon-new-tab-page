@@ -79,7 +79,6 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
       { 'is-mobile': isMobile },
       { 'is-mobile-main-menu': isMobile && router.isAtMenu.value }
     ]"
-    :lock-scroll="false"
     draggable
     :show-close="false"
     header-class="settings-header noselect"

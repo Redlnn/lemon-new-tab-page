@@ -47,7 +47,6 @@ function onDeny() {
     :title="t('background.permission.request.title')"
     width="400px"
     class="permission-dialog base-dialog--blur base-dialog--opacity noselect"
-    :lock-scroll="false"
   >
     <div class="permission-dialog-content">
       <p>{{ t('background.permission.request.message') }}</p>

@@ -123,3 +123,7 @@ body {
     }
   }
 }
+
+body > .el-dropdown {
+  display: flex;
+}
