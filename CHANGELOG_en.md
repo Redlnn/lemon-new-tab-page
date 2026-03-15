@@ -19,19 +19,22 @@
 
 ### Improvements⚡️
 
+- Optimized performance and refined details
 - Minor adjustments to UI elements and translations
-- Disabled the search bar expansion animation on startup by default due to performance issues on most devices
-- When caching is enabled, cached wallpapers will continue to be used even after expiration if new wallpapers cannot be fetched
-- **Quote:** Added click animation to the widget
-- **Clock:** Font size now uses a slider, up to 200px
-- **Cloud Sync:** No longer syncs Monet colors, wallpaper cache, or custom search engines
 - Settings items are now hidden when the corresponding feature is disabled
 - Real-time synchronization of settings changes across multiple open tabs
+- Improved dark mode switching experience
+- **Quote:** Added click animation
+- **Search:** Disabled the search bar expansion animation on startup by default due to performance issues on most devices
+- **Background:** When caching is enabled, cached wallpapers will continue to be used even after expiration if new wallpapers cannot be fetched
+- **Clock:** Font size now uses a slider, up to 200px
+- **Cloud Sync:** No longer syncs Monet colors, wallpaper cache, or custom search engines
+- **Background:** The mask now only provides an on/off switch, with opacity controlled by color values to differentiate between day and night mode transparency
 
 ### Bug Fixes🐛
 
 - Fixed animation stutter when opening the settings panel for the first time
-- Fixed an issue where clicking the quote widget while the search bar was focused caused it to lose focus
+- **Search:** Fixed an issue where clicking the quote widget while the search bar was focused caused it to lose focus
 - **Quote:** Fixed an issue where it would not display in certain cases when "Always Show" was enabled
 
 ## 3.1.0 (Feb 14, 2026)
