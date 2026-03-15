@@ -2,7 +2,7 @@
 
 > Translated by AI from Chinese.
 
-## 3.2.0 (WIP)
+## 3.2.0 (Mar 15, 2026)
 
 ### New Features✨
 
