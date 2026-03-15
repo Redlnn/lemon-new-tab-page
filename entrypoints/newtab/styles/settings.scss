@@ -9,7 +9,7 @@
   background-color: var(--el-bg-color-page);
   border-radius: 20px;
   box-shadow: 0 0 15px 0 var(--le-bg-color-page-opacity-60);
-  transition: var(--el-transition-duration-fast) ease;
+  transition: background-color var(--el-transition-duration-fast) ease;
 
   html.dialog-acrylic & {
     @include acrylic.acrylic;
