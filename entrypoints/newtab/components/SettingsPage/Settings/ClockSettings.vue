@@ -103,7 +103,8 @@ function handleNewStyleChange(val: string | number | boolean) {
         />
       </div>
       <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('clock.weight.title') }}</div>        <el-select
+        <div class="settings__label">{{ t('clock.weight.title') }}</div>
+        <el-select
           v-model="settings.clock.weight.time"
           style="width: 160px"
           popper-class="settings-item-popper"

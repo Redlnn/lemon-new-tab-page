@@ -508,8 +508,8 @@ function handleContextmenu(
 }
 
 .dock-tooltip.el-popper {
-  border: none;
   background: rgb(from var(--el-bg-color-overlay) r g b/ 50%);
+  border: none;
 
   html.colorful & {
     background: rgb(from var(--el-color-primary-light-7) r g b/ 50%);

@@ -200,8 +200,8 @@
   transition: var(--el-transition-duration-fast) ease;
 
   &.active {
-    background-color: var(--el-fill-color-dark);
     padding: 10px 20px;
+    background-color: var(--el-fill-color-dark);
     border-radius: 10px;
 
     &.settings__item:first-of-type {

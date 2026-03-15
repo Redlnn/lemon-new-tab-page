@@ -426,12 +426,12 @@ useDraggable(gridRef, shortcuts, {
 }
 
 .launchpad-search {
+  display: flex;
+  gap: 5px;
+  align-items: center;
   width: 320px;
   max-width: 90dvw;
   margin-bottom: 48px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
 
   @media (width <= 500px) {
     margin-bottom: 30px;
@@ -539,9 +539,9 @@ useDraggable(gridRef, shortcuts, {
     }
 
     &--add {
-      background-color: rgb(255 255 255 / 15%);
-      color: rgb(255 255 255 / 85%);
       font-size: 38px;
+      color: rgb(255 255 255 / 85%);
+      background-color: rgb(255 255 255 / 15%);
     }
   }
 

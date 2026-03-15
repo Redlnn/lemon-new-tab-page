@@ -31,10 +31,10 @@
     animation: delayedFadeIn 0.25s;
 
     &.border {
-      border: solid 1px rgb(255 255 255 / 0.5);
+      border: solid 1px rgb(255 255 255 / 50%);
 
       html.dark & {
-        border: solid 1px rgb(255 255 255 / 0.1);
+        border: solid 1px rgb(255 255 255 / 10%);
       }
     }
 

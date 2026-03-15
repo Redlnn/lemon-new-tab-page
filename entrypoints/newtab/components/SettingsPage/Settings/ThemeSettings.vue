@@ -285,9 +285,9 @@ const beforeMonetChange = async () => {
   display: flex;
   flex: 1;
   flex-direction: column;
+  gap: 6px;
   align-items: center;
   justify-content: center;
-  gap: 6px;
   padding: 12px 8px;
   font-size: var(--el-font-size-extra-small);
   color: var(--el-text-color-regular);
@@ -305,8 +305,8 @@ const beforeMonetChange = async () => {
   }
 
   &:hover {
-    border-color: var(--el-color-primary-light-3);
     color: var(--el-color-primary);
+    border-color: var(--el-color-primary-light-3);
   }
 
   &--active {

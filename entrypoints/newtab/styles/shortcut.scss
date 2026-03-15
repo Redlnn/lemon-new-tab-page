@@ -54,17 +54,19 @@
       box-shadow 0.2s ease,
       transform 0.2s ease;
 
+    .shortcut:hover &--next,
+    &--next:focus-visible {
+      transform: translateX(-5px);
+    }
+
+    .shortcut:hover &--prev,
+    &--prev:focus-visible {
+      transform: translateX(5px);
+    }
+
     .shortcut:hover &,
     &:focus-visible {
       opacity: 1;
-
-      &--next {
-        transform: translateX(-5px);
-      }
-
-      &--prev {
-        transform: translateX(5px);
-      }
     }
 
     &:focus-visible {
@@ -316,15 +318,15 @@
           height: var(--icon_size);
           color: var(--el-text-color-regular);
           background: var(--el-fill-color-darker);
+          border: solid 1px rgb(255 255 255 / 10%);
           border-radius: 50%;
           transition: background-color 0.1s ease;
-          border: solid 1px rgb(255 255 255 / 0.1);
 
           &.border {
-            border: solid 1px rgb(255 255 255 / 0.5);
+            border: solid 1px rgb(255 255 255 / 50%);
 
             html.dark & {
-              border: solid 1px rgb(255 255 255 / 0.1);
+              border: solid 1px rgb(255 255 255 / 10%);
             }
           }
 
