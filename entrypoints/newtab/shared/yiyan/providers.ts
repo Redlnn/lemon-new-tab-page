@@ -34,15 +34,15 @@ export const yiyanProviders = {
           (res) =>
             resolve({
               yiyan: res.data.content,
-              yiyanOrigin: res.data.origin.title
+              yiyanOrigin: res.data.origin.title,
             }),
           () =>
             resolve({
               yiyan: undefined,
-              yiyanOrigin: undefined
-            })
+              yiyanOrigin: undefined,
+            }),
         )
-      })
+      }),
   },
   hitokoto: {
     nameKey: 'settings:yiyan.providers.hitokoto.name',
@@ -56,6 +56,6 @@ export const yiyanProviders = {
         console.error('Error fetching hitokoto:', error)
         return { yiyan: undefined, yiyanOrigin: undefined }
       }
-    }
-  }
+    },
+  },
 } as const

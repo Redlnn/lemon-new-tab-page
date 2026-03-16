@@ -5,7 +5,7 @@ import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 export function useShortcutDrag(
   containerRef: Ref<HTMLElement | undefined | null>,
   shortcuts: ShallowRef<{ url: string; title: string; favicon?: string }[]>,
-  refresh: () => void
+  refresh: () => void,
 ) {
   const shortcutStore = useShortcutStore()
   const isDragging = ref(false)
@@ -26,10 +26,10 @@ export function useShortcutDrag(
       shortcutStore.items = shortcuts.value
       saveShortcut(shortcutStore.$state)
       refresh()
-    }
+    },
   })
 
   return {
-    isDragging
+    isDragging,
   }
 }

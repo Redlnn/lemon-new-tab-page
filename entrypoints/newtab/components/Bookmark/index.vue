@@ -12,7 +12,7 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import {
   BOOKMARK_ACTIVE_MAP,
   BOOKMARK_OPENED_MENU_CLOSE_FN,
-  OPEN_BOOKMARK_EDIT_DIALOG
+  OPEN_BOOKMARK_EDIT_DIALOG,
 } from '@newtab/shared/keys'
 
 import { useBookmarkStore } from './bookmarks'
@@ -27,7 +27,7 @@ const settings = useSettingsStore()
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.bookmark.transparent,
-  blur: settings.perf.bookmark.blur
+  blur: settings.perf.bookmark.blur,
 }))
 
 const bookmarkPerfClass = perf('bookmark')
@@ -40,7 +40,7 @@ const editDialogRef = ref<InstanceType<typeof BookmarkEditDialog>>()
 
 provide(
   OPEN_BOOKMARK_EDIT_DIALOG,
-  (node) => editDialogRef.value && editDialogRef.value.openEditDialog(node)
+  (node) => editDialogRef.value && editDialogRef.value.openEditDialog(node),
 )
 
 function onDrawerResize(evt: MouseEvent, size: number): void {
@@ -85,7 +85,7 @@ function handleInput() {
 
 function getEnumKeyByValue<T extends Record<string, string>, V extends T[keyof T]>(
   enumObj: T,
-  value: V
+  value: V,
 ): keyof T | undefined {
   const key = (Object.keys(enumObj) as Array<keyof T>).find((key) => enumObj[key] === value)
   if (key === 'Original') return ''
@@ -97,28 +97,28 @@ const sortOptions = [
   {
     value: '',
     labelKey: 'bookmark.sortMode.origin',
-    click: () => store.setSortMode(SortMode.Original)
+    click: () => store.setSortMode(SortMode.Original),
   },
   {
     value: 'NameAsc',
     labelKey: 'bookmark.sortMode.nameAsc',
-    click: () => store.setSortMode(SortMode.NameAsc)
+    click: () => store.setSortMode(SortMode.NameAsc),
   },
   {
     value: 'NnameDesc',
     labelKey: 'bookmark.sortMode.nameDesc',
-    click: () => store.setSortMode(SortMode.NameDesc)
+    click: () => store.setSortMode(SortMode.NameDesc),
   },
   {
     value: 'CreatedAsc',
     labelKey: 'bookmark.sortMode.createdAsc',
-    click: () => store.setSortMode(SortMode.CreatedDesc)
+    click: () => store.setSortMode(SortMode.CreatedDesc),
   },
   {
     value: 'CreatedDesc',
     labelKey: 'bookmark.sortMode.createdDesc',
-    click: () => store.setSortMode(SortMode.CreatedAsc)
-  }
+    click: () => store.setSortMode(SortMode.CreatedAsc),
+  },
 ]
 
 // 控制不同深度层级的激活值（按深度索引），避免父子 collapse 共享同一数组导致冲突
@@ -134,7 +134,7 @@ const topModel = computed({
   get: () => activeMap.value[1] ?? [],
   set: (v: string[]) => {
     activeMap.value[1] = v
-  }
+  },
 })
 
 watch(
@@ -148,7 +148,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 </script>
 

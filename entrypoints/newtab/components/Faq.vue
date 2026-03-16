@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import '@newtab/styles/github-markdown.css'
-
 import { Github } from '@vicons/fa'
 import { EmailRound } from '@vicons/material'
 import { TranslationComponent as i18next, useTranslation } from 'i18next-vue'

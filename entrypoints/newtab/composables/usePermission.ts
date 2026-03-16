@@ -6,7 +6,7 @@ export const PermissionResult = {
   GrantedAll: 'granted-all',
   GrantedCurrent: 'granted-current',
   DeniedByUser: 'denied-by-user',
-  DeniedByBrowser: 'denied-by-browser'
+  DeniedByBrowser: 'denied-by-browser',
 } as const
 export type PermissionResult = (typeof PermissionResult)[keyof typeof PermissionResult]
 
@@ -25,7 +25,7 @@ export function usePermission() {
 
   const checkAndRequestPermission = async (
     hostname: string,
-    onlyAll: boolean = false
+    onlyAll: boolean = false,
   ): Promise<PermissionResult> => {
     const allPermissions = { origins: [`*://*/*`] }
     const allGranted = await browser.permissions.contains(allPermissions)
@@ -47,6 +47,6 @@ export function usePermission() {
     permissionDialogVisible,
     currentHostname,
     onPermissionDialogResult,
-    checkAndRequestPermission
+    checkAndRequestPermission,
   }
 }

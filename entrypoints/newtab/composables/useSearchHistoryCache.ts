@@ -80,6 +80,6 @@ export function useSearchHistoryCache() {
     histories: readonly(historiesRef),
     ensureLoaded,
     addHistory,
-    clearHistories
+    clearHistories,
   }
 }

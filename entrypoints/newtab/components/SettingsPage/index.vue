@@ -30,7 +30,7 @@ const currentPageTitle = computed(() => {
 })
 
 const slideTransitionName = computed(() =>
-  isMobile.value ? (router.isForward.value ? 'settings-slide-left' : 'settings-slide-right') : ''
+  isMobile.value ? (router.isForward.value ? 'settings-slide-left' : 'settings-slide-right') : '',
 )
 
 const resetRouter = () => router.reset(isMobile.value ? SettingsRoute.MENU : SettingsRoute.THEME)
@@ -77,7 +77,7 @@ defineExpose({ show: customShow, hide, toggle: customToggle })
     class="settings__dialog settings-container--two-column"
     :class="[
       { 'is-mobile': isMobile },
-      { 'is-mobile-main-menu': isMobile && router.isAtMenu.value }
+      { 'is-mobile-main-menu': isMobile && router.isAtMenu.value },
     ]"
     draggable
     :show-close="false"

@@ -13,7 +13,7 @@ import {
   uploadBackground,
   useDarkWallpaperStorge,
   useWallpaperStorge,
-  useWallpaperUrlStore
+  useWallpaperUrlStore,
 } from '@newtab/shared/wallpaper'
 
 // 大小阈值 (字节)，超过会提示。这里设置为 50MB
@@ -53,7 +53,7 @@ function useBackgroundSwitcher() {
 
   const readMediaMeta = (
     file: File,
-    cb: (meta: { width?: number; height?: number; duration?: number }, file?: File) => void
+    cb: (meta: { width?: number; height?: number; duration?: number }, file?: File) => void,
   ) => {
     if (!file) return
     if (file.type.startsWith('image/')) {
@@ -103,10 +103,10 @@ function useBackgroundSwitcher() {
       try {
         await ElMessageBox.confirm(
           i18next.t('settings:background.warning.tooLarge.message', {
-            size: formatBytes(rawFile.size)
+            size: formatBytes(rawFile.size),
           }),
           i18next.t('settings:background.warning.tooLarge.title'),
-          { type: 'warning' }
+          { type: 'warning' },
         )
       } catch {
         // 用户取消上传
@@ -185,8 +185,8 @@ function useBackgroundSwitcher() {
       i18next.t('settings:background.warning.unknownSource'),
       i18next.t('settings:background.warning.title'),
       {
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
       .then(() => {
         settings.background.bgType = BgType.Online
@@ -262,7 +262,7 @@ function useBackgroundSwitcher() {
           isDarkBg.value = newVal
         }
       },
-      { immediate: true }
+      { immediate: true },
     )
 
     const tasks: Array<Promise<void>> = []
@@ -285,7 +285,7 @@ function useBackgroundSwitcher() {
               }
             }
           } catch {}
-        })()
+        })(),
       )
     }
 
@@ -295,7 +295,7 @@ function useBackgroundSwitcher() {
           try {
             await wallpaperUrlStore.getUrl('dark')
             const file = await useDarkWallpaperStorge.getItem<Blob>(
-              settings.background.localDark.id
+              settings.background.localDark.id,
             )
             if (file) {
               metaDark.value = { size: (file as File).size }
@@ -309,7 +309,7 @@ function useBackgroundSwitcher() {
               }
             }
           } catch {}
-        })()
+        })(),
       )
     }
 
@@ -330,7 +330,7 @@ function useBackgroundSwitcher() {
     deleteLocalBg,
     tempOnlineUrl,
     changeOnlineBg,
-    onlineImageWarn
+    onlineImageWarn,
   }
 }
 

@@ -1,27 +1,27 @@
 @use '../variables.scss' as *;
 
 $--slider: (
-  'button-size': 15px
+  'button-size': 15px,
 );
 $--border-radius: (
-  'base': 20px
+  'base': 20px,
 );
 $--messagebox: (
-  'border-radius': 20px
+  'border-radius': 20px,
 );
 $--popper: (
-  'border-radius': 20px
+  'border-radius': 20px,
 );
 $--backtop: (
   'bg-color': color-mix(in oklch, var(--el-color-primary), transparent 90%),
-  'hover-bg-color': color-mix(in oklch, var(--el-color-primary-light-5), transparent 60%)
+  'hover-bg-color': color-mix(in oklch, var(--el-color-primary-light-5), transparent 60%),
 );
 $--custom-font-family:
   #{$font-apple},
   #{$font-common},
   #{$font-fallback};
 $--font-family: (
-  '': $--custom-font-family
+  '': $--custom-font-family,
 );
 
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (

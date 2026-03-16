@@ -9,7 +9,7 @@ import {
   useBingWallpaperStorge,
   useDarkWallpaperStorge,
   useWallpaperStorge,
-  wallpaperUrlCache
+  wallpaperUrlCache,
 } from '.'
 
 export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
@@ -60,7 +60,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       } catch {}
       await wallpaperUrlCache.setValue({
         ...(await wallpaperUrlCache.getValue()),
-        [type]: ''
+        [type]: '',
       })
     }
 
@@ -86,7 +86,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
 
       await wallpaperUrlCache.setValue({
         ...(await wallpaperUrlCache.getValue()),
-        [type]: url
+        [type]: url,
       })
       updateRef(type, url)
       return targetRef
@@ -99,17 +99,17 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   watch(
     () => settings.background.local.id,
     () => getUrl('light'),
-    { immediate: true }
+    { immediate: true },
   )
   watch(
     () => settings.background.localDark.id,
     () => getUrl('dark'),
-    { immediate: true }
+    { immediate: true },
   )
   watch(
     () => settings.background.bing.id,
     () => getUrl('bing'),
-    { immediate: true }
+    { immediate: true },
   )
 
   const setUrl = async (type: 'light' | 'dark' | 'bing', url: string) => {

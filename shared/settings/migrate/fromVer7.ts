@@ -1,5 +1,6 @@
 import type { SettingsSchemaV7, SettingsSchemaV8 } from '..'
 import { defaultSettings } from '..'
+
 import { toNewBgType } from './map'
 
 export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchemaV8 {
@@ -7,7 +8,7 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
     theme: {
       primaryColor: oldSettings.primaryColor,
       colorfulMode: oldSettings.colorfulMode,
-      monetColor: oldSettings.monetColor
+      monetColor: oldSettings.monetColor,
     },
     clock: {
       enabled: oldSettings.time.enabled,
@@ -23,8 +24,8 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
       blink: oldSettings.time.blinkingColon,
       invertColor: {
         light: oldSettings.time.invertColor.light,
-        night: oldSettings.time.invertColor.night
-      }
+        night: oldSettings.time.invertColor.night,
+      },
     },
     search: {
       enabled: oldSettings.search.enabled,
@@ -36,7 +37,7 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
       recordHistory: oldSettings.search.recordSearchHistory,
       shadow: oldSettings.search.enableShadow,
       placeholder: oldSettings.search.placeholder,
-      launchAnimation: oldSettings.search.launchAnim
+      launchAnimation: oldSettings.search.launchAnim,
     },
     background: {
       bgType: toNewBgType(oldSettings.background.bgType),
@@ -45,28 +46,28 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
       mask: {
         opacity: oldSettings.background.bgMaskOpacity,
         light: oldSettings.background.lightMaskColor,
-        night: oldSettings.background.nightMaskColor
+        night: oldSettings.background.nightMaskColor,
       },
       pauseOnBlur: oldSettings.background.pauseWhenBlur,
       fastAnimation: oldSettings.background.fasterBgAnim,
       local: {
         id: oldSettings.localBackground.id,
-        mediaType: oldSettings.localBackground.mediaType
+        mediaType: oldSettings.localBackground.mediaType,
       },
       localDark: {
         id: oldSettings.localDarkBackground.id,
-        mediaType: oldSettings.localDarkBackground.mediaType
+        mediaType: oldSettings.localDarkBackground.mediaType,
       },
       bing: {
         id: oldSettings.bingBackground.id,
-        updateDate: oldSettings.bingBackground.updateDate
+        updateDate: oldSettings.bingBackground.updateDate,
       },
       online: {
         url: oldSettings.background.onlineUrl,
         cacheEnable: defaultSettings.background.online.cache.enabled,
         cacheDuration: defaultSettings.background.online.cache.duration,
-        noExpires: defaultSettings.background.online.cache.noExpires
-      }
+        noExpires: defaultSettings.background.online.cache.noExpires,
+      },
     },
     shortcut: {
       enabled: oldSettings.shortcut.enabled,
@@ -86,7 +87,7 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
       titleExtraWidth: defaultSettings.shortcut.title.extraWidth,
       whiteTextInLightMode: oldSettings.shortcut.whiteTextInLightMode,
       marginTop: oldSettings.shortcut.marginTop,
-      openInNewTab: defaultSettings.shortcut.openInNewTab
+      openInNewTab: defaultSettings.shortcut.openInNewTab,
     },
     sync: { enabled: oldSettings.sync.enabled },
     yiyan: {
@@ -96,17 +97,17 @@ export function migrateFromVer7To8(oldSettings: SettingsSchemaV7): SettingsSchem
       enableShadow: oldSettings.yiyan.enableShadow,
       invertColor: {
         light: oldSettings.yiyan.invertColor.light,
-        night: oldSettings.yiyan.invertColor.night
-      }
+        night: oldSettings.yiyan.invertColor.night,
+      },
     },
     perf: { ...oldSettings.perf },
     bookmark: {
       ...oldSettings.bookmarkSidebar,
-      defaultSortMode: defaultSettings.bookmark.defaultSortMode
+      defaultSortMode: defaultSettings.bookmark.defaultSortMode,
     },
     hideMajorChangelog: oldSettings.hideMajorChangelog,
     readChangeLog: oldSettings.readChangeLog,
     pluginVersion: oldSettings.pluginVersion,
-    version: 8
+    version: 8,
   } satisfies SettingsSchemaV8
 }

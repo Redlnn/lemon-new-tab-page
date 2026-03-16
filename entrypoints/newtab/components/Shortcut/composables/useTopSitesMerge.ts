@@ -27,7 +27,7 @@ function getFallbackTitle(url: string): string {
 }
 
 export async function useTopSitesMerge(
-  options: UseTopSitesMergeOptions
+  options: UseTopSitesMergeOptions,
 ): Promise<TopSites.MostVisitedURL[]> {
   // 如果 getTopSites() 返回 undefined，则默认空数组
   const topSites = (await getTopSites(options.force)) ?? []

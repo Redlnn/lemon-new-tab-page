@@ -5,12 +5,12 @@ export const OPEN_SETTINGS: InjectionKey<() => void> = Symbol('openSettings')
 
 // 打开搜索引擎偏好弹窗
 export const OPEN_SEARCH_ENGINE_PREFERENCE: InjectionKey<() => void> = Symbol(
-  'openSearchEnginePreference'
+  'openSearchEnginePreference',
 )
 
 // 打开背景偏好弹窗
 export const OPEN_BACKGROUND_PREFERENCE: InjectionKey<() => void> = Symbol(
-  'openBackgroundPreference'
+  'openBackgroundPreference',
 )
 
 // 打开书签编辑弹窗
@@ -24,15 +24,15 @@ export const BOOKMARK_ACTIVE_MAP: InjectionKey<Ref<Record<number, string[]>>> =
 
 // 关闭已打开的书签菜单的函数
 export const BOOKMARK_OPENED_MENU_CLOSE_FN: InjectionKey<Ref<(() => void) | null>> = Symbol(
-  'bookmarkOpenedMenuCloseFn'
+  'bookmarkOpenedMenuCloseFn',
 )
 
 // 关闭已打开的快捷方式菜单的函数
 export const SHORTCUT_OPENED_MENU_CLOSE_FN: InjectionKey<Ref<(() => void) | null>> = Symbol(
-  'shortcutOpenedMenuCloseFn'
+  'shortcutOpenedMenuCloseFn',
 )
 
 // 关闭已打开的自定义搜索引擎菜单的函数
 export const CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN: InjectionKey<Ref<(() => void) | null>> = Symbol(
-  'customEngineOpenedMenuCloseFn'
+  'customEngineOpenedMenuCloseFn',
 )

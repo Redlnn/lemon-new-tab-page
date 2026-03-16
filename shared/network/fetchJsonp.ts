@@ -26,8 +26,8 @@ async function fetchJsonp(options: fetchJsonpOptions): Promise<string[]> {
       responseType: 'text',
       responseEncoding: options.encoding,
       headers: {
-        'Content-Type': 'text/plain'
-      }
+        'Content-Type': 'text/plain',
+      },
     })
 
     return options.parser(response)

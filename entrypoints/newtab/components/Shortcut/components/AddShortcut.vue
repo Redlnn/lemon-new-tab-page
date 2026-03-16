@@ -18,13 +18,13 @@ withDefaults(
   }>(),
   {
     showButton: true,
-    tabindex: true
-  }
+    tabindex: true,
+  },
 )
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,
-  blur: settings.perf.shortcut.blur
+  blur: settings.perf.shortcut.blur,
 }))
 
 const iconPerfClass = perf('shortcut__icon')

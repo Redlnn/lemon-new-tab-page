@@ -3,14 +3,14 @@ export enum OldBgType {
   none, // 0
   Local, // 1
   Bing, // 2
-  Online // 3
+  Online, // 3
 }
 
 export const BgType = {
   None: 'none',
   Local: 'local',
   Bing: 'bing',
-  Online: 'online'
+  Online: 'online',
 } as const
 export type BgType = (typeof BgType)[keyof typeof BgType]
 
@@ -28,7 +28,7 @@ export const ClockWeight = {
   Bold: 'bold',
   ExtraBold: 'extra-bold',
   Heavy: 'heavy',
-  Black: 'black'
+  Black: 'black',
 } as const
 export type ClockWeight = (typeof ClockWeight)[keyof typeof ClockWeight]
 
@@ -36,7 +36,7 @@ export const DrawerDirection = {
   ltr: 'ltr',
   rtl: 'rtl',
   ttb: 'ttb',
-  btt: 'btt'
+  btt: 'btt',
 } as const
 export type DrawerDirection = (typeof DrawerDirection)[keyof typeof DrawerDirection]
 
@@ -47,6 +47,6 @@ export const SortMode = {
   CreatedAsc: 'created-asc',
   CreatedDesc: 'created-desc',
   ModifiedAsc: 'modified-asc',
-  ModifiedDesc: 'modified-desc'
+  ModifiedDesc: 'modified-desc',
 } as const
 export type SortMode = (typeof SortMode)[keyof typeof SortMode]

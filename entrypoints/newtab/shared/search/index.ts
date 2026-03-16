@@ -15,34 +15,34 @@ export const searchEngines = {
   google: {
     nameKey: 'newtab:search.engines.google',
     url: 'https://www.google.com/search?q=%s',
-    icon: Google
+    icon: Google,
   },
   baidu: {
     nameKey: 'newtab:search.engines.baidu',
     url: 'https://www.baidu.com/#ie=utf-8&wd=%s',
-    icon: Baidu
+    icon: Baidu,
   },
   bing: {
     nameKey: 'newtab:search.engines.bing',
     url: 'https://www.bing.com/search?q=%s',
-    icon: Bing
+    icon: Bing,
   },
   yandex: {
     nameKey: 'newtab:search.engines.yandex',
     url: 'https://yandex.com/search?text=%s',
-    icon: Yandex
+    icon: Yandex,
   },
   duckduckgo: {
     nameKey: 'newtab:search.engines.duckduckgo',
     url: 'https://duckduckgo.com/?q=%s',
-    icon: DuckDuckGo
-  }
+    icon: DuckDuckGo,
+  },
 } as const
 
 export const searchSuggestAPIs = {
   google: { nameKey: 'newtab:search.engines.google', parser: googleSuggestParser },
   baidu: { nameKey: 'newtab:search.engines.baidu', parser: baiduSuggestParser },
-  bing: { nameKey: 'newtab:search.engines.bing', parser: bingSuggestParser }
+  bing: { nameKey: 'newtab:search.engines.bing', parser: bingSuggestParser },
 } as const
 
 /**

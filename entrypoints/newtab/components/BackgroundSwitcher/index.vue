@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import './bg-switcher.scss'
-
-import { storeToRefs } from 'pinia'
 import { useDark, useElementSize } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 
 import {
   Brightness6Twotone,
@@ -16,7 +15,7 @@ import {
   LaunchRound,
   LightModeTwotone,
   TripOriginRound,
-  UploadRound
+  UploadRound,
 } from '@vicons/material'
 import type { UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -57,7 +56,7 @@ const isVideoBg = computed(
   () =>
     isLocalBg.value &&
     (settings.background.local.mediaType === 'video' ||
-      settings.background.localDark.mediaType === 'video')
+      settings.background.localDark.mediaType === 'video'),
 )
 
 const {
@@ -70,7 +69,7 @@ const {
   deleteLocalBg,
   tempOnlineUrl,
   changeOnlineBg,
-  onlineImageWarn
+  onlineImageWarn,
 } = useBackgroundSwitcher()
 
 function handleNoneBg() {
@@ -82,7 +81,7 @@ function handleNoneBg() {
 }
 
 const isShowDeleteIcon = computed(() =>
-  Boolean(isDarkBg.value ? settings.background.localDark.id : settings.background.local.id)
+  Boolean(isDarkBg.value ? settings.background.localDark.id : settings.background.local.id),
 )
 const bingWallpaperSrc = bingWallpaperURLGetter.getBgUrl()
 const bingWallpaperInfo = bingWallpaperURLGetter.getInfo()

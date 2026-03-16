@@ -9,7 +9,7 @@ interface CachedImage {
 
 export const useOnlineWallpaperCacheStore = localForage.createInstance({
   ...COMMON_CONFIG,
-  storeName: 'onlineWallpaperCache'
+  storeName: 'onlineWallpaperCache',
 })
 
 /**

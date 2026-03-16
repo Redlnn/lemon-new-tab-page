@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { CSSProperties } from 'vue'
 import { useIdle } from '@vueuse/core'
+import type { CSSProperties } from 'vue'
 
 import { useTranslation } from 'i18next-vue'
 
@@ -14,7 +14,7 @@ import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 import {
   OPEN_BACKGROUND_PREFERENCE,
   OPEN_SEARCH_ENGINE_PREFERENCE,
-  OPEN_SETTINGS
+  OPEN_SETTINGS,
 } from '@newtab/shared/keys'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
@@ -38,10 +38,10 @@ const Changelog = defineAsyncComponent(() => import('./components/Changelog.vue'
 const Faq = defineAsyncComponent(() => import('./components/Faq.vue'))
 const AboutComp = defineAsyncComponent(() => import('./components/About.vue'))
 const SearchEnginesSwitcher = defineAsyncComponent(
-  () => import('./components/SearchEnginesSwitcher/index.vue')
+  () => import('./components/SearchEnginesSwitcher/index.vue'),
 )
 const BackgroundSwitcher = defineAsyncComponent(
-  () => import('./components/BackgroundSwitcher/index.vue')
+  () => import('./components/BackgroundSwitcher/index.vue'),
 )
 const PermissionDialog = defineAsyncComponent(() => import('./components/PermissionDialog.vue'))
 
@@ -75,7 +75,7 @@ onMounted(async () => {
           if (!instance) return
           instance.show()
         },
-        { once: true, flush: 'post' }
+        { once: true, flush: 'post' },
       )
     } else {
       settings.pluginVersion = version
@@ -88,13 +88,13 @@ onMounted(async () => {
       const p = payload as { cloud: string; local: string }
       ElNotification.error({
         title: t('fail.title'),
-        message: t('fail.message', { cloud: p.cloud, local: p.local })
+        message: t('fail.message', { cloud: p.cloud, local: p.local }),
       })
     } else if (type === 'sync-error') {
       const err = payload as Error
       ElNotification.error({
         title: t('error.title'),
-        message: err.message || 'Unknown error.'
+        message: err.message || 'Unknown error.',
       })
     }
   })
@@ -102,7 +102,7 @@ onMounted(async () => {
 
 const { idle } = useIdle(5_000, {
   events: ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'],
-  listenForVisibilityChange: false
+  listenForVisibilityChange: false,
 })
 
 watch(idle, (v) => {
@@ -121,7 +121,7 @@ watch(
       return
     }
     changeTheme(color)
-  }
+  },
 )
 
 watch(
@@ -129,7 +129,7 @@ watch(
   (colorful) => {
     toggleDocumentClass('colorful', colorful)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 watch(
@@ -137,7 +137,7 @@ watch(
   (enabled) => {
     toggleDocumentClass('dialog-transparent', enabled)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 watch(
@@ -145,7 +145,7 @@ watch(
   (enabled) => {
     toggleDocumentClass('dialog-acrylic', enabled)
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 function openBookmarkSidebar() {
@@ -168,7 +168,7 @@ const actionClass = computed(() => {
   return {
     'action-btn-container--tran': enableTransparent,
     'action-btn-container--blur': enableBlur,
-    'action-btn-container--top': settings.dock.enabled
+    'action-btn-container--top': settings.dock.enabled,
   }
 })
 </script>
@@ -178,10 +178,10 @@ const actionClass = computed(() => {
     :locale="elLocale"
     :dialog="{
       transition: settings.perf.dialog.animation ? 'dialog' : 'none',
-      alignCenter: true
+      alignCenter: true,
     }"
     :message="{
-      placement: 'bottom'
+      placement: 'bottom',
     }"
   >
     <main

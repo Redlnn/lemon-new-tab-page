@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.dialog.transparent,
-  blur: settings.perf.dialog.blur
+  blur: settings.perf.dialog.blur,
 }))
 
 const popperPerfClass = perf('se-switcher-item__menu-popper')
@@ -40,7 +40,7 @@ const position = ref<DOMRect | null>(null)
 const itemRef = useTemplateRef('itemRef')
 
 const triggerRef = {
-  getBoundingClientRect: () => position.value ?? new DOMRect()
+  getBoundingClientRect: () => position.value ?? new DOMRect(),
 }
 
 function handleClick() {

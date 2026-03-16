@@ -76,7 +76,7 @@ function showEngineToast() {
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.searchBar.transparent,
-  blur: settings.perf.searchBar.blur
+  blur: settings.perf.searchBar.blur,
 }))
 
 const popperPerfClass = perf('search-engine-menu')
@@ -102,7 +102,7 @@ defineExpose({ hide, showEngineToast })
           :key="key"
           class="search-engine-menu-item"
           :class="{
-            'search-engine-menu-item--active': settings.search.engine === key
+            'search-engine-menu-item--active': settings.search.engine === key,
           }"
           @click="settings.search.engine = key"
         >
@@ -128,7 +128,7 @@ defineExpose({ hide, showEngineToast })
             :key="engine.id"
             class="search-engine-menu-item"
             :class="{
-              'search-engine-menu-item--active': settings.search.engine === engine.id
+              'search-engine-menu-item--active': settings.search.engine === engine.id,
             }"
             @click="settings.search.engine = engine.id"
           >
@@ -136,7 +136,7 @@ defineExpose({ hide, showEngineToast })
               <div
                 class="search-engine-menu-item__icon search-engine-menu-item__icon--custom"
                 :style="{
-                  backgroundImage: `url(${getCustomEngineFavicon(engine)})`
+                  backgroundImage: `url(${getCustomEngineFavicon(engine)})`,
                 }"
               ></div>
               <span>{{ engine.name }}</span>

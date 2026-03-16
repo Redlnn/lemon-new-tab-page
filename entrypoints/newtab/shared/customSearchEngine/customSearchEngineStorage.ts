@@ -16,6 +16,6 @@ export const defaultCustomSearchEngine: CustomSearchEngineStorage = { items: [] 
 export const customSearchEngineStorage = storage.defineItem<CustomSearchEngineStorage>(
   'local:customSearchEngine',
   {
-    fallback: structuredClone(defaultCustomSearchEngine)
-  }
+    fallback: structuredClone(defaultCustomSearchEngine),
+  },
 )

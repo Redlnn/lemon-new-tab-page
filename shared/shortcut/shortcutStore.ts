@@ -27,5 +27,5 @@ export async function saveShortcut(shortcut?: Shortcut | { $state?: Shortcut }) 
 export const useShortcutStore = defineStore('shortcut', {
   state: () => {
     return structuredClone(defaultShortcut)
-  }
+  },
 })

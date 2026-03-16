@@ -5,7 +5,7 @@ import {
   CloudOffRound,
   DeleteForeverOutlined,
   DownloadRound,
-  FileUploadRound
+  FileUploadRound,
 } from '@vicons/material'
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
@@ -21,7 +21,7 @@ import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 import {
   type CustomSearchEngineStorage,
   saveCustomSearchEngine,
-  useCustomSearchEngineStore
+  useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 
 const { t, i18next } = useTranslation('settings')
@@ -38,8 +38,8 @@ async function confirmClearExtensionData() {
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.no'),
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
   } catch {
     return
@@ -56,8 +56,8 @@ async function confirmClearWallpaperData() {
       {
         confirmButtonText: t('newtab:common.confirm'),
         cancelButtonText: t('newtab:common.no'),
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
   } catch {
     return
@@ -78,7 +78,7 @@ async function clearWallpaperData() {
     lock: true,
     text: t('other.purge.confirm.wallpaper.purging'),
     body: true,
-    background: 'var(--el-overlay-color-light)'
+    background: 'var(--el-overlay-color-light)',
   })
 
   Promise.all([resetSettings(), localForage.dropInstance({ name: '柠檬起始页' })])
@@ -95,7 +95,7 @@ function clearExtensionData() {
     lock: true,
     text: t('other.purge.confirm.data.purging'),
     body: true,
-    background: 'var(--el-overlay-color-light)'
+    background: 'var(--el-overlay-color-light)',
   })
 
   Promise.all([
@@ -104,7 +104,7 @@ function clearExtensionData() {
     localForage.dropInstance({ name: '柠檬起始页' }),
     storage.clear('local'),
     storage.clear('session'),
-    storage.clear('sync')
+    storage.clear('sync'),
   ])
     .catch(console.error)
     .finally(() => {
@@ -140,8 +140,8 @@ async function openFilePicker() {
       {
         confirmButtonText: t('other.importExport.warningDialog.yes'),
         cancelButtonText: t('other.importExport.warningDialog.no'),
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
     fileInput.value?.click()
   } catch {}
@@ -151,7 +151,7 @@ async function exportBackup() {
   const backup: Backup = {
     settings: settings.$state,
     shortcuts: shortcuts.$state,
-    customSearchEngines: customSearchEngineStore.$state
+    customSearchEngines: customSearchEngineStore.$state,
   }
 
   downloadJSON<Backup>(backup, 'lenmon-new-tab-backup.json')
@@ -176,7 +176,7 @@ function handleFileChange(event: Event) {
     // settings 部分（沿用之前的逻辑）
     if (settings.version !== data.settings.version) {
       ElMessage.error(
-        t('other.importExport.importFailed', { reason: t('other.importExport.versionMismatch') })
+        t('other.importExport.importFailed', { reason: t('other.importExport.versionMismatch') }),
       )
       return
     }
@@ -187,7 +187,7 @@ function handleFileChange(event: Event) {
     data.settings.background.localDark = data.settings.background.localDark || {
       id: '',
       url: '',
-      mediaType: undefined
+      mediaType: undefined,
     }
     data.settings.background.bing = settings.$state.background.bing
     data.settings.background.online.url = settings.$state.background.online.url
@@ -226,13 +226,13 @@ function handleFileImport<T>(
   event: Event,
   inputRef: Ref<HTMLInputElement | null>,
   validator: (data: unknown) => data is T,
-  onSuccess: (data: T) => void
+  onSuccess: (data: T) => void,
 ) {
   const input = event.target as HTMLInputElement
   const file = input?.files?.[0]
   if (!file) {
     ElMessage.error(
-      t('other.importExport.importFailed', { reason: t('other.importExport.noFileSelected') })
+      t('other.importExport.importFailed', { reason: t('other.importExport.noFileSelected') }),
     )
     console.error('No file selected')
     return
@@ -266,8 +266,8 @@ function handleFileImport<T>(
       } else {
         ElMessage.error(
           t('other.importExport.importFailed', {
-            reason: parseError || t('other.importExport.unknownError')
-          })
+            reason: parseError || t('other.importExport.unknownError'),
+          }),
         )
       }
       // 重置 file input 以允许导入同一个文件
@@ -289,7 +289,7 @@ const supportedLanguages = computed(() => {
   // 先添加当前语言，再添加其他语言
   const options = languageCodes.map((code) => ({
     value: code,
-    label: displayNames.of(code)
+    label: displayNames.of(code),
   }))
   // 将当前语言移到首位
   const currentIndex = options.findIndex((opt) => opt.value === current)

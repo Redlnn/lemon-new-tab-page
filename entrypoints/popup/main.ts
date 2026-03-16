@@ -1,8 +1,7 @@
 import './styles/index.scss'
-
+import { usePreferredDark } from '@vueuse/core'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
-import { usePreferredDark } from '@vueuse/core'
 
 import { i18n, i18nInitPromise } from '@/shared/i18n'
 import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
@@ -10,7 +9,7 @@ import {
   applyStoredMonetColors,
   changeTheme,
   getMonetColors,
-  toggleDocumentClass
+  toggleDocumentClass,
 } from '@/shared/theme'
 
 import App from './App.vue'
@@ -27,7 +26,7 @@ watch(
       document.documentElement.classList.remove('dark')
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 i18nInitPromise.then(async () => {

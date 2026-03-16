@@ -7,7 +7,7 @@ export const defaultSettings = {
     primaryColor: '#f5b800',
     colorfulMode: false,
     monetColor: false,
-    idleHide: false
+    idleHide: false,
   },
 
   clock: {
@@ -19,7 +19,7 @@ export const defaultSettings = {
 
     meridiem: {
       show: true,
-      followSize: false
+      followSize: false,
     },
 
     showDate: true,
@@ -29,7 +29,7 @@ export const defaultSettings = {
     size: 50,
     weight: {
       time: ClockWeight.Black,
-      date: ClockWeight.Medium
+      date: ClockWeight.Medium,
     },
 
     style: {
@@ -38,9 +38,9 @@ export const defaultSettings = {
 
       invertColor: {
         light: false,
-        night: false
-      }
-    }
+        night: false,
+      },
+    },
   },
   search: {
     enabled: true,
@@ -56,10 +56,10 @@ export const defaultSettings = {
 
     style: {
       shadow: true,
-      border: false
+      border: false,
     },
 
-    placeholder: ''
+    placeholder: '',
   },
   background: {
     bgType: BgType.Bing,
@@ -72,7 +72,7 @@ export const defaultSettings = {
     mask: {
       enabled: false,
       light: 'rgba(0, 0, 0, 0.15)',
-      night: 'rgba(0, 0, 0, 0.15)'
+      night: 'rgba(0, 0, 0, 0.15)',
     },
 
     pauseOnBlur: false,
@@ -81,26 +81,26 @@ export const defaultSettings = {
     local: {
       id: '',
       url: '',
-      mediaType: undefined
+      mediaType: undefined,
     },
     localDark: {
       id: '',
       url: '',
-      mediaType: undefined
+      mediaType: undefined,
     },
     bing: {
       id: '',
       url: '',
-      updateDate: ''
+      updateDate: '',
     },
     online: {
       url: '',
       cache: {
         enabled: false,
         duration: 1, // 默认缓存1小时
-        noExpires: false
-      }
-    }
+        noExpires: false,
+      },
+    },
   },
 
   shortcut: {
@@ -117,26 +117,26 @@ export const defaultSettings = {
 
     style: {
       shadow: true,
-      border: false
+      border: false,
     },
 
     layout: {
       rows: 2,
-      columns: 5
+      columns: 5,
     },
 
     marginTop: 50,
     spacing: {
       itemGapX: 5,
       itemGapY: 20,
-      iconTitleGap: 8
+      iconTitleGap: 8,
     },
 
     title: {
       show: true,
       extraWidth: 35,
-      whiteInLightMode: true
-    }
+      whiteInLightMode: true,
+    },
   },
 
   dock: {
@@ -156,12 +156,12 @@ export const defaultSettings = {
     launchpad: {
       enabled: false,
       topSites: true,
-      openInNewTab: false
-    }
+      openInNewTab: false,
+    },
   },
 
   sync: {
-    enabled: false
+    enabled: false,
   },
 
   yiyan: {
@@ -174,56 +174,56 @@ export const defaultSettings = {
       shadow: true,
       invertColor: {
         light: false,
-        night: false
-      }
-    }
+        night: false,
+      },
+    },
   },
   perf: {
     bgSwitchAnim: true,
     dockScale: true,
     bookmark: {
       transparent: true,
-      blur: true
+      blur: true,
     },
     dialog: {
       transparent: true,
       blur: true,
-      animation: true
+      animation: true,
     },
     focus: {
       scale: true,
-      blur: true
+      blur: true,
     },
     shortcut: {
       transparent: true,
-      blur: true
+      blur: true,
     },
     searchBar: {
       transparent: true,
       blur: true,
-      launchAnim: false
+      launchAnim: false,
     },
     yiyan: {
       transparent: true,
       blur: true,
-      ripple: true
+      ripple: true,
     },
     actionBtns: {
       blur: true,
-      transparent: true
-    }
+      transparent: true,
+    },
   },
 
   bookmark: {
     direction: DrawerDirection.rtl,
     rightClickToOpen: true,
     showBtn: true,
-    defaultSortMode: SortMode.Original
+    defaultSortMode: SortMode.Original,
   },
 
   hideMajorChangelog: true,
   readChangeLog: false,
 
   pluginVersion: '',
-  version: CURRENT_CONFIG_VERSION
+  version: CURRENT_CONFIG_VERSION,
 } satisfies CURRENT_CONFIG_SCHEMA

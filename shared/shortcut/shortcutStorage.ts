@@ -7,5 +7,5 @@ export interface Shortcut {
 export const defaultShortcut: Shortcut = { items: [] }
 
 export const shortcutStorage = storage.defineItem<Shortcut>('local:bookmark', {
-  fallback: structuredClone(defaultShortcut)
+  fallback: structuredClone(defaultShortcut),
 })

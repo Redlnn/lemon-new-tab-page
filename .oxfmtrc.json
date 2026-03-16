@@ -1,0 +1,42 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "semi": false,
+  "tabWidth": 2,
+  "singleQuote": true,
+  "printWidth": 100,
+  "trailingComma": "all",
+  "sortImports": {
+    "customGroups": [
+      { "groupName": "style1", "elementNamePattern": ["**/*.css", "**/*.scss", "**/*.less"] },
+      { "groupName": "wxt", "elementNamePattern": ["#imports", "wxt/**"] },
+      { "groupName": "vue", "elementNamePattern": ["pinia", "vue", "@vueuse/**"] },
+      {
+        "groupName": "pkgjson",
+        "elementNamePattern": ["@/package.json"]
+      },
+      {
+        "groupName": "newtab",
+        "elementNamePattern": ["@newtab/**"]
+      },
+      {
+        "groupName": "relative",
+        "elementNamePattern": ["[.]/**"]
+      }
+    ],
+    "groups": [
+      "style",
+      "style1",
+      "builtin",
+      "vue",
+      "external",
+      "wxt",
+      "pkgjson",
+      ["internal", "subpath"],
+      "newtab",
+      ["parent", "sibling", "index"],
+      "relative",
+      "unknown"
+    ],
+    "internalPattern": ["@/", "@newtab/"]
+  }
+}

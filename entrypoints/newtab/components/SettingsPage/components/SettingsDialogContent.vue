@@ -4,7 +4,7 @@ import { dialogInjectionKey, useDraggable, useLocale } from 'element-plus'
 import { type DialogContentProps } from 'element-plus/es/components/dialog/src/dialog-content'
 import {
   dialogContentEmits,
-  dialogContentPropsDefaults
+  dialogContentPropsDefaults,
 } from 'element-plus/es/components/dialog/src/dialog-content.mjs'
 import { FOCUS_TRAP_INJECTION_KEY } from 'element-plus/es/components/focus-trap/src/tokens'
 import { composeRefs } from 'element-plus/es/utils/vue/refs'
@@ -25,7 +25,7 @@ const { resetPosition, updatePosition, isDragging } = useDraggable(
   dialogRef,
   headerRef,
   draggable,
-  overflow
+  overflow,
 )
 
 const dialogKls = computed(() => [
@@ -34,12 +34,12 @@ const dialogKls = computed(() => [
   ns.is('draggable', draggable.value),
   ns.is('dragging', isDragging.value),
   ns.is('align-center', !!props.alignCenter),
-  { [ns.m('center')]: props.center }
+  { [ns.m('center')]: props.center },
 ])
 
 defineExpose({
   resetPosition,
-  updatePosition
+  updatePosition,
 })
 </script>
 

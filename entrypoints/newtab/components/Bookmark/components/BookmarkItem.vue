@@ -8,11 +8,12 @@ import {
   DragIndicatorRound,
   EditOutlined,
   FolderOpenRound,
-  OpenInNewRound
+  OpenInNewRound,
 } from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { type DraggableEvent, VueDraggable } from 'vue-draggable-plus'
+
 import { browser, type Browser } from 'wxt/browser'
 
 import { getFaviconURL } from '@/shared/media'
@@ -23,7 +24,7 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import {
   BOOKMARK_ACTIVE_MAP,
   BOOKMARK_OPENED_MENU_CLOSE_FN,
-  OPEN_BOOKMARK_EDIT_DIALOG
+  OPEN_BOOKMARK_EDIT_DIALOG,
 } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
@@ -45,8 +46,8 @@ const props = withDefaults(
     depth: 1,
     isSearching: false,
     isSortedMode: false,
-    disableDrag: false
-  }
+    disableDrag: false,
+  },
 )
 const isFolder = computed(() => !!props.node.children)
 const isTopLevel = computed(() => props.depth === 1)
@@ -69,7 +70,7 @@ const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.bookmark.transparent,
-  blur: settings.perf.bookmark.blur
+  blur: settings.perf.bookmark.blur,
 }))
 
 const popperPerfClass = perf('bookmark__menu-popper')
@@ -81,10 +82,10 @@ const position = ref({
   top: 0,
   left: 0,
   bottom: 0,
-  right: 0
+  right: 0,
 } as DOMRect)
 const triggerRef = ref({
-  getBoundingClientRect: () => position.value
+  getBoundingClientRect: () => position.value,
 })
 
 const itemRef = useTemplateRef('itemRef')
@@ -108,7 +109,7 @@ function handleContextmenu(event: MouseEvent | TouchEvent | PointerEvent): void 
 
   position.value = DOMRect.fromRect({
     x: clientX,
-    y: clientY
+    y: clientY,
   })
   dropdownRef.value?.handleOpen()
 
@@ -144,7 +145,7 @@ async function addToShortcut() {
   shortcutStore.items.push({
     url: props.node.url,
     title: props.node.title || '',
-    favicon: faviconRef.value
+    favicon: faviconRef.value,
   })
   await saveShortcut(shortcutStore.$state)
   ElMessage.success(t('bookmark.added'))
@@ -163,9 +164,9 @@ const model = computed({
     const prev = activeMap.value || {}
     activeMap.value = {
       ...prev,
-      [childDepthKey]: v
+      [childDepthKey]: v,
     }
-  }
+  },
 })
 
 // 懒加载优化：判断当前节点是否展开
@@ -182,7 +183,7 @@ watch(
       hasBeenExpanded.value = true
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 const shouldRenderChildren = computed(() => hasBeenExpanded.value || isExpanded.value)
@@ -197,8 +198,8 @@ async function deleteBookmark() {
       {
         confirmButtonText: t('common.delete'),
         cancelButtonText: t('common.no'),
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
 
     if (props.node.children) {
@@ -215,7 +216,7 @@ async function deleteBookmark() {
 // 创建子节点的本地可编辑副本（用于拖动）
 const localChildren = computed({
   get: () => props.node.children ?? [],
-  set: () => {}
+  set: () => {},
 })
 
 // 嵌套拖拽完成的处理器
@@ -252,14 +253,14 @@ const handleNestedDragSort = async (event: DraggableEvent) => {
       // 调用浏览器 API 移动书签
       await browser.bookmarks.move(nodeId, {
         parentId,
-        index: newIndex
+        index: newIndex,
       })
     }
   } catch (error) {
     console.error(t('bookmark.moveError'), error)
     ElNotification.error({
       title: t('bookmark.moveError'),
-      message: (error as Error).message || 'Unknown error.'
+      message: (error as Error).message || 'Unknown error.',
     })
   }
 }
@@ -360,7 +361,7 @@ const isDragDisabled = computed(() => {
       trigger="contextmenu"
       placement="bottom-start"
       :popper-options="{
-        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+        modifiers: [{ name: 'offset', options: { offset: [0, 0] } }],
       }"
       :popper-class="popperPerfClass"
     >

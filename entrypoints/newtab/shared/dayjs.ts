@@ -7,7 +7,7 @@ import i18next from 'i18next'
 import { getLang } from '@/shared/i18n'
 
 const dayjsLocales = import.meta.glob('/node_modules/dayjs/esm/locale/zh*.js', {
-  eager: false
+  eager: false,
 }) as Record<string, () => Promise<{ default: ILocale }>>
 
 dayjs.extend(localizedFormat)

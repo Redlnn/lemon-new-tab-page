@@ -6,7 +6,7 @@ import {
   Levels,
   LIGHT_SELECTOR,
   THEME_STYLE_ELEMENT_ID,
-  WHITE_COLOR
+  WHITE_COLOR,
 } from './token'
 import { hex2rgba, isValidHexColor, normalizeTo6Hex, rgba2Hex } from './utils'
 
@@ -47,7 +47,7 @@ function generateThemeEntries(
   baseColor: Rgba,
   lightMixColor: Rgba,
   darkMixColor: Rgba,
-  pre: string
+  pre: string,
 ) {
   const entries: Array<[string, string]> = []
 
@@ -85,12 +85,12 @@ export function changeTheme(color: string) {
 
   const lightEntries: Array<[string, string]> = [
     ['--el-color-primary', normalized],
-    ...generateThemeEntries(baseColor, WHITE_COLOR, BLACK_COLOR, '--el-color-primary')
+    ...generateThemeEntries(baseColor, WHITE_COLOR, BLACK_COLOR, '--el-color-primary'),
   ]
 
   const darkEntries: Array<[string, string]> = [
     ['--el-color-primary', normalized],
-    ...generateThemeEntries(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR, '--el-color-primary')
+    ...generateThemeEntries(baseColor, EL_BG_COLOR_RGBA, WHITE_COLOR, '--el-color-primary'),
   ]
 
   themeEntriesBySelector.set(LIGHT_SELECTOR, lightEntries)

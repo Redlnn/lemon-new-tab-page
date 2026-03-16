@@ -10,7 +10,7 @@ import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 import {
   saveCustomSearchEngine,
-  useCustomSearchEngineStore
+  useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { searchEngines } from '@newtab/shared/search'
@@ -47,8 +47,8 @@ async function deleteCustomEngine(index: number) {
       {
         confirmButtonText: t('common.confirm'),
         cancelButtonText: t('common.no'),
-        type: 'warning'
-      }
+        type: 'warning',
+      },
     )
 
     // 如果删除的是当前选中的引擎，切换到 Bing

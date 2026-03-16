@@ -8,7 +8,7 @@ export interface MonetColors {
 
 // 使用 wxt storage 存储莫奈颜色
 export const monetColorsStorage = storage.defineItem<MonetColors | null>('local:monetColors', {
-  fallback: null
+  fallback: null,
 })
 
 /**
@@ -16,12 +16,12 @@ export const monetColorsStorage = storage.defineItem<MonetColors | null>('local:
  */
 export async function saveMonetColors(
   cssLight: Record<string, string>,
-  cssDark: Record<string, string>
+  cssDark: Record<string, string>,
 ) {
   await monetColorsStorage.setValue({
     cssLight,
     cssDark,
-    timestamp: Date.now()
+    timestamp: Date.now(),
   })
 }
 

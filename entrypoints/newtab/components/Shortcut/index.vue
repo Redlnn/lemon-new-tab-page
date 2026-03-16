@@ -59,7 +59,7 @@ const allItems = computed(() => {
       title: site.title,
       favicon: site.favicon,
       isPinned: true,
-      originalIndex: i
+      originalIndex: i,
     }
   }
 
@@ -70,7 +70,7 @@ const allItems = computed(() => {
       title: site.title || '',
       favicon: site.favicon,
       isPinned: false,
-      originalIndex: i
+      originalIndex: i,
     }
   }
 
@@ -85,7 +85,7 @@ const totalItemsCount = computed(() => allItems.value.length)
 const paginationTotalItems = computed(() =>
   !settings.shortcut.paging
     ? Math.min(totalItemsCount.value, slotsPerPage.value)
-    : totalItemsCount.value
+    : totalItemsCount.value,
 )
 
 // 分页逻辑
@@ -100,7 +100,7 @@ const {
   prevPage,
   nextPage,
   goToPage,
-  setupSwipe
+  setupSwipe,
 } = useShortcutPagination(paginationTotalItems, slotsPerPage)
 
 // 是否在指定页显示添加按钮
@@ -168,7 +168,7 @@ const showNextPageAddButton = computed(() => {
 // ---- 共享右键菜单 ----
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,
-  blur: settings.perf.shortcut.blur
+  blur: settings.perf.shortcut.blur,
 }))
 const popperClass = perf('shortcut__menu-popper')
 const navBtnPerfClass = perf('shortcut__nav-btn')
@@ -181,7 +181,7 @@ const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctx
 
 function openCtxMenu(
   event: MouseEvent | PointerEvent,
-  item: { url: string; title: string; isPinned: boolean; originalIndex: number }
+  item: { url: string; title: string; isPinned: boolean; originalIndex: number },
 ): void {
   // 关闭上一个
   if (openedMenuCloseFn.value) {
@@ -199,7 +199,7 @@ watch(
       openedMenuCloseFn.value()
       openedMenuCloseFn.value = null
     }
-  }
+  },
 )
 
 // 网格解算
@@ -214,7 +214,7 @@ const grid = computed(() => {
   return solveGridColumnFirst(
     isLastPage ? currentCount + 1 : currentCount,
     maxFitCols.value,
-    maxFitRows.value
+    maxFitRows.value,
   )
 })
 
@@ -242,7 +242,7 @@ async function refresh() {
       columns: displayColumns.value,
       maxRows: displayRows.value,
       force: topSitesNeedsReload.value,
-      noCap: true // 不截断，获取所有可用的 top sites
+      noCap: true, // 不截断，获取所有可用的 top sites
     })
     topSitesNeedsReload.value = false
   } else {
@@ -263,7 +263,7 @@ setupSwipe(
   prevPageContainerRef,
   currentPageContainerRef,
   nextPageContainerRef,
-  isDragging
+  isDragging,
 )
 
 // 开始拖拽时关闭已打开的菜单
@@ -287,7 +287,7 @@ useEventListener(
       nextPage()
     }
   },
-  { passive: true }
+  { passive: true },
 )
 
 // useResizeObserver 会在开始观察时立即触发一次，因此不需要额外的 onMounted 刷新调用
@@ -303,12 +303,12 @@ watch(
     settings.shortcut.iconSize,
     settings.shortcut.spacing.itemGapX,
     settings.shortcut.spacing.itemGapY,
-    settings.shortcut.paging
+    settings.shortcut.paging,
   ],
   async () => {
     updateMaxCols()
     await refreshDebounced()
-  }
+  },
 )
 
 watch(isOnlyTouchDevice, updateMaxCols)
@@ -320,7 +320,7 @@ watch(
       topSitesNeedsReload.value = true
     }
     refreshDebounced()
-  }
+  },
 )
 
 const isHideShortcut = computed(() => {
@@ -338,14 +338,14 @@ const isHideShortcut = computed(() => {
 // 提取容器通用class（避免模板中重复）
 const containerBaseClasses = computed(() => [
   settings.shortcut.style.shadow ? 'shortcut__container--item-shadow' : undefined,
-  settings.shortcut.title.whiteInLightMode ? 'shortcut__container--white-in-light' : undefined
+  settings.shortcut.title.whiteInLightMode ? 'shortcut__container--white-in-light' : undefined,
 ])
 
 // 容器动画class
 const containerAnimationClasses = computed(() => ({
   'shortcut__container--slide-left': slideDirection.value === 'left',
   'shortcut__container--slide-right': slideDirection.value === 'right',
-  'shortcut__container--no-transition': noTransition.value
+  'shortcut__container--no-transition': noTransition.value,
 }))
 
 // 容器通用style
@@ -354,7 +354,7 @@ const containerGridStyle = computed(() => ({
   gridTemplateRows: `repeat(${displayRows.value}, 1fr)`,
   gridGap: `${settings.shortcut.spacing.itemGapY}px ${settings.shortcut.spacing.itemGapX}px`,
   '--icon_size': `${settings.shortcut.iconSize}px`,
-  '--icon_ratio': `${settings.shortcut.iconRatio}`
+  '--icon_ratio': `${settings.shortcut.iconRatio}`,
 }))
 </script>
 
@@ -364,7 +364,7 @@ const containerGridStyle = computed(() => ({
     :style="{
       opacity: isHideShortcut,
       paddingTop: `${settings.shortcut.marginTop / 2}px`,
-      marginTop: height > 500 ? `${settings.shortcut.marginTop / 2}px` : undefined
+      marginTop: height > 500 ? `${settings.shortcut.marginTop / 2}px` : undefined,
     }"
   >
     <div ref="shortcutWrapperRef" class="shortcut__wrapper">
@@ -375,7 +375,7 @@ const containerGridStyle = computed(() => ({
           class="shortcut__nav-btn--prev"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === 0 || isAnimating },
-            navBtnPerfClass
+            navBtnPerfClass,
           ]"
           :disabled="currentPage === 0 || isAnimating"
           @click="prevPage"
@@ -427,7 +427,7 @@ const containerGridStyle = computed(() => ({
                 :style="{
                   pointerEvents:
                     settings.shortcut.showOnSearchFocus || !focusStore.isFocused ? 'auto' : 'none',
-                  ...containerGridStyle
+                  ...containerGridStyle,
                 }"
               >
                 <shortcut-item
@@ -485,7 +485,7 @@ const containerGridStyle = computed(() => ({
           class="shortcut__nav-btn--next"
           :class="[
             { 'shortcut__nav-btn--disabled': currentPage === totalPages - 1 || isAnimating },
-            navBtnPerfClass
+            navBtnPerfClass,
           ]"
           :disabled="currentPage === totalPages - 1 || isAnimating"
           @click="nextPage"

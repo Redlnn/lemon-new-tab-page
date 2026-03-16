@@ -12,35 +12,35 @@ const settings = useSettingsStore()
 const directionOptions = [
   {
     label: 'bookmark.direction.rtl',
-    value: DrawerDirection.rtl
+    value: DrawerDirection.rtl,
   },
   {
     label: 'bookmark.direction.ltr',
-    value: DrawerDirection.ltr
-  }
+    value: DrawerDirection.ltr,
+  },
 ]
 
 const sortModeOptions = [
   {
     label: 'bookmark.sortMode.origin',
-    value: SortMode.Original
+    value: SortMode.Original,
   },
   {
     label: 'bookmark.sortMode.nameAsc',
-    value: SortMode.NameAsc
+    value: SortMode.NameAsc,
   },
   {
     label: 'bookmark.sortMode.nameDesc',
-    value: SortMode.NameDesc
+    value: SortMode.NameDesc,
   },
   {
     label: 'bookmark.sortMode.createdAsc',
-    value: SortMode.CreatedAsc
+    value: SortMode.CreatedAsc,
   },
   {
     label: 'bookmark.sortMode.createdDesc',
-    value: SortMode.CreatedDesc
-  }
+    value: SortMode.CreatedDesc,
+  },
 ]
 </script>
 

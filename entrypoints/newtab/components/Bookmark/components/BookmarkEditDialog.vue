@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { FormInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
+
 import { browser, type Browser } from 'wxt/browser'
 
 import { formatUrl, isValidUrl } from '@/entrypoints/newtab/shared/utils'
@@ -21,7 +22,7 @@ const data: {
   url: '',
   title: '',
   id: '',
-  isFolder: false
+  isFolder: false,
 })
 
 function resetFields() {
@@ -35,7 +36,7 @@ function openEditDialog(node: BookmarkTreeNode) {
     url: node.url,
     title: node.title,
     id: node.id,
-    isFolder: !!node.children
+    isFolder: !!node.children,
   })
   showDialog.value = true
 }
@@ -51,7 +52,7 @@ async function submit() {
 
     const bookmark = {
       url: formatUrl(data.url),
-      title: data.title.trim()
+      title: data.title.trim(),
     }
     await browser.bookmarks.update(data.id, bookmark)
   }
@@ -65,7 +66,7 @@ async function cancel() {
 }
 
 defineExpose({
-  openEditDialog
+  openEditDialog,
 })
 </script>
 

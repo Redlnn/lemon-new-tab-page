@@ -8,6 +8,6 @@ export const colorMode = useColorMode({
   modes: {
     dark: 'dark',
     light: 'light',
-    auto: ''
-  }
+    auto: '',
+  },
 })

@@ -1,5 +1,5 @@
-import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import skipFormatting from 'eslint-config-prettier/flat'
 import pluginOxlint from 'eslint-plugin-oxlint'
 import pluginVue from 'eslint-plugin-vue'
 import { globalIgnores } from 'eslint/config'
@@ -12,13 +12,16 @@ import { globalIgnores } from 'eslint/config'
 export default defineConfigWithVueTs(
   {
     name: 'app/files-to-lint',
-    files: ['**/*.{ts,mts,tsx,vue,js,cjs,mjs,jsx}']
+    files: ['**/*.{ts,mts,tsx,vue,js,cjs,mjs,jsx}'],
   },
 
-  globalIgnores(['auto-imports.d.ts', 'components.d.ts', '.output/*', '.wxt/*']),
+  globalIgnores(['**/auto-imports.d.ts', '**/components.d.ts', '**/.output/*', '**/.wxt/*']),
 
-  pluginVue.configs['flat/essential'],
+  ...pluginVue.configs['flat/essential'],
   vueTsConfigs.recommended,
+
+  ...pluginOxlint.buildFromOxlintConfigFile('.oxlintrc.json'),
+
   {
     name: 'app/overrides',
     rules: {
@@ -27,16 +30,16 @@ export default defineConfigWithVueTs(
       'prefer-const': 'error',
       'prefer-rest-params': 'error',
       'prefer-spread': 'error',
-      'vue/multi-word-component-names': 'off'
-    }
+      'vue/multi-word-component-names': 'off',
+    },
   },
   {
     name: 'app/overrides-js',
     files: ['**/*.js', '**/*.cjs', '**/*.mjs', '**/*.cjx'],
     rules: {
-      '@typescript-eslint/no-var-requires': 'off'
-    }
+      '@typescript-eslint/no-var-requires': 'warn',
+    },
   },
-  ...pluginOxlint.configs['flat/recommended'],
-  skipFormatting
+
+  skipFormatting,
 )

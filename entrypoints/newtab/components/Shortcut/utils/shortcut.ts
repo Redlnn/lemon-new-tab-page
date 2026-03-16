@@ -7,7 +7,7 @@ import { saveShortcut, type Shortcut } from '@/shared/shortcut'
 export async function removeShortcut(
   index: number,
   store: Store<'shortcut', Shortcut>,
-  refresh: () => Promise<void>
+  refresh: () => Promise<void>,
 ) {
   const { url, title, favicon } = store.items[index]!
   store.items.splice(index, 1)
@@ -18,7 +18,7 @@ export async function removeShortcut(
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18next.t('newtab:shortcut.unpinMessage')
+        i18next.t('newtab:shortcut.unpinMessage'),
       ),
       h(
         'span',
@@ -28,15 +28,15 @@ export async function removeShortcut(
             store.items.splice(index, 0, {
               url,
               title,
-              favicon
+              favicon,
             })
             await saveShortcut(store.$state)
             await refresh()
-          }
+          },
         },
-        i18next.t('newtab:common.undo')
-      )
-    ])
+        i18next.t('newtab:common.undo'),
+      ),
+    ]),
   })
 }
 
@@ -45,12 +45,12 @@ export async function pinShortcut(
   refresh: () => Promise<void>,
   url: string,
   title: string,
-  favicon?: string
+  favicon?: string,
 ) {
   store.items.push({
     url,
     title,
-    favicon
+    favicon,
   })
   await saveShortcut(store.$state)
   await refresh()

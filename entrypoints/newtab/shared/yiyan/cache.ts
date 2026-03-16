@@ -13,7 +13,7 @@ const KEY = 'session:lemon:yiyan:cache'
 const TTL = 10 * 1000 // 10 seconds
 
 const yiyanCacheStorage = storage.defineItem<YiyanCache | null>(KEY, {
-  fallback: null
+  fallback: null,
 })
 
 export async function getYiyanCache(): Promise<YiyanCache | null> {
@@ -28,7 +28,7 @@ export async function setYiyanCache(provider: YiyanProviderKey, res: YiyanResult
   const payload: YiyanCache = {
     provider,
     res: res,
-    ts: Date.now()
+    ts: Date.now(),
   }
   try {
     await yiyanCacheStorage.setValue(payload)

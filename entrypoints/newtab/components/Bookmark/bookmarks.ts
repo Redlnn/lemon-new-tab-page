@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
 import i18next from 'i18next'
+
 import { browser, type Browser } from 'wxt/browser'
 
 import { SortMode } from '@/shared/enums'
@@ -17,14 +18,14 @@ const bookmarkListeners: {
       parentId: string
       index: number
       node: Browser.bookmarks.BookmarkTreeNode
-    }
+    },
   ) => void
   changed?: (
     id: string,
     changeInfo: {
       title: string
       url?: string | undefined
-    }
+    },
   ) => void
   moved?: (
     id: string,
@@ -33,7 +34,7 @@ const bookmarkListeners: {
       index: number
       oldParentId: string
       oldIndex: number
-    }
+    },
   ) => void
   importEnded?: () => void
 } = {}
@@ -47,7 +48,7 @@ export const useBookmarkStore = defineStore('bookmark', {
     // 根据查询/排序计算后的树结果
     filteredResult: [] as Browser.bookmarks.BookmarkTreeNode[],
     // 首个匹配路径（按照排序/展示顺序），空数组表示无匹配
-    firstMatchPath: [] as string[]
+    firstMatchPath: [] as string[],
   }),
 
   actions: {
@@ -58,8 +59,8 @@ export const useBookmarkStore = defineStore('bookmark', {
         worker?.postMessage({
           type: 'UPDATE_SETTINGS',
           payload: {
-            language: lang
-          }
+            language: lang,
+          },
         })
         this.triggerFilter()
       })
@@ -126,8 +127,8 @@ export const useBookmarkStore = defineStore('bookmark', {
         payload: {
           tree: _tree,
           language: i18next.language,
-          sortMode: this.sortMode
-        }
+          sortMode: this.sortMode,
+        },
       })
     },
 
@@ -152,8 +153,8 @@ export const useBookmarkStore = defineStore('bookmark', {
         payload: {
           query: this.searchQuery,
           sortMode: this.sortMode,
-          language: i18next.language
-        }
+          language: i18next.language,
+        },
       })
     },
 
@@ -194,13 +195,13 @@ export const useBookmarkStore = defineStore('bookmark', {
         worker.terminate()
         worker = null
       }
-    }
+    },
   },
 
   getters: {
     // 根据 `searchQuery` 过滤后的树。如果查询为空则返回完整的排序树。
     filteredTree(): Browser.bookmarks.BookmarkTreeNode[] {
       return this.filteredResult
-    }
-  }
+    },
+  },
 })

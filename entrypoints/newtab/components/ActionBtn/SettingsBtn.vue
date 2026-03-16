@@ -6,7 +6,7 @@ import {
   InfoRound,
   SearchRound,
   SettingsRound,
-  WallpaperRound
+  WallpaperRound,
 } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
@@ -27,14 +27,14 @@ const { t } = useTranslation()
 const settings = useSettingsStore()
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.actionBtns.transparent,
-  blur: settings.perf.actionBtns.blur
+  blur: settings.perf.actionBtns.blur,
 }))
 const popperPerfClass = perf('setting-btn__popper')
 
 function sponsorMessage() {
   ElMessageBox.alert(t('sponsor'), t('newtab:menu.sponsor'), {
     closeOnPressEscape: true,
-    closeOnClickModal: true
+    closeOnClickModal: true,
   })
 }
 </script>

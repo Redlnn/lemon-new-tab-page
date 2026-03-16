@@ -28,7 +28,7 @@ defineProps<{
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,
-  blur: settings.perf.shortcut.blur
+  blur: settings.perf.shortcut.blur,
 }))
 
 const popperClass = perf('shortcut__menu-popper')
@@ -54,7 +54,7 @@ async function refresh() {
       columns: 1,
       maxRows: 1,
       force: topSitesNeedsReload.value,
-      noCap: true // 不截断，获取所有可用的 top sites
+      noCap: true, // 不截断，获取所有可用的 top sites
     })
     topSitesNeedsReload.value = false
   } else {
@@ -70,7 +70,7 @@ async function refresh() {
 // 根据屏幕宽度初始两个区块的可见项目
 const visibleShortcuts = computed(() => shortcuts.value.slice(0, maxFitCols.value))
 const visibleTopSites = computed(() =>
-  topSites.value.slice(0, Math.max(0, maxFitCols.value - visibleShortcuts.value.length))
+  topSites.value.slice(0, Math.max(0, maxFitCols.value - visibleShortcuts.value.length)),
 )
 
 // 屏幕尺寸变化时更新最大列数
@@ -85,7 +85,7 @@ watch(
   async () => {
     updateMaxCols()
     await refreshDebounced()
-  }
+  },
 )
 
 watch(
@@ -95,7 +95,7 @@ watch(
       topSitesNeedsReload.value = true
     }
     refreshDebounced()
-  }
+  },
 )
 
 const isHideDock = computed(() => {
@@ -245,7 +245,7 @@ const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctx
 
 function handleContextmenu(
   event: MouseEvent | TouchEvent | PointerEvent,
-  item: CtxShortcutItem
+  item: CtxShortcutItem,
 ): void {
   ctxMenuRef.value?.open(event, item)
 }
@@ -260,7 +260,7 @@ function handleContextmenu(
       pointerEvents: isHideDock === '0' ? 'none' : 'auto',
       '--item-size': settings.dock.iconSize + 'px',
       '--item-ratio': settings.dock.iconRatio * 100 + '%',
-      '--gap-size': settings.dock.gap + 'px'
+      '--gap-size': settings.dock.gap + 'px',
     }"
     @pointerenter="onPointerEnter"
     @mouseenter="onMouseEnter"
@@ -318,7 +318,7 @@ function handleContextmenu(
                 url: item.url,
                 title: item.title,
                 isPinned: true,
-                originalIndex: idx
+                originalIndex: idx,
               })
           "
           @trigger="
@@ -328,7 +328,7 @@ function handleContextmenu(
                   url: item.url,
                   title: item.title,
                   isPinned: true,
-                  originalIndex: idx
+                  originalIndex: idx,
                 })
             }
           "
@@ -367,7 +367,7 @@ function handleContextmenu(
                 url: item.url,
                 title: item.title || '',
                 isPinned: false,
-                originalIndex: j
+                originalIndex: j,
               })
           "
           @trigger="
@@ -377,7 +377,7 @@ function handleContextmenu(
                   url: item.url,
                   title: item.title || '',
                   isPinned: false,
-                  originalIndex: j
+                  originalIndex: j,
                 })
             }
           "

@@ -16,8 +16,8 @@ const props = withDefaults(
   }>(),
   {
     placement: 'bottom-start',
-    showEdit: false
-  }
+    showEdit: false,
+  },
 )
 
 const emit = defineEmits<{
@@ -39,15 +39,15 @@ const {
   ctxUnpin,
   ctxPin,
   ctxBlockSite,
-  ctxEdit
+  ctxEdit,
 } = useShortcutContextMenu({
   refreshFn: props.refreshFn,
-  onOpenEditDialog: (index) => props.onOpenEditDialog?.(index)
+  onOpenEditDialog: (index) => props.onOpenEditDialog?.(index),
 })
 
 function open(
   event: MouseEvent | PointerEvent | TouchEvent,
-  item: Parameters<typeof setCtxContext>[1]
+  item: Parameters<typeof setCtxContext>[1],
 ): void {
   setCtxContext(event, item)
   dropdownRef.value?.handleOpen()
@@ -69,7 +69,7 @@ defineExpose({ open, close })
     trigger="contextmenu"
     :placement="placement"
     :popper-options="{
-      modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]
+      modifiers: [{ name: 'offset', options: { offset: [0, 0] } }],
     }"
     :popper-class="popperClass"
     @visible-change="(v: boolean) => emit('visible-change', v)"

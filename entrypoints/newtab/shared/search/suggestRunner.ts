@@ -80,6 +80,6 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
     },
     onError: (cb) => {
       errorCb = cb
-    }
+    },
   }
 }

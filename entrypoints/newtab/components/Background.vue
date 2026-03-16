@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-import { storeToRefs } from 'pinia'
 import {
   promiseTimeout,
   useDark,
   useDocumentVisibility,
   useEventListener,
   useTimeoutFn,
-  useWindowFocus
+  useWindowFocus,
 } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 
 import i18next from 'i18next'
 
@@ -23,7 +23,7 @@ import {
   cacheOnlineWallpaper,
   clearAllOnlineWallpaperCache,
   getCachedOnlineWallpaper,
-  useWallpaperUrlStore
+  useWallpaperUrlStore,
 } from '@newtab/shared/wallpaper'
 
 let animationDuration = 1250
@@ -92,7 +92,7 @@ function updateVideoPlayback() {
 }
 
 const backgroundCss = computed(() => ({
-  'background-container--focused__blur': focusStore.isFocused && settings.perf.focus.blur
+  'background-container--focused__blur': focusStore.isFocused && settings.perf.focus.blur,
 }))
 
 // 视差效果
@@ -215,7 +215,7 @@ const bgTypeProviders: Record<
     } catch (e) {
       ElNotification.error({
         title: i18next.t('newtab:notification.wallpaperCache.title'),
-        message: i18next.t('newtab:notification.wallpaperCache.message', { error: e })
+        message: i18next.t('newtab:notification.wallpaperCache.message', { error: e }),
       })
       if (cached) {
         revokeLastBlobUrl()
@@ -237,12 +237,12 @@ const bgTypeProviders: Record<
     lastBlobUrl.value = url
     return url
   },
-  [BgType.None]: () => Promise.resolve('')
+  [BgType.None]: () => Promise.resolve(''),
 }
 
 async function assignMaybeRef<T>(
   target: Ref<T>,
-  source: T | Ref<T> | Promise<T> | Promise<Ref<T>>
+  source: T | Ref<T> | Promise<T> | Promise<Ref<T>>,
 ) {
   let stop: (() => void) | undefined
 
@@ -276,7 +276,7 @@ watch(
 
     updateVideoPlayback()
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // 动态watch管理
@@ -347,7 +347,7 @@ watch(
     if (newType === oldType) return
     await updateBackgroundURL(newType)
     activateBackgroundWatch(newType)
-  }
+  },
 )
 
 watch(
@@ -366,7 +366,7 @@ watch(
       document.documentElement.classList.remove('monet')
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 onMounted(async () => {
@@ -425,7 +425,7 @@ async function onImgLoaded() {
       '--mask-color__light': settings.background.mask.light,
       '--mask-color__night': settings.background.mask.night,
       '--blur-intensity': `${settings.background.blur}px`,
-      '--bg-opacity-duration': bgOpacityDuration
+      '--bg-opacity-duration': bgOpacityDuration,
     }"
   >
     <div v-if="settings.background.mask.enabled" class="background-mask"></div>
@@ -440,7 +440,7 @@ async function onImgLoaded() {
           scale: backgroundScale,
           translate: backgroundTranslate,
           '--parallax-inset':
-            settings.background.parallax && settings.background.blur < 10 ? '15px' : '0px'
+            settings.background.parallax && settings.background.blur < 10 ? '15px' : '0px',
         }"
       >
         <video

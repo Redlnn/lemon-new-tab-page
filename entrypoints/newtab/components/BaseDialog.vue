@@ -55,7 +55,7 @@ function onScroll(e: { scrollLeft: number; scrollTop: number }) {
 
 const perf = usePerfClasses(() => ({
   transparent: props.opacity,
-  blur: props.acrylic
+  blur: props.acrylic,
 }))
 
 const dialogPerfClass = perf('base-dialog')
@@ -63,7 +63,7 @@ const dialogPerfClass = perf('base-dialog')
 const dialogId = computed(() => {
   return (
     (dialogRef.value?.$el as HTMLElement)?.nextElementSibling?.firstElementChild?.getAttribute(
-      'aria-describedby'
+      'aria-describedby',
     ) ?? null
   )
 })

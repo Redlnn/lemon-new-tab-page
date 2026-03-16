@@ -1,4 +1,32 @@
 {
+  "[css]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
+
   "i18n-ally.localesPaths": ["locales"],
   "i18n-ally.fullReloadOnChanged": true,
   "i18n-ally.keystyle": "nested",
@@ -12,31 +40,32 @@
   "i18n-ally.extract.autoDetect": false,
   "i18n-ally.enabledFrameworks": ["i18next", "vue", "custom"],
   "i18n-ally.defaultNamespace": "newtab",
+
   "markdownlint.config": {
     "MD033": false,
     "MD024": false,
     "MD041": false
   },
+  "markdownlint.lintWorkspaceGlobs": [
+    "**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
+    "!**/*.code-search",
+    "!**/bower_components",
+    "!**/node_modules",
+    "!**/.git",
+    "!**/vendor",
+    "!**/.serena"
+  ],
+
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit"
   },
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "editor.formatOnSave": true,
+
   "css.validate": false,
   "less.validate": false,
   "scss.validate": false,
-  "tsImportSorter.configuration.groupRules": [
-    "^react(-dom)?$",
-    "^@angular/",
-    ["^pinia", "^vue$", "^@vueuse"],
-    "^node:",
-    "^@(?!newtab)[^/]+$",
-    {},
-    "^#",
-    "^@/package.json$",
-    "^@/",
-    "^@newtab",
-    "^[.]"
-  ],
+
   "chat.tools.terminal.autoApprove": {
     "pnpm -s type-check": {
       "approve": true,
@@ -55,14 +84,8 @@
       "matchCommandLine": true
     }
   },
-  "markdownlint.lintWorkspaceGlobs": [
-    "**/*.{md,mkd,mdwn,mdown,markdown,markdn,mdtxt,mdtext,workbook}",
-    "!**/*.code-search",
-    "!**/bower_components",
-    "!**/node_modules",
-    "!**/.git",
-    "!**/vendor",
-    "!**/.serena"
-  ],
-  "python-envs.defaultEnvManager": "ms-python.python:system"
+  "explorer.fileNesting.patterns": {
+    "tsconfig.json": "tsconfig.*.json, env.d.ts, typed-router.d.ts",
+    "wxt.config.ts": "web-ext.config.*"
+  }
 }

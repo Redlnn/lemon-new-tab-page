@@ -1,6 +1,5 @@
-import { browser } from 'wxt/browser'
-
 import { defineBackground } from '#imports'
+import { browser } from 'wxt/browser'
 
 import { BgType } from '@/shared/enums'
 import { defaultSettings } from '@/shared/settings'
@@ -66,7 +65,7 @@ async function processSyncQueue() {
   await syncDataStorage.setValue({
     settings: syncItem.settings,
     bookmarks: syncItem.bookmarks,
-    lastUpdate: syncItem.lastUpdate
+    lastUpdate: syncItem.lastUpdate,
   })
   await localSyncDataStorage.setValue({ lastUpdate: syncItem.lastUpdate })
 
@@ -74,7 +73,7 @@ async function processSyncQueue() {
   debugLog('processed', {
     queueLenAtStart,
     dropped,
-    durationMs: Math.round(t1 - t0)
+    durationMs: Math.round(t1 - t0),
   })
 
   // 如果在处理期间又有新的待处理项，安排下一次处理
@@ -113,7 +112,7 @@ function scheduleLocalTick(delay = SYNC_INTERVAL) {
         isRunning = false
       }
     },
-    Math.max(0, delay)
+    Math.max(0, delay),
   )
   localTimerExpiry = desiredExpiry
 }
@@ -181,12 +180,12 @@ export default defineBackground(() => {
 
     const [tab] = await browser.tabs.query({
       active: true,
-      status: 'complete'
+      status: 'complete',
     })
     if (tab?.id) {
       try {
         await browser.tabs.sendMessage(tab.id, {
-          type: 'SYNC_UPDATE'
+          type: 'SYNC_UPDATE',
         } as SyncMessage)
       } catch {}
     }
@@ -195,7 +194,7 @@ export default defineBackground(() => {
   // 创建周期性 alarm（注意：periodInMinutes 最小粒度通常为 1 分钟）
   try {
     browser.alarms.create(ALARM_NAME, {
-      periodInMinutes: Math.max(SYNC_INTERVAL / 60000, 1)
+      periodInMinutes: Math.max(SYNC_INTERVAL / 60000, 1),
     })
   } catch (err) {
     debugLog('alarms.create failed, fallback to local tick only', err)

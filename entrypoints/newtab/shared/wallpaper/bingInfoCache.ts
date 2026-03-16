@@ -11,9 +11,9 @@ const defaultInfo: BingWallpaperInfo = {
   url: '',
   copyright: '',
   copyrightlink: '',
-  title: ''
+  title: '',
 } as const
 
 export const bingInfoCache = storage.defineItem<BingWallpaperInfo>('local:bingInfo', {
-  fallback: defaultInfo
+  fallback: defaultInfo,
 })

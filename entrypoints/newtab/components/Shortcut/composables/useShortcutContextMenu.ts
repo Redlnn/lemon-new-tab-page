@@ -28,7 +28,7 @@ export function useShortcutContextMenu(options: {
 
   const setCtxContext = (
     event: MouseEvent | PointerEvent | TouchEvent,
-    item: CtxShortcutItem
+    item: CtxShortcutItem,
   ): void => {
     ctxItem.value = item
     let clientX = 0
@@ -104,6 +104,6 @@ export function useShortcutContextMenu(options: {
     ctxUnpin,
     ctxPin,
     ctxBlockSite,
-    ctxEdit
+    ctxEdit,
   }
 }

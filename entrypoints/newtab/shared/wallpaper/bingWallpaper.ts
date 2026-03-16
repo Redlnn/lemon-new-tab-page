@@ -6,6 +6,7 @@ import enhancedFetch from '@/shared/network/fetch'
 import { saveSettings, useSettingsStore } from '@/shared/settings'
 
 import { useBingWallpaperStorge, useWallpaperUrlStore } from '.'
+
 import { bingInfoCache } from './bingInfoCache'
 
 interface BingWallpaperImage {
@@ -64,7 +65,7 @@ class BingWallpaperURLGetter {
     drk: 0,
     top: 0,
     bot: 0,
-    hs: []
+    hs: [],
   })
   public uhdUrl: Ref<string> = ref('')
 
@@ -83,7 +84,7 @@ class BingWallpaperURLGetter {
   private updateUHDUrl(url: string) {
     this.uhdUrl.value = url.replace(
       /\/th\?id=([^&]+)_([0-9x]+|UHD)\.jpg.*$/,
-      'https://bing.com/th?id=$1_UHD.jpg'
+      'https://bing.com/th?id=$1_UHD.jpg',
     )
   }
 
@@ -120,7 +121,7 @@ class BingWallpaperURLGetter {
         url: cache.url,
         copyright: cache.copyright,
         copyrightlink: cache.copyrightlink,
-        title: cache.title
+        title: cache.title,
       }
       this.updateUHDUrl(cache.url)
       return url
@@ -133,7 +134,7 @@ class BingWallpaperURLGetter {
       url: '',
       copyright: '',
       copyrightlink: '',
-      title: ''
+      title: '',
     })
     await useBingWallpaperStorge.removeItem(id)
     await this.revokeSettingsURL()
@@ -160,7 +161,7 @@ class BingWallpaperURLGetter {
       data = await enhancedFetch<BingWallpaperResp>(
         'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1',
         // &mkt=zh-CN 加上区域后会导致后续访问 www.bing.com 被跳转到 cn.bing.com
-        { timeout: 1000 }
+        { timeout: 1000 },
       )
       this.info.value = data.images[0]!
       this.updateUHDUrl(data.images[0]!.url)
@@ -173,7 +174,7 @@ class BingWallpaperURLGetter {
         url: data.images[0]!.url,
         copyright: data.images[0]!.copyright,
         copyrightlink: data.images[0]!.copyrightlink,
-        title: data.images[0]!.title
+        title: data.images[0]!.title,
       })
     } catch (error) {
       console.error(error)
@@ -183,7 +184,7 @@ class BingWallpaperURLGetter {
         this.info.value = {
           ...this.info.value,
           copyright: i18next.t('newtab:notification.bing.message'),
-          title: i18next.t('newtab:notification.bing.title')
+          title: i18next.t('newtab:notification.bing.title'),
         }
       }
       return
@@ -213,7 +214,7 @@ class BingWallpaperURLGetter {
       settings.background.bing = {
         id: id,
         url: url,
-        updateDate: data.images[0]!.fullstartdate
+        updateDate: data.images[0]!.fullstartdate,
       }
       await saveSettings(settings)
       await useWallpaperUrlStore().setUrl('bing', url)
@@ -221,7 +222,7 @@ class BingWallpaperURLGetter {
       console.error('Failed to get Bing wallpaper:', error)
       ElNotification.error({
         title: i18next.t('newtab:notification.bing.title'),
-        message: i18next.t('newtab:notification.bing.message')
+        message: i18next.t('newtab:notification.bing.message'),
       })
       throw error
     }

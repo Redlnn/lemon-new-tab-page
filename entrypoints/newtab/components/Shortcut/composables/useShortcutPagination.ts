@@ -16,7 +16,7 @@ export interface UseShortcutPagination {
     prevPageRef: Ref<HTMLElement | undefined | null>,
     currentPageRef: Ref<HTMLElement | undefined | null>,
     nextPageRef: Ref<HTMLElement | undefined | null>,
-    isDragging?: Ref<boolean>
+    isDragging?: Ref<boolean>,
   ) => void
 }
 
@@ -24,7 +24,7 @@ const ANIMATION_DURATION = 300 // ms
 
 export function useShortcutPagination(
   totalItems: Ref<number>,
-  itemsPerPage: Ref<number>
+  itemsPerPage: Ref<number>,
 ): UseShortcutPagination {
   const currentPage = ref(0)
   const isAnimating = ref(false)
@@ -119,7 +119,7 @@ export function useShortcutPagination(
     prevPageRef: Ref<HTMLElement | undefined | null>,
     currentPageRef: Ref<HTMLElement | undefined | null>,
     nextPageRef: Ref<HTMLElement | undefined | null>,
-    isDragging?: Ref<boolean>
+    isDragging?: Ref<boolean>,
   ) => {
     const SWIPE_PAGE_THRESHOLD = 50 // px
     const transX = ref(0)
@@ -132,7 +132,7 @@ export function useShortcutPagination(
       onSwipeEnd() {
         transX.value = 0
         noTransition.value = false
-      }
+      },
     })
 
     watch([lengthX, isSwiping], () => {
@@ -162,7 +162,7 @@ export function useShortcutPagination(
 
       updateTransform(
         prevPageRef,
-        transX.value ? `translateX(calc(-100% + ${transX.value}px))` : ''
+        transX.value ? `translateX(calc(-100% + ${transX.value}px))` : '',
       )
       updateTransform(currentPageRef, transX.value ? `translateX(${transX.value}px)` : '')
       updateTransform(nextPageRef, transX.value ? `translateX(calc(100% + ${transX.value}px))` : '')
@@ -180,6 +180,6 @@ export function useShortcutPagination(
     prevPage,
     nextPage,
     goToPage,
-    setupSwipe
+    setupSwipe,
   }
 }

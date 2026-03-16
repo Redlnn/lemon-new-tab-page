@@ -8,7 +8,7 @@ import {
   type DialogProps,
   useDialog,
   useNamespace,
-  useSameTarget
+  useSameTarget,
 } from 'element-plus'
 import { dialogPropsDefaults } from 'element-plus/es/components/dialog/src/dialog'
 import ElFocusTrap from 'element-plus/es/components/focus-trap/src/focus-trap.mjs'
@@ -22,7 +22,7 @@ type DialogProps_ = DialogProps & {
 
 const props = withDefaults(defineProps<DialogProps_>(), {
   ...dialogPropsDefaults,
-  class: ''
+  class: '',
 })
 defineEmits(dialogEmits)
 
@@ -49,7 +49,7 @@ const {
   onCloseAutoFocus,
   onCloseRequested,
   onFocusoutPrevented,
-  closing
+  closing,
 } = useDialog(props, dialogRef)
 
 provide(dialogInjectionKey, {
@@ -58,7 +58,7 @@ provide(dialogInjectionKey, {
   bodyId,
   ns,
   rendered,
-  style
+  style,
 })
 
 const overlayEvent = useSameTarget(onModalClick)
@@ -74,7 +74,7 @@ defineExpose({
   visible,
   dialogContentRef,
   resetPosition,
-  handleClose
+  handleClose,
 })
 </script>
 
@@ -88,7 +88,7 @@ defineExpose({
         :overlay-class="[
           modalClass ?? '',
           `${ns.namespace.value}-modal-dialog`,
-          ns.is('penetrable', penetrable)
+          ns.is('penetrable', penetrable),
         ]"
         :z-index="zIndex"
       >

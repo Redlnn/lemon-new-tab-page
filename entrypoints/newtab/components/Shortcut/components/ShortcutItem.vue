@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { toRef } from 'vue'
 import { OnLongPress } from '@vueuse/components'
+import { toRef } from 'vue'
 
 import { Pin12Regular } from '@vicons/fluent'
 
@@ -26,7 +26,7 @@ const iconUrl = computed(() => props.favicon || faviconRef.value)
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,
-  blur: settings.perf.shortcut.blur
+  blur: settings.perf.shortcut.blur,
 }))
 
 const iconClass = perf('shortcut__icon')
@@ -71,7 +71,7 @@ const itemRef = useTemplateRef('itemRef')
           <span
             class="span"
             :style="{
-              backgroundImage: `url(${iconUrl})`
+              backgroundImage: `url(${iconUrl})`,
             }"
           ></span>
         </div>

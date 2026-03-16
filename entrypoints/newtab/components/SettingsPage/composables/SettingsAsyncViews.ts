@@ -12,11 +12,11 @@ const settingsViewLoaders: Record<SettingsRoute, (() => Promise<{ default: Compo
   [SettingsRoute.BOOKMARK_SIDEBAR]: () => import('../Settings/BookmarkSidebarSettings.vue'),
   [SettingsRoute.YIYAN]: () => import('../Settings/YiyanSettings.vue'),
   [SettingsRoute.PERFORMANCE]: () => import('../Settings/PerformanceSettings.vue'),
-  [SettingsRoute.OTHER]: () => import('../Settings/OtherSettings.vue')
+  [SettingsRoute.OTHER]: () => import('../Settings/OtherSettings.vue'),
 } as const
 
 const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = Object.keys(
-  settingsViewLoaders
+  settingsViewLoaders,
 ).reduce(
   (map, route) => {
     const typedRoute = route as SettingsRoute
@@ -24,7 +24,7 @@ const settingsAsyncViewMap: Record<SettingsRoute, Component | null> = Object.key
     map[typedRoute] = loader ? defineAsyncComponent(loader) : null
     return map
   },
-  {} as Record<SettingsRoute, Component | null>
+  {} as Record<SettingsRoute, Component | null>,
 )
 
 export const getSettingsView = (route: SettingsRoute): Component | null =>

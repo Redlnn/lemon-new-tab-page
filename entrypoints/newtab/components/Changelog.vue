@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import '@newtab/styles/github-markdown.css'
-
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'

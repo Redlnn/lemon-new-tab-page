@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+
 import { browser } from 'wxt/browser'
 
 import { PermissionResult } from '@newtab/composables/usePermission'
@@ -28,7 +29,7 @@ async function requestPermission(isAll: boolean) {
         ? isAll
           ? PermissionResult.GrantedAll
           : PermissionResult.GrantedCurrent
-        : PermissionResult.DeniedByBrowser
+        : PermissionResult.DeniedByBrowser,
     )
   } catch (error) {
     console.error(`Failed to request ${isAll ? 'all' : 'current'} permissions:`, error)

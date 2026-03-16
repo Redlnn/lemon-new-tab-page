@@ -1,5 +1,4 @@
 import './styles/index.scss'
-
 import { createPinia } from 'pinia'
 
 import { version } from '@/package.json'
@@ -10,8 +9,8 @@ import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
-import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
 import { colorMode, preferredDark } from '@newtab/shared/colorMode'
+import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
 
 import App from './App.vue'
 import { setupAutoSaveSettings } from './shared/autoSaveSettings'
@@ -31,7 +30,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 export const main = async () => {
@@ -41,7 +40,7 @@ export const main = async () => {
     banner,
     'padding: 2px 6px; border-radius: 4px 0 0 4px; color: #fff; background: #ff9d00; font-weight: bold;',
     'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
-    ''
+    '',
   )
 
   await shouldStartApp()

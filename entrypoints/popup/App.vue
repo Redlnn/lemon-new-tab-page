@@ -2,6 +2,7 @@
 import { Add12Filled, Pin12Regular } from '@vicons/fluent'
 import { CheckRound, CloseRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
+
 import { browser } from 'wxt/browser'
 
 import { getFaviconURL } from '@/shared/media'
@@ -44,13 +45,13 @@ onMounted(async () => {
       currentTab.value = {
         url: tab.url,
         title: tab.title || tab.url,
-        favIconUrl: tab.favIconUrl
+        favIconUrl: tab.favIconUrl,
       }
 
       // 检查是否已经存在（规范化 URL 后比较）
       const normalizedTabUrl = normalizeUrlForCompare(tab.url)
       isAlreadyExists.value = shortcutStore.items.some(
-        (item) => normalizeUrlForCompare(item.url) === normalizedTabUrl
+        (item) => normalizeUrlForCompare(item.url) === normalizedTabUrl,
       )
     }
   } catch (error) {
@@ -68,7 +69,7 @@ async function addCurrentPage() {
   shortcutStore.items.push({
     url: currentTab.value.url,
     title: currentTab.value.title,
-    favicon
+    favicon,
   })
 
   await saveShortcut(shortcutStore.$state)

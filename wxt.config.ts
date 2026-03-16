@@ -27,18 +27,19 @@ const baseManifest = {
     96: '/icon-96.png',
     128: '/icon-128.png',
     256: '/icon-256.png',
-    512: '/icon-512.png'
+    512: '/icon-512.png',
   },
   host_permissions: [
     'https://www.bing.com/',
     'https://api.bing.com/',
     'https://suggestion.baidu.com/',
     'https://suggestqueries.google.com/',
-    'https://v2.jinrishici.com/'
+    'https://v2.jinrishici.com/',
   ],
   content_security_policy: {
-    extension_pages: "script-src 'self'; object-src 'none'; img-src 'self' https: http: data: blob:"
-  }
+    extension_pages:
+      "script-src 'self'; object-src 'none'; img-src 'self' https: http: data: blob:",
+  },
 }
 
 if (import.meta.env.DEV) {
@@ -50,26 +51,26 @@ const firefoxManifest = {
   permissions: ['topSites', 'storage', 'alarms', 'bookmarks', 'activeTab', 'tabs'],
   optional_permissions: ['*://*/*'],
   chrome_settings_overrides: {
-    homepage: 'newtab.html'
+    homepage: 'newtab.html',
   },
   browser_specific_settings: {
     gecko: {
       id: '{25566b3f-eaeb-4f05-aac6-da1efc2dc1fd}',
       data_collection_permissions: {
-        required: ['bookmarksInfo', 'browsingActivity']
-      }
-    }
-  }
+        required: ['bookmarksInfo', 'browsingActivity'],
+      },
+    },
+  },
 }
 
 const chromeManifest = {
   ...baseManifest,
   permissions: ['topSites', 'storage', 'favicon', 'alarms', 'bookmarks', 'activeTab', 'tabs'],
-  optional_host_permissions: ['*://*/*']
+  optional_host_permissions: ['*://*/*'],
 }
 
 const elementPlusResolver = ElementPlusResolver({
-  importStyle: 'sass'
+  importStyle: 'sass',
 })
 
 // 将 所有 Element Plus CSS 包裹在 @layer element-plus { } 中，以便未分层的用户样式始终优先（Vite 8+）
@@ -85,7 +86,7 @@ const elementPlusLayerPlugin: postcss.Plugin = {
     const layer = postcss.atRule({ name: 'layer', params: 'element-plus' })
     layer.append(...nodes)
     root.append(layer)
-  }
+  },
 }
 
 // See https://wxt.dev/api/config.html
@@ -102,11 +103,11 @@ export default defineConfig({
   vite: () => ({
     plugins: [
       Vue({
-        include: [/\.vue$/, /\.md$/]
+        include: [/\.vue$/, /\.md$/],
       }), // 自己添加 @vitejs/plugin-vue 不使用 @wxt-dev/module-vue
       i18nextLoader({
         paths: ['./locales'],
-        namespaceResolution: 'basename'
+        namespaceResolution: 'basename',
       }),
       svgLoader(),
       Markdown({
@@ -114,51 +115,51 @@ export default defineConfig({
         markdownItSetup(md) {
           md.use(removeH1Plugin)
           md.use(keepFirst5H2Plugin)
-        }
+        },
       }),
       Markdown({
         include: [/\.md$/],
-        exclude: [/CHANGELOG.*\.md$/]
+        exclude: [/CHANGELOG.*\.md$/],
       }),
       AutoImport({
         include: [
           /\.[tj]sx?$/, // .ts, .tsx, .js, .jsx
           /\.vue$/,
           /\.vue\?vue/, // .vue
-          /\.vue\.[tj]sx?\?vue/ // .vue (vue-loader with experimentalInlineMatchResource enabled)
+          /\.vue\.[tj]sx?\?vue/, // .vue (vue-loader with experimentalInlineMatchResource enabled)
         ],
         imports: ['vue'],
         resolvers: [elementPlusResolver],
         viteOptimizeDeps: true,
-        dts: 'types/auto-imports.d.ts'
+        dts: 'types/auto-imports.d.ts',
       }),
       Components({
         resolvers: [elementPlusResolver],
-        dts: 'types/components.d.ts'
-      })
+        dts: 'types/components.d.ts',
+      }),
     ],
     build: {
       sourcemap: false, // for HMP (@wxt-dev/module-vue 会自动添加)
-      chunkSizeWarningLimit: 2000
+      chunkSizeWarningLimit: 2000,
     },
     ssr: {
-      noExternal: ['element-plus']
+      noExternal: ['element-plus'],
     },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./', import.meta.url)),
-        '@newtab': fileURLToPath(new URL('./entrypoints/newtab', import.meta.url))
-      }
+        '@newtab': fileURLToPath(new URL('./entrypoints/newtab', import.meta.url)),
+      },
     },
     css: {
       postcss: {
-        plugins: [elementPlusLayerPlugin]
+        plugins: [elementPlusLayerPlugin],
       },
       preprocessorOptions: {
         scss: {
-          additionalData: `@use "@/assets/styles/element/index.scss" as *;`
-        }
-      }
-    }
-  })
+          additionalData: `@use "@/assets/styles/element/index.scss" as *;`,
+        },
+      },
+    },
+  }),
 })

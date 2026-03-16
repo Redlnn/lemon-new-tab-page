@@ -16,7 +16,7 @@ interface BingSuggest {
       {
         Type: string
         Suggests: BingSuggestItem[]
-      }
+      },
     ]
   }
 }
@@ -77,7 +77,7 @@ async function baiduSuggestParser(text: string): Promise<string[]> {
       callbackParam: 'cb',
       callbackName: 'window.baidu.sug',
       parser: baiduJsonpParser,
-      encoding: 'gbk' // 百度搜索建议 API 使用 GBK 编码
+      encoding: 'gbk', // 百度搜索建议 API 使用 GBK 编码
     })
 
     if (suggestions[0] === text) {

@@ -10,7 +10,7 @@ type Opts = { transparent: boolean; blur: boolean }
 export function getPerfClasses(
   opts: Opts,
   prefix: string,
-  options?: { blurIndependent?: boolean; withoutPrefix?: boolean }
+  options?: { blurIndependent?: boolean; withoutPrefix?: boolean },
 ): string {
   const transparentOn = opts.transparent
   const blurOn = opts.blur && (transparentOn || options?.blurIndependent === true)

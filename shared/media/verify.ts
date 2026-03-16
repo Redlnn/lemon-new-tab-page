@@ -6,7 +6,7 @@ const ALLOWED_IMAGE_TYPES = [
   'image/apng',
   'image/avif',
   'image/bmp',
-  'image/tiff'
+  'image/tiff',
 ]
 
 const ALLOWED_VIDEO_TYPES = ['video/mp4', 'video/webm', 'video/ogg', 'video/quicktime']

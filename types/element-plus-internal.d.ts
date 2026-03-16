@@ -8,6 +8,7 @@ declare module 'element-plus/es/components/teleport/src/teleport2.mjs' {
 
 declare module 'element-plus/es/components/dialog/src/dialog-content.mjs' {
   import type { DefineComponent } from 'vue'
+
   import type { DialogContentProps } from 'element-plus/es/components/dialog/src/dialog-content'
 
   export const dialogContentEmits: { close: () => true }

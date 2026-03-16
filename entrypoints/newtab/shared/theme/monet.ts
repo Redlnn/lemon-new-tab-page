@@ -43,7 +43,7 @@ function getWorker() {
  */
 async function getThemeFromImage(
   image: HTMLImageElement,
-  cropCenter = false
+  cropCenter = false,
 ): Promise<{ cssLight: Record<string, string>; cssDark: Record<string, string> }> {
   if (!image.complete) {
     await new Promise<void>((resolve, reject) => {
@@ -84,7 +84,7 @@ async function getThemeFromImage(
   const bitmap = await createImageBitmap(image, sx, sy, sw, sh, {
     resizeWidth: width,
     resizeHeight: height,
-    resizeQuality: 'low'
+    resizeQuality: 'low',
   })
 
   return new Promise((resolve, reject) => {

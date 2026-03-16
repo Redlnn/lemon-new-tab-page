@@ -26,7 +26,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       primaryColor: oldSettings.theme.primaryColor,
       colorfulMode: oldSettings.theme.colorfulMode,
       monetColor: oldSettings.theme.monetColor,
-      idleHide: defaultSettings.theme.idleHide
+      idleHide: defaultSettings.theme.idleHide,
     },
 
     clock: {
@@ -38,7 +38,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
       meridiem: {
         show: oldSettings.clock.showMeridiem,
-        followSize: oldSettings.clock.meridiemFollowSize
+        followSize: oldSettings.clock.meridiemFollowSize,
       },
 
       showDate: oldSettings.clock.showDate,
@@ -48,7 +48,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       size: clockSizeToNumber(oldSettings.clock.size),
       weight: {
         time: oldSettings.clock.weight,
-        date: defaultSettings.clock.weight.date
+        date: defaultSettings.clock.weight.date,
       },
 
       style: {
@@ -57,9 +57,9 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
         invertColor: {
           light: oldSettings.clock.invertColor.light,
-          night: oldSettings.clock.invertColor.night
-        }
-      }
+          night: oldSettings.clock.invertColor.night,
+        },
+      },
     },
 
     search: {
@@ -78,8 +78,8 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
       style: {
         shadow: oldSettings.search.shadow,
-        border: defaultSettings.search.style.border
-      }
+        border: defaultSettings.search.style.border,
+      },
     },
 
     background: {
@@ -99,7 +99,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
         night:
           oldSettings.background.mask.opacity > 0
             ? hex2maskColor(oldSettings.background.mask.night, oldSettings.background.mask.opacity)
-            : defaultSettings.background.mask.night
+            : defaultSettings.background.mask.night,
       },
 
       pauseOnBlur: oldSettings.background.pauseOnBlur,
@@ -107,15 +107,15 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
       local: {
         id: oldSettings.background.local.id,
-        mediaType: oldSettings.background.local.mediaType
+        mediaType: oldSettings.background.local.mediaType,
       },
       localDark: {
         id: oldSettings.background.localDark.id,
-        mediaType: oldSettings.background.localDark.mediaType
+        mediaType: oldSettings.background.localDark.mediaType,
       },
       bing: {
         id: oldSettings.background.bing.id,
-        updateDate: oldSettings.background.bing.updateDate
+        updateDate: oldSettings.background.bing.updateDate,
       },
 
       online: {
@@ -123,9 +123,9 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
         cache: {
           enabled: oldSettings.background.online.cacheEnable,
           duration: oldSettings.background.online.cacheDuration,
-          noExpires: oldSettings.background.online.noExpires
-        }
-      }
+          noExpires: oldSettings.background.online.noExpires,
+        },
+      },
     },
 
     shortcut: {
@@ -142,26 +142,26 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
       style: {
         shadow: oldSettings.shortcut.enableShadow,
-        border: defaultSettings.shortcut.style.border
+        border: defaultSettings.shortcut.style.border,
       },
 
       layout: {
         rows: oldSettings.shortcut.rows,
-        columns: oldSettings.shortcut.columns
+        columns: oldSettings.shortcut.columns,
       },
 
       marginTop: oldSettings.shortcut.marginTop,
       spacing: {
         itemGapX: oldSettings.shortcut.itemMarginH,
         itemGapY: oldSettings.shortcut.itemMarginV,
-        iconTitleGap: oldSettings.shortcut.iconMarginBottom
+        iconTitleGap: oldSettings.shortcut.iconMarginBottom,
       },
 
       title: {
         show: oldSettings.shortcut.showShortcutTitle,
         extraWidth: oldSettings.shortcut.titleExtraWidth,
-        whiteInLightMode: oldSettings.shortcut.whiteTextInLightMode
-      }
+        whiteInLightMode: oldSettings.shortcut.whiteTextInLightMode,
+      },
     },
 
     dock: defaultSettings.dock,
@@ -177,9 +177,9 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
         shadow: defaultSettings.yiyan.style.shadow,
         invertColor: {
           light: defaultSettings.yiyan.style.invertColor.light,
-          night: defaultSettings.yiyan.style.invertColor.night
-        }
-      }
+          night: defaultSettings.yiyan.style.invertColor.night,
+        },
+      },
     },
 
     perf: {
@@ -187,48 +187,48 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       dockScale: defaultSettings.perf.dockScale,
       bookmark: {
         transparent: !oldSettings.perf.disableBookmarkTransparent,
-        blur: !oldSettings.perf.disableBookmarkBlur
+        blur: !oldSettings.perf.disableBookmarkBlur,
       },
       dialog: {
         transparent: !oldSettings.perf.disableDialogTransparent,
         blur: !oldSettings.perf.disableDialogBlur,
-        animation: !oldSettings.perf.disableDialogAnimation
+        animation: !oldSettings.perf.disableDialogAnimation,
       },
       focus: {
         scale: !oldSettings.perf.disableFocusScale,
-        blur: !oldSettings.perf.disableFocusBlur
+        blur: !oldSettings.perf.disableFocusBlur,
       },
       shortcut: {
         transparent: !oldSettings.perf.disableShortcutTransparent,
-        blur: !oldSettings.perf.disableShortcutBlur
+        blur: !oldSettings.perf.disableShortcutBlur,
       },
       searchBar: {
         transparent: !oldSettings.perf.disableSearchBarTransparent,
         blur: !oldSettings.perf.disableSearchBarBlur,
-        launchAnim: defaultSettings.perf.searchBar.launchAnim
+        launchAnim: defaultSettings.perf.searchBar.launchAnim,
       },
       yiyan: {
         transparent: !oldSettings.perf.disableYiyanTransparent,
         blur: !oldSettings.perf.disableYiyanBlur,
-        ripple: defaultSettings.perf.yiyan.ripple
+        ripple: defaultSettings.perf.yiyan.ripple,
       },
       actionBtns: {
         blur: !oldSettings.perf.disableSettingsBtnBlur,
-        transparent: !oldSettings.perf.disableSettingsBtnTransparent
-      }
+        transparent: !oldSettings.perf.disableSettingsBtnTransparent,
+      },
     },
 
     bookmark: {
       direction: oldSettings.bookmark.direction,
       rightClickToOpen: oldSettings.bookmark.rightClickToOpen,
       showBtn: !oldSettings.bookmark.hideBtn,
-      defaultSortMode: defaultSettings.bookmark.defaultSortMode
+      defaultSortMode: defaultSettings.bookmark.defaultSortMode,
     },
 
     hideMajorChangelog: oldSettings.hideMajorChangelog,
     readChangeLog: oldSettings.readChangeLog,
 
     pluginVersion: oldSettings.pluginVersion,
-    version: 9
+    version: 9,
   } satisfies SettingsSchemaV9
 }

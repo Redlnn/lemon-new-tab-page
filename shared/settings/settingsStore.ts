@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 
 import type { CURRENT_CONFIG_SCHEMA } from '../settings'
 import { defaultSettings } from '../settings'
+
 import { settingsStorage } from './settingsStorage'
 
 export async function initSettings() {
@@ -23,7 +24,7 @@ export async function initSettings() {
 }
 
 export async function saveSettings(
-  settings?: CURRENT_CONFIG_SCHEMA | { $state?: CURRENT_CONFIG_SCHEMA }
+  settings?: CURRENT_CONFIG_SCHEMA | { $state?: CURRENT_CONFIG_SCHEMA },
 ) {
   let toSave: CURRENT_CONFIG_SCHEMA | undefined
 
@@ -41,5 +42,5 @@ export async function saveSettings(
 export const useSettingsStore = defineStore('option', {
   state: () => {
     return structuredClone(defaultSettings as CURRENT_CONFIG_SCHEMA)
-  }
+  },
 })

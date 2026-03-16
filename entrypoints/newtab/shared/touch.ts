@@ -4,7 +4,7 @@ export const isOnlyTouchDevice = useMediaQuery('(hover: none) and (pointer: coar
 export const isHasTouchDevice = useMediaQuery('(pointer: coarse)')
 
 export function isTouchEvent(
-  event: MouseEvent | TouchEvent | PointerEvent | Event
+  event: MouseEvent | TouchEvent | PointerEvent | Event,
 ): event is TouchEvent | PointerEvent {
   if (window.PointerEvent && event instanceof PointerEvent) {
     return (event as PointerEvent).pointerType === 'touch'

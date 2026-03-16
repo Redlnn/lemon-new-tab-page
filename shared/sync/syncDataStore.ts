@@ -1,5 +1,5 @@
-import { defineStore, MutationType } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
+import { defineStore, MutationType } from 'pinia'
 
 import { browser } from 'wxt/browser'
 
@@ -9,9 +9,10 @@ import {
   CURRENT_CONFIG_VERSION,
   defaultSettings,
   migrateFromVer7To8,
-  useSettingsStore
+  useSettingsStore,
 } from '../settings'
 import { defaultShortcut, saveShortcut, useShortcutStore } from '../shortcut'
+
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
 
@@ -19,7 +20,7 @@ const debouncedSend = useDebounceFn(async (data: SyncData) => {
   try {
     await browser.runtime.sendMessage({
       type: 'SYNC_REQUEST',
-      data
+      data,
     } as SyncRequestMessage)
   } catch (err) {
     const error = err as Error
@@ -54,7 +55,7 @@ export type SyncEventPayloadMap = {
 }
 export type SyncEventCallback = <T extends SyncEventType>(
   type: T,
-  payload: SyncEventPayloadMap[T]
+  payload: SyncEventPayloadMap[T],
 ) => void
 let syncEventCallback: SyncEventCallback | null = null
 export function setSyncEventCallback(cb: SyncEventCallback | null) {
@@ -79,7 +80,7 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
     }
 
     browser.runtime.sendMessage({
-      type: 'SYNC_INITED'
+      type: 'SYNC_INITED',
     } as SyncMessage)
 
     // 监听同步储存更新消息
@@ -114,13 +115,13 @@ export async function initSyncSettings(localSettings: ReturnType<typeof useSetti
       prevSyncEnabled = nowEnabled
 
       await localSyncDataStorage.setValue({
-        lastUpdate: Date.now()
+        lastUpdate: Date.now(),
       })
       await syncDataStore.checkCloudSync()
     }
 
     localSettings.$subscribe(subChange)
-    useShortcutStore().$subscribe(async (mutation, _state) => {
+    useShortcutStore().$subscribe(async (mutation) => {
       if (mutation.type !== MutationType.direct) {
         // 防止刚开就认为数据过旧，只有initShortcut会整个替换state
         return
@@ -146,14 +147,14 @@ export async function deinitSyncSettings() {
 }
 
 const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
-  7: (s) => migrateFromVer7To8(s as SettingsSchemaV7)
+  7: (s) => migrateFromVer7To8(s as SettingsSchemaV7),
 }
 
 export const useSyncDataStore = defineStore('sync', {
   state: (): SyncData => ({
     settings: structuredClone(defaultSettings),
     bookmarks: structuredClone(defaultShortcut),
-    lastUpdate: 0
+    lastUpdate: 0,
   }),
 
   actions: {
@@ -178,7 +179,7 @@ export const useSyncDataStore = defineStore('sync', {
           if (syncEventCallback) {
             syncEventCallback('version-mismatch', {
               cloud: String(cloudData.settings.version),
-              local: String(localSettings.version)
+              local: String(localSettings.version),
             })
           }
           return false
@@ -216,7 +217,7 @@ export const useSyncDataStore = defineStore('sync', {
         debouncedSend({
           settings: localSettings.$state,
           bookmarks: localShortcut.$state,
-          lastUpdate: Date.now()
+          lastUpdate: Date.now(),
         } as SyncData)
       } catch (err) {
         if (syncEventCallback) {
@@ -250,7 +251,7 @@ export const useSyncDataStore = defineStore('sync', {
                 if (syncEventCallback) {
                   syncEventCallback('version-mismatch', {
                     cloud: String(s.version),
-                    local: String(localSettings.version)
+                    local: String(localSettings.version),
                   })
                 }
                 return
@@ -264,7 +265,7 @@ export const useSyncDataStore = defineStore('sync', {
           } catch (err) {
             console.error(
               `Failed to migrate cloud settings from ${cloudData.settings.version} to ${CURRENT_CONFIG_VERSION}:`,
-              err
+              err,
             )
             // 迁移失败：关闭云同步并通知 UI
             localSettings.sync.enabled = false
@@ -286,7 +287,7 @@ export const useSyncDataStore = defineStore('sync', {
         cloudData.settings.background.localDark = localState.background.localDark || {
           id: '',
           url: '',
-          mediaType: undefined
+          mediaType: undefined,
         } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
         cloudData.settings.background.bing = localState.background.bing // 保持本地必应壁纸数据
         cloudData.settings.background.online.url = localState.background.online.url // 保持本地在线壁纸URL
@@ -294,7 +295,7 @@ export const useSyncDataStore = defineStore('sync', {
         // 用了自定义搜索引擎则保持不变
         if (
           !['google', 'baidu', 'bing', 'yandex', 'duckduckgo'].includes(
-            cloudData.settings.search.engine
+            cloudData.settings.search.engine,
           )
         ) {
           cloudData.settings.search.engine = localState.search.engine
@@ -315,7 +316,7 @@ export const useSyncDataStore = defineStore('sync', {
         saveShortcut(cloudData.bookmarks)
 
         await localSyncDataStorage.setValue({
-          lastUpdate: cloudData.lastUpdate
+          lastUpdate: cloudData.lastUpdate,
         })
       } catch (err) {
         if (syncEventCallback) {
@@ -328,6 +329,6 @@ export const useSyncDataStore = defineStore('sync', {
       } finally {
         isProcessing = false
       }
-    }
-  }
+    },
+  },
 })

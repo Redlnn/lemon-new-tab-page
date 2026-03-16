@@ -38,6 +38,6 @@ export function useShortcutData(refreshDebounced: () => void) {
     topSites,
     shortcuts,
     mounted,
-    topSitesNeedsReload
+    topSitesNeedsReload,
   }
 }

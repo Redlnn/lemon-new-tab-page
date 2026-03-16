@@ -58,7 +58,7 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
       h(
         'span',
         { style: { color: 'var(--el-color-success)' } },
-        i18next.t('newtab:shortcut.hideTopMessage.content')
+        i18next.t('newtab:shortcut.hideTopMessage.content'),
       ),
       h(
         'span',
@@ -67,9 +67,9 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
           onClick: async () => {
             await restoreBlockedSite(url)
             await reloadFunc()
-          }
+          },
         },
-        i18next.t('newtab:common.undo')
+        i18next.t('newtab:common.undo'),
       ),
       h(
         'span',
@@ -80,13 +80,13 @@ function showBlockedMessage(url: string, reloadFunc: () => Promise<void>) {
             await blockedTopSitesStorage.setValue([])
             await reloadFunc()
             ElMessage.success({
-              message: i18next.t('newtab:shortcut.hideTopMessage.restoreSuccess')
+              message: i18next.t('newtab:shortcut.hideTopMessage.restoreSuccess'),
             })
-          }
+          },
         },
-        i18next.t('newtab:shortcut.hideTopMessage.restoreDefault')
-      )
-    ])
+        i18next.t('newtab:shortcut.hideTopMessage.restoreDefault'),
+      ),
+    ]),
   })
 }
 

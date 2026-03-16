@@ -17,6 +17,6 @@ export function useDialog() {
     opened,
     show,
     hide,
-    toggle
+    toggle,
   }
 }

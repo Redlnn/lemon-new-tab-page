@@ -4,6 +4,7 @@ import i18next from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import I18NextVue from 'i18next-vue'
 import resources from 'virtual:i18next-loader'
+
 import { browser } from 'wxt/browser'
 
 export const getLang = () => i18next.language || browser.i18n.getUILanguage()
@@ -24,7 +25,7 @@ function changeDocument() {
 
 const languageDetector = new LanguageDetector(null, {
   order: ['localStorage', 'navigator'],
-  caches: ['localStorage']
+  caches: ['localStorage'],
 })
 
 export const i18nInitPromise = i18next
@@ -36,7 +37,7 @@ export const i18nInitPromise = i18next
     fallbackLng: {
       'zh-MO': ['zh-HK'],
       zh: ['zh-CN'],
-      default: ['en']
+      default: ['en'],
     },
     load: 'currentOnly',
     nonExplicitSupportedLngs: true,
@@ -44,9 +45,9 @@ export const i18nInitPromise = i18next
     defaultNS: 'newtab',
     debug: import.meta.env.DEV,
     interpolation: {
-      escapeValue: false
+      escapeValue: false,
     },
-    showSupportNotice: false
+    showSupportNotice: false,
   })
   .then(() => {
     // Windows 不能正确区分 zh-HK 和 zh-TW，把所有繁体中文都当作 zh-TW

@@ -19,7 +19,7 @@ const settings = useSettingsStore()
 const {
   histories: cachedHistories,
   ensureLoaded: ensureHistoryLoaded,
-  clearHistories: clearHistoryCache
+  clearHistories: clearHistoryCache,
 } = useSearchHistoryCache()
 
 const clearSearchHistory = useTemplateRef('clearSearchHistory')
@@ -39,16 +39,16 @@ const emit = defineEmits<{
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.searchBar.transparent,
-  blur: settings.perf.searchBar.blur
+  blur: settings.perf.searchBar.blur,
 }))
 
 const suggestionAreaPerfClass = computed(() => [
   {
     'search-suggestion-area--shadow': settings.search.style.shadow,
     'search-suggestion-area--dark':
-      settings.background.bgType === BgType.None && searchSuggestions.value.length > 0
+      settings.background.bgType === BgType.None && searchSuggestions.value.length > 0,
   },
-  perf('search-suggestion-area').value
+  perf('search-suggestion-area').value,
 ])
 
 const areaHeight = computed(() => {
@@ -65,7 +65,7 @@ const areaHeight = computed(() => {
 const displayedSuggestions = computed(() =>
   searchSuggestions.value.length > 10
     ? searchSuggestions.value.slice(0, 10)
-    : searchSuggestions.value
+    : searchSuggestions.value,
 )
 
 function handleInput() {
@@ -158,7 +158,7 @@ watch(
     if (isShowSearchHistories.value) {
       searchSuggestions.value = list.slice()
     }
-  }
+  },
 )
 
 defineExpose({
@@ -172,7 +172,7 @@ defineExpose({
   currentActiveSuggest,
   searchSuggestions,
   isShowSearchHistories,
-  searchSuggestionArea
+  searchSuggestionArea,
 })
 </script>
 
@@ -183,7 +183,7 @@ defineExpose({
     :class="suggestionAreaPerfClass"
     :style="{
       width: `${searchFormWidth}px`,
-      height: areaHeight
+      height: areaHeight,
     }"
   >
     <suggest-list-item

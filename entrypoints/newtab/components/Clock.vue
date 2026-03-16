@@ -10,7 +10,6 @@ import { useSettingsStore } from '@/shared/settings'
 
 const { t, i18next } = useTranslation('newtab')
 const settings = useSettingsStore()
-const time = ref()
 
 const currentLang = ref(i18next.language)
 
@@ -37,7 +36,7 @@ useIntervalFn(
   () => {
     timeNow.value = new Date()
   },
-  () => (settings.clock.showSeconds ? 100 : 1000)
+  () => (settings.clock.showSeconds ? 100 : 1000),
 )
 
 const dateNow = useNow({ interval: 60 * 1000 })
@@ -50,7 +49,7 @@ const formattedTime = computed(() => {
     hourMeridiem: now.format('h'),
     minute: now.format('mm'),
     second: now.format('ss'),
-    meridiem: now.format('A')
+    meridiem: now.format('A'),
   }
 })
 
@@ -61,7 +60,7 @@ const formattedDate = computed(() => {
     meridiemZH: customMeridiem(now.hour()),
     weekday: now.format('dddd'),
     date: now.format('LL'),
-    lunar: now.format('LMLD')
+    lunar: now.format('LMLD'),
   }
 })
 
@@ -71,19 +70,19 @@ const weightMap = {
   [ClockWeight.Bold]: 600,
   [ClockWeight.ExtraBold]: 700,
   [ClockWeight.Heavy]: 800,
-  [ClockWeight.Black]: 900
+  [ClockWeight.Black]: 900,
 }
 
 const clockClass = computed(() => [settings.clock.newStyle ? 'clock__new' : undefined])
 const clockStyle = computed(() => {
   return {
     fontWeight: weightMap[settings.clock.weight.time],
-    fontSize: settings.clock.size + 'px'
+    fontSize: settings.clock.size + 'px',
   }
 })
 const calcStyle = computed(() => {
   return {
-    fontWeight: weightMap[settings.clock.weight.date]
+    fontWeight: weightMap[settings.clock.weight.date],
   }
 })
 </script>
@@ -95,7 +94,7 @@ const calcStyle = computed(() => {
     :class="[
       settings.clock.style.shadow ? 'clock--shadow' : undefined,
       settings.clock.style.invertColor.light ? ['clock--invert', 'clock--light'] : undefined,
-      settings.clock.style.invertColor.night ? ['clock--invert', 'clock--night'] : undefined
+      settings.clock.style.invertColor.night ? ['clock--invert', 'clock--night'] : undefined,
     ]"
   >
     <div class="clock__time-container" :class="clockClass" :style="clockStyle">
@@ -123,7 +122,7 @@ const calcStyle = computed(() => {
             :class="[
               settings.clock.colorfulNum && (!settings.clock.showSeconds || settings.clock.newStyle)
                 ? 'colorful'
-                : undefined
+                : undefined,
             ]"
             >{{ formattedTime.minute }}</span
           >

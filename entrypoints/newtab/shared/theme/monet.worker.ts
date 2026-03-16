@@ -4,7 +4,7 @@ import {
   hexFromArgb,
   Scheme,
   sourceColorFromImageBytes,
-  themeFromSourceColor
+  themeFromSourceColor,
 } from '@material/material-color-utilities'
 
 import { mixLegacy } from '@/shared/theme/mix'
@@ -29,7 +29,7 @@ function buildColorShades(base: Rgba) {
       7: rgba2Hex(mixLegacy(base, WHITE_COLOR, 30)),
       8: rgba2Hex(mixLegacy(base, WHITE_COLOR, 20)),
       9: rgba2Hex(mixLegacy(base, WHITE_COLOR, 10)),
-      dark2: rgba2Hex(mixLegacy(base, BLACK_COLOR, 70))
+      dark2: rgba2Hex(mixLegacy(base, BLACK_COLOR, 70)),
     },
     dark: {
       3: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 70)),
@@ -37,8 +37,8 @@ function buildColorShades(base: Rgba) {
       7: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 30)),
       8: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 20)),
       9: rgba2Hex(mixLegacy(base, EL_BG_COLOR_RGBA, 10)),
-      dark2: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70))
-    }
+      dark2: rgba2Hex(mixLegacy(base, WHITE_COLOR, 70)),
+    },
   }
 }
 
@@ -117,13 +117,13 @@ function buildCssVars(scheme: Scheme, mode: 'light' | 'dark') {
     '--el-text-color-primary': hexFromArgb(scheme.onSurface),
     '--el-text-color-regular': hexFromArgb(scheme.onSurfaceVariant),
     '--el-text-color-secondary': rgba2Hex(
-      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 60)
-    )
+      mixLegacy(rgbaFromArgb(scheme.onSurfaceVariant), textMix, 60),
+    ),
   }
 }
 
 self.onmessage = (
-  e: MessageEvent<{ id: number; imageBitmap: ImageBitmap; width: number; height: number }>
+  e: MessageEvent<{ id: number; imageBitmap: ImageBitmap; width: number; height: number }>,
 ) => {
   const { id, imageBitmap, width, height } = e.data
 

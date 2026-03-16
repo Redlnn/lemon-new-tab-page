@@ -13,7 +13,7 @@ async function downloadBackup() {
 
   downloadJSON(
     { ...settings, ...pinedShortcut, ...customSearchEngine },
-    `lemon-new-tab-backup-${new Date().toISOString()}.json`
+    `lemon-new-tab-backup-${new Date().toISOString()}.json`,
   )
 }
 
@@ -32,10 +32,10 @@ export async function handleInvaildSettings() {
           {
             type: 'primary',
             icon: DownloadRound,
-            onClick: downloadBackup
+            onClick: downloadBackup,
           },
-          'Download'
-        )
+          'Download',
+        ),
       ]),
     i18next.t('bootstrap.invalidVer.title'),
     {
@@ -44,15 +44,15 @@ export async function handleInvaildSettings() {
       showClose: false,
       closeOnPressEscape: false,
       closeOnClickModal: false,
-      roundButton: true
-    }
+      roundButton: true,
+    },
   )
 
   ElLoading.service({
     lock: true,
     text: i18next.t('settings:other.purge.confirm.wallpaper.purging'),
     body: true,
-    background: 'var(--el-overlay-color-light)'
+    background: 'var(--el-overlay-color-light)',
   })
 
   try {
@@ -61,15 +61,15 @@ export async function handleInvaildSettings() {
       sessionStorage.clear,
       localForage.dropInstance({ name: '柠檬起始页' }),
       storage.clear('local'),
-      storage.clear('session')
+      storage.clear('session'),
     ])
   } catch (e) {
     console.error('Failed to clear data:', e)
     ElMessageBox.alert(
       h('div', null, [h('h5', null, (e as Error).name), h('p', null, (e as Error).message)]),
       {
-        title: 'Failed to clear data'
-      }
+        title: 'Failed to clear data',
+      },
     )
     return false
   }

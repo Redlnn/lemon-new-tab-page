@@ -25,7 +25,7 @@ const predefineColorsMapClassic = [
   { value: '#008899', labelKey: 'theme.color.classic.teal' },
   { value: '#1677ff', labelKey: 'theme.color.classic.antBlue' }, // Ant Design Primary
   { value: '#1e50a2', labelKey: 'theme.color.classic.lapisBlue' },
-  { value: '#4d5aaf', labelKey: 'theme.color.classic.bellflower' }
+  { value: '#4d5aaf', labelKey: 'theme.color.classic.bellflower' },
 ]
 
 const predefineColorsMapAcgn = [
@@ -35,12 +35,12 @@ const predefineColorsMapAcgn = [
   { value: '#730f40', labelKey: 'theme.color.acgn.aveMujica' },
   { value: '#f7b3c2', labelKey: 'theme.color.acgn.bocchi' },
   { value: '#ff2291', labelKey: 'theme.color.acgn.kessoku' },
-  { value: '#d90e2c', labelKey: 'theme.color.acgn.togeari' }
+  { value: '#d90e2c', labelKey: 'theme.color.acgn.togeari' },
 ]
 
 const predefineColorsMap = [
   { label: 'Classic', options: predefineColorsMapClassic },
-  { label: 'ACGN', options: predefineColorsMapAcgn }
+  { label: 'ACGN', options: predefineColorsMapAcgn },
 ]
 
 const predefineColors = predefineColorsMapClassic.concat(predefineColorsMapAcgn).map((i) => i.value)
@@ -116,7 +116,7 @@ const beforeMonetChange = async () => {
     await ElMessageBox.confirm(
       t('theme.monet.askEnableCache.message'),
       t('theme.monet.askEnableCache.title'),
-      { type: 'warning' }
+      { type: 'warning' },
     )
   } catch {
     // 用户取消或关闭对话框：不允许开启

@@ -15,7 +15,7 @@ const settings = useSettingsStore()
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.yiyan.transparent,
-  blur: settings.perf.yiyan.blur
+  blur: settings.perf.yiyan.blur,
 }))
 const yiyanPerfClass = perf('yiyan', { withoutPrefix: true })
 
@@ -77,7 +77,7 @@ function onPointerDown(e: PointerEvent) {
     size,
     leaving: false,
     entered: false,
-    wantLeave: false
+    wantLeave: false,
   }
 
   ripples.value.push(ripple)
@@ -118,9 +118,9 @@ async function copyToClipboard() {
         {
           'yiyan--shadow': settings.yiyan.style.shadow,
           'yiyan--invert yiyan--light': settings.yiyan.style.invertColor.light,
-          'yiyan--invert yiyan--night': settings.yiyan.style.invertColor.night
+          'yiyan--invert yiyan--night': settings.yiyan.style.invertColor.night,
         },
-        yiyanPerfClass
+        yiyanPerfClass,
       ]"
       ref="yiyan"
       @pointerdown="onPointerDown"
@@ -142,7 +142,7 @@ async function copyToClipboard() {
             width: r.size + 'px',
             height: r.size + 'px',
             left: r.x - r.size / 2 + 'px',
-            top: r.y - r.size / 2 + 'px'
+            top: r.y - r.size / 2 + 'px',
           }"
           @transitionend="(e) => onTransitionEnd(e, r)"
         ></span>

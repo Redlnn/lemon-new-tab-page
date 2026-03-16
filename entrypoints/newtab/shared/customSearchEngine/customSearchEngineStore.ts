@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import {
   customSearchEngineStorage,
   type CustomSearchEngineStorage,
-  defaultCustomSearchEngine
+  defaultCustomSearchEngine,
 } from './customSearchEngineStorage'
 
 export async function initCustomSearchEngine() {
@@ -13,7 +13,7 @@ export async function initCustomSearchEngine() {
 }
 
 export async function saveCustomSearchEngine(
-  data: CustomSearchEngineStorage | { $state?: CustomSearchEngineStorage }
+  data: CustomSearchEngineStorage | { $state?: CustomSearchEngineStorage },
 ) {
   let toSave: CustomSearchEngineStorage | undefined
 
@@ -32,5 +32,5 @@ export async function saveCustomSearchEngine(
 export const useCustomSearchEngineStore = defineStore('customSearchEngine', {
   state: () => {
     return structuredClone(defaultCustomSearchEngine)
-  }
+  },
 })

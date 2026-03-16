@@ -22,14 +22,14 @@ const data: {
 } = reactive({
   url: '',
   title: '',
-  favicon: ''
+  favicon: '',
 })
 
 const { beforeFaviconUpload, httpRequest } = useFaviconUpload()
 
 const isEditing = computed(() => editingIndex.value !== null)
 const dialogTitle = computed(() =>
-  t(isEditing.value ? 'shortcut.editShortcut' : 'shortcut.addShortcut')
+  t(isEditing.value ? 'shortcut.editShortcut' : 'shortcut.addShortcut'),
 )
 const confirmLabel = computed(() => t(isEditing.value ? 'common.save' : 'common.confirm'))
 
@@ -52,7 +52,7 @@ function openEditDialog(index: number) {
   Object.assign(data, {
     url: target.url,
     title: target.title,
-    favicon: target.favicon ?? ''
+    favicon: target.favicon ?? '',
   })
   showDialog.value = true
 }
@@ -66,7 +66,7 @@ async function submit() {
   const shortcut = {
     url: formatUrl(data.url),
     title: data.title.trim(),
-    ...(!data.favicon ? {} : { favicon: data.favicon })
+    ...(!data.favicon ? {} : { favicon: data.favicon }),
   }
   if (isEditing.value && editingIndex.value !== null) {
     shortcutStore.items.splice(editingIndex.value, 1, shortcut)

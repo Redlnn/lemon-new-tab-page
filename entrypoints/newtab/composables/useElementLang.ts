@@ -4,7 +4,7 @@ import i18next from 'i18next'
 import { getLang } from '@/shared/i18n'
 
 const elementZhLocales = import.meta.glob<{ default: Language }>(
-  '/node_modules/element-plus/es/locale/lang/zh*.mjs'
+  '/node_modules/element-plus/es/locale/lang/zh*.mjs',
 )
 
 // 由于考虑面向用户群体，只包含中文、英文

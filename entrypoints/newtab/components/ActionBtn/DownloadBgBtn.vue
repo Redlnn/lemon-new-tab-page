@@ -42,7 +42,7 @@ const extMap: Record<string, string> = {
   'image/jxl': 'jxl',
   'image/apng': 'png',
   'image/heic': 'heic',
-  'image/heif': 'heif'
+  'image/heif': 'heif',
 }
 
 function downloadImageBlob(blob: Blob) {

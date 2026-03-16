@@ -1,5 +1,5 @@
-import type { Store } from 'pinia'
 import { useDebounceFn } from '@vueuse/core'
+import type { Store } from 'pinia'
 
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, saveSettings } from '@/shared/settings'
 

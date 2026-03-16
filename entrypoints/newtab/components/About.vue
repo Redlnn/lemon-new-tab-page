@@ -3,6 +3,7 @@ import { useDateFormat, useNow } from '@vueuse/core'
 
 import { Chrome, Edge, Firefox, Github } from '@vicons/fa'
 import { useTranslation } from 'i18next-vue'
+
 import { browser } from 'wxt/browser'
 
 import { version } from '@/package.json'

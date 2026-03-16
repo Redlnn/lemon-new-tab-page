@@ -80,7 +80,7 @@ const allItems = computed(() => {
       title: s.title || '',
       favicon: s.favicon,
       isPinned: false,
-      originalIndex: i
+      originalIndex: i,
     })
   }
   return items
@@ -92,7 +92,7 @@ const filteredItems = computed(() => {
   const q = query.value.trim().toLowerCase()
   if (!q) return allItems.value
   return allItems.value.filter(
-    (item) => item.title.toLowerCase().includes(q) || item.url.toLowerCase().includes(q)
+    (item) => item.title.toLowerCase().includes(q) || item.url.toLowerCase().includes(q),
   )
 })
 
@@ -120,7 +120,7 @@ async function refresh() {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       force: topSitesNeedsReload.value,
-      noCap: true // 不截断，获取所有可用的 top sites
+      noCap: true, // 不截断，获取所有可用的 top sites
     })
     topSitesNeedsReload.value = false
     // topSites.value = sites.map((s) => ({ url: s.url, title: s.title ?? '', favicon: s.favicon }))
@@ -161,7 +161,7 @@ useSwipe(containerRef, {
   onSwipeEnd(_e, dir) {
     if (dir === 'left') nextPage()
     else if (dir === 'right') prevPage()
-  }
+  },
 })
 
 // ---- 键盘 ----
@@ -198,7 +198,7 @@ watch(
       searchInputRef.value?.focus()
     }
   },
-  { immediate: true }
+  { immediate: true },
 )
 
 // 搜索时回到第0页
@@ -218,7 +218,7 @@ watch(
       topSitesNeedsReload.value = true
     }
     refreshDebounced()
-  }
+  },
 )
 
 // ---- 点击打开 ----
@@ -229,7 +229,7 @@ function openItem(url: string) {
 // ---- 右键菜单 ----
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,
-  blur: settings.perf.shortcut.blur
+  blur: settings.perf.shortcut.blur,
 }))
 
 const popperClass = perf('shortcut__menu-popper')
@@ -239,7 +239,7 @@ const ctxMenuOpen = ref(false)
 
 function openCtxMenu(
   event: MouseEvent | PointerEvent,
-  item: { url: string; title: string; isPinned: boolean; originalIndex: number }
+  item: { url: string; title: string; isPinned: boolean; originalIndex: number },
 ): void {
   ctxMenuRef.value?.open(event, item)
   ctxMenuOpen.value = true
@@ -261,7 +261,7 @@ useDraggable(gridRef, shortcuts, {
     shortcutStore.items = shortcuts.value
     saveShortcut(shortcutStore.$state)
     refreshDebounced()
-  }
+  },
 })
 </script>
 

@@ -4,7 +4,7 @@ import {
   useActiveElement,
   useElementSize,
   useTimeoutFn,
-  useWindowFocus
+  useWindowFocus,
 } from '@vueuse/core'
 
 import { Search } from '@vicons/fa'
@@ -46,7 +46,7 @@ const { width: searchFormWidth } = useElementSize(searchForm)
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.searchBar.transparent,
-  blur: settings.perf.searchBar.blur
+  blur: settings.perf.searchBar.blur,
 }))
 
 const formPerfClass = computed(() => [
@@ -55,13 +55,13 @@ const formPerfClass = computed(() => [
     'search-box__form--dark': settings.background.bgType === BgType.None,
     'search-box__form--expand': settings.search.expandAlways,
     'search-box__form--always-icon': settings.search.showIconAlways,
-    border: settings.search.style.border
+    border: settings.search.style.border,
   },
-  perf('search-box__form').value
+  perf('search-box__form').value,
 ])
 
 const searchPlaceholder = computed(() =>
-  focusStore.isFocused ? undefined : settings.search.placeholder || t('search.placeholder')
+  focusStore.isFocused ? undefined : settings.search.placeholder || t('search.placeholder'),
 )
 
 function resetSearch() {
@@ -232,7 +232,7 @@ const doSearchWithText = async (text: string, newtab: boolean = false) => {
   window.open(
     searchUrl.replace('%s', encodeURIComponent(text)),
     newtab || settings.search.openInNewTab ? '_blank' : '_self',
-    'noopener noreferrer'
+    'noopener noreferrer',
   )
   suggedtionArea.value!.clearSearchSuggestions()
 }
@@ -258,7 +258,7 @@ onMounted(() => {
       class="search-box__form"
       :class="formPerfClass"
       :style="{
-        '--width': settings.perf.searchBar.launchAnim ? (mounted ? undefined : '0') : undefined
+        '--width': settings.perf.searchBar.launchAnim ? (mounted ? undefined : '0') : undefined,
       }"
       @submit.prevent="doSearch"
     >

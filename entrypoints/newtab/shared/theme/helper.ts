@@ -2,7 +2,7 @@ import {
   alphaFromArgb,
   blueFromArgb,
   greenFromArgb,
-  redFromArgb
+  redFromArgb,
 } from '@material/material-color-utilities'
 
 /**

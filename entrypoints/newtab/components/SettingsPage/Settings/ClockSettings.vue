@@ -12,28 +12,28 @@ const settings = useSettingsStore()
 const weightOptions = [
   {
     value: ClockWeight.Normal,
-    label: 'clock.weight.normal'
+    label: 'clock.weight.normal',
   },
   {
     value: ClockWeight.Medium,
-    label: 'clock.weight.medium'
+    label: 'clock.weight.medium',
   },
   {
     value: ClockWeight.Bold,
-    label: 'clock.weight.bold'
+    label: 'clock.weight.bold',
   },
   {
     value: ClockWeight.ExtraBold,
-    label: 'clock.weight.extraBold'
+    label: 'clock.weight.extraBold',
   },
   {
     value: ClockWeight.Heavy,
-    label: 'clock.weight.heavy'
+    label: 'clock.weight.heavy',
   },
   {
     value: ClockWeight.Black,
-    label: 'clock.weight.black'
-  }
+    label: 'clock.weight.black',
+  },
 ]
 
 function handleNewStyleChange(val: string | number | boolean) {

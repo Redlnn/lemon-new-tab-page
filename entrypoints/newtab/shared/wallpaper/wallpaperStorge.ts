@@ -4,22 +4,22 @@ import { storage } from '#imports'
 
 export const COMMON_CONFIG: LocalForageOptions = {
   name: '柠檬起始页',
-  driver: localForage.INDEXEDDB
+  driver: localForage.INDEXEDDB,
 }
 
 export const useWallpaperStorge = localForage.createInstance({
   ...COMMON_CONFIG,
-  storeName: 'wallpaper'
+  storeName: 'wallpaper',
 })
 
 export const useBingWallpaperStorge = localForage.createInstance({
   ...COMMON_CONFIG,
-  storeName: 'wallpaperBing'
+  storeName: 'wallpaperBing',
 })
 
 export const useDarkWallpaperStorge = localForage.createInstance({
   ...COMMON_CONFIG,
-  storeName: 'wallpaperDark'
+  storeName: 'wallpaperDark',
 })
 
 interface WallpaperUrlCache {
@@ -31,9 +31,9 @@ interface WallpaperUrlCache {
 const defaultWallpaperUrlCache: WallpaperUrlCache = {
   light: '',
   dark: '',
-  bing: ''
+  bing: '',
 } as const
 
 export const wallpaperUrlCache = storage.defineItem<WallpaperUrlCache>('session:bingInfo', {
-  fallback: defaultWallpaperUrlCache
+  fallback: defaultWallpaperUrlCache,
 })

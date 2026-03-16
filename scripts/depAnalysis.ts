@@ -7,7 +7,7 @@ const projectRoot = process.cwd()
 // 多个源码目录
 const srcDirs = [
   path.join(projectRoot, './entrypoints'),
-  path.join(projectRoot, './shared') // 如果还有 src，也可以加上
+  path.join(projectRoot, './shared'), // 如果还有 src，也可以加上
 ]
 
 const pkgPath = path.join(projectRoot, 'package.json')
@@ -99,6 +99,6 @@ Object.keys(allDeps).forEach((dep) => {
   const used = runtimeUsed.has(dep)
   const suggested = used ? 'dependencies' : 'devDependencies'
   console.log(
-    `${dep.padEnd(35)} | ${type.padEnd(9)} | ${(used ? '✅ runtime used' : '❌ only dev').padEnd(15)} | suggested: ${suggested}`
+    `${dep.padEnd(35)} | ${type.padEnd(9)} | ${(used ? '✅ runtime used' : '❌ only dev').padEnd(15)} | suggested: ${suggested}`,
   )
 })

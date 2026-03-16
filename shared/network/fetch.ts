@@ -9,7 +9,7 @@ interface FetchOptions extends RequestInit {
  */
 export async function enhancedFetch<T = unknown>(
   url: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {},
 ): Promise<T> {
   const { timeout = 2000, responseType = 'json', responseEncoding, ...fetchOptions } = options
 
@@ -28,7 +28,7 @@ export async function enhancedFetch<T = unknown>(
     const response = await fetch(url, {
       ...fetchOptions,
       headers,
-      signal: controller.signal
+      signal: controller.signal,
     })
 
     clearTimeout(timeoutId)

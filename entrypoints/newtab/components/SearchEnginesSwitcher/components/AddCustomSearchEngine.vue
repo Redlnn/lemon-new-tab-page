@@ -6,7 +6,7 @@ import { useTranslation } from 'i18next-vue'
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
 import {
   saveCustomSearchEngine,
-  useCustomSearchEngineStore
+  useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 
 const { t } = useTranslation()
@@ -23,14 +23,14 @@ const data: {
 } = reactive({
   name: '',
   url: '',
-  icon: undefined
+  icon: undefined,
 })
 
 const { beforeFaviconUpload, httpRequest } = useFaviconUpload()
 
 const isEditing = computed(() => editingIndex.value !== null)
 const dialogTitle = computed(() =>
-  t(isEditing.value ? 'customSearchEngine.edit' : 'customSearchEngine.add')
+  t(isEditing.value ? 'customSearchEngine.edit' : 'customSearchEngine.add'),
 )
 const confirmLabel = computed(() => t(isEditing.value ? 'common.save' : 'common.confirm'))
 
@@ -53,7 +53,7 @@ function openEditDialog(index: number) {
   Object.assign(data, {
     name: target.name,
     url: target.url,
-    icon: target.icon ?? ''
+    icon: target.icon ?? '',
   })
   showDialog.value = true
 }
@@ -84,7 +84,7 @@ async function submit() {
       : crypto.randomUUID(),
     name: data.name.trim(),
     url: data.url.trim(),
-    icon: data.icon || undefined
+    icon: data.icon || undefined,
   }
 
   if (isEditing.value && editingIndex.value !== null) {
@@ -105,7 +105,7 @@ async function cancel() {
 
 defineExpose({
   openAddDialog,
-  openEditDialog
+  openEditDialog,
 })
 </script>
 

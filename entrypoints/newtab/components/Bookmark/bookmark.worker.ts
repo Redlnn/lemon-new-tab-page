@@ -100,7 +100,7 @@ function cloneAndSortTree(
   nodes: BookmarkTreeNode[] | undefined,
   depth: number,
   mode: SortMode,
-  language: string
+  language: string,
 ): BookmarkTreeNode[] {
   if (!nodes || nodes.length === 0) return []
 
@@ -131,7 +131,7 @@ function cloneAndSortTree(
 function createRebuild(
   matchedIds: Set<string>,
   keepIds: Set<string>,
-  onFirstPath: (p: string[]) => void
+  onFirstPath: (p: string[]) => void,
 ) {
   let foundFirst = false
   return function rebuild(node: BookmarkTreeNode, parents: string[]): BookmarkTreeNode | null {
@@ -169,7 +169,7 @@ function buildIndex() {
   const map: typeof indexMap = {}
 
   const stack: Array<{ nodes: BookmarkTreeNode[]; parents: string[] }> = [
-    { nodes: tree, parents: [] }
+    { nodes: tree, parents: [] },
   ]
 
   while (stack.length) {
@@ -182,7 +182,7 @@ function buildIndex() {
         parents,
         titleLower: (node.title || '').toLowerCase(),
         urlLower: node.url ? node.url.toLowerCase() : '',
-        isFolder
+        isFolder,
       }
 
       if (isFolder && node.children!.length) {
@@ -235,7 +235,7 @@ function filter(query: string, mode: SortMode) {
 
     return {
       filteredResult: source,
-      firstMatchPath
+      firstMatchPath,
     }
   }
 
@@ -260,7 +260,7 @@ function filter(query: string, mode: SortMode) {
     lastResultIds = []
     return {
       filteredResult: [],
-      firstMatchPath: []
+      firstMatchPath: [],
     }
   }
 
@@ -312,7 +312,7 @@ function filter(query: string, mode: SortMode) {
 
   return {
     filteredResult: result,
-    firstMatchPath: firstPath ?? []
+    firstMatchPath: firstPath ?? [],
   }
 }
 

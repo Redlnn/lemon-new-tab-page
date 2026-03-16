@@ -4,7 +4,7 @@ import {
   ApiRound,
   BookmarkBorderRound,
   ColorLensOutlined,
-  FormatQuoteRound
+  FormatQuoteRound,
 } from '@vicons/material'
 
 export const SettingsRoute = {
@@ -18,7 +18,7 @@ export const SettingsRoute = {
   BOOKMARK_SIDEBAR: 'bookmarkSidebar',
   YIYAN: 'yiyan',
   PERFORMANCE: 'performance',
-  OTHER: 'other'
+  OTHER: 'other',
 } as const
 export type SettingsRoute = (typeof SettingsRoute)[keyof typeof SettingsRoute]
 
@@ -32,53 +32,53 @@ export const MENU_ITEMS: MenuItem[] = [
   {
     key: SettingsRoute.THEME,
     icon: ColorLensOutlined,
-    titleKey: 'theme.title'
+    titleKey: 'theme.title',
   },
   {
     key: SettingsRoute.CLOCK,
     icon: ClockCircleOutlined,
-    titleKey: 'clock.title'
+    titleKey: 'clock.title',
   },
   {
     key: SettingsRoute.SEARCH,
     icon: SearchOutlined,
-    titleKey: 'search.title'
+    titleKey: 'search.title',
   },
   {
     key: SettingsRoute.BACKGROUND,
     icon: PictureOutlined,
-    titleKey: 'background.title'
+    titleKey: 'background.title',
   },
   {
     key: SettingsRoute.SHORTCUT,
     icon: DockRow24Regular,
-    titleKey: 'shortcut.title'
+    titleKey: 'shortcut.title',
   },
   {
     key: SettingsRoute.DOCK,
     icon: ExtendedDock24Regular,
-    titleKey: 'dock.title'
+    titleKey: 'dock.title',
   },
   {
     key: SettingsRoute.BOOKMARK_SIDEBAR,
     icon: BookmarkBorderRound,
-    titleKey: 'bookmark.title'
+    titleKey: 'bookmark.title',
   },
   {
     key: SettingsRoute.YIYAN,
     icon: FormatQuoteRound,
-    titleKey: 'yiyan.title'
+    titleKey: 'yiyan.title',
   },
   {
     key: SettingsRoute.PERFORMANCE,
     icon: ApiRound,
-    titleKey: 'perf.title'
+    titleKey: 'perf.title',
   },
   {
     key: SettingsRoute.OTHER,
     icon: ControlOutlined,
-    titleKey: 'other.title'
-  }
+    titleKey: 'other.title',
+  },
 ] as const
 
 interface RouteState {
@@ -91,7 +91,7 @@ const state = ref<RouteState>({
   // 默认空视图以避免影响初始加载性能和壁纸进入动画
   current: SettingsRoute.MENU,
   history: [],
-  isForward: true
+  isForward: true,
 })
 
 export function useSettingsRouter() {
@@ -128,6 +128,6 @@ export function useSettingsRouter() {
     isForward,
     push,
     back,
-    reset
+    reset,
   }
 }
