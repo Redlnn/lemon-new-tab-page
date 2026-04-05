@@ -47,7 +47,6 @@ export const i18nInitPromise = i18next
     interpolation: {
       escapeValue: false,
     },
-    showSupportNotice: false,
   })
   .then(() => {
     // Windows 不能正确区分 zh-HK 和 zh-TW，把所有繁体中文都当作 zh-TW
