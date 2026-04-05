@@ -37,6 +37,13 @@ async function restoreDefaultTopSites() {
           <el-switch v-model="settings.shortcut.topSites" />
         </div>
         <div class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('shortcut.topSitesIconCache') }}</div>
+          <el-switch
+            :disabled="!settings.shortcut.topSites"
+            v-model="settings.shortcut.topSitesIconCache"
+          />
+        </div>
+        <div class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('shortcut.shadow') }}</div>
           <el-switch v-model="settings.shortcut.style.shadow" />
         </div>

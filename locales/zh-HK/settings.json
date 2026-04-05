@@ -266,7 +266,8 @@
     "title": "快速存取",
     "titleExtraWidth": "標題擴展寬度",
     "titleWhiteInLight": "【快速存取】淺色模式下使用白色文字",
-    "topSites": "顯示最常瀏覽網站"
+    "topSites": "顯示最常瀏覽網站",
+    "topSitesIconCache": "快取最常瀏覽圖示"
   },
   "theme": {
     "color": {

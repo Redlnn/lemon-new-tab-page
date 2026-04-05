@@ -4,6 +4,9 @@ import type { TopSites } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
+import { topSitesIconCacheStorage } from '@newtab/shared/storages/topSitesIconCacheStorage'
+
+import { getFaviconURLChrome } from '@/shared/media'
 
 const TOP_SITES_TTL = 30_000 // 30 秒
 let cachedTopSites: { value: TopSites.MostVisitedURL[]; ts: number } | null = null
@@ -13,6 +16,78 @@ function shouldUseCache(force = false) {
   if (force) return false
   if (!cachedTopSites) return false
   return Date.now() - cachedTopSites.ts <= TOP_SITES_TTL
+}
+
+async function fetchFaviconAsBase64(pageUrl: string): Promise<string | null> {
+  try {
+    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+      const faviconUrl = getFaviconURLChrome(pageUrl)
+      const response = await fetch(faviconUrl)
+      const blob = await response.blob()
+      return await new Promise<string | null>((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => resolve(reader.result as string)
+        reader.onerror = () => resolve(null)
+        reader.readAsDataURL(blob)
+      })
+    }
+    // Firefox: favicon 已由 browser.topSites.get() 提供，无需额外获取
+    return null
+  } catch {
+    return null
+  }
+}
+
+async function fetchAndCacheIcons(
+  sites: TopSites.MostVisitedURL[],
+  cache: Record<string, string>,
+): Promise<void> {
+  let changed = false
+  for (const site of sites) {
+    // Firefox 已有 favicon data URI
+    if (site.favicon) {
+      cache[site.url] = site.favicon
+      changed = true
+      continue
+    }
+    const base64 = await fetchFaviconAsBase64(site.url)
+    if (base64) {
+      cache[site.url] = base64
+      changed = true
+    }
+  }
+  if (changed) {
+    await topSitesIconCacheStorage.setValue(cache)
+  }
+}
+
+async function enrichWithCachedIcons(sites: TopSites.MostVisitedURL[]): Promise<void> {
+  const cache = await topSitesIconCacheStorage.getValue()
+  const currentUrls = new Set<string>()
+
+  for (const site of sites) {
+    currentUrls.add(site.url)
+    if (cache[site.url]) {
+      site.favicon = cache[site.url]
+    }
+  }
+
+  // 裁剪不再出现的 URL
+  let changed = false
+  for (const url of Object.keys(cache)) {
+    if (!currentUrls.has(url)) {
+      delete cache[url]
+      changed = true
+    }
+  }
+
+  // 后台获取缓存未命中的图标（不阻塞渲染）
+  const missing = sites.filter((s) => !cache[s.url])
+  if (missing.length > 0) {
+    fetchAndCacheIcons(missing, cache)
+  } else if (changed) {
+    topSitesIconCacheStorage.setValue(cache)
+  }
 }
 
 async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
@@ -28,7 +103,7 @@ async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
   return topSites.filter((site) => !blockedTopStites.has(site.url))
 }
 
-async function getTopSites(force = false): Promise<TopSites.MostVisitedURL[]> {
+async function getTopSites(force = false, cacheIcons = false): Promise<TopSites.MostVisitedURL[]> {
   if (shouldUseCache(force)) {
     return cachedTopSites!.value
   }
@@ -42,6 +117,11 @@ async function getTopSites(force = false): Promise<TopSites.MostVisitedURL[]> {
   try {
     const value = await pendingTopSitesPromise
     cachedTopSites = { value, ts: Date.now() }
+
+    if (cacheIcons) {
+      await enrichWithCachedIcons(value)
+    }
+
     return value
   } finally {
     pendingTopSitesPromise = null

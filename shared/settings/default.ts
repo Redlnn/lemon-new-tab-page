@@ -107,6 +107,7 @@ export const defaultSettings = {
     enabled: true,
 
     topSites: true,
+    topSitesIconCache: false,
     pinnedIcon: true,
     openInNewTab: false,
     paging: true,

@@ -105,6 +105,7 @@ export interface SettingsSchemaV9 {
     enabled: boolean
 
     topSites: boolean
+    topSitesIconCache: boolean
     pinnedIcon: boolean
     openInNewTab: boolean
     paging: boolean

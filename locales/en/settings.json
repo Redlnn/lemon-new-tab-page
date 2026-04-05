@@ -266,7 +266,8 @@
     "title": "Shortcut",
     "titleExtraWidth": "Title expand width",
     "titleWhiteInLight": "[Shortcut] Use white text in light mode",
-    "topSites": "Show most visited"
+    "topSites": "Show most visited",
+    "topSitesIconCache": "Cache top sites icons"
   },
   "theme": {
     "color": {

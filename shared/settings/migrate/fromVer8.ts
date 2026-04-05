@@ -132,6 +132,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
       enabled: oldSettings.shortcut.enabled,
 
       topSites: oldSettings.shortcut.enableTopSites,
+      topSitesIconCache: defaultSettings.shortcut.topSitesIconCache,
       pinnedIcon: oldSettings.shortcut.showPinnedIcon,
       openInNewTab: oldSettings.shortcut.openInNewTab,
       paging: !oldSettings.shortcut.disablePaging,
