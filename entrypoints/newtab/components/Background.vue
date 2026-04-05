@@ -441,7 +441,7 @@ async function onImgLoaded() {
           scale: backgroundScale,
           translate: backgroundTranslate,
           '--parallax-inset':
-            settings.background.parallax && settings.background.blur < 10 ? '15px' : '0px',
+            settings.background.parallax && settings.background.blur < 10 ? '20px' : '0px',
         }"
       >
         <video
