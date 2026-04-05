@@ -58,6 +58,10 @@ export const main = async () => {
 
   changeTheme(settings.theme.primaryColor)
 
+  // 清除 index.html 内联脚本设置的临时内联样式，让 CSS 变量接管
+  document.documentElement.style.removeProperty('background-color')
+  document.documentElement.style.removeProperty('color-scheme')
+
   // 如果开启了莫奈模式，先应用之前存储的莫奈配色，避免加载壁纸期间的视觉跳变
   if (settings.theme.monetColor) {
     const storedColors = await getMonetColors()
