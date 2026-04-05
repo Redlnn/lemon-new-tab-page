@@ -25,6 +25,8 @@ export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
       return
     }
 
+    // browser.topSites.get({ includeFavicon: true }) 不一定靠谱
+    // 直接使用 pageUrl 的 origin + /favicon.ico 作为后续 fetch 的 URL
     const primary = new URL('/favicon.ico', u).toString()
 
     if (img) {

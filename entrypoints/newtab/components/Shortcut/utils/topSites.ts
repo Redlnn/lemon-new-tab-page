@@ -3,10 +3,10 @@ import i18next from 'i18next'
 import type { TopSites } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 
-import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
-import { topSitesIconCacheStorage } from '@newtab/shared/storages/topSitesIconCacheStorage'
-
 import { getFaviconURLChrome } from '@/shared/media'
+
+import { topSitesIconCacheStorage } from '@newtab/shared/storages/topSitesIconCacheStorage'
+import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const TOP_SITES_TTL = 30_000 // 30 秒
 let cachedTopSites: { value: TopSites.MostVisitedURL[]; ts: number } | null = null
@@ -20,19 +20,23 @@ function shouldUseCache(force = false) {
 
 async function fetchFaviconAsBase64(pageUrl: string): Promise<string | null> {
   try {
+    let faviconUrl: string | null = null
     if (import.meta.env.CHROME || import.meta.env.EDGE) {
-      const faviconUrl = getFaviconURLChrome(pageUrl)
-      const response = await fetch(faviconUrl)
-      const blob = await response.blob()
-      return await new Promise<string | null>((resolve) => {
-        const reader = new FileReader()
-        reader.onloadend = () => resolve(reader.result as string)
-        reader.onerror = () => resolve(null)
-        reader.readAsDataURL(blob)
-      })
+      faviconUrl = getFaviconURLChrome(pageUrl)
+    } else {
+      // browser.topSites.get({ includeFavicon: true }) 不一定靠谱
+      // 直接使用 pageUrl 的 origin + /favicon.ico 作为后续 fetch 的 URL
+      faviconUrl = new URL('/favicon.ico', pageUrl).toString()
     }
-    // Firefox: favicon 已由 browser.topSites.get() 提供，无需额外获取
-    return null
+
+    const response = await fetch(faviconUrl)
+    const blob = await response.blob()
+    return await new Promise<string | null>((resolve) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(reader.result as string)
+      reader.onerror = () => resolve(null)
+      reader.readAsDataURL(blob)
+    })
   } catch {
     return null
   }
@@ -53,7 +57,13 @@ async function fetchAndCacheIcons(
     const base64 = await fetchFaviconAsBase64(site.url)
     if (base64) {
       cache[site.url] = base64
+      site.favicon = base64
       changed = true
+    } else {
+      // 获取失败的站点使用默认图标
+      // 但不缓存，下一次仍然尝试获取（可能是临时的网络问题导致获取失败）
+      // 避免渲染时再次尝试获取
+      site.favicon = '/favicon.png'
     }
   }
   if (changed) {
@@ -92,12 +102,10 @@ async function enrichWithCachedIcons(sites: TopSites.MostVisitedURL[]): Promise<
 
 async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
   let topSites
-  if (import.meta.env.CHROME || import.meta.env.EDGE) {
-    topSites = await browser.topSites.get()
-  } else if (import.meta.env.FIREFOX) {
+  if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })
   } else {
-    throw new Error('Unsupported browser')
+    topSites = await browser.topSites.get()
   }
   const blockedTopStites = new Set(await blockedTopSitesStorage.getValue())
   return topSites.filter((site) => !blockedTopStites.has(site.url))
