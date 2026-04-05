@@ -49,7 +49,8 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       return targetRef
     }
 
-    const cachedUrl = (await wallpaperUrlCache.getValue())[type]
+    const cache = await wallpaperUrlCache.getValue()
+    const cachedUrl = cache[type]
     if (cachedUrl) {
       try {
         const res = await fetch(cachedUrl)
@@ -58,10 +59,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
           return targetRef
         }
       } catch {}
-      await wallpaperUrlCache.setValue({
-        ...(await wallpaperUrlCache.getValue()),
-        [type]: '',
-      })
+      await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
     }
 
     let file: Blob | null = null
@@ -84,10 +82,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
         }
       }
 
-      await wallpaperUrlCache.setValue({
-        ...(await wallpaperUrlCache.getValue()),
-        [type]: url,
-      })
+      await wallpaperUrlCache.setValue({ ...cache, [type]: url })
       updateRef(type, url)
       return targetRef
     }

@@ -8,12 +8,16 @@
 /* 对话框进入/离开 */
 .dialog-enter-active,
 .dialog-enter-active .el-dialog {
-  transition: all 0.15s ease-out;
+  transition:
+    opacity 0.15s ease-out,
+    transform 0.15s ease-out;
 }
 
 .dialog-leave-active,
 .dialog-leave-active .el-dialog {
-  transition: all 0.15s ease-in;
+  transition:
+    opacity 0.15s ease-in,
+    transform 0.15s ease-in;
 }
 
 .dialog-enter-from,

@@ -15,7 +15,6 @@ import { useFocusStore } from '@newtab/shared/store'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
-import type { CtxShortcutItem } from './composables/useShortcutContextMenu'
 import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
@@ -244,11 +243,29 @@ function setLaunchpadBtnRef(el: unknown): void {
 // ---- 右键上下文菜单 ----
 const ctxMenuRef = useTemplateRef<InstanceType<typeof ShortcutContextMenu>>('ctxMenuRef')
 
-function handleContextmenu(
+function onItemContextmenu(
   event: MouseEvent | TouchEvent | PointerEvent,
-  item: CtxShortcutItem,
+  item: { url: string; title?: string },
+  isPinned: boolean,
+  originalIndex: number,
 ): void {
-  ctxMenuRef.value?.open(event, item)
+  ctxMenuRef.value?.open(event, { url: item.url, title: item.title || '', isPinned, originalIndex })
+}
+
+function onItemLongPress(
+  event: PointerEvent,
+  item: { url: string; title?: string },
+  isPinned: boolean,
+  originalIndex: number,
+): void {
+  if (isHasTouchDevice && isTouchEvent(event)) {
+    ctxMenuRef.value?.open(event, {
+      url: item.url,
+      title: item.title || '',
+      isPinned,
+      originalIndex,
+    })
+  }
 }
 </script>
 
@@ -313,26 +330,8 @@ function handleContextmenu(
           :href="item.url"
           :ref="setScalableRef"
           :target="settings.dock.openInNewTab ? '_blank' : '_self'"
-          @contextmenu.stop.prevent="
-            (e: MouseEvent) =>
-              handleContextmenu(e, {
-                url: item.url,
-                title: item.title,
-                isPinned: true,
-                originalIndex: idx,
-              })
-          "
-          @trigger="
-            (e: PointerEvent) => {
-              if (isHasTouchDevice && isTouchEvent(e))
-                handleContextmenu(e, {
-                  url: item.url,
-                  title: item.title,
-                  isPinned: true,
-                  originalIndex: idx,
-                })
-            }
-          "
+          @contextmenu.stop.prevent="onItemContextmenu($event, item, true, idx)"
+          @trigger="onItemLongPress($event, item, true, idx)"
         >
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>
@@ -362,26 +361,8 @@ function handleContextmenu(
           :href="item.url"
           :ref="setScalableRef"
           :target="settings.dock.openInNewTab ? '_blank' : '_self'"
-          @contextmenu.stop.prevent="
-            (e: MouseEvent) =>
-              handleContextmenu(e, {
-                url: item.url,
-                title: item.title || '',
-                isPinned: false,
-                originalIndex: j,
-              })
-          "
-          @trigger="
-            (e: PointerEvent) => {
-              if (isHasTouchDevice && isTouchEvent(e))
-                handleContextmenu(e, {
-                  url: item.url,
-                  title: item.title || '',
-                  isPinned: false,
-                  originalIndex: j,
-                })
-            }
-          "
+          @contextmenu.stop.prevent="onItemContextmenu($event, item, false, j)"
+          @trigger="onItemLongPress($event, item, false, j)"
         >
           <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
         </OnLongPress>

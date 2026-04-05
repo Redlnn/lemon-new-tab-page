@@ -4,6 +4,7 @@ import {
   useDark,
   useDocumentVisibility,
   useEventListener,
+  useThrottleFn,
   useTimeoutFn,
   useWindowFocus,
 } from '@vueuse/core'
@@ -102,10 +103,10 @@ const mouseY = ref(typeof window !== 'undefined' ? window.innerHeight / 2 : 540)
 watchEffect((onCleanup) => {
   if (!settings.background.parallax) return
 
-  const onMouseMove = (e: MouseEvent) => {
+  const onMouseMove = useThrottleFn((e: MouseEvent) => {
     mouseX.value = e.clientX
     mouseY.value = e.clientY
-  }
+  }, 16)
   const onMouseLeave = () => {
     mouseX.value = window.innerWidth / 2
     mouseY.value = window.innerHeight / 2
