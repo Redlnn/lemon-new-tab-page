@@ -38,14 +38,14 @@
       }
 
       @media (prefers-color-scheme: light) {
-        html:not(.dark):not(.light) {
+        html:not(.dark, .light) {
           color-scheme: light;
           background-color: #f2f3f5;
         }
       }
 
       @media (prefers-color-scheme: dark) {
-        html:not(.dark):not(.light) {
+        html:not(.dark, .light) {
           color-scheme: dark;
           background-color: #0a0a0a;
         }
