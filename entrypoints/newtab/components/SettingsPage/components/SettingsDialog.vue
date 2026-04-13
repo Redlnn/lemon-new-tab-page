@@ -43,12 +43,14 @@ const {
   _draggable,
   _alignCenter,
   _overflow,
+  penetrable,
   handleClose,
   onModalClick,
   onOpenAutoFocus,
   onCloseAutoFocus,
   onCloseRequested,
   onFocusoutPrevented,
+  bringToFront,
   closing,
 } = useDialog(props, dialogRef)
 
@@ -62,8 +64,6 @@ provide(dialogInjectionKey, {
 })
 
 const overlayEvent = useSameTarget(onModalClick)
-
-const penetrable = computed(() => props.modalPenetrable && !props.modal && !props.fullscreen)
 
 const resetPosition = () => {
   dialogContentRef.value?.resetPosition()
@@ -131,6 +131,7 @@ defineExpose({
               :title="title"
               :aria-level="headerAriaLevel"
               @close="handleClose"
+              @mousedown="bringToFront"
             >
               <template #aside>
                 <slot name="aside" />
