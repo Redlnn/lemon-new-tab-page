@@ -11,7 +11,7 @@ import {
   migrateFromVer7To8,
   useSettingsStore,
 } from '../settings'
-import { defaultShortcut, saveShortcut, useShortcutStore } from '../shortcut'
+import { defaultShortcuts, saveShortcut, useShortcutStore } from '../shortcut'
 
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
@@ -153,7 +153,7 @@ const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
 export const useSyncDataStore = defineStore('sync', {
   state: (): SyncData => ({
     settings: structuredClone(defaultSettings),
-    bookmarks: structuredClone(defaultShortcut),
+    bookmarks: structuredClone(defaultShortcuts),
     lastUpdate: 0,
   }),
 

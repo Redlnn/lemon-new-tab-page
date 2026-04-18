@@ -1,11 +1,19 @@
 import { storage } from '#imports'
 
 export interface Shortcut {
-  items: { url: string; title: string; favicon?: string }[]
+  url: string
+  title: string
+  favicon?: string
+  faviconSource?: 'uploaded' | 'auto'
+  faviconLastUpdate?: number
 }
 
-export const defaultShortcut: Shortcut = { items: [] }
+export interface Shortcuts {
+  items: Shortcut[]
+}
 
-export const shortcutStorage = storage.defineItem<Shortcut>('local:bookmark', {
-  fallback: structuredClone(defaultShortcut),
+export const defaultShortcuts: Shortcuts = { items: [] }
+
+export const shortcutStorage = storage.defineItem<Shortcuts>('local:bookmark', {
+  fallback: structuredClone(defaultShortcuts),
 })

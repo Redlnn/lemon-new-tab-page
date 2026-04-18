@@ -3,8 +3,9 @@ import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { formatUrl, isValidUrl } from '@/entrypoints/newtab/shared/utils'
-import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
+import { saveShortcut, useShortcutStore, type Shortcut } from '@/shared/shortcut'
+
+import { formatUrl, isValidUrl } from '@newtab/shared/utils'
 
 import { useFaviconUpload } from '../composables/useFaviconUpload'
 
@@ -15,11 +16,7 @@ const modelForm = ref<FormInstance>()
 
 const showDialog = ref(false)
 const editingIndex = ref<number | null>(null)
-const data: {
-  url: string
-  title: string
-  favicon?: string
-} = reactive({
+const data: Shortcut = reactive({
   url: '',
   title: '',
   favicon: '',

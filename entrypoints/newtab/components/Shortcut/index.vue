@@ -1,10 +1,10 @@
-<script setup lang="ts">
+﻿<script setup lang="ts">
 import { useDebounceFn, useEventListener, useResizeObserver, useWindowSize } from '@vueuse/core'
 
 import { ChevronLeft20Filled, ChevronRight20Filled } from '@vicons/fluent'
 
 import { useSettingsStore } from '@/shared/settings'
-import { useShortcutStore } from '@/shared/shortcut'
+import { useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
@@ -44,13 +44,10 @@ const allItems = computed(() => {
   const topSitesLen = topSitesArr.length
 
   // 预分配数组大小，避免动态扩容
-  const result: {
-    url: string
-    title: string
-    favicon?: string
+  const result: (Shortcut & {
     isPinned: boolean
     originalIndex: number
-  }[] = Array.from({ length: shortcutsLen + topSitesLen })
+  })[] = Array.from({ length: shortcutsLen + topSitesLen })
 
   for (let i = 0; i < shortcutsLen; i++) {
     const site = shortcutsArr[i]!

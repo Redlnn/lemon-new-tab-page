@@ -15,7 +15,7 @@ import { storage } from '#imports'
 
 import { downloadJSON } from '@/shared/getJson'
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
-import { saveShortcut, type Shortcut, useShortcutStore } from '@/shared/shortcut'
+import { saveShortcut, type Shortcuts, useShortcutStore } from '@/shared/shortcut'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
 import {
@@ -125,7 +125,7 @@ function sendSyncMessage() {
 const fileInput = useTemplateRef('fileInput')
 type Backup = {
   settings: CURRENT_CONFIG_SCHEMA
-  shortcuts: Shortcut
+  shortcuts: Shortcuts
   customSearchEngines: CustomSearchEngineStorage
 }
 

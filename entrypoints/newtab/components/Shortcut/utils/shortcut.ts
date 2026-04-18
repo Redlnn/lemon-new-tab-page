@@ -2,11 +2,11 @@ import type { Store } from 'pinia'
 
 import i18next from 'i18next'
 
-import { saveShortcut, type Shortcut } from '@/shared/shortcut'
+import { saveShortcut, type Shortcuts } from '@/shared/shortcut'
 
 export async function removeShortcut(
   index: number,
-  store: Store<'shortcut', Shortcut>,
+  store: Store<'shortcut', Shortcuts>,
   refresh: () => Promise<void>,
 ) {
   const { url, title, favicon } = store.items[index]!
@@ -41,7 +41,7 @@ export async function removeShortcut(
 }
 
 export async function pinShortcut(
-  store: Store<'shortcut', Shortcut>,
+  store: Store<'shortcut', Shortcuts>,
   refresh: () => Promise<void>,
   url: string,
   title: string,

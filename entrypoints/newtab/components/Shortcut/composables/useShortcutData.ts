@@ -1,6 +1,6 @@
 import type { TopSites } from 'webextension-polyfill'
 
-import { shortcutStorage, useShortcutStore } from '@/shared/shortcut'
+import { shortcutStorage, useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
@@ -16,7 +16,7 @@ export function useShortcutData(refreshDebounced: () => void) {
   const shortcutStore = useShortcutStore()
 
   const topSites = shallowRef<TopSites.MostVisitedURL[]>([])
-  const shortcuts = shallowRef<{ url: string; title: string; favicon?: string }[]>([])
+  const shortcuts = shallowRef<Shortcut[]>([])
   const mounted = ref(false)
   const topSitesNeedsReload = ref(true)
 

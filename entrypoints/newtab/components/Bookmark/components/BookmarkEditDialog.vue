@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser, type Browser } from 'wxt/browser'
 
-import { formatUrl, isValidUrl } from '@/entrypoints/newtab/shared/utils'
+import { formatUrl, isValidUrl } from '@newtab/shared/utils'
 
 type BookmarkTreeNode = Browser.bookmarks.BookmarkTreeNode
 

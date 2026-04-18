@@ -1,7 +1,8 @@
 import { useDebounceFn, useWindowSize } from '@vueuse/core'
 
-import { isOnlyTouchDevice } from '@/entrypoints/newtab/shared/touch'
 import { useSettingsStore } from '@/shared/settings'
+
+import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 /**
  * 列优先网格求解
