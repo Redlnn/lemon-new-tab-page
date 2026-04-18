@@ -1,11 +1,17 @@
 import { defineStore } from 'pinia'
 
+import { acquireFaviconRef } from '@/shared/media'
+
 import { defaultShortcuts, type Shortcuts, shortcutStorage } from './shortcutStorage'
 
-export async function initShortcut() {
+export async function initShortcut(options?: { acquire?: boolean }) {
   const shortcut = await shortcutStorage.getValue()
   const shortcutStore = useShortcutStore()
   shortcutStore.$patch(shortcut)
+  const shouldAcquire = options?.acquire ?? true
+  if (shouldAcquire) {
+    shortcut.items.forEach((item) => acquireFaviconRef(item.url))
+  }
 }
 
 export async function saveShortcut(shortcut?: Shortcuts | { $state?: Shortcuts }) {

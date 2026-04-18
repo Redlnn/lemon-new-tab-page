@@ -70,7 +70,8 @@
     },
     "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?",
     "edit": "Edit Custom Search Engine",
-    "title": "Custom Search Engine"
+    "title": "Custom Search Engine",
+    "fetchingFavicon": "Fetching icon in background..."
   },
   "dock": {
     "launchpad": {
@@ -136,7 +137,8 @@
     },
     "pin": "Pin",
     "unpin": "Unpin",
-    "unpinMessage": "Shortcut unpinned."
+    "unpinMessage": "Shortcut unpinned.",
+    "fetchingFavicon": "Fetching icon in background..."
   },
   "sponsor": "I first built this extension in my free time to meet my own needs, and I’m glad it’s useful for you too! If you’d like to support me, you can reach me at: redlnn@outlook.com. Thanks for your support!",
   "time": {

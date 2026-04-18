@@ -5,7 +5,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser } from 'wxt/browser'
 
-import { getFaviconURL } from '@/shared/media'
+import { fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 import { initShortcut } from '@/shared/shortcut/shortcutStore'
 
@@ -29,14 +29,78 @@ const currentTab = shallowRef<{
   url: string
   title: string
   favIconUrl?: string
+  tabId?: number
 } | null>(null)
 
 const isLoading = ref(true)
 const isAdded = ref(false)
 const isAlreadyExists = ref(false)
 
+/** Read the favicon href from the active tab's DOM via content script injection. */
+async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
+  try {
+    if (import.meta.env.FIREFOX) {
+      // Firefox MV2: browser.scripting 不存在，改用 browser.tabs.executeScript
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const results = await (browser.tabs as any).executeScript(tabId, {
+        code: `(function () {
+          var s = ['link[rel~="icon"][href]', 'link[rel~="shortcut icon"][href]', 'link[rel~="apple-touch-icon"][href]'];
+          for (var i = 0; i < s.length; i++) { var el = document.querySelector(s[i]); if (el && el.href) return el.href; }
+          return null;
+        })()`,
+      })
+      return (results?.[0] as string | null | undefined) ?? null
+    }
+    // Chrome/Edge MV3: use browser.scripting.executeScript
+    const results = await browser.scripting.executeScript({
+      target: { tabId },
+      func: () => {
+        const selectors = [
+          'link[rel~="icon"][href]',
+          'link[rel~="shortcut icon"][href]',
+          'link[rel~="apple-touch-icon"][href]',
+        ]
+        for (const sel of selectors) {
+          const el = document.querySelector<HTMLLinkElement>(sel)
+          if (el?.href) return el.href // href is already absolute in tab context
+        }
+        return null
+      },
+    })
+    return (results?.[0]?.result as string | null | undefined) ?? null
+  } catch {
+    return null
+  }
+}
+
+/** Stable favicon ref that updates asynchronously when currentTab changes. */
+const currentTabFaviconRef = shallowRef('/favicon.png')
+watchEffect(async () => {
+  const tab = currentTab.value
+  if (!tab) {
+    currentTabFaviconRef.value = '/favicon.png'
+    return
+  }
+  if (tab.favIconUrl) {
+    currentTabFaviconRef.value = tab.favIconUrl
+    return
+  }
+  if (tab.tabId != null) {
+    const domFavicon = await getFaviconFromTabDOM(tab.tabId).catch(() => null)
+    if (domFavicon) {
+      currentTabFaviconRef.value = domFavicon
+      return
+    }
+  }
+  fetchFaviconWithCache(tab.url)
+    .then((d) => {
+      if (d) currentTabFaviconRef.value = d
+    })
+    .catch(() => {})
+})
+
 onMounted(async () => {
-  await initShortcut()
+  await initShortcut({ acquire: false })
 
   try {
     const tabs = await browser.tabs.query({ active: true, currentWindow: true })
@@ -46,6 +110,7 @@ onMounted(async () => {
         url: tab.url,
         title: tab.title || tab.url,
         favIconUrl: tab.favIconUrl,
+        tabId: tab.id,
       }
 
       // 检查是否已经存在（规范化 URL 后比较）
@@ -64,12 +129,25 @@ onMounted(async () => {
 async function addCurrentPage() {
   if (!currentTab.value) return
 
-  const favicon = currentTab.value.favIconUrl || getFaviconURL(currentTab.value.url).value
+  let favicon: string | undefined = currentTab.value.favIconUrl || undefined
+
+  if (!favicon && currentTab.value.tabId != null) {
+    const domFavicon = await getFaviconFromTabDOM(currentTab.value.tabId).catch(() => null)
+    if (domFavicon) {
+      favicon = domFavicon
+      warmFaviconCache(currentTab.value.url, domFavicon, 'url').catch(() => {})
+    }
+  }
+
+  if (!favicon) {
+    const fetched = await fetchFaviconWithCache(currentTab.value.url).catch(() => null)
+    if (fetched) favicon = fetched
+  }
 
   shortcutStore.items.push({
     url: currentTab.value.url,
     title: currentTab.value.title,
-    favicon,
+    ...(favicon ? { favicon } : {}),
   })
 
   await saveShortcut(shortcutStore.$state)
@@ -99,7 +177,7 @@ async function addCurrentPage() {
         <div class="popup__content">
           <div class="popup__site-info">
             <el-image
-              :src="currentTab.favIconUrl || getFaviconURL(currentTab.url).value"
+              :src="currentTabFaviconRef"
               class="popup__favicon"
               fit="cover"
             />

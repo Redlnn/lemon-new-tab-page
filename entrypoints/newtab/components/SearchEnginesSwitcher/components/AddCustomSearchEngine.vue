@@ -3,6 +3,7 @@ import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
+import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/shared/media'
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
 import {
   saveCustomSearchEngine,
@@ -78,6 +79,11 @@ async function submit() {
     return
   }
 
+  const oldUrl =
+    isEditing.value && editingIndex.value !== null
+      ? customSearchEngineStore.items[editingIndex.value]?.url
+      : undefined
+
   const engine = {
     id: isEditing.value
       ? customSearchEngineStore.items[editingIndex.value!]!.id
@@ -89,13 +95,31 @@ async function submit() {
 
   if (isEditing.value && editingIndex.value !== null) {
     customSearchEngineStore.items.splice(editingIndex.value, 1, engine)
+    if (oldUrl && oldUrl !== engine.url) {
+      releaseFaviconRef(oldUrl)
+      acquireFaviconRef(engine.url)
+    }
   } else {
     customSearchEngineStore.items.push(engine)
+    acquireFaviconRef(engine.url)
   }
 
   await saveCustomSearchEngine(customSearchEngineStore.$state)
   showDialog.value = false
   resetFields()
+
+  if (!engine.icon) {
+    const notification = ElNotification({
+      title: t('customSearchEngine.fetchingFavicon'),
+      message: engine.url,
+      type: 'info',
+      duration: 0,
+      showClose: false,
+    })
+    fetchFaviconWithCache(engine.url)
+      .then(() => notification.close())
+      .catch(() => notification.close())
+  }
 }
 
 async function cancel() {

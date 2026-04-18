@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 
+import { acquireFaviconRef } from '@/shared/media'
+
 import {
   customSearchEngineStorage,
   type CustomSearchEngineStorage,
@@ -10,6 +12,7 @@ export async function initCustomSearchEngine() {
   const data = await customSearchEngineStorage.getValue()
   const customSearchEngineStore = useCustomSearchEngineStore()
   customSearchEngineStore.$patch(data)
+  data.items.forEach((item) => acquireFaviconRef(item.url))
 }
 
 export async function saveCustomSearchEngine(

@@ -3,7 +3,7 @@ import { Plus } from '@vicons/fa'
 import { CheckmarkCircle12Filled } from '@vicons/fluent'
 import { useTranslation } from 'i18next-vue'
 
-import { getFaviconURL } from '@/shared/media'
+import { releaseFaviconRef } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
@@ -12,6 +12,7 @@ import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
+import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
 import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { searchEngines } from '@newtab/shared/search'
 
@@ -25,6 +26,7 @@ defineExpose({ show, hide, toggle })
 
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
+const { getCustomEngineFavicon } = useCustomEngineFavicon()
 
 const addCustomSearchEngineRef = ref<InstanceType<typeof AddCustomSearchEngine>>()
 
@@ -56,8 +58,10 @@ async function deleteCustomEngine(index: number) {
       settings.search.engine = 'bing'
     }
 
+    const deletedUrl = engine.url
     customSearchEngineStore.items.splice(index, 1)
     await saveCustomSearchEngine(customSearchEngineStore.$state)
+    releaseFaviconRef(deletedUrl)
   } catch {
     // 用户取消删除
   }
@@ -70,21 +74,6 @@ function handleScroll() {
   if (openedMenuCloseFn.value) {
     openedMenuCloseFn.value()
   }
-}
-
-// 缓存自定义搜索引擎的 favicon Ref
-const customEngineFaviconCache = new Map<string, Ref<string>>()
-
-function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string }): string {
-  if (engine.icon) {
-    return engine.icon
-  }
-
-  if (!customEngineFaviconCache.has(engine.id)) {
-    customEngineFaviconCache.set(engine.id, getFaviconURL(engine.url))
-  }
-
-  return customEngineFaviconCache.get(engine.id)!.value
 }
 </script>
 

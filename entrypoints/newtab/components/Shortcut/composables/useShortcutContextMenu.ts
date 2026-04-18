@@ -2,6 +2,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser } from '#imports'
 
+import { releaseFaviconRef } from '@/shared/media'
 import { useShortcutStore } from '@/shared/shortcut'
 
 import { pinShortcut, removeShortcut } from '../utils/shortcut'
@@ -74,7 +75,9 @@ export function useShortcutContextMenu(options: {
 
   const ctxUnpin = async (): Promise<void> => {
     if (!ctxItem.value?.isPinned) return
+    const deletedUrl = ctxItem.value.url
     await removeShortcut(ctxItem.value.originalIndex, shortcutStore, refreshFn)
+    releaseFaviconRef(deletedUrl)
   }
 
   const ctxPin = async (): Promise<void> => {

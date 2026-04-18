@@ -3,6 +3,7 @@ import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
+import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/shared/media'
 import { saveShortcut, useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
 import { formatUrl, isValidUrl } from '@newtab/shared/utils'
@@ -60,19 +61,44 @@ async function submit() {
     return
   }
 
+  const oldUrl =
+    isEditing.value && editingIndex.value !== null
+      ? shortcutStore.items[editingIndex.value]?.url
+      : undefined
+
   const shortcut = {
     url: formatUrl(data.url),
     title: data.title.trim(),
     ...(!data.favicon ? {} : { favicon: data.favicon }),
   }
+
   if (isEditing.value && editingIndex.value !== null) {
     shortcutStore.items.splice(editingIndex.value, 1, shortcut)
+    if (oldUrl && oldUrl !== shortcut.url) {
+      releaseFaviconRef(oldUrl)
+      acquireFaviconRef(shortcut.url)
+    }
   } else {
     shortcutStore.items.push(shortcut)
+    acquireFaviconRef(shortcut.url)
   }
+
   await saveShortcut(shortcutStore.$state)
   showDialog.value = false
   resetFields()
+
+  if (!shortcut.favicon) {
+    const notification = ElNotification({
+      title: t('shortcut.fetchingFavicon'),
+      message: shortcut.url,
+      type: 'info',
+      duration: 0,
+      showClose: false,
+    })
+    fetchFaviconWithCache(shortcut.url)
+      .then(() => notification.close())
+      .catch(() => notification.close())
+  }
 }
 
 async function cancel() {

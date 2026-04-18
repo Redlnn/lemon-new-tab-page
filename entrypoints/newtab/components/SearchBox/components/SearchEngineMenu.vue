@@ -4,11 +4,11 @@ import { useTimeoutFn } from '@vueuse/core'
 import type { TooltipInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
-import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
 import { searchEngines } from '@newtab/shared/search'
 import { useFocusStore } from '@newtab/shared/store'
 
@@ -18,25 +18,11 @@ const focusStore = useFocusStore()
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
 const searchEngineMenu = ref<TooltipInstance>()
+const { getCustomEngineFavicon } = useCustomEngineFavicon()
 
 const isBuiltInEngine = computed(() => {
   return settings.search.engine in searchEngines
 })
-
-// 缓存自定义搜索引擎的 favicon Ref
-const customEngineFaviconCache = new Map<string, Ref<string>>()
-
-function getCustomEngineFavicon(engine: { id: string; url: string; icon?: string }): string {
-  if (engine.icon) {
-    return engine.icon
-  }
-
-  if (!customEngineFaviconCache.has(engine.id)) {
-    customEngineFaviconCache.set(engine.id, getFaviconURL(engine.url))
-  }
-
-  return customEngineFaviconCache.get(engine.id)!.value
-}
 
 const currentCustomEngine = computed(() => {
   if (isBuiltInEngine.value) {

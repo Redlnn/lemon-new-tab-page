@@ -19,6 +19,15 @@ import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
 import { useShortcutData } from './composables/useShortcutData'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 
+// Stable Ref map so we don't re-create Refs on every render
+const faviconRefMap = new Map<string, Ref<string>>()
+function getOrCreateFaviconRef(url: string): string {
+  if (!faviconRefMap.has(url)) {
+    faviconRefMap.set(url, getFaviconURL(url))
+  }
+  return faviconRefMap.get(url)!.value
+}
+
 const refreshDebounced = useDebounceFn(refresh, 100)
 
 const { topSites, shortcuts, topSitesNeedsReload } = useShortcutData(refreshDebounced)
@@ -334,7 +343,7 @@ useDraggable(gridRef, shortcuts, {
                 "
               >
                 <div class="launchpad-item__icon">
-                  <img :src="item.favicon || getFaviconURL(item.url).value" :alt="item.title" />
+                  <img :src="item.favicon || getOrCreateFaviconRef(item.url)" :alt="item.title" />
                 </div>
                 <el-text :line-clamp="1" truncated class="launchpad-item__label">
                   <el-icon v-if="item.isPinned && settings.dock.launchpad.topSites">

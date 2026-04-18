@@ -20,6 +20,15 @@ import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 import Launchpad from './Launchpad.vue'
 
+// Stable Ref map so we don't re-create Refs on every render
+const faviconRefMap = new Map<string, Ref<string>>()
+function getOrCreateFaviconRef(url: string): string {
+  if (!faviconRefMap.has(url)) {
+    faviconRefMap.set(url, getFaviconURL(url))
+  }
+  return faviconRefMap.get(url)!.value
+}
+
 defineProps<{
   onOpenAddDialog?: () => void
   onOpenEditDialog?: (index: number) => void
@@ -332,7 +341,7 @@ function onItemLongPress(
           @contextmenu.stop.prevent="onItemContextmenu($event, item, true, idx)"
           @trigger="onItemLongPress($event, item, true, idx)"
         >
-          <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
+          <img :src="item.favicon || getOrCreateFaviconRef(item.url)" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
       <div v-if="idx !== visibleShortcuts.length - 1" class="dock-gap" :ref="setScalableRef"></div>
@@ -363,7 +372,7 @@ function onItemLongPress(
           @contextmenu.stop.prevent="onItemContextmenu($event, item, false, j)"
           @trigger="onItemLongPress($event, item, false, j)"
         >
-          <img :src="item.favicon || getFaviconURL(item.url).value" alt="favicon" />
+          <img :src="item.favicon || getOrCreateFaviconRef(item.url)" alt="favicon" />
         </OnLongPress>
       </el-tooltip>
       <div v-if="j !== visibleTopSites.length - 1" class="dock-gap" :ref="setScalableRef"></div>

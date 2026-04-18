@@ -3,6 +3,12 @@ import i18next from 'i18next'
 import type { TopSites } from 'webextension-polyfill'
 import browser from 'webextension-polyfill'
 
+import {
+  acquireFaviconRef,
+  fetchFaviconWithCache,
+  releaseFaviconRef,
+  warmFaviconCache,
+} from '@/shared/media'
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const TOP_SITES_TTL = 30_000 // 30 秒
@@ -15,12 +21,29 @@ function shouldUseCache(force = false) {
   return Date.now() - cachedTopSites.ts <= TOP_SITES_TTL
 }
 
+async function cacheBrowserFavicons(sites: TopSites.MostVisitedURL[]): Promise<void> {
+  // Firefox may return favicons directly; warm the cache so they survive list rotation.
+  // For sites without a favicon, trigger a background fetch.
+  const tasks = sites
+    .filter((s) => s.url)
+    .map(async (s) => {
+      if (s.favicon) {
+        await warmFaviconCache(s.url, s.favicon, 'url').catch(() => {})
+      } else {
+        await fetchFaviconWithCache(s.url).catch(() => {})
+      }
+    })
+  await Promise.allSettled(tasks)
+}
+
 async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
   let topSites
   if (import.meta.env.CHROME || import.meta.env.EDGE) {
     topSites = await browser.topSites.get()
   } else if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })
+    // Cache Firefox-provided favicons in the background (don't block rendering)
+    cacheBrowserFavicons(topSites).catch(() => {})
   } else {
     throw new Error('Unsupported browser')
   }
@@ -40,7 +63,16 @@ async function getTopSites(force = false): Promise<TopSites.MostVisitedURL[]> {
   pendingTopSitesPromise = fetchTopSites()
 
   try {
+    const previousUrls = cachedTopSites?.value.map((s) => s.url) ?? []
     const value = await pendingTopSitesPromise
+    const newUrls = value.map((s) => s.url)
+
+    // Update reference counts: acquire for newly appeared sites, release for disappeared ones
+    const disappeared = previousUrls.filter((u) => !newUrls.includes(u))
+    const appeared = newUrls.filter((u) => !previousUrls.includes(u))
+    disappeared.forEach((u) => releaseFaviconRef(u))
+    appeared.forEach((u) => acquireFaviconRef(u))
+
     cachedTopSites = { value, ts: Date.now() }
     return value
   } finally {

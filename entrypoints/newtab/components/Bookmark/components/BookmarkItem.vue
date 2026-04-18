@@ -16,7 +16,7 @@ import { type DraggableEvent, VueDraggable } from 'vue-draggable-plus'
 
 import { browser, type Browser } from 'wxt/browser'
 
-import { getFaviconURL } from '@/shared/media'
+import { acquireFaviconRef, getFaviconURL, releaseFaviconRef } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 
@@ -67,6 +67,13 @@ const canCollapseOther = computed(() => {
 })
 
 const faviconRef = props.node.url ? getFaviconURL(props.node.url) : ref('')
+
+onMounted(() => {
+  if (props.node.url) acquireFaviconRef(props.node.url)
+})
+onUnmounted(() => {
+  if (props.node.url) releaseFaviconRef(props.node.url)
+})
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.bookmark.transparent,

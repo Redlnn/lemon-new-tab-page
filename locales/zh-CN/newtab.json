@@ -70,7 +70,8 @@
     },
     "deleteConfirm": "确定要删除搜索引擎「{{name}}」吗？",
     "edit": "编辑自定义搜索引擎",
-    "title": "自定义搜索引擎"
+    "title": "自定义搜索引擎",
+    "fetchingFavicon": "正在后台获取图标..."
   },
   "dock": {
     "launchpad": {
@@ -136,7 +137,8 @@
     },
     "pin": "置顶",
     "unpin": "取消置顶",
-    "unpinMessage": "已取消置顶该链接"
+    "unpinMessage": "已取消置顶该链接",
+    "fetchingFavicon": "正在后台获取图标..."
   },
   "sponsor": "这个扩展是我当初利用业余时间为了满足自己的需求而开始开发的。很高兴它也对你有帮助！如果你真的想支持我，可以联系我的邮箱：redlnn@outlook.com。感谢你的关注与支持！",
   "time": {

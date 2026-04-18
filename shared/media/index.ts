@@ -2,50 +2,40 @@ import type { Ref } from 'vue'
 import { unref, watch } from 'vue'
 
 export * from './verify'
+export {
+  acquireFaviconRef,
+  cleanupFaviconCacheIfUnused,
+  fetchFaviconWithCache,
+  releaseFaviconRef,
+  warmFaviconCache,
+} from './faviconFetch'
 
-export function getFaviconURLChrome(url: string, size = '128') {
-  const _url = new URL(chrome.runtime.getURL('/_favicon/'))
-  _url.searchParams.set('pageUrl', encodeURI(url)) // 同时对 URL 本身进行编码
-  _url.searchParams.set('size', size)
-  return _url.toString()
-}
+import { fetchFaviconWithCache } from './faviconFetch'
 
 export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
   const iconUrl = ref('/favicon.png')
-  let img: HTMLImageElement | null = null
+  let seq = 0
 
   const resolve = (u: string | null | undefined) => {
     if (!u) {
       iconUrl.value = '/favicon.png'
       return
     }
+    const currentSeq = ++seq
+    iconUrl.value = '/favicon.png' // immediately reset to avoid stale icon on URL change
 
-    if (import.meta.env.CHROME || import.meta.env.EDGE) {
-      iconUrl.value = getFaviconURLChrome(u)
-      return
-    }
-
-    const primary = new URL('/favicon.ico', u).toString()
-
-    if (img) {
-      img.onload = null
-      img.onerror = null
-    }
-
-    img = new Image()
-    img.onload = () => (iconUrl.value = primary)
-    img.onerror = () => (iconUrl.value = '/favicon.png')
-    img.src = primary
+    fetchFaviconWithCache(u)
+      .then((data) => {
+        if (currentSeq === seq && data) iconUrl.value = data
+      })
+      .catch(() => {})
   }
 
-  // 支持传入普通字符串或 Ref
   const initial = unref(url)
   resolve(initial)
 
   if (isRef(url)) {
-    watch(url, (v) => {
-      resolve(v)
-    })
+    watch(url, (v) => resolve(v))
   }
 
   return iconUrl
