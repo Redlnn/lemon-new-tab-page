@@ -266,8 +266,7 @@
     "title": "快速访问",
     "titleExtraWidth": "标题扩展宽度",
     "titleWhiteInLight": "【快速访问】浅色模式下使用白色文字",
-    "topSites": "展示最常访问",
-    "topSitesIconCache": "缓存最常访问图标"
+    "topSites": "展示最常访问"
   },
   "theme": {
     "color": {

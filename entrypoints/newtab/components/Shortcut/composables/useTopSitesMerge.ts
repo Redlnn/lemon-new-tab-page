@@ -7,7 +7,6 @@ interface UseTopSitesMergeOptions {
   columns?: number
   maxRows?: number
   force?: boolean
-  cacheIcons?: boolean
   /** 不截断结果，返回所有去重后的 top sites */
   noCap?: boolean
 }
@@ -31,7 +30,7 @@ export async function useTopSitesMerge(
   options: UseTopSitesMergeOptions,
 ): Promise<TopSites.MostVisitedURL[]> {
   // 如果 getTopSites() 返回 undefined，则默认空数组
-  const topSites = (await getTopSites(options.force, options.cacheIcons)) ?? []
+  const topSites = (await getTopSites(options.force)) ?? []
 
   // 构建 URL Set 用于快速去重
   const { shortcuts } = options

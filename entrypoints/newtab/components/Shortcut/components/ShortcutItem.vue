@@ -20,7 +20,9 @@ const props = defineProps<{
   onContextMenu?: (event: MouseEvent | PointerEvent) => void
 }>()
 
-const iconUrl = computed(() => props.favicon || getFaviconURL(toRef(props, 'url')).value)
+// 使用 Ref 传递 url，让 getFaviconURL 内部监听变化
+const faviconRef = getFaviconURL(toRef(props, 'url'))
+const iconUrl = computed(() => props.favicon || faviconRef.value)
 
 const perf = usePerfClasses(() => ({
   transparent: settings.perf.shortcut.transparent,

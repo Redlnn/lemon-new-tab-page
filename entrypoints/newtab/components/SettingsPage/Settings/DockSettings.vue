@@ -69,13 +69,6 @@ async function restoreDefaultTopSites() {
           <el-switch v-model="settings.dock.topSites" />
         </div>
         <div class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('shortcut.topSitesIconCache') }}</div>
-          <el-switch
-            :disabled="!settings.dock.topSites"
-            v-model="settings.shortcut.topSitesIconCache"
-          />
-        </div>
-        <div class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('common.openInNewTab') }}</div>
           <el-switch v-model="settings.dock.openInNewTab" />
         </div>

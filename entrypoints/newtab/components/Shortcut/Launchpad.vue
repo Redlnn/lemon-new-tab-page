@@ -120,7 +120,6 @@ async function refresh() {
     topSites.value = await useTopSitesMerge({
       shortcuts: shortcuts.value,
       force: topSitesNeedsReload.value,
-      cacheIcons: settings.shortcut.topSitesIconCache,
       noCap: true, // 不截断，获取所有可用的 top sites
     })
     topSitesNeedsReload.value = false
