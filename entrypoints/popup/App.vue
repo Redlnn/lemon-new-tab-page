@@ -41,14 +41,14 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
   try {
     if (import.meta.env.MANIFEST_VERSION === 2) {
       // Firefox MV2: browser.scripting 不存在，改用 browser.tabs.executeScript
-      const results = await browser.tabs.executeScript(tabId, {
+      const results = (await browser.tabs.executeScript(tabId, {
         code: `(function () {
           var s = ['link[rel~="icon"][href]', 'link[rel~="shortcut icon"][href]', 'link[rel~="apple-touch-icon"][href]'];
           for (var i = 0; i < s.length; i++) { var el = document.querySelector(s[i]); if (el && el.href) return el.href; }
           return null;
         })()`,
-      })
-      return (results?.[0] as string | null | undefined) ?? null
+      })) as (string | null)[]
+      return results[0]
     }
     // Chrome/Edge MV3：使用 browser.scripting.executeScript
     const results = await browser.scripting.executeScript({
@@ -66,7 +66,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
         return null
       },
     })
-    return (results?.[0]?.result as string | null | undefined) ?? null
+    return results[0]?.result ?? null
   } catch {
     return null
   }
