@@ -31,8 +31,6 @@ const perf = usePerfClasses(() => ({
 
 const iconClass = perf('shortcut__icon')
 const pinIconClass = perf('shortcut__pin-icon')
-
-const itemRef = useTemplateRef('itemRef')
 </script>
 
 <template>
