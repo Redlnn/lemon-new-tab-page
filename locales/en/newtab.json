@@ -93,9 +93,17 @@
       "message": "Please check the console output in developer tools.",
       "title": "Failed to get Bing wallpaper"
     },
+    "faviconCacheHint": {
+      "message": "Enable favicon cache in \"Other\" settings for faster icon loading",
+      "title": "Tip: Favicon cache is disabled"
+    },
     "wallpaperCache": {
       "message": "Unable to cache online wallpaper: ${error}",
       "title": "Failed to cache online wallpaper"
+    },
+    "welcome": {
+      "message": "Thanks for installing Lemon New Tab! Customize your new tab page in the settings (bottom-right corner).",
+      "title": "Welcome to Lemon New Tab"
     }
   },
   "search": {

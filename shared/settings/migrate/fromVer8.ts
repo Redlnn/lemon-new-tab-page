@@ -227,6 +227,7 @@ export function migrateFromVer8To9(oldSettings: SettingsSchemaV8): SettingsSchem
 
     hideMajorChangelog: oldSettings.hideMajorChangelog,
     readChangeLog: oldSettings.readChangeLog,
+    faviconCacheEnabled: defaultSettings.faviconCacheEnabled,
 
     pluginVersion: oldSettings.pluginVersion,
     version: 9,

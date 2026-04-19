@@ -7,6 +7,7 @@ import { PermissionResult } from '@newtab/composables/usePermission'
 
 const props = defineProps<{
   hostname: string
+  onlyAll?: boolean
 }>()
 const model = defineModel<boolean>({ required: true })
 const emit = defineEmits<{
@@ -65,7 +66,11 @@ function onDeny() {
         <el-button type="primary" plain @click="requestPermission(true)" class="permission-btn">
           {{ t('background.permission.allowAll') }}
         </el-button>
-        <el-button @click="requestPermission(false)" class="permission-btn">
+        <el-button
+          @click="requestPermission(false)"
+          class="permission-btn"
+          :disabled="props.onlyAll"
+        >
           {{ t('background.permission.allowCurrent') }}
         </el-button>
         <el-button

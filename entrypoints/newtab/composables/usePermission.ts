@@ -12,6 +12,7 @@ export type PermissionResult = (typeof PermissionResult)[keyof typeof Permission
 
 const permissionDialogVisible = ref(false)
 const currentHostname = ref('')
+const currentOnlyAll = ref(false)
 let permissionResolve: ((value: PermissionResult) => void) | null = null
 
 export function usePermission() {
@@ -36,6 +37,7 @@ export function usePermission() {
     if (!onlyAll && granted) return PermissionResult.GrantedCurrent
 
     currentHostname.value = hostname
+    currentOnlyAll.value = onlyAll
     permissionDialogVisible.value = true
 
     return new Promise<PermissionResult>((resolve) => {
@@ -46,6 +48,7 @@ export function usePermission() {
   return {
     permissionDialogVisible,
     currentHostname,
+    currentOnlyAll,
     onPermissionDialogResult,
     checkAndRequestPermission,
   }

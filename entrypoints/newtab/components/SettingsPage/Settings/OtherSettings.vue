@@ -11,6 +11,8 @@ import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import localForage from 'localforage'
 
+import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+
 import { storage } from '#imports'
 
 import { downloadJSON } from '@/shared/getJson'
@@ -29,6 +31,21 @@ const { t, i18next } = useTranslation('settings')
 const settings = useSettingsStore()
 const shortcuts = useShortcutStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
+
+const { checkAndRequestPermission } = usePermission()
+
+const beforeFaviconCacheChange = async (): Promise<boolean> => {
+  // 正在关闭 → 直接允许（不撤销 *://*/* 权限）
+  if (settings.faviconCacheEnabled) return true
+
+  // 正在开启 → 申请 *://*/* 权限
+  const result = await checkAndRequestPermission(window.location.hostname, true)
+  const granted = result === PermissionResult.GrantedAll
+  if (!granted) {
+    ElMessage.warning(t('other.faviconCache.permissionDenied'))
+  }
+  return granted
+}
 
 async function confirmClearExtensionData() {
   try {
@@ -314,6 +331,16 @@ function changeLanguage(lang: string) {
     <p class="settings__item--note">
       {{ t('other.syncWarning') }}
       <cloud-off-round />
+    </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.faviconCache.label') }}</div>
+      <el-switch
+        v-model="settings.faviconCacheEnabled"
+        :before-change="beforeFaviconCacheChange"
+      />
+    </div>
+    <p class="settings__item--note">
+      {{ t('other.faviconCache.description') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:changelog.hideMajor') }}</div>

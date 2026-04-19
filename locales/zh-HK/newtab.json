@@ -93,9 +93,17 @@
       "message": "請查看開發者工具中的主控台提示。",
       "title": "無法取得 Bing 壁紙"
     },
+    "faviconCacheHint": {
+      "message": "可在「其他」設定中開啟圖示快取，以獲得更快的圖示載入速度",
+      "title": "提示：圖示快取未開啟"
+    },
     "wallpaperCache": {
       "message": "無法快取線上壁紙：${error}",
       "title": "快取線上壁紙失敗"
+    },
+    "welcome": {
+      "message": "感謝安裝檸檬起始頁！你可以在右下角的設定中自訂你的新分頁。",
+      "title": "歡迎使用檸檬起始頁"
     }
   },
   "search": {

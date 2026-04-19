@@ -93,9 +93,17 @@
       "message": "请检查开发者工具中的控制台提示。",
       "title": "获取 Bing 壁纸失败"
     },
+    "faviconCacheHint": {
+      "message": "可在「其他」设置中开启图标缓存，获得更快的图标加载速度",
+      "title": "提示：图标缓存未开启"
+    },
     "wallpaperCache": {
       "message": "无法缓存在线壁纸：${error}",
       "title": "缓存在线壁纸失败"
+    },
+    "welcome": {
+      "message": "感谢安装柠檬起始页！你可以在右下角的设置中自定义你的新标签页。",
+      "title": "欢迎使用柠檬起始页"
     }
   },
   "search": {

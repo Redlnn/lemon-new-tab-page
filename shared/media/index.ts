@@ -6,6 +6,7 @@ export {
   acquireFaviconRef,
   fetchFaviconWithCache,
   releaseFaviconRef,
+  setFaviconCacheEnabled,
   warmFaviconCache,
 } from './faviconFetch'
 

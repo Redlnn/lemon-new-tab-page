@@ -227,6 +227,7 @@ export interface SettingsSchemaV9 {
 
   hideMajorChangelog: boolean
   readChangeLog: boolean
+  faviconCacheEnabled: boolean // 图标缓存（需要 *://*/* 权限）
 
   pluginVersion: string
   version: 9

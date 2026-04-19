@@ -179,6 +179,11 @@
       "data": "Purge all data",
       "wallpaper": "Purge wallpaper cache"
     },
+    "faviconCache": {
+      "description": "Cache favicons locally for faster loading; requires the \"Access all sites\" permission",
+      "label": "Favicon Cache",
+      "permissionDenied": "Permission \"Access all sites\" was not granted; favicon cache remains disabled"
+    },
     "sync": "Cloud Sync (Experimental)",
     "syncWarning": "Cloud Sync may overwrite local settings and cannot sync the following items: background images, most visited sites, dark mode state, etc. Items that do not support syncing will be marked with an indicator as shown on the right:",
     "title": "Other"

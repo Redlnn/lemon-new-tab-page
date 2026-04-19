@@ -4,6 +4,7 @@ import { createPinia } from 'pinia'
 import { version } from '@/package.json'
 
 import { i18n } from '@/shared/i18n'
+import { setFaviconCacheEnabled } from '@/shared/media'
 import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
 import { initShortcut } from '@/shared/shortcut'
 import { initSyncSettings } from '@/shared/sync'
@@ -55,6 +56,10 @@ export const main = async () => {
   await initCustomSearchEngine()
   await initShortcut()
   const settings = useSettingsStore()
+
+  // 初始化图标缓存标志，并跟踪设置变化
+  setFaviconCacheEnabled(settings.faviconCacheEnabled)
+  watch(() => settings.faviconCacheEnabled, setFaviconCacheEnabled)
 
   changeTheme(settings.theme.primaryColor)
 

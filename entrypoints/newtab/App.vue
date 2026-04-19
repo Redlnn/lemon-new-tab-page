@@ -17,6 +17,8 @@ import {
   OPEN_SETTINGS,
 } from '@newtab/shared/keys'
 
+import { shownFaviconCacheHintStorage } from '@newtab/shared/storages/notificationStorage'
+
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
 import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
@@ -58,10 +60,33 @@ const AddShortcutDialogRef = ref<InstanceType<typeof AddShortcutDialog>>()
 const appRef = useTemplateRef('appRef')
 
 const { t } = useTranslation('sync')
+const { t: tNewtab } = useTranslation('newtab')
 const elLocale = useElementLang()
 const settings = useSettingsStore()
 
 onMounted(async () => {
+  // 全新用户欢迎通知
+  if (settings.pluginVersion === '') {
+    ElNotification.success({
+      title: tNewtab('notification.welcome.title'),
+      message: tNewtab('notification.welcome.message'),
+      duration: 8000,
+    })
+  }
+
+  // 图标缓存提示通知（仅展示一次）
+  if (!settings.faviconCacheEnabled) {
+    const alreadyShown = await shownFaviconCacheHintStorage.getValue()
+    if (!alreadyShown) {
+      await shownFaviconCacheHintStorage.setValue(true)
+      ElNotification.info({
+        title: tNewtab('notification.faviconCacheHint.title'),
+        message: tNewtab('notification.faviconCacheHint.message'),
+        duration: 10000,
+      })
+    }
+  }
+
   if (settings.pluginVersion !== version) {
     settings.readChangeLog = false
     ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
@@ -158,7 +183,8 @@ provide(OPEN_SETTINGS, () => SettingsPageRef.value?.toggle())
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 
-const { permissionDialogVisible, currentHostname, onPermissionDialogResult } = usePermission()
+const { permissionDialogVisible, currentHostname, currentOnlyAll, onPermissionDialogResult } =
+  usePermission()
 
 const actionClass = computed(() => {
   const perf = settings.perf
@@ -239,6 +265,7 @@ const actionClass = computed(() => {
     <permission-dialog
       v-model="permissionDialogVisible"
       :hostname="currentHostname"
+      :only-all="currentOnlyAll"
       @result="onPermissionDialogResult"
     />
   </el-config-provider>

@@ -10,6 +10,16 @@ import {
 } from './faviconCache'
 
 // ---------------------------------------------------------------------------
+// 图标缓存总开关（由设置控制，默认关闭）
+// ---------------------------------------------------------------------------
+let _cacheEnabled = false
+
+/** 由 newtab main.ts 在设置加载后调用以初始化缓存行为，并在设置变更时再次调用。 */
+export function setFaviconCacheEnabled(enabled: boolean): void {
+  _cacheEnabled = enabled
+}
+
+// ---------------------------------------------------------------------------
 // L1 内存缓存（会话生命周期）
 // ---------------------------------------------------------------------------
 const l1Cache = new Map<string, FaviconCacheEntry>()
@@ -138,6 +148,18 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
   const origin = toOrigin(pageUrl)
   if (!origin) return null
 
+  // 缓存未启用：仅走 Strategy A/D，不读写 L1/L2，直接返回
+  if (!_cacheEnabled) {
+    let data: string | null = null
+    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+      data = await fetchViaChromeFaviconApi(pageUrl)
+    }
+    if (!data) {
+      data = await probeViaImageElement(pageUrl)
+    }
+    return data
+  }
+
   // L1 hit
   const l1 = l1Cache.get(origin)
   if (l1) {
@@ -230,6 +252,7 @@ export async function warmFaviconCache(
   faviconData: string,
   type: FaviconCacheEntry['type'] = 'url',
 ): Promise<void> {
+  if (!_cacheEnabled) return
   const origin = toOrigin(pageUrl)
   if (!origin) return
 
@@ -245,6 +268,7 @@ export async function warmFaviconCache(
 
 /** 增加 pageUrl 对应 origin 的引用计数。 */
 export function acquireFaviconRef(pageUrl: string): void {
+  if (!_cacheEnabled) return
   const origin = toOrigin(pageUrl)
   if (!origin) return
 
@@ -264,6 +288,7 @@ export function acquireFaviconRef(pageUrl: string): void {
  * 若该 origin 有正在进行的抓取，会先等待抓取结束再执行最终删除。
  */
 export function releaseFaviconRef(pageUrl: string): void {
+  if (!_cacheEnabled) return
   const origin = toOrigin(pageUrl)
   if (!origin) return
   const next = (refCounts.get(origin) ?? 0) - 1

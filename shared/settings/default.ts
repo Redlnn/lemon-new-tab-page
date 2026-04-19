@@ -223,6 +223,7 @@ export const defaultSettings = {
 
   hideMajorChangelog: true,
   readChangeLog: false,
+  faviconCacheEnabled: false,
 
   pluginVersion: '',
   version: CURRENT_CONFIG_VERSION,
