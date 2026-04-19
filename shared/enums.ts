@@ -1,4 +1,4 @@
-/** @deprecated use BgType instead */
+/** @deprecated 使用 BgType 替代 */
 export enum OldBgType {
   none, // 0
   Local, // 1

@@ -6,7 +6,7 @@ import {
 } from '@material/material-color-utilities'
 
 /**
- * Return RGBA from a given int32 color
+ * 从给定的 int32 颜色值返回 RGBA
  *
  * @param argb ARGB representation of a int32 color.
  * @return RGBA representation of a int32 color.
@@ -20,7 +20,7 @@ export function rgbaFromArgb(argb: number): Rgba {
 }
 
 /**
- * Return int32 color from a given RGBA component
+ * 从给定的 RGBA 组件返回 int32 颜色值
  *
  * @param rgba RGBA representation of a int32 color.
  * @returns ARGB representation of a int32 color.

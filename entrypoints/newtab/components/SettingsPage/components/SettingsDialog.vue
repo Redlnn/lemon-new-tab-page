@@ -70,7 +70,7 @@ const resetPosition = () => {
 }
 
 defineExpose({
-  /** @description whether the dialog is visible */
+  /** @description 对话框是否可见 */
   visible,
   dialogContentRef,
   resetPosition,

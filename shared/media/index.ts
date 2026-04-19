@@ -4,7 +4,6 @@ import { unref, watch } from 'vue'
 export * from './verify'
 export {
   acquireFaviconRef,
-  cleanupFaviconCacheIfUnused,
   fetchFaviconWithCache,
   releaseFaviconRef,
   warmFaviconCache,
@@ -22,7 +21,7 @@ export function getFaviconURL(url: string | Ref<string | null>): Ref<string> {
       return
     }
     const currentSeq = ++seq
-    iconUrl.value = '/favicon.png' // immediately reset to avoid stale icon on URL change
+    iconUrl.value = '/favicon.png' // 立即重置，以避免在 URL 变更时显示过期图标
 
     fetchFaviconWithCache(u)
       .then((data) => {

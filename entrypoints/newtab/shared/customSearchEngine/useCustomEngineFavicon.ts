@@ -10,9 +10,8 @@ interface CustomEngine {
 }
 
 /**
- * Returns a stable composable for resolving custom search engine favicons.
- * Call once per component; the returned `getCustomEngineFavicon` function is
- * safe to use in templates.
+ * 返回用于解析自定义搜索引擎 favicon 的稳定组合函数。
+ * 每个组件调用一次；返回的 `getCustomEngineFavicon` 函数可安全用于模板中。
  */
 export function useCustomEngineFavicon() {
   const faviconRefMap = new Map<string, Ref<string>>()

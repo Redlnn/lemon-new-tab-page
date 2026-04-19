@@ -36,7 +36,7 @@ const isLoading = ref(true)
 const isAdded = ref(false)
 const isAlreadyExists = ref(false)
 
-/** Read the favicon href from the active tab's DOM via content script injection. */
+/** 从激活页的 DOM 中读取 favicon href（通过注入 content script）。 */
 async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
   try {
     if (import.meta.env.FIREFOX) {
@@ -51,7 +51,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
       })
       return (results?.[0] as string | null | undefined) ?? null
     }
-    // Chrome/Edge MV3: use browser.scripting.executeScript
+    // Chrome/Edge MV3：使用 browser.scripting.executeScript
     const results = await browser.scripting.executeScript({
       target: { tabId },
       func: () => {
@@ -62,7 +62,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
         ]
         for (const sel of selectors) {
           const el = document.querySelector<HTMLLinkElement>(sel)
-          if (el?.href) return el.href // href is already absolute in tab context
+          if (el?.href) return el.href // 在选项卡上下文中 href 已为绝对地址
         }
         return null
       },
@@ -73,7 +73,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
   }
 }
 
-/** Stable favicon ref that updates asynchronously when currentTab changes. */
+/** 稳定的 favicon 引用，会在 currentTab 变更时异步更新。 */
 const currentTabFaviconRef = shallowRef('/favicon.png')
 watchEffect(async () => {
   const tab = currentTab.value

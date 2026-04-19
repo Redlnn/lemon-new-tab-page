@@ -10,27 +10,27 @@ import {
 } from './faviconCache'
 
 // ---------------------------------------------------------------------------
-// L1 in-memory cache (session lifetime)
+// L1 内存缓存（会话生命周期）
 // ---------------------------------------------------------------------------
 const l1Cache = new Map<string, FaviconCacheEntry>()
 
-// Deduplication: prevent multiple concurrent fetches for the same origin
+// 去重：防止对同一 origin 发起多个并发请求
 const pendingFetches = new Map<string, Promise<string | null>>()
 
 // ---------------------------------------------------------------------------
-// Reference counting (session lifetime)
+// 引用计数（会话生命周期）
 // ---------------------------------------------------------------------------
 const refCounts = new Map<string, number>()
-// Cleanup timers scheduled after refs drop to zero (avoid immediate L2 churn)
+// 引用计数降到零后安排的清理定时器（避免立即对 L2 造成抖动）
 const cleanupTimers = new Map<string, ReturnType<typeof setTimeout>>()
-// Delay before actually removing L1/L2 entries after last release (ms)
+// 在最后一次 release 后真正移除 L1/L2 条目的延迟（毫秒）
 const CLEANUP_DELAY_MS = 10_000
 
 // ---------------------------------------------------------------------------
-// Helpers
+// 辅助函数
 // ---------------------------------------------------------------------------
 
-/** Convert a Blob to a base64 data URL */
+/** 将 Blob 转换为 base64 数据 URL */
 function blobToDataURL(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
@@ -40,7 +40,7 @@ function blobToDataURL(blob: Blob): Promise<string> {
   })
 }
 
-/** Extract the canonical origin from any URL string. Returns null if invalid. */
+/** 从任意 URL 字符串中提取规范化的 origin（例如 https://example.com）。若解析失败则返回 null。 */
 function toOrigin(url: string): string | null {
   try {
     return new URL(url).origin
@@ -49,7 +49,7 @@ function toOrigin(url: string): string | null {
   }
 }
 
-/** Probe a URL using an HTMLImageElement (no CORS, display-only). */
+/** 使用 HTMLImageElement 试探给定 URL 是否可用（无需 CORS，基于加载结果判断）。 */
 function probeImageUrl(url: string): Promise<boolean> {
   return new Promise((resolve) => {
     const img = new Image()
@@ -60,10 +60,10 @@ function probeImageUrl(url: string): Promise<boolean> {
 }
 
 // ---------------------------------------------------------------------------
-// Fetch strategies
+// 获取策略
 // ---------------------------------------------------------------------------
 
-/** Strategy A: Chromium's internal /_favicon/ API → base64 */
+/** 策略 A：使用 Chromium 内部的 /_favicon/ API（返回 base64） */
 async function fetchViaChromeFaviconApi(pageUrl: string): Promise<string | null> {
   try {
     const apiUrl = new URL(chrome.runtime.getURL('/_favicon/'))
@@ -79,8 +79,8 @@ async function fetchViaChromeFaviconApi(pageUrl: string): Promise<string | null>
   }
 }
 
-/** Strategy C: Try well-known favicon paths, fetch each for base64.
- *  Requires `*:\/\/*` optional permission to be granted. */
+/** 策略 C：尝试常见的 favicon 路径并获取 base64。
+ *  需要授予泛域名主机权限（允许访问任意域名）。 */
 async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
   const candidates = [
     '/favicon.ico',
@@ -100,13 +100,13 @@ async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
       if (blob.size === 0) continue
       return blobToDataURL(blob)
     } catch {
-      // continue to next candidate
+      // 继续尝试下一个候选路径
     }
   }
   return null
 }
 
-/** Strategy D: Image-probe well-known paths (no CORS needed, URL-only result). */
+/** 策略 D：通过 Image 元素探测常见路径（无需 CORS，仅返回 URL）。 */
 async function probeViaImageElement(pageUrl: string): Promise<string | null> {
   const candidates = [
     '/favicon.ico',
@@ -124,17 +124,15 @@ async function probeViaImageElement(pageUrl: string): Promise<string | null> {
 }
 
 // ---------------------------------------------------------------------------
-// Main public API
+// 主要对外接口
 // ---------------------------------------------------------------------------
 
 /**
- * Return the favicon for `pageUrl`, consulting L1 → L2 caches first.
- * On cache miss (or expired entry), fetches in the background and updates
- * the cache; the stale / default value is returned immediately so the UI
- * is never blocked.
+ * 返回 pageUrl 的 favicon，优先查询 L1（内存）→ L2（持久化）缓存。
+ * 若命中但已过期，会在后台异步刷新并更新缓存；函数会立即返回当前（可能已过期或默认的）值，避免阻塞 UI。
  *
- * Returns a base64 data URL or a plain URL string (prefix check: `data:`).
- * Returns `null` if completely unavailable (callers should show the fallback).
+ * 返回值为 base64 数据 URL 或普通 URL（可通过前缀 'data:' 判断）。
+ * 若完全不可用则返回 null（调用方应展示兜底图标）。
  */
 export async function fetchFaviconWithCache(pageUrl: string): Promise<string | null> {
   const origin = toOrigin(pageUrl)
@@ -145,7 +143,7 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
   if (l1) {
     const expired = Date.now() - l1.fetchedAt > FAVICON_CACHE_TTL
     if (!expired) return l1.data
-    // Expired → return stale immediately, refresh in background
+    // 已过期 → 立即返回旧值，同时在后台刷新
     refreshInBackground(pageUrl, origin)
     return l1.data
   }
@@ -160,18 +158,18 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
     return l2.data
   }
 
-  // Cache miss → fetch now (with dedup)
+  // 缓存未命中 → 立即抓取（已去重）
   return doFetch(pageUrl, origin)
 }
 
-/** Fire-and-forget background refresh */
+/** 后台异步刷新（不等待结果） */
 function refreshInBackground(pageUrl: string, origin: string): void {
   doFetch(pageUrl, origin).catch(() => {})
 }
 
-/** Perform a full fetch for `origin` (deduped). */
+/** 对指定 origin 执行完整抓取（已去重）。 */
 async function doFetch(pageUrl: string, origin: string): Promise<string | null> {
-  // Deduplication
+  // 去重处理
   const existing = pendingFetches.get(origin)
   if (existing) return existing
 
@@ -179,12 +177,12 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     let data: string | null = null
     let type: 'base64' | 'url' = 'base64'
 
-    // Strategy A: Chromium's internal /_favicon/ API (no host permissions needed)
+    // 策略 A：Chromium 内部的 /_favicon/ API（不需要主机权限）
     if (import.meta.env.CHROME || import.meta.env.EDGE) {
       data = await fetchViaChromeFaviconApi(pageUrl)
     }
 
-    // Strategy C: well-known direct fetch (needs host perms, works on all browsers)
+    // 策略 C：常见直接路径抓取（需要主机权限，适用于所有浏览器）
     if (!data) {
       const hasHostPerm = await browser.permissions
         .contains({ origins: ['*://*/*'] })
@@ -195,7 +193,7 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
       }
     }
 
-    // Strategy D: image probe (no CORS, URL-only result)
+    // 策略 D：通过 Image 探测（无需 CORS，仅返回 URL）
     if (!data) {
       data = await probeViaImageElement(pageUrl)
       if (data) type = 'url'
@@ -203,7 +201,7 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
 
     if (data) {
       const entry: FaviconCacheEntry = { data, type, fetchedAt: Date.now() }
-      // Always keep in L1 (session); persist to L2 only if someone holds a ref for this origin
+      // 始终保留到 L1（会话）；仅当该 origin 有引用时才持久化到 L2
       l1Cache.set(origin, entry)
       const refCount = refCounts.get(origin) ?? 0
       if (refCount > 0) {
@@ -223,9 +221,9 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
 }
 
 /**
- * Write a known favicon directly into L1 + L2 cache, skipping any network fetch.
- * A no-op if a non-expired entry already exists.
- * Useful for injecting browser-provided favicons (e.g. Firefox topSites).
+ * 将已知 favicon 直接写入 L1/L2 缓存，跳过网络请求。
+ * 若已有未过期条目则不做任何修改。
+ * 常用于注入浏览器提供的 favicon（例如 Firefox 的 topSites）。
  */
 export async function warmFaviconCache(
   pageUrl: string,
@@ -245,12 +243,12 @@ export async function warmFaviconCache(
   await setFaviconCacheEntry(origin, entry).catch(() => {})
 }
 
-/** Increment the reference count for the origin of `pageUrl`. */
+/** 增加 pageUrl 对应 origin 的引用计数。 */
 export function acquireFaviconRef(pageUrl: string): void {
   const origin = toOrigin(pageUrl)
   if (!origin) return
 
-  // Cancel any pending cleanup for this origin
+  // 取消该 origin 上任何挂起的清理定时器
   const timer = cleanupTimers.get(origin)
   if (timer) {
     clearTimeout(timer)
@@ -261,9 +259,9 @@ export function acquireFaviconRef(pageUrl: string): void {
 }
 
 /**
- * Decrement the reference count for the origin of `pageUrl`.
- * When it reaches zero, schedule L1/L2 cleanup after a short delay.
- * If a pending fetch is in progress, wait for it to finish before final deletion.
+ * 减少 pageUrl 对应 origin 的引用计数。
+ * 当计数降为 0 时，会在短延迟后安排清理 L1/L2 缓存。
+ * 若该 origin 有正在进行的抓取，会先等待抓取结束再执行最终删除。
  */
 export function releaseFaviconRef(pageUrl: string): void {
   const origin = toOrigin(pageUrl)
@@ -272,16 +270,16 @@ export function releaseFaviconRef(pageUrl: string): void {
   if (next <= 0) {
     refCounts.delete(origin)
 
-    // Schedule a delayed cleanup to avoid race with concurrent fetches or transient UI changes
+    // 安排延迟清理，避免与并发抓取或短暂的 UI 变化发生竞态
     const performCleanup = async () => {
       try {
-        // If a fetch is in progress for this origin, wait for it to complete
+        // 如果该 origin 有正在进行的抓取，先等待其完成
         const pending = pendingFetches.get(origin)
         if (pending) {
           await pending.catch(() => {})
         }
 
-        // If a new ref was acquired meanwhile, abort cleanup
+        // 若期间获取到新引用，则取消清理
         if ((refCounts.get(origin) ?? 0) > 0) return
 
         l1Cache.delete(origin)
@@ -296,24 +294,4 @@ export function releaseFaviconRef(pageUrl: string): void {
   } else {
     refCounts.set(origin, next)
   }
-}
-
-/**
- * Conditionally removes the favicon cache entry for `deletedUrl`'s origin
- * only when no other URL in `activeUrls` shares that origin.
- *
- * @deprecated Use `acquireFaviconRef` / `releaseFaviconRef` instead.
- */
-export async function cleanupFaviconCacheIfUnused(
-  deletedUrl: string,
-  activeUrls: string[],
-): Promise<void> {
-  const deletedOrigin = toOrigin(deletedUrl)
-  if (!deletedOrigin) return
-
-  const stillUsed = activeUrls.some((u) => toOrigin(u) === deletedOrigin)
-  if (stillUsed) return
-
-  l1Cache.delete(deletedOrigin)
-  await deleteFaviconCacheEntry(deletedOrigin)
 }

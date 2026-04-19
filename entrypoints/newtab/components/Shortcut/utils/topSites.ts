@@ -22,8 +22,8 @@ function shouldUseCache(force = false) {
 }
 
 async function cacheBrowserFavicons(sites: TopSites.MostVisitedURL[]): Promise<void> {
-  // Firefox may return favicons directly; warm the cache so they survive list rotation.
-  // For sites without a favicon, trigger a background fetch.
+  // Firefox 可能会直接返回 favicon；预热缓存以便在列表旋转时仍能保留它们。
+  // 对于没有 favicon 的站点，触发后台获取。
   const tasks = sites
     .filter((s) => s.url)
     .map(async (s) => {
@@ -42,7 +42,7 @@ async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
     topSites = await browser.topSites.get()
   } else if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })
-    // Cache Firefox-provided favicons in the background (don't block rendering)
+    // 在后台缓存 Firefox 提供的 favicon（不阻塞渲染）
     cacheBrowserFavicons(topSites).catch(() => {})
   } else {
     throw new Error('Unsupported browser')
