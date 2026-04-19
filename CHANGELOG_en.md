@@ -2,6 +2,22 @@
 
 > Translated by AI from Chinese.
 
+## 3.2.2 (Apr 19, 2026)
+
+### New Features✨
+
+- Added icon caching for Most Visited, custom Quick Access, and custom search engines; toggle available in "Other" settings.
+- Added a new user welcome and permission prompt that guides users through necessary permission steps when enabling icon caching.
+
+### Improvements⚡️
+
+- Performance optimizations.
+
+### Bug Fixes🐛
+
+- Fixed white edges appearing at the edges when wallpaper parallax is enabled.
+- Fixed white flash on Linux + Chromium when starting in dark mode.
+
 ## 3.2.0 (Mar 15, 2026)
 
 ### New Features✨
