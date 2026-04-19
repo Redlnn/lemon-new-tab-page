@@ -5,23 +5,7 @@
     <link rel="icon" type="image/x-icon" href="/icon-64.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
-    <script>
-      ;(function () {
-        const ls = localStorage.getItem('vueuse-color-scheme')
-        const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-        const isDark = ls === 'dark' || (ls !== 'light' && systemDark)
-        const h = document.documentElement
-        if (isDark) {
-          h.classList.add('dark')
-          h.style.colorScheme = 'dark'
-          h.style.backgroundColor = '#0a0a0a'
-        } else {
-          h.classList.add('light')
-          h.style.colorScheme = 'light'
-          h.style.backgroundColor = '#f2f3f5'
-        }
-      })()
-    </script>
+    <script src="/theme-init.js"></script>
     <style>
       html,
       html.light {
