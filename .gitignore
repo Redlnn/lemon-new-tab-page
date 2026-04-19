@@ -29,6 +29,9 @@ web-ext.config.ts
 *.sln
 *.sw?
 
+# Worktrees
+.worktrees/
+
 # MCP
 .serena/
 
