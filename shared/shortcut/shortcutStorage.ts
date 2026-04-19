@@ -4,8 +4,6 @@ export interface Shortcut {
   url: string
   title: string
   favicon?: string
-  faviconSource?: 'uploaded' | 'auto'
-  faviconLastUpdate?: number
 }
 
 export interface Shortcuts {
