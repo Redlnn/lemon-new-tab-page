@@ -61,12 +61,50 @@ function toOrigin(url: string): string | null {
   }
 }
 
+/** 已知的无效 SVG 特征字符串（第三方 favicon 服务在找不到图标时返回的占位图）
+ *  - favicon.so：代码图标（path 浮点坐标，误判风险极低）
+ */
+const KNOWN_INVALID_SVG_SIGNATURES = ['M5.719 14.75'] as const
+
+/** 判断 SVG 文本是否是已知的无效占位 SVG */
+function isKnownInvalidSvg(text: string): boolean {
+  // favicon.so：使用路径特征字符串（浮点坐标极具唯一性，误判风险极低）
+  if (KNOWN_INVALID_SVG_SIGNATURES.some((sig) => text.includes(sig))) return true
+  // favicon.im：灰色圆形 + 斜体 "f" 占位图（不依赖属性顺序，分别检测）
+  if (
+    text.includes('cx="50" cy="50" r="40" fill="#808080"') &&
+    text.includes('font-style="italic"') &&
+    text.includes('>f<')
+  )
+    return true
+  return false
+}
+
 /** 使用 HTMLImageElement 试探给定 URL 是否可用（无需 CORS，基于加载结果判断）。 */
 function probeImageUrl(url: string): Promise<boolean> {
   return new Promise((resolve) => {
     const img = new Image()
-    img.onload = () => resolve(true)
-    img.onerror = () => resolve(false)
+
+    let settled = false
+    const done = (result: boolean) => {
+      if (settled) return
+      settled = true
+
+      clearTimeout(timer)
+      img.onload = null
+      img.onerror = null
+
+      // 尝试中断加载（有些浏览器有效）
+      img.src = ''
+
+      resolve(result)
+    }
+
+    const timer = setTimeout(() => done(false), 2000)
+
+    img.onload = () => done(true)
+    img.onerror = () => done(false)
+
     img.src = url
   })
 }
@@ -91,6 +129,59 @@ async function fetchViaChromeFaviconApi(pageUrl: string): Promise<string | null>
   }
 }
 
+/** 策略 B：并行请求第三方 favicon 服务（favicon.so & favicon.im），取最快且有效的一个，返回 base64 */
+async function fetchViaThirdPartyServices(pageUrl: string): Promise<string | null> {
+  try {
+    const { hostname } = new URL(pageUrl)
+    if (!hostname) return null
+
+    const endpoints = [`https://favicon.so/${hostname}`, `https://favicon.im/${hostname}`]
+
+    // 为每个请求创建一个可中断的 controller，并配合定时器实现超时
+    const controllers = endpoints.map(() => new AbortController())
+    const timers: ReturnType<typeof setTimeout>[] = controllers.map((c) =>
+      // 2s 超时后中止对应请求
+      setTimeout(() => c.abort(), 2000),
+    )
+
+    const attempts = endpoints.map((u, idx) =>
+      (async (): Promise<string> => {
+        const controller = controllers[idx]
+        const resp = await fetch(u, { signal: controller.signal })
+        if (!resp.ok) throw new Error('bad status')
+        const contentType = resp.headers.get('content-type') ?? ''
+        if (contentType.startsWith('text/') || contentType.includes('html'))
+          throw new Error('invalid content-type')
+        const blob = await resp.blob()
+        if (blob.size === 0) throw new Error('empty')
+        if (contentType.includes('svg') || blob.type.includes('svg')) {
+          const text = await blob.text()
+          if (isKnownInvalidSvg(text)) throw new Error('known invalid svg')
+        }
+        return await blobToDataURL(blob)
+      })(),
+    )
+
+    try {
+      const result = await Promise.any(attempts)
+      // 成功后中断所有剩余请求
+      controllers.forEach((c) => {
+        try {
+          c.abort()
+        } catch {}
+      })
+      return result
+    } catch {
+      // 所有请求都失败
+      return null
+    } finally {
+      timers.forEach(clearTimeout)
+    }
+  } catch {
+    return null
+  }
+}
+
 /** 策略 C：尝试常见的 favicon 路径并获取 base64。
  *  需要授予泛域名主机权限（允许访问任意域名）。 */
 async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
@@ -104,7 +195,7 @@ async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
   const { origin } = new URL(pageUrl)
   for (const path of candidates) {
     try {
-      const resp = await fetch(origin + path, { signal: AbortSignal.timeout(5000) })
+      const resp = await fetch(origin + path, { signal: AbortSignal.timeout(2000) })
       if (!resp.ok) continue
       const contentType = resp.headers.get('content-type') ?? ''
       if (contentType.startsWith('text/') || contentType.includes('html')) continue
@@ -150,12 +241,16 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
   const origin = toOrigin(pageUrl)
   if (!origin) return null
 
-  // 缓存未启用：仅走 Strategy A/D，不读写 L1/L2，直接返回
+  // 缓存未启用 → 直接抓取但不存储
   if (!_cacheEnabled) {
     let data: string | null = null
     if (isChromium) {
       data = await fetchViaChromeFaviconApi(pageUrl)
     }
+    if (!data) {
+      data = await fetchViaThirdPartyServices(pageUrl)
+    }
+    // 最后回退到 Image 探测（仅返回 URL）
     if (!data) {
       data = await probeViaImageElement(pageUrl)
     }
@@ -218,6 +313,11 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
       }
     }
 
+    // 策略 B：尝试第三方 favicon 服务（并行请求 favicon.so & favicon.im）
+    if (!data) {
+      data = await fetchViaThirdPartyServices(pageUrl)
+    }
+
     // 策略 D：通过 Image 探测（无需 CORS，仅返回 URL）
     if (!data) {
       data = await probeViaImageElement(pageUrl)
@@ -248,8 +348,10 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
 /**
  * 将已知 favicon 直接写入 L1/L2 缓存，跳过网络请求。
  * 若已有未过期条目则不做任何修改。
- * 常用于注入浏览器提供的 favicon（例如 Firefox 的 topSites 可能为 base64）。
- * 也用于在获取到 favicon 图片的 URL 后，尝试抓取并升级为 base64（需要主机权限）。
+ * 只会存进 base64，获取失败则不会缓存。
+ * 目前用处：
+ * - 注入浏览器提供的 favicon（例如 Firefox 的 topSites 可能为 base64）。
+ * - Popup 在获取到 favicon 图片的有效 URL 后，尝试抓取并升级为 base64（需要主机权限）。
  */
 export async function warmFaviconCache(
   pageUrl: string,
@@ -283,7 +385,7 @@ export async function warmFaviconCache(
       if (hasHostPerm) {
         try {
           const targetUrl = new URL(faviconData, pageUrl)
-          const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(5000) })
+          const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(2000) })
           if (!resp.ok) return null
           const contentType = resp.headers.get('content-type') ?? ''
           if (contentType.startsWith('text/') || contentType.includes('html')) return null
