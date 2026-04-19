@@ -8,7 +8,7 @@ import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const { t } = useTranslation('settings')
 
-const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
+const isChromium = import.meta.env.CHROME || import.meta.env.EDGE || import.meta.env.OPERA
 const settings = useSettingsStore()
 
 async function restoreDefaultTopSites() {
@@ -19,7 +19,7 @@ async function restoreDefaultTopSites() {
 
 <template>
   <div class="settings__items-container">
-    <p v-if="isChrome" class="settings__item--note" style="margin-top: 1em">
+    <p v-if="isChromium" class="settings__item--note" style="margin-top: 1em">
       {{ t('shortcut.tip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
@@ -90,7 +90,7 @@ async function restoreDefaultTopSites() {
           />
         </div>
         <p
-          v-if="isChrome"
+          v-if="isChromium"
           style="
             margin-top: 0;
             font-size: var(--el-font-size-extra-small);

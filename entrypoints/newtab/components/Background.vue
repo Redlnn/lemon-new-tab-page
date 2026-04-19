@@ -66,7 +66,6 @@ function shortenBgFadeDuration() {
 }
 
 const bgURLreg = new RegExp('url\\((["\']?)(.*?)\\1\\)', 'i')
-const isChrome = import.meta.env.CHROME || import.meta.env.EDGE
 
 // 视频壁纸相关逻辑
 
@@ -177,7 +176,8 @@ const bgTypeProviders: Record<
       return rawUrl
     }
 
-    if (isChrome) {
+    // MV3才需要检查全站权限，MV2的Firefox不需要
+    if (import.meta.env.MANIFEST_VERSION === 3) {
       const allGranted = await browser.permissions.contains({ origins: [`*://*/*`] })
       if (!allGranted) {
         return rawUrl

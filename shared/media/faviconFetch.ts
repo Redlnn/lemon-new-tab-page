@@ -9,6 +9,8 @@ import {
   type FaviconCacheEntry,
 } from './faviconCache'
 
+const isChromium = import.meta.env.CHROME || import.meta.env.EDGE || import.meta.env.OPERA
+
 // ---------------------------------------------------------------------------
 // 图标缓存总开关（由设置控制，默认关闭）
 // ---------------------------------------------------------------------------
@@ -151,7 +153,7 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
   // 缓存未启用：仅走 Strategy A/D，不读写 L1/L2，直接返回
   if (!_cacheEnabled) {
     let data: string | null = null
-    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+    if (isChromium) {
       data = await fetchViaChromeFaviconApi(pageUrl)
     }
     if (!data) {
@@ -200,7 +202,7 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     let type: 'base64' | 'url' = 'base64'
 
     // 策略 A：Chromium 内部的 /_favicon/ API（不需要主机权限）
-    if (import.meta.env.CHROME || import.meta.env.EDGE) {
+    if (isChromium) {
       data = await fetchViaChromeFaviconApi(pageUrl)
     }
 

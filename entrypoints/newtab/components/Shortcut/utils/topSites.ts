@@ -39,7 +39,7 @@ async function cacheBrowserFavicons(sites: TopSites.MostVisitedURL[]): Promise<v
 
 async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
   let topSites
-  if (import.meta.env.CHROME || import.meta.env.EDGE) {
+  if (import.meta.env.CHROME || import.meta.env.EDGE || import.meta.env.OPERA) {
     topSites = await browser.topSites.get()
   } else if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })

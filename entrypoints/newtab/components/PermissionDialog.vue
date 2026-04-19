@@ -17,7 +17,7 @@ const emit = defineEmits<{
 const { t } = useTranslation('settings')
 
 async function requestPermission(isAll: boolean) {
-  if (import.meta.env.FIREFOX && !isAll) {
+  if (import.meta.env.MANIFEST_VERSION === 2 && !isAll) {
     // Firefox MV2 不需要请求当前网站权限，直接视为已授权
     return emit('result', PermissionResult.GrantedCurrent)
   }

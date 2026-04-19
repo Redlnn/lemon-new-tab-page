@@ -39,10 +39,9 @@ const isAlreadyExists = ref(false)
 /** 从激活页的 DOM 中读取 favicon href（通过注入 content script）。 */
 async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
   try {
-    if (import.meta.env.FIREFOX) {
+    if (import.meta.env.MANIFEST_VERSION === 2) {
       // Firefox MV2: browser.scripting 不存在，改用 browser.tabs.executeScript
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const results = await (browser.tabs as any).executeScript(tabId, {
+      const results = await browser.tabs.executeScript(tabId, {
         code: `(function () {
           var s = ['link[rel~="icon"][href]', 'link[rel~="shortcut icon"][href]', 'link[rel~="apple-touch-icon"][href]'];
           for (var i = 0; i < s.length; i++) { var el = document.querySelector(s[i]); if (el && el.href) return el.href; }

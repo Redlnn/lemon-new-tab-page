@@ -239,7 +239,8 @@ function useBackgroundSwitcher() {
     await clearAllOnlineWallpaperCache()
     const { hostname } = new URL(_url)
 
-    if (import.meta.env.FIREFOX && !settings.theme.monetColor) {
+    // MV2的Firefox不需要检查权限，直接设置在线壁纸URL即可。MV3才需要检查权限。
+    if (import.meta.env.MANIFEST_VERSION === 2 && !settings.theme.monetColor) {
       settings.background.online.url = _url
       return
     }
