@@ -54,13 +54,12 @@ export const main = async () => {
 
   await initSettings()
   await initCustomSearchEngine()
-  await initShortcut()
   const settings = useSettingsStore()
 
   // 初始化图标缓存标志，并跟踪设置变化
-  setFaviconCacheEnabled(settings.faviconCacheEnabled)
-  watch(() => settings.faviconCacheEnabled, setFaviconCacheEnabled)
+  watch(() => settings.faviconCacheEnabled, setFaviconCacheEnabled, { immediate: true })
 
+  await initShortcut()
   changeTheme(settings.theme.primaryColor)
 
   // 清除 index.html 内联脚本设置的临时内联样式，让 CSS 变量接管
