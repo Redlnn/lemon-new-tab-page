@@ -29,7 +29,8 @@ async function cacheBrowserFavicons(sites: TopSites.MostVisitedURL[]): Promise<v
     .filter((s) => s.url)
     .map(async (s) => {
       if (s.favicon) {
-        await warmFaviconCache(s.url, s.favicon, 'url').catch(() => {})
+        // 实际上 Firefox 返回的好像总是为空
+        await warmFaviconCache(s.url, s.favicon).catch(() => {})
       } else {
         await fetchFaviconWithCache(s.url).catch(() => {})
       }
@@ -43,8 +44,6 @@ async function fetchTopSites(): Promise<TopSites.MostVisitedURL[]> {
     topSites = await browser.topSites.get()
   } else if (import.meta.env.FIREFOX) {
     topSites = await browser.topSites.get({ includeFavicon: true })
-    // 在后台缓存 Firefox 提供的 favicon（不阻塞渲染）
-    cacheBrowserFavicons(topSites).catch(() => {})
   } else {
     throw new Error('Unsupported browser')
   }
@@ -68,11 +67,15 @@ async function getTopSites(force = false): Promise<TopSites.MostVisitedURL[]> {
     const value = await pendingTopSitesPromise
     const newUrls = value.map((s) => s.url)
 
-    // Update reference counts: acquire for newly appeared sites, release for disappeared ones
+    // 更新引用计数：新出现的站点 acquire，消失的站点 release
     const disappeared = previousUrls.filter((u) => !newUrls.includes(u))
     const appeared = newUrls.filter((u) => !previousUrls.includes(u))
     disappeared.forEach((u) => releaseFaviconRef(u))
     appeared.forEach((u) => acquireFaviconRef(u))
+
+    // 在已更新引用计数后，再预热浏览器提供或自行抓取的 favicon，
+    // 这样 `warmFaviconCache` 有机会将条目持久化到 L2。预热异步，不阻塞渲染。
+    cacheBrowserFavicons(value).catch(() => {})
 
     cachedTopSites = { value, ts: Date.now() }
     return value
