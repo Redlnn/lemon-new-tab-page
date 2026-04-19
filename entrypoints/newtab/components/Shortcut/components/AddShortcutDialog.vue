@@ -88,16 +88,12 @@ async function submit() {
   resetFields()
 
   if (!shortcut.favicon) {
-    const notification = ElNotification({
+    ElNotification({
       title: t('shortcut.fetchingFavicon'),
       message: shortcut.url,
       type: 'info',
-      duration: 0,
-      showClose: false,
     })
     fetchFaviconWithCache(shortcut.url)
-      .then(() => notification.close())
-      .catch(() => notification.close())
   }
 }
 

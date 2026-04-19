@@ -110,16 +110,12 @@ async function submit() {
   resetFields()
 
   if (!engine.icon) {
-    const notification = ElNotification({
+    ElNotification({
       title: t('customSearchEngine.fetchingFavicon'),
       message: engine.url,
       type: 'info',
-      duration: 0,
-      showClose: false,
     })
     fetchFaviconWithCache(engine.url)
-      .then(() => notification.close())
-      .catch(() => notification.close())
   }
 }
 
