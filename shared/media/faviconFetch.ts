@@ -201,10 +201,11 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     let data: string | null = null
     let type: 'base64' | 'url' = 'base64'
 
+    // 不可信，会返回空的默认图标
     // 策略 A：Chromium 内部的 /_favicon/ API（不需要主机权限）
-    if (isChromium) {
-      data = await fetchViaChromeFaviconApi(pageUrl)
-    }
+    // if (isChromium) {
+    //   data = await fetchViaChromeFaviconApi(pageUrl)
+    // }
 
     // 策略 C：常见直接路径抓取（需要主机权限，适用于所有浏览器）
     if (!data) {
