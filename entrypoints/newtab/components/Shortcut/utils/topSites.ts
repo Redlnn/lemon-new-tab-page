@@ -9,6 +9,7 @@ import {
   releaseFaviconRef,
   warmFaviconCache,
 } from '@/shared/media'
+
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
 
 const TOP_SITES_TTL = 30_000 // 30 秒

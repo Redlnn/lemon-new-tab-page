@@ -176,11 +176,7 @@ async function addCurrentPage() {
       <template v-else>
         <div class="popup__content">
           <div class="popup__site-info">
-            <el-image
-              :src="currentTabFaviconRef"
-              class="popup__favicon"
-              fit="cover"
-            />
+            <el-image :src="currentTabFaviconRef" class="popup__favicon" fit="cover" />
             <div class="popup__site-text">
               <el-text class="popup__site-title" line-clamp="1">{{ currentTab.title }}</el-text>
               <el-text class="popup__site-url" type="info" size="small" line-clamp="1">{{

@@ -4,6 +4,7 @@ import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
 import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/shared/media'
+
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
 import {
   saveCustomSearchEngine,

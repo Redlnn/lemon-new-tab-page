@@ -65,7 +65,16 @@ const firefoxManifest = {
 
 const chromeManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'favicon', 'alarms', 'bookmarks', 'activeTab', 'tabs', 'scripting'],
+  permissions: [
+    'topSites',
+    'storage',
+    'favicon',
+    'alarms',
+    'bookmarks',
+    'activeTab',
+    'tabs',
+    'scripting',
+  ],
   optional_host_permissions: ['*://*/*'],
 }
 
