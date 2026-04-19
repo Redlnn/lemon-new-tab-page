@@ -248,25 +248,66 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
 /**
  * 将已知 favicon 直接写入 L1/L2 缓存，跳过网络请求。
  * 若已有未过期条目则不做任何修改。
- * 常用于注入浏览器提供的 favicon（例如 Firefox 的 topSites）。
+ * 常用于注入浏览器提供的 favicon（例如 Firefox 的 topSites 可能为 base64）。
+ * 也用于在获取到 favicon 图片的 URL 后，尝试抓取并升级为 base64（需要主机权限）。
  */
 export async function warmFaviconCache(
   pageUrl: string,
   faviconData: string,
   type: FaviconCacheEntry['type'] = 'url',
-): Promise<void> {
-  if (!_cacheEnabled) return
+): Promise<string | null> {
+  if (!_cacheEnabled) return null
   const origin = toOrigin(pageUrl)
-  if (!origin) return
+  if (!origin) return null
 
   const l1 = l1Cache.get(origin)
-  if (l1 && Date.now() - l1.fetchedAt <= FAVICON_CACHE_TTL) return
+  if (l1 && Date.now() - l1.fetchedAt <= FAVICON_CACHE_TTL) return null
   const l2 = await getFaviconCacheEntry(origin)
-  if (l2 && Date.now() - l2.fetchedAt <= FAVICON_CACHE_TTL) return
+  if (l2 && Date.now() - l2.fetchedAt <= FAVICON_CACHE_TTL) return null
 
-  const entry: FaviconCacheEntry = { data: faviconData, type, fetchedAt: Date.now() }
+  // 决定最终要写入缓存的数据：优先尝试将 URL 转为 base64（需要泛域名主机权限）
+  let finalData = faviconData
+  let finalType: FaviconCacheEntry['type'] = type
+
+  // 已经是 base64 数据则直接使用
+  if (type === 'base64' || (typeof faviconData === 'string' && faviconData.startsWith('data:'))) {
+    finalType = 'base64'
+  } else {
+    // 对于 URL 类型，优先尝试抓取传入的 faviconData（它通常是具体图片的 URL），
+    // 将其转换为 base64 后再存储。不要调用 fetchViaDirectUrls 去尝试常见路径。
+    try {
+      const hasHostPerm = await browser.permissions
+        .contains({ origins: ['*://*/*'] })
+        .catch(() => false)
+
+      if (hasHostPerm) {
+        try {
+          const targetUrl = new URL(faviconData, pageUrl)
+          const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(5000) })
+          if (!resp.ok) return null
+          const contentType = resp.headers.get('content-type') ?? ''
+          if (contentType.startsWith('text/') || contentType.includes('html')) return null
+          const blob = await resp.blob()
+          if (blob.size == 0) return null
+          finalData = await blobToDataURL(blob)
+          finalType = 'base64'
+        } catch {
+          // 直接抓取失败则忽略，回落使用传入的 URL
+        }
+      }
+    } catch {
+      // 忽略任何错误，回落到传入的 faviconData
+    }
+  }
+
+  const entry: FaviconCacheEntry = { data: finalData, type: finalType, fetchedAt: Date.now() }
   l1Cache.set(origin, entry)
-  await setFaviconCacheEntry(origin, entry).catch(() => {})
+  const refCount = refCounts.get(origin) ?? 0
+  if (refCount > 0) {
+    await setFaviconCacheEntry(origin, entry).catch(() => {})
+  }
+  if (finalType === 'base64') return finalData
+  return null
 }
 
 /** 增加 pageUrl 对应 origin 的引用计数。 */

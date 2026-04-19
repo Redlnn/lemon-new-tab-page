@@ -5,7 +5,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser } from 'wxt/browser'
 
-import { fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
+import { acquireFaviconRef, fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 import { initShortcut } from '@/shared/shortcut/shortcutStore'
 
@@ -111,6 +111,7 @@ onMounted(async () => {
         favIconUrl: tab.favIconUrl,
         tabId: tab.id,
       }
+      console.log('Current active tab:', tab)
 
       // 检查是否已经存在（规范化 URL 后比较）
       const normalizedTabUrl = normalizeUrlForCompare(tab.url)
@@ -128,25 +129,22 @@ onMounted(async () => {
 async function addCurrentPage() {
   if (!currentTab.value) return
 
-  let favicon: string | undefined = currentTab.value.favIconUrl || undefined
+  const hasValidFavicon =
+    currentTabFaviconRef.value && currentTabFaviconRef.value !== '/favicon.png'
 
-  if (!favicon && currentTab.value.tabId != null) {
-    const domFavicon = await getFaviconFromTabDOM(currentTab.value.tabId).catch(() => null)
-    if (domFavicon) {
-      favicon = domFavicon
-      warmFaviconCache(currentTab.value.url, domFavicon, 'url').catch(() => {})
-    }
-  }
-
-  if (!favicon) {
-    const fetched = await fetchFaviconWithCache(currentTab.value.url).catch(() => null)
-    if (fetched) favicon = fetched
+  let finalFavicon: string | null = null
+  if (hasValidFavicon) {
+    currentTab.value.favIconUrl = currentTabFaviconRef.value
+    acquireFaviconRef(currentTab.value.url)
+    finalFavicon = await warmFaviconCache(currentTab.value.url, currentTabFaviconRef.value)
   }
 
   shortcutStore.items.push({
     url: currentTab.value.url,
     title: currentTab.value.title,
-    ...(favicon ? { favicon } : {}),
+    // 此处若获取到图标则同时把缓存的base64结果存储到shortcutStore
+    // 后续ShortcutItem组件优先使用该字段，避免每次都调用getFaviconURL函数获取图标
+    favicon: finalFavicon ?? undefined,
   })
 
   await saveShortcut(shortcutStore.$state)
