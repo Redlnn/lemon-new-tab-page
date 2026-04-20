@@ -1,27 +1,14 @@
-import localForage from 'localforage'
+import { idbDelete, idbGet, idbSet } from '@/shared/storage/idb'
+
+export type { FaviconCacheEntry } from '@/shared/storage/idb'
 
 export const FAVICON_CACHE_TTL = 7 * 24 * 60 * 60 * 1000 // 7 days in ms
 
-export interface FaviconCacheEntry {
-  /** base64 数据 URL（例如 "data:image/...;base64,..."）或普通 HTTP/HTTPS 链接 */
-  data: string
-  /** 'base64' 表示完整的离线数据 URI；'url' 表示需要通过网络获取的地址 */
-  type: 'base64' | 'url'
-  /** 该条目被存储时的 Unix 时间戳（毫秒） */
-  fetchedAt: number
-}
-
-const faviconStore = localForage.createInstance({
-  name: '柠檬起始页',
-  driver: localForage.INDEXEDDB,
-  storeName: 'favicon',
-})
-
 /** 返回指定 origin 的缓存条目；若不存在或发生存储错误则返回 null。
  * 注意：该函数不会检查 TTL。调用方应比较 `entry.fetchedAt` 与 `FAVICON_CACHE_TTL`，并在过期时触发刷新。 */
-export async function getFaviconCacheEntry(origin: string): Promise<FaviconCacheEntry | null> {
+export async function getFaviconCacheEntry(origin: string) {
   try {
-    return await faviconStore.getItem<FaviconCacheEntry>(origin)
+    return (await idbGet('favicon', origin)) ?? null
   } catch {
     return null
   }
@@ -31,10 +18,10 @@ export async function getFaviconCacheEntry(origin: string): Promise<FaviconCache
  * 存储失败时会静默忽略错误。 */
 export async function setFaviconCacheEntry(
   origin: string,
-  entry: FaviconCacheEntry,
+  entry: import('@/shared/storage/idb').FaviconCacheEntry,
 ): Promise<void> {
   try {
-    await faviconStore.setItem(origin, entry)
+    await idbSet('favicon', origin, entry)
   } catch {
     // 缓存写入失败时静默处理
   }
@@ -43,7 +30,7 @@ export async function setFaviconCacheEntry(
 /** 删除指定 origin 的缓存条目（如果存在）。删除失败时会静默忽略错误。 */
 export async function deleteFaviconCacheEntry(origin: string): Promise<void> {
   try {
-    await faviconStore.removeItem(origin)
+    await idbDelete('favicon', origin)
   } catch {
     // 缓存删除失败时静默处理
   }

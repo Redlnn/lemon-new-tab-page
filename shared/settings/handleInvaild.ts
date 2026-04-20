@@ -20,7 +20,7 @@ async function downloadBackup() {
 export async function handleInvaildSettings() {
   const { DownloadRound } = await import('@vicons/material')
   const { ElButton } = await import('element-plus')
-  const localForage = await import('localforage')
+  const { idbDropDatabase } = await import('@/shared/storage/idb')
 
   await ElMessageBox.alert(
     () =>
@@ -59,7 +59,7 @@ export async function handleInvaildSettings() {
     await Promise.all([
       localStorage.clear(),
       sessionStorage.clear(),
-      localForage.dropInstance({ name: '柠檬起始页' }),
+      idbDropDatabase(),
       storage.clear('local'),
       storage.clear('session'),
     ])

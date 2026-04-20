@@ -9,7 +9,6 @@ import {
 } from '@vicons/material'
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-import localForage from 'localforage'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 
@@ -18,6 +17,7 @@ import { storage } from '#imports'
 import { downloadJSON } from '@/shared/getJson'
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcuts, useShortcutStore } from '@/shared/shortcut'
+import { idbDropDatabase } from '@/shared/storage/idb'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
 import {
@@ -98,7 +98,7 @@ async function clearWallpaperData() {
     background: 'var(--el-overlay-color-light)',
   })
 
-  Promise.all([resetSettings(), localForage.dropInstance({ name: '柠檬起始页' })])
+  Promise.all([resetSettings(), idbDropDatabase()])
     .catch(console.error)
     .finally(() => {
       setTimeout(() => {
@@ -118,7 +118,7 @@ function clearExtensionData() {
   Promise.all([
     localStorage.clear(),
     sessionStorage.clear(),
-    localForage.dropInstance({ name: '柠檬起始页' }),
+    idbDropDatabase(),
     storage.clear('local'),
     storage.clear('session'),
     storage.clear('sync'),

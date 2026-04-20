@@ -1,26 +1,21 @@
-import localForage from 'localforage'
+import { idbClear, idbDelete, idbGet, idbSet } from '@/shared/storage/idb'
 
 import { storage } from '#imports'
 
-export const COMMON_CONFIG: LocalForageOptions = {
-  name: '柠檬起始页',
-  driver: localForage.INDEXEDDB,
+/** 创建与 localforage API 兼容的 store 包装 */
+function createWallpaperStore(storeName: 'wallpaper' | 'wallpaperBing' | 'wallpaperDark') {
+  return {
+    getItem: async <T = Blob>(_key: string): Promise<T | null> =>
+      ((await idbGet(storeName, _key)) as T | undefined) ?? null,
+    setItem: <T = Blob>(_key: string, value: T) => idbSet(storeName, _key, value as Blob),
+    removeItem: (key: string) => idbDelete(storeName, key),
+    clear: () => idbClear(storeName),
+  }
 }
 
-export const useWallpaperStorge = localForage.createInstance({
-  ...COMMON_CONFIG,
-  storeName: 'wallpaper',
-})
-
-export const useBingWallpaperStorge = localForage.createInstance({
-  ...COMMON_CONFIG,
-  storeName: 'wallpaperBing',
-})
-
-export const useDarkWallpaperStorge = localForage.createInstance({
-  ...COMMON_CONFIG,
-  storeName: 'wallpaperDark',
-})
+export const useWallpaperStorge = createWallpaperStore('wallpaper')
+export const useBingWallpaperStorge = createWallpaperStore('wallpaperBing')
+export const useDarkWallpaperStorge = createWallpaperStore('wallpaperDark')
 
 interface WallpaperUrlCache {
   light: string
