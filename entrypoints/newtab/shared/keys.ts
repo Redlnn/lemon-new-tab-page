@@ -1,5 +1,13 @@
 import type { Browser } from 'wxt/browser'
 
+// 搜索框聚焦状态（由 App.vue provide，搜索框及相关组件 inject）
+export interface FocusState {
+  isFocused: boolean
+  focus: () => void
+  blur: () => void
+}
+export const FOCUS_STATE: InjectionKey<FocusState> = Symbol('focusState')
+
 // 打开设置页面
 export const OPEN_SETTINGS: InjectionKey<() => void> = Symbol('openSettings')
 

@@ -10,11 +10,11 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
 import { searchEngines } from '@newtab/shared/search'
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 
 const { t } = useTranslation()
 
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
 const searchEngineMenu = ref<TooltipInstance>()

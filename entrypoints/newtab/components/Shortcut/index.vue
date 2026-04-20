@@ -9,7 +9,7 @@ import { useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import AddShortcut from './components/AddShortcut.vue'
@@ -22,7 +22,7 @@ import { solveGridColumnFirst, usePagedGridLayout } from './composables/useShort
 import { useShortcutPagination } from './composables/useShortcutPagination'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
 

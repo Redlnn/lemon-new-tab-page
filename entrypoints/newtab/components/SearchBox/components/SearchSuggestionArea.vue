@@ -8,13 +8,13 @@ import { useSettingsStore } from '@/shared/settings'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { createSuggestRunner, searchSuggestAPIs, searchSuggestCache } from '@newtab/shared/search'
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 
 import SuggestListItem from './SuggestListItem.vue'
 
 const { t } = useTranslation()
 
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 const {
   histories: cachedHistories,

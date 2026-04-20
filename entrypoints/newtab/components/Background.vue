@@ -17,7 +17,7 @@ import { browser } from '#imports'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { useBgSwitchStore, useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 import { applyMonet } from '@newtab/shared/theme'
 import {
   bingWallpaperURLGetter,
@@ -32,7 +32,7 @@ let hasShortenedFade = false
 
 const isDark = useDark()
 
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 
 // 如果设置了快速初始动画，则直接使用短时间
@@ -42,7 +42,7 @@ if (settings.background.fastAnimation) {
 
 const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
-const switchStore = useBgSwitchStore()
+const isSwitching = ref(true)
 
 const imageRef = useTemplateRef('imageRef')
 const videoRef = useTemplateRef('videoRef')
@@ -292,7 +292,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   // 只在URL真正变化时才执行切换动画
   if (type !== BgType.Online && newUrl === bgURL.value) return
 
-  switchStore.start()
+  isSwitching.value = true
 
   // 等待过渡动画
   // 首次打开默认白屏，不需要等待白屏动画
@@ -307,7 +307,7 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   stopBgWatch?.() // 切换 provider 时清除旧监听
   stopBgWatch = await assignMaybeRef(bgURL, newUrl)
 
-  switchStore.end()
+  isSwitching.value = false
   if (settings.perf.bgSwitchAnim) {
     await promiseTimeout(animationDuration)
   }
@@ -433,7 +433,7 @@ async function onImgLoaded() {
     <div v-if="settings.background.vignette" class="background__vignette" />
     <Transition name="bg-fade">
       <div
-        v-show="!switchStore.isSwitching"
+        v-show="!isSwitching"
         ref="bgRef"
         class="background-container"
         :class="backgroundCss"

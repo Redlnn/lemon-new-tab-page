@@ -17,7 +17,7 @@ import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { getSearchEngineUrl, searchEngines } from '@newtab/shared/search'
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'
@@ -35,7 +35,7 @@ const originSearchText = ref<string | null>(null)
 const mounted = ref(false)
 const isComposing = ref(false) // 跟踪输入法组合输入状态
 
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
 const isWindowFocused = useWindowFocus()

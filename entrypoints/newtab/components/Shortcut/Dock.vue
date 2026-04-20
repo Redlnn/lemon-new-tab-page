@@ -11,7 +11,7 @@ import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore } from '@/shared/shortcut'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
@@ -42,7 +42,7 @@ const perf = usePerfClasses(() => ({
 const popperClass = perf('shortcut__menu-popper')
 
 const { t } = useTranslation()
-const focusStore = useFocusStore()
+const focusStore = useFocusState()
 const settings = useSettingsStore()
 const shortcutStore = useShortcutStore()
 

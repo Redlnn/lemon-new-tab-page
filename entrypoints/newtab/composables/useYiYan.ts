@@ -2,11 +2,11 @@ import { useWindowSize } from '@vueuse/core'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import { useFocusStore } from '@newtab/shared/store'
+import { useFocusState } from '@newtab/composables/useFocus'
 import { getYiyanCache, isCacheFresh, setYiyanCache, yiyanProviders } from '@newtab/shared/yiyan'
 
 export function useYiYan() {
-  const focusStore = useFocusStore()
+  const focusStore = useFocusState()
   const settings = useSettingsStore()
   const { height } = useWindowSize({ type: 'visual' })
 

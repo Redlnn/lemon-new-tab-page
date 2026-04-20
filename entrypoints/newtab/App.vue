@@ -12,6 +12,7 @@ import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 
 import {
+  FOCUS_STATE,
   OPEN_BACKGROUND_PREFERENCE,
   OPEN_SEARCH_ENGINE_PREFERENCE,
   OPEN_SETTINGS,
@@ -29,6 +30,7 @@ import Dock from './components/Shortcut/Dock.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
 import { useElementLang } from './composables/useElementLang'
+import { createFocusState } from './composables/useFocus'
 import { usePermission } from './composables/usePermission'
 import { shouldShowChangelog } from './shared/utils'
 
@@ -180,6 +182,7 @@ function openBookmarkSidebar() {
   }
 }
 
+provide(FOCUS_STATE, createFocusState())
 provide(OPEN_SETTINGS, () => SettingsPageRef.value?.toggle())
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
