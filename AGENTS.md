@@ -67,3 +67,7 @@
 - 对任意 TypeScript/Vue 逻辑改动，执行 `pnpm type-check`。
 - 执行 `pnpm lint` 做样式与静态检查。
 - 如果构建流程或 Manifest 行为变化，执行对应的 build/zip 命令。
+
+## Git 提交说明
+
+使用 gitmoji 作为 commit message 的开头，代替 `feat:` 等描述性前缀，后面跟简短描述，必要时添加更详细的正文说明
