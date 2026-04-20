@@ -8,7 +8,7 @@ import { settingsStorage } from './settingsStorage'
 export const useSettingsStore = defineStore('option', () => {
   const state = reactive(structuredClone(defaultSettings as CURRENT_CONFIG_SCHEMA))
 
-  async function init() {
+  const init = async () => {
     const settings = await settingsStorage.getValue()
     console.log('[Settings] Initializing settings storage with config version', settings.version)
 
@@ -26,7 +26,7 @@ export const useSettingsStore = defineStore('option', () => {
     })
   }
 
-  async function save() {
+  const save = async () => {
     await settingsStorage.setValue(toRaw(state))
   }
 

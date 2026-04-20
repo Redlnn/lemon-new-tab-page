@@ -7,7 +7,7 @@ import { defaultShortcuts, type Shortcuts, shortcutStorage } from './shortcutSto
 export const useShortcutStore = defineStore('shortcut', () => {
   const items = ref(structuredClone(defaultShortcuts.items))
 
-  async function init(options?: { acquire?: boolean }) {
+  const init = async (options?: { acquire?: boolean }) => {
     const shortcut = await shortcutStorage.getValue()
     items.value = shortcut.items
     if (options?.acquire ?? true) {
@@ -15,7 +15,7 @@ export const useShortcutStore = defineStore('shortcut', () => {
     }
   }
 
-  async function save(data?: Shortcuts) {
+  const save = async (data?: Shortcuts) => {
     if (data) {
       items.value = data.items
     }

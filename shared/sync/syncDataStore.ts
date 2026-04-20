@@ -76,7 +76,7 @@ export const useSyncDataStore = defineStore('sync', () => {
   const bookmarks = ref<Shortcuts>(structuredClone(defaultShortcuts))
   const lastUpdate = ref(0)
 
-  async function init() {
+  const init = async () => {
     // 幂等：如已初始化，先清理再重新初始化
     if (initialized) {
       deinit()
@@ -168,13 +168,13 @@ export const useSyncDataStore = defineStore('sync', () => {
     }
   }
 
-  function deinit() {
+  const deinit = () => {
     cleanupFns.forEach((fn) => fn())
     cleanupFns = []
     initialized = false
   }
 
-  async function checkCloudSync() {
+  const checkCloudSync = async () => {
     try {
       const localSettings = useSettingsStore()
       if (!localSettings.sync.enabled) {
@@ -221,7 +221,7 @@ export const useSyncDataStore = defineStore('sync', () => {
     }
   }
 
-  async function syncToCloud() {
+  const syncToCloud = async () => {
     try {
       const localSettings = useSettingsStore()
       if (!localSettings.sync.enabled) {
@@ -246,7 +246,7 @@ export const useSyncDataStore = defineStore('sync', () => {
     }
   }
 
-  async function applyCloudData() {
+  const applyCloudData = async () => {
     isProcessing = true
     try {
       const localSettings = useSettingsStore()

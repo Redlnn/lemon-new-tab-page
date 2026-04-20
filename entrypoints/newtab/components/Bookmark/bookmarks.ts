@@ -52,7 +52,7 @@ export const useBookmarkStore = defineStore('bookmark', () => {
   // 根据 `searchQuery` 过滤后的树。如果查询为空则返回完整的排序树。
   const filteredTree = computed(() => filteredResult.value)
 
-  function initWorker() {
+  const initWorker = () => {
     if (worker) return
     worker = new BookmarkWorker()
     i18next.on('languageChanged', (lang) => {
@@ -116,7 +116,7 @@ export const useBookmarkStore = defineStore('bookmark', () => {
     }
   }
 
-  async function loadBookmarks() {
+  const loadBookmarks = async () => {
     initWorker()
     const _tree = await browser.bookmarks.getTree()
     const children = _tree[0]?.children ?? []
@@ -132,22 +132,22 @@ export const useBookmarkStore = defineStore('bookmark', () => {
     })
   }
 
-  function _setSortMode(mode: SortMode) {
+  const _setSortMode = (mode: SortMode) => {
     if (sortMode.value === mode) return
     sortMode.value = mode
   }
 
-  function setSortMode(mode: SortMode) {
+  const setSortMode = (mode: SortMode) => {
     if (sortMode.value === mode) return
     sortMode.value = mode
     triggerFilter()
   }
 
-  function updateFilteredResult() {
+  const updateFilteredResult = () => {
     triggerFilter()
   }
 
-  function triggerFilter() {
+  const triggerFilter = () => {
     worker?.postMessage({
       type: 'FILTER',
       payload: {
@@ -158,7 +158,7 @@ export const useBookmarkStore = defineStore('bookmark', () => {
     })
   }
 
-  function terminateWorker() {
+  const terminateWorker = () => {
     // 移除书签事件监听
     if (bookmarkListeners.created) {
       try {

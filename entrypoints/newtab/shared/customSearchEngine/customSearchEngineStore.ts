@@ -11,13 +11,13 @@ import {
 export const useCustomSearchEngineStore = defineStore('customSearchEngine', () => {
   const items = ref(structuredClone(defaultCustomSearchEngine.items))
 
-  async function init() {
+  const init = async () => {
     const data = await customSearchEngineStorage.getValue()
     items.value = data.items
     data.items.forEach((item) => acquireFaviconRef(item.url))
   }
 
-  async function save(data?: CustomSearchEngineStorage) {
+  const save = async (data?: CustomSearchEngineStorage) => {
     if (data) {
       items.value = data.items
     }
