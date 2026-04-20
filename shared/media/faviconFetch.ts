@@ -22,8 +22,9 @@ export function setFaviconCacheEnabled(enabled: boolean): void {
 }
 
 // ---------------------------------------------------------------------------
-// L1 内存缓存（会话生命周期）
+// L1 内存缓存（会话生命周期），带简单 LRU 驱逐策略
 // ---------------------------------------------------------------------------
+const L1_MAX_SIZE = 200
 const l1Cache = new Map<string, FaviconCacheEntry>()
 
 // 去重：防止对同一 origin 发起多个并发请求
@@ -37,6 +38,34 @@ const refCounts = new Map<string, number>()
 const cleanupTimers = new Map<string, ReturnType<typeof setTimeout>>()
 // 在最后一次 release 后真正移除 L1/L2 条目的延迟（毫秒）
 const CLEANUP_DELAY_MS = 10_000
+
+// ---------------------------------------------------------------------------
+// 常见 favicon 路径（策略 C/D 共用）
+// ---------------------------------------------------------------------------
+const COMMON_FAVICON_PATHS = [
+  '/favicon.ico',
+  '/favicon.png',
+  '/favicon.svg',
+  '/favicon.webp',
+  '/apple-touch-icon.png',
+] as const
+
+// ---------------------------------------------------------------------------
+// L1 缓存 LRU 辅助
+// ---------------------------------------------------------------------------
+/** 写入 L1 缓存，超过上限时驱逐无引用的最旧条目 */
+function l1Set(key: string, entry: FaviconCacheEntry): void {
+  // Map 的插入顺序就是 LRU 顺序，删后重插可刷新位置
+  l1Cache.delete(key)
+  l1Cache.set(key, entry)
+  if (l1Cache.size <= L1_MAX_SIZE) return
+  // 驱逐最早插入且无引用的条目
+  for (const [k] of l1Cache) {
+    if ((refCounts.get(k) ?? 0) > 0) continue
+    l1Cache.delete(k)
+    if (l1Cache.size <= L1_MAX_SIZE) return
+  }
+}
 
 // ---------------------------------------------------------------------------
 // 辅助函数
@@ -185,45 +214,38 @@ async function fetchViaThirdPartyServices(pageUrl: string): Promise<string | nul
 /** 策略 C：尝试常见的 favicon 路径并获取 base64。
  *  需要授予泛域名主机权限（允许访问任意域名）。 */
 async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
-  const candidates = [
-    '/favicon.ico',
-    '/favicon.png',
-    '/favicon.svg',
-    '/favicon.webp',
-    '/apple-touch-icon.png',
-  ]
   const { origin } = new URL(pageUrl)
-  for (const path of candidates) {
-    try {
-      const resp = await fetch(origin + path, { signal: AbortSignal.timeout(2000) })
-      if (!resp.ok) continue
-      const contentType = resp.headers.get('content-type') ?? ''
-      if (contentType.startsWith('text/') || contentType.includes('html')) continue
-      const blob = await resp.blob()
-      if (blob.size === 0) continue
-      return blobToDataURL(blob)
-    } catch {
-      // 继续尝试下一个候选路径
-    }
+  try {
+    return await Promise.any(
+      COMMON_FAVICON_PATHS.map(async (path) => {
+        const resp = await fetch(origin + path, { signal: AbortSignal.timeout(2000) })
+        if (!resp.ok) throw new Error('not ok')
+        const contentType = resp.headers.get('content-type') ?? ''
+        if (contentType.startsWith('text/') || contentType.includes('html')) throw new Error('html')
+        const blob = await resp.blob()
+        if (blob.size === 0) throw new Error('empty')
+        return blobToDataURL(blob)
+      }),
+    )
+  } catch {
+    return null
   }
-  return null
 }
 
 /** 策略 D：通过 Image 元素探测常见路径（无需 CORS，仅返回 URL）。 */
 async function probeViaImageElement(pageUrl: string): Promise<string | null> {
-  const candidates = [
-    '/favicon.ico',
-    '/favicon.png',
-    '/favicon.svg',
-    '/favicon.webp',
-    '/apple-touch-icon.png',
-  ]
   const { origin } = new URL(pageUrl)
-  for (const path of candidates) {
-    const url = origin + path
-    if (await probeImageUrl(url)) return url
+  try {
+    return await Promise.any(
+      COMMON_FAVICON_PATHS.map(async (path) => {
+        const url = origin + path
+        if (await probeImageUrl(url)) return url
+        throw new Error('probe failed')
+      }),
+    )
+  } catch {
+    return null
   }
-  return null
 }
 
 // ---------------------------------------------------------------------------
@@ -270,7 +292,7 @@ export async function fetchFaviconWithCache(pageUrl: string): Promise<string | n
   // L2 hit
   const l2 = await getFaviconCacheEntry(origin)
   if (l2) {
-    l1Cache.set(origin, l2)
+    l1Set(origin, l2)
     const expired = Date.now() - l2.fetchedAt > FAVICON_CACHE_TTL
     if (!expired) return l2.data
     refreshInBackground(pageUrl, origin)
@@ -327,7 +349,7 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     if (data) {
       const entry: FaviconCacheEntry = { data, type, fetchedAt: Date.now() }
       // 始终保留到 L1（会话）；仅当该 origin 有引用时才持久化到 L2
-      l1Cache.set(origin, entry)
+      l1Set(origin, entry)
       const refCount = refCounts.get(origin) ?? 0
       if (refCount > 0) {
         await setFaviconCacheEntry(origin, entry).catch(() => {})
@@ -365,7 +387,11 @@ export async function warmFaviconCache(
   const l1 = l1Cache.get(origin)
   if (l1 && Date.now() - l1.fetchedAt <= FAVICON_CACHE_TTL) return null
   const l2 = await getFaviconCacheEntry(origin)
-  if (l2 && Date.now() - l2.fetchedAt <= FAVICON_CACHE_TTL) return null
+  if (l2 && Date.now() - l2.fetchedAt <= FAVICON_CACHE_TTL) {
+    // L2 命中但 L1 未命中 → 提升到 L1 避免下次重复 IDB 读取
+    l1Set(origin, l2)
+    return null
+  }
 
   // 决定最终要写入缓存的数据：优先尝试将 URL 转为 base64（需要泛域名主机权限）
   let finalData = faviconData
@@ -386,13 +412,16 @@ export async function warmFaviconCache(
         try {
           const targetUrl = new URL(faviconData, pageUrl)
           const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(2000) })
-          if (!resp.ok) return null
-          const contentType = resp.headers.get('content-type') ?? ''
-          if (contentType.startsWith('text/') || contentType.includes('html')) return null
-          const blob = await resp.blob()
-          if (blob.size == 0) return null
-          finalData = await blobToDataURL(blob)
-          finalType = 'base64'
+          if (resp.ok) {
+            const contentType = resp.headers.get('content-type') ?? ''
+            if (!contentType.startsWith('text/') && !contentType.includes('html')) {
+              const blob = await resp.blob()
+              if (blob.size > 0) {
+                finalData = await blobToDataURL(blob)
+                finalType = 'base64'
+              }
+            }
+          }
         } catch {
           // 直接抓取失败则忽略，回落使用传入的 URL
         }
@@ -403,7 +432,7 @@ export async function warmFaviconCache(
   }
 
   const entry: FaviconCacheEntry = { data: finalData, type: finalType, fetchedAt: Date.now() }
-  l1Cache.set(origin, entry)
+  l1Set(origin, entry)
   const refCount = refCounts.get(origin) ?? 0
   if (refCount > 0) {
     await setFaviconCacheEntry(origin, entry).catch(() => {})
