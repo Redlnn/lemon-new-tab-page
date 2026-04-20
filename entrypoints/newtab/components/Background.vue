@@ -100,12 +100,12 @@ const mouseX = ref(typeof window !== 'undefined' ? window.innerWidth / 2 : 960)
 const mouseY = ref(typeof window !== 'undefined' ? window.innerHeight / 2 : 540)
 
 watchEffect((onCleanup) => {
-  if (!settings.background.parallax) return
+  if (!settings.background.parallax || documentVisibility.value === 'hidden') return
 
   const onMouseMove = useThrottleFn((e: MouseEvent) => {
     mouseX.value = e.clientX
     mouseY.value = e.clientY
-  }, 16)
+  }, 33)
   const onMouseLeave = () => {
     mouseX.value = window.innerWidth / 2
     mouseY.value = window.innerHeight / 2
