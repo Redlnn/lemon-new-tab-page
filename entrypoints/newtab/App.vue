@@ -16,7 +16,6 @@ import {
   OPEN_SEARCH_ENGINE_PREFERENCE,
   OPEN_SETTINGS,
 } from '@newtab/shared/keys'
-
 import { shownFaviconCacheHintStorage } from '@newtab/shared/storages/notificationStorage'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
