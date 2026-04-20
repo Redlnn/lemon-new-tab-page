@@ -3,6 +3,8 @@ import { OnLongPress } from '@vueuse/components'
 import { useDebounceFn, useResizeObserver, useWindowSize } from '@vueuse/core'
 
 import { useTranslation } from 'i18next-vue'
+import Apps24Regular from '~icons/fluent/apps-24-regular'
+import AddRound from '~icons/ic/round-add'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -17,8 +19,6 @@ import { useShortcutData } from './composables/useShortcutData'
 import { useDockLayout } from './composables/useShortcutLayout'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
 import Launchpad from './Launchpad.vue'
-import Apps24Regular from '~icons/fluent/apps-24-regular'
-import AddRound from '~icons/ic/round-add'
 
 // Stable Ref map so we don't re-create Refs on every render
 const faviconRefMap = new Map<string, Ref<string>>()

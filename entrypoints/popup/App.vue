@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import Add12Filled from '~icons/fluent/add-12-filled'
+import Pin12Regular from '~icons/fluent/pin-12-regular'
+import CheckRound from '~icons/ic/round-check'
+import CloseRound from '~icons/ic/round-close'
 
 import { browser } from 'wxt/browser'
 
 import { acquireFaviconRef, fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
 import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
 import { initShortcut } from '@/shared/shortcut/shortcutStore'
-import Add12Filled from '~icons/fluent/add-12-filled'
-import Pin12Regular from '~icons/fluent/pin-12-regular'
-import CheckRound from '~icons/ic/round-check'
-import CloseRound from '~icons/ic/round-close'
 
 const { t } = useTranslation('popup')
 const shortcutStore = useShortcutStore()

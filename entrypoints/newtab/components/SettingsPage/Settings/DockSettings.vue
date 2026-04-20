@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import RestoreRound from '~icons/ic/round-restore'
 
 import { useSettingsStore } from '@/shared/settings'
 
 import { blockedTopSitesStorage } from '@newtab/shared/storages/topSitesStorage'
-import RestoreRound from '~icons/ic/round-restore'
 
 const { t } = useTranslation('settings')
 

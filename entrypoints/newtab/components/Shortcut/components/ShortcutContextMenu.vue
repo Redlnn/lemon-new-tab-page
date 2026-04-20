@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-
-import { useShortcutContextMenu } from '../composables/useShortcutContextMenu'
 import Edit16Regular from '~icons/fluent/edit-16-regular'
 import Pin12Regular from '~icons/fluent/pin-12-regular'
 import PinOff16Regular from '~icons/fluent/pin-off-16-regular'
@@ -10,6 +8,8 @@ import Star12Regular from '~icons/fluent/star-12-regular'
 import BlockRound from '~icons/ic/round-block'
 import ContentCopyRound from '~icons/ic/round-content-copy'
 import OpenInNewRound from '~icons/ic/round-open-in-new'
+
+import { useShortcutContextMenu } from '../composables/useShortcutContextMenu'
 
 const props = withDefaults(
   defineProps<{

@@ -1,5 +1,6 @@
-import BookmarkTwotone from '~icons/ic/twotone-bookmark'
 <script lang="ts" setup>
+import BookmarkTwotone from '~icons/ic/twotone-bookmark'
+
 const emit = defineEmits<{
   (e: 'open-bookmark-sidebar'): void
 }>()

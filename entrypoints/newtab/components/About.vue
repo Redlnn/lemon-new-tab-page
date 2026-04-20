@@ -2,6 +2,10 @@
 import { useDateFormat, useNow } from '@vueuse/core'
 
 import { useTranslation } from 'i18next-vue'
+import Chrome from '~icons/fa6-brands/chrome'
+import Edge from '~icons/fa6-brands/edge'
+import Firefox from '~icons/fa6-brands/firefox-browser'
+import Github from '~icons/fa6-brands/github'
 
 import { browser } from 'wxt/browser'
 
@@ -13,10 +17,6 @@ import BiliBili from '@newtab/assets/bili.svg?component'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 import { yiyanProviders } from '@newtab/shared/yiyan'
-import Chrome from '~icons/fa6-brands/chrome'
-import Edge from '~icons/fa6-brands/edge'
-import Firefox from '~icons/fa6-brands/firefox-browser'
-import Github from '~icons/fa6-brands/github'
 
 const { t } = useTranslation()
 

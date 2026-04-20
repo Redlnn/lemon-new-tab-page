@@ -3,8 +3,10 @@ import { useTimeoutFn } from '@vueuse/core'
 
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
-
-import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import DeleteForeverOutlined from '~icons/ic/outline-delete-forever'
+import CloudOffRound from '~icons/ic/round-cloud-off'
+import DownloadRound from '~icons/ic/round-download'
+import FileUploadRound from '~icons/ic/round-file-upload'
 
 import { storage } from '#imports'
 
@@ -14,15 +16,12 @@ import { saveShortcut, type Shortcuts, useShortcutStore } from '@/shared/shortcu
 import { idbDropDatabase } from '@/shared/storage/idb'
 import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
 
+import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {
   type CustomSearchEngineStorage,
   saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
-import CloudOffRound from '~icons/ic/round-cloud-off'
-import DeleteForeverOutlined from '~icons/ic/outline-delete-forever'
-import DownloadRound from '~icons/ic/round-download'
-import FileUploadRound from '~icons/ic/round-file-upload'
 
 const { t, i18next } = useTranslation('settings')
 
@@ -332,10 +331,7 @@ function changeLanguage(lang: string) {
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.faviconCache.label') }}</div>
-      <el-switch
-        v-model="settings.faviconCacheEnabled"
-        :before-change="beforeFaviconCacheChange"
-      />
+      <el-switch v-model="settings.faviconCacheEnabled" :before-change="beforeFaviconCacheChange" />
     </div>
     <p class="settings__item--note">
       {{ t('other.faviconCache.description') }}

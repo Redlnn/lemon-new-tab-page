@@ -4,6 +4,9 @@ import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } f
 
 import { useTranslation } from 'i18next-vue'
 import { useDraggable } from 'vue-draggable-plus'
+import Pin12Regular from '~icons/fluent/pin-12-regular'
+import AddRound from '~icons/ic/round-add'
+import SettingsRound from '~icons/ic/round-settings'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -16,9 +19,6 @@ import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 import ShortcutContextMenu from './components/ShortcutContextMenu.vue'
 import { useShortcutData } from './composables/useShortcutData'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
-import Pin12Regular from '~icons/fluent/pin-12-regular'
-import AddRound from '~icons/ic/round-add'
-import SettingsRound from '~icons/ic/round-settings'
 
 // Stable Ref map so we don't re-create Refs on every render
 const faviconRefMap = new Map<string, Ref<string>>()

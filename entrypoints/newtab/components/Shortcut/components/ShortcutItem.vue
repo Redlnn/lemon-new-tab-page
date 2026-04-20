@@ -2,12 +2,13 @@
 import { OnLongPress } from '@vueuse/components'
 import { toRef } from 'vue'
 
+import Pin12Regular from '~icons/fluent/pin-12-regular'
+
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
-import Pin12Regular from '~icons/fluent/pin-12-regular'
 
 const settings = useSettingsStore()
 

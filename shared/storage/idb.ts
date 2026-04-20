@@ -92,7 +92,12 @@ function getDB() {
   return dbPromise
 }
 
-type StoreName = 'favicon' | 'wallpaper' | 'wallpaperBing' | 'wallpaperDark' | 'onlineWallpaperCache'
+type StoreName =
+  | 'favicon'
+  | 'wallpaper'
+  | 'wallpaperBing'
+  | 'wallpaperDark'
+  | 'onlineWallpaperCache'
 
 /** 获取指定 store 中某个 key 的值 */
 export async function idbGet<S extends StoreName>(

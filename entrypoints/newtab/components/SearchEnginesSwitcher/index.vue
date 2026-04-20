@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import Plus from '~icons/fa6-solid/plus'
+import CheckmarkCircle12Filled from '~icons/fluent/checkmark-circle-12-filled'
 
 import { releaseFaviconRef } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
@@ -16,8 +18,6 @@ import { searchEngines } from '@newtab/shared/search'
 
 import AddCustomSearchEngine from './components/AddCustomSearchEngine.vue'
 import CustomEngineItem from './components/CustomEngineItem.vue'
-import Plus from '~icons/fa6-solid/plus'
-import CheckmarkCircle12Filled from '~icons/fluent/checkmark-circle-12-filled'
 
 const { t } = useTranslation()
 

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
+import BubbleChartRound from '~icons/ic/round-bubble-chart'
+import CloudOffRound from '~icons/ic/round-cloud-off'
 
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import { OPEN_BACKGROUND_PREFERENCE } from '@newtab/shared/keys'
-import BubbleChartRound from '~icons/ic/round-bubble-chart'
-import CloudOffRound from '~icons/ic/round-cloud-off'
 
 const { t } = useTranslation('settings')
 

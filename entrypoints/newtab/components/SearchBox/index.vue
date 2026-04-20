@@ -8,6 +8,7 @@ import {
 } from '@vueuse/core'
 
 import { useTranslation } from 'i18next-vue'
+import Search from '~icons/fa6-solid/magnifying-glass'
 
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
@@ -20,7 +21,6 @@ import { useFocusStore } from '@newtab/shared/store'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'
-import Search from '~icons/fa6-solid/magnifying-glass'
 
 const searchBox = useTemplateRef('searchBox')
 const searchForm = useTemplateRef('searchForm')

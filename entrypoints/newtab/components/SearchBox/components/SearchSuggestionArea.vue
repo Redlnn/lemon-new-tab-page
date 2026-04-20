@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import TrashAlt from '~icons/fa6-solid/trash-can'
 
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
@@ -10,7 +11,6 @@ import { createSuggestRunner, searchSuggestAPIs, searchSuggestCache } from '@new
 import { useFocusStore } from '@newtab/shared/store'
 
 import SuggestListItem from './SuggestListItem.vue'
-import TrashAlt from '~icons/fa6-solid/trash-can'
 
 const { t } = useTranslation()
 

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import BubbleChartRound from '~icons/ic/round-bubble-chart'
+import CloudOffRound from '~icons/ic/round-cloud-off'
 
 import { useSettingsStore } from '@/shared/settings'
 
 import { OPEN_SEARCH_ENGINE_PREFERENCE } from '@newtab/shared/keys'
 import { searchSuggestAPIs } from '@newtab/shared/search'
-import BubbleChartRound from '~icons/ic/round-bubble-chart'
-import CloudOffRound from '~icons/ic/round-cloud-off'
 
 const { t } = useTranslation('settings')
 

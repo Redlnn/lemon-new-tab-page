@@ -2,9 +2,9 @@
 import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
 import type { DialogInstance, ScrollbarInstance } from 'element-plus'
+import CloseRound from '~icons/ic/round-close'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
-import CloseRound from '~icons/ic/round-close'
 
 interface Props {
   title?: string
