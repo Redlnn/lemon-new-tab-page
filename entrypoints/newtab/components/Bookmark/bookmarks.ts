@@ -39,169 +39,178 @@ const bookmarkListeners: {
   importEnded?: () => void
 } = {}
 
-export const useBookmarkStore = defineStore('bookmark', {
-  state: () => ({
-    tree: [] as Browser.bookmarks.BookmarkTreeNode[],
-    loaded: false,
-    sortMode: SortMode.Original as SortMode,
-    searchQuery: '',
-    // 根据查询/排序计算后的树结果
-    filteredResult: [] as Browser.bookmarks.BookmarkTreeNode[],
-    // 首个匹配路径（按照排序/展示顺序），空数组表示无匹配
-    firstMatchPath: [] as string[],
-  }),
+export const useBookmarkStore = defineStore('bookmark', () => {
+  const tree = ref<Browser.bookmarks.BookmarkTreeNode[]>([])
+  const loaded = ref(false)
+  const sortMode = ref<SortMode>(SortMode.Original)
+  const searchQuery = ref('')
+  // 根据查询/排序计算后的树结果
+  const filteredResult = ref<Browser.bookmarks.BookmarkTreeNode[]>([])
+  // 首个匹配路径（按照排序/展示顺序），空数组表示无匹配
+  const firstMatchPath = ref<string[]>([])
 
-  actions: {
-    initWorker() {
-      if (worker) return
-      worker = new BookmarkWorker()
-      i18next.on('languageChanged', (lang) => {
-        worker?.postMessage({
-          type: 'UPDATE_SETTINGS',
-          payload: {
-            language: lang,
-          },
-        })
-        this.triggerFilter()
-      })
+  // 根据 `searchQuery` 过滤后的树。如果查询为空则返回完整的排序树。
+  const filteredTree = computed(() => filteredResult.value)
 
-      worker.onmessage = (e) => {
-        const { type, filteredResult, firstMatchPath } = e.data
-        if (type === 'INIT_DONE' || type === 'FILTER_DONE') {
-          this.filteredResult = filteredResult
-          this.firstMatchPath = firstMatchPath
-          if (type === 'INIT_DONE') this.loaded = true
-        }
-      }
-
-      // 添加书签变更监听，变更时重新加载书签并刷新 worker 缓存
-      if (!bookmarkListeners.created) {
-        bookmarkListeners.created = () => {
-          this.loadBookmarks().catch(() => {})
-        }
-        browser.bookmarks.onCreated.addListener(bookmarkListeners.created)
-      }
-
-      if (!bookmarkListeners.removed) {
-        bookmarkListeners.removed = () => {
-          this.loadBookmarks().catch(() => {})
-        }
-        browser.bookmarks.onRemoved.addListener(bookmarkListeners.removed)
-      }
-
-      if (!bookmarkListeners.changed) {
-        bookmarkListeners.changed = () => {
-          this.loadBookmarks().catch(() => {})
-        }
-        browser.bookmarks.onChanged.addListener(bookmarkListeners.changed)
-      }
-
-      if (!bookmarkListeners.moved) {
-        bookmarkListeners.moved = () => {
-          this.loadBookmarks().catch(() => {})
-        }
-        browser.bookmarks.onMoved.addListener(bookmarkListeners.moved)
-      }
-
-      if (!bookmarkListeners.importEnded) {
-        bookmarkListeners.importEnded = () => {
-          this.loadBookmarks().catch(() => {})
-        }
-        // importEnded 在导入书签完成时触发（可选）
-        try {
-          browser.bookmarks.onImportEnded.addListener(bookmarkListeners.importEnded)
-        } catch {
-          // 某些浏览器/环境可能不支持该事件，忽略错误
-        }
-      }
-    },
-
-    async loadBookmarks() {
-      this.initWorker()
-      const tree = await browser.bookmarks.getTree()
-      const _tree = tree[0]?.children ?? []
-      this.tree = _tree
-
+  function initWorker() {
+    if (worker) return
+    worker = new BookmarkWorker()
+    i18next.on('languageChanged', (lang) => {
       worker?.postMessage({
-        type: 'INIT',
+        type: 'UPDATE_SETTINGS',
         payload: {
-          tree: _tree,
-          language: i18next.language,
-          sortMode: this.sortMode,
+          language: lang,
         },
       })
-    },
+      triggerFilter()
+    })
 
-    _setSortMode(mode: SortMode) {
-      if (this.sortMode === mode) return
-      this.sortMode = mode
-    },
-
-    setSortMode(mode: SortMode) {
-      if (this.sortMode === mode) return
-      this.sortMode = mode
-      this.triggerFilter()
-    },
-
-    updateFilteredResult() {
-      this.triggerFilter()
-    },
-
-    triggerFilter() {
-      worker?.postMessage({
-        type: 'FILTER',
-        payload: {
-          query: this.searchQuery,
-          sortMode: this.sortMode,
-          language: i18next.language,
-        },
-      })
-    },
-
-    terminateWorker() {
-      // 移除书签事件监听
-      if (bookmarkListeners.created) {
-        try {
-          browser.bookmarks.onCreated.removeListener(bookmarkListeners.created)
-        } catch {}
-        delete bookmarkListeners.created
+    worker.onmessage = (e) => {
+      const { type, filteredResult: result, firstMatchPath: path } = e.data
+      if (type === 'INIT_DONE' || type === 'FILTER_DONE') {
+        filteredResult.value = result
+        firstMatchPath.value = path
+        if (type === 'INIT_DONE') loaded.value = true
       }
-      if (bookmarkListeners.removed) {
-        try {
-          browser.bookmarks.onRemoved.removeListener(bookmarkListeners.removed)
-        } catch {}
-        delete bookmarkListeners.removed
-      }
-      if (bookmarkListeners.changed) {
-        try {
-          browser.bookmarks.onChanged.removeListener(bookmarkListeners.changed)
-        } catch {}
-        delete bookmarkListeners.changed
-      }
-      if (bookmarkListeners.moved) {
-        try {
-          browser.bookmarks.onMoved.removeListener(bookmarkListeners.moved)
-        } catch {}
-        delete bookmarkListeners.moved
-      }
-      if (bookmarkListeners.importEnded) {
-        try {
-          browser.bookmarks.onImportEnded.removeListener(bookmarkListeners.importEnded)
-        } catch {}
-        delete bookmarkListeners.importEnded
-      }
+    }
 
-      if (worker) {
-        worker.terminate()
-        worker = null
+    // 添加书签变更监听，变更时重新加载书签并刷新 worker 缓存
+    if (!bookmarkListeners.created) {
+      bookmarkListeners.created = () => {
+        loadBookmarks().catch(() => {})
       }
-    },
-  },
+      browser.bookmarks.onCreated.addListener(bookmarkListeners.created)
+    }
 
-  getters: {
-    // 根据 `searchQuery` 过滤后的树。如果查询为空则返回完整的排序树。
-    filteredTree(): Browser.bookmarks.BookmarkTreeNode[] {
-      return this.filteredResult
-    },
-  },
+    if (!bookmarkListeners.removed) {
+      bookmarkListeners.removed = () => {
+        loadBookmarks().catch(() => {})
+      }
+      browser.bookmarks.onRemoved.addListener(bookmarkListeners.removed)
+    }
+
+    if (!bookmarkListeners.changed) {
+      bookmarkListeners.changed = () => {
+        loadBookmarks().catch(() => {})
+      }
+      browser.bookmarks.onChanged.addListener(bookmarkListeners.changed)
+    }
+
+    if (!bookmarkListeners.moved) {
+      bookmarkListeners.moved = () => {
+        loadBookmarks().catch(() => {})
+      }
+      browser.bookmarks.onMoved.addListener(bookmarkListeners.moved)
+    }
+
+    if (!bookmarkListeners.importEnded) {
+      bookmarkListeners.importEnded = () => {
+        loadBookmarks().catch(() => {})
+      }
+      // importEnded 在导入书签完成时触发（可选）
+      try {
+        browser.bookmarks.onImportEnded.addListener(bookmarkListeners.importEnded)
+      } catch {
+        // 某些浏览器/环境可能不支持该事件，忽略错误
+      }
+    }
+  }
+
+  async function loadBookmarks() {
+    initWorker()
+    const _tree = await browser.bookmarks.getTree()
+    const children = _tree[0]?.children ?? []
+    tree.value = children
+
+    worker?.postMessage({
+      type: 'INIT',
+      payload: {
+        tree: children,
+        language: i18next.language,
+        sortMode: sortMode.value,
+      },
+    })
+  }
+
+  function _setSortMode(mode: SortMode) {
+    if (sortMode.value === mode) return
+    sortMode.value = mode
+  }
+
+  function setSortMode(mode: SortMode) {
+    if (sortMode.value === mode) return
+    sortMode.value = mode
+    triggerFilter()
+  }
+
+  function updateFilteredResult() {
+    triggerFilter()
+  }
+
+  function triggerFilter() {
+    worker?.postMessage({
+      type: 'FILTER',
+      payload: {
+        query: searchQuery.value,
+        sortMode: sortMode.value,
+        language: i18next.language,
+      },
+    })
+  }
+
+  function terminateWorker() {
+    // 移除书签事件监听
+    if (bookmarkListeners.created) {
+      try {
+        browser.bookmarks.onCreated.removeListener(bookmarkListeners.created)
+      } catch {}
+      delete bookmarkListeners.created
+    }
+    if (bookmarkListeners.removed) {
+      try {
+        browser.bookmarks.onRemoved.removeListener(bookmarkListeners.removed)
+      } catch {}
+      delete bookmarkListeners.removed
+    }
+    if (bookmarkListeners.changed) {
+      try {
+        browser.bookmarks.onChanged.removeListener(bookmarkListeners.changed)
+      } catch {}
+      delete bookmarkListeners.changed
+    }
+    if (bookmarkListeners.moved) {
+      try {
+        browser.bookmarks.onMoved.removeListener(bookmarkListeners.moved)
+      } catch {}
+      delete bookmarkListeners.moved
+    }
+    if (bookmarkListeners.importEnded) {
+      try {
+        browser.bookmarks.onImportEnded.removeListener(bookmarkListeners.importEnded)
+      } catch {}
+      delete bookmarkListeners.importEnded
+    }
+
+    if (worker) {
+      worker.terminate()
+      worker = null
+    }
+  }
+
+  return {
+    tree,
+    loaded,
+    sortMode,
+    searchQuery,
+    filteredResult,
+    firstMatchPath,
+    filteredTree,
+    initWorker,
+    loadBookmarks,
+    _setSortMode,
+    setSortMode,
+    updateFilteredResult,
+    triggerFilter,
+    terminateWorker,
+  }
 })

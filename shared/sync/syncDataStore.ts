@@ -15,6 +15,7 @@ import { defaultShortcuts, useShortcutStore } from '../shortcut'
 
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
+import type { Shortcuts } from '../shortcut/shortcutStorage'
 
 const debouncedSend = useDebounceFn(async (data: SyncData) => {
   try {
@@ -70,282 +71,291 @@ const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
   7: (s) => migrateFromVer7To8(s as SettingsSchemaV7),
 }
 
-export const useSyncDataStore = defineStore('sync', {
-  state: (): SyncData => ({
-    settings: structuredClone(defaultSettings),
-    bookmarks: structuredClone(defaultShortcuts),
-    lastUpdate: 0,
-  }),
+export const useSyncDataStore = defineStore('sync', () => {
+  const settings = ref<CURRENT_CONFIG_SCHEMA>(structuredClone(defaultSettings))
+  const bookmarks = ref<Shortcuts>(structuredClone(defaultShortcuts))
+  const lastUpdate = ref(0)
 
-  actions: {
-    async init() {
-      // 幂等：如已初始化，先清理再重新初始化
-      if (initialized) {
-        this.deinit()
+  async function init() {
+    // 幂等：如已初始化，先清理再重新初始化
+    if (initialized) {
+      deinit()
+    }
+
+    const localSettings = useSettingsStore()
+    isProcessing = true
+    try {
+      const cloudData = await syncDataStorage.getValue()
+      if (cloudData.settings.pluginVersion === '') {
+        // 默认配置，使用本地配置覆盖
+        cloudData.settings = localSettings.$state
+      }
+      settings.value = cloudData.settings
+      bookmarks.value = cloudData.bookmarks
+      lastUpdate.value = cloudData.lastUpdate
+
+      // 初始化时进行一次同步检查
+      if (!(await checkCloudSync())) {
+        return
       }
 
-      const localSettings = useSettingsStore()
-      isProcessing = true
-      try {
-        const cloudData = await syncDataStorage.getValue()
-        if (cloudData.settings.pluginVersion === '') {
-          // 默认配置，使用本地配置覆盖
-          cloudData.settings = localSettings.$state
-        }
-        this.$patch(cloudData)
+      browser.runtime.sendMessage({
+        type: 'SYNC_INITED',
+      } as SyncMessage)
 
-        // 初始化时进行一次同步检查
-        if (!(await this.checkCloudSync())) {
-          return
-        }
+      // 监听同步储存更新消息
+      browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
 
-        browser.runtime.sendMessage({
-          type: 'SYNC_INITED',
-        } as SyncMessage)
+      // 监听变化触发同步
+      // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
+      // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
+      // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
+      let prevSyncEnabled = localSettings.sync.enabled
 
-        // 监听同步储存更新消息
-        browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
+      const subChange = async () => {
+        const nowEnabled = localSettings.sync.enabled
 
-        // 监听变化触发同步
-        // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
-        // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
-        // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
-        let prevSyncEnabled = localSettings.sync.enabled
-
-        const subChange = async () => {
-          const nowEnabled = localSettings.sync.enabled
-
-          // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
-          if (isProcessing) {
-            prevSyncEnabled = nowEnabled
-            return
-          }
-
-          if (!nowEnabled) {
-            return
-          }
-
-          // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
-          if (!prevSyncEnabled && nowEnabled) {
-            prevSyncEnabled = true
-            await this.checkCloudSync()
-            return
-          }
-
+        // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
+        if (isProcessing) {
           prevSyncEnabled = nowEnabled
-
-          await localSyncDataStorage.setValue({
-            lastUpdate: Date.now(),
-          })
-          await this.checkCloudSync()
-        }
-
-        const unsubSettings = localSettings.$subscribe(subChange)
-        const unsubShortcut = useShortcutStore().$subscribe(async (mutation) => {
-          if (mutation.type !== MutationType.direct) {
-            // 防止刚开就认为数据过旧，只有 init 会整个替换 state
-            return
-          }
-          await subChange()
-        })
-
-        cleanupFns = [
-          () => browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage),
-          unsubSettings,
-          unsubShortcut,
-        ]
-        initialized = true
-      } catch (err) {
-        if (syncEventCallback) {
-          if (err instanceof Error) {
-            syncEventCallback('sync-error', err)
-          } else {
-            syncEventCallback('sync-error', new Error(String(err)))
-          }
-        }
-      } finally {
-        isProcessing = false
-      }
-    },
-
-    deinit() {
-      cleanupFns.forEach((fn) => fn())
-      cleanupFns = []
-      initialized = false
-    },
-
-    async checkCloudSync() {
-      try {
-        const localSettings = useSettingsStore()
-        if (!localSettings.sync.enabled) {
-          return false
-        }
-
-        const cloudData = await syncDataStorage.getValue()
-        const localSyncData = await localSyncDataStorage.getValue()
-
-        // 云端更新时间与本地更新时间一致
-        if (cloudData.lastUpdate === localSyncData.lastUpdate) {
-          return true
-        }
-
-        // 检查版本
-        if (cloudData.settings.version > localSettings.version) {
-          localSettings.sync.enabled = false
-          if (syncEventCallback) {
-            syncEventCallback('version-mismatch', {
-              cloud: String(cloudData.settings.version),
-              local: String(localSettings.version),
-            })
-          }
-          return false
-        }
-
-        // 版本相同，检查更新时间
-        if (cloudData.lastUpdate > localSyncData.lastUpdate) {
-          await this.applyCloudData()
-          return true
-        }
-        if (cloudData.lastUpdate < localSyncData.lastUpdate) {
-          await this.syncToCloud()
-          return true
-        }
-      } catch (err) {
-        if (syncEventCallback) {
-          if (err instanceof Error) {
-            syncEventCallback('sync-error', err)
-          } else {
-            syncEventCallback('sync-error', new Error(String(err)))
-          }
-        }
-      }
-    },
-
-    async syncToCloud() {
-      try {
-        const localSettings = useSettingsStore()
-        if (!localSettings.sync.enabled) {
           return
         }
 
-        const localShortcut = useShortcutStore()
-
-        debouncedSend({
-          settings: localSettings.$state,
-          bookmarks: localShortcut.$state,
-          lastUpdate: Date.now(),
-        } as SyncData)
-      } catch (err) {
-        if (syncEventCallback) {
-          if (err instanceof Error) {
-            syncEventCallback('sync-error', err)
-          } else {
-            syncEventCallback('sync-error', new Error(String(err)))
-          }
-        }
-      }
-    },
-
-    async applyCloudData() {
-      isProcessing = true
-      try {
-        const localSettings = useSettingsStore()
-        const cloudData = await syncDataStorage.getValue()
-
-        if (cloudData.settings.version < CURRENT_CONFIG_VERSION) {
-          // 云端配置版本落后，逐步应用迁移直到达到当前版本
-          try {
-            let s = cloudData.settings
-
-            // 逐步通过映射函数迁移到 CURRENT_CONFIG_VERSION
-            while ((s.version as number) < CURRENT_CONFIG_VERSION) {
-              const v = s.version as number
-              const fn = migrations[v]
-              if (!fn) {
-                // 未知版本：关闭云同步并通知 UI 处理版本不匹配
-                localSettings.sync.enabled = false
-                if (syncEventCallback) {
-                  syncEventCallback('version-mismatch', {
-                    cloud: String(s.version),
-                    local: String(localSettings.version),
-                  })
-                }
-                return
-              }
-              // @ts-expect-error：此处s要经过多轮升级才会变为最新版本
-              s = await fn(s)
-            }
-
-            const migratedSettings = s as CURRENT_CONFIG_SCHEMA
-            cloudData.settings = migratedSettings
-          } catch (err) {
-            console.error(
-              `Failed to migrate cloud settings from ${cloudData.settings.version} to ${CURRENT_CONFIG_VERSION}:`,
-              err,
-            )
-            // 迁移失败：关闭云同步并通知 UI
-            localSettings.sync.enabled = false
-            if (syncEventCallback) {
-              if (err instanceof Error) {
-                syncEventCallback('sync-error', err)
-              } else {
-                syncEventCallback('sync-error', new Error(String(err)))
-              }
-            }
-            return
-          }
+        if (!nowEnabled) {
+          return
         }
 
-        const localState = localSettings.$state
-
-        cloudData.settings.background.bgType = localState.background.bgType // 保持本地背景类型
-        cloudData.settings.background.local = localState.background.local // 保持本地壁纸数据
-        cloudData.settings.background.localDark = localState.background.localDark || {
-          id: '',
-          url: '',
-          mediaType: undefined,
-        } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
-        cloudData.settings.background.bing = localState.background.bing // 保持本地必应壁纸数据
-        cloudData.settings.background.online.url = localState.background.online.url // 保持本地在线壁纸URL
-
-        // 用了自定义搜索引擎则保持不变
-        if (
-          !['google', 'baidu', 'bing', 'yandex', 'duckduckgo'].includes(
-            cloudData.settings.search.engine,
-          )
-        ) {
-          cloudData.settings.search.engine = localState.search.engine
+        // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
+        if (!prevSyncEnabled && nowEnabled) {
+          prevSyncEnabled = true
+          await checkCloudSync()
+          return
         }
 
-        // 在线壁纸需获取权限，禁用相关设置
-        // 保持本地在线壁纸缓存设置
-        cloudData.settings.background.online.cache = localState.background.online.cache
-        if (
-          localSettings.background.bgType === BgType.Online &&
-          !localState.background.online.cache
-        ) {
-          // 关闭莫奈
-          cloudData.settings.theme.monetColor = false
-        }
-
-        localSettings.$patch(cloudData.settings)
-        const shortcutStore = useShortcutStore()
-        await shortcutStore.save(cloudData.bookmarks)
+        prevSyncEnabled = nowEnabled
 
         await localSyncDataStorage.setValue({
-          lastUpdate: cloudData.lastUpdate,
+          lastUpdate: Date.now(),
         })
-      } catch (err) {
-        if (syncEventCallback) {
-          if (err instanceof Error) {
-            syncEventCallback('sync-error', err)
-          } else {
-            syncEventCallback('sync-error', new Error(String(err)))
-          }
-        }
-      } finally {
-        isProcessing = false
+        await checkCloudSync()
       }
-    },
-  },
+
+      const unsubSettings = localSettings.$subscribe(subChange)
+      const unsubShortcut = useShortcutStore().$subscribe(async (mutation) => {
+        if (mutation.type !== MutationType.direct) {
+          // 防止刚开就认为数据过旧，只有 init 会整个替换 state
+          return
+        }
+        await subChange()
+      })
+
+      cleanupFns = [
+        () => browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage),
+        unsubSettings,
+        unsubShortcut,
+      ]
+      initialized = true
+    } catch (err) {
+      if (syncEventCallback) {
+        if (err instanceof Error) {
+          syncEventCallback('sync-error', err)
+        } else {
+          syncEventCallback('sync-error', new Error(String(err)))
+        }
+      }
+    } finally {
+      isProcessing = false
+    }
+  }
+
+  function deinit() {
+    cleanupFns.forEach((fn) => fn())
+    cleanupFns = []
+    initialized = false
+  }
+
+  async function checkCloudSync() {
+    try {
+      const localSettings = useSettingsStore()
+      if (!localSettings.sync.enabled) {
+        return false
+      }
+
+      const cloudData = await syncDataStorage.getValue()
+      const localSyncData = await localSyncDataStorage.getValue()
+
+      // 云端更新时间与本地更新时间一致
+      if (cloudData.lastUpdate === localSyncData.lastUpdate) {
+        return true
+      }
+
+      // 检查版本
+      if (cloudData.settings.version > localSettings.version) {
+        localSettings.sync.enabled = false
+        if (syncEventCallback) {
+          syncEventCallback('version-mismatch', {
+            cloud: String(cloudData.settings.version),
+            local: String(localSettings.version),
+          })
+        }
+        return false
+      }
+
+      // 版本相同，检查更新时间
+      if (cloudData.lastUpdate > localSyncData.lastUpdate) {
+        await applyCloudData()
+        return true
+      }
+      if (cloudData.lastUpdate < localSyncData.lastUpdate) {
+        await syncToCloud()
+        return true
+      }
+    } catch (err) {
+      if (syncEventCallback) {
+        if (err instanceof Error) {
+          syncEventCallback('sync-error', err)
+        } else {
+          syncEventCallback('sync-error', new Error(String(err)))
+        }
+      }
+    }
+  }
+
+  async function syncToCloud() {
+    try {
+      const localSettings = useSettingsStore()
+      if (!localSettings.sync.enabled) {
+        return
+      }
+
+      const localShortcut = useShortcutStore()
+
+      debouncedSend({
+        settings: localSettings.$state,
+        bookmarks: localShortcut.$state,
+        lastUpdate: Date.now(),
+      } as SyncData)
+    } catch (err) {
+      if (syncEventCallback) {
+        if (err instanceof Error) {
+          syncEventCallback('sync-error', err)
+        } else {
+          syncEventCallback('sync-error', new Error(String(err)))
+        }
+      }
+    }
+  }
+
+  async function applyCloudData() {
+    isProcessing = true
+    try {
+      const localSettings = useSettingsStore()
+      const cloudData = await syncDataStorage.getValue()
+
+      if (cloudData.settings.version < CURRENT_CONFIG_VERSION) {
+        // 云端配置版本落后，逐步应用迁移直到达到当前版本
+        try {
+          let s = cloudData.settings
+
+          // 逐步通过映射函数迁移到 CURRENT_CONFIG_VERSION
+          while ((s.version as number) < CURRENT_CONFIG_VERSION) {
+            const v = s.version as number
+            const fn = migrations[v]
+            if (!fn) {
+              // 未知版本：关闭云同步并通知 UI 处理版本不匹配
+              localSettings.sync.enabled = false
+              if (syncEventCallback) {
+                syncEventCallback('version-mismatch', {
+                  cloud: String(s.version),
+                  local: String(localSettings.version),
+                })
+              }
+              return
+            }
+            // @ts-expect-error：此处s要经过多轮升级才会变为最新版本
+            s = await fn(s)
+          }
+
+          const migratedSettings = s as CURRENT_CONFIG_SCHEMA
+          cloudData.settings = migratedSettings
+        } catch (err) {
+          console.error(
+            `Failed to migrate cloud settings from ${cloudData.settings.version} to ${CURRENT_CONFIG_VERSION}:`,
+            err,
+          )
+          // 迁移失败：关闭云同步并通知 UI
+          localSettings.sync.enabled = false
+          if (syncEventCallback) {
+            if (err instanceof Error) {
+              syncEventCallback('sync-error', err)
+            } else {
+              syncEventCallback('sync-error', new Error(String(err)))
+            }
+          }
+          return
+        }
+      }
+
+      const localState = localSettings.$state
+
+      cloudData.settings.background.bgType = localState.background.bgType // 保持本地背景类型
+      cloudData.settings.background.local = localState.background.local // 保持本地壁纸数据
+      cloudData.settings.background.localDark = localState.background.localDark || {
+        id: '',
+        url: '',
+        mediaType: undefined,
+      } // 保持本地暗黑壁纸数据，旧版本无 localDarkBackground 所以加了个默认值
+      cloudData.settings.background.bing = localState.background.bing // 保持本地必应壁纸数据
+      cloudData.settings.background.online.url = localState.background.online.url // 保持本地在线壁纸URL
+
+      // 用了自定义搜索引擎则保持不变
+      if (
+        !['google', 'baidu', 'bing', 'yandex', 'duckduckgo'].includes(
+          cloudData.settings.search.engine,
+        )
+      ) {
+        cloudData.settings.search.engine = localState.search.engine
+      }
+
+      // 在线壁纸需获取权限，禁用相关设置
+      // 保持本地在线壁纸缓存设置
+      cloudData.settings.background.online.cache = localState.background.online.cache
+      if (
+        localSettings.background.bgType === BgType.Online &&
+        !localState.background.online.cache
+      ) {
+        // 关闭莫奈
+        cloudData.settings.theme.monetColor = false
+      }
+
+      localSettings.$patch(cloudData.settings)
+      const shortcutStore = useShortcutStore()
+      await shortcutStore.save(cloudData.bookmarks)
+
+      await localSyncDataStorage.setValue({
+        lastUpdate: cloudData.lastUpdate,
+      })
+    } catch (err) {
+      if (syncEventCallback) {
+        if (err instanceof Error) {
+          syncEventCallback('sync-error', err)
+        } else {
+          syncEventCallback('sync-error', new Error(String(err)))
+        }
+      }
+    } finally {
+      isProcessing = false
+    }
+  }
+
+  return {
+    settings,
+    bookmarks,
+    lastUpdate,
+    init,
+    deinit,
+    checkCloudSync,
+    syncToCloud,
+    applyCloudData,
+  }
 })

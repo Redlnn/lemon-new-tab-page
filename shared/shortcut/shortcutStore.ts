@@ -4,26 +4,23 @@ import { acquireFaviconRef } from '@/shared/media'
 
 import { defaultShortcuts, type Shortcuts, shortcutStorage } from './shortcutStorage'
 
-export const useShortcutStore = defineStore('shortcut', {
-  state: () => {
-    return structuredClone(defaultShortcuts)
-  },
+export const useShortcutStore = defineStore('shortcut', () => {
+  const items = ref(structuredClone(defaultShortcuts.items))
 
-  actions: {
-    async init(options?: { acquire?: boolean }) {
-      const shortcut = await shortcutStorage.getValue()
-      this.$patch(shortcut)
-      if (options?.acquire ?? true) {
-        shortcut.items.forEach((item) => acquireFaviconRef(item.url))
-      }
-    },
+  async function init(options?: { acquire?: boolean }) {
+    const shortcut = await shortcutStorage.getValue()
+    items.value = shortcut.items
+    if (options?.acquire ?? true) {
+      shortcut.items.forEach((item) => acquireFaviconRef(item.url))
+    }
+  }
 
-    async save(data?: Shortcuts) {
-      if (data) {
-        this.$patch({ items: data.items })
-      }
-      const rawItems = toRaw(this.$state).items
-      await shortcutStorage.setValue({ items: rawItems })
-    },
-  },
+  async function save(data?: Shortcuts) {
+    if (data) {
+      items.value = data.items
+    }
+    await shortcutStorage.setValue({ items: toRaw(items.value) })
+  }
+
+  return { items, init, save }
 })
