@@ -15,7 +15,7 @@ export function setupAutoSaveSettings(settings: Store<'option', CURRENT_CONFIG_S
 
     lastSavedState = currentState
     await saveSettings(state)
-  }, 500)
+  }, 1500)
 
   settings.$subscribe(async (_mutation, state) => {
     if (state.theme.primaryColor === null) {
