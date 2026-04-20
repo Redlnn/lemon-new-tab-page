@@ -2,14 +2,8 @@
 import { useIdle } from '@vueuse/core'
 import type { CSSProperties } from 'vue'
 
-import { useTranslation } from 'i18next-vue'
-
-import { version } from '@/package.json'
-
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
-import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
-import { changeTheme, toggleDocumentClass } from '@/shared/theme'
 
 import {
   FOCUS_STATE,
@@ -17,7 +11,6 @@ import {
   OPEN_SEARCH_ENGINE_PREFERENCE,
   OPEN_SETTINGS,
 } from '@newtab/shared/keys'
-import { shownFaviconCacheHintStorage } from '@newtab/shared/storages/notificationStorage'
 
 import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
@@ -29,10 +22,11 @@ import SearchBox from './components/SearchBox/index.vue'
 import Dock from './components/Shortcut/Dock.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
+import { useAppNotifications } from './composables/useAppNotifications'
 import { useElementLang } from './composables/useElementLang'
 import { createFocusState } from './composables/useFocus'
 import { usePermission } from './composables/usePermission'
-import { shouldShowChangelog } from './shared/utils'
+import { useThemeWatcher } from './composables/useThemeWatcher'
 
 const SettingsPage = defineAsyncComponent(() => import('./components/SettingsPage/index.vue'))
 const Changelog = defineAsyncComponent(() => import('./components/Changelog.vue'))
@@ -62,71 +56,14 @@ const AddShortcutDialogRef = ref<InstanceType<typeof AddShortcutDialog>>()
 
 const appRef = useTemplateRef('appRef')
 
-const { t } = useTranslation('sync')
-const { t: tNewtab } = useTranslation('newtab')
 const elLocale = useElementLang()
 const settings = useSettingsStore()
 
-onMounted(async () => {
-  // 全新用户欢迎通知
-  if (settings.pluginVersion === '') {
-    ElNotification.success({
-      title: tNewtab('notification.welcome.title'),
-      message: tNewtab('notification.welcome.message'),
-      duration: 8000,
-    })
-  }
+// 主题/外观 watcher
+useThemeWatcher()
 
-  // 图标缓存提示通知（仅展示一次）
-  if (!settings.faviconCacheEnabled) {
-    const alreadyShown = await shownFaviconCacheHintStorage.getValue()
-    if (!alreadyShown) {
-      await shownFaviconCacheHintStorage.setValue(true)
-      ElNotification.info({
-        title: tNewtab('notification.faviconCacheHint.title'),
-        message: tNewtab('notification.faviconCacheHint.message'),
-        duration: 10000,
-      })
-    }
-  }
-
-  if (settings.pluginVersion !== version) {
-    settings.readChangeLog = false
-    ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
-
-    const canAutoShow = shouldShowChangelog(settings.pluginVersion, version)
-
-    if (canAutoShow && !settings.hideMajorChangelog) {
-      watch(
-        () => ChangelogRef.value,
-        (instance) => {
-          if (!instance) return
-          instance.show()
-        },
-        { once: true, flush: 'post' },
-      )
-    } else {
-      settings.pluginVersion = version
-    }
-  }
-
-  // 注册同步事件回调
-  setSyncEventCallback((type, payload) => {
-    if (type === 'version-mismatch') {
-      const p = payload as { cloud: string; local: string }
-      ElNotification.error({
-        title: t('fail.title'),
-        message: t('fail.message', { cloud: p.cloud, local: p.local }),
-      })
-    } else if (type === 'sync-error') {
-      const err = payload as Error
-      ElNotification.error({
-        title: t('error.title'),
-        message: err.message || 'Unknown error.',
-      })
-    }
-  })
-})
+// 应用级通知（欢迎、缓存提示、版本更新、同步错误）
+useAppNotifications(ChangelogRef)
 
 const { idle } = useIdle(5_000, {
   events: ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'],
@@ -141,40 +78,6 @@ watch(idle, (v) => {
     appRef.value?.style.removeProperty('opacity')
   }
 })
-
-watch(
-  () => settings.theme.primaryColor,
-  (color) => {
-    if (color === null) {
-      return
-    }
-    changeTheme(color)
-  },
-)
-
-watch(
-  () => settings.theme.colorfulMode,
-  (colorful) => {
-    toggleDocumentClass('colorful', colorful)
-  },
-  { immediate: true },
-)
-
-watch(
-  () => settings.perf.dialog.transparent,
-  (enabled) => {
-    toggleDocumentClass('dialog-transparent', enabled)
-  },
-  { immediate: true },
-)
-
-watch(
-  () => settings.perf.dialog.blur,
-  (enabled) => {
-    toggleDocumentClass('dialog-acrylic', enabled)
-  },
-  { immediate: true },
-)
 
 function openBookmarkSidebar() {
   if (settings.bookmark.rightClickToOpen) {
