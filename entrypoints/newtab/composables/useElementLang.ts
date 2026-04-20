@@ -40,5 +40,9 @@ export function useElementLang() {
   }
   i18next.on('languageChanged', onLngChanged)
 
+  onUnmounted(() => {
+    i18next.off('languageChanged', onLngChanged)
+  })
+
   return elLocale
 }

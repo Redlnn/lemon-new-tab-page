@@ -13,10 +13,14 @@ const settings = useSettingsStore()
 
 const currentLang = ref(i18next.language)
 
-i18next.on('languageChanged', (lng) => {
+const onLngChanged = (lng: string) => {
   useTimeoutFn(() => {
     currentLang.value = lng
   }, 100)
+}
+i18next.on('languageChanged', onLngChanged)
+onUnmounted(() => {
+  i18next.off('languageChanged', onLngChanged)
 })
 
 function customMeridiem(hours: number) {
