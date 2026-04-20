@@ -23,10 +23,8 @@ import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
 import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
 import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
 import Background from './components/Background.vue'
-import Bookmark from './components/Bookmark/index.vue'
 import Clock from './components/Clock.vue'
 import SearchBox from './components/SearchBox/index.vue'
-import AddShortcutDialog from './components/Shortcut/components/AddShortcutDialog.vue'
 import Dock from './components/Shortcut/Dock.vue'
 import Shortcut from './components/Shortcut/index.vue'
 import YiYan from './components/YiYan.vue'
@@ -45,6 +43,10 @@ const BackgroundSwitcher = defineAsyncComponent(
   () => import('./components/BackgroundSwitcher/index.vue'),
 )
 const PermissionDialog = defineAsyncComponent(() => import('./components/PermissionDialog.vue'))
+const Bookmark = defineAsyncComponent(() => import('./components/Bookmark/index.vue'))
+const AddShortcutDialog = defineAsyncComponent(
+  () => import('./components/Shortcut/components/AddShortcutDialog.vue'),
+)
 
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
