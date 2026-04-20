@@ -57,8 +57,8 @@ export async function handleInvaildSettings() {
 
   try {
     await Promise.all([
-      localStorage.clear,
-      sessionStorage.clear,
+      localStorage.clear(),
+      sessionStorage.clear(),
       localForage.dropInstance({ name: '柠檬起始页' }),
       storage.clear('local'),
       storage.clear('session'),

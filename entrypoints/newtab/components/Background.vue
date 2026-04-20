@@ -17,7 +17,7 @@ import { browser } from '#imports'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { useBgSwtichStore, useFocusStore } from '@newtab/shared/store'
+import { useBgSwitchStore, useFocusStore } from '@newtab/shared/store'
 import { applyMonet } from '@newtab/shared/theme'
 import {
   bingWallpaperURLGetter,
@@ -42,7 +42,7 @@ if (settings.background.fastAnimation) {
 
 const wallpaperUrlStore = useWallpaperUrlStore()
 const { lightUrl, darkUrl } = storeToRefs(wallpaperUrlStore)
-const switchStore = useBgSwtichStore()
+const switchStore = useBgSwitchStore()
 
 const imageRef = useTemplateRef('imageRef')
 const videoRef = useTemplateRef('videoRef')

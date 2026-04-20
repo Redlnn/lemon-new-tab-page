@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useBgSwtichStore = defineStore('bgSwitching', () => {
+export const useBgSwitchStore = defineStore('bgSwitching', () => {
   // 每次打开未加载前都是白屏，应为true
   const isSwitching = ref(true)
 
