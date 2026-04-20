@@ -51,18 +51,12 @@ importers:
       i18next-vue:
         specifier: ^5.4.0
         version: 5.4.0(i18next@26.0.6(typescript@6.0.3))(vue@3.5.32(typescript@6.0.3))
-      jinrishici:
-        specifier: ^1.0.6
-        version: 1.0.6
       localforage:
         specifier: ^1.10.0
         version: 1.10.0
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@6.0.3)(vue@3.5.32(typescript@6.0.3))
-      uuid:
-        specifier: ^13.0.0
-        version: 13.0.0
       vue:
         specifier: ^3.5.32
         version: 3.5.32(typescript@6.0.3)
@@ -2122,9 +2116,6 @@ packages:
   isobject@3.0.1:
     resolution: {integrity: sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg==}
     engines: {node: '>=0.10.0'}
-
-  jinrishici@1.0.6:
-    resolution: {integrity: sha512-4Bk5VHo6xg9DspGS8y8I7D6kftA6DYy4rSvwpdtxFvh9DidXMgf+NSZKAXrcLTi8S5NjqmwkpAKYPHXRURH64Q==}
 
   jiti@2.6.1:
     resolution: {integrity: sha512-ekilCSN1jwRvIbgeg/57YFh8qQDNbwDb9xT/qu2DAHbFFZUicIl4ygVaAvzveMhMVr3LnpSKTNnwt8PoOfmKhQ==}
@@ -5357,8 +5348,6 @@ snapshots:
   isexe@3.1.5: {}
 
   isobject@3.0.1: {}
-
-  jinrishici@1.0.6: {}
 
   jiti@2.6.1: {}
 

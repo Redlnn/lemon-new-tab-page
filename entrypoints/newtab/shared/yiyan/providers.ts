@@ -1,6 +1,18 @@
-import { load } from 'jinrishici'
-
 import enhancedFetch from '@/shared/network/fetch'
+
+const JINRISHICI_TOKEN_KEY = 'jinrishici-token'
+const JINRISHICI_API = 'https://v2.jinrishici.com/one.json'
+
+interface JinrishiciResponse {
+  status: string
+  data: {
+    content: string
+    origin: {
+      title: string
+    }
+  }
+  token: string
+}
 
 interface Hitokoto {
   id: number // 一言标识
@@ -28,21 +40,25 @@ export const yiyanProviders = {
     nameKey: 'settings:yiyan.providers.jinrishici.name',
     note: undefined,
     website: 'https://www.jinrishici.com',
-    load: () =>
-      new Promise<YiyanResult>((resolve) => {
-        load(
-          (res) =>
-            resolve({
-              yiyan: res.data.content,
-              yiyanOrigin: res.data.origin.title,
-            }),
-          () =>
-            resolve({
-              yiyan: undefined,
-              yiyanOrigin: undefined,
-            }),
-        )
-      }),
+    load: async (): Promise<YiyanResult> => {
+      try {
+        const token = localStorage.getItem(JINRISHICI_TOKEN_KEY)
+        const url = token
+          ? `${JINRISHICI_API}?X-User-Token=${encodeURIComponent(token)}`
+          : JINRISHICI_API
+        const resp = await fetch(url)
+        if (!resp.ok) return { yiyan: undefined, yiyanOrigin: undefined }
+        const data: JinrishiciResponse = await resp.json()
+        if (data.status !== 'success') return { yiyan: undefined, yiyanOrigin: undefined }
+        if (data.token) localStorage.setItem(JINRISHICI_TOKEN_KEY, data.token)
+        return {
+          yiyan: data.data.content,
+          yiyanOrigin: data.data.origin.title,
+        }
+      } catch {
+        return { yiyan: undefined, yiyanOrigin: undefined }
+      }
+    },
   },
   hitokoto: {
     nameKey: 'settings:yiyan.providers.hitokoto.name',

@@ -34,10 +34,8 @@
     "i18next": "^26.0.6",
     "i18next-browser-languagedetector": "^8.2.1",
     "i18next-vue": "^5.4.0",
-    "jinrishici": "^1.0.6",
     "localforage": "^1.10.0",
     "pinia": "^3.0.4",
-    "uuid": "^13.0.0",
     "vue": "^3.5.32",
     "vue-draggable-plus": "^0.6.1"
   },
