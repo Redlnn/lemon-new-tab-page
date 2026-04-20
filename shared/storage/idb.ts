@@ -41,21 +41,53 @@ interface LemonDBSchema extends DBSchema {
 
 const DB_NAME = '柠檬起始页'
 const DB_VERSION = 1
+const REQUIRED_STORES: readonly StoreName[] = [
+  'favicon',
+  'wallpaper',
+  'wallpaperBing',
+  'wallpaperDark',
+  'onlineWallpaperCache',
+]
 
 let dbPromise: Promise<import('idb').IDBPDatabase<LemonDBSchema>> | null = null
 
+/**
+ * 探测已有数据库的版本和 store 情况。
+ * 兼容 localforage 创建的高版本数据库（localforage 从 version 2 开始，
+ * 每增加一个 store 就 +1，5 个 store 可能达到 version 6+）。
+ */
+async function probeExistingDB(): Promise<{ version: number; needsUpgrade: boolean }> {
+  return new Promise((resolve) => {
+    const req = indexedDB.open(DB_NAME)
+    req.onsuccess = () => {
+      const db = req.result
+      const needsUpgrade = !REQUIRED_STORES.every((s) => db.objectStoreNames.contains(s))
+      const version = db.version
+      db.close()
+      resolve({ version, needsUpgrade })
+    }
+    req.onerror = () => resolve({ version: 0, needsUpgrade: true })
+  })
+}
+
 function getDB() {
   if (!dbPromise) {
-    dbPromise = openDB<LemonDBSchema>(DB_NAME, DB_VERSION, {
-      upgrade(db) {
-        if (!db.objectStoreNames.contains('favicon')) db.createObjectStore('favicon')
-        if (!db.objectStoreNames.contains('wallpaper')) db.createObjectStore('wallpaper')
-        if (!db.objectStoreNames.contains('wallpaperBing')) db.createObjectStore('wallpaperBing')
-        if (!db.objectStoreNames.contains('wallpaperDark')) db.createObjectStore('wallpaperDark')
-        if (!db.objectStoreNames.contains('onlineWallpaperCache'))
-          db.createObjectStore('onlineWallpaperCache')
-      },
-    })
+    dbPromise = (async () => {
+      const { version: existingVersion, needsUpgrade } = await probeExistingDB()
+      // 需要创建 store 时版本号必须高于当前值以触发 upgrade；
+      // 否则以当前版本打开即可（stores 已由 localforage 或上次运行创建）
+      const targetVersion = needsUpgrade
+        ? Math.max(existingVersion + 1, DB_VERSION)
+        : existingVersion
+
+      return openDB<LemonDBSchema>(DB_NAME, targetVersion, {
+        upgrade(db) {
+          for (const store of REQUIRED_STORES) {
+            if (!db.objectStoreNames.contains(store)) db.createObjectStore(store)
+          }
+        },
+      })
+    })()
   }
   return dbPromise
 }
