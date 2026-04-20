@@ -9,7 +9,6 @@ import { useSettingsStore } from '@/shared/settings'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
 import {
-  saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
@@ -60,7 +59,7 @@ async function deleteCustomEngine(index: number) {
 
     const deletedUrl = engine.url
     customSearchEngineStore.items.splice(index, 1)
-    await saveCustomSearchEngine(customSearchEngineStore.$state)
+    await customSearchEngineStore.save()
     releaseFaviconRef(deletedUrl)
   } catch {
     // 用户取消删除

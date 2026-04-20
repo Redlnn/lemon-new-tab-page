@@ -7,7 +7,6 @@ import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/s
 
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
 import {
-  saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 
@@ -105,7 +104,7 @@ async function submit() {
     acquireFaviconRef(engine.url)
   }
 
-  await saveCustomSearchEngine(customSearchEngineStore.$state)
+  await customSearchEngineStore.save()
   showDialog.value = false
   resetFields()
 

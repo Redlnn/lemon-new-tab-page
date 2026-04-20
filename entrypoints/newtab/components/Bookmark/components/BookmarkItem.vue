@@ -17,7 +17,7 @@ import { browser, type Browser } from 'wxt/browser'
 
 import { acquireFaviconRef, getFaviconURL, releaseFaviconRef } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
-import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
+import { useShortcutStore } from '@/shared/shortcut'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import {
@@ -153,7 +153,7 @@ async function addToShortcut() {
     title: props.node.title || '',
     favicon: faviconRef.value,
   })
-  await saveShortcut(shortcutStore.$state)
+  await shortcutStore.save()
   ElMessage.success(t('bookmark.added'))
 }
 

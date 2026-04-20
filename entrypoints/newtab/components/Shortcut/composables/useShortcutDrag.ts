@@ -1,6 +1,6 @@
 import { useDraggable } from 'vue-draggable-plus'
 
-import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
+import { useShortcutStore } from '@/shared/shortcut'
 
 export function useShortcutDrag(
   containerRef: Ref<HTMLElement | undefined | null>,
@@ -24,7 +24,7 @@ export function useShortcutDrag(
     },
     onUpdate() {
       shortcutStore.items = shortcuts.value
-      saveShortcut(shortcutStore.$state)
+      shortcutStore.save()
       refresh()
     },
   })

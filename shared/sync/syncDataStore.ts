@@ -11,7 +11,7 @@ import {
   migrateFromVer7To8,
   useSettingsStore,
 } from '../settings'
-import { defaultShortcuts, saveShortcut, useShortcutStore } from '../shortcut'
+import { defaultShortcuts, useShortcutStore } from '../shortcut'
 
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
@@ -47,6 +47,10 @@ async function handleSyncStorageUpdateMessage(message: SyncMessage) {
 // 防止 applyCloudData 期间触发 subChange
 let isProcessing = false
 
+// 已初始化标志及清理句柄，防止重复 init
+let initialized = false
+let cleanupFns: (() => void)[] = []
+
 // 事件回调，用于通知 UI 层
 export type SyncEventType = 'version-mismatch' | 'sync-error'
 export type SyncEventPayloadMap = {
@@ -62,90 +66,6 @@ export function setSyncEventCallback(cb: SyncEventCallback | null) {
   syncEventCallback = cb
 }
 
-export async function initSyncSettings(localSettings: ReturnType<typeof useSettingsStore>) {
-  isProcessing = true
-  let cloudData: SyncData
-  try {
-    cloudData = await syncDataStorage.getValue()
-    if (cloudData.settings.pluginVersion === '') {
-      // 默认配置，使用本地配置覆盖
-      cloudData.settings = localSettings.$state
-    }
-    const syncDataStore = useSyncDataStore()
-    syncDataStore.$patch(cloudData)
-
-    // 初始化时进行一次同步检查
-    if (!(await syncDataStore.checkCloudSync())) {
-      return
-    }
-
-    browser.runtime.sendMessage({
-      type: 'SYNC_INITED',
-    } as SyncMessage)
-
-    // 监听同步储存更新消息
-    browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
-
-    // 监听变化触发同步
-    // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
-    // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
-    // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
-    let prevSyncEnabled = localSettings.sync.enabled
-
-    const subChange = async () => {
-      const nowEnabled = localSettings.sync.enabled
-
-      // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
-      if (isProcessing) {
-        prevSyncEnabled = nowEnabled
-        return
-      }
-
-      if (!nowEnabled) {
-        return
-      }
-
-      // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
-      if (!prevSyncEnabled && nowEnabled) {
-        prevSyncEnabled = true
-        await syncDataStore.checkCloudSync()
-        return
-      }
-
-      prevSyncEnabled = nowEnabled
-
-      await localSyncDataStorage.setValue({
-        lastUpdate: Date.now(),
-      })
-      await syncDataStore.checkCloudSync()
-    }
-
-    localSettings.$subscribe(subChange)
-    useShortcutStore().$subscribe(async (mutation) => {
-      if (mutation.type !== MutationType.direct) {
-        // 防止刚开就认为数据过旧，只有initShortcut会整个替换state
-        return
-      }
-      await subChange()
-    })
-  } catch (err) {
-    if (syncEventCallback) {
-      if (err instanceof Error) {
-        syncEventCallback('sync-error', err)
-      } else {
-        syncEventCallback('sync-error', new Error(String(err)))
-      }
-    }
-  } finally {
-    isProcessing = false
-  }
-}
-
-export async function deinitSyncSettings() {
-  // 移除同步储存更新消息监听器
-  browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage)
-}
-
 const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
   7: (s) => migrateFromVer7To8(s as SettingsSchemaV7),
 }
@@ -158,6 +78,102 @@ export const useSyncDataStore = defineStore('sync', {
   }),
 
   actions: {
+    async init() {
+      // 幂等：如已初始化，先清理再重新初始化
+      if (initialized) {
+        this.deinit()
+      }
+
+      const localSettings = useSettingsStore()
+      isProcessing = true
+      try {
+        const cloudData = await syncDataStorage.getValue()
+        if (cloudData.settings.pluginVersion === '') {
+          // 默认配置，使用本地配置覆盖
+          cloudData.settings = localSettings.$state
+        }
+        this.$patch(cloudData)
+
+        // 初始化时进行一次同步检查
+        if (!(await this.checkCloudSync())) {
+          return
+        }
+
+        browser.runtime.sendMessage({
+          type: 'SYNC_INITED',
+        } as SyncMessage)
+
+        // 监听同步储存更新消息
+        browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
+
+        // 监听变化触发同步
+        // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
+        // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
+        // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
+        let prevSyncEnabled = localSettings.sync.enabled
+
+        const subChange = async () => {
+          const nowEnabled = localSettings.sync.enabled
+
+          // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
+          if (isProcessing) {
+            prevSyncEnabled = nowEnabled
+            return
+          }
+
+          if (!nowEnabled) {
+            return
+          }
+
+          // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
+          if (!prevSyncEnabled && nowEnabled) {
+            prevSyncEnabled = true
+            await this.checkCloudSync()
+            return
+          }
+
+          prevSyncEnabled = nowEnabled
+
+          await localSyncDataStorage.setValue({
+            lastUpdate: Date.now(),
+          })
+          await this.checkCloudSync()
+        }
+
+        const unsubSettings = localSettings.$subscribe(subChange)
+        const unsubShortcut = useShortcutStore().$subscribe(async (mutation) => {
+          if (mutation.type !== MutationType.direct) {
+            // 防止刚开就认为数据过旧，只有 init 会整个替换 state
+            return
+          }
+          await subChange()
+        })
+
+        cleanupFns = [
+          () => browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage),
+          unsubSettings,
+          unsubShortcut,
+        ]
+        initialized = true
+      } catch (err) {
+        if (syncEventCallback) {
+          if (err instanceof Error) {
+            syncEventCallback('sync-error', err)
+          } else {
+            syncEventCallback('sync-error', new Error(String(err)))
+          }
+        }
+      } finally {
+        isProcessing = false
+      }
+    },
+
+    deinit() {
+      cleanupFns.forEach((fn) => fn())
+      cleanupFns = []
+      initialized = false
+    },
+
     async checkCloudSync() {
       try {
         const localSettings = useSettingsStore()
@@ -313,7 +329,8 @@ export const useSyncDataStore = defineStore('sync', {
         }
 
         localSettings.$patch(cloudData.settings)
-        saveShortcut(cloudData.bookmarks)
+        const shortcutStore = useShortcutStore()
+        await shortcutStore.save(cloudData.bookmarks)
 
         await localSyncDataStorage.setValue({
           lastUpdate: cloudData.lastUpdate,

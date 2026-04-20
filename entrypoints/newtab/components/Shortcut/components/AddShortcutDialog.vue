@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue'
 import Plus from '~icons/fa6-solid/plus'
 
 import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/shared/media'
-import { saveShortcut, useShortcutStore, type Shortcut } from '@/shared/shortcut'
+import { useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
 import { formatUrl, isValidUrl } from '@newtab/shared/utils'
 
@@ -83,7 +83,7 @@ async function submit() {
     acquireFaviconRef(shortcut.url)
   }
 
-  await saveShortcut(shortcutStore.$state)
+  await shortcutStore.save()
   showDialog.value = false
   resetFields()
 

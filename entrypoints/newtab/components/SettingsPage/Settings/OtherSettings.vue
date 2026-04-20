@@ -12,14 +12,13 @@ import { storage } from '#imports'
 
 import { downloadJSON } from '@/shared/downloadJson'
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
-import { saveShortcut, type Shortcuts, useShortcutStore } from '@/shared/shortcut'
+import { type Shortcuts, useShortcutStore } from '@/shared/shortcut'
 import { idbDropDatabase } from '@/shared/storage/idb'
-import { deinitSyncSettings, initSyncSettings } from '@/shared/sync'
+import { useSyncDataStore } from '@/shared/sync'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {
   type CustomSearchEngineStorage,
-  saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
 
@@ -129,10 +128,11 @@ function clearExtensionData() {
 }
 
 function sendSyncMessage() {
+  const syncStore = useSyncDataStore()
   if (settings.sync.enabled) {
-    initSyncSettings(settings)
+    syncStore.init()
   } else {
-    deinitSyncSettings()
+    syncStore.deinit()
   }
 }
 
@@ -208,27 +208,26 @@ function handleFileChange(event: Event) {
 
     settings.$patch(data.settings)
     if (originalSyncState !== data.settings.sync.enabled) {
+      const syncStore = useSyncDataStore()
       if (data.settings.sync.enabled) {
-        initSyncSettings(settings)
+        syncStore.init()
       } else {
-        deinitSyncSettings()
+        syncStore.deinit()
       }
     }
 
     // shortcuts 部分
     if (data.shortcuts) {
-      shortcuts.$patch(data.shortcuts)
-      await saveShortcut(data.shortcuts)
+      await shortcuts.save(data.shortcuts)
     }
 
     // custom search engines 部分
     if (data.customSearchEngines) {
-      customSearchEngineStore.$patch(data.customSearchEngines)
-      await saveCustomSearchEngine(data.customSearchEngines)
+      await customSearchEngineStore.save(data.customSearchEngines)
     }
 
     if (settings.sync.enabled) {
-      initSyncSettings(settings)
+      useSyncDataStore().init()
     }
   })
 }

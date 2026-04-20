@@ -8,8 +8,7 @@ import CloseRound from '~icons/ic/round-close'
 import { browser } from 'wxt/browser'
 
 import { acquireFaviconRef, fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
-import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
-import { initShortcut } from '@/shared/shortcut/shortcutStore'
+import { useShortcutStore } from '@/shared/shortcut'
 
 const { t } = useTranslation('popup')
 const shortcutStore = useShortcutStore()
@@ -101,7 +100,7 @@ watchEffect(async () => {
 })
 
 onMounted(async () => {
-  await initShortcut({ acquire: false })
+  await shortcutStore.init({ acquire: false })
 
   try {
     const tabs = await browser.tabs.query({ active: true, currentWindow: true })
@@ -149,7 +148,7 @@ async function addCurrentPage() {
     favicon: finalFavicon ?? undefined,
   })
 
-  await saveShortcut(shortcutStore.$state)
+  await shortcutStore.save()
   isAdded.value = true
 }
 </script>

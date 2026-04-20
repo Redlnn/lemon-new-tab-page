@@ -4,7 +4,7 @@ import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
 import { i18n, i18nInitPromise } from '@/shared/i18n'
-import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
+import { shouldStartApp, useSettingsStore } from '@/shared/settings'
 import {
   applyStoredMonetColors,
   changeTheme,
@@ -39,7 +39,7 @@ i18nInitPromise.then(async () => {
   app.use(pinia)
 
   // 初始化设置
-  await initSettings()
+  await useSettingsStore().init()
   const settings = useSettingsStore()
 
   // 应用主题色

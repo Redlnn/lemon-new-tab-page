@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import i18next from 'i18next'
 
 import enhancedFetch from '@/shared/network/fetch'
-import { saveSettings, useSettingsStore } from '@/shared/settings'
+import { useSettingsStore } from '@/shared/settings'
 
 import { useBingWallpaperStorge, useWallpaperUrlStore } from '.'
 
@@ -97,7 +97,7 @@ class BingWallpaperURLGetter {
       const parsedDate = new Date(settings.background.bing.updateDate)
       if (!isNaN(parsedDate.getTime())) {
         settings.background.bing.updateDate = formatUTCCompact(parsedDate)
-        // await saveSettings(settings)
+        // await settings.save()
       }
     }
 
@@ -216,7 +216,7 @@ class BingWallpaperURLGetter {
         url: url,
         updateDate: data.images[0]!.fullstartdate,
       }
-      await saveSettings(settings)
+      await settings.save()
       await useWallpaperUrlStore().setUrl('bing', url)
     } catch (error) {
       console.error('Failed to get Bing wallpaper:', error)

@@ -1,18 +1,16 @@
-import type { Store } from 'pinia'
-
 import i18next from 'i18next'
 
 import { acquireFaviconRef, releaseFaviconRef } from '@/shared/media'
-import { saveShortcut, type Shortcuts } from '@/shared/shortcut'
+import { useShortcutStore } from '@/shared/shortcut'
 
 export async function removeShortcut(
   index: number,
-  store: Store<'shortcut', Shortcuts>,
+  store: ReturnType<typeof useShortcutStore>,
   refresh: () => Promise<void>,
 ) {
   const { url, title, favicon } = store.items[index]!
   store.items.splice(index, 1)
-  await saveShortcut(store.$state)
+  await store.save()
   releaseFaviconRef(url)
   await refresh()
   ElMessage.success({
@@ -33,7 +31,7 @@ export async function removeShortcut(
               favicon,
             })
             acquireFaviconRef(url)
-            await saveShortcut(store.$state)
+            await store.save()
             await refresh()
           },
         },
@@ -44,7 +42,7 @@ export async function removeShortcut(
 }
 
 export async function pinShortcut(
-  store: Store<'shortcut', Shortcuts>,
+  store: ReturnType<typeof useShortcutStore>,
   refresh: () => Promise<void>,
   url: string,
   title: string,
@@ -56,6 +54,6 @@ export async function pinShortcut(
     favicon,
   })
   acquireFaviconRef(url)
-  await saveShortcut(store.$state)
+  await store.save()
   await refresh()
 }

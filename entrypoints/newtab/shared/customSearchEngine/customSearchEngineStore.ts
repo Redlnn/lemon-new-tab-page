@@ -8,32 +8,24 @@ import {
   defaultCustomSearchEngine,
 } from './customSearchEngineStorage'
 
-export async function initCustomSearchEngine() {
-  const data = await customSearchEngineStorage.getValue()
-  const customSearchEngineStore = useCustomSearchEngineStore()
-  customSearchEngineStore.$patch(data)
-  data.items.forEach((item) => acquireFaviconRef(item.url))
-}
-
-export async function saveCustomSearchEngine(
-  data: CustomSearchEngineStorage | { $state?: CustomSearchEngineStorage },
-) {
-  let toSave: CustomSearchEngineStorage | undefined
-
-  if (!data) {
-    toSave = useCustomSearchEngineStore().$state
-  } else if ((data as unknown as { $state?: CustomSearchEngineStorage }).$state) {
-    toSave = (data as unknown as { $state?: CustomSearchEngineStorage }).$state
-  } else {
-    toSave = data as CustomSearchEngineStorage
-  }
-
-  const rawItems = toRaw(toSave as CustomSearchEngineStorage).items
-  await customSearchEngineStorage.setValue({ items: rawItems })
-}
-
 export const useCustomSearchEngineStore = defineStore('customSearchEngine', {
   state: () => {
     return structuredClone(defaultCustomSearchEngine)
+  },
+
+  actions: {
+    async init() {
+      const data = await customSearchEngineStorage.getValue()
+      this.$patch(data)
+      data.items.forEach((item) => acquireFaviconRef(item.url))
+    },
+
+    async save(data?: CustomSearchEngineStorage) {
+      if (data) {
+        this.$patch({ items: data.items })
+      }
+      const rawItems = toRaw(this.$state).items
+      await customSearchEngineStorage.setValue({ items: rawItems })
+    },
   },
 })

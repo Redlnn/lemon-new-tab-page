@@ -10,7 +10,7 @@ import SettingsRound from '~icons/ic/round-settings'
 
 import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
-import { saveShortcut, useShortcutStore } from '@/shared/shortcut'
+import { useShortcutStore } from '@/shared/shortcut'
 
 import { usePerfClasses } from '@newtab/composables/usePerfClasses'
 import { OPEN_SETTINGS } from '@newtab/shared/keys'
@@ -269,7 +269,7 @@ useDraggable(gridRef, shortcuts, {
   },
   onUpdate() {
     shortcutStore.items = shortcuts.value
-    saveShortcut(shortcutStore.$state)
+    shortcutStore.save()
     refreshDebounced()
   },
 })

@@ -5,13 +5,13 @@ import { version } from '@/package.json'
 
 import { i18n } from '@/shared/i18n'
 import { setFaviconCacheEnabled } from '@/shared/media'
-import { initSettings, shouldStartApp, useSettingsStore } from '@/shared/settings'
-import { initShortcut } from '@/shared/shortcut'
-import { initSyncSettings } from '@/shared/sync'
+import { shouldStartApp, useSettingsStore } from '@/shared/settings'
+import { useShortcutStore } from '@/shared/shortcut'
+import { useSyncDataStore } from '@/shared/sync'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
 
 import { colorMode, preferredDark } from '@newtab/shared/colorMode'
-import { initCustomSearchEngine } from '@newtab/shared/customSearchEngine'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 
 import App from './App.vue'
 import { setupAutoSaveSettings } from './shared/autoSaveSettings'
@@ -53,7 +53,7 @@ export const main = async () => {
   app.use(pinia)
 
   // 必须先加载设置：组件渲染依赖设置（主题、v-if 控制等）
-  await initSettings()
+  await useSettingsStore().init()
   const settings = useSettingsStore()
 
   // 设置 favicon 缓存标志（移到 initCustomSearchEngine 之前，修复时序问题）
@@ -79,9 +79,9 @@ export const main = async () => {
   app.mount('body')
 
   // 快捷方式和搜索引擎读取不同的存储键且互不依赖，可并行初始化
-  await Promise.all([initCustomSearchEngine(), initShortcut()])
+  await Promise.all([useCustomSearchEngineStore().init(), useShortcutStore().init()])
 
   if (settings.sync.enabled) {
-    initSyncSettings(settings)
+    useSyncDataStore().init()
   }
 }
