@@ -13,11 +13,11 @@ import Search from '~icons/fa6-solid/magnifying-glass'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
+import { useFocusState } from '@newtab/composables/useFocus'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { getSearchEngineUrl, searchEngines } from '@newtab/shared/search'
-import { useFocusState } from '@newtab/composables/useFocus'
 
 import SearchEngineMenu from './components/SearchEngineMenu.vue'
 import SearchSuggestionArea from './components/SearchSuggestionArea.vue'

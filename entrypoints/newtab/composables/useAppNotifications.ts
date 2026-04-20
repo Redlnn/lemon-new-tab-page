@@ -1,6 +1,7 @@
 import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
+
 import { useSettingsStore } from '@/shared/settings'
 import { setSyncEventCallback } from '@/shared/sync/syncDataStore'
 

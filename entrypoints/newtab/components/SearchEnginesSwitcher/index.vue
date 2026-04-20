@@ -8,9 +8,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
-import {
-  useCustomSearchEngineStore,
-} from '@newtab/shared/customSearchEngine'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
 import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { searchEngines } from '@newtab/shared/search'

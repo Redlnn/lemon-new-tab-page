@@ -5,10 +5,10 @@ import TrashAlt from '~icons/fa6-solid/trash-can'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
+import { useFocusState } from '@newtab/composables/useFocus'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
 import { createSuggestRunner, searchSuggestAPIs, searchSuggestCache } from '@newtab/shared/search'
-import { useFocusState } from '@newtab/composables/useFocus'
 
 import SuggestListItem from './SuggestListItem.vue'
 

@@ -16,7 +16,7 @@ interface CustomEngine {
 export function useCustomEngineFavicon() {
   const faviconRefMap = new Map<string, Ref<string>>()
 
-  function getCustomEngineFavicon(engine: CustomEngine): string {
+  const getCustomEngineFavicon = (engine: CustomEngine): string => {
     if (engine.icon) return engine.icon
 
     const key = `${engine.id}:${engine.url}`

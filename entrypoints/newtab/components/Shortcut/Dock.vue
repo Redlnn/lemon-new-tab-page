@@ -10,8 +10,8 @@ import { getFaviconURL } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore } from '@/shared/shortcut'
 
-import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useFocusState } from '@newtab/composables/useFocus'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
 
 import ShortcutContextMenu from './components/ShortcutContextMenu.vue'

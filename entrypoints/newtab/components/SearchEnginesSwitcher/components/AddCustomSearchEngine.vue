@@ -6,9 +6,7 @@ import Plus from '~icons/fa6-solid/plus'
 import { acquireFaviconRef, fetchFaviconWithCache, releaseFaviconRef } from '@/shared/media'
 
 import { useFaviconUpload } from '@newtab/components/Shortcut/composables/useFaviconUpload'
-import {
-  useCustomSearchEngineStore,
-} from '@newtab/shared/customSearchEngine'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 
 const { t } = useTranslation()
 

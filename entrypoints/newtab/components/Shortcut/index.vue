@@ -7,9 +7,9 @@ import ChevronRight20Filled from '~icons/fluent/chevron-right-20-filled'
 import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
+import { useFocusState } from '@newtab/composables/useFocus'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { SHORTCUT_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
-import { useFocusState } from '@newtab/composables/useFocus'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import AddShortcut from './components/AddShortcut.vue'

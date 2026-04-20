@@ -6,11 +6,11 @@ import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
+import { useFocusState } from '@newtab/composables/useFocus'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
 import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
 import { searchEngines } from '@newtab/shared/search'
-import { useFocusState } from '@newtab/composables/useFocus'
 
 const { t } = useTranslation()
 

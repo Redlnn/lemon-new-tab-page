@@ -12,10 +12,10 @@ import {
   useSettingsStore,
 } from '../settings'
 import { defaultShortcuts, useShortcutStore } from '../shortcut'
+import type { Shortcuts } from '../shortcut/shortcutStorage'
 
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
-import type { Shortcuts } from '../shortcut/shortcutStorage'
 
 const debouncedSend = useDebounceFn(async (data: SyncData) => {
   try {
