@@ -52,14 +52,13 @@ export const main = async () => {
   i18n(app)
   app.use(pinia)
 
+  // 必须先加载设置：组件渲染依赖设置（主题、v-if 控制等）
   await initSettings()
-  await initCustomSearchEngine()
   const settings = useSettingsStore()
 
-  // 初始化图标缓存标志，并跟踪设置变化
+  // 设置 favicon 缓存标志（移到 initCustomSearchEngine 之前，修复时序问题）
   watch(() => settings.faviconCacheEnabled, setFaviconCacheEnabled, { immediate: true })
 
-  await initShortcut()
   changeTheme(settings.theme.primaryColor)
 
   // 清除 index.html 内联脚本设置的临时内联样式，让 CSS 变量接管
@@ -76,7 +75,11 @@ export const main = async () => {
 
   setupAutoSaveSettings(settings)
 
+  // 尽早挂载以缩短白屏时间；快捷方式和自定义搜索引擎在挂载后异步加载
   app.mount('body')
+
+  // 快捷方式和搜索引擎读取不同的存储键且互不依赖，可并行初始化
+  await Promise.all([initCustomSearchEngine(), initShortcut()])
 
   if (settings.sync.enabled) {
     initSyncSettings(settings)
