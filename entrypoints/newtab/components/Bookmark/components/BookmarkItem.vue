@@ -1,15 +1,6 @@
 <script setup lang="ts">
 import { onLongPress } from '@vueuse/core'
 
-import { Dismiss12Regular, Pin12Regular } from '@vicons/fluent'
-import {
-  ContentCopyRound,
-  DeleteOutlineRound,
-  DragIndicatorRound,
-  EditOutlined,
-  FolderOpenRound,
-  OpenInNewRound,
-} from '@vicons/material'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 import { type DraggableEvent, VueDraggable } from 'vue-draggable-plus'
@@ -27,6 +18,14 @@ import {
   OPEN_BOOKMARK_EDIT_DIALOG,
 } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
+import Dismiss12Regular from '~icons/fluent/dismiss-12-regular'
+import Pin12Regular from '~icons/fluent/pin-12-regular'
+import ContentCopyRound from '~icons/ic/round-content-copy'
+import DeleteOutlineRound from '~icons/ic/round-delete-outline'
+import DragIndicatorRound from '~icons/ic/round-drag-indicator'
+import EditOutlined from '~icons/ic/outline-edit'
+import FolderOpenRound from '~icons/ic/round-folder-open'
+import OpenInNewRound from '~icons/ic/round-open-in-new'
 
 const openBookmarkEditDialog = inject(OPEN_BOOKMARK_EDIT_DIALOG)
 

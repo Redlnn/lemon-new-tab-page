@@ -3,6 +3,7 @@ import { fileURLToPath, URL } from 'node:url'
 import Vue from '@vitejs/plugin-vue'
 import postcss from 'postcss'
 import AutoImport from 'unplugin-auto-import/vite'
+import Icons from 'unplugin-icons/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import Markdown from 'unplugin-vue-markdown/vite'
@@ -122,6 +123,7 @@ export default defineConfig({
         namespaceResolution: 'basename',
       }),
       svgLoader(),
+      Icons({ compiler: 'vue3' }),
       Markdown({
         include: [/CHANGELOG.*\.md$/],
         markdownItSetup(md) {

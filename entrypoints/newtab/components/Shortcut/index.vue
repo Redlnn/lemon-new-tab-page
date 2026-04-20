@@ -1,8 +1,6 @@
 ﻿<script setup lang="ts">
 import { useDebounceFn, useEventListener, useResizeObserver, useWindowSize } from '@vueuse/core'
 
-import { ChevronLeft20Filled, ChevronRight20Filled } from '@vicons/fluent'
-
 import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore, type Shortcut } from '@/shared/shortcut'
 
@@ -20,6 +18,8 @@ import { useShortcutDrag } from './composables/useShortcutDrag'
 import { solveGridColumnFirst, usePagedGridLayout } from './composables/useShortcutLayout'
 import { useShortcutPagination } from './composables/useShortcutPagination'
 import { useTopSitesMerge } from './composables/useTopSitesMerge'
+import ChevronLeft20Filled from '~icons/fluent/chevron-left-20-filled'
+import ChevronRight20Filled from '~icons/fluent/chevron-right-20-filled'
 
 const focusStore = useFocusStore()
 const settings = useSettingsStore()

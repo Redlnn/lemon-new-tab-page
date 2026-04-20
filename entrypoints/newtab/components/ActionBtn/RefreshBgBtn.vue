@@ -1,6 +1,5 @@
+import RefreshRound from '~icons/ic/round-refresh'
 <script lang="ts" setup>
-import { RefreshRound } from '@vicons/material'
-
 const emit = defineEmits<{
   (e: 'refresh-background'): void
 }>()

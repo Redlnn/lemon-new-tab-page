@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useElementBounding, useElementHover, useEventListener } from '@vueuse/core'
 
-import { ContentCopyTwotone } from '@vicons/material'
 import { ElMessage } from 'element-plus'
 import i18next from 'i18next'
 
@@ -9,6 +8,7 @@ import { useSettingsStore } from '@/shared/settings'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { useYiYan } from '@newtab/composables/useYiYan'
+import ContentCopyTwotone from '~icons/ic/twotone-content-copy'
 
 const { yiyan, yiyanOrigin, load, isEnabled } = useYiYan()
 const settings = useSettingsStore()

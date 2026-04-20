@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { AddRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
+import AddRound from '~icons/ic/round-add'
 
 const { t } = useTranslation()
 

@@ -1,18 +1,16 @@
 <script lang="ts" setup>
-import { HeartFilled } from '@vicons/antd'
-import {
-  AccessTimeFilledRound,
-  HelpFilled,
-  InfoRound,
-  SearchRound,
-  SettingsRound,
-  WallpaperRound,
-} from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { useSettingsStore } from '@/shared/settings'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
+import HeartFilled from '~icons/ant-design/heart-filled'
+import AccessTimeFilledRound from '~icons/ic/round-access-time-filled'
+import HelpFilled from '~icons/ic/round-help'
+import InfoRound from '~icons/ic/round-info'
+import SearchRound from '~icons/ic/round-search'
+import SettingsRound from '~icons/ic/round-settings'
+import WallpaperRound from '~icons/ic/round-wallpaper'
 
 const emit = defineEmits<{
   (e: 'open-settings'): void

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { useElementVisibility, useWindowSize } from '@vueuse/core'
 
-import { CloseRound } from '@vicons/material'
 import type { DialogInstance, ScrollbarInstance } from 'element-plus'
 
 import usePerfClasses from '@newtab/composables/usePerfClasses'
+import CloseRound from '~icons/ic/round-close'
 
 interface Props {
   title?: string

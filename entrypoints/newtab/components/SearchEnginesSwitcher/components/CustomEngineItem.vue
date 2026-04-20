@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onLongPress } from '@vueuse/core'
 
-import { CheckmarkCircle12Filled, Delete16Regular, Edit16Regular } from '@vicons/fluent'
 import type { DropdownInstance } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
@@ -10,6 +9,9 @@ import { useSettingsStore } from '@/shared/settings'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 import { CUSTOM_ENGINE_OPENED_MENU_CLOSE_FN } from '@newtab/shared/keys'
 import { isHasTouchDevice, isTouchEvent } from '@newtab/shared/touch'
+import CheckmarkCircle12Filled from '~icons/fluent/checkmark-circle-12-filled'
+import Delete16Regular from '~icons/fluent/delete-16-regular'
+import Edit16Regular from '~icons/fluent/edit-16-regular'
 
 const { t } = useTranslation()
 

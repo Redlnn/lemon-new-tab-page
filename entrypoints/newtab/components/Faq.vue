@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import '@newtab/styles/github-markdown.css'
-import { Github } from '@vicons/fa'
-import { EmailRound } from '@vicons/material'
 import { TranslationComponent as i18next, useTranslation } from 'i18next-vue'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { useDialog } from '@newtab/composables/useDialog'
+import Github from '~icons/fa6-brands/github'
+import EmailRound from '~icons/ic/round-email'
 
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })

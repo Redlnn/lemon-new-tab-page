@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
 
-import { CloseRound, KeyboardArrowLeftRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { useDialog } from '@newtab/composables/useDialog'
@@ -10,6 +9,8 @@ import SettingsDetailView from './components/SettingsDetailView.vue'
 import SettingsDialog from './components/SettingsDialog.vue'
 import SettingsMenuView from './components/SettingsMenuView.vue'
 import { MENU_ITEMS, SettingsRoute, useSettingsRouter } from './composables/useSettingsRouter'
+import CloseRound from '~icons/ic/round-close'
+import KeyboardArrowLeftRound from '~icons/ic/round-keyboard-arrow-left'
 
 const MOBILE_BREAKPOINT = 600
 const COLLAPSE_BREAKPOINT = 850

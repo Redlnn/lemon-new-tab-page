@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
 
-import { CloudOffRound, ComputerRound, DarkModeRound, LightModeRound } from '@vicons/material'
 import i18next from 'i18next'
 import { useTranslation } from 'i18next-vue'
 
@@ -10,6 +9,10 @@ import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
 import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import { colorMode as mode, preferredDark } from '@newtab/shared/colorMode'
+import CloudOffRound from '~icons/ic/round-cloud-off'
+import ComputerRound from '~icons/ic/round-computer'
+import DarkModeRound from '~icons/ic/round-dark-mode'
+import LightModeRound from '~icons/ic/round-light-mode'
 
 const { t } = useTranslation('settings')
 

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useDebounceFn } from '@vueuse/core'
 
-import { SearchRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import { SortMode } from '@/shared/enums'
@@ -18,6 +17,7 @@ import {
 import { useBookmarkStore } from './bookmarks'
 import BookmarkEditDialog from './components/BookmarkEditDialog.vue'
 import BookmarkItem from './components/BookmarkItem.vue'
+import SearchRound from '~icons/ic/round-search'
 
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })

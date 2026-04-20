@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
@@ -10,6 +9,7 @@ import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
+import Plus from '~icons/fa6-solid/plus'
 
 const { t } = useTranslation()
 

@@ -18,7 +18,7 @@ async function downloadBackup() {
 }
 
 export async function handleInvaildSettings() {
-  const { DownloadRound } = await import('@vicons/material')
+  const { default: DownloadRound } = await import('~icons/ic/round-download')
   const { ElButton } = await import('element-plus')
   const { idbDropDatabase } = await import('@/shared/storage/idb')
 

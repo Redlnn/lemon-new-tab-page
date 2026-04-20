@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { ChevronRightRound } from '@vicons/material'
 import { useTranslation } from 'i18next-vue'
 
 import Icon from '@/assets/icon.svg?component'
 
 import { MENU_ITEMS } from '../composables/useSettingsRouter'
+import ChevronRightRound from '~icons/ic/round-chevron-right'
 
 const { t } = useTranslation('settings')
 

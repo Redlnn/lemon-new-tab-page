@@ -3,20 +3,6 @@ import './bg-switcher.scss'
 import { useDark, useElementSize } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 
-import {
-  Brightness6Twotone,
-  CloseRound,
-  CloudQueueTwotone,
-  DarkModeTwotone,
-  DownloadRound,
-  FolderCopyRound,
-  HideImageTwotone,
-  InsertLinkRound,
-  LaunchRound,
-  LightModeTwotone,
-  TripOriginRound,
-  UploadRound,
-} from '@vicons/material'
 import type { UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
@@ -29,6 +15,18 @@ import { useDialog } from '@newtab/composables/useDialog'
 import { bingWallpaperURLGetter, useWallpaperUrlStore } from '@newtab/shared/wallpaper'
 
 import useBackgroundSwitcher from './useBackgroundSwitcher'
+import Brightness6Twotone from '~icons/ic/twotone-brightness-6'
+import CloseRound from '~icons/ic/round-close'
+import CloudQueueTwotone from '~icons/ic/twotone-cloud-queue'
+import DarkModeTwotone from '~icons/ic/twotone-dark-mode'
+import DownloadRound from '~icons/ic/round-download'
+import FolderCopyRound from '~icons/ic/round-folder-copy'
+import HideImageTwotone from '~icons/ic/twotone-hide-image'
+import InsertLinkRound from '~icons/ic/round-insert-link'
+import LaunchRound from '~icons/ic/round-launch'
+import LightModeTwotone from '~icons/ic/twotone-light-mode'
+import TripOriginRound from '~icons/ic/round-trip-origin'
+import UploadRound from '~icons/ic/round-upload'
 
 const { t } = useTranslation('settings')
 

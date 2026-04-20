@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { Plus } from '@vicons/fa'
 import type { FormInstance, UploadRequestOptions } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
@@ -9,6 +8,7 @@ import { saveShortcut, useShortcutStore, type Shortcut } from '@/shared/shortcut
 import { formatUrl, isValidUrl } from '@newtab/shared/utils'
 
 import { useFaviconUpload } from '../composables/useFaviconUpload'
+import Plus from '~icons/fa6-solid/plus'
 
 const { t } = useTranslation()
 

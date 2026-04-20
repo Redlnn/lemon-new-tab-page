@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import { useTimeoutFn } from '@vueuse/core'
 
-import {
-  CloudOffRound,
-  DeleteForeverOutlined,
-  DownloadRound,
-  FileUploadRound,
-} from '@vicons/material'
 import { ElLoading } from 'element-plus'
 import { useTranslation } from 'i18next-vue'
 
@@ -25,6 +19,10 @@ import {
   saveCustomSearchEngine,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
+import CloudOffRound from '~icons/ic/round-cloud-off'
+import DeleteForeverOutlined from '~icons/ic/outline-delete-forever'
+import DownloadRound from '~icons/ic/round-download'
+import FileUploadRound from '~icons/ic/round-file-upload'
 
 const { t, i18next } = useTranslation('settings')
 

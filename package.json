@@ -22,10 +22,6 @@
     "format": "oxfmt ."
   },
   "dependencies": {
-    "@vicons/antd": "^0.13.0",
-    "@vicons/fa": "^0.13.0",
-    "@vicons/fluent": "^0.13.0",
-    "@vicons/material": "^0.13.0",
     "@vueuse/components": "^14.2.1",
     "@vueuse/core": "^14.2.1",
     "dayjs": "^1.11.20",
@@ -40,6 +36,11 @@
     "vue-draggable-plus": "^0.6.1"
   },
   "devDependencies": {
+    "@iconify-json/ant-design": "^1.2.5",
+    "@iconify-json/fa6-brands": "^1.2.6",
+    "@iconify-json/fa6-solid": "^1.2.4",
+    "@iconify-json/fluent": "^1.2.45",
+    "@iconify-json/ic": "^1.2.4",
     "@material/material-color-utilities": "^0.4.0",
     "@tsconfig/node24": "^24.0.4",
     "@types/chrome": "^0.1.40",
@@ -68,6 +69,7 @@
     "stylelint-scss": "^7.0.0",
     "typescript": "^6.0.3",
     "unplugin-auto-import": "^21.0.0",
+    "unplugin-icons": "^23.0.1",
     "unplugin-vue-components": "^32.0.0",
     "unplugin-vue-markdown": "^30.0.0",
     "vite": "^8.0.8",
