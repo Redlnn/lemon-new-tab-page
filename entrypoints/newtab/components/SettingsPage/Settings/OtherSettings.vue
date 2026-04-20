@@ -8,7 +8,7 @@ import { PermissionResult, usePermission } from '@newtab/composables/usePermissi
 
 import { storage } from '#imports'
 
-import { downloadJSON } from '@/shared/getJson'
+import { downloadJSON } from '@/shared/downloadJson'
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { saveShortcut, type Shortcuts, useShortcutStore } from '@/shared/shortcut'
 import { idbDropDatabase } from '@/shared/storage/idb'
