@@ -40,7 +40,7 @@ const cleanupTimers = new Map<string, ReturnType<typeof setTimeout>>()
 const CLEANUP_DELAY_MS = 10_000
 
 // ---------------------------------------------------------------------------
-// 常见 favicon 路径（策略 C/D 共用）
+// 常见 favicon 路径（策略 B/D 共用）
 // ---------------------------------------------------------------------------
 const COMMON_FAVICON_PATHS = [
   '/favicon.ico',
@@ -49,6 +49,10 @@ const COMMON_FAVICON_PATHS = [
   '/favicon.webp',
   '/apple-touch-icon.png',
 ] as const
+
+const PAGE_LINK_ICON_SCAN_LIMIT = 256 * 1024
+const LINK_TAG_RE = /<link\b[^>]*>/gi
+const HTML_ATTR_RE = /([^\s"'<>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g
 
 // ---------------------------------------------------------------------------
 // L1 缓存 LRU 辅助
@@ -88,6 +92,89 @@ function toOrigin(url: string): string | null {
   } catch {
     return null
   }
+}
+
+/** 从 <link> 标签字符串中解析出属性键值对。 */
+function parseHtmlAttributes(tag: string): Record<string, string> {
+  const attrs: Record<string, string> = {}
+  const source = tag.replace(/^<link\b/i, '').replace(/\/?\s*>$/, '')
+
+  for (const match of source.matchAll(HTML_ATTR_RE)) {
+    const name = match[1]?.toLowerCase()
+    if (!name) continue
+    attrs[name] = (match[2] ?? match[3] ?? match[4] ?? '').trim()
+  }
+
+  return attrs
+}
+
+/** 给定图标 URL，尝试获取其内容并转换为 base64 数据 URL。失败时返回 null。 */
+async function fetchIconAsDataUrl(iconUrl: string): Promise<string | null> {
+  if (iconUrl.startsWith('data:')) return iconUrl
+
+  try {
+    const resp = await fetch(iconUrl, { signal: AbortSignal.timeout(2000) })
+    if (!resp.ok) return null
+    const contentType = resp.headers.get('content-type') ?? ''
+    if (contentType.startsWith('text/') || contentType.includes('html')) return null
+    const blob = await resp.blob()
+    if (blob.size === 0) return null
+    return await blobToDataURL(blob)
+  } catch {
+    return null
+  }
+}
+
+/** 在给定 HTML 片段中扫描 <link> 标签，尝试获取其中声明的 favicon 图标。会跳过已尝试过的 URL。 */
+async function tryFetchIconFromDiscoveredLinkTags(
+  pageUrl: string,
+  html: string,
+  state: { processedIndex: number; attemptedIconUrls: Set<string> },
+): Promise<string | null> {
+  LINK_TAG_RE.lastIndex = state.processedIndex
+
+  const nonAppleCandidates: string[] = []
+
+  let match: RegExpExecArray | null
+  while ((match = LINK_TAG_RE.exec(html)) !== null) {
+    state.processedIndex = LINK_TAG_RE.lastIndex
+
+    const linkTag = match[0]
+    const attrs = parseHtmlAttributes(linkTag)
+    const rel = attrs.rel?.toLowerCase() ?? ''
+    const href = attrs.href?.trim() ?? ''
+    if (!rel || !href) continue
+
+    let iconUrl: string | null = null
+    try {
+      const u = new URL(href, pageUrl)
+      if (!['http:', 'https:', 'data:', 'blob:'].includes(u.protocol)) continue
+      iconUrl = u.toString()
+    } catch {
+      continue
+    }
+
+    if (!iconUrl || state.attemptedIconUrls.has(iconUrl)) continue
+    state.attemptedIconUrls.add(iconUrl)
+
+    // 优先尝试 apple-touch-icon
+    if (rel.includes('apple-touch-icon')) {
+      const data = await fetchIconAsDataUrl(iconUrl)
+      if (data) return data
+      continue
+    }
+
+    // 非 apple-touch-icon，先缓存候选，稍后按顺序尝试
+    nonAppleCandidates.push(iconUrl)
+  }
+
+  // 先尝试非 apple 候选（保持出现顺序）
+  for (const iconUrl of nonAppleCandidates) {
+    const data = await fetchIconAsDataUrl(iconUrl)
+    if (data) return data
+  }
+
+  return null
 }
 
 /** 已知的无效 SVG 特征字符串（第三方 favicon 服务在找不到图标时返回的占位图）
@@ -142,7 +229,7 @@ function probeImageUrl(url: string): Promise<boolean> {
 // 获取策略
 // ---------------------------------------------------------------------------
 
-/** 策略 A：使用 Chromium 内部的 /_favicon/ API（返回 base64） */
+/** 策略 _：使用 Chromium 内部的 /_favicon/ API（返回 base64） */
 async function fetchViaChromeFaviconApi(pageUrl: string): Promise<string | null> {
   try {
     const apiUrl = new URL(chrome.runtime.getURL('/_favicon/'))
@@ -158,7 +245,7 @@ async function fetchViaChromeFaviconApi(pageUrl: string): Promise<string | null>
   }
 }
 
-/** 策略 B：并行请求第三方 favicon 服务（favicon.so & favicon.im），取最快且有效的一个，返回 base64 */
+/** 策略 C：并行请求第三方 favicon 服务（favicon.so & favicon.im），取最快且有效的一个，返回 base64 */
 async function fetchViaThirdPartyServices(pageUrl: string): Promise<string | null> {
   try {
     const { hostname } = new URL(pageUrl)
@@ -211,7 +298,7 @@ async function fetchViaThirdPartyServices(pageUrl: string): Promise<string | nul
   }
 }
 
-/** 策略 C：尝试常见的 favicon 路径并获取 base64。
+/** 策略 B：尝试常见的 favicon 路径并获取 base64。
  *  需要授予泛域名主机权限（允许访问任意域名）。 */
 async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
   const { origin } = new URL(pageUrl)
@@ -227,6 +314,51 @@ async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
         return blobToDataURL(blob)
       }),
     )
+  } catch {
+    return null
+  }
+}
+
+/** 策略 A：通过读取目标页面的 <link rel="icon"> 标签获取 favicon
+ * 需要授予泛域名主机权限（允许访问任意域名）。 */
+async function fetchViaPageLinkIcon(pageUrl: string): Promise<string | null> {
+  // 只扫描前一小段 HTML / head，避免为找 favicon 读取整页内容。
+  try {
+    const resp = await fetch(pageUrl, { signal: AbortSignal.timeout(5000) })
+    if (!resp.ok) return null
+    const contentType = resp.headers.get('content-type') ?? ''
+    if (!contentType.includes('html') && !contentType.startsWith('text/')) return null
+
+    const reader = resp.body?.getReader()
+    if (!reader) return null
+
+    const decoder = new TextDecoder()
+    let html = ''
+    const state = {
+      processedIndex: 0,
+      attemptedIconUrls: new Set<string>(),
+    }
+
+    try {
+      while (html.length < PAGE_LINK_ICON_SCAN_LIMIT) {
+        const { value, done } = await reader.read()
+        if (done) break
+
+        html += decoder.decode(value, { stream: true })
+
+        const data = await tryFetchIconFromDiscoveredLinkTags(pageUrl, html, state)
+        if (data) return data
+
+        if (/<\/head>/i.test(html)) break
+      }
+
+      html += decoder.decode()
+      return await tryFetchIconFromDiscoveredLinkTags(pageUrl, html, state)
+    } finally {
+      try {
+        await reader.cancel()
+      } catch {}
+    }
   } catch {
     return null
   }
@@ -317,34 +449,39 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
   const promise = (async (): Promise<string | null> => {
     let data: string | null = null
     let type: 'base64' | 'url' = 'base64'
+    const hasHostPerm = await browser.permissions
+      .contains({ origins: ['*://*/*'] })
+      .catch(() => false)
 
     // 不可信，会返回空的默认图标
-    // 策略 A：Chromium 内部的 /_favicon/ API（不需要主机权限）
+    // 策略 _：Chromium 内部的 /_favicon/ API（不需要主机权限）
     // if (isChromium) {
     //   data = await fetchViaChromeFaviconApi(pageUrl)
     // }
 
-    // 策略 C：常见直接路径抓取（需要主机权限，适用于所有浏览器）
-    if (!data) {
-      const hasHostPerm = await browser.permissions
-        .contains({ origins: ['*://*/*'] })
-        .catch(() => false)
+    // 策略 A：读取页面声明的 icon 链接（需要主机权限）
+    if (!data && hasHostPerm) {
+      data = await fetchViaPageLinkIcon(pageUrl)
+    }
+    console.debug('fetchViaPageLinkIcon', { data })
 
-      if (hasHostPerm) {
-        data = await fetchViaDirectUrls(pageUrl)
-      }
+    // 策略 B：常见直接路径抓取（需要主机权限，适用于所有浏览器）
+    if (!data && hasHostPerm) {
+      data = await fetchViaDirectUrls(pageUrl)
     }
 
     // 策略 B：尝试第三方 favicon 服务（并行请求 favicon.so & favicon.im）
     if (!data) {
       data = await fetchViaThirdPartyServices(pageUrl)
     }
+    console.debug('fetchViaThirdPartyServices', { data })
 
     // 策略 D：通过 Image 探测（无需 CORS，仅返回 URL）
     if (!data) {
       data = await probeViaImageElement(pageUrl)
       if (data) type = 'url'
     }
+    console.debug('probeViaImageElement', { data })
 
     if (data) {
       const entry: FaviconCacheEntry = { data, type, fetchedAt: Date.now() }

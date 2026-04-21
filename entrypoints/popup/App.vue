@@ -44,7 +44,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
       // Firefox MV2: browser.scripting 不存在，改用 browser.tabs.executeScript
       const results = (await browser.tabs.executeScript(tabId, {
         code: `(function () {
-          var s = ['link[rel~="icon"][href]', 'link[rel~="shortcut icon"][href]', 'link[rel~="apple-touch-icon"][href]'];
+          var s = ['link[rel~="apple-touch-icon"][href]', 'link[rel~="icon"][href]'];
           for (var i = 0; i < s.length; i++) { var el = document.querySelector(s[i]); if (el && el.href) return el.href; }
           return null;
         })()`,
@@ -55,11 +55,7 @@ async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
     const results = await browser.scripting.executeScript({
       target: { tabId },
       func: () => {
-        const selectors = [
-          'link[rel~="icon"][href]',
-          'link[rel~="shortcut icon"][href]',
-          'link[rel~="apple-touch-icon"][href]',
-        ]
+        const selectors = ['link[rel~="apple-touch-icon"][href]', 'link[rel~="icon"][href]']
         for (const sel of selectors) {
           const el = document.querySelector<HTMLLinkElement>(sel)
           if (el?.href) return el.href // 在选项卡上下文中 href 已为绝对地址
