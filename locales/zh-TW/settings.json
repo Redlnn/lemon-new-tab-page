@@ -274,6 +274,7 @@
       "itemGapY": "捷徑上下間距"
     },
     "tip": "Tip：可以拖曳設定視窗以觀察捷徑區域的變化噢~",
+    "iconCacheTip": "Tip：建議開啟「設定-其他-圖示快取」以嘗試取得更高清晰度的圖示。",
     "title": "捷徑",
     "titleExtraWidth": "標題擴展寬度",
     "titleWhiteInLight": "【捷徑】淺色模式下使用白色文字",

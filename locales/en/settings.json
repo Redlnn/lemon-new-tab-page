@@ -274,6 +274,7 @@
       "itemGapY": "Vertical icon spacing"
     },
     "tip": "Tip: You can drag the settings window to see changes in the shortcut area.",
+    "iconCacheTip": "Tip: Consider enabling Settings → Other → Icon cache to attempt fetching higher-resolution icons.",
     "title": "Shortcut",
     "titleExtraWidth": "Title expand width",
     "titleWhiteInLight": "[Shortcut] Use white text in light mode",

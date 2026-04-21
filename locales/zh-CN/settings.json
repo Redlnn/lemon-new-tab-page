@@ -274,6 +274,7 @@
       "itemGapY": "链接上下间距"
     },
     "tip": "Tip：可以拖动设置窗口以观察快速访问区域变化噢~",
+    "iconCacheTip": "Tip：建议打开「设置-其他-图标缓存」以尝试获取更高清晰度的图标。",
     "title": "快速访问",
     "titleExtraWidth": "标题扩展宽度",
     "titleWhiteInLight": "【快速访问】浅色模式下使用白色文字",

@@ -128,7 +128,7 @@
       "extensionIconTip": "You can also add the current page you are browsing by clicking the icon in the browser extensions menu.",
       "invalidUrlError": "Invalid URL. Please input a new one",
       "tooLargeImageError": "The image size exceeds 100KiB, please reselect a new one~",
-      "uploadFaviconAlert": "Auto-detect if not provided."
+      "uploadFaviconAlert": "If you don't upload an icon, consider enabling Settings → Other → Icon cache to automatically fetch icons."
     },
     "addShortcut": "Add Shortcut",
     "bookmark": {

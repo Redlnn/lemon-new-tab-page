@@ -128,7 +128,7 @@
       "extensionIconTip": "你亦可以透過點擊瀏覽器擴展選單中嘅圖示嘷將當前查看的頁面加入快速存取。",
       "invalidUrlError": "網址無效，請重新輸入",
       "tooLargeImageError": "圖片超過 100KiB，請重新選擇",
-      "uploadFaviconAlert": "冇上載圖示時會嘗試自動提取。"
+      "uploadFaviconAlert": "冇上載圖示時，建議開啟「設定-其他-圖示快取」以自動取得圖示"
     },
     "addShortcut": "新增快速存取",
     "bookmark": {

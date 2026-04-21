@@ -18,6 +18,9 @@ async function restoreDefaultTopSites() {
 
 <template>
   <div class="settings__items-container">
+    <p class="settings__item--note" style="margin-top: 1em">
+      {{ t('shortcut.iconCacheTip') }}
+    </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>
       <el-switch v-model="settings.dock.enabled" />

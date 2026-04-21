@@ -19,8 +19,11 @@ async function restoreDefaultTopSites() {
 
 <template>
   <div class="settings__items-container">
-    <p v-if="isChromium" class="settings__item--note" style="margin-top: 1em">
+    <p class="settings__item--note" style="margin-top: 1em; margin-bottom: 0.2em">
       {{ t('shortcut.tip') }}
+    </p>
+    <p class="settings__item--note">
+      {{ t('shortcut.iconCacheTip') }}
     </p>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:common.enable') }}</div>

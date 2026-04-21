@@ -388,23 +388,6 @@ function changeLanguage(lang: string) {
       <cloud-off-round />
     </p>
     <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.faviconCache.label') }}</div>
-      <el-switch v-model="settings.faviconCacheEnabled" :before-change="beforeFaviconCacheChange" />
-    </div>
-    <p class="settings__item--note">
-      {{ t('other.faviconCache.description') }}
-    </p>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('other.purge.icon') }}</div>
-      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearIconCache">
-        {{ t('other.purge.btn') }}
-      </el-button>
-    </div>
-    <div class="settings__item settings__item--horizontal">
-      <div class="settings__label">{{ t('newtab:changelog.hideMajor') }}</div>
-      <el-switch v-model="settings.hideMajorChangelog" />
-    </div>
-    <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.language') }}</div>
       <el-select
         v-model="currentLanguage"
@@ -433,6 +416,23 @@ function changeLanguage(lang: string) {
           {{ t('other.importExport.import') }}
         </el-button>
       </span>
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('newtab:changelog.hideMajor') }}</div>
+      <el-switch v-model="settings.hideMajorChangelog" />
+    </div>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.faviconCache.label') }}</div>
+      <el-switch v-model="settings.faviconCacheEnabled" :before-change="beforeFaviconCacheChange" />
+    </div>
+    <p class="settings__item--note">
+      {{ t('other.faviconCache.description') }}
+    </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.purge.icon') }}</div>
+      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearIconCache">
+        {{ t('other.purge.btn') }}
+      </el-button>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('other.purge.wallpaper') }}</div>
