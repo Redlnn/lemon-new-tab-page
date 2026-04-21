@@ -6,8 +6,9 @@
 
 ### New Features✨
 
-- Added icon caching for Most Visited, custom Quick Access, and custom search engines; toggle available in "Other" settings.
-- Added a new user welcome and permission prompt that guides users through necessary permission steps when enabling icon caching.
+- Add a welcome message for new users and enable icon cache prompts.
+- Brand new icon caching mechanism that attempts to fetch higher-quality website icons and caches them to improve loading speed and visual experience on subsequent visits.
+  ([#71](https://github.com/Redlnn/lemon-new-tab/issues/71))
 
 ### Improvements⚡️
 
@@ -17,6 +18,7 @@
 
 - Fixed white edges appearing at the edges when wallpaper parallax is enabled.
 - Fixed white flash on Linux + Chromium when starting in dark mode.
+  ([#72](https://github.com/Redlnn/lemon-new-tab/issues/72))
 
 ## 3.2.0 (Mar 15, 2026)
 
