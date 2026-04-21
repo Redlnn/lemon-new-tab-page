@@ -130,10 +130,10 @@ async function fetchIconAsDataUrl(iconUrl: string): Promise<string | null> {
   if (iconUrl.startsWith('data:')) return iconUrl
 
   try {
-    const resp = await fetch(iconUrl, { signal: AbortSignal.timeout(2000) })
+    const resp = await fetch(iconUrl, { signal: AbortSignal.timeout(5000) })
     if (!resp.ok) return null
     const contentType = resp.headers.get('content-type') ?? ''
-    if (contentType.startsWith('text/') || contentType.includes('html')) return null
+    if (!contentType.startsWith('image/')) return null
     const blob = await resp.blob()
     if (blob.size === 0) return null
     return await blobToDataURL(blob)
@@ -182,7 +182,9 @@ async function tryFetchIconFromDiscoveredLinkTags(
     }
 
     // 非 apple-touch-icon，先缓存候选，稍后按顺序尝试
-    nonAppleCandidates.push(iconUrl)
+    if (rel.includes('icon')) {
+      nonAppleCandidates.push(iconUrl)
+    }
   }
 
   // 先尝试非 apple 候选（保持出现顺序）
@@ -233,7 +235,7 @@ function probeImageUrl(url: string): Promise<boolean> {
       resolve(result)
     }
 
-    const timer = setTimeout(() => done(false), 2000)
+    const timer = setTimeout(() => done(false), 5000)
 
     img.onload = () => done(true)
     img.onerror = () => done(false)
@@ -273,8 +275,8 @@ async function fetchViaThirdPartyServices(pageUrl: string): Promise<string | nul
     // 为每个请求创建一个可中断的 controller，并配合定时器实现超时
     const controllers = endpoints.map(() => new AbortController())
     const timers: ReturnType<typeof setTimeout>[] = controllers.map((c) =>
-      // 2s 超时后中止对应请求
-      setTimeout(() => c.abort(), 2000),
+      // 5s 超时后中止对应请求
+      setTimeout(() => c.abort(), 5000),
     )
 
     const attempts = endpoints.map((u, idx) =>
@@ -322,7 +324,7 @@ async function fetchViaDirectUrls(pageUrl: string): Promise<string | null> {
   try {
     return await Promise.any(
       COMMON_FAVICON_PATHS.map(async (path) => {
-        const resp = await fetch(origin + path, { signal: AbortSignal.timeout(2000) })
+        const resp = await fetch(origin + path, { signal: AbortSignal.timeout(5000) })
         if (!resp.ok) throw new Error('not ok')
         const contentType = resp.headers.get('content-type') ?? ''
         if (contentType.startsWith('text/') || contentType.includes('html')) throw new Error('html')
@@ -482,7 +484,6 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     if (!data && hasHostPerm) {
       data = await fetchViaPageLinkIcon(pageUrl)
     }
-    console.debug('fetchViaPageLinkIcon', { data })
 
     // 策略 B：常见直接路径抓取（需要主机权限，适用于所有浏览器）
     if (!data && hasHostPerm) {
@@ -493,14 +494,12 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     if (!data) {
       data = await fetchViaThirdPartyServices(pageUrl)
     }
-    console.debug('fetchViaThirdPartyServices', { data })
 
     // 策略 D：通过 Image 探测（无需 CORS，仅返回 URL）
     if (!data) {
       data = await probeViaImageElement(pageUrl)
       if (data) type = 'url'
     }
-    console.debug('probeViaImageElement', { data })
 
     if (data && generationAtStart === cacheGeneration) {
       const entry: FaviconCacheEntry = { data, type, fetchedAt: Date.now() }
@@ -568,7 +567,7 @@ export async function warmFaviconCache(
       if (hasHostPerm) {
         try {
           const targetUrl = new URL(faviconData, pageUrl)
-          const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(2000) })
+          const resp = await fetch(targetUrl, { signal: AbortSignal.timeout(5000) })
           if (resp.ok) {
             const contentType = resp.headers.get('content-type') ?? ''
             if (!contentType.startsWith('text/') && !contentType.includes('html')) {

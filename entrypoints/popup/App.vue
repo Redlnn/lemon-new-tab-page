@@ -108,7 +108,6 @@ onMounted(async () => {
         favIconUrl: tab.favIconUrl,
         tabId: tab.id,
       }
-      console.log('Current active tab:', tab)
 
       // 检查是否已经存在（规范化 URL 后比较）
       const normalizedTabUrl = normalizeUrlForCompare(tab.url)
