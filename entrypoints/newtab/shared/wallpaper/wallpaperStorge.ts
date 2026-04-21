@@ -2,7 +2,7 @@ import { storage } from '#imports'
 
 import { idbClear, idbDelete, idbGet, idbSet } from '@/shared/storage/idb'
 
-/** 创建与 localforage API 兼容的 store 包装 */
+/** 创建与 idb API 兼容的 store 包装 */
 function createWallpaperStore(storeName: 'wallpaper' | 'wallpaperBing' | 'wallpaperDark') {
   return {
     getItem: async <T = Blob>(_key: string): Promise<T | null> =>

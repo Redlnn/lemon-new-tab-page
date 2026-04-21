@@ -170,6 +170,11 @@
           "purging": "Clearing extension data..",
           "title": "Are you sure you want to purge all data of this extension?"
         },
+        "icon": {
+          "message": "This operation will delete all cached site icons.",
+          "purging": "Clearing favicon cache...",
+          "title": "Are you sure you want to purge the favicon cache?"
+        },
         "wallpaper": {
           "message": "This operation will delete the selected background images or videos.",
           "purging": "Clearing wallpaper cache...",
@@ -177,6 +182,7 @@
         }
       },
       "data": "Purge all data",
+      "icon": "Purge favicon cache",
       "wallpaper": "Purge wallpaper cache"
     },
     "faviconCache": {

@@ -1,4 +1,4 @@
-import { idbDelete, idbGet, idbSet } from '@/shared/storage/idb'
+import { idbClear, idbDelete, idbGet, idbSet } from '@/shared/storage/idb'
 
 export type { FaviconCacheEntry } from '@/shared/storage/idb'
 
@@ -33,5 +33,14 @@ export async function deleteFaviconCacheEntry(origin: string): Promise<void> {
     await idbDelete('favicon', origin)
   } catch {
     // 缓存删除失败时静默处理
+  }
+}
+
+/** 清空所有 favicon 持久化缓存。失败时会静默忽略错误。 */
+export async function clearFaviconCacheEntries(): Promise<void> {
+  try {
+    await idbClear('favicon')
+  } catch {
+    // 缓存清理失败时静默处理
   }
 }

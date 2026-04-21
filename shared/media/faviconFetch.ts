@@ -2,6 +2,7 @@
 import { browser } from '#imports'
 
 import {
+  clearFaviconCacheEntries,
   deleteFaviconCacheEntry,
   FAVICON_CACHE_TTL,
   getFaviconCacheEntry,
@@ -15,10 +16,26 @@ const isChromium = import.meta.env.CHROME || import.meta.env.EDGE || import.meta
 // 图标缓存总开关（由设置控制，默认关闭）
 // ---------------------------------------------------------------------------
 let _cacheEnabled = false
+let cacheGeneration = 0
 
 /** 由 newtab main.ts 在设置加载后调用以初始化缓存行为，并在设置变更时再次调用。 */
 export function setFaviconCacheEnabled(enabled: boolean): void {
   _cacheEnabled = enabled
+}
+
+/** 清空 favicon 的内存缓存与持久化缓存。 */
+export async function clearFaviconCache(): Promise<void> {
+  cacheGeneration += 1
+
+  for (const timer of cleanupTimers.values()) {
+    clearTimeout(timer)
+  }
+
+  cleanupTimers.clear()
+  refCounts.clear()
+  l1Cache.clear()
+
+  await clearFaviconCacheEntries()
 }
 
 // ---------------------------------------------------------------------------
@@ -446,6 +463,8 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
   const existing = pendingFetches.get(origin)
   if (existing) return existing
 
+  const generationAtStart = cacheGeneration
+
   const promise = (async (): Promise<string | null> => {
     let data: string | null = null
     let type: 'base64' | 'url' = 'base64'
@@ -483,7 +502,7 @@ async function doFetch(pageUrl: string, origin: string): Promise<string | null> 
     }
     console.debug('probeViaImageElement', { data })
 
-    if (data) {
+    if (data && generationAtStart === cacheGeneration) {
       const entry: FaviconCacheEntry = { data, type, fetchedAt: Date.now() }
       // 始终保留到 L1（会话）；仅当该 origin 有引用时才持久化到 L2
       l1Set(origin, entry)
@@ -520,6 +539,7 @@ export async function warmFaviconCache(
   if (!_cacheEnabled) return null
   const origin = toOrigin(pageUrl)
   if (!origin) return null
+  const generationAtStart = cacheGeneration
 
   const l1 = l1Cache.get(origin)
   if (l1 && Date.now() - l1.fetchedAt <= FAVICON_CACHE_TTL) return null
@@ -568,11 +588,13 @@ export async function warmFaviconCache(
     }
   }
 
-  const entry: FaviconCacheEntry = { data: finalData, type: finalType, fetchedAt: Date.now() }
-  l1Set(origin, entry)
-  const refCount = refCounts.get(origin) ?? 0
-  if (refCount > 0) {
-    await setFaviconCacheEntry(origin, entry).catch(() => {})
+  if (generationAtStart === cacheGeneration) {
+    const entry: FaviconCacheEntry = { data: finalData, type: finalType, fetchedAt: Date.now() }
+    l1Set(origin, entry)
+    const refCount = refCounts.get(origin) ?? 0
+    if (refCount > 0) {
+      await setFaviconCacheEntry(origin, entry).catch(() => {})
+    }
   }
   if (finalType === 'base64') return finalData
   return null

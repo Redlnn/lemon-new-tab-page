@@ -11,6 +11,7 @@ import FileUploadRound from '~icons/ic/round-file-upload'
 import { storage } from '#imports'
 
 import { downloadJSON } from '@/shared/downloadJson'
+import { clearFaviconCache } from '@/shared/media'
 import { type CURRENT_CONFIG_SCHEMA, defaultSettings, useSettingsStore } from '@/shared/settings'
 import { type Shortcuts, useShortcutStore } from '@/shared/shortcut'
 import { idbDropDatabase } from '@/shared/storage/idb'
@@ -21,6 +22,13 @@ import {
   type CustomSearchEngineStorage,
   useCustomSearchEngineStore,
 } from '@newtab/shared/customSearchEngine'
+import {
+  clearAllOnlineWallpaperCache,
+  useBingWallpaperStorge,
+  useDarkWallpaperStorge,
+  useWallpaperStorge,
+  useWallpaperUrlStore,
+} from '@newtab/shared/wallpaper'
 
 const { t, i18next } = useTranslation('settings')
 
@@ -79,12 +87,36 @@ async function confirmClearWallpaperData() {
   clearWallpaperData()
 }
 
+async function confirmClearIconCache() {
+  try {
+    await ElMessageBox.confirm(
+      t('other.purge.confirm.icon.message'),
+      t('other.purge.confirm.icon.title'),
+      {
+        confirmButtonText: t('newtab:common.confirm'),
+        cancelButtonText: t('newtab:common.no'),
+        type: 'warning',
+      },
+    )
+  } catch {
+    return
+  }
+
+  clearIconCache()
+}
+
 async function clearWallpaperData() {
+  const wallpaperUrlStore = useWallpaperUrlStore()
+
   const resetSettings = () => {
     settings.background.bgType = defaultSettings.background.bgType
     settings.background.local = { ...defaultSettings.background.local }
     settings.background.localDark = { ...defaultSettings.background.localDark }
     settings.background.bing = { ...defaultSettings.background.bing }
+    settings.background.online = {
+      ...defaultSettings.background.online,
+      cache: { ...defaultSettings.background.online.cache },
+    }
   }
 
   ElLoading.service({
@@ -94,7 +126,17 @@ async function clearWallpaperData() {
     background: 'var(--el-overlay-color-light)',
   })
 
-  Promise.all([resetSettings(), idbDropDatabase()])
+  resetSettings()
+
+  Promise.all([
+    useWallpaperStorge.clear(),
+    useDarkWallpaperStorge.clear(),
+    useBingWallpaperStorge.clear(),
+    clearAllOnlineWallpaperCache(),
+    wallpaperUrlStore.clearUrl('light'),
+    wallpaperUrlStore.clearUrl('dark'),
+    wallpaperUrlStore.clearUrl('bing'),
+  ])
     .catch(console.error)
     .finally(() => {
       setTimeout(() => {
@@ -119,6 +161,23 @@ function clearExtensionData() {
     storage.clear('session'),
     storage.clear('sync'),
   ])
+    .catch(console.error)
+    .finally(() => {
+      useTimeoutFn(() => {
+        location.reload()
+      }, 1000)
+    })
+}
+
+function clearIconCache() {
+  ElLoading.service({
+    lock: true,
+    text: t('other.purge.confirm.icon.purging'),
+    body: true,
+    background: 'var(--el-overlay-color-light)',
+  })
+
+  clearFaviconCache()
     .catch(console.error)
     .finally(() => {
       useTimeoutFn(() => {
@@ -335,6 +394,12 @@ function changeLanguage(lang: string) {
     <p class="settings__item--note">
       {{ t('other.faviconCache.description') }}
     </p>
+    <div class="settings__item settings__item--horizontal">
+      <div class="settings__label">{{ t('other.purge.icon') }}</div>
+      <el-button type="danger" :icon="DeleteForeverOutlined" @click="confirmClearIconCache">
+        {{ t('other.purge.btn') }}
+      </el-button>
+    </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('newtab:changelog.hideMajor') }}</div>
       <el-switch v-model="settings.hideMajorChangelog" />
