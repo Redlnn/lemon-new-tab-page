@@ -8,6 +8,20 @@
     <meta name="manifest.type" content="browser_action" />
     <script src="/theme-init.js"></script>
     <style>
+      html,
+      html.light {
+        background-color: #f2f3f5;
+      }
+
+      html.light {
+        color-scheme: light;
+      }
+
+      html.dark {
+        color-scheme: dark;
+        background-color: #0a0a0a;
+      }
+
       @media (prefers-color-scheme: light) {
         html {
           color-scheme: light;
@@ -22,7 +36,58 @@
         }
       }
     </style>
+    <style>
+      .hidden {
+        display: none;
+      }
+      .fallback {
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 24px;
+        box-sizing: border-box;
+        background: #0f1115;
+        color: #f5f7fa;
+      }
+      .fallback-content {
+        max-width: 640px;
+        width: 100%;
+        background: #171a21;
+        border: 1px solid #2a3040;
+        border-radius: 10px;
+        padding: 20px;
+        line-height: 1.6;
+      }
+      .fallback-title {
+        margin: 0 0 8px;
+        font-size: 18px;
+      }
+      .fallback-desc {
+        margin: 0 0 8px;
+        opacity: 0.9;
+      }
+      .fallback-pre {
+        margin: 0;
+        padding: 12px;
+        background: #0f1115;
+        border: 1px solid #2a3040;
+        border-radius: 8px;
+        white-space: pre-wrap;
+        word-break: break-word;
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <main id="fallback" class="fallback hidden">
+      <section class="fallback-content">
+        <h1 class="fallback-title">Popup startup failed</h1>
+        <p class="fallback-desc">
+          The popup failed to initialize. Please reload the extension or reopen the popup.
+        </p>
+        <pre class="fallback-pre"></pre>
+      </section>
+    </main>
+  </body>
   <script type="module" src="./main.ts"></script>
 </html>

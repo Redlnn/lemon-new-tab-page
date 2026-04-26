@@ -28,11 +28,10 @@ const languageDetector = new LanguageDetector(null, {
   caches: ['localStorage'],
 })
 
-export const i18nInitPromise = i18next
+export async function initI18n() {
   // 检测用户语言
   // 参考: https://github.com/i18next/i18next-browser-languageDetector
-  .use(languageDetector)
-  .init({
+  await i18next.use(languageDetector).init({
     resources,
     fallbackLng: {
       'zh-MO': ['zh-HK'],
@@ -48,19 +47,22 @@ export const i18nInitPromise = i18next
       escapeValue: false,
     },
   })
-  .then(() => {
-    // Windows 不能正确区分 zh-HK 和 zh-TW，把所有繁体中文都当作 zh-TW
-    if (i18next.language === 'zh-TW' && isHKorMO()) {
-      i18next.changeLanguage('zh-HK')
-    }
+
+  // Windows 不能正确区分 zh-HK 和 zh-TW，把所有繁体中文都当作 zh-TW
+  if (i18next.language === 'zh-TW' && isHKorMO()) {
+    await i18next.changeLanguage('zh-HK')
+  }
+
+  changeDocument()
+  isChinese.value = i18next.language.startsWith('zh')
+
+  i18next.off('languageChanged') // 避免重复绑定事件
+  i18next.on('languageChanged', (lng: string) => {
+    // 同步 UI：当语言变化时，更新 <html lang> 与标题
     changeDocument()
-    isChinese.value = i18next.language.startsWith('zh')
-    i18next.on('languageChanged', (lng: string) => {
-      // 同步 UI：当语言变化时，更新 <html lang> 与标题
-      changeDocument()
-      isChinese.value = lng.startsWith('zh')
-    })
+    isChinese.value = lng.startsWith('zh')
   })
+}
 
 export function i18n<T extends App>(app: T) {
   app.use(I18NextVue, { i18next })

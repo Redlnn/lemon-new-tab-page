@@ -17,7 +17,7 @@ async function downloadBackup() {
   )
 }
 
-export async function handleInvaildSettings() {
+export async function handleInvaildSettings(): Promise<boolean> {
   const { default: DownloadRound } = await import('~icons/ic/round-download')
   const { ElButton } = await import('element-plus')
   const { idbDropDatabase } = await import('@/shared/storage/idb')
@@ -48,7 +48,7 @@ export async function handleInvaildSettings() {
     },
   )
 
-  ElLoading.service({
+  const loading = ElLoading.service({
     lock: true,
     text: i18next.t('settings:other.purge.confirm.wallpaper.purging'),
     body: true,
@@ -64,15 +64,19 @@ export async function handleInvaildSettings() {
       storage.clear('session'),
     ])
   } catch (e) {
-    console.error('Failed to clear data:', e)
-    ElMessageBox.alert(
-      h('div', null, [h('h5', null, (e as Error).name), h('p', null, (e as Error).message)]),
+    loading.close()
+    const error = e instanceof Error ? e : new Error(String(e))
+    console.error('Failed to clear data:', error)
+    await ElMessageBox.alert(
+      h('div', null, [h('h5', null, error.name), h('p', null, error.message)]),
       {
         title: 'Failed to clear data',
       },
     )
-    return false
+    throw error
   }
+  loading.close()
   await promiseTimeout(1000)
-  location.reload()
+  queueMicrotask(() => location.reload())
+  return false
 }

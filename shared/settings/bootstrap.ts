@@ -2,13 +2,13 @@ import { browser } from '#imports'
 
 import { handleInvaildSettings } from './handleInvaild'
 
-export async function shouldStartApp() {
+export async function shouldStartApp(): Promise<boolean> {
   const wxtSettingsVer: { $settings: number | null } = await browser.storage.local.get({
     $settings: null,
   })
   if (wxtSettingsVer.$settings && wxtSettingsVer.$settings <= 6) {
     await handleInvaildSettings()
-    return
+    return false
   }
 
   const localSettings: {
@@ -31,6 +31,9 @@ export async function shouldStartApp() {
 
     if (isInvaildSettings) {
       await handleInvaildSettings()
+      return false
     }
   }
+
+  return true
 }

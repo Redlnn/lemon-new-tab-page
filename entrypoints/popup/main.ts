@@ -3,7 +3,7 @@ import { usePreferredDark } from '@vueuse/core'
 import { createPinia } from 'pinia'
 import { createApp } from 'vue'
 
-import { i18n, i18nInitPromise } from '@/shared/i18n'
+import { i18n, initI18n } from '@/shared/i18n'
 import { shouldStartApp, useSettingsStore } from '@/shared/settings'
 import {
   applyStoredMonetColors,
@@ -29,8 +29,21 @@ watch(
   { immediate: true },
 )
 
-i18nInitPromise.then(async () => {
-  await shouldStartApp()
+function renderPopupStartupError(error: unknown) {
+  const message = error instanceof Error ? error.message : String(error)
+  const fallbackMain = document.getElementById('fallback')
+  if (fallbackMain) {
+    fallbackMain.classList.remove('hidden')
+    const pre = fallbackMain.querySelector('.fallback-pre')
+    if (pre) {
+      pre.textContent = message
+    }
+  }
+}
+
+async function bootstrapPopup() {
+  const canStartApp = await shouldStartApp()
+  if (!canStartApp) return
 
   const app = i18n(createApp(App))
   const pinia = createPinia()
@@ -58,4 +71,14 @@ i18nInitPromise.then(async () => {
   }
 
   app.mount('body')
-})
+}
+
+void (async () => {
+  try {
+    await initI18n()
+    await bootstrapPopup()
+  } catch (error) {
+    console.error('[popup] startup failed', error)
+    renderPopupStartupError(error)
+  }
+})()

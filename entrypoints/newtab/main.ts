@@ -5,7 +5,7 @@ import { version } from '@/package.json'
 
 import { i18n } from '@/shared/i18n'
 import { setFaviconCacheEnabled } from '@/shared/media'
-import { shouldStartApp, useSettingsStore } from '@/shared/settings'
+import { useSettingsStore } from '@/shared/settings'
 import { useShortcutStore } from '@/shared/shortcut'
 import { useSyncDataStore } from '@/shared/sync'
 import { applyStoredMonetColors, getMonetColors } from '@/shared/theme'
@@ -43,8 +43,6 @@ export const main = async () => {
     'padding: 2px 6px; border-radius: 0 4px 4px 0; color: #fff; background: #ffbf00; font-weight: bold;',
     '',
   )
-
-  await shouldStartApp()
 
   const app = createApp(App)
   const pinia = createPinia()
