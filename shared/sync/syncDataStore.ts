@@ -4,11 +4,12 @@ import { defineStore, MutationType } from 'pinia'
 import { browser } from 'wxt/browser'
 
 import { BgType } from '../enums'
-import type { CURRENT_CONFIG_SCHEMA, SettingsSchemaV7 } from '../settings'
+import type { CURRENT_CONFIG_SCHEMA, SettingsSchemaV7, SettingsSchemaV8 } from '../settings'
 import {
   CURRENT_CONFIG_VERSION,
   defaultSettings,
   migrateFromVer7To8,
+  migrateFromVer8To9,
   useSettingsStore,
 } from '../settings'
 import { defaultShortcuts, useShortcutStore } from '../shortcut'
@@ -17,27 +18,31 @@ import type { Shortcuts } from '../shortcut/shortcutStorage'
 import { localSyncDataStorage, syncDataStorage } from './syncDataStorage'
 import type { SyncData, SyncMessage, SyncRequestMessage } from './types'
 
+const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null
+
+const hasStringType = (value: unknown): value is { type: string } =>
+  isObjectRecord(value) && typeof value.type === 'string'
+
+const toError = (err: unknown): Error => (err instanceof Error ? err : new Error(String(err)))
+
 const debouncedSend = useDebounceFn(async (data: SyncData) => {
   try {
-    await browser.runtime.sendMessage({
+    const syncRequestMessage: SyncRequestMessage = {
       type: 'SYNC_REQUEST',
       data,
-    } as SyncRequestMessage)
+    }
+    await browser.runtime.sendMessage(syncRequestMessage)
   } catch (err) {
-    const error = err as Error
-    console.error('Sync to cloud failed:', error)
+    console.error('Sync to cloud failed:', toError(err))
   }
 }, 2000)
 
-async function handleSyncStorageUpdateMessage(message: SyncMessage) {
-  const isSyncMessage = (msg: unknown) =>
-    typeof msg === 'object' &&
-    msg !== null &&
-    'type' in msg &&
-    typeof (msg as { type: unknown }).type === 'string' &&
-    (msg as { type: string }).type === 'SYNC_UPDATE'
+const isSyncUpdateMessage = (msg: unknown): msg is SyncMessage =>
+  hasStringType(msg) && msg.type === 'SYNC_UPDATE'
 
-  if (isSyncMessage(message)) {
+async function handleSyncStorageUpdateMessage(message: unknown) {
+  if (isSyncUpdateMessage(message)) {
     const syncDataStore = useSyncDataStore()
     await syncDataStore.checkCloudSync()
   }
@@ -67,8 +72,22 @@ export function setSyncEventCallback(cb: SyncEventCallback | null) {
   syncEventCallback = cb
 }
 
-const migrations: Record<number, (s: unknown) => Promise<unknown> | unknown> = {
-  7: (s) => migrateFromVer7To8(s as SettingsSchemaV7),
+const emitSyncError = (err: unknown) => {
+  if (syncEventCallback) {
+    syncEventCallback('sync-error', toError(err))
+  }
+}
+
+type MigratableSettings = SettingsSchemaV7 | SettingsSchemaV8 | CURRENT_CONFIG_SCHEMA
+
+const migrations: Partial<
+  Record<
+    MigratableSettings['version'],
+    (s: MigratableSettings) => Promise<MigratableSettings> | MigratableSettings
+  >
+> = {
+  7: (s) => (s.version === 7 ? migrateFromVer7To8(s) : s),
+  8: (s) => (s.version === 8 ? migrateFromVer8To9(s) : s),
 }
 
 export const useSyncDataStore = defineStore('sync', () => {
@@ -99,9 +118,10 @@ export const useSyncDataStore = defineStore('sync', () => {
         return
       }
 
-      browser.runtime.sendMessage({
+      const syncInitedMessage: SyncMessage = {
         type: 'SYNC_INITED',
-      } as SyncMessage)
+      }
+      browser.runtime.sendMessage(syncInitedMessage)
 
       // 监听同步储存更新消息
       browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
@@ -156,13 +176,7 @@ export const useSyncDataStore = defineStore('sync', () => {
       ]
       initialized = true
     } catch (err) {
-      if (syncEventCallback) {
-        if (err instanceof Error) {
-          syncEventCallback('sync-error', err)
-        } else {
-          syncEventCallback('sync-error', new Error(String(err)))
-        }
-      }
+      emitSyncError(err)
     } finally {
       isProcessing = false
     }
@@ -211,13 +225,7 @@ export const useSyncDataStore = defineStore('sync', () => {
         return true
       }
     } catch (err) {
-      if (syncEventCallback) {
-        if (err instanceof Error) {
-          syncEventCallback('sync-error', err)
-        } else {
-          syncEventCallback('sync-error', new Error(String(err)))
-        }
-      }
+      emitSyncError(err)
     }
   }
 
@@ -230,19 +238,14 @@ export const useSyncDataStore = defineStore('sync', () => {
 
       const localShortcut = useShortcutStore()
 
-      debouncedSend({
+      const payload: SyncData = {
         settings: localSettings.$state,
         bookmarks: localShortcut.$state,
         lastUpdate: Date.now(),
-      } as SyncData)
-    } catch (err) {
-      if (syncEventCallback) {
-        if (err instanceof Error) {
-          syncEventCallback('sync-error', err)
-        } else {
-          syncEventCallback('sync-error', new Error(String(err)))
-        }
       }
+      debouncedSend(payload)
+    } catch (err) {
+      emitSyncError(err)
     }
   }
 
@@ -255,11 +258,11 @@ export const useSyncDataStore = defineStore('sync', () => {
       if (cloudData.settings.version < CURRENT_CONFIG_VERSION) {
         // 云端配置版本落后，逐步应用迁移直到达到当前版本
         try {
-          let s = cloudData.settings
+          let s: MigratableSettings = cloudData.settings as MigratableSettings
 
           // 逐步通过映射函数迁移到 CURRENT_CONFIG_VERSION
-          while ((s.version as number) < CURRENT_CONFIG_VERSION) {
-            const v = s.version as number
+          while (s.version < CURRENT_CONFIG_VERSION) {
+            const v = s.version
             const fn = migrations[v]
             if (!fn) {
               // 未知版本：关闭云同步并通知 UI 处理版本不匹配
@@ -272,12 +275,35 @@ export const useSyncDataStore = defineStore('sync', () => {
               }
               return
             }
-            // @ts-expect-error：此处s要经过多轮升级才会变为最新版本
-            s = await fn(s)
+            const nextSettings = await fn(s)
+            if (
+              nextSettings.version === s.version ||
+              nextSettings.version > CURRENT_CONFIG_VERSION
+            ) {
+              localSettings.sync.enabled = false
+              if (syncEventCallback) {
+                syncEventCallback('version-mismatch', {
+                  cloud: String(nextSettings.version),
+                  local: String(localSettings.version),
+                })
+              }
+              return
+            }
+            s = nextSettings
           }
 
-          const migratedSettings = s as CURRENT_CONFIG_SCHEMA
-          cloudData.settings = migratedSettings
+          if (s.version !== CURRENT_CONFIG_VERSION) {
+            localSettings.sync.enabled = false
+            if (syncEventCallback) {
+              syncEventCallback('version-mismatch', {
+                cloud: String(s.version),
+                local: String(localSettings.version),
+              })
+            }
+            return
+          }
+
+          cloudData.settings = s
         } catch (err) {
           console.error(
             `Failed to migrate cloud settings from ${cloudData.settings.version} to ${CURRENT_CONFIG_VERSION}:`,
@@ -285,13 +311,7 @@ export const useSyncDataStore = defineStore('sync', () => {
           )
           // 迁移失败：关闭云同步并通知 UI
           localSettings.sync.enabled = false
-          if (syncEventCallback) {
-            if (err instanceof Error) {
-              syncEventCallback('sync-error', err)
-            } else {
-              syncEventCallback('sync-error', new Error(String(err)))
-            }
-          }
+          emitSyncError(err)
           return
         }
       }
@@ -336,13 +356,7 @@ export const useSyncDataStore = defineStore('sync', () => {
         lastUpdate: cloudData.lastUpdate,
       })
     } catch (err) {
-      if (syncEventCallback) {
-        if (err instanceof Error) {
-          syncEventCallback('sync-error', err)
-        } else {
-          syncEventCallback('sync-error', new Error(String(err)))
-        }
-      }
+      emitSyncError(err)
     } finally {
       isProcessing = false
     }

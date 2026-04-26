@@ -119,19 +119,57 @@ function scheduleLocalTick(delay = SYNC_INTERVAL) {
 
 // --------------------------------------
 
-const isSyncMessage = (msg: unknown): msg is SyncMessage =>
-  typeof msg === 'object' &&
-  msg !== null &&
-  'type' in msg &&
-  typeof (msg as { type: unknown }).type === 'string' &&
-  (msg as { type: string }).type.startsWith('SYNC_')
+const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null
 
-const isSyncRequestMessage = (msg: unknown): msg is SyncRequestMessage =>
-  typeof msg === 'object' &&
-  msg !== null &&
-  'type' in msg &&
-  typeof (msg as { type: unknown }).type === 'string' &&
-  (msg as { type: string }).type === 'SYNC_REQUEST'
+const hasStringType = (value: unknown): value is { type: string } =>
+  isObjectRecord(value) && typeof value.type === 'string'
+
+const isSyncMessage = (msg: unknown): msg is SyncMessage =>
+  hasStringType(msg) && msg.type.startsWith('SYNC_')
+
+const isValidLastUpdate = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isFinite(value) && value >= 0
+
+const isValidSyncData = (value: unknown): value is SyncData => {
+  if (!isObjectRecord(value) || !isValidLastUpdate(value.lastUpdate)) {
+    return false
+  }
+  const { settings } = value
+  if (!isObjectRecord(settings) || !isObjectRecord(value.bookmarks)) {
+    return false
+  }
+
+  const { background } = settings
+  if (!isObjectRecord(background)) {
+    return false
+  }
+
+  const { online } = background
+  return (
+    'bgType' in background &&
+    isObjectRecord(background.local) &&
+    isObjectRecord(background.localDark) &&
+    isObjectRecord(background.bing) &&
+    isObjectRecord(online) &&
+    typeof online.url === 'string'
+  )
+}
+
+const parseSyncRequestMessage = (msg: unknown): SyncRequestMessage | null => {
+  if (!isObjectRecord(msg) || msg.type !== 'SYNC_REQUEST' || !('data' in msg)) {
+    return null
+  }
+
+  if (!isValidSyncData(msg.data)) {
+    return null
+  }
+
+  return {
+    type: 'SYNC_REQUEST',
+    data: msg.data,
+  }
+}
 
 export default defineBackground(() => {
   browser.runtime.onMessage.addListener((message) => {
@@ -139,8 +177,9 @@ export default defineBackground(() => {
       isInited = true
     }
 
-    if (isInited && isSyncRequestMessage(message)) {
-      const incoming = message.data
+    const syncRequest = isInited ? parseSyncRequestMessage(message) : null
+    if (syncRequest) {
+      const incoming = syncRequest.data
       // 保留最新的 snapshot（基于 lastUpdate）
       if (!latestSyncItem || incoming.lastUpdate >= latestSyncItem.lastUpdate) {
         latestSyncItem = incoming
@@ -152,6 +191,8 @@ export default defineBackground(() => {
         const remaining = elapsed >= SYNC_INTERVAL ? 0 : SYNC_INTERVAL - elapsed
         scheduleLocalTick(remaining)
       }
+    } else if (isInited && isSyncMessage(message) && message.type === 'SYNC_REQUEST') {
+      debugLog('ignored invalid SYNC_REQUEST payload')
     }
   })
 
@@ -183,11 +224,20 @@ export default defineBackground(() => {
       status: 'complete',
     })
     if (tab?.id) {
+      const syncUpdateMessage: SyncMessage = { type: 'SYNC_UPDATE' }
       try {
-        await browser.tabs.sendMessage(tab.id, {
-          type: 'SYNC_UPDATE',
-        } as SyncMessage)
-      } catch {}
+        await browser.tabs.sendMessage(tab.id, syncUpdateMessage)
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err)
+        if (
+          message.includes('Receiving end does not exist') ||
+          message.includes('Could not establish connection')
+        ) {
+          debugLog('SYNC_UPDATE skipped: active tab has no receiver')
+          return
+        }
+        console.warn('[sync] Failed to notify active tab about SYNC_UPDATE', err)
+      }
     }
   })
 
