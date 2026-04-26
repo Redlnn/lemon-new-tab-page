@@ -6,11 +6,16 @@ export interface SuggestRunnerOptions {
   retryDelay?: number
 }
 
+export interface SuggestRunnerResult {
+  text: string
+  list: string[]
+}
+
 export interface SuggestRunner {
   run: (text: string, fetcher: SuggestFetcher) => void
   cancel: () => void
-  onResult: (cb: (list: string[]) => void) => void
-  onError: (cb: (err: unknown) => void) => void
+  onResult: (cb: (result: SuggestRunnerResult) => void) => void
+  onError: (cb: (err: unknown, text: string) => void) => void
 }
 
 /**
@@ -19,12 +24,14 @@ export interface SuggestRunner {
 export function createSuggestRunner(options: SuggestRunnerOptions = {}): SuggestRunner {
   const { debounceMs = 200, maxRetries = 0, retryDelay = 100 } = options
 
-  let timer: number | undefined
+  let timer: ReturnType<typeof setTimeout> | undefined
   let abortCurrent: (() => void) | undefined
-  let resultCb: ((list: string[]) => void) | undefined
-  let errorCb: ((err: unknown) => void) | undefined
+  let resultCb: ((result: SuggestRunnerResult) => void) | undefined
+  let errorCb: ((err: unknown, text: string) => void) | undefined
+  let runVersion = 0
 
   const cancel = () => {
+    runVersion += 1
     if (timer != null) {
       clearTimeout(timer)
       timer = undefined
@@ -34,9 +41,18 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
   }
 
   const run = (text: string, fetcher: SuggestFetcher) => {
-    cancel()
+    const currentRunVersion = ++runVersion
+    if (timer != null) {
+      clearTimeout(timer)
+      timer = undefined
+    }
+    abortCurrent?.()
+    abortCurrent = undefined
     // 防抖
     timer = setTimeout(async () => {
+      if (currentRunVersion !== runVersion) {
+        return
+      }
       // 简单的“取消”机制：使用一个已解析的 Promise 短路
       let canceled = false
       abortCurrent = () => {
@@ -48,8 +64,8 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
         while (true) {
           try {
             const list = await fetcher(text)
-            if (!canceled) {
-              resultCb?.(list)
+            if (!canceled && currentRunVersion === runVersion) {
+              resultCb?.({ text, list })
             }
             break
           } catch (err) {
@@ -57,8 +73,8 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
               break
             }
             if (attempt >= maxRetries) {
-              if (!canceled) {
-                errorCb?.(err)
+              if (!canceled && currentRunVersion === runVersion) {
+                errorCb?.(err, text)
               }
               break
             }
@@ -67,9 +83,11 @@ export function createSuggestRunner(options: SuggestRunnerOptions = {}): Suggest
           }
         }
       } finally {
-        abortCurrent = undefined
+        if (currentRunVersion === runVersion) {
+          abortCurrent = undefined
+        }
       }
-    }, debounceMs) as unknown as number
+    }, debounceMs)
   }
 
   return {
