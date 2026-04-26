@@ -18,6 +18,11 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   const lightUrl = ref('')
   const darkUrl = ref('')
   const bingUrl = ref('')
+  const requestVersion = {
+    light: 0,
+    dark: 0,
+    bing: 0,
+  } satisfies Record<'light' | 'dark' | 'bing', number>
 
   const getTargetRef = (type: 'light' | 'dark' | 'bing') => {
     if (type === 'light') return lightUrl
@@ -34,18 +39,30 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
     targetRef.value = url
   }
 
+  const currentBackgroundId = (type: 'light' | 'dark' | 'bing') => {
+    if (type === 'light') return settings.background.local.id
+    if (type === 'dark') return settings.background.localDark.id
+    return settings.background.bing.id
+  }
+
   const getUrl = async (type: 'light' | 'dark' | 'bing'): Promise<Ref<string>> => {
+    const version = ++requestVersion[type]
     let background: localBackground
     if (type === 'light') background = settings.background.local
     else if (type === 'dark') background = settings.background.localDark
     else background = settings.background.bing
     const targetRef = getTargetRef(type)
+    const expectedBackgroundId = background.id
+    const isLatest = () =>
+      requestVersion[type] === version && currentBackgroundId(type) === expectedBackgroundId
 
     if (!background.id) {
       if (type === 'dark') {
         return getUrl('light')
       }
-      updateRef(type, '')
+      if (isLatest()) {
+        updateRef(type, '')
+      }
       return targetRef
     }
 
@@ -55,11 +72,20 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       try {
         const res = await fetch(cachedUrl)
         if (res.ok) {
-          updateRef(type, cachedUrl)
+          if (isLatest()) {
+            updateRef(type, cachedUrl)
+          }
           return targetRef
         }
-      } catch {}
-      await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
+      } catch (error) {
+        console.warn(
+          `[wallpaper] Failed to validate cached ${type} wallpaper URL, cache will reset:`,
+          error,
+        )
+      }
+      if (isLatest()) {
+        await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
+      }
     }
 
     let file: Blob | null = null
@@ -74,12 +100,13 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
 
     if (file && isMediaFile(file)) {
       const url = URL.createObjectURL(file)
+      if (!isLatest()) {
+        URL.revokeObjectURL(url)
+        return targetRef
+      }
 
-      if (type === 'dark' || type === 'light') {
-        const bg = background as typeof settings.background.local
-        if (!bg.mediaType) {
-          bg.mediaType = isVideoFile(file) ? 'video' : 'image'
-        }
+      if ((type === 'dark' || type === 'light') && !background.mediaType) {
+        background.mediaType = isVideoFile(file) ? 'video' : 'image'
       }
 
       await wallpaperUrlCache.setValue({ ...cache, [type]: url })
@@ -87,27 +114,36 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       return targetRef
     }
 
-    updateRef(type, '')
+    if (isLatest()) {
+      updateRef(type, '')
+    }
     return targetRef
+  }
+
+  const triggerRefresh = (type: 'light' | 'dark' | 'bing') => {
+    void getUrl(type).catch((error) => {
+      console.error(`Failed to get ${type} wallpaper URL:`, error)
+    })
   }
 
   watch(
     () => settings.background.local.id,
-    () => getUrl('light'),
+    () => triggerRefresh('light'),
     { immediate: true },
   )
   watch(
     () => settings.background.localDark.id,
-    () => getUrl('dark'),
+    () => triggerRefresh('dark'),
     { immediate: true },
   )
   watch(
     () => settings.background.bing.id,
-    () => getUrl('bing'),
+    () => triggerRefresh('bing'),
     { immediate: true },
   )
 
   const setUrl = async (type: 'light' | 'dark' | 'bing', url: string) => {
+    requestVersion[type] += 1
     const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
     const cachedUrl = cache[type]
@@ -120,6 +156,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
   }
 
   const clearUrl = async (type: 'light' | 'dark' | 'bing') => {
+    requestVersion[type] += 1
     const cache = await wallpaperUrlCache.getValue()
     // 如果有旧的 URL，先撤销
     const cachedUrl = cache[type]
