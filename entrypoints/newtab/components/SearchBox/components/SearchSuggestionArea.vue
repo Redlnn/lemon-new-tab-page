@@ -27,6 +27,9 @@ const isShowSearchHistories = ref(false)
 const currentActiveSuggest = ref<null | number>(null)
 const searchSuggestionArea = useTemplateRef('searchSuggestionArea')
 const searchSuggestions = shallowRef<string[]>([])
+// 用于追踪当前展示的结果是否仍然有效，避免旧请求覆盖新结果
+const latestLiveQuery = ref('')
+let historyRequestVersion = 0
 
 const props = defineProps<{
   searchText: string
@@ -72,6 +75,7 @@ function handleInput() {
   if (focusStore.isFocused && !props.searchText) {
     // 如果搜索词为空，则显示搜索历史
     runner.cancel()
+    latestLiveQuery.value = ''
     clearSearchSuggestions()
     showSearchHistories()
   } else {
@@ -80,12 +84,23 @@ function handleInput() {
   }
 }
 
+const canShowHistory = () => focusStore.isFocused && !props.searchText
+
 async function showSearchHistories() {
+  const requestVersion = ++historyRequestVersion
+  if (!canShowHistory()) {
+    return
+  }
+
   if (searchSuggestions.value.length > 0 && !isShowSearchHistories.value) {
     return
   }
 
   await ensureHistoryLoaded()
+  if (requestVersion !== historyRequestVersion || !canShowHistory()) {
+    return
+  }
+
   const searchHistories = cachedHistories.value
   if (searchHistories.length > 0) {
     searchSuggestions.value = searchHistories.slice()
@@ -95,21 +110,32 @@ async function showSearchHistories() {
 
 // 统一“请求 + 取消 + 防抖 + 重试”（重试统一在运行器层）
 const runner = createSuggestRunner({ debounceMs: 300, maxRetries: 2, retryDelay: 100 })
-runner.onResult((list) => {
+runner.onResult(({ text, list }) => {
+  if (text !== latestLiveQuery.value || text !== props.searchText || isShowSearchHistories.value) {
+    return
+  }
+
   searchSuggestions.value = list
   // 缓存搜索建议结果
-  if (props.searchText && list.length > 0) {
-    searchSuggestCache.set(props.searchText, list)
+  if (list.length > 0) {
+    searchSuggestCache.set(text, list)
   }
 })
-runner.onError((err) => {
+runner.onError((err, text) => {
+  if (text !== latestLiveQuery.value || text !== props.searchText || isShowSearchHistories.value) {
+    return
+  }
+
   console.error('Failed to fetch search suggestions:', err)
   searchSuggestions.value = []
 })
 
 function showSuggestionsDebounced() {
+  historyRequestVersion += 1
+  latestLiveQuery.value = props.searchText
   // 至少2个字符才触发搜索建议
   if (props.searchText.length < 2) {
+    runner.cancel()
     return
   }
 
@@ -125,7 +151,7 @@ function showSuggestionsDebounced() {
     console.error('Selected search suggestion API not found')
     return
   }
-  runner.run(props.searchText, api.parser)
+  runner.run(latestLiveQuery.value, api.parser)
 }
 
 onUnmounted(() => {
@@ -137,11 +163,13 @@ function clearActiveSuggest() {
 }
 
 function hideSearchHistories() {
+  historyRequestVersion += 1
   isShowSearchHistories.value = false
 }
 
 function clearSearchSuggestions() {
   runner.cancel()
+  latestLiveQuery.value = ''
   hideSearchHistories()
   currentActiveSuggest.value = null
   searchSuggestions.value = []
@@ -155,7 +183,7 @@ async function clearSearchHistories() {
 watch(
   () => cachedHistories.value,
   (list) => {
-    if (isShowSearchHistories.value) {
+    if (isShowSearchHistories.value && canShowHistory()) {
       searchSuggestions.value = list.slice()
     }
   },
