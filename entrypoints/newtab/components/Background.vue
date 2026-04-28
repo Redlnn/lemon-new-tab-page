@@ -366,7 +366,8 @@ function activateBackgroundWatch(type: BgType) {
     // 只在使用在线背景时监听在线URL变化
     stopBgTypeWatch = watch(() => settings.background.online.url, handleOnlineBgChange)
   }
-  // Bing和None类型不需要watch，因为它们不会动态变化
+  // Bing类型：assignMaybeRef 已对 bingUrl ref 建立 watch，后台刷新完成时会自动更新 bgURL
+  // None类型：无需监听
 }
 
 // 监听背景类型切换，动态激活/停用对应的watch

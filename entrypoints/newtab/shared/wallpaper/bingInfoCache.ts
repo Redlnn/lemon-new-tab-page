@@ -5,6 +5,7 @@ export interface BingWallpaperInfo {
   copyright: string
   copyrightlink: string
   title: string
+  lastCheckTime: number
 }
 
 const defaultInfo: BingWallpaperInfo = {
@@ -12,6 +13,7 @@ const defaultInfo: BingWallpaperInfo = {
   copyright: '',
   copyrightlink: '',
   title: '',
+  lastCheckTime: 0,
 } as const
 
 export const bingInfoCache = storage.defineItem<BingWallpaperInfo>('local:bingInfo', {
