@@ -69,22 +69,30 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
     const cache = await wallpaperUrlCache.getValue()
     const cachedUrl = cache[type]
     if (cachedUrl) {
-      try {
-        const res = await fetch(cachedUrl)
-        if (res.ok) {
-          if (isLatest()) {
-            updateRef(type, cachedUrl)
-          }
-          return targetRef
+      if (cachedUrl.startsWith('blob:')) {
+        // Blob URLs are context-specific and always stale when read from another tab.
+        // Skip fetch validation and silently clear the stale cache entry.
+        if (isLatest()) {
+          await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
         }
-      } catch (error) {
-        console.warn(
-          `[wallpaper] Failed to validate cached ${type} wallpaper URL, cache will reset:`,
-          error,
-        )
-      }
-      if (isLatest()) {
-        await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
+      } else {
+        try {
+          const res = await fetch(cachedUrl)
+          if (res.ok) {
+            if (isLatest()) {
+              updateRef(type, cachedUrl)
+            }
+            return targetRef
+          }
+        } catch (error) {
+          console.warn(
+            `[wallpaper] Failed to validate cached ${type} wallpaper URL, cache will reset:`,
+            error,
+          )
+        }
+        if (isLatest()) {
+          await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
+        }
       }
     }
 
@@ -109,7 +117,7 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
         background.mediaType = isVideoFile(file) ? 'video' : 'image'
       }
 
-      await wallpaperUrlCache.setValue({ ...cache, [type]: url })
+      // Blob URLs are context-specific; do not store them in session cache.
       updateRef(type, url)
       return targetRef
     }
@@ -151,7 +159,16 @@ export const useWallpaperUrlStore = defineStore('wallpaperUrl', () => {
       URL.revokeObjectURL(cachedUrl)
     }
 
-    await wallpaperUrlCache.setValue({ ...cache, [type]: url })
+    // Only cache non-blob URLs (e.g., online HTTP URLs).
+    // Blob URLs are context-specific and would be stale for any other tab.
+    if (url.startsWith('blob:')) {
+      // Clear any stale cache entry so the next tab won't attempt to validate it.
+      if (cachedUrl) {
+        await wallpaperUrlCache.setValue({ ...cache, [type]: '' })
+      }
+    } else {
+      await wallpaperUrlCache.setValue({ ...cache, [type]: url })
+    }
     updateRef(type, url)
   }
 
