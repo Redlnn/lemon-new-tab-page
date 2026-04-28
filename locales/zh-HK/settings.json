@@ -10,6 +10,7 @@
       }
     },
     "cache": {
+      "disabledTip": "僅在壁紙類型為「線上圖片」時可開啟（Bing 壁紙預設已快取）",
       "duration": "快取有效期",
       "label": "線上壁紙快取",
       "nextStartup": "將於下次啟動時生效",

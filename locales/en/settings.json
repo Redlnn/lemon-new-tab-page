@@ -10,6 +10,7 @@
       }
     },
     "cache": {
+      "disabledTip": "Only available when the background type is \"Online URL\" (Bing wallpaper is always cached by default)",
       "duration": "Cache expiration duration",
       "label": "Online wallpaper cache",
       "nextStartup": "Effective on next startup",

@@ -119,11 +119,17 @@ const beforeCacheChange = async () => {
         {{ t('background.cache.label') }}
         <cloud-off-round />
       </div>
-      <el-switch
-        v-model="settings.background.online.cache.enabled"
-        :disabled="settings.background.bgType !== BgType.Online"
-        :before-change="beforeCacheChange"
-      />
+      <el-tooltip
+        :content="t('background.cache.disabledTip')"
+        :disabled="settings.background.bgType === BgType.Online"
+        placement="top"
+      >
+        <el-switch
+          v-model="settings.background.online.cache.enabled"
+          :disabled="settings.background.bgType !== BgType.Online"
+          :before-change="beforeCacheChange"
+        />
+      </el-tooltip>
     </div>
     <div class="settings__item settings__item--horizontal">
       <div class="settings__label">{{ t('background.cache.noExpires') }}</div>
