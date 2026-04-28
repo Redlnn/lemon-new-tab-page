@@ -7,7 +7,7 @@ import { BgType } from '@/shared/enums'
 import { isMediaFile } from '@/shared/media'
 import { useSettingsStore } from '@/shared/settings'
 
-import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import {
   clearAllOnlineWallpaperCache,
   uploadBackground,
@@ -200,7 +200,7 @@ function useBackgroundSwitcher() {
   const { checkAndRequestPermission } = usePermission()
 
   const handlePermissions = async (_url: string, hostname: string) => {
-    const result = await checkAndRequestPermission(hostname)
+    const result = await checkAndRequestPermission(hostname, false, PermissionContext.OnlineWallpaper)
 
     if (result === PermissionResult.GrantedAll) return true
 

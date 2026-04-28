@@ -10,9 +10,18 @@ export const PermissionResult = {
 } as const
 export type PermissionResult = (typeof PermissionResult)[keyof typeof PermissionResult]
 
+export const PermissionContext = {
+  OnlineWallpaper: 'onlineWallpaper',
+  WallpaperCache: 'wallpaperCache',
+  FaviconCache: 'faviconCache',
+  MonetColor: 'monetColor',
+} as const
+export type PermissionContext = (typeof PermissionContext)[keyof typeof PermissionContext]
+
 const permissionDialogVisible = ref(false)
 const currentHostname = ref('')
 const currentOnlyAll = ref(false)
+const currentContext = ref<PermissionContext>(PermissionContext.OnlineWallpaper)
 let permissionResolve: ((value: PermissionResult) => void) | null = null
 
 export function usePermission() {
@@ -27,6 +36,7 @@ export function usePermission() {
   const checkAndRequestPermission = async (
     hostname: string,
     onlyAll: boolean = false,
+    context: PermissionContext = PermissionContext.OnlineWallpaper,
   ): Promise<PermissionResult> => {
     const allPermissions = { origins: [`*://*/*`] }
     const allGranted = await browser.permissions.contains(allPermissions)
@@ -38,6 +48,7 @@ export function usePermission() {
 
     currentHostname.value = hostname
     currentOnlyAll.value = onlyAll
+    currentContext.value = context
     permissionDialogVisible.value = true
 
     return new Promise<PermissionResult>((resolve) => {
@@ -49,6 +60,7 @@ export function usePermission() {
     permissionDialogVisible,
     currentHostname,
     currentOnlyAll,
+    currentContext,
     onPermissionDialogResult,
     checkAndRequestPermission,
   }

@@ -37,7 +37,9 @@
       "allowCurrent": "Only allow this API URL",
       "deny": "Reject",
       "request": {
+        "faviconCacheMessage": "To enable favicon caching, the extension needs the “Access all sites” permission.",
         "message": "To access online wallpapers, the extension needs to request the appropriate permissions:",
+        "monetColorMessage": "To enable Dynamic Theme Colors (Monet Color Extraction), the extension needs the “Access all sites” permission.",
         "subA": {
           "content": "Requires “Access this API URL”.",
           "label": "Normal mode: "
@@ -46,7 +48,8 @@
           "content": "Requires “Access all sites”.",
           "label": "Dynamic theme colors / Cache:"
         },
-        "title": "Permission Request"
+        "title": "Permission Request",
+        "wallpaperCacheMessage": "To enable online wallpaper caching, the extension needs the “Access all sites” permission."
       }
     },
     "preferenceTitle": "Wallpaper preferences",

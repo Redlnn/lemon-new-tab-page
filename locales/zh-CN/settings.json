@@ -37,7 +37,9 @@
       "allowCurrent": "仅允许该API网址",
       "deny": "拒绝",
       "request": {
+        "faviconCacheMessage": "为了启用图标缓存，扩展需要「访问所有网站」权限。",
         "message": "为了获取在线壁纸，扩展需要请求相应的访问权限：",
+        "monetColorMessage": "为了启用动态主题色（莫奈取色），扩展需要「访问所有网站」权限。",
         "subA": {
           "content": "需要「访问该API网址」",
           "label": "普通模式："
@@ -46,7 +48,8 @@
           "content": "需要「访问所有网站」",
           "label": "动态主题色 / 壁纸缓存："
         },
-        "title": "权限请求"
+        "title": "权限请求",
+        "wallpaperCacheMessage": "为了启用在线壁纸缓存，扩展需要「访问所有网站」权限。"
       }
     },
     "preferenceTitle": "壁纸偏好",

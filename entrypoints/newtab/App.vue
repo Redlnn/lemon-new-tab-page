@@ -90,8 +90,13 @@ provide(OPEN_SETTINGS, () => SettingsPageRef.value?.toggle())
 provide(OPEN_SEARCH_ENGINE_PREFERENCE, () => SESwitcherRef.value?.show())
 provide(OPEN_BACKGROUND_PREFERENCE, () => BGSwticherRef.value?.show())
 
-const { permissionDialogVisible, currentHostname, currentOnlyAll, onPermissionDialogResult } =
-  usePermission()
+const {
+  permissionDialogVisible,
+  currentHostname,
+  currentOnlyAll,
+  currentContext,
+  onPermissionDialogResult,
+} = usePermission()
 
 const actionClass = computed(() => {
   const perf = settings.perf
@@ -173,6 +178,7 @@ const actionClass = computed(() => {
       v-model="permissionDialogVisible"
       :hostname="currentHostname"
       :only-all="currentOnlyAll"
+      :context="currentContext"
       @result="onPermissionDialogResult"
     />
   </el-config-provider>

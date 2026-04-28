@@ -7,7 +7,7 @@ import CloudOffRound from '~icons/ic/round-cloud-off'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import { OPEN_BACKGROUND_PREFERENCE } from '@newtab/shared/keys'
 
 const { t } = useTranslation('settings')
@@ -29,7 +29,7 @@ const beforeCacheChange = async () => {
   if (!settings.background.online.url) return false
 
   const { hostname } = new URL(settings.background.online.url)
-  const result = await checkAndRequestPermission(hostname, true)
+  const result = await checkAndRequestPermission(hostname, true, PermissionContext.WallpaperCache)
   const res = result === PermissionResult.GrantedAll
   if (res) ElMessage.success(i18next.t('settings:background.cache.nextStartup'))
   else ElMessage.warning(i18next.t('settings:background.warning.cacheDisabled'))

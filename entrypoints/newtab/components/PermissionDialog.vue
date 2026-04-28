@@ -3,11 +3,12 @@ import { useTranslation } from 'i18next-vue'
 
 import { browser } from 'wxt/browser'
 
-import { PermissionResult } from '@newtab/composables/usePermission'
+import { PermissionContext, PermissionResult } from '@newtab/composables/usePermission'
 
 const props = defineProps<{
   hostname: string
   onlyAll?: boolean
+  context?: PermissionContext
 }>()
 const model = defineModel<boolean>({ required: true })
 const emit = defineEmits<{
@@ -15,6 +16,19 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useTranslation('settings')
+
+const contextMessage = computed(() => {
+  switch (props.context) {
+    case PermissionContext.WallpaperCache:
+      return t('background.permission.request.wallpaperCacheMessage')
+    case PermissionContext.FaviconCache:
+      return t('background.permission.request.faviconCacheMessage')
+    case PermissionContext.MonetColor:
+      return t('background.permission.request.monetColorMessage')
+    default:
+      return t('background.permission.request.message')
+  }
+})
 
 async function requestPermission(isAll: boolean) {
   if (import.meta.env.MANIFEST_VERSION === 2 && !isAll) {
@@ -51,8 +65,8 @@ function onDeny() {
     class="permission-dialog base-dialog--blur base-dialog--opacity noselect"
   >
     <div class="permission-dialog-content">
-      <p>{{ t('background.permission.request.message') }}</p>
-      <ul>
+      <p>{{ contextMessage }}</p>
+      <ul v-if="!props.onlyAll">
         <li>
           <strong>{{ t('background.permission.request.subA.label') }}</strong>
           {{ t('background.permission.request.subA.content') }}
@@ -62,14 +76,14 @@ function onDeny() {
           {{ t('background.permission.request.subB.content') }}
         </li>
       </ul>
-      <div class="permission-dialog-actions">
+      <div class="permission-dialog-actions" :class="{ 'permission-dialog-actions--only-all': props.onlyAll }">
         <el-button type="primary" plain @click="requestPermission(true)" class="permission-btn">
           {{ t('background.permission.allowAll') }}
         </el-button>
         <el-button
+          v-if="!props.onlyAll"
           @click="requestPermission(false)"
           class="permission-btn"
-          :disabled="props.onlyAll"
         >
           {{ t('background.permission.allowCurrent') }}
         </el-button>
@@ -111,6 +125,10 @@ function onDeny() {
   display: grid;
   grid-template: '. .' 1fr 'deny deny' 1fr / 1fr 1fr;
   gap: 10px;
+
+  &.permission-dialog-actions--only-all {
+    grid-template: '.' 1fr 'deny' 1fr / 1fr;
+  }
 }
 
 .permission-btn.el-button {

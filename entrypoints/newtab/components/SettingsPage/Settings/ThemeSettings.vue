@@ -11,7 +11,7 @@ import LightModeRound from '~icons/ic/round-light-mode'
 import { BgType } from '@/shared/enums'
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
-import { PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
 import { colorMode as mode, preferredDark } from '@newtab/shared/colorMode'
 
 const { t } = useTranslation('settings')
@@ -128,7 +128,7 @@ const beforeMonetChange = async () => {
 
   // 用户同意开启缓存
   const { hostname } = new URL(settings.background.online.url)
-  const result = await checkAndRequestPermission(hostname, true)
+  const result = await checkAndRequestPermission(hostname, true, PermissionContext.MonetColor)
   const res = result === PermissionResult.GrantedAll
 
   if (res) settings.background.online.cache.enabled = true
