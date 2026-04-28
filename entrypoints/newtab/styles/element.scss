@@ -1,6 +1,5 @@
 @use '@newtab/styles/mixins/acrylic.scss' as acrylic;
 @use 'element-plus/theme-chalk/src/dark/css-vars.scss' as *;
-@use 'element-plus/theme-chalk/src/loading.scss' as *;
 
 body {
   --el-font-weight-primary: 400;
@@ -66,7 +65,14 @@ body {
 .el-notification {
   @include acrylic.acrylic;
   background-color: var(--le-bg-color-overlay-opacity-20);
-  transition: background-color var(--el-transition-duration-fast) ease;
+  transition:
+    background-color var(--el-transition-duration-fast) ease,
+    opacity var(--el-transition-duration),
+    transform var(--el-transition-duration),
+    left var(--el-transition-duration),
+    right var(--el-transition-duration),
+    top 0.4s,
+    bottom var(--el-transition-duration);
 }
 
 .el-popper.el-color-picker__panel {
@@ -91,7 +97,9 @@ body {
 
 .el-backtop {
   @include acrylic.acrylic(3px);
-  transition: background-color var(--el-transition-duration-fast) ease;
+  transition:
+    background-color var(--el-transition-duration-fast) ease,
+    opacity var(--el-transition-duration) cubic-bezier(0.55, 0, 0.1, 1); // .el-fade-in
 }
 
 .el-switch:not(.el-switch--small, .el-switch--large) {
