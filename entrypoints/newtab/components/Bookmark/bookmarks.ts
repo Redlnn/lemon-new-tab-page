@@ -9,6 +9,7 @@ import { SortMode } from '@/shared/enums'
 import BookmarkWorker from './bookmark.worker?worker'
 
 let worker: Worker | null = null
+let languageChangedListener: ((lang: string) => void) | null = null
 
 const bookmarkListeners: {
   created?: (id: string, bookmark: Browser.bookmarks.BookmarkTreeNode) => void
@@ -51,22 +52,41 @@ export const useBookmarkStore = defineStore('bookmark', () => {
 
   // 根据 `searchQuery` 过滤后的树。如果查询为空则返回完整的排序树。
   const filteredTree = computed(() => filteredResult.value)
+  const reloadBookmarks = (reason: string) => {
+    void loadBookmarks().catch((error) => {
+      console.error(`[bookmark] Failed to reload bookmarks after ${reason}:`, error)
+    })
+  }
 
   const initWorker = () => {
     if (worker) return
     worker = new BookmarkWorker()
-    i18next.on('languageChanged', (lang) => {
-      worker?.postMessage({
-        type: 'UPDATE_SETTINGS',
-        payload: {
-          language: lang,
-        },
-      })
-      triggerFilter()
-    })
+    if (!languageChangedListener) {
+      languageChangedListener = (lang) => {
+        worker?.postMessage({
+          type: 'UPDATE_SETTINGS',
+          payload: {
+            language: lang,
+          },
+        })
+        triggerFilter()
+      }
+      i18next.on('languageChanged', languageChangedListener)
+    }
 
     worker.onmessage = (e) => {
       const { type, filteredResult: result, firstMatchPath: path } = e.data
+      if (type === 'ERROR') {
+        const workerError =
+          typeof e.data.error === 'string' && e.data.error ? e.data.error : 'Unknown worker error'
+        console.error('Bookmark worker error:', workerError)
+        ElNotification.error({
+          title: i18next.t('bookmark.title'),
+          message: workerError,
+        })
+        return
+      }
+
       if (type === 'INIT_DONE' || type === 'FILTER_DONE') {
         filteredResult.value = result
         firstMatchPath.value = path
@@ -74,44 +94,54 @@ export const useBookmarkStore = defineStore('bookmark', () => {
       }
     }
 
+    worker.onerror = (event) => {
+      const message = event.message || 'Unknown worker runtime error'
+      console.error('Bookmark worker runtime error:', event)
+      ElNotification.error({
+        title: i18next.t('bookmark.title'),
+        message,
+      })
+    }
+
     // 添加书签变更监听，变更时重新加载书签并刷新 worker 缓存
     if (!bookmarkListeners.created) {
       bookmarkListeners.created = () => {
-        loadBookmarks().catch(() => {})
+        reloadBookmarks('onCreated')
       }
       browser.bookmarks.onCreated.addListener(bookmarkListeners.created)
     }
 
     if (!bookmarkListeners.removed) {
       bookmarkListeners.removed = () => {
-        loadBookmarks().catch(() => {})
+        reloadBookmarks('onRemoved')
       }
       browser.bookmarks.onRemoved.addListener(bookmarkListeners.removed)
     }
 
     if (!bookmarkListeners.changed) {
       bookmarkListeners.changed = () => {
-        loadBookmarks().catch(() => {})
+        reloadBookmarks('onChanged')
       }
       browser.bookmarks.onChanged.addListener(bookmarkListeners.changed)
     }
 
     if (!bookmarkListeners.moved) {
       bookmarkListeners.moved = () => {
-        loadBookmarks().catch(() => {})
+        reloadBookmarks('onMoved')
       }
       browser.bookmarks.onMoved.addListener(bookmarkListeners.moved)
     }
 
     if (!bookmarkListeners.importEnded) {
       bookmarkListeners.importEnded = () => {
-        loadBookmarks().catch(() => {})
+        reloadBookmarks('onImportEnded')
       }
       // importEnded 在导入书签完成时触发（可选）
       try {
         browser.bookmarks.onImportEnded.addListener(bookmarkListeners.importEnded)
-      } catch {
-        // 某些浏览器/环境可能不支持该事件，忽略错误
+      } catch (error) {
+        // 某些浏览器/环境可能不支持该事件
+        console.warn('[bookmark] onImportEnded listener is unavailable in this browser:', error)
       }
     }
   }
@@ -159,39 +189,56 @@ export const useBookmarkStore = defineStore('bookmark', () => {
   }
 
   const terminateWorker = () => {
+    if (languageChangedListener) {
+      i18next.off('languageChanged', languageChangedListener)
+      languageChangedListener = null
+    }
+
     // 移除书签事件监听
     if (bookmarkListeners.created) {
       try {
         browser.bookmarks.onCreated.removeListener(bookmarkListeners.created)
-      } catch {}
+      } catch (error) {
+        console.warn('[bookmark] Failed to remove onCreated listener:', error)
+      }
       delete bookmarkListeners.created
     }
     if (bookmarkListeners.removed) {
       try {
         browser.bookmarks.onRemoved.removeListener(bookmarkListeners.removed)
-      } catch {}
+      } catch (error) {
+        console.warn('[bookmark] Failed to remove onRemoved listener:', error)
+      }
       delete bookmarkListeners.removed
     }
     if (bookmarkListeners.changed) {
       try {
         browser.bookmarks.onChanged.removeListener(bookmarkListeners.changed)
-      } catch {}
+      } catch (error) {
+        console.warn('[bookmark] Failed to remove onChanged listener:', error)
+      }
       delete bookmarkListeners.changed
     }
     if (bookmarkListeners.moved) {
       try {
         browser.bookmarks.onMoved.removeListener(bookmarkListeners.moved)
-      } catch {}
+      } catch (error) {
+        console.warn('[bookmark] Failed to remove onMoved listener:', error)
+      }
       delete bookmarkListeners.moved
     }
     if (bookmarkListeners.importEnded) {
       try {
         browser.bookmarks.onImportEnded.removeListener(bookmarkListeners.importEnded)
-      } catch {}
+      } catch (error) {
+        console.warn('[bookmark] Failed to remove onImportEnded listener:', error)
+      }
       delete bookmarkListeners.importEnded
     }
 
     if (worker) {
+      worker.onmessage = null
+      worker.onerror = null
       worker.terminate()
       worker = null
     }
