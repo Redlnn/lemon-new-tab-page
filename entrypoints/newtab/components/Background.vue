@@ -72,6 +72,10 @@ const bgURLreg = new RegExp('url\\((["\']?)(.*?)\\1\\)', 'i')
 const isWindowFocused = useWindowFocus()
 const documentVisibility = useDocumentVisibility()
 
+function reportVideoPlaybackError(action: 'pause' | 'play', error: unknown) {
+  console.warn(`[background] Failed to ${action} wallpaper video:`, error)
+}
+
 function updateVideoPlayback() {
   const vid = videoRef.value
   if (!vid) return
@@ -82,12 +86,20 @@ function updateVideoPlayback() {
   ) {
     try {
       vid.pause()
-    } catch {}
+    } catch (error) {
+      reportVideoPlaybackError('pause', error)
+    }
   } else {
     try {
-      // play() 会返回一个 Promise，使用 void 忽略未处理的 Promise 警告
-      void vid.play()
-    } catch {}
+      const playPromise = vid.play()
+      if (playPromise instanceof Promise) {
+        void playPromise.catch((error) => {
+          reportVideoPlaybackError('play', error)
+        })
+      }
+    } catch (error) {
+      reportVideoPlaybackError('play', error)
+    }
   }
 }
 
@@ -199,10 +211,7 @@ const bgTypeProviders: Record<
     }
 
     if (isCacheValid) {
-      revokeLastBlobUrl()
-      const url = URL.createObjectURL(cached!.blob)
-      lastBlobUrl.value = url
-      return url
+      return URL.createObjectURL(cached!.blob)
     }
 
     let blob: Blob | null = null
@@ -219,10 +228,7 @@ const bgTypeProviders: Record<
         message: i18next.t('newtab:notification.wallpaperCache.message', { error: e }),
       })
       if (cached) {
-        revokeLastBlobUrl()
-        const url = URL.createObjectURL(cached.blob) // 如果下载失败，不管缓存是否过期都继续使用缓存
-        lastBlobUrl.value = url
-        return url
+        return URL.createObjectURL(cached.blob) // 如果下载失败，不管缓存是否过期都继续使用缓存
       } else return rawUrl // 假如开了莫奈，这里会有未定义行为，也许在应用莫奈的时候会出错
     }
 
@@ -233,32 +239,18 @@ const bgTypeProviders: Record<
       await cacheOnlineWallpaper(rawUrl, newCache)
     }
 
-    revokeLastBlobUrl()
-    const url = URL.createObjectURL(blob)
-    lastBlobUrl.value = url
-    return url
+    return URL.createObjectURL(blob)
   },
   [BgType.None]: () => Promise.resolve(''),
 }
 
-async function assignMaybeRef<T>(
-  target: Ref<T>,
-  source: T | Ref<T> | Promise<T> | Promise<Ref<T>>,
-) {
-  let stop: (() => void) | undefined
-
-  const process = async () => {
-    const resolved = await source
-    if (isRef(resolved)) {
-      stop?.() // 停止旧的 watch（避免重复）
-      stop = watch(resolved, (v) => (target.value = v), { immediate: true })
-    } else {
-      target.value = resolved
-    }
+function assignMaybeRef<T>(target: Ref<T>, source: T | Ref<T>) {
+  if (isRef(source)) {
+    return watch(source, (v) => (target.value = v), { immediate: true })
   }
 
-  process()
-  return () => stop?.()
+  target.value = source
+  return () => {}
 }
 
 watch(
@@ -270,7 +262,9 @@ watch(
       if (vid && !vid.paused) {
         try {
           vid.pause()
-        } catch {}
+        } catch (error) {
+          reportVideoPlaybackError('pause', error)
+        }
       }
       return
     }
@@ -283,14 +277,45 @@ watch(
 // 动态watch管理
 let stopBgWatch: (() => void) | undefined
 let stopBgTypeWatch: (() => void) | null = null
+let backgroundRequestVersion = 0
 
 async function updateBackgroundURL(type: BgType): Promise<void> {
+  const requestVersion = ++backgroundRequestVersion
   const provider = bgTypeProviders[type]
   if (!provider) return
 
-  const newUrl = await provider()
+  stopBgWatch?.()
+  stopBgWatch = undefined
+
+  let newUrl: string | Ref<string>
+  try {
+    newUrl = await provider()
+  } catch (error) {
+    if (requestVersion !== backgroundRequestVersion) return
+    console.error('Failed to update background URL:', error)
+    isSwitching.value = false
+    return
+  }
+  if (requestVersion !== backgroundRequestVersion) {
+    if (type === BgType.Online && !isRef(newUrl) && newUrl.startsWith('blob:')) {
+      URL.revokeObjectURL(newUrl)
+    }
+    return
+  }
+
+  if (type === BgType.Online && !isRef(newUrl)) {
+    if (newUrl.startsWith('blob:')) {
+      revokeLastBlobUrl()
+      lastBlobUrl.value = newUrl
+    } else {
+      revokeLastBlobUrl()
+    }
+  } else {
+    revokeLastBlobUrl()
+  }
+
   // 只在URL真正变化时才执行切换动画
-  if (type !== BgType.Online && newUrl === bgURL.value) return
+  if (type !== BgType.Online && !isRef(newUrl) && newUrl === bgURL.value) return
 
   isSwitching.value = true
 
@@ -299,17 +324,20 @@ async function updateBackgroundURL(type: BgType): Promise<void> {
   if (bgURL.value !== '') {
     if (settings.perf.bgSwitchAnim) {
       await promiseTimeout(animationDuration)
+      if (requestVersion !== backgroundRequestVersion) return
     }
     // 不直接赋值是因为避免看到壁纸变形
     // 直接赋值为原始 URL（Background 组件会决定是否包裹 url()）
     bgURL.value = ''
   }
-  stopBgWatch?.() // 切换 provider 时清除旧监听
-  stopBgWatch = await assignMaybeRef(bgURL, newUrl)
+  if (requestVersion !== backgroundRequestVersion) return
+
+  stopBgWatch = assignMaybeRef(bgURL, newUrl)
 
   isSwitching.value = false
   if (settings.perf.bgSwitchAnim) {
     await promiseTimeout(animationDuration)
+    if (requestVersion !== backgroundRequestVersion) return
   }
   shortenBgFadeDuration()
 }
@@ -389,7 +417,9 @@ async function refreshBackground() {
       await clearAllOnlineWallpaperCache(bgURL.value)
       await updateBackgroundURL(BgType.Online)
     }
-  } catch {}
+  } catch (error) {
+    console.error('[background] Failed to refresh background:', error)
+  }
 }
 defineExpose({ refreshBackground })
 
@@ -401,6 +431,7 @@ useEventListener('pageshow', async (e) => {
 
 // 组件卸载时清理watch
 onUnmounted(() => {
+  stopBgWatch?.()
   stopBgTypeWatch?.()
   // 卸载时释放 Blob URL
   revokeLastBlobUrl()
