@@ -11,7 +11,11 @@ import LightModeRound from '~icons/ic/round-light-mode'
 import { BgType } from '@/shared/enums'
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
-import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import {
+  PermissionContext,
+  PermissionResult,
+  usePermission,
+} from '@newtab/composables/usePermission'
 import { colorMode as mode, preferredDark } from '@newtab/shared/colorMode'
 
 const { t } = useTranslation('settings')

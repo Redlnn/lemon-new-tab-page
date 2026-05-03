@@ -17,7 +17,11 @@ import { type Shortcuts, useShortcutStore } from '@/shared/shortcut'
 import { idbDropDatabase } from '@/shared/storage/idb'
 import { useSyncDataStore } from '@/shared/sync'
 
-import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import {
+  PermissionContext,
+  PermissionResult,
+  usePermission,
+} from '@newtab/composables/usePermission'
 import {
   type CustomSearchEngineStorage,
   useCustomSearchEngineStore,
@@ -43,7 +47,11 @@ const beforeFaviconCacheChange = async (): Promise<boolean> => {
   if (settings.faviconCacheEnabled) return true
 
   // 正在开启 → 申请 *://*/* 权限
-  const result = await checkAndRequestPermission(window.location.hostname, true, PermissionContext.FaviconCache)
+  const result = await checkAndRequestPermission(
+    window.location.hostname,
+    true,
+    PermissionContext.FaviconCache,
+  )
   const granted = result === PermissionResult.GrantedAll
   if (!granted) {
     ElMessage.warning(t('other.faviconCache.permissionDenied'))

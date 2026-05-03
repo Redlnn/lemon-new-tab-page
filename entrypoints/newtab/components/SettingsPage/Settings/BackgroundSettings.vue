@@ -7,7 +7,11 @@ import CloudOffRound from '~icons/ic/round-cloud-off'
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
 
-import { PermissionContext, PermissionResult, usePermission } from '@newtab/composables/usePermission'
+import {
+  PermissionContext,
+  PermissionResult,
+  usePermission,
+} from '@newtab/composables/usePermission'
 import { OPEN_BACKGROUND_PREFERENCE } from '@newtab/shared/keys'
 
 const { t } = useTranslation('settings')

@@ -76,15 +76,14 @@ function onDeny() {
           {{ t('background.permission.request.subB.content') }}
         </li>
       </ul>
-      <div class="permission-dialog-actions" :class="{ 'permission-dialog-actions--only-all': props.onlyAll }">
+      <div
+        class="permission-dialog-actions"
+        :class="{ 'permission-dialog-actions--only-all': props.onlyAll }"
+      >
         <el-button type="primary" plain @click="requestPermission(true)" class="permission-btn">
           {{ t('background.permission.allowAll') }}
         </el-button>
-        <el-button
-          v-if="!props.onlyAll"
-          @click="requestPermission(false)"
-          class="permission-btn"
-        >
+        <el-button v-if="!props.onlyAll" @click="requestPermission(false)" class="permission-btn">
           {{ t('background.permission.allowCurrent') }}
         </el-button>
         <el-button
