@@ -75,7 +75,8 @@ const iconPerfClass = perf('shortcut__icon')
 
   .shortcut__icon {
     svg {
-      width: 70%;
+      min-width: 70%;
+      min-height: 70%;
     }
   }
 
