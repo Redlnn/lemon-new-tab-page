@@ -1,15 +1,14 @@
 import { defineBackground } from '#imports'
 import { browser } from 'wxt/browser'
 
-import { BgType } from '@/shared/enums'
-import { defaultSettings } from '@/shared/settings'
-import type { SyncData, SyncMessage, SyncRequestMessage } from '@/shared/sync'
-import { localSyncDataStorage, syncDataStorage } from '@/shared/sync'
+import { syncDataStorage } from '@/shared/sync/syncDataStorage'
+import { isSyncEnvelopeV1 } from '@/shared/sync/types'
+import type { SyncEnvelopeV1, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
 
 let isInited = false
 let isRunning = false
 // 仅保留 latest snapshot（single-latest-item），以 O(1) 复杂度处理高频更新
-let latestSyncItem: SyncData | null = null
+let latestSyncItem: SyncEnvelopeV1 | null = null
 // 统计自上次处理以来入队次数（用于更准确的日志）
 let enqueuedSinceLastProcess = 0
 // 统计被覆盖/丢弃的次数（可选监控）
@@ -48,31 +47,23 @@ async function processSyncQueue() {
   latestSyncItem = null
   enqueuedSinceLastProcess = 0
   droppedSinceLastProcess = 0
-  // 由于本地壁纸不同步且在线壁纸要重新由用户触发权限申请，所以重置回默认设置
-  const { bgType } = syncItem.settings.background
-
-  // 如果使用本地或在线壁纸，需要重置背景类型（这些类型无法跨设备同步）
-  if (bgType === BgType.Local || bgType === BgType.Online) {
-    syncItem.settings.background.bgType = BgType.Bing
+  const currentCloud = await syncDataStorage.getValue()
+  let wrote = false
+  if (isSyncEnvelopeV1(currentCloud) && currentCloud.lastUpdate > syncItem.lastUpdate) {
+    debugLog('rejected stale push', {
+      incoming: syncItem.lastUpdate,
+      cloud: currentCloud.lastUpdate,
+    })
+  } else {
+    await syncDataStorage.setValue(syncItem)
+    wrote = true
   }
-  // 重置壁纸缓存数据
-  syncItem.settings.background.local = defaultSettings.background.local
-  syncItem.settings.background.localDark = defaultSettings.background.localDark
-  syncItem.settings.background.bing = defaultSettings.background.bing
-  // 由于无法同步在线壁纸，所以重置在线壁纸url
-  syncItem.settings.background.online.url = defaultSettings.background.online.url
-
-  await syncDataStorage.setValue({
-    settings: syncItem.settings,
-    bookmarks: syncItem.bookmarks,
-    lastUpdate: syncItem.lastUpdate,
-  })
-  await localSyncDataStorage.setValue({ lastUpdate: syncItem.lastUpdate })
 
   const t1 = performance?.now?.() ?? Date.now()
   debugLog('processed', {
     queueLenAtStart,
     dropped,
+    wrote,
     durationMs: Math.round(t1 - t0),
   })
 
@@ -128,40 +119,12 @@ const hasStringType = (value: unknown): value is { type: string } =>
 const isSyncMessage = (msg: unknown): msg is SyncMessage =>
   hasStringType(msg) && msg.type.startsWith('SYNC_')
 
-const isValidLastUpdate = (value: unknown): value is number =>
-  typeof value === 'number' && Number.isFinite(value) && value >= 0
-
-const isValidSyncData = (value: unknown): value is SyncData => {
-  if (!isObjectRecord(value) || !isValidLastUpdate(value.lastUpdate)) {
-    return false
-  }
-  const { settings } = value
-  if (!isObjectRecord(settings) || !isObjectRecord(value.bookmarks)) {
-    return false
-  }
-
-  const { background } = settings
-  if (!isObjectRecord(background)) {
-    return false
-  }
-
-  const { online } = background
-  return (
-    'bgType' in background &&
-    isObjectRecord(background.local) &&
-    isObjectRecord(background.localDark) &&
-    isObjectRecord(background.bing) &&
-    isObjectRecord(online) &&
-    typeof online.url === 'string'
-  )
-}
-
 const parseSyncRequestMessage = (msg: unknown): SyncRequestMessage | null => {
   if (!isObjectRecord(msg) || msg.type !== 'SYNC_REQUEST' || !('data' in msg)) {
     return null
   }
 
-  if (!isValidSyncData(msg.data)) {
+  if (!isSyncEnvelopeV1(msg.data)) {
     return null
   }
 
@@ -180,9 +143,15 @@ export default defineBackground(() => {
     const syncRequest = isInited ? parseSyncRequestMessage(message) : null
     if (syncRequest) {
       const incoming = syncRequest.data
+      enqueuedSinceLastProcess += 1
       // 保留最新的 snapshot（基于 lastUpdate）
       if (!latestSyncItem || incoming.lastUpdate >= latestSyncItem.lastUpdate) {
+        if (latestSyncItem) {
+          droppedSinceLastProcess += 1
+        }
         latestSyncItem = incoming
+      } else {
+        droppedSinceLastProcess += 1
       }
       debugLog('enqueue', { pending: latestSyncItem ? 1 : 0, lastUpdate: incoming.lastUpdate })
       // 尽快处理一次，降低延迟

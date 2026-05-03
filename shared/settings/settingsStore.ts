@@ -30,5 +30,8 @@ export const useSettingsStore = defineStore('option', () => {
     await settingsStorage.setValue(toRaw(state))
   }
 
-  return { ...toRefs(state), init, save }
+  // 返回原始（非响应式）底层状态对象，对structuredClone安全
+  const getRawState = (): CURRENT_CONFIG_SCHEMA => toRaw(state) as CURRENT_CONFIG_SCHEMA
+
+  return { ...toRefs(state), init, save, getRawState }
 })

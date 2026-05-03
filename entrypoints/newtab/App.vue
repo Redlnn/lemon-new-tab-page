@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import { useIdle } from '@vueuse/core'
+import { storeToRefs } from 'pinia'
 import type { CSSProperties } from 'vue'
 
 import { BgType } from '@/shared/enums'
 import { useSettingsStore } from '@/shared/settings'
+import { useSyncDataStore } from '@/shared/sync'
 
 import {
   FOCUS_STATE,
@@ -43,6 +45,8 @@ const Bookmark = defineAsyncComponent(() => import('./components/Bookmark/index.
 const AddShortcutDialog = defineAsyncComponent(
   () => import('./components/Shortcut/components/AddShortcutDialog.vue'),
 )
+const SyncLegacyDialog = defineAsyncComponent(() => import('./components/SyncLegacyDialog.vue'))
+const SyncConflictDialog = defineAsyncComponent(() => import('./components/SyncConflictDialog.vue'))
 
 const SettingsPageRef = ref<InstanceType<typeof SettingsPage>>()
 const ChangelogRef = ref<InstanceType<typeof Changelog>>()
@@ -58,6 +62,8 @@ const appRef = useTemplateRef('appRef')
 
 const elLocale = useElementLang()
 const settings = useSettingsStore()
+const syncStore = useSyncDataStore()
+const { legacyDialogVisible, conflictDialogVisible, conflictPayload } = storeToRefs(syncStore)
 
 // 主题/外观 watcher
 useThemeWatcher()
@@ -109,6 +115,12 @@ const actionClass = computed(() => {
     'action-btn-container--top': settings.dock.enabled,
   }
 })
+
+const handleLegacyConfirm = () => syncStore.clearLegacyAndReinitialize()
+const handleLegacyCancel = () => syncStore.dismissLegacyDialog()
+const handleUseCloudConflictData = () => syncStore.useCloudConflictData()
+const handleUseLocalConflictData = () => syncStore.useLocalConflictData()
+const handleDisableSyncConflict = () => syncStore.disableSyncAndDismissConflict()
 </script>
 
 <template>
@@ -180,6 +192,18 @@ const actionClass = computed(() => {
       :only-all="currentOnlyAll"
       :context="currentContext"
       @result="onPermissionDialogResult"
+    />
+    <sync-legacy-dialog
+      v-model="legacyDialogVisible"
+      @confirm="handleLegacyConfirm"
+      @cancel="handleLegacyCancel"
+    />
+    <sync-conflict-dialog
+      v-model="conflictDialogVisible"
+      :conflict="conflictPayload"
+      @use-cloud="handleUseCloudConflictData"
+      @use-local="handleUseLocalConflictData"
+      @disable-sync="handleDisableSyncConflict"
     />
   </el-config-provider>
 </template>

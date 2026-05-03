@@ -16,14 +16,13 @@ import { shouldShowChangelog } from '../shared/utils'
 export function useAppNotifications(changelogRef: Ref<{ show: () => void } | undefined>) {
   const settings = useSettingsStore()
   const { t } = useTranslation('sync')
-  const { t: tNewtab } = useTranslation('newtab')
 
   onMounted(async () => {
     // 全新用户欢迎通知
     if (settings.pluginVersion === '') {
       ElNotification.success({
-        title: tNewtab('notification.welcome.title'),
-        message: tNewtab('notification.welcome.message'),
+        title: t('newtab:notification.welcome.title'),
+        message: t('newtab:notification.welcome.message'),
         duration: 8000,
       })
     }
@@ -34,8 +33,8 @@ export function useAppNotifications(changelogRef: Ref<{ show: () => void } | und
       if (!alreadyShown) {
         await shownFaviconCacheHintStorage.setValue(true)
         ElNotification.info({
-          title: tNewtab('notification.faviconCacheHint.title'),
-          message: tNewtab('notification.faviconCacheHint.message'),
+          title: t('newtab:notification.faviconCacheHint.title'),
+          message: t('newtab:notification.faviconCacheHint.message'),
           duration: 10000,
         })
       }
@@ -63,11 +62,21 @@ export function useAppNotifications(changelogRef: Ref<{ show: () => void } | und
 
     // 注册同步事件回调
     setSyncEventCallback((type, payload) => {
-      if (type === 'version-mismatch') {
-        const p = payload as { cloud: string; local: string }
+      if (type === 'version-too-new') {
+        const p = payload as { cloud: number; local: number }
         ElNotification.error({
           title: t('fail.title'),
-          message: t('fail.message', { cloud: p.cloud, local: p.local }),
+          message: t('fail.message', { cloud: String(p.cloud), local: String(p.local) }),
+        })
+      } else if (type === 'legacy-detected') {
+        ElNotification.warning({
+          title: t('legacyFormat.title'),
+          message: t('legacyFormat.message'),
+        })
+      } else if (type === 'conflict') {
+        ElNotification.warning({
+          title: t('conflict.title'),
+          message: t('conflict.message'),
         })
       } else if (type === 'sync-error') {
         const err = payload as Error

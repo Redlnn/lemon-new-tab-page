@@ -1,20 +1,29 @@
 import { storage } from '#imports'
 
-import { defaultSettings } from '../settings'
+import { CURRENT_CONFIG_VERSION, defaultSettings } from '../settings'
 import { defaultShortcuts } from '../shortcut/shortcutStorage'
 
-import type { LocalSyncData, SyncData } from './types'
+import { defaultSyncedCustomSearchEngines } from './types'
+import type { LocalSyncMeta, SyncEnvelopeV1 } from './types'
 
-export const syncDataStorage = storage.defineItem<SyncData>('sync:syncData', {
+export const syncDataStorage = storage.defineItem<SyncEnvelopeV1>('sync:syncData', {
   fallback: {
+    _v: 1,
+    configVersion: CURRENT_CONFIG_VERSION,
+    fromDeviceId: '',
+    fromDeviceName: '',
     settings: defaultSettings,
     bookmarks: defaultShortcuts,
+    customSearchEngines: defaultSyncedCustomSearchEngines,
     lastUpdate: 0,
   },
 })
 
-export const localSyncDataStorage = storage.defineItem<LocalSyncData>('local:syncData', {
+export const localSyncMetaStorage = storage.defineItem<LocalSyncMeta>('local:syncMeta', {
   fallback: {
-    lastUpdate: 1,
+    deviceId: '',
+    deviceName: '',
+    lastSyncedAt: 0,
+    localModifiedAt: 0,
   },
 })
