@@ -7,8 +7,8 @@
 
 - 项目概览与开发说明：[README.md](README.md)
 - 英文说明：[README_en.md](README_en.md)
-- 发布历史：[CHANGELOG.md](CHANGELOG.md)
-- 待优化事项：[TODO.md](TODO.md)
+- 发布历史：[CHANGELOG.md](docs/CHANGELOG.md)
+- 待优化事项（可能不存在）：[TODO.md](TODO.md)
 
 ## 环境与命令
 

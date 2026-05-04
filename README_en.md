@@ -2,7 +2,8 @@
 
 <div align="center">
 
-[Simplified Chinese](README.md) | English
+[Simplified Chinese](README.md) | English  
+[Terms of Service](docs/TERMS_OF_SERVICE_en.md) | [Privacy Policy](docs/PRIVACY_POLICY_en.md)
 
 </div>
 
@@ -34,7 +35,7 @@ The extension is now available on
 
 ## Changelog
 
-[English](./CHANGELOG_en.md) | [Chinese](./CHANGELOG.md)
+[English](./docs/CHANGELOG_en.md) | [Chinese](./docs/CHANGELOG.md)
 
 ## Browser Compatibility
 

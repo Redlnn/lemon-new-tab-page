@@ -16,8 +16,8 @@ const settings = useSettingsStore()
 const { opened, show, hide, toggle } = useDialog()
 defineExpose({ show, hide, toggle })
 
-const ChangelogZh = defineAsyncComponent(() => import('@/CHANGELOG.md'))
-const ChangelogEn = defineAsyncComponent(() => import('@/CHANGELOG_en.md'))
+const ChangelogZh = defineAsyncComponent(() => import('@/docs/CHANGELOG.md'))
+const ChangelogEn = defineAsyncComponent(() => import('@/docs/CHANGELOG_en.md'))
 
 function handleClose() {
   settings.pluginVersion = version
@@ -46,12 +46,12 @@ function handleClose() {
           <p>{{ t('changelog.otherVersions.description') }}</p>
           <ul>
             <li>
-              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/CHANGELOG.md">
+              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/docs/CHANGELOG.md">
                 {{ t('changelog.otherVersions.linkZhCN') }}
               </a>
             </li>
             <li>
-              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/CHANGELOG_en.md">
+              <a href="https://github.com/Redlnn/lemon-new-tab/blob/master/docs/CHANGELOG_en.md">
                 {{ t('changelog.otherVersions.linkEn') }}
               </a>
             </li>

@@ -2,7 +2,8 @@
 
 <div align="center">
 
-[Enlgish](README_en.md) | 简体中文
+[Enlgish](README_en.md) | 简体中文  
+[服务条款](docs/TERMS_OF_SERVICE.md) | [隐私政策](docs/PRIVACY_POLICY.md)
 
 </div>
 
@@ -35,7 +36,7 @@
 
 ## 更新日志（Changelog）
 
-[中文](./CHANGELOG.md) | [English](./CHANGELOG_en.md)
+[中文](./docs/CHANGELOG.md) | [English](./docs/CHANGELOG_en.md)
 
 ## 浏览器兼容性
 
