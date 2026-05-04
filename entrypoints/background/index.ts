@@ -13,6 +13,7 @@ import type {
   SyncConflictMessage,
   SyncConflictResolveMessage,
   SyncEnvelopeV1,
+  SyncInitedMessage,
   SyncLegacyDetectedMessage,
   SyncLocalChangedMessage,
   SyncMessage,
@@ -25,7 +26,6 @@ import type {
 let localVersion = 0
 let localDeviceId = ''
 let localModifiedAt = 0
-let lastSyncedAt = 0
 
 // Startup write gate: block normal pushes for 5s (30s when cloud is empty)
 // so the browser has time to sync cloud storage before we potentially overwrite it
@@ -69,7 +69,6 @@ async function updateLocalMeta(
   const current = await localSyncMetaStorage.getValue()
   await localSyncMetaStorage.setValue({ ...current, ...patch })
   if (patch.localVersion !== undefined) localVersion = patch.localVersion
-  if (patch.lastSyncedAt !== undefined) lastSyncedAt = patch.lastSyncedAt
   if (patch.localModifiedAt !== undefined) localModifiedAt = patch.localModifiedAt
 }
 
@@ -80,7 +79,6 @@ const initPromise = (async () => {
   localVersion = meta.localVersion
   localDeviceId = meta.deviceId
   localModifiedAt = meta.localModifiedAt
-  lastSyncedAt = meta.lastSyncedAt
 
   // Check if cloud is empty (never written to) to decide startup window length
   const cloudSnapshot = await syncDataStorage.getValue()
@@ -92,10 +90,7 @@ const initPromise = (async () => {
     startupTimer = null
     startupWriteReady = true
     debugLog('startup write gate opened (timeout)', { isCloudEmpty })
-    // If we have local changes that weren't pushed during the window, push now
-    if (latestLocalPayload !== null && (localModifiedAt > lastSyncedAt || pendingImmediatePush)) {
-      scheduleLocalTick(0)
-    }
+    scheduleLocalTick(0)
   }, timeoutMs)
 
   debugLog('initialized', { localVersion, localDeviceId, isCloudEmpty, timeoutMs })
@@ -103,12 +98,16 @@ const initPromise = (async () => {
 
 // ─── Send message to newtab ───────────────────────────────────────────────────
 
-async function sendToNewtab(message: SyncMessage): Promise<void> {
+/** Returns true if the message was delivered; false if newtab was not reachable. */
+async function sendToNewtab(message: SyncMessage): Promise<boolean> {
   try {
     const [tab] = await browser.tabs.query({ active: true, status: 'complete' })
     if (tab?.id) {
       await browser.tabs.sendMessage(tab.id, message)
+      return true
     }
+    debugLog('sendToNewtab: no active complete tab')
+    return false
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err)
     if (
@@ -116,9 +115,10 @@ async function sendToNewtab(message: SyncMessage): Promise<void> {
       msg.includes('Could not establish connection')
     ) {
       debugLog('sendToNewtab skipped: no receiver')
-      return
+      return false
     }
     console.warn('[sync] Failed to send message to newtab', err)
+    return false
   }
 }
 
@@ -150,7 +150,11 @@ async function processCloudChange(cloudRaw: unknown): Promise<void> {
     // Legacy format (no _v: 1)
     debugLog('legacy data detected')
     if (isInited) {
-      await sendToNewtab({ type: 'SYNC_LEGACY_DETECTED' } as SyncLegacyDetectedMessage)
+      const delivered = await sendToNewtab({ type: 'SYNC_LEGACY_DETECTED' } as SyncLegacyDetectedMessage)
+      if (!delivered) {
+        pendingLegacyDetected = true
+        isInited = false
+      }
     } else {
       pendingLegacyDetected = true
     }
@@ -167,7 +171,7 @@ async function processCloudChange(cloudRaw: unknown): Promise<void> {
   }
 
   // Rule 2: Own device historical data already reflected locally
-  if (cloud.fromDeviceId === localDeviceId && cloud.version <= localVersion) {
+  if (cloud.fromDeviceId === localDeviceId && cloud.version === localVersion) {
     debugLog('own device historical, skip', { version: cloud.version, local: localVersion })
     return
   }
@@ -177,10 +181,14 @@ async function processCloudChange(cloudRaw: unknown): Promise<void> {
     debugLog('version too new', { cloud: cloud.configVersion, local: CURRENT_CONFIG_VERSION })
     const versionPayload = { cloud: cloud.configVersion, local: CURRENT_CONFIG_VERSION }
     if (isInited) {
-      await sendToNewtab({
+      const delivered = await sendToNewtab({
         type: 'SYNC_VERSION_TOO_NEW',
         ...versionPayload,
       } as SyncVersionTooNewMessage)
+      if (!delivered) {
+        pendingVersionTooNew = versionPayload
+        isInited = false
+      }
     } else {
       pendingVersionTooNew = versionPayload
     }
@@ -216,13 +224,21 @@ async function processCloudChange(cloudRaw: unknown): Promise<void> {
   // Rule 4: Cloud is ahead — apply to local
   if (cloud.version > localVersion) {
     debugLog('cloud is newer, applying', { cloud: cloud.version, local: localVersion })
+    // Nullify init payload: newtab will re-report its state after applying the fresh cloud data.
+    // Without this, processSyncQueue could push the stale pre-apply snapshot as v+1.
+    latestLocalPayload = null
     await updateLocalMeta({
       localVersion: cloud.version,
       lastSyncedAt: cloud.lastUpdate,
       localModifiedAt: cloud.lastUpdate,
     })
     if (isInited) {
-      await sendToNewtab({ type: 'SYNC_APPLY_DATA', data: cloudRaw } as SyncApplyDataMessage)
+      const delivered = await sendToNewtab({ type: 'SYNC_APPLY_DATA', data: cloudRaw } as SyncApplyDataMessage)
+      if (!delivered) {
+        // Newtab closed before we could deliver; queue for next init
+        pendingApplyData = cloudRaw
+        isInited = false
+      }
     } else {
       pendingApplyData = cloudRaw
     }
@@ -241,16 +257,24 @@ async function processCloudChange(cloudRaw: unknown): Promise<void> {
       local: { localModifiedAt },
     }
     if (isInited) {
-      await sendToNewtab({ type: 'SYNC_CONFLICT', payload: conflictPayload } as SyncConflictMessage)
+      const delivered = await sendToNewtab({ type: 'SYNC_CONFLICT', payload: conflictPayload } as SyncConflictMessage)
+      if (!delivered) {
+        pendingConflict = conflictPayload
+        isInited = false
+      }
     } else {
       pendingConflict = conflictPayload
     }
     return
   }
 
-  // Rule 6: Cloud is behind AND was pushed based on a version older than ours
-  // → another device wrote stale data; overwrite it
-  if (cloud.version < localVersion && cloud.baseVersion < localVersion) {
+  // Rule 6: Cloud is behind AND was pushed based on a version older than ours AND from a
+  // different device → another device wrote stale data; overwrite it immediately
+  if (
+    cloud.version < localVersion &&
+    cloud.baseVersion < localVersion &&
+    cloud.fromDeviceId !== localDeviceId
+  ) {
     debugLog('stale-device overwrite detected, correcting', {
       cloudVersion: cloud.version,
       cloudBase: cloud.baseVersion,
@@ -298,13 +322,24 @@ async function processSyncQueue(): Promise<void> {
 
   // Read-before-write: abort push if cloud was updated while we were waiting
   const currentCloud = await syncDataStorage.getValue()
-  if (isSyncEnvelopeV1(currentCloud)) {
-    const cloud = currentCloud
-    if (cloud.version > localVersion) {
-      debugLog('read-before-write: cloud is newer, applying instead of pushing')
-      await processCloudChange(currentCloud)
-      return
-    }
+  if (!isSyncEnvelopeV1(currentCloud)) {
+    debugLog('read-before-write: non-v1 cloud data present, skipping push until resolved')
+    return
+  }
+  if (currentCloud.version > localVersion) {
+    debugLog('read-before-write: cloud is newer, applying instead of pushing')
+    await processCloudChange(currentCloud)
+    return
+  }
+
+  // No-op guard: skip push if cloud already reflects our latest local state
+  if (
+    currentCloud.version === localVersion &&
+    currentCloud.fromDeviceId === localDeviceId &&
+    payload.lastUpdate <= currentCloud.lastUpdate
+  ) {
+    debugLog('read-before-write: no local changes since last push, skipping')
+    return
   }
 
   await writeToCloud(payload)
@@ -365,10 +400,22 @@ export default defineBackground(() => {
       localDeviceId = meta.deviceId
       localVersion = meta.localVersion
       localModifiedAt = meta.localModifiedAt
-      lastSyncedAt = meta.lastSyncedAt
 
       isInited = true
       debugLog('newtab inited', { localVersion, localDeviceId })
+
+      // Accept the initial local snapshot from newtab (covers SW-restart + missed-watch cases)
+      const initMsg = message as SyncInitedMessage
+      if (initMsg.payload && isSyncEnvelopeV1(initMsg.payload)) {
+        const incoming = initMsg.payload
+        if (!latestLocalPayload || incoming.lastUpdate >= (latestLocalPayload.lastUpdate ?? 0)) {
+          latestLocalPayload = incoming
+        }
+      }
+      // If gate is open (or an immediate push is queued), start processing now
+      if (latestLocalPayload !== null && (startupWriteReady || pendingImmediatePush)) {
+        scheduleLocalTick(0)
+      }
 
       // Flush any notifications queued before newtab was ready
       // Priority: legacy > version-too-new > apply > conflict
@@ -385,6 +432,8 @@ export default defineBackground(() => {
       } else if (pendingApplyData) {
         const data = pendingApplyData
         pendingApplyData = null
+        // Nullify init payload: it is now stale; newtab will re-report after applying cloud data.
+        latestLocalPayload = null
         await sendToNewtab({ type: 'SYNC_APPLY_DATA', data } as SyncApplyDataMessage)
       } else if (pendingConflict) {
         const payload = pendingConflict

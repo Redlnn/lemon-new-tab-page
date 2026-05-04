@@ -19,7 +19,7 @@ import { defaultShortcuts, useShortcutStore } from '../shortcut'
 import type { Shortcuts } from '../shortcut/shortcutStorage'
 
 import { createDeviceId, detectDeviceName } from './device'
-import { localSyncMetaStorage, syncDataStorage } from './syncDataStorage'
+import { localSyncMetaStorage } from './syncDataStorage'
 import { isSyncEnvelopeV1 } from './types'
 import type {
   LocalSyncMeta,
@@ -307,35 +307,33 @@ export const useSyncDataStore = defineStore('sync', () => {
     const shortcutStore = useShortcutStore()
     const customSearchEngineStore = useCustomSearchEngineStore()
     isProcessing = true
+    // Handle messages from background; hoisted so the catch block can remove it on error.
+    let handleBackgroundMessage: ((message: unknown) => Promise<void>) | undefined
+
     try {
-      await ensureDeviceMeta()
+      const meta = await ensureDeviceMeta()
 
-      const cloudData = await syncDataStorage.getValue()
-      if (isSyncEnvelopeV1(cloudData)) {
-        settings.value = cloudData.settings
-        bookmarks.value = cloudData.bookmarks
-        lastUpdate.value = cloudData.lastUpdate
-      } else {
-        settings.value = structuredClone(localSettings.getRawState())
-        bookmarks.value = structuredClone(defaultShortcuts)
-        lastUpdate.value = 0
-      }
+      // Initialise sync store refs from *local* state — never from the browser's potentially
+      // stale cloud cache.  applyCloudData() will update these once background decides to apply.
+      settings.value = structuredClone(localSettings.getRawState())
+      bookmarks.value = { items: structuredClone(toRaw(shortcutStore.items)) }
+      lastUpdate.value = meta.lastSyncedAt
 
-      // Tell background we're ready; it will flush any pending notifications
-      const syncInitedMessage: SyncInitedMessage = { type: 'SYNC_INITED' }
-      browser.runtime.sendMessage(syncInitedMessage)
+      // Send SYNC_INITED with the current local snapshot so background can run
+      // processSyncQueue immediately (covers SW-restart + watch()-missed-update cases).
+      const initPayload = buildPayload(meta.localModifiedAt, meta)
+      const syncInitedMessage: SyncInitedMessage = { type: 'SYNC_INITED', payload: initPayload }
 
-      // Handle messages from background
-      const handleBackgroundMessage = async (message: unknown) => {
+      handleBackgroundMessage = async (message: unknown) => {
         if (!hasStringType(message)) return
 
         if (message.type === 'SYNC_APPLY_DATA' && 'data' in message) {
-          const data = (message as SyncApplyDataMessage).data
+          const { data } = message as SyncApplyDataMessage
           if (isSyncEnvelopeV1(data)) {
             await applyCloudData(data)
           }
         } else if (message.type === 'SYNC_CONFLICT' && 'payload' in message) {
-          const payload = (message as SyncConflictMessage).payload
+          const { payload } = message as SyncConflictMessage
           conflictPayload.value = payload
           conflictDialogVisible.value = true
           emitSyncEvent('conflict', payload)
@@ -348,7 +346,10 @@ export const useSyncDataStore = defineStore('sync', () => {
         }
       }
 
+      // Register BEFORE awaiting sendMessage: background may flush pendingApplyData/pendingConflict
+      // during the SYNC_INITED response, and newtab must already be listening when those arrive.
       browser.runtime.onMessage.addListener(handleBackgroundMessage)
+      await browser.runtime.sendMessage(syncInitedMessage)
 
       // Sanitized snapshot comparison: only trigger sync when meaningful data changes
       // (ignores local-only fields like readChangeLog, pluginVersion, local background)
@@ -414,13 +415,17 @@ export const useSyncDataStore = defineStore('sync', () => {
       const unsubCustomSearchEngine = customSearchEngineStore.$subscribe(onStateMutation)
 
       cleanupFns = [
-        () => browser.runtime.onMessage.removeListener(handleBackgroundMessage),
+        () => browser.runtime.onMessage.removeListener(handleBackgroundMessage!),
         unsubSettings,
         unsubShortcut,
         unsubCustomSearchEngine,
       ]
       initialized = true
     } catch (err) {
+      // Clean up the message listener if it was registered before the error
+      if (handleBackgroundMessage) {
+        browser.runtime.onMessage.removeListener(handleBackgroundMessage)
+      }
       emitSyncError(err)
     } finally {
       isProcessing = false

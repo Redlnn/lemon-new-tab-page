@@ -84,9 +84,12 @@ export interface LocalSyncMeta {
 
 // ─── Message types ────────────────────────────────────────────────────────────
 
-/** newtab → bg: newtab has initialized; bg re-reads LocalSyncMeta for device info. */
+/** newtab → bg: newtab has initialized; bg re-reads LocalSyncMeta for device info.
+ *  Optional `payload` carries the current local snapshot so background has data for
+ *  processSyncQueue even if watch() didn't fire after a SW restart. */
 export interface SyncInitedMessage {
   type: 'SYNC_INITED'
+  payload?: SyncEnvelopeV1
 }
 
 /** newtab → bg: sanitized local data changed; bg decides whether and when to push. */
