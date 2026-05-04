@@ -1,114 +1,342 @@
 import { defineBackground } from '#imports'
 import { browser } from 'wxt/browser'
 
-import { syncDataStorage } from '@/shared/sync/syncDataStorage'
-import { isSyncEnvelopeV1 } from '@/shared/sync/types'
-import type { SyncEnvelopeV1, SyncMessage, SyncRequestMessage } from '@/shared/sync/types'
+import { CURRENT_CONFIG_VERSION, defaultSettings } from '@/shared/settings'
+import { defaultShortcuts } from '@/shared/shortcut/shortcutStorage'
+import { localSyncMetaStorage, syncDataStorage } from '@/shared/sync/syncDataStorage'
+import {
+  defaultSyncedCustomSearchEngines,
+  isSyncEnvelopeV1,
+} from '@/shared/sync/types'
+import type {
+  SyncApplyDataMessage,
+  SyncConflictMessage,
+  SyncConflictResolveMessage,
+  SyncEnvelopeV1,
+  SyncLegacyDetectedMessage,
+  SyncLocalChangedMessage,
+  SyncMessage,
+  SyncVersionTooNewMessage,
+} from '@/shared/sync/types'
 
+// ─── Runtime state (reset on each SW restart) ────────────────────────────────
+
+// Loaded from localSyncMetaStorage in initPromise; refreshed on SYNC_INITED
+let localVersion = 0
+let localDeviceId = ''
+let localModifiedAt = 0
+let lastSyncedAt = 0
+
+// Startup write gate: block normal pushes for 5s (30s when cloud is empty)
+// so the browser has time to sync cloud storage before we potentially overwrite it
+let startupWriteReady = false
+let startupTimer: ReturnType<typeof setTimeout> | null = null
+
+// Latest local payload from newtab; kept as single-latest-item
+let latestLocalPayload: SyncEnvelopeV1 | null = null
+
+// Tracks version we just wrote so watch() can recognise our own write and skip re-processing
+let lastSelfWrittenVersion = -1
+
+// Set by decision matrix Rule 6/7 when local payload hasn't arrived yet;
+// ensures the next SYNC_LOCAL_CHANGED triggers an immediate push
+let pendingImmediatePush = false
+
+// Newtab init gate: messages to newtab are held until SYNC_INITED is received
 let isInited = false
+let pendingApplyData: SyncEnvelopeV1 | null = null
+let pendingConflict: SyncConflictMessage['payload'] | null = null
+let pendingLegacyDetected = false
+let pendingVersionTooNew: { cloud: number; local: number } | null = null
+
+// Sync queue / rate limiting
 let isRunning = false
-// 仅保留 latest snapshot（single-latest-item），以 O(1) 复杂度处理高频更新
-let latestSyncItem: SyncEnvelopeV1 | null = null
-// 统计自上次处理以来入队次数（用于更准确的日志）
-let enqueuedSinceLastProcess = 0
-// 统计被覆盖/丢弃的次数（可选监控）
-let droppedSinceLastProcess = 0
 let lastSyncTime = 0
-const SYNC_INTERVAL = 2000 // 2 seconds
+const SYNC_INTERVAL = 2000
 const ALARM_NAME = 'sync-queue-tick'
 let localTimer: ReturnType<typeof setTimeout> | null = null
-let localTimerExpiry = 0 // 时间戳（ms），记录本地 timer 到期时间以支持提前重设
+let localTimerExpiry = 0
 
 const debugLog: (...args: unknown[]) => void = import.meta.env.DEV
   ? (...args) => console.log('[sync]', ...args)
   : () => {}
 
-// 检查是否可以执行同步
-function canSync(): boolean {
-  return latestSyncItem !== null && Date.now() - lastSyncTime >= SYNC_INTERVAL
+// ─── Local meta helper ────────────────────────────────────────────────────────
+
+async function updateLocalMeta(
+  patch: Partial<{ localVersion: number; lastSyncedAt: number; localModifiedAt: number }>,
+) {
+  const current = await localSyncMetaStorage.getValue()
+  await localSyncMetaStorage.setValue({ ...current, ...patch })
+  if (patch.localVersion !== undefined) localVersion = patch.localVersion
+  if (patch.lastSyncedAt !== undefined) lastSyncedAt = patch.lastSyncedAt
+  if (patch.localModifiedAt !== undefined) localModifiedAt = patch.localModifiedAt
 }
 
-// 处理同步队列
-async function processSyncQueue() {
-  if (!canSync()) {
+// ─── Initialization ───────────────────────────────────────────────────────────
+
+const initPromise = (async () => {
+  const meta = await localSyncMetaStorage.getValue()
+  localVersion = meta.localVersion
+  localDeviceId = meta.deviceId
+  localModifiedAt = meta.localModifiedAt
+  lastSyncedAt = meta.lastSyncedAt
+
+  // Check if cloud is empty (never written to) to decide startup window length
+  const cloudSnapshot = await syncDataStorage.getValue()
+  const isCloudEmpty =
+    !isSyncEnvelopeV1(cloudSnapshot) || cloudSnapshot.fromDeviceId === ''
+
+  const timeoutMs = isCloudEmpty ? 30_000 : 5_000
+  startupTimer = setTimeout(() => {
+    startupTimer = null
+    startupWriteReady = true
+    debugLog('startup write gate opened (timeout)', { isCloudEmpty })
+    // If we have local changes that weren't pushed during the window, push now
+    if (latestLocalPayload !== null && (localModifiedAt > lastSyncedAt || pendingImmediatePush)) {
+      scheduleLocalTick(0)
+    }
+  }, timeoutMs)
+
+  debugLog('initialized', { localVersion, localDeviceId, isCloudEmpty, timeoutMs })
+})()
+
+// ─── Send message to newtab ───────────────────────────────────────────────────
+
+async function sendToNewtab(message: SyncMessage): Promise<void> {
+  try {
+    const [tab] = await browser.tabs.query({ active: true, status: 'complete' })
+    if (tab?.id) {
+      await browser.tabs.sendMessage(tab.id, message)
+    }
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err)
+    if (
+      msg.includes('Receiving end does not exist') ||
+      msg.includes('Could not establish connection')
+    ) {
+      debugLog('sendToNewtab skipped: no receiver')
+      return
+    }
+    console.warn('[sync] Failed to send message to newtab', err)
+  }
+}
+
+// ─── Write to cloud ───────────────────────────────────────────────────────────
+
+async function writeToCloud(payload: SyncEnvelopeV1): Promise<void> {
+  const newVersion = localVersion + 1
+  const envelope: SyncEnvelopeV1 = {
+    ...payload,
+    version: newVersion,
+    baseVersion: localVersion,
+  }
+
+  lastSelfWrittenVersion = newVersion
+  try {
+    await syncDataStorage.setValue(envelope)
+  } catch (err) {
+    lastSelfWrittenVersion = -1
+    throw err
+  }
+  await updateLocalMeta({ localVersion: newVersion, lastSyncedAt: envelope.lastUpdate })
+  debugLog('wrote to cloud', { version: newVersion, baseVersion: newVersion - 1 })
+}
+
+// ─── Decision matrix ──────────────────────────────────────────────────────────
+
+async function processCloudChange(cloudRaw: unknown): Promise<void> {
+  if (!isSyncEnvelopeV1(cloudRaw)) {
+    // Legacy format (no _v: 1)
+    debugLog('legacy data detected')
+    if (isInited) {
+      await sendToNewtab({ type: 'SYNC_LEGACY_DETECTED' } as SyncLegacyDetectedMessage)
+    } else {
+      pendingLegacyDetected = true
+    }
     return
   }
 
-  // 以 latestSyncItem 为唯一待处理项，记录入队统计并清空相关状态
-  const syncItem = latestSyncItem
-  const queueLenAtStart = enqueuedSinceLastProcess
-  const dropped = droppedSinceLastProcess
-  if (!syncItem) return
-  const t0 = performance?.now?.() ?? Date.now()
+  const cloud = cloudRaw
 
-  // 以开始处理时间为节流基准
-  lastSyncTime = Date.now()
-  // 清空待处理项与统计
-  latestSyncItem = null
-  enqueuedSinceLastProcess = 0
-  droppedSinceLastProcess = 0
-  const currentCloud = await syncDataStorage.getValue()
-  let wrote = false
-  if (isSyncEnvelopeV1(currentCloud) && currentCloud.lastUpdate > syncItem.lastUpdate) {
-    debugLog('rejected stale push', {
-      incoming: syncItem.lastUpdate,
-      cloud: currentCloud.lastUpdate,
+  // Rule 1: Own write — watch() fired for data we just wrote; confirm and skip
+  if (cloud.version === lastSelfWrittenVersion && cloud.fromDeviceId === localDeviceId) {
+    lastSelfWrittenVersion = -1
+    debugLog('own write confirmed', { version: cloud.version })
+    return
+  }
+
+  // Rule 2: Own device historical data already reflected locally
+  if (cloud.fromDeviceId === localDeviceId && cloud.version <= localVersion) {
+    debugLog('own device historical, skip', { version: cloud.version, local: localVersion })
+    return
+  }
+
+  // Reject cloud data whose configVersion is newer than this build supports
+  if (cloud.configVersion > CURRENT_CONFIG_VERSION) {
+    debugLog('version too new', { cloud: cloud.configVersion, local: CURRENT_CONFIG_VERSION })
+    const versionPayload = { cloud: cloud.configVersion, local: CURRENT_CONFIG_VERSION }
+    if (isInited) {
+      await sendToNewtab({
+        type: 'SYNC_VERSION_TOO_NEW',
+        ...versionPayload,
+      } as SyncVersionTooNewMessage)
+    } else {
+      pendingVersionTooNew = versionPayload
+    }
+    return
+  }
+
+  // Rule 3: Cloud is empty (storage fallback — never written to)
+  if (cloud.version === 0 && cloud.fromDeviceId === '') {
+    // Extend startup window: browser may still be downloading real cloud data
+    if (startupTimer !== null) {
+      clearTimeout(startupTimer)
+      startupTimer = setTimeout(() => {
+        startupTimer = null
+        startupWriteReady = true
+        debugLog('startup write gate opened (30s after empty cloud)')
+        if (latestLocalPayload !== null) {
+          scheduleLocalTick(0)
+        }
+      }, 30_000)
+      debugLog('cloud is empty, extending startup window to 30s')
+    }
+    return
+  }
+
+  // Rules 4-7: Real cloud data arrived — open the write gate immediately
+  if (startupTimer !== null) {
+    clearTimeout(startupTimer)
+    startupTimer = null
+    startupWriteReady = true
+    debugLog('startup write gate opened (real cloud data received)')
+  }
+
+  // Rule 4: Cloud is ahead — apply to local
+  if (cloud.version > localVersion) {
+    debugLog('cloud is newer, applying', { cloud: cloud.version, local: localVersion })
+    await updateLocalMeta({
+      localVersion: cloud.version,
+      lastSyncedAt: cloud.lastUpdate,
+      localModifiedAt: cloud.lastUpdate,
     })
-  } else {
-    await syncDataStorage.setValue(syncItem)
-    wrote = true
+    if (isInited) {
+      await sendToNewtab({ type: 'SYNC_APPLY_DATA', data: cloudRaw } as SyncApplyDataMessage)
+    } else {
+      pendingApplyData = cloudRaw
+    }
+    return
   }
 
-  const t1 = performance?.now?.() ?? Date.now()
-  debugLog('processed', {
-    queueLenAtStart,
-    dropped,
-    wrote,
-    durationMs: Math.round(t1 - t0),
-  })
-
-  // 如果在处理期间又有新的待处理项，安排下一次处理
-  if (latestSyncItem !== null) {
-    scheduleLocalTick(SYNC_INTERVAL)
+  // Rule 5: Same version from a different device — conflict
+  if (cloud.version === localVersion && cloud.fromDeviceId !== localDeviceId) {
+    debugLog('conflict', { version: cloud.version, device: cloud.fromDeviceId })
+    const conflictPayload: SyncConflictMessage['payload'] = {
+      cloud: {
+        lastUpdate: cloud.lastUpdate,
+        fromDeviceName: cloud.fromDeviceName,
+        fromDeviceId: cloud.fromDeviceId,
+      },
+      local: { localModifiedAt },
+    }
+    if (isInited) {
+      await sendToNewtab({ type: 'SYNC_CONFLICT', payload: conflictPayload } as SyncConflictMessage)
+    } else {
+      pendingConflict = conflictPayload
+    }
+    return
   }
+
+  // Rule 6: Cloud is behind AND was pushed based on a version older than ours
+  // → another device wrote stale data; overwrite it
+  if (cloud.version < localVersion && cloud.baseVersion < localVersion) {
+    debugLog('stale-device overwrite detected, correcting', {
+      cloudVersion: cloud.version,
+      cloudBase: cloud.baseVersion,
+      local: localVersion,
+    })
+    if (latestLocalPayload !== null) {
+      pendingImmediatePush = true
+      scheduleLocalTick(0)
+    } else {
+      // Mark for immediate push when newtab sends SYNC_LOCAL_CHANGED
+      pendingImmediatePush = true
+    }
+    return
+  }
+
+  // Rule 7: Cloud is behind for any other reason → push local to correct
+  if (cloud.version < localVersion) {
+    debugLog('cloud is stale, pushing local', { cloud: cloud.version, local: localVersion })
+    if (latestLocalPayload !== null) {
+      scheduleLocalTick(0)
+    } else {
+      pendingImmediatePush = true
+    }
+  }
+}
+
+// ─── Sync queue ───────────────────────────────────────────────────────────────
+
+async function processSyncQueue(): Promise<void> {
+  if (latestLocalPayload === null) return
+
+  const isImmediate = pendingImmediatePush
+  if (!isImmediate && !startupWriteReady) return
+
+  pendingImmediatePush = false
+
+  if (!isImmediate && Date.now() - lastSyncTime < SYNC_INTERVAL) {
+    scheduleLocalTick(SYNC_INTERVAL - (Date.now() - lastSyncTime))
+    return
+  }
+
+  const payload = latestLocalPayload
+  latestLocalPayload = null
+  lastSyncTime = Date.now()
+
+  // Read-before-write: abort push if cloud was updated while we were waiting
+  const currentCloud = await syncDataStorage.getValue()
+  if (isSyncEnvelopeV1(currentCloud)) {
+    const cloud = currentCloud
+    if (cloud.version > localVersion) {
+      debugLog('read-before-write: cloud is newer, applying instead of pushing')
+      await processCloudChange(currentCloud)
+      return
+    }
+  }
+
+  await writeToCloud(payload)
 }
 
 function scheduleLocalTick(delay = SYNC_INTERVAL) {
   const now = Date.now()
   const desiredExpiry = now + delay
 
-  // 如果已有 timer 且新计划不比当前更早，则保持现有 timer
   if (localTimer != null) {
     const remaining = Math.max(localTimerExpiry - now, 0)
-    if (delay >= remaining) {
-      return
-    }
-    // 新的计划更早，重设 timer
+    if (delay >= remaining) return
     clearTimeout(localTimer)
     localTimer = null
     localTimerExpiry = 0
   }
 
-  localTimer = setTimeout(
-    async () => {
-      localTimer = null
-      localTimerExpiry = 0
-      if (!isInited || isRunning) {
-        return
-      }
-      isRunning = true
-      try {
-        await processSyncQueue()
-      } finally {
-        isRunning = false
-      }
-    },
-    Math.max(0, delay),
-  )
+  localTimer = setTimeout(async () => {
+    localTimer = null
+    localTimerExpiry = 0
+    if (isRunning) return
+    isRunning = true
+    try {
+      await processSyncQueue()
+    } finally {
+      isRunning = false
+    }
+  }, Math.max(0, delay))
   localTimerExpiry = desiredExpiry
 }
 
-// --------------------------------------
+// ─── Message helpers ──────────────────────────────────────────────────────────
 
 const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
   typeof value === 'object' && value !== null
@@ -116,65 +344,135 @@ const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
 const hasStringType = (value: unknown): value is { type: string } =>
   isObjectRecord(value) && typeof value.type === 'string'
 
-const isSyncMessage = (msg: unknown): msg is SyncMessage =>
-  hasStringType(msg) && msg.type.startsWith('SYNC_')
-
-const parseSyncRequestMessage = (msg: unknown): SyncRequestMessage | null => {
-  if (!isObjectRecord(msg) || msg.type !== 'SYNC_REQUEST' || !('data' in msg)) {
-    return null
-  }
-
-  if (!isSyncEnvelopeV1(msg.data)) {
-    return null
-  }
-
-  return {
-    type: 'SYNC_REQUEST',
-    data: msg.data,
-  }
-}
+// ─── Background entry point ───────────────────────────────────────────────────
 
 export default defineBackground(() => {
-  browser.runtime.onMessage.addListener((message) => {
-    if (isSyncMessage(message) && message.type === 'SYNC_INITED') {
-      isInited = true
-    }
+  // Watch for cloud storage changes (from any device, or from our own writes)
+  syncDataStorage.watch(async () => {
+    await initPromise
+    const cloudRaw = await syncDataStorage.getValue()
+    await processCloudChange(cloudRaw)
+  })
 
-    const syncRequest = isInited ? parseSyncRequestMessage(message) : null
-    if (syncRequest) {
-      const incoming = syncRequest.data
-      enqueuedSinceLastProcess += 1
-      // 保留最新的 snapshot（基于 lastUpdate）
-      if (!latestSyncItem || incoming.lastUpdate >= latestSyncItem.lastUpdate) {
-        if (latestSyncItem) {
-          droppedSinceLastProcess += 1
+  browser.runtime.onMessage.addListener(async (message) => {
+    await initPromise
+
+    if (!hasStringType(message)) return
+
+    if (message.type === 'SYNC_INITED') {
+      // Re-read meta: newtab may have just created the device ID for the first time
+      const meta = await localSyncMetaStorage.getValue()
+      localDeviceId = meta.deviceId
+      localVersion = meta.localVersion
+      localModifiedAt = meta.localModifiedAt
+      lastSyncedAt = meta.lastSyncedAt
+
+      isInited = true
+      debugLog('newtab inited', { localVersion, localDeviceId })
+
+      // Flush any notifications queued before newtab was ready
+      // Priority: legacy > version-too-new > apply > conflict
+      if (pendingLegacyDetected) {
+        pendingLegacyDetected = false
+        await sendToNewtab({ type: 'SYNC_LEGACY_DETECTED' } as SyncLegacyDetectedMessage)
+      } else if (pendingVersionTooNew) {
+        const payload = pendingVersionTooNew
+        pendingVersionTooNew = null
+        await sendToNewtab({
+          type: 'SYNC_VERSION_TOO_NEW',
+          ...payload,
+        } as SyncVersionTooNewMessage)
+      } else if (pendingApplyData) {
+        const data = pendingApplyData
+        pendingApplyData = null
+        await sendToNewtab({ type: 'SYNC_APPLY_DATA', data } as SyncApplyDataMessage)
+      } else if (pendingConflict) {
+        const payload = pendingConflict
+        pendingConflict = null
+        await sendToNewtab({ type: 'SYNC_CONFLICT', payload } as SyncConflictMessage)
+      }
+    } else if (message.type === 'SYNC_LOCAL_CHANGED' || message.type === 'SYNC_REQUEST') {
+      if (!isInited) return
+
+      const reqMsg = message as SyncLocalChangedMessage
+      if (!isSyncEnvelopeV1(reqMsg.data)) {
+        debugLog('ignored invalid SYNC_LOCAL_CHANGED payload')
+        return
+      }
+
+      const incoming = reqMsg.data
+      if (!latestLocalPayload || incoming.lastUpdate >= (latestLocalPayload.lastUpdate ?? 0)) {
+        latestLocalPayload = incoming
+      }
+      localModifiedAt = Math.max(localModifiedAt, incoming.lastUpdate)
+
+      if (pendingImmediatePush) {
+        // Rule 6/7 triggered before payload arrived; push immediately now
+        scheduleLocalTick(0)
+        return
+      }
+
+      if (!startupWriteReady) return
+
+      const elapsed = Date.now() - lastSyncTime
+      scheduleLocalTick(elapsed >= SYNC_INTERVAL ? 0 : SYNC_INTERVAL - elapsed)
+    } else if (message.type === 'SYNC_CONFLICT_RESOLVE') {
+      if (!isInited) return
+      const resolveMsg = message as SyncConflictResolveMessage
+
+      if (resolveMsg.choice === 'cloud') {
+        const cloudRaw = await syncDataStorage.getValue()
+        if (isSyncEnvelopeV1(cloudRaw)) {
+          await sendToNewtab({ type: 'SYNC_APPLY_DATA', data: cloudRaw } as SyncApplyDataMessage)
         }
-        latestSyncItem = incoming
-      } else {
-        droppedSinceLastProcess += 1
+      } else if (resolveMsg.choice === 'local' && latestLocalPayload !== null) {
+        // Re-read cloud before writing: another device may have pushed while the user was deciding
+        const currentCloud = await syncDataStorage.getValue()
+        if (isSyncEnvelopeV1(currentCloud) && currentCloud.version > localVersion) {
+          // Cloud got newer during the conflict dialog; apply it and let the user decide again
+          debugLog('conflict resolve(local): cloud moved ahead, re-evaluating')
+          await processCloudChange(currentCloud)
+        } else {
+          await writeToCloud(latestLocalPayload)
+          latestLocalPayload = null
+        }
       }
-      debugLog('enqueue', { pending: latestSyncItem ? 1 : 0, lastUpdate: incoming.lastUpdate })
-      // 尽快处理一次，降低延迟
-      if (!isRunning) {
-        const elapsed = Date.now() - lastSyncTime
-        const remaining = elapsed >= SYNC_INTERVAL ? 0 : SYNC_INTERVAL - elapsed
-        scheduleLocalTick(remaining)
+    } else if (message.type === 'SYNC_CLEAR_LEGACY') {
+      // Re-read cloud: another device may have already migrated the data to v1
+      const currentCloud = await syncDataStorage.getValue()
+      if (isSyncEnvelopeV1(currentCloud)) {
+        debugLog('SYNC_CLEAR_LEGACY: cloud is already v1, processing normally')
+        await processCloudChange(currentCloud)
+        return
       }
-    } else if (isInited && isSyncMessage(message) && message.type === 'SYNC_REQUEST') {
-      debugLog('ignored invalid SYNC_REQUEST payload')
+
+      // Cloud is still legacy — reset version tracking and write a clean v1 envelope
+      // so other devices stop seeing the legacy format
+      const meta = await localSyncMetaStorage.getValue()
+      const envelope: SyncEnvelopeV1 = {
+        _v: 1,
+        configVersion: CURRENT_CONFIG_VERSION,
+        fromDeviceId: meta.deviceId || 'unknown',
+        fromDeviceName: meta.deviceName || 'unknown',
+        lastUpdate: Date.now(),
+        settings: defaultSettings,
+        bookmarks: defaultShortcuts,
+        customSearchEngines: defaultSyncedCustomSearchEngines,
+        version: 0,
+        baseVersion: 0,
+      }
+      lastSelfWrittenVersion = 0
+      await updateLocalMeta({ localVersion: 0 })
+      await syncDataStorage.setValue(envelope)
+      debugLog('legacy cleared, version reset to 0')
     }
   })
 
-  // 使用浏览器 Alarms API 定期唤醒，避免 SW 挂起后 setInterval 丢失
+  // Alarm-based periodic tick to keep the service worker alive and process queued syncs
   browser.alarms.onAlarm.addListener(async (alarm) => {
-    if (alarm.name !== ALARM_NAME) {
-      return
-    }
-    debugLog('alarm')
-    if (!isInited || isRunning) {
-      return
-    }
-
+    if (alarm.name !== ALARM_NAME) return
+    debugLog('alarm tick')
+    if (!isInited || isRunning) return
     isRunning = true
     try {
       await processSyncQueue()
@@ -183,41 +481,11 @@ export default defineBackground(() => {
     }
   })
 
-  syncDataStorage.watch(async () => {
-    if (!isInited) {
-      return
-    }
-
-    const [tab] = await browser.tabs.query({
-      active: true,
-      status: 'complete',
-    })
-    if (tab?.id) {
-      const syncUpdateMessage: SyncMessage = { type: 'SYNC_UPDATE' }
-      try {
-        await browser.tabs.sendMessage(tab.id, syncUpdateMessage)
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err)
-        if (
-          message.includes('Receiving end does not exist') ||
-          message.includes('Could not establish connection')
-        ) {
-          debugLog('SYNC_UPDATE skipped: active tab has no receiver')
-          return
-        }
-        console.warn('[sync] Failed to notify active tab about SYNC_UPDATE', err)
-      }
-    }
-  })
-
-  // 创建周期性 alarm（注意：periodInMinutes 最小粒度通常为 1 分钟）
   try {
     browser.alarms.create(ALARM_NAME, {
-      periodInMinutes: Math.max(SYNC_INTERVAL / 60000, 1),
+      periodInMinutes: Math.max(SYNC_INTERVAL / 60_000, 1),
     })
-  } catch (err) {
-    debugLog('alarms.create failed, fallback to local tick only', err)
-    // 兜底：如果浏览器不支持 alarms，则维持本地 tick
+  } catch {
     scheduleLocalTick(SYNC_INTERVAL)
   }
 })

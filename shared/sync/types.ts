@@ -25,6 +25,10 @@ export interface SyncEnvelopeV1 {
   settings: CURRENT_CONFIG_SCHEMA
   bookmarks: Shortcuts
   customSearchEngines: SyncedCustomSearchEngineStorage
+  /** Monotonically increasing version; +1 on each effective push. */
+  version: number
+  /** Cloud version this push was based on; used to detect stale-device overwrites. */
+  baseVersion: number
 }
 
 const isObjectRecord = (value: unknown): value is Record<string, unknown> =>
@@ -62,25 +66,86 @@ export const isSyncEnvelopeV1 = (value: unknown): value is SyncEnvelopeV1 => {
     isValidTimestamp(value.lastUpdate) &&
     isObjectRecord(value.settings) &&
     isObjectRecord(value.bookmarks) &&
-    isValidCustomSearchEngineStorage(value.customSearchEngines)
+    isValidCustomSearchEngineStorage(value.customSearchEngines) &&
+    typeof value.version === 'number' &&
+    typeof value.baseVersion === 'number'
   )
 }
+
 
 export interface LocalSyncMeta {
   deviceId: string
   deviceName: string
   lastSyncedAt: number
   localModifiedAt: number
+  /** The last cloud version this device successfully synced or pushed. */
+  localVersion: number
 }
 
-export interface SyncMessage {
-  type: 'SYNC_REQUEST' | 'SYNC_INITED' | 'SYNC_UPDATE'
+// ─── Message types ────────────────────────────────────────────────────────────
+
+/** newtab → bg: newtab has initialized; bg re-reads LocalSyncMeta for device info. */
+export interface SyncInitedMessage {
+  type: 'SYNC_INITED'
 }
 
-export interface SyncRequestMessage extends SyncMessage {
+/** newtab → bg: sanitized local data changed; bg decides whether and when to push. */
+export interface SyncLocalChangedMessage {
+  type: 'SYNC_LOCAL_CHANGED'
+  data: SyncEnvelopeV1
+}
+
+/** newtab → bg: legacy alias for SYNC_LOCAL_CHANGED; accepted for backward compatibility. */
+export interface SyncRequestMessage {
   type: 'SYNC_REQUEST'
   data: SyncEnvelopeV1
 }
+
+/** newtab → bg: user chose how to resolve a conflict. */
+export interface SyncConflictResolveMessage {
+  type: 'SYNC_CONFLICT_RESOLVE'
+  choice: 'cloud' | 'local'
+}
+
+/** newtab → bg: clear legacy envelope and re-initialize cloud sync state. */
+export interface SyncClearLegacyMessage {
+  type: 'SYNC_CLEAR_LEGACY'
+}
+
+/** bg → newtab: apply this cloud data to local state. */
+export interface SyncApplyDataMessage {
+  type: 'SYNC_APPLY_DATA'
+  data: SyncEnvelopeV1
+}
+
+/** bg → newtab: version conflict detected; user must choose how to resolve. */
+export interface SyncConflictMessage {
+  type: 'SYNC_CONFLICT'
+  payload: SyncEventPayloadMap['conflict']
+}
+
+/** bg → newtab: cloud data is in a legacy format; user must reset. */
+export interface SyncLegacyDetectedMessage {
+  type: 'SYNC_LEGACY_DETECTED'
+}
+
+/** bg → newtab: cloud configVersion is newer than supported; sync disabled. */
+export interface SyncVersionTooNewMessage {
+  type: 'SYNC_VERSION_TOO_NEW'
+  cloud: number
+  local: number
+}
+
+export type SyncMessage =
+  | SyncInitedMessage
+  | SyncLocalChangedMessage
+  | SyncRequestMessage
+  | SyncConflictResolveMessage
+  | SyncClearLegacyMessage
+  | SyncApplyDataMessage
+  | SyncConflictMessage
+  | SyncLegacyDetectedMessage
+  | SyncVersionTooNewMessage
 
 export type SyncEventType = 'legacy-detected' | 'version-too-new' | 'conflict' | 'sync-error'
 

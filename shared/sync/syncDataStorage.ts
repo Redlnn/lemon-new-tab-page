@@ -16,6 +16,8 @@ export const syncDataStorage = storage.defineItem<SyncEnvelopeV1>('sync:syncData
     bookmarks: defaultShortcuts,
     customSearchEngines: defaultSyncedCustomSearchEngines,
     lastUpdate: 0,
+    version: 0,
+    baseVersion: 0,
   },
 })
 
@@ -25,5 +27,6 @@ export const localSyncMetaStorage = storage.defineItem<LocalSyncMeta>('local:syn
     deviceName: '',
     lastSyncedAt: 0,
     localModifiedAt: 0,
+    localVersion: 0,
   },
 })

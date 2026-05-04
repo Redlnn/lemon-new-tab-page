@@ -20,14 +20,19 @@ import type { Shortcuts } from '../shortcut/shortcutStorage'
 
 import { createDeviceId, detectDeviceName } from './device'
 import { localSyncMetaStorage, syncDataStorage } from './syncDataStorage'
-import { defaultSyncedCustomSearchEngines, isSyncEnvelopeV1 } from './types'
+import { isSyncEnvelopeV1 } from './types'
 import type {
   LocalSyncMeta,
+  SyncApplyDataMessage,
+  SyncClearLegacyMessage,
+  SyncConflictMessage,
+  SyncConflictResolveMessage,
   SyncEnvelopeV1,
   SyncEventPayloadMap,
   SyncEventType,
-  SyncMessage,
-  SyncRequestMessage,
+  SyncInitedMessage,
+  SyncLocalChangedMessage,
+  SyncVersionTooNewMessage,
   SyncedCustomSearchEngineStorage,
 } from './types'
 
@@ -41,25 +46,12 @@ const toError = (err: unknown): Error => (err instanceof Error ? err : new Error
 
 const debouncedSend = useDebounceFn(async (data: SyncEnvelopeV1) => {
   try {
-    const syncRequestMessage: SyncRequestMessage = {
-      type: 'SYNC_REQUEST',
-      data,
-    }
-    await browser.runtime.sendMessage(syncRequestMessage)
+    const msg: SyncLocalChangedMessage = { type: 'SYNC_LOCAL_CHANGED', data }
+    await browser.runtime.sendMessage(msg)
   } catch (err) {
     console.error('Sync to cloud failed:', toError(err))
   }
 }, 2000)
-
-const isSyncUpdateMessage = (msg: unknown): msg is SyncMessage =>
-  hasStringType(msg) && msg.type === 'SYNC_UPDATE'
-
-async function handleSyncStorageUpdateMessage(message: unknown) {
-  if (isSyncUpdateMessage(message)) {
-    const syncDataStore = useSyncDataStore()
-    await syncDataStore.checkCloudSync()
-  }
-}
 
 // 静默同步标志
 // 防止初始化过程中触发 subChange
@@ -114,17 +106,6 @@ const normalizeCustomSearchEngines = (
   })
   return { items }
 }
-
-const createDefaultEnvelope = (meta: LocalSyncMeta): SyncEnvelopeV1 => ({
-  _v: 1,
-  configVersion: CURRENT_CONFIG_VERSION,
-  fromDeviceId: meta.deviceId,
-  fromDeviceName: meta.deviceName,
-  lastUpdate: 0,
-  settings: structuredClone(defaultSettings),
-  bookmarks: structuredClone(defaultShortcuts),
-  customSearchEngines: structuredClone(defaultSyncedCustomSearchEngines),
-})
 
 export const useSyncDataStore = defineStore('sync', () => {
   const settings = ref<CURRENT_CONFIG_SCHEMA>(structuredClone(defaultSettings))
@@ -248,19 +229,10 @@ export const useSyncDataStore = defineStore('sync', () => {
       settings: sanitizeSettingsForCloud(settingsSnapshot),
       bookmarks: bookmarksSnapshot,
       customSearchEngines: customSearchEngineSnapshot,
+      // version and baseVersion are placeholders; background fills in the real values
+      version: 0,
+      baseVersion: 0,
     }
-  }
-
-  const pushLocalSnapshot = async (timestamp: number) => {
-    const localSettings = useSettingsStore()
-    if (!localSettings.sync.enabled) {
-      return
-    }
-
-    const meta = await setLocalSyncMeta({ localModifiedAt: timestamp })
-    const payload = buildPayload(timestamp, meta)
-    lastUpdate.value = payload.lastUpdate
-    debouncedSend(payload)
   }
 
   const handleLegacyDetected = () => {
@@ -270,220 +242,11 @@ export const useSyncDataStore = defineStore('sync', () => {
     emitSyncEvent('legacy-detected', undefined)
   }
 
-  const init = async () => {
-    // 幂等：如已初始化，先清理再重新初始化
-    if (initialized) {
-      deinit()
-    }
-
-    const localSettings = useSettingsStore()
-    isProcessing = true
-    try {
-      await ensureDeviceMeta()
-
-      const cloudData = await syncDataStorage.getValue()
-      if (isSyncEnvelopeV1(cloudData)) {
-        settings.value = cloudData.settings
-        bookmarks.value = cloudData.bookmarks
-        lastUpdate.value = cloudData.lastUpdate
-      } else {
-        settings.value = structuredClone(localSettings.getRawState())
-        bookmarks.value = structuredClone(defaultShortcuts)
-        lastUpdate.value = 0
-      }
-
-      const syncInitedMessage: SyncMessage = {
-        type: 'SYNC_INITED',
-      }
-      browser.runtime.sendMessage(syncInitedMessage)
-
-      // 监听同步储存更新消息
-      browser.runtime.onMessage.addListener(handleSyncStorageUpdateMessage)
-
-      // 监听变化触发同步
-      // 追踪上一次的 sync.enabled 状态，避免用户手动开启云同步时立刻把
-      // local lastUpdate 推新（导致本地覆盖云端）。当检测到由 false -> true
-      // 的切换时，只执行一次 checkCloudSync()，不更新 lastUpdate。
-      let prevSyncEnabled = localSettings.sync.enabled
-
-      const subChange = async () => {
-        const nowEnabled = localSettings.sync.enabled
-
-        // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
-        if (isProcessing) {
-          prevSyncEnabled = nowEnabled
-          return
-        }
-
-        if (!nowEnabled) {
-          return
-        }
-
-        // 刚刚从未启用变为启用：不更新 lastUpdate，仅检查云端
-        if (!prevSyncEnabled && nowEnabled) {
-          prevSyncEnabled = true
-          await checkCloudSync()
-          return
-        }
-
-        prevSyncEnabled = nowEnabled
-
-        await setLocalSyncMeta({
-          localModifiedAt: Date.now(),
-        })
-        await checkCloudSync()
-      }
-
-      const unsubSettings = localSettings.$subscribe(subChange)
-      const shortcutStore = useShortcutStore()
-      const customSearchEngineStore = useCustomSearchEngineStore()
-
-      const onStateMutation = async (mutation: { type: MutationType }) => {
-        if (mutation.type !== MutationType.direct) {
-          // 防止刚开就认为数据过旧，只有 init 会整个替换 state
-          return
-        }
-        await subChange()
-      }
-
-      const unsubShortcut = shortcutStore.$subscribe(onStateMutation)
-      const unsubCustomSearchEngine = customSearchEngineStore.$subscribe(onStateMutation)
-
-      cleanupFns = [
-        () => browser.runtime.onMessage.removeListener(handleSyncStorageUpdateMessage),
-        unsubSettings,
-        unsubShortcut,
-        unsubCustomSearchEngine,
-      ]
-      initialized = true
-
-      // 初始化时进行一次同步检查
-      await checkCloudSync()
-    } catch (err) {
-      emitSyncError(err)
-    } finally {
-      isProcessing = false
-    }
-  }
-
-  const deinit = () => {
-    cleanupFns.forEach((fn) => fn())
-    cleanupFns = []
-    conflictDialogVisible.value = false
-    conflictPayload.value = null
-    legacyDialogVisible.value = false
-    initialized = false
-  }
-
-  const checkCloudSync = async () => {
-    try {
-      const localSettings = useSettingsStore()
-      if (!localSettings.sync.enabled) {
-        return false
-      }
-
-      const cloudData = await syncDataStorage.getValue()
-      if (!isSyncEnvelopeV1(cloudData)) {
-        handleLegacyDetected()
-        return false
-      }
-
-      // 检查版本
-      if (cloudData.configVersion > CURRENT_CONFIG_VERSION) {
-        localSettings.sync.enabled = false
-        emitSyncEvent('version-too-new', {
-          cloud: cloudData.configVersion,
-          local: CURRENT_CONFIG_VERSION,
-        })
-        return false
-      }
-
-      const localSyncMeta = await ensureDeviceMeta()
-      const S = localSyncMeta.lastSyncedAt
-      const M = localSyncMeta.localModifiedAt
-      const C = cloudData.lastUpdate
-
-      // 首次完全初始化：S=0, M=0, C=0 → 推送本地（初始化）
-      if (S === 0 && M === 0 && C === 0) {
-        await pushLocalSnapshot(Date.now())
-        return true
-      }
-
-      // 云端为空，推送本地
-      if (C === 0) {
-        await pushLocalSnapshot(M > 0 ? M : Date.now())
-        return true
-      }
-
-      // 如果本地从未同步过（S=0 但 M>0 或 M=0），使用当前时间戳作为 M
-      // 这样首次连接有云端数据时会触发冲突检测
-      let localModifiedAt = M
-      if (S === 0 && M === 0) {
-        localModifiedAt = Date.now()
-        await setLocalSyncMeta({ localModifiedAt })
-      }
-
-      const hasLocalChanges = localModifiedAt > S
-      const hasCloudChanges = C > S
-
-      if (!hasLocalChanges && !hasCloudChanges) {
-        return true
-      }
-
-      if (hasLocalChanges && hasCloudChanges) {
-        if (C === localModifiedAt) {
-          await setLocalSyncMeta({ lastSyncedAt: C })
-          return true
-        }
-
-        const conflict: SyncEventPayloadMap['conflict'] = {
-          cloud: {
-            lastUpdate: cloudData.lastUpdate,
-            fromDeviceName: cloudData.fromDeviceName,
-            fromDeviceId: cloudData.fromDeviceId,
-          },
-          local: {
-            localModifiedAt: localModifiedAt,
-          },
-        }
-        conflictPayload.value = conflict
-        conflictDialogVisible.value = true
-        emitSyncEvent('conflict', conflict)
-        return false
-      }
-
-      if (hasLocalChanges) {
-        await pushLocalSnapshot(localModifiedAt > 0 ? localModifiedAt : Date.now())
-        return true
-      }
-
-      if (hasCloudChanges) {
-        await applyCloudData(cloudData, { pushBackAfterMigration: true })
-        return true
-      }
-    } catch (err) {
-      emitSyncError(err)
-    }
-
-    return false
-  }
-
-  const syncToCloud = async () => {
-    try {
-      await pushLocalSnapshot(Date.now())
-    } catch (err) {
-      emitSyncError(err)
-    }
-  }
-
-  const applyCloudData = async (
-    cloudInput?: SyncEnvelopeV1,
-    options: { pushBackAfterMigration?: boolean } = {},
-  ) => {
+  const applyCloudData = async (cloudInput: SyncEnvelopeV1) => {
     isProcessing = true
     try {
       const localSettings = useSettingsStore()
-      const cloudData = cloudInput ?? (await syncDataStorage.getValue())
+      const cloudData = cloudInput
       if (!isSyncEnvelopeV1(cloudData)) {
         handleLegacyDetected()
         return
@@ -514,14 +277,18 @@ export const useSyncDataStore = defineStore('sync', () => {
       await customSearchEngineStore.save(normalizedCustomSearchEngines)
       ensureSearchEngineAvailable(localSettings, normalizedCustomSearchEngines)
 
+      const cloudVersion = cloudData.version ?? 0
       await setLocalSyncMeta({
         lastSyncedAt: cloudData.lastUpdate,
         localModifiedAt: cloudData.lastUpdate,
+        localVersion: cloudVersion,
       })
       lastUpdate.value = cloudData.lastUpdate
 
-      if (options.pushBackAfterMigration && migrated) {
-        await pushLocalSnapshot(Date.now())
+      // If settings were migrated to a newer schema, push the migrated version back
+      if (migrated) {
+        const meta = await localSyncMetaStorage.getValue()
+        debouncedSend(buildPayload(Date.now(), meta))
       }
     } catch (err) {
       emitSyncError(err)
@@ -530,16 +297,175 @@ export const useSyncDataStore = defineStore('sync', () => {
     }
   }
 
+  const init = async () => {
+    // 幂等：如已初始化，先清理再重新初始化
+    if (initialized) {
+      deinit()
+    }
+
+    const localSettings = useSettingsStore()
+    const shortcutStore = useShortcutStore()
+    const customSearchEngineStore = useCustomSearchEngineStore()
+    isProcessing = true
+    try {
+      await ensureDeviceMeta()
+
+      const cloudData = await syncDataStorage.getValue()
+      if (isSyncEnvelopeV1(cloudData)) {
+        settings.value = cloudData.settings
+        bookmarks.value = cloudData.bookmarks
+        lastUpdate.value = cloudData.lastUpdate
+      } else {
+        settings.value = structuredClone(localSettings.getRawState())
+        bookmarks.value = structuredClone(defaultShortcuts)
+        lastUpdate.value = 0
+      }
+
+      // Tell background we're ready; it will flush any pending notifications
+      const syncInitedMessage: SyncInitedMessage = { type: 'SYNC_INITED' }
+      browser.runtime.sendMessage(syncInitedMessage)
+
+      // Handle messages from background
+      const handleBackgroundMessage = async (message: unknown) => {
+        if (!hasStringType(message)) return
+
+        if (message.type === 'SYNC_APPLY_DATA' && 'data' in message) {
+          const data = (message as SyncApplyDataMessage).data
+          if (isSyncEnvelopeV1(data)) {
+            await applyCloudData(data)
+          }
+        } else if (message.type === 'SYNC_CONFLICT' && 'payload' in message) {
+          const payload = (message as SyncConflictMessage).payload
+          conflictPayload.value = payload
+          conflictDialogVisible.value = true
+          emitSyncEvent('conflict', payload)
+        } else if (message.type === 'SYNC_LEGACY_DETECTED') {
+          handleLegacyDetected()
+        } else if (message.type === 'SYNC_VERSION_TOO_NEW') {
+          const msg = message as SyncVersionTooNewMessage
+          localSettings.sync.enabled = false
+          emitSyncEvent('version-too-new', { cloud: msg.cloud, local: msg.local })
+        }
+      }
+
+      browser.runtime.onMessage.addListener(handleBackgroundMessage)
+
+      // Sanitized snapshot comparison: only trigger sync when meaningful data changes
+      // (ignores local-only fields like readChangeLog, pluginVersion, local background)
+      let lastSanitizedSnapshot: string | null = null
+      let prevSyncEnabled = localSettings.sync.enabled
+
+      const computeSnapshot = (): string => {
+        const sanitizedSettings = sanitizeSettingsForCloud(
+          structuredClone(localSettings.getRawState()),
+        )
+        const bookmarksData = { items: toRaw(shortcutStore.items) }
+        const customEnginesData = toRaw(customSearchEngineStore.items)
+        return JSON.stringify({ s: sanitizedSettings, b: bookmarksData, e: customEnginesData })
+      }
+
+      const subChange = async () => {
+        const nowEnabled = localSettings.sync.enabled
+
+        // 如果正在处理（静默中），先同步 prevSyncEnabled 再早退，避免状态滞后
+        if (isProcessing) {
+          prevSyncEnabled = nowEnabled
+          return
+        }
+
+        if (!nowEnabled) return
+
+        const snapshot = computeSnapshot()
+
+        // 刚刚从未启用变为启用：发送当前数据并返回
+        if (!prevSyncEnabled && nowEnabled) {
+          prevSyncEnabled = true
+          lastSanitizedSnapshot = snapshot
+          const timestamp = Date.now()
+          const meta = await setLocalSyncMeta({ localModifiedAt: timestamp })
+          debouncedSend(buildPayload(timestamp, meta))
+          return
+        }
+
+        prevSyncEnabled = nowEnabled
+
+        // 仅本地专属字段变更（如 readChangeLog、pluginVersion）时跳过
+        if (snapshot === lastSanitizedSnapshot) {
+          return
+        }
+
+        lastSanitizedSnapshot = snapshot
+        const timestamp = Date.now()
+        const meta = await setLocalSyncMeta({ localModifiedAt: timestamp })
+        debouncedSend(buildPayload(timestamp, meta))
+      }
+
+      const unsubSettings = localSettings.$subscribe(subChange)
+
+      const onStateMutation = async (mutation: { type: MutationType }) => {
+        if (mutation.type !== MutationType.direct) {
+          // 防止刚开就认为数据过旧，只有 init 会整个替换 state
+          return
+        }
+        await subChange()
+      }
+
+      const unsubShortcut = shortcutStore.$subscribe(onStateMutation)
+      const unsubCustomSearchEngine = customSearchEngineStore.$subscribe(onStateMutation)
+
+      cleanupFns = [
+        () => browser.runtime.onMessage.removeListener(handleBackgroundMessage),
+        unsubSettings,
+        unsubShortcut,
+        unsubCustomSearchEngine,
+      ]
+      initialized = true
+    } catch (err) {
+      emitSyncError(err)
+    } finally {
+      isProcessing = false
+    }
+  }
+
+  const deinit = () => {
+    cleanupFns.forEach((fn) => fn())
+    cleanupFns = []
+    conflictDialogVisible.value = false
+    conflictPayload.value = null
+    legacyDialogVisible.value = false
+    initialized = false
+  }
+
+  const syncToCloud = async () => {
+    try {
+      const localSettings = useSettingsStore()
+      if (!localSettings.sync.enabled) return
+      const timestamp = Date.now()
+      const meta = await setLocalSyncMeta({ localModifiedAt: timestamp })
+      const payload = buildPayload(timestamp, meta)
+      const msg: SyncLocalChangedMessage = { type: 'SYNC_LOCAL_CHANGED', data: payload }
+      await browser.runtime.sendMessage(msg)
+    } catch (err) {
+      emitSyncError(err)
+    }
+  }
+
   const clearLegacyAndReinitialize = async () => {
     const localSettings = useSettingsStore()
     isProcessing = true
     try {
-      const meta = await ensureDeviceMeta()
-      await syncDataStorage.setValue(createDefaultEnvelope(meta))
       localSettings.sync.enabled = true
       legacyDialogVisible.value = false
-      await pushLocalSnapshot(Date.now())
-      await checkCloudSync()
+      // Tell background to clear the legacy envelope and reset its version state
+      const clearMsg: SyncClearLegacyMessage = { type: 'SYNC_CLEAR_LEGACY' }
+      await browser.runtime.sendMessage(clearMsg)
+      // Push local data so background writes version=1 on top of the cleared state
+      const meta = await ensureDeviceMeta()
+      const timestamp = Date.now()
+      await setLocalSyncMeta({ localModifiedAt: timestamp })
+      const payload = buildPayload(timestamp, meta)
+      const msg: SyncLocalChangedMessage = { type: 'SYNC_LOCAL_CHANGED', data: payload }
+      await browser.runtime.sendMessage(msg)
     } catch (err) {
       emitSyncError(err)
     } finally {
@@ -554,14 +480,23 @@ export const useSyncDataStore = defineStore('sync', () => {
   const useCloudConflictData = async () => {
     conflictDialogVisible.value = false
     conflictPayload.value = null
-    await applyCloudData(undefined, { pushBackAfterMigration: true })
+    try {
+      const msg: SyncConflictResolveMessage = { type: 'SYNC_CONFLICT_RESOLVE', choice: 'cloud' }
+      await browser.runtime.sendMessage(msg)
+    } catch (err) {
+      emitSyncError(err)
+    }
   }
 
   const useLocalConflictData = async () => {
     conflictDialogVisible.value = false
     conflictPayload.value = null
-    await pushLocalSnapshot(Date.now())
-    await checkCloudSync()
+    try {
+      const msg: SyncConflictResolveMessage = { type: 'SYNC_CONFLICT_RESOLVE', choice: 'local' }
+      await browser.runtime.sendMessage(msg)
+    } catch (err) {
+      emitSyncError(err)
+    }
   }
 
   const disableSyncAndDismissConflict = () => {
@@ -580,7 +515,6 @@ export const useSyncDataStore = defineStore('sync', () => {
     conflictPayload,
     init,
     deinit,
-    checkCloudSync,
     syncToCloud,
     applyCloudData,
     clearLegacyAndReinitialize,
